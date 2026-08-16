@@ -1,30 +1,90 @@
-# DAY 01｜DIRECTOR_PLAN
+# DAY 01｜DIRECTOR_PLAN FINAL_CUT
 
-## 原则
-9:16竖版；真实主页截图承担主要证据；简单清晰；关键数字/核心句子做视觉锚点；不用复杂AI视频。
+status: PUBLISHED_FINAL_CUT
 
-## 结构
+## Final Structure
 
-### 0–5s｜37粉冲突
-旧主页截图全屏，推近“37粉”。
+### Part 1｜AI Hook｜约0–16.53s
 
-### 5–14s｜内容很杂
-旧作品宫格快速裁切/平移，强调AI视频、科幻、经济、动物科普等不同类型，可短暂圈出1092/719/709等历史播放数据。
+- H-A01：AI进入日常
+- H-A02：AI能不能真的帮到我
+- H-A03：30天实验启动
+- 结尾短停留：30天实验 / DAY 01
 
-### 14–24s｜核心问题
-不同内容标签出现后散开，中央留下：**每条视频都在换观众**。
+Visual Function：
+Concept / Emotion
 
-### 24–34s｜知识价值
-背景简化，全屏：**别人关注你以后，下一条还能期待看到什么？**
+目的：
+先抛出“AI到底能不能真的帮到我”，再落回真实37粉证据。
 
-### 34–44s｜重新定位
-旧主页淡出→新主页截图；框选“汤圆AI实战”；出现“37 → 1000”。
+### Part 2｜S1–S10 Real Evidence Body｜约16.53–88.54s
 
-### 44s–结尾｜第一季启动
-依次：AI内容创作 / AI视频 / 自媒体实验；最后 `DAY 1`、`30天公开实验`、`37粉 → 1000粉`。
+核心语义：
 
-## 声音
-本人真实口播为主。BGM可无；若用则低存在感。音效少量强调即可。
+- 37粉
+- 有1000+/700+播放
+- 内容混杂
+- 每条都在换观众
+- “下一条还能期待什么”
+- 重新定位
+- 37→1000
+- AI内容创作 / AI视频 / 自媒体实战
+- 数据、失败、调整公开
 
-## 成片验收
-前3秒是否明确37粉？旧内容混乱是否看得懂？核心结论是否清楚？知识价值是否成立？30天挑战是否清楚？是否像真实实验而不是AI营销片？
+Visual Function：
+
+Evidence + Explanation
+
+真实证据：
+- 37粉
+- 1092
+- 719
+- 主页/作品
+- 滚屏
+
+解释：
+Remotion / Data Loupe / Before-After / 关系图
+
+### Part 3｜Added Review Outro｜约20.06s
+
+结构：
+
+- E-A01：AI协作制作现场
+- E-A02：方案 / 踩坑复盘
+- 插回真实证据段
+- E-A03：真实过程 / 生活工作
+- 最终稳定保持
+
+Visual Function：
+Capability Proof + Emotion + Evidence
+
+### Part 4｜S11 Final Validation
+
+最终：
+
+- Day 1
+- 37粉
+- 30天以后
+- 37粉 → ?
+
+稳定停留。
+
+## Final Technical
+
+- 1080×1920
+- 30fps
+- 114.726s
+- H.264
+- AAC 48kHz mono
+- No black frames
+- AI original audio removed
+
+## Production Rule Learned
+
+本文件证明：
+
+`DRAFT_TIMING`不能直接进入正式制作。
+
+未来必须：
+
+`AUDIO_LOCK → FINAL_TIMING → DIRECTOR_LOCK`

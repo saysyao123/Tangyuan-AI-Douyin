@@ -1,14 +1,61 @@
-# 每日新对话启动指令
+# 每日执行启动指令 v2.0
 
-请读取GitHub仓库中的：
-- `00_CONTROL/MASTER_CONTROL.md`
-- `00_CONTROL/CURRENT_STATE.md`
-- `00_CONTROL/LOCKED_RULES.md`
-- `01_TOPIC_SYSTEM/USED_TOPICS.md`
-- 最新相关Day档案
+先读取：
 
-严格沿用已锁项目规则。今天只负责当前Day的一条视频：数据复盘→候选题→唯一主选题→原始内容/真实证据→Knowledge Script Harness→最终口播→导演表→素材清单→AI/Remotion生产→成片验收→封面标题→发布方案→交接包。
+1. `00_CONTROL/SOURCE_OF_TRUTH.md`
+2. `00_CONTROL/LOCKED_RULES.md`
+3. `00_CONTROL/CURRENT_STATE.md`
+4. `01_TOPIC_SYSTEM/USED_TOPICS.md`
+5. `01_TOPIC_SYSTEM/TOPIC_POOL.md`
+6. `03_DATA/VIDEO_PERFORMANCE.csv` 最近3条
+7. 上一个Day `METRICS.md`
+8. 当前 `99_INBOX/DAY_XX_START_PACKET.md`（若存在）
+9. 所需Harness
 
-不要重新讨论账号定位。只有影响结果且仓库资料/工具无法解决的关键缺口时，一次只问一个问题。
+## 今天只完成一条视频
 
-当天结束必须生成：`DAY_XX_HANDOFF.md`，供总控归档。
+顺序：
+
+上一条数据
+→ Topic Lock
+→ Evidence Lock
+→ Script Lock
+→ Audio Lock
+→ ASR / Timeline
+→ Director
+→ Asset Gate
+→ Segment Production
+→ Segment QA
+→ Full Cut
+→ Full QA
+→ Publish Package
+→ Handoff
+
+## 效率要求
+
+目标：
+**150分钟 + 30分钟缓冲**
+
+累计120分钟仍未进入Full Cut：
+自动降低视觉复杂度。
+
+优先取消：
+- 非必要AI镜头
+- 装饰动画
+- 新视觉风格测试
+
+不能取消：
+- 真实证据
+- 旁白清晰度
+- QA
+
+## 提问
+
+不重复项目级已锁定问题。
+
+只有真正会改变结果且现有资料无法解决时，一次问一个。
+
+## 结束
+
+产出：
+`DAY_XX_HANDOFF.md`

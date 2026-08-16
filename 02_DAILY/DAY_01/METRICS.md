@@ -1,19 +1,61 @@
 # DAY 01｜METRICS
 
-状态：待发布
+status: PUBLISHED_METRICS_PENDING
 
-- 发布日期：
-- 发布时间：
-- 发布前粉丝：37
-- 1小时播放：
-- 3小时播放：
-- 24小时播放：
-- 点赞：
-- 评论：
-- 收藏：
-- 分享：
-- 主页访问：
-- 新增关注：
-- 每1000播放新增关注：
+## Publish
 
-单条结果默认不足以升级长期规则。
+- Publish Date: 2026-08-16
+- Actual Publish Time:
+- Followers Before: 37
+- Post URL:
+
+## 1h
+
+- Views:
+- Likes:
+- Comments:
+- Favorites:
+- Shares:
+- Profile Visits:
+- New Follows:
+- Follow Source:
+
+## 3h
+
+- Views:
+- Likes:
+- Comments:
+- Favorites:
+- Shares:
+- Profile Visits:
+- New Follows:
+
+## 24h
+
+- Views:
+- Likes:
+- Comments:
+- Favorites:
+- Shares:
+- Profile Visits:
+- New Follows:
+- Followers After:
+- Avg Watch Time:
+- Completion Rate:
+- Follows / 1000 Views:
+
+## Performance Questions
+
+1. 114.726秒是否造成明显完播问题？
+2. AI Hook是否值得继续测试？
+3. 真实证据段是否获得评论/关注反馈？
+4. 主页访问→关注是否改善？
+5. 用户是否对“真实复盘/踩坑”产生追更意愿？
+
+## Rule Upgrade
+
+当前：
+
+**NO**
+
+Day1单条数据不能直接升级长期增长规则。
