@@ -27,12 +27,23 @@ Reference anchor is the Johnny MV version directly watched and accepted by the u
 Backup retained:
 `午后树下微风`
 
-### S01 process correction
-R1 now separates:
-- `REFERENCE_BGM`: required before production analysis;
+### S01 simplified song-selection path｜Temporarily LOCKED
+For the current R1 and near-term manual testing, use the simplified observer workflow:
+
+`5-source MV/music observer pool -> scan recent ~30-day songs -> prefer songs repeated across multiple observers / recent wider Douyin diffusion -> give direct real MV/video links -> user judges song + visual together -> choose one Reference BGM`
+
+This lightweight path is intentionally retained for current production speed.
+
+The deeper datasource path (`exact music_id / creator-center probe / account-side availability / automated preview acquisition`) is **not abandoned**. It is deferred to the Codex-capable computer for later hardening and automation tests.
+
+Do not block current visual-production calibration on that deeper datasource engineering.
+
+### Reference vs Publish BGM
+R1 separates:
+- `REFERENCE_BGM`: required before music/visual production analysis; current reference is locked by the Johnny MV the user actually heard and accepted.
 - `PUBLISH_BGM`: exact Douyin platform asset / account availability, required before final publishing.
 
-The full Codex datasource proof remains a system-hardening requirement, but no longer blocks R1 visual production after a user-selected Reference BGM is anchored.
+The full Codex datasource proof remains a system-hardening requirement.
 
 `AVAILABLE_AT_PUBLISH = TRUE` remains HARD before release.
 
@@ -79,6 +90,8 @@ Before editing:
 - actual audio must be re-synced;
 - do not assume 0.1s precision yet.
 
+If the user provides a local audio or MV file containing the accepted Reference BGM, use that exact supplied media as the source for clipping and waveform alignment; do not silently substitute another online version.
+
 ## Current Benchmark / Observer System
 
 Song discovery observer pool and rolling MV benchmark remain active:
@@ -89,14 +102,14 @@ Future use is JIT, not full-pool analysis at every stage.
 
 ## Current Risks / Pending
 
-- exact Douyin music_id pending;
+- exact Douyin music_id pending Codex hardening test;
 - exact account publish availability pending Codex-side verification;
-- exact waveform timing pending audio acquisition;
+- exact waveform timing pending access to the accepted audio source;
 - alternate versions (standard / rhythm / DJ) exist, so no silent version swap is allowed.
 
 ## Next Allowed Action
 
-Human review of `R1S02_MUSIC_STRUCTURE.md`.
+Human review of `R1S02_MUSIC_STRUCTURE.md` and exact Reference BGM clip preparation when the accepted media source is available.
 
 If user approves the working lyric interval and Beat structure:
 1. create separate LOCK commit for R1S02;
