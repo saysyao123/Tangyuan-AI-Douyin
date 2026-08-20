@@ -1,4 +1,4 @@
-# Runtime Manifest v3.0
+# Runtime Manifest v3.1
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
@@ -20,11 +20,20 @@
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项：选歌 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 终审 | 当前 MV Round / Stage | 当前阶段对应 Rules | `knowledge/MV_BENCHMARK_LAYER.md` + 当前 Round 最新 Benchmark Snapshot；只按阶段 JIT 加载，不全量常驻 |
+| MV专项：选歌 / BGM截取 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 歌词 / 终审 | `workflows/mv.md` | `rules/ai_video.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md` + `knowledge/MV_BENCHMARK_LAYER.md`；按阶段 JIT 加载 |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
 | 规则升级 | `workflows/publish_review.md` | 对应rule文件 | `knowledge/PROMOTION_POLICY.md`,`03_DATA/EXPERIMENTS.md` |
+
+## MV Runtime Rule
+
+MV任务默认先读：
+1. `workflows/mv.md`
+2. 当前 MV Round `CURRENT_STATE.md`
+3. 当前阶段明确需要的 Rules / Prompt / Benchmark Snapshot
+
+R1历史复盘、失败样本、旧Prompt只有在排错或规则溯源时加载，禁止默认全读。
 
 ## MV Benchmark JIT Rule
 
