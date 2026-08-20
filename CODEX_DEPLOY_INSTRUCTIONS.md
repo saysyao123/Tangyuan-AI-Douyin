@@ -1,42 +1,38 @@
-# CODEX_DEPLOY_INSTRUCTIONS
+# CODEX / Agent Runtime Instructions v3.0
 
-目标仓库：`https://github.com/saysyao123/saysyao123-Tangyuan-AI-Douyin`
+目标仓库：`saysyao123/Tangyuan-AI-Douyin`
 
-## 目标
-将本包 `Tangyuan-AI-Douyin/` 目录内部全部内容原样部署到目标GitHub Public Repository根目录。
+## 不要这样启动
+不要一上来全文读取整个Repo、全部Harness、全部Daily、全部IP Visual文档。这样会造成上下文膨胀和规则冲突。
 
-## 原则
-- 保持目录结构
-- 不删除现有项目文件，除非确认只是测试残留
-- 不上传Key/Token/Cookie/密码/私密账号信息
-- 不上传未脱敏隐私素材
-- 大型视频/音频/图片不要批量推入Git
-- 不自行修改账号定位、第一季目标、已锁定规则
-
-## 建议命令
-```bash
-git clone https://github.com/saysyao123/saysyao123-Tangyuan-AI-Douyin.git
-cd saysyao123-Tangyuan-AI-Douyin
-# 将本包 Tangyuan-AI-Douyin/ 内部全部文件复制到当前仓库根目录
-git status
-git add .
-git diff --cached
-git commit -m "chore: initialize Tangyuan AI Douyin project control system"
-git push
+## 正确启动
+```text
+1. 读取 04_HARNESS/SKILL.md
+2. 读取 04_HARNESS/MANIFEST.md
+3. 读取 00_CONTROL/CURRENT_STATE.md
+4. 判断当前任务
+5. 按 MANIFEST 只读取对应 workflow + rules + template
+6. 完成当前模块并通过Gate后，再加载下一模块
 ```
 
-## 推送前验收
-必须存在：README、MASTER_CONTROL、CURRENT_STATE、TOPIC_POOL、DAY_00、DAY_01、ACCOUNT_GROWTH、KNOWLEDGE_SCRIPT_HARNESS、ACCOUNT_POSITIONING、DAILY_EXECUTION_START、99_INBOX。
+## Change Discipline
+- Workflow只写流程和Input/Output Contract。
+- Rule只写长期可验收约束。
+- Template只写复用骨架，不保存项目状态。
+- 单次经验进入Daily Lessons / Experiments，不直接塞进Skill。
+- 修改局部模块时，不重写无关模块。
+- Contract改变时同步更新MANIFEST与Tests。
 
-## 安全扫描关键词
-`sk-` / `token` / `api_key` / `apikey` / `password` / `cookie` / `authorization` / `bearer` / `secret` / `手机号` / `身份证`
+## Git Safety
+- 不自行修改账号定位、第一季目标、已锁定规则。
+- 不提交Key/Token/Cookie/密码/私密账号信息。
+- 不上传未脱敏隐私素材。
+- 大型视频/音频/图片不要批量推入Git。
+- 提交前检查diff，只提交本任务相关路径。
 
-命中后人工判断并删除敏感内容。
+## Architecture References
+- `docs/ARCHITECTURE_V3.md`
+- `docs/MIGRATION_V3.md`
 
-## 部署后回传
-- commit SHA
-- branch
-- 最终文件树
-- git status是否clean
-- 是否发现冲突
-- 是否发现敏感信息
+## Legacy
+旧 `04_HARNESS/*_HARNESS.md` 是迁移期参考，不属于默认运行上下文。只有缺少细节、追溯来源或回归测试时按需读取。

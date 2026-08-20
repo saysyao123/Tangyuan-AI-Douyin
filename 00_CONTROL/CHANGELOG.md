@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v3.0 — 2026-08-20
+
+### Thin Skill Architecture
+- 新增 `04_HARNESS/SKILL.md` 作为唯一薄运行入口。
+- 新增 `04_HARNESS/MANIFEST.md`，按任务执行 JIT Context 加载。
+- 将运行职责拆为 `workflows/`、`rules/`、`templates/`、`knowledge/`、`tests/`。
+- `LOCKED_RULES.md` 从规则正文集合改为 Rule Registry，规则正文迁入 `04_HARNESS/rules/*`。
+- `MASTER_CONTROL.md` 缩为长期项目合同，不再承载详细生产流程。
+- 新增 Input / Output Contract 与模块级回归测试规范。
+- 新增 Knowledge → Rule Promotion Policy，单次经验不再直接写入SKILL。
+- README、PROJECT_MANIFEST、CODEX入口切换至v3 Runtime。
+- 原大型 `*_HARNESS.md` 暂时保留为 Legacy Reference，默认不参与运行上下文。
+- 新增 `docs/ARCHITECTURE_V3.md` 与 `docs/MIGRATION_V3.md`。
+
 ## v2.0 — 2026-08-16
 
 ### Day1正式进入发布后阶段

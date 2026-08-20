@@ -1,182 +1,43 @@
-# LOCKED_RULES
+# LOCKED_RULES｜Rule Registry v3.0
 
-> v2.0｜2026-08-16  
-> 只记录已经确认应长期执行的项目规则。  
-> 内容表现规律必须经过真实发布数据验证；生产稳定性规则可以由生产过程直接验证。
+> 本文件从“规则正文集合”改为**规则注册表**。规则正文只存在于 `04_HARNESS/rules/*`，避免同一规则复制多份。
 
-## A. 账号与第一季
+## Active Rule Sources
 
-- 账号：汤圆AI实战
-- 使用现有账号，不新建
-- 保留“汤圆”作为长期IP名
-- 旧视频暂不大规模隐藏/删除
-- 第一季：30天AI重做37粉账号
-- 起始基线：2026-08-15 / 37粉
-- 第一季目标：1000粉
-- 第一季主线：AI内容创作 / AI视频 / 自媒体实验
+### Account / Truth / Content Boundary
+权威文件：`04_HARNESS/rules/account_truth.md`
 
-## B. IP与真实性
+覆盖：账号、第一季、真实性、内容边界、发布实验纪律、提问规则。
 
-- 不包装成程序员大神或AI权威
-- 真实实验 / 踩坑 → 原因 → 调整 → 可复制结论
-- 未亲测不得包装成亲测
-- 研究/发现型内容必须明确标明
-- 每条实战视频原则上至少1个真实证据点
-- 前期不要求真人露脸
-- 使用本人真实声音
+### Production Core
+权威文件：`04_HARNESS/rules/production_core.md`
 
-## C. 发布与数据
+状态：`PRODUCTION_VALIDATED`
 
-- 默认每天1条
-- 常规生产窗口：20:00–23:00
-- 前14条尽量保持发布时间稳定
-- 主指标：每1000播放新增关注
-- 单条视频好坏不自动升级长期增长规律
+覆盖：真实音频先于时间轴、独立ASR、唯一Master Narration、高清Source、镜头运动、Segment Lock、四层QA、准确数字、Artifact Verify、Material Coverage、Evidence Integrity。
 
-## D. 两级验证制度
+### Visual Core
+权威文件：`04_HARNESS/rules/visual_core.md`
 
-任何“经验”必须标状态。
+状态：`PRODUCTION_VALIDATED`
 
-### PRODUCTION_VALIDATED
-已被制作流程证明稳定/必要。
+覆盖：9:16、视觉职能路由、字幕与容器居中、手机可读、小字删除、镜头运动、Evidence、Anti-Homogeneity。
 
-可用于：
-- 工程流程
-- QA
-- 音频
-- 素材
-- 导演执行
-- 文件验收
+### AI Video
+权威文件：`04_HARNESS/rules/ai_video.md`
 
-### PERFORMANCE_VALIDATED
-已通过真实平台数据重复验证。
+覆盖：AI使用Gate、首帧、5秒稳定图生视频、QA与音轨处理。
 
-才可用于：
-- 哪种Hook更涨粉
-- 哪种时长更高完播
-- 哪种画面形式更有效
-- 哪种标签/标题/封面更优
-- 哪种内容模型值得长期复制
+### HyperFrames
+权威文件：`04_HARNESS/rules/hyperframes.md`
 
-单条结果默认先进入 `EXPERIMENTS.md`。
+覆盖：Logic Motion适用范围、Teaching Truth、Anchor/Variable/Consequence、Signature Move、Anti-PPT、竖屏与Hierarchy。
 
-## E. Day1后生产稳定性硬规则｜PRODUCTION_VALIDATED
+## Validation Levels
 
-### R01｜真实音频先于最终导演时间轴
-未锁最终旁白音频前，导演秒数只能是 `DRAFT_TIMING`。
+- `PRODUCTION_VALIDATED`：制作稳定性规则，可由重复生产/技术验证升级。
+- `PERFORMANCE_VALIDATED`：增长/平台表现规律，必须重复真实发布数据验证。
 
-### R02｜ASR必须独立
-录音可能偏离原稿时：
+单条结果默认进入 `03_DATA/EXPERIMENTS.md`，不得直接升级长期规则。
 
-`Audio → ASR → Transcript Confirm → Cleanup`
-
-禁止用旧文案诱导“听写”。
-
-### R03｜最终成片只保留一个Master Narration Track
-AI生成视频默认剥离源音轨。
-
-只有导演表明确：
-`KEEP_SOURCE_AUDIO = TRUE`
-才允许保留某段源声音。
-
-### R04｜多场次录音必须匹配
-Hook / 主体 / Outro分开录制时，以主体为参考统一：
-- 响度
-- 动态范围
-- 轻微音色差
-
-不改变：
-- 人的真实音高
-- 真实声线
-- 自然表达
-
-### R05｜高清Source负责放大，低清Motion只负责运动
-低清录屏不得裁小卡后再全屏放大。
-
-### R06｜镜头运动必须有起点、方向、终点
-允许：
-- 稳定推进
-- 稳定拉远
-- 固定轴Zoom
-- 单向位移
-
-默认禁止：
-- 随机漂移
-- 呼吸Zoom
-- 左右摇摆
-- 无意义上下浮动
-
-### R07｜Segment Lock
-每个主要段落：
-`Produce → QA → Approve → Lock`
-
-已Approved段落不因后续局部问题随意重做。
-
-### R08｜生成不等于完成
-所有视频必须完成：
-- Technical QA
-- Visual QA
-- Narrative QA
-- Evidence QA
-
-才允许交付。
-
-### R09｜AI首帧必须是独立干净9:16图
-Prompt首句直接锁：
-- 1张独立图片
-- 单一构图
-- 禁止拼图
-- 禁止九宫格
-- 禁止分镜表
-- 禁止海报/信息图/可读说明文字
-
-### R10｜AI图生视频默认5秒稳定动作
-默认：
-- 一个主事件
-- 一个摄影机动作
-- 环境余韵
-- 明确结束状态
-
-### R11｜准确数字/文字不交给AI生成
-真实数据、37/1000、DAY编号、平台文字等由后期叠加。
-
-### R12｜Artifact Verify
-任何输出文件在宣称完成前必须：
-
-`exists → ffprobe/probe → QA → deliver`
-
-## F. Evidence First, AI Where It Adds Meaning
-
-不同语义使用不同视觉职能：
-
-- Evidence → 真实素材
-- Explanation → Remotion / 程序化视觉
-- Concept / Emotion → 可用AI
-- Capability Proof → 使用真实AI产物
-- Hook / Transition / Outro → AI仅在显著增加表达价值时使用
-
-不是“AI越多越好”，也不是“AI只能最后用”。
-
-## G. Anti-Homogeneity Gate
-
-连续两个语义段允许同一种视觉语法。
-
-第三个连续段必须检查是否出现PPT/卡片同质化。
-
-可轮换：
-- 真实全屏证据
-- Data Loupe
-- 真实滚屏
-- 程序化解释
-- Before/After
-- AI概念镜头
-- 工作过程
-- 静止核心问题
-
-变化镜头语法，不频繁改变整套视觉语言。
-
-## H. 提问规则
-
-- 不重新询问已锁定项目级问题
-- 只有会明显改变当天结果且现有资料无法解决时提问
-- 一次只问一个关键问题
+升级/废止流程：`04_HARNESS/knowledge/PROMOTION_POLICY.md`。

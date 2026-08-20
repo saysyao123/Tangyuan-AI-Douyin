@@ -1,30 +1,47 @@
-# PROJECT_MANIFEST
+# PROJECT_MANIFEST v3.0
 
-## 总控
-README.md；00_CONTROL/MASTER_CONTROL.md；CURRENT_STATE.md；LOCKED_RULES.md；CHANGELOG.md；DECISIONS.md
+## Runtime入口
+- `04_HARNESS/SKILL.md`
+- `04_HARNESS/MANIFEST.md`
+- `00_CONTROL/CURRENT_STATE.md`
 
-## 选题
-01_TOPIC_SYSTEM/TOPIC_POOL.md；USED_TOPICS.md；USER_PROBLEMS.md；HISTORICAL_PROJECTS.md；HOT_TOPIC_POOL.md
+## Project Contract
+- `00_CONTROL/MASTER_CONTROL.md`
+- `00_CONTROL/LOCKED_RULES.md`（规则注册表）
+- `00_CONTROL/DECISIONS.md`
+- `00_CONTROL/CHANGELOG.md`
 
-## 每日
-02_DAILY/DAY_00/BASELINE.md；02_DAILY/DAY_01/{SUMMARY,SCRIPT_FINAL,DIRECTOR_PLAN,ASSET_MANIFEST,PUBLISH,METRICS}.md
+## Workflows
+- `04_HARNESS/workflows/topic.md`
+- `04_HARNESS/workflows/script.md`
+- `04_HARNESS/workflows/audio.md`
+- `04_HARNESS/workflows/director.md`
+- `04_HARNESS/workflows/production.md`
+- `04_HARNESS/workflows/publish_review.md`
 
-## 数据
-03_DATA/ACCOUNT_GROWTH.csv；VIDEO_PERFORMANCE.csv；EXPERIMENTS.md；WEEKLY_REVIEWS.md
+## Rules
+- `04_HARNESS/rules/account_truth.md`
+- `04_HARNESS/rules/production_core.md`
+- `04_HARNESS/rules/visual_core.md`
+- `04_HARNESS/rules/ai_video.md`
+- `04_HARNESS/rules/hyperframes.md`
 
-## Harness
-04_HARNESS/KNOWLEDGE_SCRIPT_HARNESS.md；TOPIC_SELECTION_HARNESS.md；VIDEO_PRODUCTION_HARNESS.md；DATA_REVIEW_HARNESS.md
+## Templates / Tests / Knowledge
+- `04_HARNESS/templates/*`
+- `04_HARNESS/tests/README.md`
+- `04_HARNESS/knowledge/PROMOTION_POLICY.md`
 
-## IP
-05_IP_ASSETS/ACCOUNT_POSITIONING.md；VOICE_AND_TONE.md；VISUAL_SYSTEM.md；PROFILE_HISTORY.md
+## Facts & State
+- `01_TOPIC_SYSTEM/`
+- `02_DAILY/`
+- `03_DATA/`
+- `05_IP_ASSETS/`
+- `06_PRODUCTION/`
+- `99_INBOX/`
 
-## 模板
-06_TEMPLATES/DAILY_EXECUTION_START.md；DAY_HANDOFF_TEMPLATE.md；DAY_FOLDER_TEMPLATE.md
+## Documentation
+- `docs/ARCHITECTURE_V3.md`
+- `docs/MIGRATION_V3.md`
 
-## Inbox
-99_INBOX/README.md；DAY_01_HANDOFF_TEMPLATE.md
-
-## Codex
-CODEX_DEPLOY_INSTRUCTIONS.md；.gitignore
-
-当前状态：**仓库初始化包v1.0；Day0完成，Day1生产中。**
+## Legacy Reference
+原 `04_HARNESS/*_HARNESS.md` 暂时保留用于迁移追溯；默认不加载。详见 `04_HARNESS/MANIFEST.md`。
