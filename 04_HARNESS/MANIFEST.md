@@ -20,10 +20,22 @@
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
+| MV专项：选歌 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 终审 | 当前 MV Round / Stage | 当前阶段对应 Rules | `knowledge/MV_BENCHMARK_LAYER.md` + 当前 Round 最新 Benchmark Snapshot；只按阶段 JIT 加载，不全量常驻 |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
 | 规则升级 | `workflows/publish_review.md` | 对应rule文件 | `knowledge/PROMOTION_POLICY.md`,`03_DATA/EXPERIMENTS.md` |
+
+## MV Benchmark JIT Rule
+
+`MV_BENCHMARK_LAYER.md` 是 External Knowledge，不是硬规则正文：
+- S01 / 新 Round：刷新最近 7 天轻量快照；
+- Director：只挑当前歌曲相关的 3–5 个 Focused works；
+- First-frame：只挑 2–3 个 Beauty references；
+- Dynamic：只挑 2–3 个 Director / Action references；
+- Final QA：只挑 2–3 个完成度 / 市场 references。
+
+禁止因为 Benchmark 作者采用某个做法，就直接升级为 Locked Rule。必须先经过本项目实验和用户验收。
 
 ## Legacy Reference Policy
 
