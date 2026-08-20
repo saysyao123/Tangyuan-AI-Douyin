@@ -6,128 +6,114 @@
 
 - ROUND: `R1`
 - STAGE: `R1S01`
-- STAGE_NAME: `最近 7 天热门 BGM 筛选`
-- STATE: `IN_PROGRESS_DATASOURCE_PROOF`
+- STAGE_NAME: `热门 BGM 发现 / 用户选歌 / Exact Entity 验证`
+- STATE: `IN_PROGRESS_BGM_PICK`
 - PREVIOUS_LOCK: `ROUND_CHARTER_LOCKED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - CHARTER_COMMIT: `e112e602ad1e9f66c390bab3341e2db7f8258960`
 - PRELIMINARY_OUTPUT: `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
 - PRELIMINARY_OUTPUT_STATUS: `NOT_LOCKABLE`
+- SELECTION_OBSERVER_POOL: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
 - ACTIVE_POC: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
 - CODEX_REQUIREMENT: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/CODEX_TEST_REQUIREMENT.md`
 - MV_BENCHMARK_LAYER: `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
 - CURRENT_BENCHMARK_SNAPSHOT: `06_TESTS/MV/ROUND_01/R1_BENCHMARK_SNAPSHOT_2026-08-21.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Why R1S01 Was Reopened
+## Latest User Decision｜Simplify S01
 
-The first S01 pass produced song-name-level candidates, but it did not prove a stable path to the exact Douyin music entity / version, a short directly playable preview, or account-level availability. That is insufficient for an MV production system because the same song can have multiple original / remix / cover assets and a locally available audio file does not prove the user's Douyin account can publish with that exact asset.
+User feedback shows the previous S01 became too technically heavy before the user could simply judge the songs.
 
-Therefore the previous five-candidate shortlist is retained as a real test artifact, but it cannot be LOCKED.
+New approved order inside the same S01:
 
-## New Hard Gate｜BGM_DATASOURCE_READY
+`5-source song observer pool -> recent 30-day repeated-song scan -> direct real MV/video links -> user taste pick -> exact music entity / account availability / hot interval validation -> S01 LOCK`
 
-R1S01 cannot return to `READY_FOR_REVIEW` until at least one real BGM completes this chain:
+This is a reordering, **not removal**, of `BGM_DATASOURCE_READY`.
 
-1. Read the current account's Douyin Creator Center `选择音乐 / 热门榜`;
-2. prove that the candidate currently exposes a usable `使用` action;
-3. lock the concrete music entity as far as possible: `music_id / exact version / author / share or play URL`;
-4. obtain or identify a lawful playable source for the corresponding audio/version;
-5. provide a 15–30 second identification/listening path or an equivalent exact public reference interval;
-6. user can directly judge whether it matches the familiar Douyin hot version.
+The user should not be blocked by Git/Python/Codex setup before first hearing/seeing candidate songs.
 
-After this proof succeeds, regenerate the 5-candidate shortlist using exact music entities instead of song names.
+## Current User Taste Feedback
+
+From the latest reference set:
+- `你有没有真的爱过我`: acceptable / shortlist.
+- `午后树下微风`: acceptable / shortlist.
+- `回到小村落`: reference link unavailable; no current judgment.
+- `像我这样爱你的人`: reference link unavailable; no current judgment.
+- `起势`: user does not like it; downgrade.
+- `借一页童话`: user says it does not feel enough like an MV; downgrade for current Golden Sample direction.
+- `山风山风等等我`: user does not like it; remove from current R1 candidate path.
+
+### Current recommendation
+
+Primary R1 candidate: `你有没有真的爱过我`.
+Backup: `午后树下微风`.
+
+Reason: `你有没有真的爱过我` has visible cross-content diffusion beyond the AIMV account (recent dance / emotion-music usage), while public evidence for `午后树下微风` is still mainly concentrated in one AIMV source.
+
+## R1S01 Song Observer Pool｜Active
+
+Use `R1S01_SELECTION_OBSERVER_POOL.md` for song discovery. Current five sources:
+1. AI MV导演曹斌Johnny — high-frequency AIMV / MV vertical adoption.
+2. 清琉隐士 — hot-song + self-made MV distribution signal.
+3. 最熟悉的陌生人2022《音乐视频制作》 — music-video production / new-song / 看见音乐计划 signal.
+4. 城市音乐 — broader hot-song / music-consumption diffusion signal.
+5. 相信音乐官方MV — official-version / release / identity anchor.
+
+Important: these five are a **song-observer pool**, not a claim that all five are equivalent “top creators” by follower count.
+
+### Simplified repeated-song rule
+- Seen in >=2 observer sources -> candidate.
+- Seen in >=3 -> `CROSS_ACCOUNT_HOT_LEAD`.
+- Then verify recent diffusion outside MV accounts (dance / cover / lifestyle / emotion music).
+- Give the user real MV/video links first.
+- User taste can immediately downgrade a hot song.
 
 ## Rolling MV Benchmark Layer｜Active Knowledge
 
-A persistent external-reference layer has been added:
+Full aesthetic/director Benchmark Pool remains separate:
 - `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
-- current snapshot: `06_TESTS/MV/ROUND_01/R1_BENCHMARK_SNAPSHOT_2026-08-21.md`
 
-Purpose:
-- S01: add `MV_VERTICAL_ADOPTION` to BGM discovery;
-- Opening Hook: compare same-BGM samples + relevant benchmark works;
-- Director: JIT-load 3–5 relevant works;
-- First-frame: JIT-load 2–3 Beauty references;
-- Dynamic: JIT-load 2–3 Director/Action references;
-- Final QA: JIT-load 2–3 completion/market references.
+It is loaded JIT in later stages:
+- Opening Hook: same-BGM + relevant benchmark works;
+- Director: 3–5 relevant works;
+- First-frame: 2–3 Beauty references;
+- Dynamic: 2–3 Director/Action references;
+- Final QA: 2–3 completion/market references.
 
-Hard boundary:
-- external benchmark observations do **not** directly become Rules / Golden References;
-- they can only be `OBSERVATION / REPEATED_PATTERN / ANTI_PATTERN / HYPOTHESIS_TO_TEST` until validated by our own R1/R2 evidence and user review;
-- Benchmark Pool is rolling, not a permanently fixed 10-account list.
+External benchmark observations never directly become hard Rules / Golden References.
 
-Current external observation: high-quality AIMV creators often use original music, official artist collaborations or AI-generated music, so Benchmark Pool cannot replace platform hot-music data. It is a second-layer vertical signal after platform heat.
+## BGM_DATASOURCE_READY｜Still Required Before S01 LOCK
 
-## Active PoC Files
+After user picks one song, complete this chain:
+1. lock exact Douyin music entity / version as far as possible;
+2. distinguish original / cover / DJ / Remix;
+3. identify a 10–30s current hot reference interval / sample;
+4. on Codex-capable computer, validate current account `AVAILABLE_AT_BUILD` in Creator Center;
+5. preserve account-side validation requirement for later `AVAILABLE_AT_PUBLISH`.
 
-- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
+The first local Windows PoC was blocked before reaching this test because Git/Python/Pip environment was unavailable. Classification: `ENVIRONMENT_DEPENDENCY_FAILURE`, not datasource failure.
+
+Full account/browser test is deferred to:
 - `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/CODEX_TEST_REQUIREMENT.md`
-- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/requirements.txt`
-- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/probe_creator_music.py`
-- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/extract_music_entities.py`
-- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/build_preview.py`
-
-Reference implementations under investigation:
-- `zJay26/douyin-skills` for Creator Center music-panel interaction and account-side availability;
-- `jiji262/douyin-downloader` for `/music/{music_id}`, music detail, related aweme and direct audio download;
-- `zhangshuai/douyin-go` for official Douyin billboard structures including music `rank / use_count / share_url`.
-
-## Latest Test Result｜Local Environment Blocked
-
-The user's first local Windows attempt did not reach the PoC itself:
-
-- `git` was not available in PATH;
-- the repository/test branch therefore was not present locally;
-- `pip` was not available;
-- venv/Playwright setup could not be trusted on that computer.
-
-Classification: `ENVIRONMENT_DEPENDENCY_FAILURE`.
-
-This is **not** evidence that the Douyin datasource approach failed.
-
-The full browser/API/audio proof is deferred to the user's Codex-capable computer and is specified in `CODEX_TEST_REQUIREMENT.md`.
-
-## Alternate No-Local-Runtime Path｜Allowed Now
-
-While the Codex proof is pending, R1S01 may continue with a lightweight public-link proof that requires no Git/Python environment on the user's current computer:
-
-1. Use a public Douyin music-share link or representative Douyin video link (Benchmark Pool works may be used as known samples).
-2. Resolve the exact public content/music entity as far as public access permits.
-3. Verify title/author/version/music identity against multiple public signals.
-4. Use only official/public playable references for short identification; do not treat an external local copy as proof of publish rights.
-5. Account-level `AVAILABLE_AT_BUILD` remains pending until the same entity is confirmed in the user's Douyin music selector.
-
-This alternate proof may validate entity identity / reference workflow, but it **does not replace** the later Codex account-side availability test.
-
-## User Role For Current Proof
-
-Current-computer path:
-- no local setup required;
-- later only listen to/inspect the exact short public reference and confirm whether it matches the familiar hot version.
-
-Codex-computer path:
-- only complete Douyin login/CAPTCHA when prompted;
-- let Codex execute the rest of the PoC automatically.
-
-No manual JSON editing, prompt rescue, MV production, or technical diagnosis is required from the user.
 
 ## Current Risks / Unknowns
 
-- Creator Center DOM / network fields may differ from the referenced open-source implementation and need one live calibration.
-- The music panel may expose song names but not music_id directly; network interception is included to test this.
-- Douyin web APIs are subject to login state, WAF / CAPTCHA and rate limits.
-- The exact 7-day audio-level history remains a separate data-collection problem; first prove the current-day exact-entity pipeline.
-- Public link-assisted proof may identify an entity but cannot prove the user's account can still select it.
-- `AVAILABLE_AT_BUILD` does not guarantee future availability; final production will also require `AVAILABLE_AT_PUBLISH`.
+- Exact music_id / hot version is not locked yet.
+- Creator Center account availability requires later Codex-side live calibration.
+- Public search/index can identify adoption and song identity but cannot prove future publish rights.
+- `AVAILABLE_AT_BUILD` does not guarantee future availability; final production still requires `AVAILABLE_AT_PUBLISH`.
 
 ## Next Allowed Action
 
-**Only execute `BGM_DATASOURCE_READY` proof and Benchmark-assisted discovery work inside R1S01.**
+**Continue R1S01 only.**
 
-Preferred full proof: run the Codex requirement on the capable computer.
+Immediate action:
+- expand comparison from one AIMV creator to the five-source observer pool;
+- use recent-30-day/recent-7-day evidence to identify repeated songs;
+- present direct real MV/video references to the user;
+- currently prefer `你有没有真的爱过我` over `午后树下微风` unless new cross-account evidence changes the ranking.
 
-Allowed interim proof: use a real public Douyin MV/music link — including a Benchmark Pool sample — to test exact-entity identification and short-reference handling without local Git/Python.
+After the user picks the song, perform Exact Entity / availability validation before S01 LOCK.
 
-Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, editing, or final BGM selection before this Gate passes.
+Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation or editing before S01 receives a separate LOCK commit.
