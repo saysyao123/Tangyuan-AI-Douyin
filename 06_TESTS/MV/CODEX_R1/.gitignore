@@ -1,0 +1,14 @@
+# Codex R1 machine-local runtime
+local/
+.venv/
+__pycache__/
+*.pyc
+
+# Browser/account state must stay local
+.douyin_creator_profile/
+browser_profile/
+playwright_profile/
+
+# Temporary media / logs outside managed local tree
+*.tmp
+*.part
