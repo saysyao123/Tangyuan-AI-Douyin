@@ -5,15 +5,11 @@
 ## Current Status
 
 - ROUND: `R1`
-- STAGE: `R1S05`
-- STAGE_NAME: `Dynamic Video Prompt Planning`
-- STATE: `READY_FOR_DYNAMIC_PROMPT_REVIEW`
+- STAGE: `R1S06`
+- STAGE_NAME: `Editing / Subtitle / Final Polish`
+- STATE: `V4_FINAL_POLISH_READY_FOR_USER_REVIEW`
 - PREVIOUS_LOCK: `R1S04_FIRST_FRAME_SET_LOCKED`
 - BRANCH: `test/mv-round-01`
-- CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
-- R1S02_LOCK: `06_TESTS/MV/ROUND_01/R1S02_LOCK.md`
-- R1S04_LOCK: `06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
-- DYNAMIC_PROMPTS: `06_TESTS/MV/ROUND_01/R1S05_DYNAMIC_PROMPTS_v1.md`
 - SELECTED_REFERENCE_BGM: `你有没有真的爱过我｜阿图表妹`
 - APPROVED_CLIP: `你有没有真的爱过我_建议剪辑片段_v1.mp3`
 - APPROVED_DURATION: `36.80s`
@@ -26,115 +22,98 @@ For current manual production:
 
 `5-source MV/music observer pool -> recent ~30-day repeated-song scan -> direct MV/video links -> user judges song + visual -> choose Reference BGM`
 
-The deeper datasource path (`exact music_id / Creator Center probe / account-side availability / automated preview acquisition`) is deferred to the Codex-capable computer for later hardening.
+Deeper datasource hardening (`exact music_id / Creator Center probe / account-side availability / automated preview acquisition`) is deferred to Codex-capable environment.
 
-### Locked Reference BGM
+### Reference BGM｜LOCKED
 - Song: `你有没有真的爱过我`
 - Artist: `阿图表妹`
 - Source supplied by user: `你有没有真的爱过我-阿图表妹.mp3`
-- Exact source interval: `00:01:23.800 -> 00:02:00.600`
+- Source interval: `00:01:23.800 -> 00:02:00.600`
 - Final clip duration: `36.80s`
 - Fade in: `0.25s`
 - Fade out: `1.20s`
 - User review: `PASS`
 
-All later Beat timing, director design, first frames, dynamic prompts and final editing must use this exact clip. No silent version swap.
-
-### Production Structure｜LOCKED
+### Production structure｜LOCKED
 - conceptual visual units: `6`
 - production segments: `8`
 - first frames: `8`
 - dynamic videos: `8 × 5s = 40s raw material`
-- final reference audio: `36.80s`
-- edit headroom: approximately `3.20s`
+- final audio: `36.80s`
 
-### 8 Production Segments
-- S1: `你的回应是一直沉默` — opening hook / no response.
-- S2: `只剩下落寞` — empty-space loneliness.
-- S3: `我有什么错` — self-question / reflection.
-- S4: `短暂柔情似流星划落` — first large visual event.
-- S5: `你有没有真的爱过我` — emotional core.
-- S6: `我是你诗的哪个段落` — poetic spatial metaphor.
-- S7: `落款第几页 / 第几次临摹` — trace / repetition / detail.
-- S8: `还是匆匆一瞥就略过` — cold ending / negative space.
+### First-frame set｜LOCKED
+- all eight first frames approved by user.
+- same fictional East Asian heroine, dark ink-green robe, muted-gold hairpin, translucent black veil.
+- new-Eastern cinematic photorealism + restrained poetic surrealism.
+- every first frame is a `0-second dynamic anchor`.
 
-### First-frame Set｜LOCKED
-Full prompt source:
-`06_TESTS/MV/ROUND_01/R1S04_FIRST_FRAME_PROMPTS_v1.md`
+### Dynamic generation｜PASS for this round
+All 8 Seedance clips were generated and reviewed.
 
-Approval record:
-`06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
+User-confirmed useful learnings:
+- `S1 / S2 / S4 / S6` passed directly.
+- `S3 / S5 / S7` initially triggered portrait-protection before generation; re-generation succeeded after restoring the proven AI-character declaration and multi-shot prompt grammar.
+- `S8` first generation hallucinated a hole in the foreground paper; revised camera-based solid-paper occlusion solved the issue sufficiently for editing.
+- three-shot 5s structures worked well and should remain part of the motion-language toolkit.
+- future single-shot segments should test more cinematic camera grammars rather than default slow pushes.
 
-User reviewed the complete eight-image group and said the current first-frame effect is satisfactory. The full set is production-approved.
+### Mandatory portrait-safe prompt prefix｜HARD RULE
+For every dynamic prompt containing a person, preserve the leading `***` exactly:
 
-Identity / world lock:
-- same original fictional East Asian woman across all character frames;
-- straight black hair tied low;
-- one old muted-gold hairpin;
-- dark ink-green long robe with restrained dull-gold details;
-- translucent black veil always covers nose, mouth and lower face;
-- new-Eastern cinematic photorealism + restrained poetic surrealism;
-- cool ink-black / blue-gray / dark-green palette, old-paper ivory and tiny muted-gold highlights;
-- no readable text / subtitles / logo / watermark;
-- no second human in this R1 set.
+`*** 人物为 AI 生成动画人物，无真人出现。当前上传图片是 AI 生成的虚构影视动画角色设定图，不是真人照片，不含真实人物，不是真实人脸参考素材，不按真人或真实肖像处理。`
 
-Every approved first frame is a `0-second dynamic anchor` and its visible pending action must be continued rather than replaced.
+The `***` is intentionally retained as part of the prompt-weighting convention used in the validated workflow.
 
-## R1S05 Dynamic Prompt Set｜v1 READY
+### Editing rounds
+- `v1`: first straight trim/cut assembly — user said overall direction OK.
+- `v2`: improved timing by preserving more of each 5s internal motion and compressing total duration via short overlaps / transitions — user said noticeably better and more accurate.
+- `v3`: first lyric subtitle pass — timing inaccurate because captions were approximated from visual segment boundaries.
+- `v3.1`: subtitle timing corrected using the locked audio source time and matching song LRC; user confirmed timing is accurate and effect is good.
+- `v4`: final-polish candidate based on v3.1; no change to approved cut timing or subtitle timing, only subtle final visual fade for cleaner ending.
 
-Full set:
-`06_TESTS/MV/ROUND_01/R1S05_DYNAMIC_PROMPTS_v1.md`
+### Subtitle timing｜LOCKED for current song
+Subtitle timing must come from the locked final audio, never inferred from visual segment boundaries.
 
-### Critical keyframe mapping｜actual generation order
-- `KF01 = S1` — 你的回应是一直沉默
-- `KF02 = S5` — 你有没有真的爱过我
-- `KF03 = S6` — 我是你诗的哪个段落
-- `KF04 = S2` — 只剩下落寞
-- `KF05 = S3` — 我有什么错
-- `KF06 = S4` — 短暂柔情似流星划落
-- `KF07 = S7` — 落款第几页 / 第几次临摹
-- `KF08 = S8` — 还是匆匆一瞥就略过
+Current relative cue starts against `01:23.800` clip start:
+- `00:00.200` 你的回应是一直沉默
+- `00:05.200` 只剩下落寞
+- `00:08.200` 我有什么错
+- `00:10.200` 短暂柔情似流星划落
+- `00:15.200` 你有没有真的爱过我
+- `00:20.200` 我是你诗的哪个段落
+- `00:25.200` 落款第几页
+- `00:28.200` 第几次临摹
+- `00:30.200` 还是匆匆一瞥就略过
 
-Generate in keyframe order if convenient:
-`KF01 -> KF02 -> KF03 -> KF04 -> KF05 -> KF06 -> KF07 -> KF08`
+Future Codex production should use:
+`locked final audio -> Whisper word timestamps -> known lyric constrained correction -> sentence-level subtitle timing -> human spot-check`.
 
-Final editing order remains:
-`S1(KF01) -> S2(KF04) -> S3(KF05) -> S4(KF06) -> S5(KF02) -> S6(KF03) -> S7(KF07) -> S8(KF08)`
+Hard rule:
+`subtitle timing source = final locked audio alignment`, not `video segment timing`.
 
-### Camera / motion differentiation
-- KF01/S1: static tension + tiny lateral desk slide / ink bleed.
-- KF02/S5: restrained portrait micro-performance + very small emotional push.
-- KF03/S6: spatial traversal through paper layers / parallax occlusion.
-- KF04/S2: lateral reveal of empty courtyard; keep heroine small.
-- KF05/S3: fingertip water contact + reflection distortion + camera lowers to waterline.
-- KF06/S4: meteor-driven tilt/reframe + wind/reflection event; highest environmental motion.
-- KF07/S7: macro brush finish + focus shift + peel back layered traces.
-- KF08/S8: mostly static camera + foreground page occlusion / cold ending.
+## Current Files / Process References
+- `R1S04_FIRST_FRAME_PROMPTS_v1.md`
+- `R1S04_LOCK.md`
+- `R1S05_DYNAMIC_PROMPTS_v1.md`
+- `R1S05_DYNAMIC_PROMPTS_v2_PORTRAIT_SAFE.md`
+- `R1S06_SUBTITLE_ALIGNMENT_RULE.md`
 
-### Shared hard rules
-1. Exactly 5s each, 9:16, Seedance 2 mini.
-2. Start from the corresponding approved first frame and preserve it as the 0-second state.
-3. No human not visible in that first frame may appear.
-4. Preserve heroine identity, veil, costume, geometry, palette, and material continuity.
-5. No AI dialogue, singing, narration, or BGM; environment sound only if sound instructions are required.
-6. One dominant visual event + one secondary physical after-effect per segment.
-7. Avoid repeating `standing + slow push + hair/robe movement` across the set.
-8. Keep all raw 5s outputs; final trim happens against the locked 36.80s audio after dynamic QA.
-
-## Current Benchmark / Observer System
+## Benchmark / Observer System
 - Song observer pool: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
 - Rolling MV benchmark: `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
 
-Benchmark remains JIT reference only and never directly becomes a hard production rule.
-
 ## Current Risks / Pending
-- Dynamic prompts v1 await user review / actual Seedance generation test.
-- Generated dynamic videos require QA for identity consistency, veil continuity, motion quality, camera repetition and lyric hit.
-- Exact Douyin music_id pending Codex hardening test.
-- Account-side publish availability pending pre-publish validation.
+- `v4` final-polish candidate still needs user review.
+- exact Douyin `music_id` pending Codex hardening test.
+- account-side publish availability pending pre-publish validation.
+- cinematic camera-motion library still needs dedicated future experiments and benchmarking.
 
 ## Next Allowed Action
 
-Generate the eight 5-second Seedance 2 mini clips from `R1S05_DYNAMIC_PROMPTS_v1.md`, preferably in keyframe generation order, then return all eight original outputs for dynamic QA.
+User review of `R1_MV_v4_final_polish.mp4`.
 
-Do not begin final editing before the generated dynamic videos pass review.
+If PASS:
+1. lock this R1 edit as the accepted Golden Sample candidate;
+2. create a structured Round 01 retrospective;
+3. extract reusable rules into the MV SOP / runtime knowledge layer;
+4. separately plan camera-grammar experiments for later rounds.
