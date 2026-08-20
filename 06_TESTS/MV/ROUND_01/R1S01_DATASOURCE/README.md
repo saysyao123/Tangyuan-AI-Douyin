@@ -21,9 +21,11 @@
 
 ### Windows PowerShell
 
-在仓库根目录执行：
+先切到测试分支并进入 Probe 目录：
 
 ```powershell
+git fetch origin
+git checkout test/mv-round-01
 cd .\06_TESTS\MV\ROUND_01\R1S01_DATASOURCE
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -52,6 +54,8 @@ r1s01_probe_output/
 └─ creator_music_panel.png
 ```
 
+这些是**本地私有测试证据**，目录已被 `.gitignore` 排除。不要把浏览器 Profile、Cookie 或 Probe 原始输出提交到公开 GitHub。
+
 ### 最低验证标准
 
 `summary.json` 中应满足：
@@ -64,7 +68,7 @@ use_button_count > 0
 
 截图里应能看到当前账号真实的「热门榜」音乐面板。
 
-> 如果 `network_music_responses > 0`，说明我们还抓到了音乐面板背后的网络数据，后续有机会直接提取 music_id、播放地址、使用量等字段。
+> 如果 `network_music_responses > 0`，说明我们还抓到了音乐面板背后的网络数据，后续有机会直接提取 music_id、播放地址、使用量等字段。Probe 不持久化网络 URL 的 query 参数，以避免把临时 token 当测试证据保存。
 
 ---
 
@@ -88,10 +92,11 @@ R1 暂时不复制第三方下载器源码到主仓库。先使用已验证活�
 
 它支持 `/music/{music_id}`，优先获取音乐直接音频，拿不到时回退到该音乐下的关联作品。
 
-建议在本仓库同级目录克隆：
+建议先回到本仓库根目录，再把外部参考项目放进已忽略/独立的 `_external` 目录：
 
 ```powershell
-cd ..\..\..\..\..
+cd ..\..\..\..
+mkdir _external -ErrorAction SilentlyContinue
 git clone https://github.com/jiji262/douyin-downloader.git _external\douyin-downloader
 cd .\_external\douyin-downloader
 python -m venv .venv
@@ -153,7 +158,7 @@ python .\build_preview.py "D:\path\to\downloaded_audio.mp3" --start 0 --duration
 
 ## 本次需要回传的文件
 
-第一次先只跑 Step A + Step B，然后把以下内容发回：
+第一次先只跑 Step A + Step B，然后把以下内容**发到当前 ChatGPT 对话，不要提交到公开 GitHub**：
 
 ```text
 summary.json
