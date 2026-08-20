@@ -6,6 +6,7 @@ import json
 import time
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 from playwright.async_api import async_playwright
 
@@ -26,6 +27,15 @@ def _safe_json(value: Any) -> str:
         return json.dumps(value, ensure_ascii=False)
     except Exception:
         return "{}"
+
+
+def _strip_query(url: str) -> str:
+    """Keep endpoint identity but never persist query tokens from Creator Center requests."""
+    try:
+        parts = urlsplit(url)
+        return urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
+    except Exception:
+        return ""
 
 
 async def _wait_for_user_login(page, timeout_s: int) -> None:
@@ -138,8 +148,8 @@ async def _scrape_panel(page, topn: int) -> dict[str, Any]:
 
 async def main() -> None:
     parser = argparse.ArgumentParser(description="R1S01: probe Douyin Creator Center hot-music panel")
-    parser.add_argument("--out", default="./r1s01_probe_output", help="output directory")
-    parser.add_argument("--profile", default="./.douyin_creator_profile", help="persistent browser profile directory")
+    parser.add_argument("--out", default="./r1s01_probe_output", help="output directory (private local evidence; do not commit)")
+    parser.add_argument("--profile", default="./.douyin_creator_profile", help="persistent browser profile directory (private; do not commit)")
     parser.add_argument("--topn", type=int, default=30, help="max music rows to capture")
     parser.add_argument("--login-timeout", type=int, default=300, help="seconds to wait for first login")
     args = parser.parse_args()
@@ -173,7 +183,11 @@ async def main() -> None:
                 payload = _safe_json(data)
                 if len(payload) > 500000:
                     payload = payload[:500000]
-                network_rows.append({"url": url, "status": response.status, "data": json.loads(payload) if payload.endswith(('}', ']')) else payload})
+                network_rows.append({
+                    "endpoint": _strip_query(url),
+                    "status": response.status,
+                    "data": json.loads(payload) if payload.endswith(("}", "]")) else payload,
+                })
             except Exception:
                 return
 
@@ -195,10 +209,11 @@ async def main() -> None:
             "use_button_count": result.get("use_button_count", 0),
             "network_music_responses": len(network_rows),
             "output_dir": str(out),
+            "privacy_note": "Output is local test evidence and is gitignored; do not commit browser profile or raw probe output.",
         }
         (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
         print(json.dumps(summary, ensure_ascii=False, indent=2))
-        print("[DONE] 请把 summary.json、creator_music_panel.json、creator_music_network.json 和截图发回本项目。")
+        print("[DONE] 请把 summary.json、creator_music_panel.json、creator_music_network.json 和截图发到当前 ChatGPT 对话，不要提交到公开 GitHub。")
         await context.close()
 
 
