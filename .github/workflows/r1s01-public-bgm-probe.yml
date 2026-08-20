@@ -1,0 +1,133 @@
+name: R1S01 Public BGM Probe
+
+on:
+  push:
+    branches:
+      - test/mv-round-01
+    paths:
+      - .github/workflows/r1s01-public-bgm-probe.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-bgm-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Prepare upstream downloader
+        run: |
+          git clone https://github.com/jiji262/douyin-downloader.git /tmp/douyin-downloader
+          cd /tmp/douyin-downloader
+          git checkout 848bcaf7bf5c5bebbe028e8ccec76e30ad1bef6b
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build public-only config
+        run: |
+          cat >/tmp/douyin-downloader/config.yml <<'YAML'
+          link:
+            - https://www.douyin.com/video/7672240119348622830
+          path: /tmp/r1s01-output/
+          video: false
+          music: true
+          cover: false
+          avatar: false
+          json: true
+          folderstyle: false
+          mode:
+            - post
+          number:
+            post: 1
+            like: 0
+            mix: 0
+            music: 0
+            collect: 0
+            collectmix: 0
+          increase:
+            post: false
+            like: false
+            mix: false
+            music: false
+          thread: 1
+          retry_times: 2
+          proxy: ""
+          database: false
+          progress:
+            quiet_logs: false
+          browser_fallback:
+            enabled: false
+            headless: true
+            max_scrolls: 10
+            idle_rounds: 3
+            wait_timeout_seconds: 60
+          transcript:
+            enabled: false
+          comments:
+            enabled: false
+          cookies:
+            msToken: ""
+            ttwid: ""
+            odin_tt: ""
+            passport_csrf_token: ""
+            sid_guard: ""
+          YAML
+
+      - name: Run public Douyin probe
+        id: probe
+        continue-on-error: true
+        run: |
+          cd /tmp/douyin-downloader
+          . .venv/bin/activate
+          set -o pipefail
+          python run.py -c config.yml 2>&1 | tee /tmp/r1s01-probe.log
+
+      - name: Inspect outputs and build short preview
+        run: |
+          mkdir -p /tmp/r1s01-artifact
+          cp /tmp/r1s01-probe.log /tmp/r1s01-artifact/probe.log || true
+          find /tmp/r1s01-output -type f -printf '%p\n' 2>/dev/null | sort > /tmp/r1s01-artifact/files.txt || true
+
+          AUDIO="$(find /tmp/r1s01-output -type f \( -iname '*.mp3' -o -iname '*.m4a' -o -iname '*.aac' -o -iname '*.wav' -o -iname '*.ogg' -o -iname '*.opus' \) 2>/dev/null | head -n 1)"
+          JSON="$(find /tmp/r1s01-output -type f -iname '*data.json' 2>/dev/null | head -n 1)"
+
+          STATUS="FAIL"
+          if [ -n "$AUDIO" ]; then
+            STATUS="AUDIO_FOUND"
+            ffmpeg -y -hide_banner -loglevel error -ss 0 -t 24 -i "$AUDIO" -vn -c:a aac -b:a 160k /tmp/r1s01-artifact/preview_24s.m4a || true
+            ffprobe -v error -show_entries format=duration:format_tags -of json "$AUDIO" > /tmp/r1s01-artifact/audio_probe.json || true
+          fi
+          if [ -n "$JSON" ]; then
+            cp "$JSON" /tmp/r1s01-artifact/source_metadata.json || true
+          fi
+
+          cat > /tmp/r1s01-artifact/result.txt <<EOF
+          SAMPLE_URL=https://www.douyin.com/video/7672240119348622830
+          PROBE_STEP_OUTCOME=${{ steps.probe.outcome }}
+          RESULT=$STATUS
+          AUDIO_PATH=$AUDIO
+          METADATA_PATH=$JSON
+          NOTE=Public-only remote probe; no cookies, no login, no DRM bypass.
+          EOF
+
+          cat /tmp/r1s01-artifact/result.txt
+
+      - name: Upload sanitized test artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: r1s01-public-bgm-probe
+          path: /tmp/r1s01-artifact/
+          if-no-files-found: error
+          retention-days: 3
