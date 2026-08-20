@@ -5,17 +5,17 @@
 ## Current Status
 
 - ROUND: `R1`
-- STAGE: `R1S04`
-- STAGE_NAME: `First-frame Prompt Planning`
-- STATE: `READY_FOR_FIRST_FRAME_PROMPT_REVIEW`
-- PREVIOUS_LOCK: `R1S02_REFERENCE_BGM_CLIP_LOCKED`
+- STAGE: `R1S05`
+- STAGE_NAME: `Dynamic Video Prompt Planning`
+- STATE: `READY_FOR_DYNAMIC_PROMPTS`
+- PREVIOUS_LOCK: `R1S04_FIRST_FRAME_SET_LOCKED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - R1S02_LOCK: `06_TESTS/MV/ROUND_01/R1S02_LOCK.md`
+- R1S04_LOCK: `06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
 - SELECTED_REFERENCE_BGM: `你有没有真的爱过我｜阿图表妹`
 - APPROVED_CLIP: `你有没有真的爱过我_建议剪辑片段_v1.mp3`
 - APPROVED_DURATION: `36.80s`
-- FIRST_FRAME_PROMPTS: `06_TESTS/MV/ROUND_01/R1S04_FIRST_FRAME_PROMPTS_v1.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Locked / Effective Decisions
@@ -37,17 +37,15 @@ The deeper datasource path (`exact music_id / Creator Center probe / account-sid
 - Fade out: `1.20s`
 - User review: `PASS`
 
-All later Beat timing, director design, first frames, Seedance prompts and final editing must use this exact clip. No silent version swap.
+All later Beat timing, director design, first frames, dynamic prompts and final editing must use this exact clip. No silent version swap.
 
-### Production Structure｜Approved
+### Production Structure｜LOCKED
 - conceptual visual units: `6`
 - production segments: `8`
 - first frames: `8`
 - dynamic videos: `8 × 5s = 40s raw material`
 - final reference audio: `36.80s`
 - edit headroom: approximately `3.20s`
-
-This is sufficient for complete coverage while preserving trim / transition / lyric-sync headroom.
 
 ### 8 Production Segments
 - S1: `你的回应是一直沉默` — opening hook / no response.
@@ -59,26 +57,43 @@ This is sufficient for complete coverage while preserving trim / transition / ly
 - S7: `落款第几页 / 第几次临摹` — trace / repetition / detail.
 - S8: `还是匆匆一瞥就略过` — cold ending / negative space.
 
-### First-frame System v1
-Full prompts are stored in:
+### First-frame Set｜LOCKED
+Full prompt source:
 `06_TESTS/MV/ROUND_01/R1S04_FIRST_FRAME_PROMPTS_v1.md`
 
-Global identity / world lock:
+Approval record:
+`06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
+
+User reviewed the complete eight-image group and said the current first-frame effect is satisfactory. The full set is now treated as production-approved.
+
+Identity / world lock:
 - same original fictional East Asian woman across all character frames;
-- straight black hair in a low loose knot;
+- straight black hair tied low;
 - one old muted-gold hairpin;
 - dark ink-green long robe with restrained dull-gold details;
 - translucent black veil always covers nose, mouth and lower face;
 - new-Eastern cinematic photorealism + restrained poetic surrealism;
 - cool ink-black / blue-gray / dark-green palette, old-paper ivory and tiny muted-gold highlights;
 - no readable text / subtitles / logo / watermark;
-- no second human in this R1 set;
-- every first frame must function as a `0-second dynamic anchor`, with the next physical action already visible.
+- no second human in this R1 set.
 
-Primary style anchors for first review:
-- `S1`: paper / ink / silence Hook;
-- `S5`: character emotional close-up;
-- `S6`: poetic paper-space metaphor.
+Every approved first frame is a `0-second dynamic anchor` and its visible pending action must be continued rather than replaced.
+
+## R1S05 Dynamic Design Requirements
+
+Create exactly `8` independent `5-second` Seedance 2 mini prompts, one for each approved first frame.
+
+Hard requirements:
+1. Each dynamic segment begins from its corresponding approved first frame.
+2. Do not introduce any human character not already visible in that first frame.
+3. Preserve heroine identity, veil, costume, world, lighting logic and scene geometry.
+4. No AI dialogue, singing voice, narration or BGM generation; visuals only / environment sound if model requires sound instructions.
+5. Avoid the repeated pattern `character stands still + slow camera push + hair/robe moves` across the set.
+6. Each segment must have one dominant visual event and one secondary physical after-effect.
+7. Vary camera grammar across the eight segments: static tension, lateral reveal, reflection distortion, event-led reframing, restrained portrait micro-movement, spatial traversal, macro action, occlusion/exit.
+8. Dynamic strength follows the song: restrained opening -> first rise at S4 -> emotional center S5 -> poetic rise S6 -> detail contraction S7 -> cold release S8.
+9. The eight 5s source clips provide 40s raw material; editing should later trim them to the locked 36.80s audio rather than forcing all clips to play in full.
+10. Seedance prompt wording must be explicit enough for the model to understand timing/action priority; do not rely on undeclared M/S/L shorthand.
 
 ## Current Benchmark / Observer System
 - Song observer pool: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
@@ -87,18 +102,13 @@ Primary style anchors for first review:
 Benchmark remains JIT reference only and never directly becomes a hard production rule.
 
 ## Current Risks / Pending
-- First-frame prompts are not user-locked yet.
-- Need user review before image generation is treated as production evidence.
+- Dynamic prompts not written yet.
+- Generated dynamic videos still require user QA for identity consistency, motion quality, camera repetition and lyric hit.
 - Exact Douyin music_id pending Codex hardening test.
 - Account-side publish availability pending pre-publish validation.
 
 ## Next Allowed Action
 
-Human review of all 8 first-frame prompts.
+Write the full `S1-S8` dynamic prompt set for Seedance 2 mini, preserving the locked first frames and varying director/camera grammar across all eight 5-second clips.
 
-If approved:
-1. create a separate R1S04 prompt LOCK commit;
-2. generate first-frame images (recommended validation anchors S1 / S5 / S6 first, or all 8 if user requests);
-3. review beauty, identity consistency, visual differentiation and dynamic executability before dynamic-video prompts.
-
-Do not begin Seedance dynamic generation before first-frame images themselves pass review.
+Do not begin final editing before the generated dynamic videos themselves pass review.
