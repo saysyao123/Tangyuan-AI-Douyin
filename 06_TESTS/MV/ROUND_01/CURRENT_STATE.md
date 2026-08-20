@@ -5,115 +5,131 @@
 ## Current Status
 
 - ROUND: `R1`
-- STAGE: `R1S06`
-- STAGE_NAME: `Editing / Subtitle / Final Polish`
-- STATE: `V4_FINAL_POLISH_READY_FOR_USER_REVIEW`
+- STAGE: `R1_FINAL`
+- STAGE_NAME: `Round Close / Golden Sample Lock`
+- STATE: `COMPLETE_LOCKED`
 - PREVIOUS_LOCK: `R1S04_FIRST_FRAME_SET_LOCKED`
+- FINAL_LOCK: `06_TESTS/MV/ROUND_01/R1_FINAL_LOCK.md`
+- FINAL_ACCEPTANCE: `06_TESTS/MV/ROUND_01/R1_FINAL_ACCEPTANCE.md`
+- RETROSPECTIVE: `06_TESTS/MV/ROUND_01/R1_RETROSPECTIVE.md`
 - BRANCH: `test/mv-round-01`
-- SELECTED_REFERENCE_BGM: `你有没有真的爱过我｜阿图表妹`
-- APPROVED_CLIP: `你有没有真的爱过我_建议剪辑片段_v1.mp3`
-- APPROVED_DURATION: `36.80s`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Locked / Effective Decisions
+## Golden Sample
 
-### Simplified song-selection path｜Temporarily LOCKED
-For current manual production:
+- Song: `你有没有真的爱过我｜阿图表妹`
+- User-supplied source: `你有没有真的爱过我-阿图表妹.mp3`
+- Locked source interval: `00:01:23.800 -> 00:02:00.600`
+- Locked reference duration: `36.80s`
+- Final accepted edit family: `R1_MV_v4_final_polish.mp4`
+- Accurate lyric timing: `lyrics_exact_v3_1.srt`
+- Production structure: `8 first frames + 8 × 5s dynamic clips`
+- User final review: `PASS / 整体效果不错`
 
-`5-source MV/music observer pool -> recent ~30-day repeated-song scan -> direct MV/video links -> user judges song + visual -> choose Reference BGM`
+This is the first MV Golden Sample.
 
-Deeper datasource hardening (`exact music_id / Creator Center probe / account-side availability / automated preview acquisition`) is deferred to Codex-capable environment.
+## Stable R1 Decisions
 
-### Reference BGM｜LOCKED
-- Song: `你有没有真的爱过我`
-- Artist: `阿图表妹`
-- Source supplied by user: `你有没有真的爱过我-阿图表妹.mp3`
-- Source interval: `00:01:23.800 -> 00:02:00.600`
-- Final clip duration: `36.80s`
-- Fade in: `0.25s`
-- Fade out: `1.20s`
-- User review: `PASS`
+### 1. Manual song-selection path
+Until Codex datasource hardening is complete:
 
-### Production structure｜LOCKED
-- conceptual visual units: `6`
-- production segments: `8`
-- first frames: `8`
-- dynamic videos: `8 × 5s = 40s raw material`
-- final audio: `36.80s`
+`~5 MV/music observer sources -> recent ~30-day song scan -> direct real MV/video links -> user chooses Reference BGM`
 
-### First-frame set｜LOCKED
-- all eight first frames approved by user.
-- same fictional East Asian heroine, dark ink-green robe, muted-gold hairpin, translucent black veil.
-- new-Eastern cinematic photorealism + restrained poetic surrealism.
-- every first frame is a `0-second dynamic anchor`.
+Do not block manual production on exact `music_id` automation.
 
-### Dynamic generation｜PASS for this round
-All 8 Seedance clips were generated and reviewed.
+### 2. Reference BGM lock
+Actual approved audio excerpt must be locked before downstream work. No silent version swap.
 
-User-confirmed useful learnings:
-- `S1 / S2 / S4 / S6` passed directly.
-- `S3 / S5 / S7` initially triggered portrait-protection before generation; re-generation succeeded after restoring the proven AI-character declaration and multi-shot prompt grammar.
-- `S8` first generation hallucinated a hole in the foreground paper; revised camera-based solid-paper occlusion solved the issue sufficiently for editing.
-- three-shot 5s structures worked well and should remain part of the motion-language toolkit.
-- future single-shot segments should test more cinematic camera grammars rather than default slow pushes.
+### 3. First frame
+Every first frame is a `0-second dynamic anchor`, not a static poster.
 
-### Mandatory portrait-safe prompt prefix｜HARD RULE
-For every dynamic prompt containing a person, preserve the leading `***` exactly:
+### 4. Production segmentation
+Conceptual visual units and production segments are separate decisions.
+
+R1 validated one working example:
+`6 conceptual units -> 8 first frames -> 8 × 5s raw video -> 36.8s final`
+
+This is a reference, not a universal quota.
+
+### 5. Character image-to-video prefix｜HARD RULE
+For every character-containing image-to-video prompt, the first line must be exactly:
 
 `*** 人物为 AI 生成动画人物，无真人出现。当前上传图片是 AI 生成的虚构影视动画角色设定图，不是真人照片，不含真实人物，不是真实人脸参考素材，不按真人或真实肖像处理。`
 
-The `***` is intentionally retained as part of the prompt-weighting convention used in the validated workflow.
+The leading `***` must remain.
 
-### Editing rounds
-- `v1`: first straight trim/cut assembly — user said overall direction OK.
-- `v2`: improved timing by preserving more of each 5s internal motion and compressing total duration via short overlaps / transitions — user said noticeably better and more accurate.
-- `v3`: first lyric subtitle pass — timing inaccurate because captions were approximated from visual segment boundaries.
-- `v3.1`: subtitle timing corrected using the locked audio source time and matching song LRC; user confirmed timing is accurate and effect is good.
-- `v4`: final-polish candidate based on v3.1; no change to approved cut timing or subtitle timing, only subtle final visual fade for cleaner ending.
+Authoritative rule source:
+`04_HARNESS/rules/ai_video.md`
 
-### Subtitle timing｜LOCKED for current song
-Subtitle timing must come from the locked final audio, never inferred from visual segment boundaries.
+### 6. Dynamic camera / shot structure
+- single-shot remains valid;
+- 2–3 shot grammar inside a 5s clip is R1-validated and useful for selected emotional / reflection / macro segments;
+- do not force one structure across every segment;
+- camera repetition must be reviewed across the whole set.
 
-Current relative cue starts against `01:23.800` clip start:
-- `00:00.200` 你的回应是一直沉默
-- `00:05.200` 只剩下落寞
-- `00:08.200` 我有什么错
-- `00:10.200` 短暂柔情似流星划落
-- `00:15.200` 你有没有真的爱过我
-- `00:20.200` 我是你诗的哪个段落
-- `00:25.200` 落款第几页
-- `00:28.200` 第几次临摹
-- `00:30.200` 还是匆匆一瞥就略过
+A larger cinematic camera library remains experimental for R2.
 
-Future Codex production should use:
-`locked final audio -> Whisper word timestamps -> known lyric constrained correction -> sentence-level subtitle timing -> human spot-check`.
+### 7. Dynamic retry
+Diagnose root cause first.
 
-Hard rule:
-`subtitle timing source = final locked audio alignment`, not `video segment timing`.
+R1 example:
+- paper occlusion generated a hole;
+- fix was not “stronger negative words” alone;
+- change the physical mechanism to camera-driven occlusion behind a solid intact paper edge.
 
-## Current Files / Process References
-- `R1S04_FIRST_FRAME_PROMPTS_v1.md`
-- `R1S04_LOCK.md`
-- `R1S05_DYNAMIC_PROMPTS_v1.md`
-- `R1S05_DYNAMIC_PROMPTS_v2_PORTRAIT_SAFE.md`
-- `R1S06_SUBTITLE_ALIGNMENT_RULE.md`
+### 8. Editing
+R1 v2 proved better than simple equal trimming:
+- preserve more complete internal 5s action;
+- use selective trim + short overlap / transition to fit the locked audio;
+- emotional flow and action integrity before mechanical equal timing.
 
-## Benchmark / Observer System
-- Song observer pool: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
-- Rolling MV benchmark: `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
+### 9. Subtitle timing｜HARD RULE
+Subtitle / lyric timing must come from the locked audio, not visual segment boundaries.
 
-## Current Risks / Pending
-- `v4` final-polish candidate still needs user review.
-- exact Douyin `music_id` pending Codex hardening test.
-- account-side publish availability pending pre-publish validation.
-- cinematic camera-motion library still needs dedicated future experiments and benchmarking.
+Codex preferred automation:
+`Whisper word timestamps -> known lyric constraint correction -> human spot-check`
+
+R1 corrected same-version timing was user-reviewed as accurate.
+
+### 10. Watermark / HD sources
+Manual R1 files may contain visible generation/platform watermarks.
+
+This does NOT block R1 acceptance.
+
+Codex production must replace them with watermark-free HD source outputs before a publish-grade render while preserving approved edit timing / subtitles / directing.
+
+Status: `DEFERRED_TO_CODEX_SOURCE_PIPELINE`
+
+## Runtime Promotion
+
+MV SOP v1:
+`04_HARNESS/workflows/mv.md`
+
+AI video hard rules:
+`04_HARNESS/rules/ai_video.md`
+
+Benchmark knowledge:
+`04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
+
+Pending experiments:
+`03_DATA/EXPERIMENTS.md`
+
+## Known limitations from R1
+
+- precise wall-clock / active-human / model-wait time was not consistently logged; do not invent retrospective numbers;
+- exact music_id / Creator Center availability remains Codex hardening work;
+- watermark-free HD source replacement not run in this manual environment;
+- Whisper word-level automation not run here;
+- advanced lyric effects not calibrated;
+- larger single-shot cinematic camera library not yet validated.
 
 ## Next Allowed Action
 
-User review of `R1_MV_v4_final_polish.mp4`.
+**Do not continue mutating R1 creative output.**
 
-If PASS:
-1. lock this R1 edit as the accepted Golden Sample candidate;
-2. create a structured Round 01 retrospective;
-3. extract reusable rules into the MV SOP / runtime knowledge layer;
-4. separately plan camera-grammar experiments for later rounds.
+Only two valid next paths:
+
+1. Start `ROUND_02` using R1 Golden Sample as the quality floor; or
+2. Run a named Codex hardening task for datasource / Whisper / watermark-free HD source replacement / automated edit recreation, explicitly preserving the R1 Golden creative decisions.
+
+R1 is closed.
