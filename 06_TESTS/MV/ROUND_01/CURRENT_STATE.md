@@ -16,6 +16,8 @@
 - PRELIMINARY_OUTPUT_STATUS: `NOT_LOCKABLE`
 - ACTIVE_POC: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
 - CODEX_REQUIREMENT: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/CODEX_TEST_REQUIREMENT.md`
+- MV_BENCHMARK_LAYER: `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
+- CURRENT_BENCHMARK_SNAPSHOT: `06_TESTS/MV/ROUND_01/R1_BENCHMARK_SNAPSHOT_2026-08-21.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Why R1S01 Was Reopened
@@ -31,11 +33,32 @@ R1S01 cannot return to `READY_FOR_REVIEW` until at least one real BGM completes 
 1. Read the current account's Douyin Creator Center `选择音乐 / 热门榜`;
 2. prove that the candidate currently exposes a usable `使用` action;
 3. lock the concrete music entity as far as possible: `music_id / exact version / author / share or play URL`;
-4. obtain the corresponding audio file;
-5. cut a 15–30 second preview;
-6. user can directly listen and judge whether it matches the currently familiar Douyin hot version.
+4. obtain or identify a lawful playable source for the corresponding audio/version;
+5. provide a 15–30 second identification/listening path or an equivalent exact public reference interval;
+6. user can directly judge whether it matches the familiar Douyin hot version.
 
 After this proof succeeds, regenerate the 5-candidate shortlist using exact music entities instead of song names.
+
+## Rolling MV Benchmark Layer｜Active Knowledge
+
+A persistent external-reference layer has been added:
+- `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
+- current snapshot: `06_TESTS/MV/ROUND_01/R1_BENCHMARK_SNAPSHOT_2026-08-21.md`
+
+Purpose:
+- S01: add `MV_VERTICAL_ADOPTION` to BGM discovery;
+- Opening Hook: compare same-BGM samples + relevant benchmark works;
+- Director: JIT-load 3–5 relevant works;
+- First-frame: JIT-load 2–3 Beauty references;
+- Dynamic: JIT-load 2–3 Director/Action references;
+- Final QA: JIT-load 2–3 completion/market references.
+
+Hard boundary:
+- external benchmark observations do **not** directly become Rules / Golden References;
+- they can only be `OBSERVATION / REPEATED_PATTERN / ANTI_PATTERN / HYPOTHESIS_TO_TEST` until validated by our own R1/R2 evidence and user review;
+- Benchmark Pool is rolling, not a permanently fixed 10-account list.
+
+Current external observation: high-quality AIMV creators often use original music, official artist collaborations or AI-generated music, so Benchmark Pool cannot replace platform hot-music data. It is a second-layer vertical signal after platform heat.
 
 ## Active PoC Files
 
@@ -68,22 +91,21 @@ The full browser/API/audio proof is deferred to the user's Codex-capable compute
 
 ## Alternate No-Local-Runtime Path｜Allowed Now
 
-While the Codex proof is pending, R1S01 may continue with a lightweight link-assisted proof that requires no Git/Python environment on the user's current computer:
+While the Codex proof is pending, R1S01 may continue with a lightweight public-link proof that requires no Git/Python environment on the user's current computer:
 
-1. User supplies a Douyin music-share link or one representative Douyin video link using the target hot BGM (a screenshot of the music page is useful but optional).
-2. System resolves the exact public content/music entity as far as public access permits.
-3. System verifies title/author/version/music identity against multiple public signals.
-4. If a public playable source can be lawfully accessed without bypassing login/DRM, system creates or references only a short listening preview for identification/evaluation.
+1. Use a public Douyin music-share link or representative Douyin video link (Benchmark Pool works may be used as known samples).
+2. Resolve the exact public content/music entity as far as public access permits.
+3. Verify title/author/version/music identity against multiple public signals.
+4. Use only official/public playable references for short identification; do not treat an external local copy as proof of publish rights.
 5. Account-level `AVAILABLE_AT_BUILD` remains pending until the same entity is confirmed in the user's Douyin music selector.
 
-This alternate proof may validate entity identity and preview workflow, but it **does not replace** the later Codex account-side availability test.
+This alternate proof may validate entity identity / reference workflow, but it **does not replace** the later Codex account-side availability test.
 
 ## User Role For Current Proof
 
 Current-computer path:
-- provide one Douyin music share link or representative video share link when testing a concrete BGM;
-- optionally provide a screenshot showing the audio/music title in Douyin;
-- listen to the returned short preview/reference and confirm whether it matches the familiar hot version.
+- no local setup required;
+- later only listen to/inspect the exact short public reference and confirm whether it matches the familiar hot version.
 
 Codex-computer path:
 - only complete Douyin login/CAPTCHA when prompted;
@@ -102,10 +124,10 @@ No manual JSON editing, prompt rescue, MV production, or technical diagnosis is 
 
 ## Next Allowed Action
 
-**Only execute `BGM_DATASOURCE_READY` proof.**
+**Only execute `BGM_DATASOURCE_READY` proof and Benchmark-assisted discovery work inside R1S01.**
 
 Preferred full proof: run the Codex requirement on the capable computer.
 
-Allowed interim proof: use one real Douyin music/video share link to test exact-entity identification and short-preview handling without local Git/Python.
+Allowed interim proof: use a real public Douyin MV/music link — including a Benchmark Pool sample — to test exact-entity identification and short-reference handling without local Git/Python.
 
 Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, editing, or final BGM selection before this Gate passes.
