@@ -5,6 +5,7 @@
 ## Current Status
 
 - TEST: `CODEX_R1`
+- BRANCH: `test/mv-codex-r1`
 - MODE: `MODE_A_ENGINEERING_REPRODUCTION`
 - STAGE: `C00`
 - STAGE_NAME: `Bootstrap / Environment Preflight`
@@ -23,10 +24,11 @@
 ## Hard Boundaries
 
 1. 人工 R1 是 Golden Truth，Codex 不得覆盖 `06_TESTS/MV/ROUND_01/*`。
-2. 不得静默换歌、换版本、改音频区间、改歌词、改镜头顺序。
-3. 不得把缺失能力伪装成 PASS。
-4. 如果需要外部登录 / CAPTCHA / 外部生成工具，标记真实状态并请求最小人工介入。
-5. 发布级视频必须使用无水印高清源；如果无法获取，最终状态不能写 `PUBLISH_READY`。
+2. Codex 测试提交只进入 `test/mv-codex-r1`，不得直接修改人工 Golden 分支。
+3. 不得静默换歌、换版本、改音频区间、改歌词、改镜头顺序。
+4. 不得把缺失能力伪装成 PASS。
+5. 如果需要外部登录 / CAPTCHA / 外部生成工具，标记真实状态并请求最小人工介入。
+6. 发布级视频必须使用无水印高清源；如果无法获取，最终状态不能写 `PUBLISH_READY`。
 
 ## Golden Locks
 
@@ -52,7 +54,8 @@
 
 ## Next Allowed Action
 
-Run `C00` only.
+1. Confirm branch is `test/mv-codex-r1`; if not, checkout it.
+2. Run `C00` only.
 
 Read:
 - `CODEX_R1_MASTER_PLAN.md`
