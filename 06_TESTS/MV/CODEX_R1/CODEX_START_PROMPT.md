@@ -5,6 +5,11 @@
 ```text
 你现在要执行本仓库的 CODEX R1 AI MV 独立自动化测试。
 
+首先确认当前 Git 分支是：
+test/mv-codex-r1
+
+如果不是，请自行 checkout 到 test/mv-codex-r1。所有 CODEX R1 测试提交只能进入这个分支，不得直接修改人工 Golden R1 分支。
+
 测试目标不是自由创作，而是先用 MODE_A_ENGINEERING_REPRODUCTION 客观复刻人工 R1 Golden Sample，测出你能自动完成多少工程流程。
 
 开始前严格按顺序读取：
@@ -25,7 +30,7 @@
 - 不允许让我提供密码、Cookie、Token；
 - 不允许把私密登录状态提交 GitHub；
 - 缺文件时先尝试自动获取，自动获取失败后再向我请求最小输入；
-- 每个 Stage 必须输出真实产物 / 日志 / manifest，并更新 CODEX_R1/CURRENT_STATE.md；
+- 每个 Stage 必须输出真实产物 / 日志 / manifest，并更新 CODEX_R1/CURRENT_STATE.md 和 RUN_CHECKLIST.md；
 - 每个 Stage 记录自动执行、人工介入、失败重试和耗时；
 - 不得修改或覆盖 06_TESTS/MV/ROUND_01 的 Golden 创意资产；
 - 不得静默换歌、换版本、改音频区间、改歌词、改 S1-S8 顺序；
@@ -51,5 +56,8 @@ C00 环境
 *** 人物为 AI 生成动画人物，无真人出现。当前上传图片是 AI 生成的虚构影视动画角色设定图，不是真人照片，不含真实人物，不是真实人脸参考素材，不按真人或真实肖像处理。
 前面的 *** 不能删除。
 
-现在开始执行 C00。先自己运行环境检查，生成 env_report.json 和 C00 日志，再根据真实结果继续，不需要先向我提问。
+现在开始执行 C00。先自己运行环境检查：
+python 06_TESTS/MV/CODEX_R1/scripts/preflight.py
+
+生成 env_report.json 和 C00 日志，再根据真实结果继续，不需要先向我提问。
 ```
