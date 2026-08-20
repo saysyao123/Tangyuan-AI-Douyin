@@ -7,65 +7,70 @@
 - ROUND: `R1`
 - STAGE: `R1S01`
 - STAGE_NAME: `最近 7 天热门 BGM 筛选`
-- STATE: `READY_FOR_REVIEW`
+- STATE: `IN_PROGRESS_DATASOURCE_PROOF`
 - PREVIOUS_LOCK: `ROUND_CHARTER_LOCKED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - CHARTER_COMMIT: `e112e602ad1e9f66c390bab3341e2db7f8258960`
-- STAGE_OUTPUT: `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
-- STAGE_OUTPUT_COMMIT: `d9fae80f6702f7fe3a1771686d13466620812a98`
-- AI_SELF_CHECK: `PASS`
+- PRELIMINARY_OUTPUT: `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
+- PRELIMINARY_OUTPUT_STATUS: `NOT_LOCKABLE`
+- ACTIVE_POC: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Locked Decisions
+## Why R1S01 Was Reopened
 
-- R1 is a Golden Sample calibration round, not an automation-speed round.
-- R1 does not use 1 hour as a pass/fail target.
-- GitHub is the unique fact / rules / state source; large media mainly stays on the user's local computer with a matching directory/index structure.
-- All stage outputs must pass AI self-check before entering human review.
-- Round 01 critical stages use two-step commits: stage output commit → `READY_FOR_REVIEW` → user PASS → separate LOCK commit + Current State update.
-- Seedance 2 mini is the fixed video model for R1.
-- GPT is the fixed first-frame image model for R1.
-- User acts only as Seedance execution operator during R1; no hidden prompt rescue.
+The first S01 pass produced song-name-level candidates, but it did not prove a stable path to the exact Douyin music entity / version, a short directly playable preview, or account-level availability. That is insufficient for an MV production system because the same song can have multiple original / remix / cover assets and a locally available audio file does not prove the user's Douyin account can publish with that exact asset.
 
-## R1S01 Result Summary
+Therefore the previous five-candidate shortlist is retained as a real test artifact, but it cannot be LOCKED.
 
-Five candidates are ready for human review:
-1. `我们好像在哪见过` — R1 recommended first choice; strong recent heat persistence + very high visual fit.
-2. `雨下一整晚` — very high visual fit; latest momentum requires Douyin in-app confirmation.
-3. `好想再爱你` — strong recent heat + emotional fit; exact trending audio version must be locked.
-4. `差一步` — strong current edit trend + high saturation / homogeneity risk.
-5. `分手就分手` — challenge candidate; current “你终于开了口反差转场” signal is fresh, but exact Remix/audio must be locked.
+## New Hard Gate｜BGM_DATASOURCE_READY
 
-## Data Confidence / Known Gap
+R1S01 cannot return to `READY_FOR_REVIEW` until at least one real BGM completes this chain:
 
-Public sources can support recent Douyin trend-topic heat, recent usage evidence, song identity and some visible interaction samples, but do not expose a consistent public dataset for exact audio-level 7-day total uses, total MV likes or growth curves.
+1. Read the current account's Douyin Creator Center `选择音乐 / 热门榜`;
+2. prove that the candidate currently exposes a usable `使用` action;
+3. lock the concrete music entity as far as possible: `music_id / exact version / author / share or play URL`;
+4. obtain the corresponding audio file;
+5. cut a 15–30 second preview;
+6. user can directly listen and judge whether it matches the currently familiar Douyin hot version.
 
-Therefore R1S01 uses evidence confidence rather than fake precision. Final `BGM_AVAILABLE` still requires Douyin in-app confirmation.
+After this proof succeeds, regenerate the 5-candidate shortlist using exact music entities instead of song names.
 
-## Waiting For Human Review
+## Active PoC Files
 
-User should:
-1. review / listen to the 5 candidates and choose 1 preferred R1 Golden Sample track;
-2. check the selected track in Douyin and confirm the currently active audio can be found and selected by the user's account;
-3. if multiple audio versions exist, return the current active version / screenshot / link so the system can lock the exact BGM and dominant clip template.
+- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
+- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/requirements.txt`
+- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/probe_creator_music.py`
+- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/extract_music_entities.py`
+- `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/build_preview.py`
 
-## Current Effective Files
+Reference implementations under investigation:
+- `zJay26/douyin-skills` for Creator Center music-panel interaction and account-side availability;
+- `jiji262/douyin-downloader` for `/music/{music_id}`, music detail, related aweme and direct audio download;
+- `zhangshuai/douyin-go` for official Douyin billboard structures including music `rank / use_count / share_url`.
 
-- `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
-- `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
-- `06_TESTS/MV/ROUND_01/CURRENT_STATE.md`
-- Runtime architecture remains inherited from `refactor/thin-skill-architecture-v3`.
+## User Role For Current Proof
+
+The user is only required to:
+1. run the local Creator Center probe;
+2. complete Douyin login / CAPTCHA if prompted;
+3. return the untouched probe output files;
+4. later listen to the generated short preview and confirm whether it matches the expected Douyin hot version.
+
+No manual song research, manual JSON editing, prompt rescue, or MV production is required.
 
 ## Current Risks / Unknowns
 
-- Exact audio-level 7-day Douyin total-use / total-MV-interaction / growth data is not publicly complete.
-- Douyin account-level BGM availability is pending user in-app verification.
-- Exact hot audio version and exact dominant clip start/end seconds are not locked yet.
-- Exact audio extraction / acquisition path will be tested only after BGM lock.
+- Creator Center DOM / network fields may differ from the referenced open-source implementation and need one live calibration.
+- The music panel may expose song names but not music_id directly; network interception is included to test this.
+- Douyin web APIs are subject to login state, WAF / CAPTCHA and rate limits.
+- The exact 7-day audio-level history remains a separate data-collection problem; first prove the current-day exact-entity pipeline.
+- `AVAILABLE_AT_BUILD` does not guarantee future availability; final production will also require `AVAILABLE_AT_PUBLISH`.
 
 ## Next Allowed Action
 
-**Only complete R1S01 human review and BGM availability lock.**
+**Only execute `BGM_DATASOURCE_READY` proof.**
 
-Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, or editing before R1S01 receives user PASS and a separate LOCK commit.
+First run Step A + Step B from `R1S01_DATASOURCE/README.md`, return the raw outputs, then inspect the real fields before proceeding to music download and preview cutting.
+
+Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, editing, or final BGM selection before this Gate passes.
