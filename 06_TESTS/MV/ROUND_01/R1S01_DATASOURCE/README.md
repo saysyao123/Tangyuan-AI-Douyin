@@ -17,6 +17,36 @@
 
 ---
 
+## 当前执行分流
+
+### Path A｜Codex 电脑完整验证（推荐）
+
+如果当前电脑具备 Git / Python / pip / Playwright / ffmpeg，则按下文 Step A–E 执行。
+
+如果当前电脑环境不具备这些依赖，不要求用户现场安装修复；将完整验证交给 Codex-capable computer。Codex 的正式要求见：
+
+`CODEX_TEST_REQUIREMENT.md`
+
+### Path B｜无本地运行环境的临时验证（当前可做）
+
+用户只需要从抖音 App 提供：
+
+- 一个具体音乐的分享链接；或
+- 一个正在使用目标热门 BGM 的代表视频分享链接；
+- 如方便，可附音乐页/视频页里显示音乐名称的截图。
+
+系统负责在公开可访问范围内尝试：
+
+1. 锁定具体歌曲/版本/作者及可识别的音乐实体信息；
+2. 对照同名不同 Remix / 翻唱 / 原版，避免只按歌名匹配；
+3. 查找当前公开样本和相关热度信号；
+4. 如果存在无需绕过登录/DRM即可访问的公开播放源，只使用短试听片段/公开预览做版本识别；
+5. 输出 `ENTITY_CONFIDENCE` 与仍缺失的账号侧验证项。
+
+Path B 可以验证“实体识别 + 试听判断”是否可行，但不能替代账号侧 `AVAILABLE_AT_BUILD`。完整 Gate 仍需后续 Codex 电脑完成。
+
+---
+
 ## Step A｜读取你账号当前「热门榜」
 
 ### Windows PowerShell
@@ -158,7 +188,7 @@ python .\build_preview.py "D:\path\to\downloaded_audio.mp3" --start 0 --duration
 
 ## 本次需要回传的文件
 
-第一次先只跑 Step A + Step B，然后把以下内容**发到当前 ChatGPT 对话，不要提交到公开 GitHub**：
+完整 Path A 第一次先只跑 Step A + Step B，然后把以下内容**发到当前 ChatGPT 对话，不要提交到公开 GitHub**：
 
 ```text
 summary.json
@@ -169,6 +199,8 @@ creator_music_panel.png
 ```
 
 不要手工修这些 JSON；失败结果同样是 R1 的正式测试证据。
+
+Path B 不需要这些本地文件，只需要一个真实抖音音乐/视频分享链接作为实体识别入口。
 
 ---
 
