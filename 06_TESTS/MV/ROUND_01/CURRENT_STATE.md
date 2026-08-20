@@ -5,117 +5,102 @@
 ## Current Status
 
 - ROUND: `R1`
-- STAGE: `R1S01`
-- STAGE_NAME: `热门 BGM 发现 / 用户选歌 / Reference BGM Lock`
-- STATE: `REFERENCE_BGM_SELECTED`
-- PREVIOUS_LOCK: `ROUND_CHARTER_LOCKED`
+- STAGE: `R1S02`
+- STAGE_NAME: `Music / Lyric Structure`
+- STATE: `READY_FOR_REVIEW`
+- PREVIOUS_LOCK: `REFERENCE_BGM_SELECTED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - SELECTED_REFERENCE_BGM: `你有没有真的爱过我｜阿图表妹`
 - REFERENCE_ANCHOR: `AI MV导演曹斌Johnny 的《你有没有真的爱过我》MV参考版本`
-- USER_DECISION: `2026-08-21 选择候选A，作为R1第一首制作歌曲`
-- BACKUP_BGM: `午后树下微风`
-- SELECTION_OBSERVER_POOL: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
-- ACTIVE_POC: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/README.md`
-- CODEX_REQUIREMENT: `06_TESTS/MV/ROUND_01/R1S01_DATASOURCE/CODEX_TEST_REQUIREMENT.md`
-- MV_BENCHMARK_LAYER: `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
+- R1S02_OUTPUT: `06_TESTS/MV/ROUND_01/R1S02_MUSIC_STRUCTURE.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Latest User Decision
+## Locked / Effective Decisions
 
-User selected candidate A:
-
+### R1 song direction
+User selected:
 `《你有没有真的爱过我》— 阿图表妹`
 
-The user had directly watched the Johnny MV reference and judged the song acceptable, then explicitly chose it as the first R1 song to make.
+Reference anchor is the Johnny MV version directly watched and accepted by the user.
 
-Other recent taste feedback:
-- `午后树下微风`: acceptable / backup.
-- `踏马寻花向自由`: average / downgrade.
-- `起势`: dislike / remove from current R1 path.
-- `借一页童话`: does not feel enough like an MV / downgrade.
-- `山风山风等等我`: dislike / remove.
+Backup retained:
+`午后树下微风`
 
-## Process Correction Validated by R1
+### S01 process correction
+R1 now separates:
+- `REFERENCE_BGM`: required before production analysis;
+- `PUBLISH_BGM`: exact Douyin platform asset / account availability, required before final publishing.
 
-The earlier S01 design coupled two different objects too tightly:
+The full Codex datasource proof remains a system-hardening requirement, but no longer blocks R1 visual production after a user-selected Reference BGM is anchored.
 
-1. `REFERENCE_BGM` — the exact song/version/reference used to make the MV;
-2. `PUBLISH_BGM` — the platform music entity that the user's account can legally/technically attach at publish time.
+`AVAILABLE_AT_PUBLISH = TRUE` remains HARD before release.
 
-This caused unnecessary blocking before the user could begin production.
+## R1S02 Proposed Working Interval
 
-### New separation
+Approximate source-song interval:
+`01:24 → 01:55` (~31s)
 
-#### REFERENCE_BGM Gate｜before production
-Required:
-- user has directly listened to / watched the chosen reference;
-- song and performer/version direction are identified;
-- a concrete public reference work is anchored;
-- lyrics / timing / music structure can be analyzed from the chosen reference version.
+Working lyric sequence:
+- 你的回应是一直沉默
+- 只剩下落寞
+- 我有什么错
+- 短暂柔情似流星划落
+- 你有没有真的爱过我
+- 我是你诗的哪个段落
+- 落款第几页
+- 第几次临摹
+- 还是匆匆一瞥就略过
 
-For R1 this gate is now satisfied by:
-- `你有没有真的爱过我｜阿图表妹`;
-- reference anchor = Johnny's corresponding MV version that the user watched and selected.
+Reason:
+- full emotional movement;
+- strong visual-bearing lyrics;
+- avoids over-reliance on literal fog / wine / moon imagery;
+- gives the title line an earned emotional peak rather than opening with repeated hook.
 
-#### PUBLISH_BGM Gate｜before final publishing
-Still HARD:
-- exact Douyin music entity / music_id as far as available;
-- distinguish original / cover / DJ / Remix;
-- current account can select/use the exact target asset;
-- `AVAILABLE_AT_PUBLISH = TRUE`;
-- if unavailable, do not publish with an external embedded copyrighted copy as a substitute.
+## Preliminary Natural Beats
 
-The Codex-side datasource proof remains required for hardening the long-term system, but it no longer blocks R1 visual production after a user-selected Reference BGM is locked.
+1. `你的回应是一直沉默` — absence / no response.
+2. `只剩下落寞 / 我有什么错` — inward collapse / self-question.
+3. `短暂柔情似流星划落` — first visual peak.
+4. `你有没有真的爱过我` — central emotional confrontation.
+5. `我是你诗的哪个段落` — metaphorical turn.
+6. `落款第几页 / 第几次临摹` — trace / copy / archived identity.
+7. `还是匆匆一瞥就略过` — cold final answer / release / negative space.
 
-## Song Observer Pool｜Active
+Strength curve:
+`M → L → M → H → H → M-H → M → L`
 
-Use `R1S01_SELECTION_OBSERVER_POOL.md` for future discovery. Current simplified logic:
-- observe ~5 music/MV sources over the last 30 days;
-- repeated song in >=2 sources -> candidate;
-- >=3 -> strong cross-account lead;
-- verify broader diffusion when possible;
-- give the user direct real MV/video links;
-- user taste can immediately reject a hot song.
+## Timing Confidence
 
-## Rolling MV Benchmark Layer｜Active Knowledge
+The current seconds come from public lyric timing for the 阿图表妹 version and are provisional until the exact Reference BGM audio / waveform is available.
 
-Full aesthetic/director Benchmark Pool remains separate:
+Before editing:
+- actual audio must be re-synced;
+- do not assume 0.1s precision yet.
+
+## Current Benchmark / Observer System
+
+Song discovery observer pool and rolling MV benchmark remain active:
+- `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
 - `04_HARNESS/knowledge/MV_BENCHMARK_LAYER.md`
 
-JIT usage:
-- Opening Hook: same-BGM + relevant benchmark works;
-- Director: 3–5 relevant works;
-- First-frame: 2–3 Beauty references;
-- Dynamic: 2–3 Director/Action references;
-- Final QA: 2–3 completion/market references.
+Future use is JIT, not full-pool analysis at every stage.
 
-External benchmark observations never directly become hard Rules / Golden References.
+## Current Risks / Pending
 
-## Current Public Version Evidence
-
-Public search currently supports:
-- song identity: `你有没有真的爱过我`;
-- performer direction: `阿图表妹`;
-- original song credited to `谈柒柒` in public lyric/music sources;
-- multiple alternate assets exist, including `节奏版` and `DJ白豆版`, so production must not silently swap versions later;
-- the user's reference anchor remains the Johnny MV version already heard, not an arbitrary alternate version.
-
-## Current Risks / Unknowns
-
-- Exact Douyin music_id is still pending.
-- Creator Center account availability remains pending Codex-side live calibration.
-- Alternate versions exist; later audio acquisition must match the selected Reference BGM closely.
-- `AVAILABLE_AT_PUBLISH` remains mandatory before release.
+- exact Douyin music_id pending;
+- exact account publish availability pending Codex-side verification;
+- exact waveform timing pending audio acquisition;
+- alternate versions (standard / rhythm / DJ) exist, so no silent version swap is allowed.
 
 ## Next Allowed Action
 
-`REFERENCE_BGM_SELECTED` is sufficient to begin the next production-analysis stage.
+Human review of `R1S02_MUSIC_STRUCTURE.md`.
 
-Next:
-1. lock the short working interval from the chosen reference;
-2. analyze music / lyric structure and emotional strength curve;
-3. propose natural Beats;
-4. stop for review before director/first-frame production if required by Round Charter.
+If user approves the working lyric interval and Beat structure:
+1. create separate LOCK commit for R1S02;
+2. advance to Director / visual-system planning;
+3. run focused Benchmark analysis for 3–5 relevant visual/director works before first-frame design.
 
-Do not silently replace the chosen song with another version during music analysis.
+Do not begin first-frame generation before R1S02 receives user PASS.
