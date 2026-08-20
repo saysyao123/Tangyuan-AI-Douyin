@@ -7,12 +7,13 @@
 - ROUND: `R1`
 - STAGE: `R1S05`
 - STAGE_NAME: `Dynamic Video Prompt Planning`
-- STATE: `READY_FOR_DYNAMIC_PROMPTS`
+- STATE: `READY_FOR_DYNAMIC_PROMPT_REVIEW`
 - PREVIOUS_LOCK: `R1S04_FIRST_FRAME_SET_LOCKED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - R1S02_LOCK: `06_TESTS/MV/ROUND_01/R1S02_LOCK.md`
 - R1S04_LOCK: `06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
+- DYNAMIC_PROMPTS: `06_TESTS/MV/ROUND_01/R1S05_DYNAMIC_PROMPTS_v1.md`
 - SELECTED_REFERENCE_BGM: `你有没有真的爱过我｜阿图表妹`
 - APPROVED_CLIP: `你有没有真的爱过我_建议剪辑片段_v1.mp3`
 - APPROVED_DURATION: `36.80s`
@@ -64,7 +65,7 @@ Full prompt source:
 Approval record:
 `06_TESTS/MV/ROUND_01/R1S04_LOCK.md`
 
-User reviewed the complete eight-image group and said the current first-frame effect is satisfactory. The full set is now treated as production-approved.
+User reviewed the complete eight-image group and said the current first-frame effect is satisfactory. The full set is production-approved.
 
 Identity / world lock:
 - same original fictional East Asian woman across all character frames;
@@ -79,21 +80,46 @@ Identity / world lock:
 
 Every approved first frame is a `0-second dynamic anchor` and its visible pending action must be continued rather than replaced.
 
-## R1S05 Dynamic Design Requirements
+## R1S05 Dynamic Prompt Set｜v1 READY
 
-Create exactly `8` independent `5-second` Seedance 2 mini prompts, one for each approved first frame.
+Full set:
+`06_TESTS/MV/ROUND_01/R1S05_DYNAMIC_PROMPTS_v1.md`
 
-Hard requirements:
-1. Each dynamic segment begins from its corresponding approved first frame.
-2. Do not introduce any human character not already visible in that first frame.
-3. Preserve heroine identity, veil, costume, world, lighting logic and scene geometry.
-4. No AI dialogue, singing voice, narration or BGM generation; visuals only / environment sound if model requires sound instructions.
-5. Avoid the repeated pattern `character stands still + slow camera push + hair/robe moves` across the set.
-6. Each segment must have one dominant visual event and one secondary physical after-effect.
-7. Vary camera grammar across the eight segments: static tension, lateral reveal, reflection distortion, event-led reframing, restrained portrait micro-movement, spatial traversal, macro action, occlusion/exit.
-8. Dynamic strength follows the song: restrained opening -> first rise at S4 -> emotional center S5 -> poetic rise S6 -> detail contraction S7 -> cold release S8.
-9. The eight 5s source clips provide 40s raw material; editing should later trim them to the locked 36.80s audio rather than forcing all clips to play in full.
-10. Seedance prompt wording must be explicit enough for the model to understand timing/action priority; do not rely on undeclared M/S/L shorthand.
+### Critical keyframe mapping｜actual generation order
+- `KF01 = S1` — 你的回应是一直沉默
+- `KF02 = S5` — 你有没有真的爱过我
+- `KF03 = S6` — 我是你诗的哪个段落
+- `KF04 = S2` — 只剩下落寞
+- `KF05 = S3` — 我有什么错
+- `KF06 = S4` — 短暂柔情似流星划落
+- `KF07 = S7` — 落款第几页 / 第几次临摹
+- `KF08 = S8` — 还是匆匆一瞥就略过
+
+Generate in keyframe order if convenient:
+`KF01 -> KF02 -> KF03 -> KF04 -> KF05 -> KF06 -> KF07 -> KF08`
+
+Final editing order remains:
+`S1(KF01) -> S2(KF04) -> S3(KF05) -> S4(KF06) -> S5(KF02) -> S6(KF03) -> S7(KF07) -> S8(KF08)`
+
+### Camera / motion differentiation
+- KF01/S1: static tension + tiny lateral desk slide / ink bleed.
+- KF02/S5: restrained portrait micro-performance + very small emotional push.
+- KF03/S6: spatial traversal through paper layers / parallax occlusion.
+- KF04/S2: lateral reveal of empty courtyard; keep heroine small.
+- KF05/S3: fingertip water contact + reflection distortion + camera lowers to waterline.
+- KF06/S4: meteor-driven tilt/reframe + wind/reflection event; highest environmental motion.
+- KF07/S7: macro brush finish + focus shift + peel back layered traces.
+- KF08/S8: mostly static camera + foreground page occlusion / cold ending.
+
+### Shared hard rules
+1. Exactly 5s each, 9:16, Seedance 2 mini.
+2. Start from the corresponding approved first frame and preserve it as the 0-second state.
+3. No human not visible in that first frame may appear.
+4. Preserve heroine identity, veil, costume, geometry, palette, and material continuity.
+5. No AI dialogue, singing, narration, or BGM; environment sound only if sound instructions are required.
+6. One dominant visual event + one secondary physical after-effect per segment.
+7. Avoid repeating `standing + slow push + hair/robe movement` across the set.
+8. Keep all raw 5s outputs; final trim happens against the locked 36.80s audio after dynamic QA.
 
 ## Current Benchmark / Observer System
 - Song observer pool: `06_TESTS/MV/ROUND_01/R1S01_SELECTION_OBSERVER_POOL.md`
@@ -102,13 +128,13 @@ Hard requirements:
 Benchmark remains JIT reference only and never directly becomes a hard production rule.
 
 ## Current Risks / Pending
-- Dynamic prompts not written yet.
-- Generated dynamic videos still require user QA for identity consistency, motion quality, camera repetition and lyric hit.
+- Dynamic prompts v1 await user review / actual Seedance generation test.
+- Generated dynamic videos require QA for identity consistency, veil continuity, motion quality, camera repetition and lyric hit.
 - Exact Douyin music_id pending Codex hardening test.
 - Account-side publish availability pending pre-publish validation.
 
 ## Next Allowed Action
 
-Write the full `S1-S8` dynamic prompt set for Seedance 2 mini, preserving the locked first frames and varying director/camera grammar across all eight 5-second clips.
+Generate the eight 5-second Seedance 2 mini clips from `R1S05_DYNAMIC_PROMPTS_v1.md`, preferably in keyframe generation order, then return all eight original outputs for dynamic QA.
 
-Do not begin final editing before the generated dynamic videos themselves pass review.
+Do not begin final editing before the generated dynamic videos pass review.
