@@ -7,11 +7,14 @@
 - ROUND: `R1`
 - STAGE: `R1S01`
 - STAGE_NAME: `最近 7 天热门 BGM 筛选`
-- STATE: `IN_PROGRESS`
+- STATE: `READY_FOR_REVIEW`
 - PREVIOUS_LOCK: `ROUND_CHARTER_LOCKED`
 - BRANCH: `test/mv-round-01`
 - CHARTER: `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
 - CHARTER_COMMIT: `e112e602ad1e9f66c390bab3341e2db7f8258960`
+- STAGE_OUTPUT: `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
+- STAGE_OUTPUT_COMMIT: `d9fae80f6702f7fe3a1771686d13466620812a98`
+- AI_SELF_CHECK: `PASS`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Locked Decisions
@@ -25,51 +28,44 @@
 - GPT is the fixed first-frame image model for R1.
 - User acts only as Seedance execution operator during R1; no hidden prompt rescue.
 
-## R1S01 Goal
+## R1S01 Result Summary
 
-Find and rank 5 strong Chinese-language BGM candidates from the most recent 7-day Douyin trend window for MV production.
+Five candidates are ready for human review:
+1. `我们好像在哪见过` — R1 recommended first choice; strong recent heat persistence + very high visual fit.
+2. `雨下一整晚` — very high visual fit; latest momentum requires Douyin in-app confirmation.
+3. `好想再爱你` — strong recent heat + emotional fit; exact trending audio version must be locked.
+4. `差一步` — strong current edit trend + high saturation / homogeneity risk.
+5. `分手就分手` — challenge candidate; current “你终于开了口反差转场” signal is fresh, but exact Remix/audio must be locked.
 
-Candidate composition target:
-- 4 candidates: high heat + strong MV interaction + high fit for the current New Eastern cinematic visual system.
-- 1 challenge candidate: very high heat but lower visual-system fit.
+## Data Confidence / Known Gap
 
-Primary ranking logic:
-1. Related MV-video interaction performance;
-2. recent 7-day growth / momentum;
-3. BGM usage heat;
-4. fit with the current visual system;
-5. expected beauty / production success rate.
+Public sources can support recent Douyin trend-topic heat, recent usage evidence, song identity and some visible interaction samples, but do not expose a consistent public dataset for exact audio-level 7-day total uses, total MV likes or growth curves.
 
-If heat differences are small, prefer the candidate with a higher probability of producing a beautiful MV.
+Therefore R1S01 uses evidence confidence rather than fake precision. Final `BGM_AVAILABLE` still requires Douyin in-app confirmation.
 
-## R1S01 Required Checks
+## Waiting For Human Review
 
-Before a BGM can be marked `BGM_AVAILABLE`, verify as far as public data allows:
-1. The BGM is discoverable on Douyin;
-2. New videos have used it recently;
-3. The user's own Douyin account can select it and enter the publishing flow — this final account-level check is performed by the user.
-
-Also identify the dominant current hot clip template when possible:
-- common start point;
-- common end point;
-- common duration;
-- alternative clip templates if any;
-- relative MV interaction performance between templates.
+User should:
+1. review / listen to the 5 candidates and choose 1 preferred R1 Golden Sample track;
+2. check the selected track in Douyin and confirm the currently active audio can be found and selected by the user's account;
+3. if multiple audio versions exist, return the current active version / screenshot / link so the system can lock the exact BGM and dominant clip template.
 
 ## Current Effective Files
 
 - `06_TESTS/MV/ROUND_01/ROUND_CHARTER.md`
+- `06_TESTS/MV/ROUND_01/R1S01_BGM_SELECTION.md`
 - `06_TESTS/MV/ROUND_01/CURRENT_STATE.md`
 - Runtime architecture remains inherited from `refactor/thin-skill-architecture-v3`.
 
 ## Current Risks / Unknowns
 
-- Whether reliable 7-day Douyin BGM usage / interaction / growth data can be obtained consistently from public and third-party sources is not yet proven.
-- Douyin account-level BGM availability cannot be fully confirmed without the user's final in-app check.
-- Exact audio extraction / acquisition path for the selected BGM remains to be tested after candidate selection.
+- Exact audio-level 7-day Douyin total-use / total-MV-interaction / growth data is not publicly complete.
+- Douyin account-level BGM availability is pending user in-app verification.
+- Exact hot audio version and exact dominant clip start/end seconds are not locked yet.
+- Exact audio extraction / acquisition path will be tested only after BGM lock.
 
 ## Next Allowed Action
 
-**Only execute R1S01:** research current 7-day Douyin BGM / MV trends, build the 5-candidate shortlist, document data confidence and missing fields, run AI self-check, then submit R1S01 output as `READY_FOR_REVIEW`.
+**Only complete R1S01 human review and BGM availability lock.**
 
-Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, or editing before R1S01 is locked.
+Do not begin music-structure analysis, Beat design, director design, first-frame generation, Seedance generation, or editing before R1S01 receives user PASS and a separate LOCK commit.
