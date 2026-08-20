@@ -51,3 +51,114 @@ Day2计划：
 
 Status：
 PLANNED
+
+---
+
+## EXP-MV-001｜Single-shot Cinematic Camera Library
+
+Status: `PLANNED_FOR_R2`
+
+### Hypothesis
+
+5秒单镜动态不应该默认退化为：
+
+`人物站立 + 慢推 + 发丝/衣摆轻动`
+
+如果建立一组 Seedance 可执行的电影摄影机语法库，可以在不强制三镜的情况下提高导演多样性。
+
+### Candidate camera grammars to test
+
+按小样逐个验证，不一次全部加入正式MV：
+- lateral tracking / lateral reveal；
+- foreground parallax pass；
+- pedestal rise / fall；
+- crane-like rise / descend；
+- low-angle tracking；
+- arc / small orbit around object or subject；
+- motivated push / pull；
+- rack-focus-led reframing；
+- camera lowering to surface / waterline；
+- event-driven tilt / pan；
+- foreground wipe / solid-edge occlusion；
+- subject-relative movement where camera and subject move at different speeds。
+
+### Measure
+
+每种语法至少记录：
+- Seedance是否正确执行；
+- 首帧一致性；
+- 角色稳定；
+- 画面美感损失；
+- 是否易出现穿模 / 背景扭曲；
+- 是否适合普通Beat / 高潮Beat；
+- 是否值得进入后续 Camera Library。
+
+### Promotion Gate
+
+不能因为某种运镜“电影里常见”或“某导演常用”就升级为规则。
+必须经过实际生成 + 用户验收。
+
+---
+
+## EXP-MV-002｜Codex Douyin BGM Datasource Hardening
+
+Status: `DEFERRED_TO_CODEX_COMPUTER`
+
+Target chain:
+
+`Creator Center / benchmark discovery -> exact music_id -> exact version -> related aweme evidence -> audio/reference preview -> build-time availability -> publish-time availability`
+
+R1手工版暂时采用：
+`~5个MV/音乐观察源 -> 近30天歌曲 -> 真实视频链接 -> 用户选歌`
+
+The manual path remains usable until this experiment proves a better automated replacement.
+
+---
+
+## EXP-MV-003｜Whisper Forced Lyric Alignment in Codex
+
+Status: `PLANNED`
+
+R1 already proved the rule that subtitle timing must come from locked audio, not edit-segment timing.
+
+This experiment is only for automation quality:
+
+`Whisper word timestamps -> known-lyrics constraint / correction -> SRT/ASS -> human spot-check`
+
+Measure:
+- phrase-start error;
+- phrase-end error;
+- handling of sustained notes;
+- repeated words;
+- instrumental gaps;
+- consistency with reliable same-version LRC when available.
+
+---
+
+## EXP-MV-004｜Watermark-free HD Source Replacement in Codex
+
+Status: `PLANNED`
+
+R1 manual files can contain visible generation/platform watermarks.
+
+Goal:
+- Codex obtains watermark-free HD equivalents;
+- source replacement preserves approved edit timing, subtitles, transitions and crop;
+- no creative re-edit should be required only to remove watermark.
+
+This is an asset-pipeline experiment, not a director-quality experiment.
+
+---
+
+## EXP-MV-005｜Advanced Lyric Effects
+
+Status: `NOT_STARTED`
+
+Base subtitle system is already stable enough for R1.
+Only test advanced effects after timing remains accurate:
+- limited word emphasis;
+- key-phrase motion;
+- local gradient darkening;
+- small position changes tied to composition.
+
+Do not replace the stable base lyric system until a variant clearly improves readability / emotion without competing with the image.
