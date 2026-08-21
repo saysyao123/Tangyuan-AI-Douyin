@@ -6,14 +6,15 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W06-X`
-- STAGE_NAME: `External Seedance generation / camera prompt validation`
-- STATE: `EXTERNAL_REQUIRED / S1_MULTISHOT_TEST_V2_READY`
+- STAGE: `W06-X / W07`
+- STAGE_NAME: `External Seedance generation + dynamic QA / director-structure calibration`
+- STATE: `S2_ONE_TAKE_PASS / DIRECTOR_SELECTOR_V1_RECORDED`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
 - W06_V1: `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
 - W06_S1_V2: `06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
+- DIRECTOR_SELECTOR: `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Locked Results
@@ -32,70 +33,98 @@ Final visual system:
 - light sand/grey functional veil integrated into wardrobe, always covering nose/mouth/lower face;
 - monumental ancient tree + restrained grey-white curved concrete architecture + large sky negative space;
 - low saturation, motivated natural backlight, real material texture;
-- MV uses **non-linear lyrical fragments**, not one continuous spatial story;
-- first-frame principle validated: **unified emotional system + diverse camera system, not unified spatial narrative system**.
+- MV uses non-linear lyrical fragments, not one continuous spatial story;
+- first-frame principle: **unified emotional system + diverse camera system, not unified spatial narrative system**.
 
-## W06 Research — Experimental Only
+## W06/W07 Generated-video Evidence
 
-Research sources include `songguoxs/seedance-prompt-skill`, `Emily2040/seedance-2.0`, `yinxiaowai/awesome-ai-video-camera-movement-prompts`, `fal-ai-community/skills`, `maciejdzierzek/seedance-prompt-generator`, CinePrompt and supporting cross-model camera references.
+### S1 v1 — FAIL
 
-### v1 hypothesis — REJECTED FOR THIS MV
+- 5.09s / 720×1280 / 24fps;
+- fixed extreme-wide one-take read as stiff because tree / wall / light / character scale barely changed;
+- insufficient visual progression pushed motion burden onto fabric;
+- independent white scarf-like cloth detached from character and crossed frame: veil topology failure.
 
-The v1 interpretation used `one primary Camera Contract per 5s clip` and distributed camera diversity across the nine clips.
+Important correction:
 
-S1 external generation disproved this interpretation for the current MV target:
-- returned raw clip: `5.09s`, `720×1280`, `24fps`;
-- giant tree / curved wall / light beam / character scale remain almost unchanged through the clip;
-- result reads as a fixed one-take and lacks the desired 3–5-shot MV dynamics;
-- motion burden shifted onto fabric instead of camera/edit rhythm;
-- an independent white scarf-like strip detached from the character and crossed the upper frame, a veil topology failure.
+`S1 proves a weak one-take can fail; it does NOT prove one-take is wrong.`
 
-Root-cause correction:
+### S2 v1 — PASS / POSITIVE SAMPLE
 
-`one camera movement per shot` **does not mean** `one camera movement per 5s clip`.
+User-returned raw clip:
+- 5.04s / 720×1280 / 24fps;
+- continuous small Arc / orbit-like camera move;
+- foreground tree trunk, character and curved wall produce readable parallax through the full clip;
+- camera changes the character-space relationship continuously and resolves at a more flattering three-quarter angle;
+- character action remains simple: reach / look upward; model load stays controlled;
+- result reads fluid and visually progressive despite being one continuous shot;
+- user judgement: `S2效果不错，环绕运镜的感觉挺好`.
 
-Correct test model:
-- keep the proven `3–5 shot` dynamic structure when the lyric/director task benefits from it;
-- inside **each Shot**, use only one clear camera movement / Camera Contract;
-- overall clip energy comes from `hard cuts + shot-size/angle contrast + one move per shot + subject/environment action`;
-- do not make every 5s clip a one-take merely to use professional camera language.
+S2 success hypothesis:
 
-## S1 v2 — READY
+`strong first-frame depth + simple continuous performance + foreground/midground/background parallax + one clear camera path + a more beautiful endpoint = one-take can outperform unnecessary cuts.`
 
-Test file:
-`06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
+## Director Structure Correction
 
-S1 v2 uses four explicit hard-cut shots:
-1. extreme wide + Dolly In;
-2. low-angle medium close-up + small Arc/Truck;
-3. veil/eyes close-up + Rack Focus;
-4. worm’s-eye / low angle + Tilt Up into the canopy and sky aperture.
+The current experiment no longer uses either of these false absolutes:
+- `every 5s clip should be one take` — REJECTED;
+- `every 5s clip should be 3–5 shots` — ALSO REJECTED.
 
-### Veil topology patch
+New experimental decision order:
 
-- veil remains one continuous piece connected to neck/shoulder/wardrobe;
-- do not call it a long scarf/ribbon/tail;
-- fabric motion is medium/small amplitude;
-- forbid any independent white cloth/scarf/ribbon appearing from sky, canopy or offscreen;
-- forbid detached cloth crossing the frame or duplicate fabric strips.
+`lyric task → first-frame performance potential → choose shot count → assign one Camera Contract per Shot → motion-load check → beauty/comfort gate`.
 
-## Current External Boundary — W06-X
+Shot-count options:
 
-`EXTERNAL_REQUIRED`.
+### 1 Shot / One Take
+Use when:
+- lyric is one continuous emotion or one complete gesture;
+- first frame already has strong depth / parallax anchors;
+- one camera path can create sustained visual progression;
+- continuity feels more musical than cutting.
 
-For the next iteration, generate **S1 v2 only** in Seedance 2 mini with the same accepted S1 first frame and return the raw MP4.
+Current positive sample: `S2 Arc`.
 
-Do **not** generate S2–S9 yet.
+### 2–3 Shots
+Use when:
+- one main event needs `setup → event → aftermath`;
+- lyric needs character/detail attention shift;
+- one semantic turn exists.
 
-## Next QA Gate
+### 3–5 Shots
+Use when:
+- lyric density or beat density is high;
+- motion peak / Hook needs angle and scale contrast;
+- one-take cannot provide enough MV visual density.
 
-After S1 v2 returns, automatically check:
-1. whether four Shots are visually distinguishable;
-2. whether each Shot executes its intended camera movement;
-3. whether 3–5-shot structure restores MV dynamics without chaos;
-4. whether character/wardrobe/world remain acceptably consistent across cuts;
-5. whether the veil stays physically connected and the floating-scarf artifact is gone;
-6. whether the final Tilt Up delivers the lyric action `抬头看树`;
-7. whether the ending is clean enough for editing.
+3–5 shots are not automatically better. Every Cut must add new emotion, information or viewpoint.
 
-Only if S1 v2 passes should this camera logic be expanded to S2–S9. Do not promote it to core rules yet.
+Full experimental selector:
+`06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
+
+## Per-shot Camera Rule — Experimental
+
+Regardless of total Shot count, each individual Shot gets one primary Camera Contract:
+
+`shot size + angle + start frame + movement + speed + subject relation + endpoint`.
+
+Motion budget per Shot:
+- 1 primary camera move;
+- 1 primary subject action;
+- 1 secondary physical motion.
+
+Do not simultaneously overload camera + large body action + large fabric + bird + focus shift + light event unless the shot specifically earns that complexity.
+
+## Current Direction
+
+- S2 is retained as a one-take positive sample; do not replace it merely to increase cuts.
+- S1 v2 four-shot prompt remains an experimental repair option, not a new universal template.
+- S3–S9 must be reconsidered individually using the Director Shot-Structure Selector before batch generation.
+- Goal is not maximum camera vocabulary; goal is the most beautiful, comfortable and lyric-specific 5-second direction for each segment.
+- No promotion to core `ai_video.md` until more generated one-take / multi-shot pass-fail evidence exists.
+
+## Next Allowed Action
+
+Before generating the rest of the batch, automatically redesign the **S3–S9 shot-structure map** segment by segment using the experimental Director Selector, preserving S2 as accepted positive evidence.
+
+Seedance execution remains `EXTERNAL_REQUIRED`; prompt/director analysis remains automatic.
