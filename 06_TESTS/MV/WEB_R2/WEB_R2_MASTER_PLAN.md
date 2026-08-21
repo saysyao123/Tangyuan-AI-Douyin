@@ -1,186 +1,183 @@
-# WEB R2｜MASTER PLAN v1.0
+# WEB R2｜MASTER PLAN v1.1
 
 ## Goal
 
 测试网页端 ChatGPT 在不依赖 Codex 的情况下，能否从新歌开始完整推进 AI MV，并记录真实自动化边界。
 
-R1 Golden Sample 只作为质量下限，不限制 R2 的歌曲、人物、世界或视觉概念。
+R1 Golden Sample 是质量下限，但不限制 R2 的歌曲、人物、世界或视觉概念。
+
+## Authority rule
+
+本文件是 **Round summary / stage map**，不是运行时权威流程。
+
+Operational truth 优先级固定为：
+1. `04_HARNESS/workflows/mv.md`
+2. `04_HARNESS/rules/mv_golden_runtime.md`
+3. current Round `CURRENT_STATE.md`
+4. 本 Master Plan
+
+本文件若与 Workflow / Runtime Rule 冲突，以前两者为准，并更新本文件，禁止同时保留两套不同流程。
 
 ---
 
 # W00｜Bootstrap / Capability Baseline
 
-网页端自动执行：
-- 读取当前分支与 `WEB_R2/CURRENT_STATE.md`；
-- 读取 `04_HARNESS/workflows/mv.md`；
-- 只按 JIT 加载当前阶段需要的规则；
-- 列出本对话实际可用能力：GitHub、Web、Image Generation、文件分析、音视频本地处理等；
-- 不假设能控制用户本机或 Seedance 外部网站。
+读取权威 Workflow + Golden Runtime + 当前状态，确认网页端实际能力与外部工具边界。
 
-Output：
-- 更新 `AUTOMATION_MATRIX.md`
-- 更新 `CURRENT_STATE.md -> W01`
+Output：更新 `AUTOMATION_MATRIX.md`、`CURRENT_STATE.md`。
 
 ---
 
 # W01｜Song Discovery / Benchmark Selection
 
-目标：在网页端尽可能自动完成选歌前置研究。
+自动刷新少量高相关MV/音乐观察源，筛3–5首候选；用户只做最终歌曲审美选择。
 
-流程：
-1. 刷新约 5 个 MV / 音乐观察源的最近约 30 天作品；
-2. 优先寻找多个观察源重复出现、并向普通抖音内容扩散的歌曲；
-3. 输出 3–5 首强候选；
-4. 每首只给用户最必要的信息：歌名 + 真实视频链接 + 简短热度/适配判断；
-5. 用户只做审美选择，不要求用户自己研究榜单。
-
-Expected state：`HUMAN_GATE`，因为最终歌曲喜好属于审美决定。
-
-Gate：一首具体 Reference BGM 被选中。
+Gate：`REFERENCE_BGM_LOCKED`。
 
 ---
 
 # W02｜Reference BGM / Exact Clip Lock
 
-优先级：
-1. 网页端可合法获得的实际音频文件；
-2. 用户上传完整 MP3/WAV；
-3. 公开试听仅用于定位，不伪装成可重新分发音频。
+拿到实际源音频后自动分析/裁剪/试听，锁定版本、起止点、时长、fade、文件身份/hash。
 
-一旦有实际源文件，网页端自动：
-- 分析歌曲结构；
-- 选择语义完整、适合短 MV 的区间；
-- 裁剪试听版；
-- 做自然 fade；
-- 输出给用户试听。
-
-用户只需判断：`PASS / 重新选段`。
-
-Gate：锁定实际音频文件、起止点、时长、fade。
+Gate：`BGM_LOCKED`。
 
 ---
 
 # W03｜Music / Lyric / Beat Analysis
 
-网页端自动完成：
-- 精确歌词；
-- 情绪曲线；
-- 音乐结构；
+自动完成：
+- 精确歌词文本；
+- 情绪/语义结构；
 - Natural Beats；
 - 强弱分布；
-- 关键歌词视觉机会；
-- Opening Hook 候选。
+- 视觉机会。
 
-不得为了 5 秒生成单元机械硬切歌词。
+重要：W03 可形成导演级 Beat Map，但**不能用波形/BPM/估算替代精确歌词时间轴**。
 
-Expected state：`AUTO`，用户可选择是否审阅。
+Gate：`LYRIC_TEXT_LOCKED + DIRECTOR_BEAT_MAP`。
 
 ---
 
 # W04｜Director + Production Allocation
 
-网页端自动完成：
-- 统一视觉概念；
-- 世界 / 色彩 / 材质；
-- 人物政策；
-- Opening Hook；
-- 每个 Beat 的主视觉事件；
-- 概念视觉单元数量；
-- 首帧数量；
-- 5 秒动态视频数量；
-- 原始动态素材时长与最终成片时长覆盖关系；
-- 运镜差异化计划。
+自动完成导演概念、视觉世界、角色政策、每Beat主事件、生产段数量、镜头/运镜差异化和素材覆盖余量。
 
-必须显式计算动态素材是否足够覆盖锁定 BGM，并保留合理剪辑余量。
+用户做导演方向审美 Gate。
 
-用户只做导演方向审美 Gate。
-
-Expected state：`HUMAN_GATE`。
+Gate：`DIRECTOR_PLAN_LOCKED`。
 
 ---
 
 # W05｜First Frames
 
-网页端自动：
-1. 生成整组完整首帧提示词；
-2. 每条都是独立可复制 Prompt；
-3. 角色 / 世界锁写进每条；
-4. 每张必须是 `0-second dynamic anchor`；
-5. 直接使用 ChatGPT Image Generation 生成首帧；
-6. 先生成 2–3 张风格锚点，再补齐整组；
-7. 自检整组美感、身份、重复度和动态可执行性。
+生成并自检整组 `0-second dynamic anchors`，用户整组审美确认。
 
-用户只需整组审美确认。
-
-Expected state：`HUMAN_GATE`，生产本身应 `AUTO`。
+Gate：`FIRST_FRAME_SET_LOCKED`。
 
 ---
 
-# W06｜Dynamic Prompt Design + External Generation Gate
+# W06｜Dynamic Prompt Design + External Generation
 
-网页端自动：
-- 为所有动态段生成 Seedance 2 mini 5 秒提示词；
-- 人物图生视频第一行必须原样使用 `rules/ai_video.md` 的 `***` 前缀；
-- 根据歌词与镜头任务选择单镜 / 2–3 镜结构；
-- 做整组 Camera Repetition Gate；
-- 扩展测试电影常用运镜，但不得全片套同一种结构。
+按歌词任务逐段选择一镜 / 2–3镜 / 更密集多镜；每个Shot使用明确 Camera Contract；做整组重复度 Gate。
 
-当前网页端若没有直接 Seedance 生成工具：
-- 状态标记 `EXTERNAL_REQUIRED`；
-- 用户只负责把首帧 + 对应 Prompt 送到 Seedance，并把生成的原始 5 秒视频上传回来；
-- 不把这一步伪装成全自动。
+当前网页端无 Seedance 执行接口时：用户只负责外部生成并上传原始视频。
 
-Expected state：Prompt `AUTO`；Video generation `EXTERNAL_REQUIRED`。
+Gate：`DYNAMIC_PROMPT_SET_READY`；外部执行标记 `EXTERNAL_REQUIRED`。
 
 ---
 
 # W07｜Dynamic QA + Retry
 
-收到原始动态视频后，网页端自动：
-- 检查人物 / 面纱 / 肢体 / 新增人物 / 场景漂移；
-- 检查主视觉事件；
-- 检查运镜是否与计划一致；
-- 检查整组重复度；
-- 判断是否可剪；
-- 根因归类：Prompt / First Frame / Model Randomness / Director / Physics Mechanism；
-- 只重写失败段，不连带推翻通过段。
+自动做人物/面纱/肢体/场景/主事件/运镜/重复度 QA，并按：
+- `PASS_FULL`
+- `SOURCE_USABLE / TRIM_REQUIRED`
+- `REGEN_WATCH`
+- `REGENERATE`
+分级。
 
-Expected state：`AUTO`；用户只负责外部重生成失败段。
+Gate：`DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`。
 
 ---
 
-# W08｜Edit + Subtitle + Final Polish
+# W08A｜Lyric Timing Evidence / Alignment｜MANDATORY PRE-EDIT
 
-前提：锁定 BGM + 全部可用视频素材。
+**禁止先剪视频。**
 
-网页端自动：
-- 建立剪辑时间线；
-- 先做 v1；
-- 根据动作完整性与音乐卡点做 v2；
-- 不机械平均分配每段时长；
-- 优先保留 5 秒内部完整动作，必要时用 selective trim + short overlap / transition；
-- 生成基础歌词字幕；
-- 字幕时间必须来自最终音频，不得按画面段落边界估算；
-- 优先 ASR / Whisper；没有本地 ASR 时可使用同版本可靠 LRC + 音频起点换算，并明确方法；
-- 烧录字幕；
-- Final Polish；
-- 生成 ZIP 交付。
+必须先取得独立强时间证据：
+1. 实际 ASR / forced alignment；或
+2. 同版本可靠 LRC；或
+3. 官方同版本 timed lyric/video。
 
-Expected state：在素材齐全时 `AUTO`。
+并保存：
+- raw evidence；
+- provenance；
+- 转换方式；
+- 逐句时间轴；
+- Ground-truth Alignment QA。
+
+BPM/波形谷值/能量/onset 只能做交叉验证，不能单独升级为精确时间轴。
+
+Required states：
+`LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED`
+→ `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED`
+→ `ALIGNMENT_GROUND_TRUTH_QA_PASS`
+→ `LYRIC_TIMELINE_LOCKED`
+→ `BEAT_MAP_VERIFIED`
+
+任何一项缺失：`LYRIC_TIMELINE_BLOCKED`，停止，不生成剪辑版。
 
 ---
 
-# W09｜Automation Retrospective / Close
+# W08B｜Picture Edit
 
-网页端自动输出：
-- `AUTOMATION_MATRIX.md` 最终版；
-- 完全自动阶段；
-- 只需审美 Gate 的阶段；
-- 外部平台阻塞阶段；
-- 用户实际人工操作列表；
-- 可在下一轮消除的人工环节；
-- 与 Codex R1 的职责分工建议；
-- 是否达到 R1 Golden quality floor；
-- 下一轮应提升的 Camera / Subtitle / BGM / Source pipeline 项目。
+只有 W08A 全部通过后才允许建立剪辑时间线。
+
+原则：
+`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > mechanical equal timing`
+
+每个片段记录 source in/out、final in/out、服务的歌词/Beat、剪切理由、动作弧。
+
+Gate：`EDIT_MAP_LOCKED -> EDIT_PREVIEW_QA_PASS`。
+
+---
+
+# W09｜Subtitle Style + Implementation QA
+
+字幕时间来自已锁 `LYRIC_TIMELINE`，此阶段禁止再通过画面重新估算时间。
+
+先加载 R1 Golden 字幕规格，再做样式 QA。
+
+必须区分：
+- Ground-truth Alignment QA：时间轴是否跟真实人声对；在W08A完成；
+- Subtitle Implementation QA：视频是否按锁定时间显示字幕；在W09完成。
+
+Gate：
+`SUBTITLE_STYLE_QA_PASS`
+→ `SUBTITLE_IMPLEMENTATION_QA_PASS`。
+
+---
+
+# W10｜Final Technical QA / Delivery
+
+检查：
+- 锁定BGM与最终音轨一致；
+- 无AI源音轨；
+- 画幅/SAR/FPS；
+- 无黑帧/错误重复/已知风险帧；
+- 字幕样式和实现；
+- 完整成片复看。
+
+Gate：`FINAL_TECH_QA_PASS -> DELIVERABLE_RENDERED`。
+
+交付文件优先 ZIP，ZIP 内使用兼容文件名并做完整性测试。
+
+---
+
+# W11｜Automation Retrospective / Close
+
+输出最终 Automation Matrix、人工干预、可自动化边界、规则晋升和 Golden 资产。
 
 Round 只有在用户最终验收后才能 `COMPLETE_LOCKED`。
+
+Golden close 必须保存可复现资产，不得只在文档里写文件名：尤其是锁定音频、最终SRT/LRC/时间轴及其 provenance。
