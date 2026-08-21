@@ -6,13 +6,14 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W07`
-- STAGE_NAME: `Full dynamic QA / trim planning`
-- STATE: `VISUAL_BATCH_PASS_WITH_TRIM / W08_READY`
+- STAGE: `W08`
+- STAGE_NAME: `Edit v1 / subtitle / pre-delivery QA`
+- STATE: `FIRST_CUT_RENDERED / AWAITING_AESTHETIC_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
 - FULL_BATCH_QA: `06_TESTS/MV/WEB_R2/W07_FULL_BATCH_QA_v1.md`
+- EDIT_V1_QA: `06_TESTS/MV/WEB_R2/W08_EDIT_V1_QA.md`
 - DIRECTOR_SELECTOR: `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
@@ -24,84 +25,65 @@
 - W03: `AUTO / LOCKED` — six Natural Beats
 - W04: `HUMAN_GATE / PASSED` — `树影之外`
 - W05: `HUMAN_GATE / PASSED` — first frames `9/9`
-- W06: `AUTO / EXPERIMENTAL` — dynamic prompt set / Director Selector tested
-- W06-X: `EXTERNAL_REQUIRED / COMPLETED FOR CURRENT BATCH` — all 9 raw Seedance clips returned
+- W06: `AUTO / EXPERIMENTAL` — dynamic prompt / Director Selector calibrated
+- W06-X: `EXTERNAL_REQUIRED / COMPLETED FOR CURRENT BATCH` — S1–S9 returned
+- W07: `AUTO / LOCKED FOR EDIT` — visual batch pass with trim
 
-## W07 Full Batch Result
+## W08 First Cut
 
-All nine returned clips are ~`5.04s / 720×1280 / 24fps`.
+Output:
+`如果你也刚好抬头看树_MV_WEB_R2_第一版成片.mp4`
 
-Batch verdict:
-`VISUAL_BATCH_PASS_WITH_TRIM / NO FULL-BATCH REGEN REQUIRED`.
+Technical state:
+- audio duration: `37.120s`
+- video duration: `37.125s` (24fps frame quantization)
+- 720×1280
+- SAR `1:1`
+- DAR `9:16`
+- H.264 video / AAC 44.1kHz stereo
+- SHA-256: `e7f4855b862c2df8bca303028a826f474775f5fd153760c4b047e213a9148f9f`
 
-Actual directing mix:
-- S1 multi-shot
-- S2 one-take Arc
-- S3 2-shot
-- S4 3-shot
-- S5 one-take breathing shot
-- S6 3-shot discovery
-- S7 multi-shot motion peak
-- S8 one-take rooftop reset
-- S9 one-take cloud release
+## Edit decisions implemented
 
-This confirms the correct direction is **mixed shot structures chosen per lyric task**, not a universal one-take or 3–5-shot template.
+- no equal-duration clip concatenation;
+- S1 opening + S2 orbit share the first title phrase;
+- S3 close detail + S4 body movement carry the leaf-dance phrase;
+- S6/S5/S6 are interleaved for call / mystery / bird discovery;
+- later S2 material is reused as playful rise before the motion peak;
+- S7 uses only clean early peak + canopy resolve; ambiguous large-fabric loop material is excluded;
+- S8 is shortened as rooftop/sky reset;
+- S9 is slowed and extended as the long cloud release.
 
-## Per-clip status
+## Audio hard state
 
-- `S1 = SOURCE_USABLE / TRIM_REQUIRED`
-  - strong wide → low-angle → eye → canopy progression;
-  - two similar middle low-angle fragments should not both survive final edit.
-- `S2 = PASS_FULL / POSITIVE ONE-TAKE SAMPLE`
-  - orbit/parallax remains a benchmark success.
-- `S3 = PASS_FULL`
-  - useful emotional close-up → medium contrast.
-- `S4 = PASS_FULL / STRONG DYNAMIC SAMPLE`
-  - strong multi-shot body/fabric movement with clear adjacent-shot contrast.
-- `S5 = PASS_FULL / BREATHING SHOT`
-  - strong scale reset; shorten if S1 opening already runs long.
-- `S6 = PASS_FULL / STRONG LYRIC-HIT SAMPLE`
-  - person → bird → person reads clearly; bird hold may be slightly shortened.
-- `S7 = SOURCE_USABLE / TRIM_REQUIRED / REGEN_WATCH`
-  - early motion peak is strong;
-  - ~2.8–4.0s pale fabric becomes topology-ambiguous / visually over-dominant;
-  - first try trim, regenerate only if final edit lacks enough clean peak duration.
-- `S8 = PASS_FULL / SHORTEN IN SEQUENCE`
-  - useful rooftop reset but visually overlaps S9.
-- `S9 = PASS_FULL / FINAL RELEASE`
-  - prioritize as the longer final hold.
+All Seedance source audio is discarded.
 
-## Whole-set repetition risks
+Final first cut maps ONLY the W02 locked BGM. AI source audio cannot influence edit timing or subtitle timing.
 
-1. S1 middle: adjacent low-angle character fragments repeat.
-2. S1 vs S5: both use giant tree + light shaft + small person; do not give both long screen time.
-3. S8 vs S9: strongest whole-set repetition; shorten S8 and reserve longer release for S9.
+## Watermark / display cleanup
 
-## Audio HARD status
+First-cut viewing source uses a consistent safe crop to move the visible generator marks outside the retained image area.
 
-All 9 returned MP4s contain AAC source audio.
+Pre-delivery QA caught an intermediate non-square SAR caused by crop scaling. The delivery file was rebuilt and verified at `SAR 1:1 / DAR 9:16` before handoff.
 
-Therefore all are `SOURCE_AUDIO_PRESENT` regardless of visual pass.
+Publish-grade W10 may still replace these first-cut sources with watermark-free HD equivalents without changing approved timing.
 
-Workflow consequence:
-- strip/detach all Seedance source audio at ingest;
-- W02 locked song master is the only music truth;
-- AI source audio never drives beat or subtitle timing;
-- prompt-level Source Audio hard rule remains active, but visual material is not rejected solely because Seedance ignored the audio request.
+## Subtitle v1
 
-## Watermark status
+No Whisper / faster-whisper claim.
 
-All returned clips visibly include a lower-right `豆包AI生成` platform mark.
+Basic line-level lyric timing uses:
+- exact same-version known lyrics;
+- locked audio waveform / phrase-resolution valleys;
+- W03 tempo / structure evidence.
 
-W08 must remove/cover/inpaint it consistently across all retained fragments before final delivery.
+This is not word-level ASR precision. First-cut viewing remains the appropriate gate for tiny line-edge adjustments.
 
-## Next Allowed Action
+## Current Gate
 
-Enter W08 automatically:
-1. strip all source audio;
-2. map clean usable windows from S1–S9;
-3. build the 37.120s edit against the locked BGM;
-4. trim repeated / topology-risk frames;
-5. remove platform marks;
-6. generate subtitles from verified locked-audio evidence only;
-7. only if the cut exposes insufficient peak coverage, regenerate S7 surgically.
+`AESTHETIC_GATE / FIRST-CUT VIEWING`.
+
+After user review:
+- local edit/subtitle fixes -> W08 v2;
+- pass -> W09 retrospective / rule-promotion decision;
+- no generation restart unless the actual cut exposes a specific missing source need.
