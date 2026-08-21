@@ -5,12 +5,12 @@
 ## Overall
 
 - Current Stage: `W06-X`
-- Overall State: `EXTERNAL_REQUIRED / CAMERA_TEST_V1_READY`
-- Fully automated stages: `3` (`W00`, `W03`, `W06`)
+- Overall State: `EXTERNAL_REQUIRED / S1_MULTISHOT_TEST_V2_READY`
+- Fully automated stages: `3` (`W00`, `W03`, `W06 research/prompt drafting`)
 - Human aesthetic gates encountered: `4`
 - Human aesthetic gates passed: `4`
 - External-required stages encountered: `1`
-- Non-aesthetic manual interventions: `4`
+- Non-aesthetic manual interventions: `5`
 
 ## Stage Board
 
@@ -20,51 +20,52 @@
 | W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE / PASSED | 最终选歌 | 研究与筛选 AUTO；用户选择 `如果你也刚好抬头看树` |
 | W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / LOCKED | 上传官方原唱；两次边界修正；最终试听确认 | v3 锁定 `139.930s–177.050s`，37.120s；one-shot clip lock 未通过，workflow v1.1 |
 | W03 | Beat分析 | AUTO | AUTO / LOCKED | 无 | 无 Whisper；同版本歌词 + locked audio evidence 完成导演级结构分析 |
-| W04 | 导演/生产分配 | HUMAN_GATE | HUMAN_GATE / PASSED | 审美选择与方向修正 | 初版“树的连续空间叙事”被否；最终锁定 `树影之外`：人物情绪 + 巨尺度 + 非线性MV碎片结构 |
-| W05 | 首帧提示词+生图 | HUMAN_GATE | HUMAN_GATE / PASSED | 整组审美确认 | 9/9最终首帧通过；形成“统一情绪系统 + 多元镜头系统，不是统一空间叙事系统” |
-| W06 | 动态提示词 | AUTO | AUTO / TEST_V1_READY | 无 | 开源运镜研究 + 9条实验提示词完成；尚未晋升核心规则 |
-| W06-X | Seedance视频生成 | EXTERNAL_REQUIRED | EXTERNAL_REQUIRED / READY | 外部生成+上传 | 当前网页工具不能直接执行 Seedance 2 mini；建议先测 S1/S3/S7 |
-| W07 | 动态QA/返工设计 | AUTO | NOT_STARTED | 外部失败段重生成 | raw clips 回传后自动进入 |
+| W04 | 导演/生产分配 | HUMAN_GATE | HUMAN_GATE / PASSED | 审美选择与方向修正 | 初版连续“树叙事”被否；最终锁定 `树影之外` |
+| W05 | 首帧提示词+生图 | HUMAN_GATE | HUMAN_GATE / PASSED | 整组审美确认 | 9/9最终首帧通过；统一情绪系统 + 多元镜头系统 |
+| W06 | 动态提示词 | AUTO | AUTO / EXPERIMENTAL | 无 | 开源运镜研究完成；v1 的“每5秒一个主运镜”解释经 S1 实测失败，已修正为“3–5镜 + 每镜一个主运镜”v2，尚未晋升核心规则 |
+| W06-X | Seedance视频生成 | EXTERNAL_REQUIRED | EXTERNAL_REQUIRED / S1_V2_PENDING | 外部生成+上传 | S1 v1 已生成并回传；当前只需重测 S1 v2，不生成其余段 |
+| W07 | 动态QA/返工设计 | AUTO | PARTIAL STARTED | 无额外本地操作 | 已自动分析 S1 v1 成片并做根因修复；待 S1 v2 回传继续 QA |
 | W08 | 剪辑/字幕/Final | AUTO if inputs ready | NOT_STARTED | 看片确认 | 无独立 Whisper/faster-whisper；字幕对齐必须使用可验证同版本证据 |
 | W09 | 复盘/锁定 | HUMAN_GATE | NOT_STARTED | 最终验收 | |
 
-## W04 Final Evidence
+## W06 Camera Research / Experiment Status
 
-Final concept: `树影之外`.
-
-- one fictional East Asian female protagonist;
-- functional light sand/grey veil integrated with wardrobe, lower face always covered;
-- ancient tree + restrained grey-white curved concrete architecture + large sky negative space;
-- low saturation + hard motivated natural backlight + real material texture;
-- MV is built from lyrical visual fragments and viewpoint contrast, not a continuous location walkthrough.
-
-## W05 Final Evidence
-
-- accepted first frames: `9 / 9`;
-- visual coverage includes monumental extreme wide, medium reach, veil/eye close-up, full-body fabric motion, bird relationship, worm’s-eye motion peak and rooftop sky release;
-- one avoidable execution rescue: the assistant stopped after three style anchors instead of continuing automatically, and one output was visibly soft; user had to ask whether generation had stalled;
-- final set passed after whole-set angle/repetition correction.
-
-## W06 Camera Research / Prompt Experiment
+### v1 — FAILED ON S1
 
 Experiment file:
 `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
 
-Research sources include:
-- `songguoxs/seedance-prompt-skill`
-- `Emily2040/seedance-2.0`
-- `yinxiaowai/awesome-ai-video-camera-movement-prompts`
-- `fal-ai-community/skills`
-- `maciejdzierzek/seedance-prompt-generator`
-- supporting camera-vocabulary repositories
+v1 hypothesis:
+`one primary Camera Contract per 5s clip; diversity across the 9-clip set`.
 
-Test principle:
-`one primary camera contract per 5s clip; diversity across the 9-clip set`.
+Returned S1 evidence:
+- raw clip `5.09s / 720×1280 / 24fps`;
+- camera composition effectively stays fixed, producing one-take/stiff feeling;
+- character/fabric carries nearly all movement;
+- veil topology breaks and an independent white scarf-like strip crosses the upper frame.
 
-Camera distribution:
-`Locked / Arc / Rack Focus / Truck / Tilt / Dolly Pull-back / Pedestal Up / Pan / small optical Zoom Out`.
+This is classified as a prompt/director interpretation failure, not user aesthetic preference.
 
-No promotion to core rules until W07 generated-video evidence.
+### v2 — CURRENT TEST
+
+Experiment file:
+`06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
+
+Corrected principle:
+- keep the proven `3–5 shot` MV structure when appropriate;
+- **one clear Camera Contract per Shot**, not per entire 5s clip;
+- use explicit hard cuts, shot-size/angle contrast and per-shot movement;
+- camera/edit rhythm should carry primary dynamics, with fabric/light/leaves as secondary dynamics.
+
+S1 v2 four-shot map:
+1. extreme wide + Dolly In;
+2. low-angle medium close-up + small Arc/Truck;
+3. veil/eyes close-up + Rack Focus;
+4. worm’s-eye/low-angle + Tilt Up into canopy/sky.
+
+Veil topology patch explicitly forbids detached or duplicated white fabric, sky-borne scarf/ribbon and offscreen cloth generation.
+
+Do not expand v2 to S2–S9 until S1 v2 passes generated-video QA.
 
 ## Manual Intervention Log
 
@@ -78,7 +79,8 @@ No promotion to core rules until W07 generated-video evidence.
 | 6 | W04 | AESTHETIC_GATE | 导演世界与MV美学属于保留的人类审美决策 | 否决连续“树叙事”，最终通过 `树影之外` | 否 |
 | 7 | W05 | TECHNICAL_RESCUE | 三张风格锚点后网页端未按计划自动继续，且一张明显偏虚 | 询问是否卡住并要求继续 | 是；未来必须主动续跑并自检清晰度 |
 | 8 | W05 | AESTHETIC_GATE | 首帧整组美学与镜头多样性需要人工最终判断 | 多轮比较后确认最终九张方案 | 否 |
-| 9 | W06-X | EXTERNAL_TOOL | 当前网页工具没有 Seedance 2 mini 执行接口 | `PENDING`：外部生成并回传 raw MP4 | 取决于未来工具能力 |
+| 9 | W06-X | EXTERNAL_TOOL | 当前网页工具没有 Seedance 2 mini 执行接口 | 已生成并回传 S1 v1；当前需外部生成 S1 v2 | 取决于未来工具能力 |
+| 10 | W06/W07 | TECHNICAL_RESCUE | 助手把“one camera movement per shot”错误扩大成“one camera movement per 5s clip”，导致 S1 一镜到底感、运镜弱，并诱发独立白纱拓扑错误 | 用户指出应把运镜重新融合回原有3–5镜结构，并指出空中莫名白纱 | 是；v2 已改为“3–5镜 + 每镜单运镜 Camera Contract”，待生成验证 |
 
 类型只允许：
 - `AESTHETIC_GATE`
