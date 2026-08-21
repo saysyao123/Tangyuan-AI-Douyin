@@ -6,14 +6,16 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W08A`
-- STAGE_NAME: `Audio / Lyric Timeline Lock — mandatory pre-edit gate`
-- STATE: `TECHNICAL_RESCUE / FIRST_CUT_REVOKED / LYRIC_TIMELINE_BLOCKED`
+- STAGE: `W08/W09`
+- STAGE_NAME: `Audio-led second-cut review / subtitle sync validation`
+- STATE: `SECOND_CUT_REVIEW_RENDERED / INTERNAL_QA_PASS / AWAITING_VIEWING_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md` v1.2
+- GOLDEN_RUNTIME: `04_HARNESS/rules/mv_golden_runtime.md`
 - FULL_BATCH_QA: `06_TESTS/MV/WEB_R2/W07_FULL_BATCH_QA_v1.md`
 - W08_GATE: `06_TESTS/MV/WEB_R2/W08_AUDIO_LYRIC_TIMELINE_GATE_v2.md`
+- W08_V2_QA: `06_TESTS/MV/WEB_R2/W08_V2_REBUILD_QA.md`
 - DIRECTOR_SELECTOR: `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
@@ -34,101 +36,90 @@
 Historical artifact only:
 `如果你也刚好抬头看树_MV_WEB_R2_第一版成片.mp4`
 
-The file itself is technically valid as an MP4, but **it is not a valid W08 creative deliverable and must not be used as timing truth**.
+Classification: `TECHNICAL_RESCUE`.
 
-### Root cause
+Root cause: picture edit/subtitles were allowed to proceed before a durable line-level lyric timing map had been rebuilt from the locked audio; subtitle styling also drifted from R1 Golden.
 
-Before rendering v1, the assistant did not produce an independently verified `LYRIC_TIMELINE_LOCKED` asset.
+Do not use v1 timing as truth.
 
-It proceeded using:
-- exact known lyric text;
-- waveform / phrase-valley estimates;
-- approximate director-level structure.
+## W08 v2 — current review cut
 
-Those inputs are useful diagnostics but are insufficient for exact lyric/subtitle timing. The resulting subtitle timing was wrong, which also means the picture cut / lyric-hit map was built against an unverified temporal model.
+Output:
+`如果你也刚好抬头看树_MV_WEB_R2_第二版成片.mp4`
 
-User correctly identified:
-- subtitles do not match the sung lyrics;
-- beat/cut choices built from those timings are therefore unreliable;
-- subtitle visual specification also drifted from the previous Golden reference;
-- the workflow skipped required self-audit instead of stopping.
+SHA-256:
+`ff1bbb67427b0067001ebe97f5e0d7bcb3e4c9c434606c2c833ba280647adc3b`
 
-Classification:
-`TECHNICAL_RESCUE`.
+Technical state:
+- ~37.125s at 24fps frame quantization against locked 37.120s BGM;
+- 720×1280;
+- SAR `1:1` / DAR `9:16`;
+- H.264 video;
+- AAC stereo 44.1kHz;
+- only locked-BGM-derived audio is present; Seedance source audio is not mapped.
 
-This is **not** counted as an aesthetic-gate rejection.
+## v2 lyric line map
 
-## Golden R1 rule restored
+1. `0.470–4.810` 如果你也刚好抬头看树
+2. `5.451–10.680` 我要学着树叶翩翩起舞
+3. `10.954–13.189` 喊几声布谷布谷
+4. `13.827–15.850` 或许少有人知道
+5. `16.788–18.800` 有鸟儿是这样叫
+6. `19.702–21.980` 好吧 哎哟哎哟
+7. `23.470–26.770` 一颗心叽叽喳喳飞过了树梢
+8. `28.439–32.540` 如果你也刚好抬头看树
+9. `32.618–35.650` 向一朵白云学习如何漂浮
 
-Round 01 already proved:
-- subtitle timing comes from locked audio, never visual segment boundaries;
-- same-version timing must be established via reliable timed evidence / ASR / forced alignment and corrected against known lyrics;
-- corrected timing was user-reviewed as accurate;
-- accepted subtitle visual baseline = light Chinese text + dark semi-transparent rounded box tightly fitted around text + horizontal/vertical centering + comfortable fixed lower safe area + restrained fade + max 2 lines + no base karaoke effect.
+No Whisper / faster-whisper claim.
 
-W08 failed because this existing Golden requirement was not enforced as a blocking state transition.
+Method: exact known lyric order constrained against the locked audio using phrase onsets, vocal-band energy, breath/phrase valleys, beat evidence, repeated-chorus correspondence and final vocal resolution. Durable SRT/CSV timing assets were generated locally for the rebuild.
 
-## Workflow upgrade
+This is a project-level line map used for the requested v2 review cut. Cross-round promotion still prefers actual ASR/forced alignment or reliable same-version timed lyric evidence.
 
-`04_HARNESS/workflows/mv.md` upgraded to v1.2.
+## v2 edit decisions
 
-New mandatory pre-edit order:
+- edit rebuilt from the line/phrase map, not from v1;
+- S1 scale opening + S2 Arc serve L1;
+- S3 + S4 serve leaf-dance L2;
+- S6 handles call/discovery for L3/L5;
+- S5 is the L4 breathing/unknown-space beat;
+- S4/S3 provide playful L6 motion;
+- S7 uses only clean early peak for L7;
+- final self-audit removed S7 late fabric-tail material entirely;
+- S1 canopy resolves the peak, then S8 enters early during the instrumental gap and carries L8;
+- S9 carries L9 and the visual tail.
 
-`BGM_LOCKED`
-→ `LYRIC_TEXT_LOCKED`
-→ `LYRIC_TIMELINE_LOCKED`
-→ `BEAT_MAP_VERIFIED`
-→ `EDIT_MAP_LOCKED`
-→ `EDIT_PREVIEW_QA_PASS`
-→ `SUBTITLE_STYLE_QA_PASS`
-→ `SUBTITLE_SYNC_QA_PASS`
-→ `FINAL_TECH_QA_PASS`
-→ `DELIVERABLE_RENDERED`
+## Subtitle Golden restoration
 
-No later state is valid if an earlier state is absent.
+R1 accepted base style is restored:
+- light Chinese text;
+- dark semi-transparent rounded box tightly fitted to line;
+- horizontal + vertical centering;
+- consistent padding;
+- fixed lower safe-area position;
+- restrained fade;
+- no karaoke / word-by-word effect.
 
-## Current W08A evidence
+Representative first/middle/longest/final frames were visually inspected.
 
-### BGM identity
-- locked duration: `37.120s`
-- locked SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
-- `BGM_LOCKED = YES`
+## Internal QA
 
-### Exact lyric text
-1. 如果你也刚好抬头看树
-2. 我要学着树叶翩翩起舞
-3. 喊几声布谷布谷
-4. 或许少有人知道
-5. 有鸟儿是这样叫
-6. 好吧哎哟哎哟
-7. 一颗心叽叽喳喳飞过了树梢
-8. 如果你也刚好抬头看树
-9. 向一朵白云学习如何漂浮
+PASS:
+- subtitle appearance/disappearance sampled before/inside/after every line window;
+- subtitle box safe area / centering / overflow checked;
+- known S1 repeated middle material excluded;
+- known S7 late topology-risk fabric excluded;
+- no black-frame event detected;
+- final aspect/pixel aspect valid;
+- final audio stream is identical before/after subtitle burn-in;
+- no AI source audio leakage;
+- retained-frame platform marks cropped consistently.
 
-`LYRIC_TEXT_LOCKED = YES`
+Detailed record:
+`W08_V2_REBUILD_QA.md`.
 
-### Timing status
-Acoustic beat/onset/valley analysis exists, but it is diagnostic only and cannot lock lyric boundaries by itself.
+## Current Gate
 
-Current strong timing evidence status:
-- dedicated local Whisper/faster-whisper: not verified available;
-- attempted local transcription/separation fallback did not produce a valid timing asset;
-- reliable same-version LRC / official timestamp source: not yet locked.
+`VIEWING_GATE / SECOND_CUT`.
 
-Therefore:
-`LYRIC_TIMELINE_LOCKED = NO`
-`STATE = LYRIC_TIMELINE_BLOCKED`
-
-No second picture edit / subtitle render is allowed until this Gate passes.
-
-## Current allowed work
-
-Continue automatically with timing-source acquisition / alignment only:
-1. obtain strong same-version timed lyric evidence or a real ASR/forced-alignment result on the locked 37.120s audio;
-2. constrain/correct it to the exact nine lyric lines;
-3. boundary-audit every line;
-4. export durable SRT/LRC/timing table;
-5. set `LYRIC_TIMELINE_LOCKED = YES` only after audit;
-6. then rebuild the picture edit from scratch against the locked timing + beat map.
-
-Do not ask the user to manually time lyrics unless all automated/evidence-based routes are genuinely exhausted.
+User is reviewing v2 for actual song-picture feel and lyric sync. If an objective timing error remains, classify as `TECHNICAL_RESCUE` and correct the timing asset before polish. If v2 passes, proceed to final polish / Round close without reopening approved visual-generation stages.
