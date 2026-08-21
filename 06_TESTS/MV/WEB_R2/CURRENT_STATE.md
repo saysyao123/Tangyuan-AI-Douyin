@@ -8,7 +8,7 @@
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W02`
 - STAGE_NAME: `Reference BGM acquisition + exact clip lock`
-- STATE: `PREVIEW_RENDERED / AWAITING_AUDIO_GATE`
+- STATE: `PREVIEW_V2_RENDERED / AWAITING_AUDIO_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -69,13 +69,9 @@ No user intervention was required in W00.
 Research state: `AUTO`.
 Total stage state: `HUMAN_GATE`.
 
-User passed the aesthetic gate and selected:
-
+User selected:
 - Reference song: `如果你也刚好抬头看树`
 - Artist / official vocal version: `孙天宇`
-- Selection reason from user: prefers this song over the other shortlist options.
-
-No R1 re-explanation was requested.
 
 ## W02 Current Evidence
 
@@ -99,32 +95,53 @@ Uploaded source:
 - bitrate: `320 kbps`
 - sample rate: `44.1 kHz`
 - channels: `stereo`
-- embedded title: `如果你也刚好抬头看树`
-- embedded artist: `孙天宇`
-- embedded album: `如果你也刚好抬头看树`
+- embedded title / artist / album match the confirmed master
 - source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
 
 Conclusion:
-- duration and metadata match the confirmed official 3:16 vocal master;
-- the file is accepted as the W02 production source;
+- accepted as the W02 production source;
 - the rejected 3:12 Bilibili user upload is not used.
 
-### Preview v1 rendered automatically
+### Preview v1 — REJECTED
 
-Recommended excerpt:
-- source in: `130.72s`
-- source out: `163.82s`
+- source range: `130.72s–163.82s`
 - rendered duration: `33.149388s`
-- content intent: second chorus, beginning with `我要学着树叶翩翩起舞` and closing on `如果你也刚好抬头看树`
-- fade in: `0.08s`
-- fade out: `0.90s`, beginning after the final vocal close
-- preview SHA-256: `6d831c7bb1dadc13de79161677285d46d8a47cdaca76e5c83b508fdc36b8bf2d`
+- user feedback: opening contains material before the true chorus start; ending cuts the final lyric before completion.
+- root cause: excerpt boundary detection was too loose and treated a broader lyrical region as the chorus instead of structurally aligning the repeated chorus itself.
+- result: `REJECTED / LOCAL_CORRECTION_ONLY`; no downstream stage was changed.
 
-Selection rationale:
-- contains the song's highest-recognition chorus and title return;
-- provides multiple lyric-specific visual events: leaves dancing, cuckoo call, a heart flying over the treetop, and looking up at the tree;
-- forms a semantically complete short-MV unit;
-- stronger first-round MV recognition than using only the lower-energy final bridge.
+### Re-analysis and structural alignment
+
+The supplied master was re-analyzed using repeated-section alignment rather than approximate lyrical location.
+
+Evidence:
+- first repeated chorus structural downbeat: approx `58.86s`;
+- second repeated chorus structural downbeat: approx `140.43s`;
+- repeated-section offset: approx `81.55s`;
+- first chorus close / section boundary: approx `87.03s`;
+- corresponding second chorus close: approx `168.58s`.
+
+Web cross-check:
+- the song had active short-video/BGM diffusion after release, including fan-curated collections of posts using the song as BGM and an official artist short video around 39 seconds;
+- Sony's own promotion repeatedly highlighted the title / tree-gift lyric cluster, confirming that short-form usage centers on the song's high-recognition tree hook rather than arbitrary verse fragments;
+- exact source timestamps are derived from the supplied master because public short-video indexes do not expose reliable source-audio in/out timestamps.
+
+### Preview v2 rendered automatically
+
+Corrected excerpt:
+- source in: `140.43s` (`02:20.430`)
+- source out: `168.90s` (`02:48.900`)
+- rendered duration: `28.470s`
+- content: one complete second repeated chorus, starting on the chorus structural downbeat and ending only after the final title-line resolution;
+- fade in: `0.025s`
+- fade out: `0.420s`
+- preview SHA-256: `b957a9e31bf7bc48a993cfdac51515cfb4f0978822abd72d7b5433c7fae8546d`
+
+Rationale:
+- removes the ~9.7s pre-chorus/preceding material mistakenly included in v1;
+- restores the ~5s of missing chorus ending that v1 cut off;
+- stays near the natural ~30s short-video music unit without padding with non-chorus lyrics just to reach a round duration;
+- second chorus is preferred over the first because the arrangement is fuller while the lyrical/melodic unit is the same.
 
 ## W02 Automation Result So Far
 
@@ -132,29 +149,18 @@ Selection rationale:
 - source acquisition: `FILE_INPUT` completed by user
 - version/file verification: `AUTO`
 - waveform/structure analysis: `AUTO`
-- excerpt selection and preview render: `AUTO`
-- final audio lock: waiting for one designed `AESTHETIC_GATE`
-
-## Expected Automation Hypothesis
-
-- W01: mostly AUTO, user only final song preference gate. **Validated.**
-- W02: AUTO if usable audio file/source is available; otherwise may require minimal user upload. **Validated as PARTIAL: one FILE_INPUT, all processing after upload AUTO, final listening remains HUMAN_GATE.**
-- W03: AUTO.
-- W04: AUTO + optional user creative review.
-- W05: prompts AUTO, image generation AUTO in ChatGPT, user review is HUMAN_GATE.
-- W06: prompt design AUTO; Seedance execution currently expected `EXTERNAL_REQUIRED`.
-- W07: AUTO after user uploads generated clips.
-- W08: AUTO once source clips and locked audio are available; subtitle alignment method depends on available audio/ASR resources.
-- W09: AUTO.
+- v1 selection/render: `AUTO`, but failed quality gate
+- v2 root-cause correction and re-render: `AUTO`
+- final audio lock: waiting for the designed `AESTHETIC_GATE`
 
 ## Next Allowed Action
 
 `AESTHETIC_GATE`:
-- user listens to W02 preview v1;
+- user listens to W02 preview v2;
 - valid responses: `PASS` or `重新选段`.
 
 Do not enter W03 until the exact audio excerpt is locked.
 If `PASS`:
-1. record exact locked source in/out, render duration and fades;
+1. lock `140.43s–168.90s` as the reference BGM;
 2. update `AUTOMATION_MATRIX.md` and this file;
 3. move to W03 and perform music / lyric / Beat analysis automatically.
