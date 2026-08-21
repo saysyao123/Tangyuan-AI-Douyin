@@ -1,117 +1,85 @@
-# WEB R2｜W08 v2 Audio-led Rebuild + QA
+# WEB R2｜W08 v2 Rebuild QA — REVOKED
 
-> Status: `REVIEW_CUT_RENDERED / INTERNAL_QA_PASS`
+> Status: `REVOKED / TECHNICAL_RESCUE / EVIDENCE_PROVENANCE_FAIL`
 > Date: `2026-08-21`
-> Output: `如果你也刚好抬头看树_MV_WEB_R2_第二版成片.mp4`
-> SHA-256: `ff1bbb67427b0067001ebe97f5e0d7bcb3e4c9c434606c2c833ba280647adc3b`
+> Historical output: `如果你也刚好抬头看树_MV_WEB_R2_第二版成片.mp4`
+> Historical SHA-256: `ff1bbb67427b0067001ebe97f5e0d7bcb3e4c9c434606c2c833ba280647adc3b`
+> Root-cause audit: `W08_V2_TIMING_PROVENANCE_FAILURE_AUDIT.md`
 
-## 1. Why v2 was rebuilt from scratch
+## 1. Why the previous INTERNAL_QA_PASS is invalid
 
-W08 v1 was revoked because picture cuts and subtitle burn-in were created before a valid lyric-time analysis existed. v2 does not reuse v1 subtitle times or v1 edit-map timing.
+The v2 SRT/CSV used these line starts:
+`0.470 / 5.451 / 10.954 / 13.827 / 16.788 / 19.702 / 23.470 / 28.439 / 32.618`.
 
-The rebuild order was:
+Those values are effectively the same acoustic candidate family that `W08_AUDIO_LYRIC_TIMELINE_GATE_v2.md` had already labelled `DIAGNOSTIC_ONLY / NOT timing truth`.
 
-`locked 37.120s BGM -> exact nine-line lyric text -> constrained line-level audio alignment -> phrase/beat map -> picture edit -> R1 Golden subtitle styling -> subtitle boundary QA -> final technical QA`.
+No independent raw ASR/forced-alignment result, reliable same-version LRC, or official timed-lyric source was saved before the v2 timeline was promoted to an `exact` SRT.
 
-No Seedance source audio participates in timing.
+Therefore the timeline was never legitimately locked.
 
-## 2. Line-level timeline used by v2
+`LYRIC_TIMELINE_LOCKED = NO`
 
-| # | Start | End | Lyric |
-|---|---:|---:|---|
-| 1 | 0.470 | 4.810 | 如果你也刚好抬头看树 |
-| 2 | 5.451 | 10.680 | 我要学着树叶翩翩起舞 |
-| 3 | 10.954 | 13.189 | 喊几声布谷布谷 |
-| 4 | 13.827 | 15.850 | 或许少有人知道 |
-| 5 | 16.788 | 18.800 | 有鸟儿是这样叫 |
-| 6 | 19.702 | 21.980 | 好吧 哎哟哎哟 |
-| 7 | 23.470 | 26.770 | 一颗心叽叽喳喳飞过了树梢 |
-| 8 | 28.439 | 32.540 | 如果你也刚好抬头看树 |
-| 9 | 32.618 | 35.650 | 向一朵白云学习如何漂浮 |
+---
 
-Durable local assets during rebuild:
-- `lyrics_exact_v2.srt`
-- `lyrics_timeline_v2.csv`
+## 2. QA category error
 
-### Alignment method honesty
+The earlier v2 QA sampled frames before/inside/after each SRT interval and verified that the rendered subtitle followed the SRT.
 
-No Whisper / faster-whisper run is claimed.
+That verifies only:
+`SUBTITLE IMPLEMENTATION -> follows SRT`
 
-The line-level map was rebuilt from the locked audio itself using the exact known lyric order constrained against multiple acoustic/music signals:
-- phrase onset strength;
-- vocal-band energy;
-- phrase/breath valleys;
-- beat grid (~103.36 BPM evidence from W03);
-- repeated chorus phrase correspondence;
-- semantic line ordering and final vocal resolution.
+It does not verify:
+`SRT -> follows actual sung vocal timing`
 
-This is substantially different from W08 v1's loose visual/phrase estimate because every subtitle line now has an explicit start/end, deliberate subtitle-free breath gaps, and the edit map is derived after those line windows rather than vice versa.
+The missing Gate was independent Ground-truth Alignment QA.
 
-Cross-round rule promotion still prefers ASR/forced alignment or reliable same-version timed lyric evidence. The current line map remains project-level evidence until direct playback review confirms the result.
+Correct separation:
+- `ALIGNMENT_GROUND_TRUTH_QA_PASS`: timing asset vs actual vocal timing, supported by independent timing evidence;
+- `SUBTITLE_IMPLEMENTATION_QA_PASS`: rendered subtitle vs already-locked timing asset.
 
-## 3. v2 picture edit map
+The first must pass before the second can count as correctness evidence.
 
-The v2 edit is rebuilt around real lyric/phrase windows rather than equal clip lengths.
+---
 
-Key decisions:
-- L1: S1 scale opening -> S2 Arc/orbit, preserving the strongest one-take sample;
-- L2: S3 emotion close-up -> S4 body/leaf-dance motion;
-- L3: S6 listener -> bird discovery;
-- L4: S5 giant-tree breathing frame;
-- L5: S6 bird/reaction material;
-- L6: S4/S3 playful movement/reaction;
-- L7: clean early S7 motion peak only, then S1 canopy release;
-- S7 late ambiguous white-fabric material is completely excluded after final self-audit;
-- pre-L8 musical gap enters S8 high-space reset early;
-- L8: S8 rooftop/sky one-take, slightly lengthened to preserve continuity;
-- L9: S9 cloud release, with visual/music tail continuing after lyric ends.
+## 3. Packaging/audio shift ruled out
 
-No equal-duration mechanical allocation is used.
+The final v2 AAC audio was compared with the locked BGM after common resampling.
 
-## 4. Subtitle Golden restoration
+- best global lag: `0.000s`
+- correlation: approximately `0.999`
+- final AAC stream begins at `0.000000`
 
-v2 restores the Round 01 accepted base system:
-- Chinese lyric text;
-- light text;
-- dark semi-transparent rounded background tightly fitted around each actual line;
-- text visually centered horizontally and vertically inside box;
-- consistent padding;
-- fixed comfortable lower safe area;
-- restrained ~0.08/0.10s appearance/disappearance;
-- max 1 line in this song;
-- no karaoke / word-by-word effect.
+So the mismatch is not an FFmpeg/AAC global shift.
 
-Representative first/middle/longest/final lyric frames were sampled and inspected before delivery.
+---
 
-## 5. Final QA
+## 4. What remains valid from v2
 
-### Picture
-- 720×1280;
-- 24fps;
-- SAR `1:1`;
-- DAR `9:16`;
-- no black-frame event detected by blackdetect;
-- crop removes visible generation/platform marks from retained frame;
-- known S1 duplicate low-angle material not reintroduced;
-- known S7 ambiguous late-fabric region excluded;
-- S8/S9 transition deliberately separates reset vs final cloud release.
+The following engineering work may be reused later after a real lyric timeline is obtained:
+- visual source selections;
+- S1 duplicate-window exclusion;
+- S7 topology-risk exclusion;
+- S8/S9 visual-role distinction;
+- R1 Golden subtitle visual style;
+- source-audio stripping;
+- aspect-ratio/SAR validation.
 
-### Audio
-- only the locked-BGM-derived audio stream is present;
-- final subtitle render copied the base-v2 BGM audio stream bit-for-bit;
-- audio elementary-stream SHA was identical before/after subtitle burn-in;
-- no Seedance source audio is mapped into the final output.
+The following may NOT be reused as timing truth:
+- `lyrics_exact_v2.srt`;
+- `lyrics_timeline_v2.csv`;
+- any picture cut whose timing rationale depends on those line windows.
 
-### Subtitle timing implementation
-For every lyric line, frames were sampled before start / inside line / before end / after end to verify subtitle appearance/disappearance follows the v2 timing table rather than picture cuts.
+---
 
-### Output
-- file duration: `37.125s` at 24fps frame quantization, representing the locked 37.120s BGM timeline;
-- H.264 video + AAC 44.1kHz stereo;
-- SHA-256 `ff1bbb67427b0067001ebe97f5e0d7bcb3e4c9c434606c2c833ba280647adc3b`.
+## 5. Current Gate
 
-## 6. Gate
+`W08A / LYRIC_ALIGNMENT_EVIDENCE_BLOCKED`
 
-`INTERNAL_QA_PASS`.
+A v3 render is forbidden until all exist:
+- `LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED`
+- `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED`
+- `ALIGNMENT_GROUND_TRUTH_QA_PASS`
+- `LYRIC_TIMELINE_LOCKED`
+- `BEAT_MAP_VERIFIED`
 
-This file is the second-cut review artifact requested by the user. If direct playback confirms lyric sync/overall rhythm, promote the current line-level timing asset to the project lock and proceed to final-polish/round-close decisions. If a line boundary is still objectively wrong, classify it as `TECHNICAL_RESCUE` and correct the timing asset before any further polish.
+Do not repair v2 by manually nudging its SRT.
