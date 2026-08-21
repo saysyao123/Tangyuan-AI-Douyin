@@ -8,7 +8,7 @@
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W02`
 - STAGE_NAME: `Reference BGM acquisition + exact clip lock`
-- STATE: `REFERENCE_VERSION_CONFIRMED / SOURCE_FILE_REQUIRED`
+- STATE: `PREVIEW_RENDERED / AWAITING_AUDIO_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -81,7 +81,7 @@ No R1 re-explanation was requested.
 
 ### Official reference version confirmed
 
-Primary version to lock:
+Primary version:
 - Title: `如果你也刚好抬头看树`
 - Artist: `孙天宇`
 - Type: official vocal master
@@ -90,26 +90,55 @@ Primary version to lock:
 - International release metadata: `2026-07-22`
 - Rights metadata: `℗ 2026 Columbia Records China`
 
-Cross-platform identity evidence:
-- Artist's verified social post on `2026-07-20` linked the same song to QQ Music, NetEase Cloud Music, Kugou, Kuwo and Qishui Music.
-- Apple Music also lists the vocal and instrumental versions under the same 2026 Single.
+### User file received and verified
 
-### Rejected as exact source
+Uploaded source:
+- filename: `如果你也刚好抬头看树-孙天宇.mp3`
+- measured duration: `196.127347s` (`3:16.127`)
+- codec: `MP3`
+- bitrate: `320 kbps`
+- sample rate: `44.1 kHz`
+- channels: `stereo`
+- embedded title: `如果你也刚好抬头看树`
+- embedded artist: `孙天宇`
+- embedded album: `如果你也刚好抬头看树`
+- source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
 
-- A Bilibili user upload indexed at about `3:12` is not treated as the locked source because its duration differs from the official `3:16` master.
-- Public streaming / user-uploaded copies may be used for identification or listening position only; they are not treated as a redistributable production source.
+Conclusion:
+- duration and metadata match the confirmed official 3:16 vocal master;
+- the file is accepted as the W02 production source;
+- the rejected 3:12 Bilibili user upload is not used.
 
-### Acquisition boundary
+### Preview v1 rendered automatically
 
-The Web can verify the exact version, but the current tools do not expose a lawful downloadable full audio file from the official streaming services.
+Recommended excerpt:
+- source in: `130.72s`
+- source out: `163.82s`
+- rendered duration: `33.149388s`
+- content intent: second chorus, beginning with `我要学着树叶翩翩起舞` and closing on `如果你也刚好抬头看树`
+- fade in: `0.08s`
+- fade out: `0.90s`, beginning after the final vocal close
+- preview SHA-256: `6d831c7bb1dadc13de79161677285d46d8a47cdaca76e5c83b508fdc36b8bf2d`
 
-Therefore W02 has now reached a legitimate `FILE_INPUT` boundary: to perform exact waveform analysis, choose the excerpt, render preview, and lock downstream timing, the actual official vocal master file must be supplied as MP3/WAV (or another directly processable audio file).
+Selection rationale:
+- contains the song's highest-recognition chorus and title return;
+- provides multiple lyric-specific visual events: leaves dancing, cuckoo call, a heart flying over the treetop, and looking up at the tree;
+- forms a semantically complete short-MV unit;
+- stronger first-round MV recognition than using only the lower-energy final bridge.
+
+## W02 Automation Result So Far
+
+- official version discovery: `AUTO`
+- source acquisition: `FILE_INPUT` completed by user
+- version/file verification: `AUTO`
+- waveform/structure analysis: `AUTO`
+- excerpt selection and preview render: `AUTO`
+- final audio lock: waiting for one designed `AESTHETIC_GATE`
 
 ## Expected Automation Hypothesis
 
-Initial hypothesis to test, not pre-declared truth:
 - W01: mostly AUTO, user only final song preference gate. **Validated.**
-- W02: AUTO if usable audio file/source is available; otherwise may require minimal user upload. **Current result: version discovery AUTO; source acquisition requires FILE_INPUT.**
+- W02: AUTO if usable audio file/source is available; otherwise may require minimal user upload. **Validated as PARTIAL: one FILE_INPUT, all processing after upload AUTO, final listening remains HUMAN_GATE.**
 - W03: AUTO.
 - W04: AUTO + optional user creative review.
 - W05: prompts AUTO, image generation AUTO in ChatGPT, user review is HUMAN_GATE.
@@ -118,17 +147,14 @@ Initial hypothesis to test, not pre-declared truth:
 - W08: AUTO once source clips and locked audio are available; subtitle alignment method depends on available audio/ASR resources.
 - W09: AUTO.
 
-These must be updated from real execution evidence.
-
 ## Next Allowed Action
 
-`FILE_INPUT`:
-- obtain the actual `孙天宇 - 如果你也刚好抬头看树` official vocal master as a processable audio file;
-- do not substitute the 3:12 Bilibili upload or another cover / derivative version.
+`AESTHETIC_GATE`:
+- user listens to W02 preview v1;
+- valid responses: `PASS` or `重新选段`.
 
-Once the file is available, Web should automatically:
-1. verify duration/version against the confirmed 3:16 master;
-2. analyze waveform + musical / lyrical structure;
-3. choose the strongest semantically complete short-MV excerpt;
-4. render a natural-fade preview;
-5. request only a `PASS / 重新选段` aesthetic gate.
+Do not enter W03 until the exact audio excerpt is locked.
+If `PASS`:
+1. record exact locked source in/out, render duration and fades;
+2. update `AUTOMATION_MATRIX.md` and this file;
+3. move to W03 and perform music / lyric / Beat analysis automatically.
