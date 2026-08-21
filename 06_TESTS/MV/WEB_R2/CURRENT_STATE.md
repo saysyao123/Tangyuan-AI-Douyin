@@ -6,139 +6,105 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W03`
-- STAGE_NAME: `Music / lyric / Beat analysis`
+- STAGE: `W04`
+- STAGE_NAME: `Director concept + production-unit allocation`
 - STATE: `READY_TO_START`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Objective
-
-从一首新的候选歌开始，在网页端重新跑完整 MV 流程，并逐 Stage 标记：
-- `AUTO`
-- `HUMAN_GATE`
-- `EXTERNAL_REQUIRED`
-- `PARTIAL`
-- `BLOCKED`
-
-重点不是假装全自动，而是测出网页端的真实自动化边界。
-
 ## Golden Quality Floor
 
-R1 Golden Sample 是质量下限，不要求复制纸墨视觉：
-- 单帧美感不得明显更低；
-- 歌词视觉命中不得明显更低；
-- 导演/运镜重复度不得更高；
-- 动态失败必须做根因分析；
-- 剪辑与字幕时间不得低于 R1 最终通过水平。
-
-## Stage Map
-
-- `W00` Bootstrap / capability baseline
-- `W01` Song discovery / benchmark-assisted selection
-- `W02` Reference BGM acquisition + exact clip lock
-- `W03` Music / lyric / Beat analysis
-- `W04` Director concept + production-unit allocation
-- `W05` First-frame prompts + image generation
-- `W06` Dynamic prompts + external Seedance generation gate
-- `W07` Dynamic QA + retry design
-- `W08` Edit + subtitle alignment + final polish
-- `W09` Automation retrospective / Round close
+R1 Golden Sample remains the minimum quality floor: frame beauty, lyric hit, directing/camera diversity, dynamic QA and edit/subtitle accuracy must not regress.
 
 ## W00 Result — LOCKED
 
-Actual state: `AUTO`.
-GitHub/Web/Files/Image interface/local ffmpeg stack verified. Dedicated Whisper/faster-whisper and direct Seedance execution are unavailable in the current exposed toolset.
+Actual state: `AUTO`. GitHub/Web/Files/Image interface/local ffmpeg stack verified. Dedicated Whisper/faster-whisper and direct Seedance execution are unavailable in the current exposed toolset.
 
 ## W01 Result — LOCKED
 
-Research state: `AUTO`.
-Total stage state: `HUMAN_GATE`.
-Selected reference song: `如果你也刚好抬头看树` — `孙天宇` official vocal version.
+Research: `AUTO`; stage total: `HUMAN_GATE / PASSED`.
+Selected song: `如果你也刚好抬头看树` — `孙天宇` official vocal version.
 
 ## W02 Result — LOCKED
 
-Actual stage state: `PARTIAL`.
-Final user gate: `PASSED` on preview v3.
+Actual state: `PARTIAL`.
+Locked production source: `如果你也刚好抬头看树-孙天宇.mp3`, 196.127s, MP3 320 kbps / 44.1 kHz / stereo.
+Locked BGM excerpt: `139.930s–177.050s`, rendered duration `37.120s`, fade in `0.020s`, fade out `0.950s`.
+Final preview v3 passed user gate.
 
-### Locked production source
+W02 one-shot clipping failed in this round and required two avoidable boundary corrections. `04_HARNESS/workflows/mv.md` was upgraded to v1.1 with the mandatory Audio Boundary Gate. Future W02 must prove this improvement by first-pass acceptance.
 
-Uploaded file: `如果你也刚好抬头看树-孙天宇.mp3`
-- duration: `196.127347s` (`3:16.127`)
-- MP3 / 320 kbps / 44.1 kHz / stereo
-- embedded metadata matches confirmed official master
-- source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
+## W03 Result — LOCKED
 
-### Locked reference BGM excerpt
+Actual state: `AUTO`.
 
-- source in: `139.930s` (`02:19.930`)
-- source out: `177.050s` (`02:57.050`)
-- rendered duration: `37.120s`
-- fade in: `0.020s`
-- fade out: `0.950s`
-- preview file: `如果你也刚好抬头看树_WEB_R2_W02_副歌扩展试听_v3.mp3`
-- preview SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
-- end strategy: after the core chorus/title-line close, include exactly one additional complete release line (`向一朵白云学习如何漂浮`), then fade after the vocal phrase resolves.
+### Evidence / timing method
 
-Downstream timing must use this exact locked audio interval/file. No silent version swap.
+- Dedicated Whisper/faster-whisper is unavailable and was **not** claimed.
+- No trustworthy public same-version timed LRC was found.
+- Lyric sequence was cross-checked against multiple same-song sources; full-version identity remains the locked 3:16 Sun Tianyu master.
+- Timing/structure uses the locked v3 audio, waveform/RMS/onset evidence, repeated-chorus alignment from W02 and beat tracking.
+- Local beat estimate for the locked clip: approximately `103.36 BPM`.
+- Harmonic-color estimate is bright major-leaning (automatic chroma estimate near E-flat major); this is descriptive only, not a hard production dependency.
+- Exact subtitle timestamps are **not** being invented here; W08 must use verifiable same-version timing evidence.
 
-### W02 failure / intervention record
+### Exact lyric sequence in locked excerpt
 
-Preview v1 — rejected:
-- `130.72s–163.82s`
-- opening included preceding non-chorus material;
-- final lyric line was truncated.
-- root cause: broad lyrical-region selection without repeated-section structural alignment or mandatory edge QA.
+1. 如果你也刚好抬头看树
+2. 我要学着树叶翩翩起舞
+3. 喊几声布谷布谷
+4. 或许少有人知道
+5. 有鸟儿是这样叫
+6. 好吧哎哟哎哟
+7. 一颗心叽叽喳喳飞过了树梢
+8. 如果你也刚好抬头看树
+9. 向一朵白云学习如何漂浮
 
-Preview v2 — technically corrected but still required user boundary refinement:
-- `140.430s–168.900s`
-- isolated the correct repeated chorus;
-- user identified that the opening needed ~0.5s pickup and the ending would resolve better with one additional complete lyric line.
+### Natural Beat Map
 
-Preview v3 — passed:
-- `139.930s–177.050s`
-- preserves the chorus body, adds musical pickup, includes one complete release line, and fades after a clear phrase-resolution/breath valley.
+Timing below is structural/energy grouping for directing, not subtitle timing.
 
-### W02 workflow promotion
+| Beat | Approx clip range | Lyric / function | Energy | Visual opportunity |
+|---|---:|---|---|---|
+| B1 | `0.0–5.9s` | 标题句 + 树叶起舞入口 | medium → bright | `抬头`必须成为第一个空间事件；叶片动作不是背景装饰 |
+| B2 | `5.9–10.7s` | 布谷布谷 | playful rise | 声音可转译为枝叶震动 / 鸟的空间定位 / 微距事件 |
+| B3 | `10.7–15.9s` | 少有人知道 / 鸟儿这样叫 | medium, curious | 从“听见”转为“发现”，适合隐藏→揭示 |
+| B4 | `15.9–23.1s` | 哎哟哎哟 + 心飞过树梢 | **primary motion peak** | 最适合整段最大动作与向上运动，禁止只拍风吹叶子 |
+| B5 | `23.1–27.7s` | 标题句复现 | release/reset | 重新获得“抬头看树”的完整空间关系，为天空段换层级 |
+| B6 | `27.7–37.12s` | 向白云学习漂浮 + tail | airy release | 从树冠释放到天空；结尾应轻，不再制造第二高潮 |
 
-`04_HARNESS/workflows/mv.md` upgraded to `v1.1` with a new W02 first-pass lock algorithm and mandatory `Audio Boundary Gate`.
+### Emotional / Strength Curve
 
-New mandatory first-pass checks include:
-- exact source/version verification;
-- short-video/Douyin usage evidence when available before candidate selection;
-- lyric + musical-section + repeated-structure mapping before timecodes;
-- `0.3–0.8s` pickup test without previous-lyric contamination;
-- no incomplete final lyric;
-- one-extra-release-line test;
-- fade only after vocal/semantic resolution;
-- isolated first ~3s / last ~4s listen plus full excerpt listen;
-- technical boundary failures must be recorded as `TECHNICAL_RESCUE`, not hidden inside a normal aesthetic gate.
+`好奇停驻 → 轻快游戏 → 发现生命 → 顽皮上扬 → 心的飞升 → 抬头确认 → 漂浮释放`
 
-## W02 Automation Conclusion
+Strongest dynamic opportunity: `B4 一颗心叽叽喳喳飞过了树梢`.
+Strongest recognition opportunity: title-line openings in `B1 / B5`.
+Best ending opportunity: `B6` cloud/air release.
 
-- official version discovery: `AUTO`
-- source acquisition: `FILE_INPUT`
-- source verification / waveform processing / rendering: `AUTO`
-- one-shot excerpt selection quality: `FAILED_IN_THIS_ROUND`
-- final excerpt achieved after two user boundary corrections
-- final approval: designed `AESTHETIC_GATE`, passed
-- W02 total: `PARTIAL`
+### Opening Hook candidates from W03
 
-This is not considered a successful one-shot automatic clip lock. The new Stage 2 workflow is intended to remove the two avoidable boundary interventions in the next song.
+These are opportunities only; W04 selects one concept:
+1. one leaf lifts against gravity and drags the camera rapidly up the trunk into the canopy;
+2. extreme low-angle canopy opening where a branch/leaf passes the lens and reveals the sky in the first second;
+3. hidden bird-call event that physically disturbs dew/leaf texture before the bird is seen.
+
+## W03 Automation Conclusion
+
+W03 can be completed automatically without user work. The missing dedicated ASR affects exact subtitle-level timing, not the ability to establish lyrics, musical structure, Natural Beats, emotional curve and director opportunities.
 
 ## Next Allowed Action
 
-Run `W03` automatically using the exact locked v3 BGM.
+Run `W04` automatically.
 
-W03 should establish:
-- exact lyric phrases for the locked excerpt;
-- music structure / rises / releases;
-- Natural Beats;
-- emotional curve;
-- strong/weak distribution;
-- key lyric visual opportunities;
-- Opening Hook candidates.
-
-Do not enter W04 until W03 output is complete.
+W04 must:
+- perform a focused 3–5 work benchmark relevant to this song;
+- choose one unified visual concept/world/material system;
+- set character policy;
+- lock one Opening Hook;
+- assign dominant visual event per Beat;
+- calculate conceptual visual units, first-frame count and 5s production clips separately;
+- explicitly verify raw dynamic coverage versus the `37.120s` locked BGM;
+- design camera diversity and run a Camera Repetition Gate;
+- then stop at the designed `AESTHETIC_GATE` for user director approval before W05.
