@@ -7,112 +7,95 @@
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W06-X`
-- STAGE_NAME: `External Seedance generation`
-- STATE: `EXTERNAL_REQUIRED / CAMERA_TEST_V1_READY`
+- STAGE_NAME: `External Seedance generation / camera prompt validation`
+- STATE: `EXTERNAL_REQUIRED / S1_MULTISHOT_TEST_V2_READY`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
-- W06_EXPERIMENT: `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
+- W06_V1: `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
+- W06_S1_V2: `06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
-## Golden Quality Floor
+## Locked Results
 
-R1 remains the minimum quality floor: frame beauty, lyric hit, directing/camera diversity, dynamic QA, edit and subtitle accuracy must not regress.
+- W00: `AUTO / LOCKED`
+- W01: `HUMAN_GATE / PASSED` — selected `如果你也刚好抬头看树` / 孙天宇
+- W02: `PARTIAL / LOCKED` — final BGM `139.930s–177.050s`, rendered `37.120s`
+- W03: `AUTO / LOCKED` — six Natural Beats, no false Whisper claim
+- W04: `HUMAN_GATE / PASSED` — final director direction `树影之外`
+- W05: `HUMAN_GATE / PASSED` — accepted first frames `9/9`
 
-## W00 Result — LOCKED
+## W04/W05 Visual Lock
 
-`AUTO`. GitHub/Web/Files/local AV stack verified. No dedicated Whisper/faster-whisper and no direct Seedance execution in the current exposed web toolset.
-
-## W01 Result — LOCKED
-
-`HUMAN_GATE / PASSED`. Song: `如果你也刚好抬头看树` — 孙天宇 official vocal version.
-
-## W02 Result — LOCKED
-
-`PARTIAL`. Final BGM: `139.930s–177.050s`, rendered `37.120s`; workflow upgraded with Audio Boundary Gate v1.1 after two avoidable boundary corrections.
-
-## W03 Result — LOCKED
-
-`AUTO`. No Whisper claim. Same-version lyric evidence + locked audio established six Natural Beats; primary motion peak = `一颗心...飞过树梢`, final release = cloud line.
-
-## W04 Result — LOCKED
-
-`HUMAN_GATE / PASSED` after visual exploration and one rejected concept.
-
-Final director direction: `树影之外`.
-
-Core principles:
-- not a continuous “tree story”; MV uses non-linear lyrical fragments;
+Final visual system:
 - one fictional East Asian female protagonist;
-- functional light sand/grey veil integrated into wardrobe and always covering nose/mouth/lower face;
-- monumental scale: ancient tree + restrained grey-white curved concrete architecture + large sky negative space;
-- low saturation, hard motivated natural backlight, real material texture;
-- unified emotion/world, diverse camera viewpoints; do not turn the nine frames into one spatial one-take narrative.
+- light sand/grey functional veil integrated into wardrobe, always covering nose/mouth/lower face;
+- monumental ancient tree + restrained grey-white curved concrete architecture + large sky negative space;
+- low saturation, motivated natural backlight, real material texture;
+- MV uses **non-linear lyrical fragments**, not one continuous spatial story;
+- first-frame principle validated: **unified emotional system + diverse camera system, not unified spatial narrative system**.
 
-## W05 Result — LOCKED
+## W06 Research — Experimental Only
 
-`HUMAN_GATE / PASSED`.
+Research sources include `songguoxs/seedance-prompt-skill`, `Emily2040/seedance-2.0`, `yinxiaowai/awesome-ai-video-camera-movement-prompts`, `fal-ai-community/skills`, `maciejdzierzek/seedance-prompt-generator`, CinePrompt and supporting cross-model camera references.
 
-- Final first-frame set: `9 / 9` generated and accepted in conversation.
-- The first pass of only three style anchors stopped instead of automatically continuing; user had to nudge and also flagged a soft/blurry result. Record this as one avoidable `TECHNICAL_RESCUE` for W05 execution discipline.
-- After iterations, the accepted frame-set deliberately mixes: monumental extreme wide / medium reach / veil-eye close-up / full-body motion / bird relationship / worm’s-eye action peak / rooftop sky-release views.
-- Final first-frame rule learned in this round: **unified emotional system + diverse camera system, not unified spatial narrative system**.
-- Do not promote new hard rules solely from still-image acceptance; video results must validate them first.
+### v1 hypothesis — REJECTED FOR THIS MV
 
-## W06 Result — TEST PROMPTS READY
+The v1 interpretation used `one primary Camera Contract per 5s clip` and distributed camera diversity across the nine clips.
 
-Actual state: `AUTO / EXPERIMENTAL`.
+S1 external generation disproved this interpretation for the current MV target:
+- returned raw clip: `5.09s`, `720×1280`, `24fps`;
+- giant tree / curved wall / light beam / character scale remain almost unchanged through the clip;
+- result reads as a fixed one-take and lacks the desired 3–5-shot MV dynamics;
+- motion burden shifted onto fabric instead of camera/edit rhythm;
+- an independent white scarf-like strip detached from the character and crossed the upper frame, a veil topology failure.
 
-Research performed before writing prompts:
-- `songguoxs/seedance-prompt-skill`
-- `Emily2040/seedance-2.0` camera/cinematography references
-- `yinxiaowai/awesome-ai-video-camera-movement-prompts`
-- `fal-ai-community/skills` cinematography
-- `maciejdzierzek/seedance-prompt-generator`
-- supporting camera vocab from CinePrompt / cross-model director skills
+Root-cause correction:
 
-Key test hypothesis:
-- each 5s clip = one primary Camera Contract + one dominant event + one secondary physical aftermath + clear endpoint;
-- diversity comes from the **whole set**, not by stacking many moves inside one 5s prompt;
-- no precise timestamp segmentation for current 5s I2V test;
-- no default slow-push template;
-- complex high-risk moves are kept experimental, not forced into this song.
+`one camera movement per shot` **does not mean** `one camera movement per 5s clip`.
 
-Prompt set and research note:
-`06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
+Correct test model:
+- keep the proven `3–5 shot` dynamic structure when the lyric/director task benefits from it;
+- inside **each Shot**, use only one clear camera movement / Camera Contract;
+- overall clip energy comes from `hard cuts + shot-size/angle contrast + one move per shot + subject/environment action`;
+- do not make every 5s clip a one-take merely to use professional camera language.
 
-Whole-set Camera Test v1:
-1. S1 Locked extreme wide
-2. S2 25–35° Arc shot
-3. S3 Locked close-up + Rack Focus
-4. S4 Truck-right lateral tracking
-5. S5 Tilt Up
-6. S6 Slow Dolly Pull-back
-7. S7 Low-angle Pedestal Up — primary motion peak
-8. S8 Slow horizontal Pan across rooftop geometry
-9. S9 Small-amplitude optical Zoom Out — final release
+## S1 v2 — READY
 
-Not used in current song but retained in research pool: Whip Pan, Dolly Zoom, Crash Zoom, FPV, strong handheld/shake, full 360 orbit, Camera Roll, Bullet Time, high-speed fly-through.
+Test file:
+`06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
+
+S1 v2 uses four explicit hard-cut shots:
+1. extreme wide + Dolly In;
+2. low-angle medium close-up + small Arc/Truck;
+3. veil/eyes close-up + Rack Focus;
+4. worm’s-eye / low angle + Tilt Up into the canopy and sky aperture.
+
+### Veil topology patch
+
+- veil remains one continuous piece connected to neck/shoulder/wardrobe;
+- do not call it a long scarf/ribbon/tail;
+- fabric motion is medium/small amplitude;
+- forbid any independent white cloth/scarf/ribbon appearing from sky, canopy or offscreen;
+- forbid detached cloth crossing the frame or duplicate fabric strips.
 
 ## Current External Boundary — W06-X
 
 `EXTERNAL_REQUIRED`.
 
-The web session cannot directly execute Seedance 2 mini. User action is limited to:
-1. upload the matching accepted first frame;
-2. paste the matching W06 prompt;
-3. generate a 5s 9:16 raw clip in Seedance 2 mini;
-4. return raw MP4(s) to this chat.
+For the next iteration, generate **S1 v2 only** in Seedance 2 mini with the same accepted S1 first frame and return the raw MP4.
 
-Recommended validation order before spending the full batch:
-- `S1` — Locked camera compliance / atmosphere;
-- `S3` — Rack Focus + veil/face stability;
-- `S7` — strongest Pedestal Up / fabric / bird / identity stress test.
+Do **not** generate S2–S9 yet.
 
-If these three pass, generate S2/S4/S5/S6/S8/S9. If one camera class fails, repair only that class; do not change the accepted first-frame set globally.
+## Next QA Gate
 
-## Next Allowed Action
+After S1 v2 returns, automatically check:
+1. whether four Shots are visually distinguishable;
+2. whether each Shot executes its intended camera movement;
+3. whether 3–5-shot structure restores MV dynamics without chaos;
+4. whether character/wardrobe/world remain acceptably consistent across cuts;
+5. whether the veil stays physically connected and the floating-scarf artifact is gone;
+6. whether the final Tilt Up delivers the lyric action `抬头看树`;
+7. whether the ending is clean enough for editing.
 
-`EXTERNAL_TOOL` only: external Seedance generation and raw clip return.
-
-After clips return: enter `W07` automatically for dynamic QA, root-cause classification and patch prompts. Do not promote W06 Camera Test v1 to core rules until W07 evidence exists.
+Only if S1 v2 passes should this camera logic be expanded to S2–S9. Do not promote it to core rules yet.
