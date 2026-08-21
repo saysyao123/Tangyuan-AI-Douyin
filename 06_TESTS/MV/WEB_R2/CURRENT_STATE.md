@@ -6,9 +6,9 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W02`
-- STAGE_NAME: `Reference BGM acquisition + exact clip lock`
-- STATE: `PREVIEW_V3_RENDERED / AWAITING_AUDIO_GATE`
+- STAGE: `W03`
+- STAGE_NAME: `Music / lyric / Beat analysis`
+- STATE: `READY_TO_START`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -58,9 +58,12 @@ Research state: `AUTO`.
 Total stage state: `HUMAN_GATE`.
 Selected reference song: `如果你也刚好抬头看树` — `孙天宇` official vocal version.
 
-## W02 Current Evidence
+## W02 Result — LOCKED
 
-### Production source
+Actual stage state: `PARTIAL`.
+Final user gate: `PASSED` on preview v3.
+
+### Locked production source
 
 Uploaded file: `如果你也刚好抬头看树-孙天宇.mp3`
 - duration: `196.127347s` (`3:16.127`)
@@ -68,59 +71,74 @@ Uploaded file: `如果你也刚好抬头看树-孙天宇.mp3`
 - embedded metadata matches confirmed official master
 - source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
 
-Accepted as W02 production source.
+### Locked reference BGM excerpt
 
-### Preview v1 — REJECTED
+- source in: `139.930s` (`02:19.930`)
+- source out: `177.050s` (`02:57.050`)
+- rendered duration: `37.120s`
+- fade in: `0.020s`
+- fade out: `0.950s`
+- preview file: `如果你也刚好抬头看树_WEB_R2_W02_副歌扩展试听_v3.mp3`
+- preview SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
+- end strategy: after the core chorus/title-line close, include exactly one additional complete release line (`向一朵白云学习如何漂浮`), then fade after the vocal phrase resolves.
 
-- source range: `130.72s–163.82s`
-- issue: opening included pre-chorus material and ending cut a lyric line.
-- root cause: excerpt boundaries were based on a broad lyrical region rather than repeated-section structural alignment.
+Downstream timing must use this exact locked audio interval/file. No silent version swap.
 
-### Preview v2 — REJECTED / LOCAL CORRECTION REQUESTED
+### W02 failure / intervention record
 
-- source range: `140.430s–168.900s`
-- duration: `28.470s`
-- corrected the v1 structural error and isolated the full second repeated chorus.
-- user feedback: the opening would feel smoother with about `0.5s` additional pre-roll; the ending should include one more complete lyric line so the fade resolves more naturally.
-- this is a local boundary refinement only; the selected chorus body remains locked.
+Preview v1 — rejected:
+- `130.72s–163.82s`
+- opening included preceding non-chorus material;
+- final lyric line was truncated.
+- root cause: broad lyrical-region selection without repeated-section structural alignment or mandatory edge QA.
 
-### Preview v3 — CURRENT
+Preview v2 — technically corrected but still required user boundary refinement:
+- `140.430s–168.900s`
+- isolated the correct repeated chorus;
+- user identified that the opening needed ~0.5s pickup and the ending would resolve better with one additional complete lyric line.
 
-User-requested refinement applied without changing the approved chorus body:
-- source in: `139.930s` (`02:19.930`), exactly `0.500s` earlier than v2;
-- source out: `177.050s` (`02:57.050`);
-- rendered duration: `37.120s`;
-- added exactly one complete lyric line after the title-line chorus close: `向一朵白云学习如何漂浮`;
-- lyric sequence cross-check confirms the following line begins the next tail section (`在某天某个随机的清晨或是下午...`), so it is intentionally excluded;
-- audio energy shows a clear phrase-resolution / breathing valley around `176.7–176.9s`, supporting the new out-point;
-- fade in: `0.020s`;
-- fade out: `0.950s` after the added line resolves.
+Preview v3 — passed:
+- `139.930s–177.050s`
+- preserves the chorus body, adds musical pickup, includes one complete release line, and fades after a clear phrase-resolution/breath valley.
 
-Rationale:
-- preserves the structurally correct second chorus established in v2;
-- gives the opening a small musical pickup rather than beginning exactly on the structural downbeat;
-- avoids the abrupt title-line stop by allowing one semantically complete release line;
-- still avoids dragging the full outro/bridge into the short-MV excerpt.
+### W02 workflow promotion
 
-## W02 Automation Result So Far
+`04_HARNESS/workflows/mv.md` upgraded to `v1.1` with a new W02 first-pass lock algorithm and mandatory `Audio Boundary Gate`.
+
+New mandatory first-pass checks include:
+- exact source/version verification;
+- short-video/Douyin usage evidence when available before candidate selection;
+- lyric + musical-section + repeated-structure mapping before timecodes;
+- `0.3–0.8s` pickup test without previous-lyric contamination;
+- no incomplete final lyric;
+- one-extra-release-line test;
+- fade only after vocal/semantic resolution;
+- isolated first ~3s / last ~4s listen plus full excerpt listen;
+- technical boundary failures must be recorded as `TECHNICAL_RESCUE`, not hidden inside a normal aesthetic gate.
+
+## W02 Automation Conclusion
 
 - official version discovery: `AUTO`
-- source acquisition: `FILE_INPUT` completed by user
-- version/file verification: `AUTO`
-- waveform/structure analysis: `AUTO`
-- v1 selection/render: `AUTO`, failed quality gate
-- v2 root-cause correction/render: `AUTO`
-- v3 local boundary refinement/render: `AUTO`
-- final audio lock: awaiting designed `AESTHETIC_GATE`
+- source acquisition: `FILE_INPUT`
+- source verification / waveform processing / rendering: `AUTO`
+- one-shot excerpt selection quality: `FAILED_IN_THIS_ROUND`
+- final excerpt achieved after two user boundary corrections
+- final approval: designed `AESTHETIC_GATE`, passed
+- W02 total: `PARTIAL`
+
+This is not considered a successful one-shot automatic clip lock. The new Stage 2 workflow is intended to remove the two avoidable boundary interventions in the next song.
 
 ## Next Allowed Action
 
-`AESTHETIC_GATE`:
-- user listens to W02 preview v3;
-- valid responses: `PASS` or further local boundary correction.
+Run `W03` automatically using the exact locked v3 BGM.
 
-Do not enter W03 until the exact audio excerpt is locked.
-If `PASS`:
-1. lock `139.930s–177.050s` as the reference BGM;
-2. update `AUTOMATION_MATRIX.md` and this file;
-3. move to W03 and perform music / lyric / Beat analysis automatically.
+W03 should establish:
+- exact lyric phrases for the locked excerpt;
+- music structure / rises / releases;
+- Natural Beats;
+- emotional curve;
+- strong/weak distribution;
+- key lyric visual opportunities;
+- Opening Hook candidates.
+
+Do not enter W04 until W03 output is complete.
