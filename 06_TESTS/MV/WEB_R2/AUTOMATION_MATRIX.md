@@ -4,21 +4,21 @@
 
 ## Overall
 
-- Current Stage: `W01`
-- Overall State: `AWAITING_AESTHETIC_GATE`
+- Current Stage: `W02`
+- Overall State: `SOURCE_FILE_REQUIRED`
 - Fully automated stages: `1`
 - Human aesthetic gates encountered: `1`
-- Human aesthetic gates passed: `0`
+- Human aesthetic gates passed: `1`
 - External-required stages encountered: `0`
-- Non-aesthetic manual interventions: `0`
+- Non-aesthetic manual interventions: `1`
 
 ## Stage Board
 
 | Stage | 内容 | 预期 | 实际 | 用户操作 | 备注 |
 |---|---|---|---|---|---|
 | W00 | 能力基线 | AUTO | AUTO | 无 | GitHub read/write 可用；Web 可用；Files/Library 可用；Image Generation 接口存在，实际生产留 W05 验证；本地 ffmpeg/ffprobe、MoviePy、pydub、OpenCV 可用；无独立 Whisper/faster-whisper；不能控制用户本机/浏览器或 Seedance 外部站点 |
-| W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE | 最终选歌 | 研究与筛选已由网页端自动完成；当前只等待用户从 3 个候选中做审美选择 |
-| W02 | 音频截取 | HUMAN_GATE/PARTIAL | NOT_STARTED | 可能上传音频 + 试听确认 | |
+| W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE | 最终选歌 | 研究与筛选自动完成；用户选择 `如果你也刚好抬头看树`，Gate 已通过 |
+| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL | 上传官方原唱实际音频文件 + 后续试听确认 | 已自动确认孙天宇官方原唱母版 3:16；官方流媒体无可直接交给本地处理的完整音频文件，因此触发 FILE_INPUT；拿到文件后裁剪/分析应继续 AUTO |
 | W03 | Beat分析 | AUTO | NOT_STARTED | 无 | |
 | W04 | 导演/生产分配 | HUMAN_GATE | NOT_STARTED | 审美确认 | |
 | W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | Image Generation 实际生产能力在本 Stage 验证 |
@@ -49,25 +49,21 @@
 4. `SANGR桑瑞` — `SPECIALIST_REFERENCE / WATCHLIST`。本轮公开索引未取得最近约30天足够可靠的新 AIMV 歌曲采用证据，不伪造活跃度。
 5. `current music / platform diffusion check` — 酷我 2026-08-06 榜单 + 抖音普通创作者近30天扩散样本，用于补足 PLATFORM_HEAT / RECENT_SPREAD 信号；其中《山风山风等等我》榜单第1，《踏马寻花向自由》第8。
 
-### Shortlist
+### Final selection
 
-#### C1｜《山风山风等等我》
-- Heat: `STRONG` — 2026-08-06 酷我当前榜单第1；近期 AIMV 观察源采用；8月仍持续出现舞蹈教学、翻唱、生活内容。
-- MV fit: `VERY_HIGH` — 山风、远方、山那头、自由感天然提供空间、运动、天气、景别与动作设计，不必依赖纯情绪站桩。
-- Risk: 容易落入“古风女子 + 山景 + 风吹衣摆”同质化，Director 阶段必须主动 Anti-Copy。
-- Representative video: https://jingxuan.douyin.com/m/video/7674486948253289782
+- `C3 如果你也刚好抬头看树`
+- Artist / reference version: `孙天宇`
+- User aesthetic gate: `PASSED`
 
-#### C2｜《踏马寻花向自由》
-- Heat: `STRONG` — 2026-08-06 酷我榜单第8；近期 AIMV 观察源连续制作；普通舞蹈/健身/生活内容仍在持续采用，且存在多版本改编。
-- MV fit: `VERY_HIGH / HIGH-MOTION` — 歌词与节奏适合真正的移动、空间穿越、动作与多镜头语法，最适合本轮继续测试 Camera Repetition Gate 与更丰富运镜。
-- Risk: “骑马 + 花海 + 国风侠女”已经非常容易俗套，必须保留自由/出走原理但更换表面视觉。
-- Representative video: https://www.bilibili.com/list/3493080640522749?bvid=BV1Dh4y1Z7g8&oid=658319006
+## W02 Version Evidence
 
-#### C3｜《如果你也刚好抬头看树》
-- Heat: `STRONG / SUSTAINED` — 7月下旬曾出现抖音热榜信号，8月仍能看到文旅、舞蹈、普通内容持续采用；近期 AIMV 观察源也制作了对应 MV。
-- MV fit: `VERY_HIGH / POETIC` — 树、叶、光、抬头、停驻、游牧感可以发展出清晰的歌词视觉事件，适合做治愈但不静态的诗意电影路线。
-- Risk: 节奏与情绪比 C2 克制，更依赖导演把“光、树、空间变化”变成事件，不能只拍唯美空镜。
-- Representative video/reference: http://t.cn/AXKFfKnH
+- Official vocal master: `孙天宇 - 如果你也刚好抬头看树`
+- Official streaming duration: `3:16`
+- Instrumental companion: `如果你也刚好抬头看树 - 伴奏`, `3:16`
+- Spotify release metadata: `2026-07-22`, `℗ 2026 Columbia Records China`
+- Artist verified post on `2026-07-20` linked the song across QQ Music / NetEase Cloud Music / Kugou / Kuwo / Qishui Music.
+- Apple Music independently lists the vocal and instrumental under the same Single.
+- Indexed Bilibili full-song user upload is about `3:12`; rejected as exact locked source because duration does not match the official 3:16 master.
 
 ## 状态枚举
 
@@ -82,7 +78,8 @@
 
 | # | Stage | 类型 | 为什么需要用户 | 用户做了什么 | 是否未来可消除 |
 |---|---|---|---|---|---|
-| 1 | W01 | AESTHETIC_GATE | 3个候选均满足自动研究门槛，最终选择涉及用户对歌曲本身的审美偏好；按计划不由系统替代 | `PENDING` | 否；这是设计保留的审美 Gate，不属于自动化缺陷 |
+| 1 | W01 | AESTHETIC_GATE | 3个候选均满足自动研究门槛，最终选择涉及用户对歌曲本身的审美偏好；按计划不由系统替代 | 选择 `C3 如果你也刚好抬头看树` | 否；这是设计保留的审美 Gate，不属于自动化缺陷 |
+| 2 | W02 | FILE_INPUT | 网页端可确认官方版本，但官方流媒体未暴露可直接进入本地处理链的完整音频文件；不能把搬运版伪装成官方生产源 | `PENDING`：上传孙天宇官方原唱 3:16 对应实际 MP3/WAV/可处理音频文件 | 可能；未来若接入有授权的音频资产源可消除 |
 
 类型只允许：
 - `AESTHETIC_GATE`
