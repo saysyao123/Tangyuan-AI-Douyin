@@ -8,7 +8,7 @@
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W02`
 - STAGE_NAME: `Reference BGM acquisition + exact clip lock`
-- STATE: `PREVIEW_V2_RENDERED / AWAITING_AUDIO_GATE`
+- STATE: `PREVIEW_V3_RENDERED / AWAITING_AUDIO_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -17,7 +17,6 @@
 ## Objective
 
 从一首新的候选歌开始，在网页端重新跑完整 MV 流程，并逐 Stage 标记：
-
 - `AUTO`
 - `HUMAN_GATE`
 - `EXTERNAL_REQUIRED`
@@ -50,98 +49,58 @@ R1 Golden Sample 是质量下限，不要求复制纸墨视觉：
 
 ## W00 Result — LOCKED
 
-Actual state: `AUTO`
-
-Verified capability baseline:
-- GitHub connector read/write: available and verified on `test/mv-web-r2`.
-- Public Web research: available; W01 validated actual discovery use.
-- Files / conversation uploads / Library analysis: available.
-- Image Generation interface: available; production quality is not pre-claimed and will be tested in W05.
-- Local audio/video processing: ffmpeg, ffprobe, MoviePy, pydub and OpenCV available.
-- Dedicated Whisper / faster-whisper: not present in current local environment; later subtitle work must not pretend Whisper ran.
-- Direct Seedance execution: not available in current exposed toolset; do not assume browser/login control.
-- User local machine/browser control: unavailable.
-
-No user intervention was required in W00.
+Actual state: `AUTO`.
+GitHub/Web/Files/Image interface/local ffmpeg stack verified. Dedicated Whisper/faster-whisper and direct Seedance execution are unavailable in the current exposed toolset.
 
 ## W01 Result — LOCKED
 
 Research state: `AUTO`.
 Total stage state: `HUMAN_GATE`.
-
-User selected:
-- Reference song: `如果你也刚好抬头看树`
-- Artist / official vocal version: `孙天宇`
+Selected reference song: `如果你也刚好抬头看树` — `孙天宇` official vocal version.
 
 ## W02 Current Evidence
 
-### Official reference version confirmed
+### Production source
 
-Primary version:
-- Title: `如果你也刚好抬头看树`
-- Artist: `孙天宇`
-- Type: official vocal master
-- Official streaming duration evidence: `3:16`
-- Companion instrumental version: `如果你也刚好抬头看树 - 伴奏`, also `3:16`
-- International release metadata: `2026-07-22`
-- Rights metadata: `℗ 2026 Columbia Records China`
-
-### User file received and verified
-
-Uploaded source:
-- filename: `如果你也刚好抬头看树-孙天宇.mp3`
-- measured duration: `196.127347s` (`3:16.127`)
-- codec: `MP3`
-- bitrate: `320 kbps`
-- sample rate: `44.1 kHz`
-- channels: `stereo`
-- embedded title / artist / album match the confirmed master
+Uploaded file: `如果你也刚好抬头看树-孙天宇.mp3`
+- duration: `196.127347s` (`3:16.127`)
+- MP3 / 320 kbps / 44.1 kHz / stereo
+- embedded metadata matches confirmed official master
 - source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
 
-Conclusion:
-- accepted as the W02 production source;
-- the rejected 3:12 Bilibili user upload is not used.
+Accepted as W02 production source.
 
 ### Preview v1 — REJECTED
 
 - source range: `130.72s–163.82s`
-- rendered duration: `33.149388s`
-- user feedback: opening contains material before the true chorus start; ending cuts the final lyric before completion.
-- root cause: excerpt boundary detection was too loose and treated a broader lyrical region as the chorus instead of structurally aligning the repeated chorus itself.
-- result: `REJECTED / LOCAL_CORRECTION_ONLY`; no downstream stage was changed.
+- issue: opening included pre-chorus material and ending cut a lyric line.
+- root cause: excerpt boundaries were based on a broad lyrical region rather than repeated-section structural alignment.
 
-### Re-analysis and structural alignment
+### Preview v2 — REJECTED / LOCAL CORRECTION REQUESTED
 
-The supplied master was re-analyzed using repeated-section alignment rather than approximate lyrical location.
+- source range: `140.430s–168.900s`
+- duration: `28.470s`
+- corrected the v1 structural error and isolated the full second repeated chorus.
+- user feedback: the opening would feel smoother with about `0.5s` additional pre-roll; the ending should include one more complete lyric line so the fade resolves more naturally.
+- this is a local boundary refinement only; the selected chorus body remains locked.
 
-Evidence:
-- first repeated chorus structural downbeat: approx `58.86s`;
-- second repeated chorus structural downbeat: approx `140.43s`;
-- repeated-section offset: approx `81.55s`;
-- first chorus close / section boundary: approx `87.03s`;
-- corresponding second chorus close: approx `168.58s`.
+### Preview v3 — CURRENT
 
-Web cross-check:
-- the song had active short-video/BGM diffusion after release, including fan-curated collections of posts using the song as BGM and an official artist short video around 39 seconds;
-- Sony's own promotion repeatedly highlighted the title / tree-gift lyric cluster, confirming that short-form usage centers on the song's high-recognition tree hook rather than arbitrary verse fragments;
-- exact source timestamps are derived from the supplied master because public short-video indexes do not expose reliable source-audio in/out timestamps.
-
-### Preview v2 rendered automatically
-
-Corrected excerpt:
-- source in: `140.43s` (`02:20.430`)
-- source out: `168.90s` (`02:48.900`)
-- rendered duration: `28.470s`
-- content: one complete second repeated chorus, starting on the chorus structural downbeat and ending only after the final title-line resolution;
-- fade in: `0.025s`
-- fade out: `0.420s`
-- preview SHA-256: `b957a9e31bf7bc48a993cfdac51515cfb4f0978822abd72d7b5433c7fae8546d`
+User-requested refinement applied without changing the approved chorus body:
+- source in: `139.930s` (`02:19.930`), exactly `0.500s` earlier than v2;
+- source out: `177.050s` (`02:57.050`);
+- rendered duration: `37.120s`;
+- added exactly one complete lyric line after the title-line chorus close: `向一朵白云学习如何漂浮`;
+- lyric sequence cross-check confirms the following line begins the next tail section (`在某天某个随机的清晨或是下午...`), so it is intentionally excluded;
+- audio energy shows a clear phrase-resolution / breathing valley around `176.7–176.9s`, supporting the new out-point;
+- fade in: `0.020s`;
+- fade out: `0.950s` after the added line resolves.
 
 Rationale:
-- removes the ~9.7s pre-chorus/preceding material mistakenly included in v1;
-- restores the ~5s of missing chorus ending that v1 cut off;
-- stays near the natural ~30s short-video music unit without padding with non-chorus lyrics just to reach a round duration;
-- second chorus is preferred over the first because the arrangement is fuller while the lyrical/melodic unit is the same.
+- preserves the structurally correct second chorus established in v2;
+- gives the opening a small musical pickup rather than beginning exactly on the structural downbeat;
+- avoids the abrupt title-line stop by allowing one semantically complete release line;
+- still avoids dragging the full outro/bridge into the short-MV excerpt.
 
 ## W02 Automation Result So Far
 
@@ -149,18 +108,19 @@ Rationale:
 - source acquisition: `FILE_INPUT` completed by user
 - version/file verification: `AUTO`
 - waveform/structure analysis: `AUTO`
-- v1 selection/render: `AUTO`, but failed quality gate
-- v2 root-cause correction and re-render: `AUTO`
-- final audio lock: waiting for the designed `AESTHETIC_GATE`
+- v1 selection/render: `AUTO`, failed quality gate
+- v2 root-cause correction/render: `AUTO`
+- v3 local boundary refinement/render: `AUTO`
+- final audio lock: awaiting designed `AESTHETIC_GATE`
 
 ## Next Allowed Action
 
 `AESTHETIC_GATE`:
-- user listens to W02 preview v2;
-- valid responses: `PASS` or `重新选段`.
+- user listens to W02 preview v3;
+- valid responses: `PASS` or further local boundary correction.
 
 Do not enter W03 until the exact audio excerpt is locked.
 If `PASS`:
-1. lock `140.43s–168.90s` as the reference BGM;
+1. lock `139.930s–177.050s` as the reference BGM;
 2. update `AUTOMATION_MATRIX.md` and this file;
 3. move to W03 and perform music / lyric / Beat analysis automatically.
