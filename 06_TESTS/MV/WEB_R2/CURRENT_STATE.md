@@ -8,13 +8,14 @@
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W06-X / W07`
 - STAGE_NAME: `External Seedance generation + dynamic QA / director-structure calibration`
-- STATE: `S2_ONE_TAKE_PASS / DIRECTOR_SELECTOR_V1_RECORDED`
+- STATE: `S1_V2_SOURCE_USABLE / S2_ONE_TAKE_PASS / DIRECTOR_SELECTOR_V1_RECORDED`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
 - W06_V1: `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
 - W06_S1_V2: `06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
 - DIRECTOR_SELECTOR: `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
+- S1_V2_QA: `06_TESTS/MV/WEB_R2/W07_S1_V2_QA_NOTE.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Locked Results
@@ -46,8 +47,45 @@ Final visual system:
 - independent white scarf-like cloth detached from character and crossed frame: veil topology failure.
 
 Important correction:
+`S1 v1 proves a weak one-take can fail; it does NOT prove one-take is wrong.`
 
-`S1 proves a weak one-take can fail; it does NOT prove one-take is wrong.`
+### S1 v2 — PASS_AS_SOURCE / TRIM_REQUIRED
+
+User-returned raw clip:
+- 5.088s / 720×1280 / 24fps;
+- clear multi-shot execution with meaningful scale / angle / focal changes;
+- visual level and camera energy are substantially better than S1 v1;
+- extreme-wide opening, eye close-up and final canopy Tilt Up are usable source material;
+- clip is accepted into the source pool, but not locked for full-length use.
+
+Detected visual discontinuities approximately at:
+`2.04s / 2.42s / 3.13s / 3.88s`.
+
+Middle issue:
+- `2.04–3.12s` contains two similar low-angle character beats;
+- foreground occlusion differentiates them slightly, but shot size / angle / action state repeat enough to feel redundant;
+- W08 should keep only the stronger portion or trim both aggressively; **do not regenerate solely for this**.
+
+New source-material principle:
+`Generated clip QA is not binary whole-clip accept/reject. A clip can be SOURCE_USABLE / TRIM_REQUIRED; final BGM and edit rhythm decide which internal shots survive.`
+
+### S1 v2 Audio — SOURCE_AUDIO_POLICY_FAIL
+
+Returned clip includes non-ambient music-like audio even though the prompt used soft wording similar to `不需要BGM`.
+
+Extracted audio evidence:
+- AAC stereo 44.1kHz;
+- integrated loudness approx `-18.7 LUFS`;
+- strongly harmonic continuous content, inconsistent with wind/leaves-only ambience.
+
+Visual source remains usable because final MV uses the locked external song and removes AI source audio.
+
+Core `04_HARNESS/rules/ai_video.md` upgraded to v1.2 with a stronger Source Audio HARD RULE:
+- explicitly forbid BGM / music / melody / beat / chords / singing / humming / narration / dialogue / voices;
+- allow only physically motivated natural ambience when useful;
+- default `SOURCE_AUDIO = REMOVE`;
+- if music still appears, mark `SOURCE_AUDIO_POLICY_FAIL`, keep good visuals and strip source audio in W08;
+- AI source audio never determines edit Beat or subtitle timing.
 
 ### S2 v1 — PASS / POSITIVE SAMPLE
 
@@ -61,70 +99,57 @@ User-returned raw clip:
 - user judgement: `S2效果不错，环绕运镜的感觉挺好`.
 
 S2 success hypothesis:
-
 `strong first-frame depth + simple continuous performance + foreground/midground/background parallax + one clear camera path + a more beautiful endpoint = one-take can outperform unnecessary cuts.`
 
 ## Director Structure Correction
 
-The current experiment no longer uses either of these false absolutes:
-- `every 5s clip should be one take` — REJECTED;
-- `every 5s clip should be 3–5 shots` — ALSO REJECTED.
+The current experiment rejects both absolutes:
+- `every 5s clip should be one take` — false;
+- `every 5s clip should be 3–5 shots` — false.
 
-New experimental decision order:
-
+Decision order:
 `lyric task → first-frame performance potential → choose shot count → assign one Camera Contract per Shot → motion-load check → beauty/comfort gate`.
 
 Shot-count options:
+- `1 Shot`: continuous emotion / complete gesture / spatial reveal / release where camera motion itself provides sustained progression;
+- `2–3 Shots`: setup → event → aftermath, character/detail shift, one semantic turn;
+- `3–5 Shots`: dense lyric / motion peak / strong Hook where angle/scale contrast is actually needed.
 
-### 1 Shot / One Take
-Use when:
-- lyric is one continuous emotion or one complete gesture;
-- first frame already has strong depth / parallax anchors;
-- one camera path can create sustained visual progression;
-- continuity feels more musical than cutting.
+Every Cut must add new emotion, information or viewpoint.
 
-Current positive sample: `S2 Arc`.
+### Adjacent Shot Contrast Gate — EXPERIMENTAL
 
-### 2–3 Shots
-Use when:
-- one main event needs `setup → event → aftermath`;
-- lyric needs character/detail attention shift;
-- one semantic turn exists.
+S1 v2 shows multi-shot prompts can still repeat themselves if adjacent shots are too similar.
 
-### 3–5 Shots
-Use when:
-- lyric density or beat density is high;
-- motion peak / Hook needs angle and scale contrast;
-- one-take cannot provide enough MV visual density.
+Before generation, consecutive Shots should differ in at least 2 of:
+- shot size;
+- angle;
+- subject scale;
+- camera direction;
+- focal plane;
+- dominant action;
+- dominant visual subject.
 
-3–5 shots are not automatically better. Every Cut must add new emotion, information or viewpoint.
+If not, merge or remove one Shot before generation.
 
 Full experimental selector:
 `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
 
-## Per-shot Camera Rule — Experimental
-
-Regardless of total Shot count, each individual Shot gets one primary Camera Contract:
-
-`shot size + angle + start frame + movement + speed + subject relation + endpoint`.
-
-Motion budget per Shot:
-- 1 primary camera move;
-- 1 primary subject action;
-- 1 secondary physical motion.
-
-Do not simultaneously overload camera + large body action + large fabric + bird + focus shift + light event unless the shot specifically earns that complexity.
-
 ## Current Direction
 
-- S2 is retained as a one-take positive sample; do not replace it merely to increase cuts.
-- S1 v2 four-shot prompt remains an experimental repair option, not a new universal template.
-- S3–S9 must be reconsidered individually using the Director Shot-Structure Selector before batch generation.
-- Goal is not maximum camera vocabulary; goal is the most beautiful, comfortable and lyric-specific 5-second direction for each segment.
-- No promotion to core `ai_video.md` until more generated one-take / multi-shot pass-fail evidence exists.
+- S1 v2 stays in the source pool; trim repetition later rather than regenerate now.
+- S2 remains the one-take positive sample and should not be rewritten merely to add cuts.
+- S3–S9 must be reconsidered individually with the Director Selector.
+- Future prompts use the strengthened Source Audio hard wording from `ai_video.md v1.2`.
+- Camera/shot-count rules remain experimental; audio source policy is promoted because it strengthens an existing verified hard rule rather than inventing a new director formula.
 
 ## Next Allowed Action
 
-Before generating the rest of the batch, automatically redesign the **S3–S9 shot-structure map** segment by segment using the experimental Director Selector, preserving S2 as accepted positive evidence.
+Automatically redesign S3–S9 shot structures and prompts segment by segment using:
+1. lyric task;
+2. accepted first frame;
+3. S1/S2 generated evidence;
+4. Adjacent Shot Contrast Gate;
+5. strengthened Source Audio hard rule.
 
 Seedance execution remains `EXTERNAL_REQUIRED`; prompt/director analysis remains automatic.
