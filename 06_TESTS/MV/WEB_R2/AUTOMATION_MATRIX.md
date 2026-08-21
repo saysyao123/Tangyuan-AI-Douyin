@@ -5,7 +5,7 @@
 ## Overall
 
 - Current Stage: `W02`
-- Overall State: `AWAITING_AUDIO_AESTHETIC_GATE`
+- Overall State: `AWAITING_AUDIO_AESTHETIC_GATE_V2`
 - Fully automated stages: `1`
 - Human aesthetic gates encountered: `2`
 - Human aesthetic gates passed: `1`
@@ -18,7 +18,7 @@
 |---|---|---|---|---|---|
 | W00 | 能力基线 | AUTO | AUTO | 无 | GitHub read/write 可用；Web 可用；Files/Library 可用；Image Generation 接口存在，实际生产留 W05 验证；本地 ffmpeg/ffprobe、MoviePy、pydub、OpenCV 可用；无独立 Whisper/faster-whisper；不能控制用户本机/浏览器或 Seedance 外部站点 |
 | W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE | 最终选歌 | 研究与筛选自动完成；用户选择 `如果你也刚好抬头看树`，Gate 已通过 |
-| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / GATE_PENDING | 已上传官方原唱实际音频；试听确认待定 | 官方版本确认 AUTO；FILE_INPUT 已完成；文件核验、结构分析、选段和裁剪均 AUTO；预览 v1 已生成，等待 PASS / 重新选段 |
+| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / GATE_PENDING_V2 | 已上传官方原唱实际音频；试听 v2 待确认 | v1 边界错误被用户 Gate 拒绝；网页端完成根因分析并仅修正 W02，不改上游；v2 按重复副歌结构重切为 `140.43s–168.90s` |
 | W03 | Beat分析 | AUTO | NOT_STARTED | 无 | |
 | W04 | 导演/生产分配 | HUMAN_GATE | NOT_STARTED | 审美确认 | |
 | W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | Image Generation 实际生产能力在本 Stage 验证 |
@@ -30,50 +30,51 @@
 
 ## W00 Capability Baseline Evidence
 
-- GitHub connector: `VERIFIED` — 已从 `test/mv-web-r2` 读取指定文件，并可向同分支写回状态文件。
-- Public Web research: `AVAILABLE` — 当前对话具备网页搜索/打开页面能力；W01 已进一步验证可执行实际选歌研究。
-- Files / uploads / Library analysis: `AVAILABLE` — 可搜索、读取、物化会话与 Library 文件。
-- Image Generation: `AVAILABLE_INTERFACE` — 当前对话暴露生图能力；是否满足本项目首帧质量线延后到 W05 实测，不在 W00 虚报通过。
-- Local audio/video processing: `VERIFIED` — `ffmpeg`、`ffprobe`、MoviePy、pydub、OpenCV 可用，可进行裁剪、转码、抽帧、合成等本地处理。
-- ASR / Whisper: `NOT_PRESENT_AS_DEDICATED_LOCAL_CAPABILITY` — 未检测到 `whisper` / `faster_whisper`；后续不得声称 Whisper 已运行。
-- Seedance execution: `NOT_AVAILABLE_IN_CURRENT_WEB_TOOLSET` — 不假设能登录或控制外部 Seedance；正式状态在 W06-X 记录。
-- User local machine/browser control: `NOT_AVAILABLE`。
+- GitHub connector: `VERIFIED`
+- Public Web research: `AVAILABLE`
+- Files / uploads / Library analysis: `AVAILABLE`
+- Image Generation: `AVAILABLE_INTERFACE`
+- Local audio/video processing: `VERIFIED`
+- ASR / Whisper: `NOT_PRESENT_AS_DEDICATED_LOCAL_CAPABILITY`
+- Seedance execution: `NOT_AVAILABLE_IN_CURRENT_WEB_TOOLSET`
+- User local machine/browser control: `NOT_AVAILABLE`
 
 ## W01 Discovery Evidence
 
-### Final selection
-
-- `C3 如果你也刚好抬头看树`
+- Final selection: `C3 如果你也刚好抬头看树`
 - Artist / reference version: `孙天宇`
 - User aesthetic gate: `PASSED`
 
 ## W02 Evidence
 
-### Version identity
+### Version / source
 
-- Official vocal master: `孙天宇 - 如果你也刚好抬头看树`
-- Official streaming duration: `3:16`
-- Instrumental companion: `如果你也刚好抬头看树 - 伴奏`, `3:16`
-- Spotify release metadata: `2026-07-22`, `℗ 2026 Columbia Records China`
-- Indexed Bilibili full-song user upload at about `3:12` rejected as exact source.
-
-### Uploaded source verification
-
-- file: `如果你也刚好抬头看树-孙天宇.mp3`
-- measured duration: `196.127347s`
-- encoding: `MP3 / 320 kbps / 44.1 kHz / stereo`
-- embedded title / artist / album match the confirmed master
+- official vocal master: `孙天宇 - 如果你也刚好抬头看树`
+- official streaming duration: `3:16`
+- uploaded production source: `196.127347s`, MP3 / 320 kbps / 44.1 kHz / stereo
+- embedded title / artist / album match
 - source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
-- result: `ACCEPTED_AS_W02_PRODUCTION_SOURCE`
 
-### Preview v1
+### Preview v1 — REJECTED
 
-- source range: `130.72s–163.82s`
-- rendered duration: `33.149388s`
-- lyric section: second chorus, `我要学着树叶翩翩起舞` → `如果你也刚好抬头看树`
-- fade: `0.08s in / 0.90s out`
-- preview SHA-256: `6d831c7bb1dadc13de79161677285d46d8a47cdaca76e5c83b508fdc36b8bf2d`
+- range: `130.72s–163.82s`
+- failure: opening contains non-chorus preceding material; final chorus line is cut before completion.
+- user gate result: `重新选段`
+- root cause: loose excerpt localization; insufficient repeated-section structural alignment.
+
+### Preview v2 — CURRENT
+
+- repeated chorus alignment: first chorus approx `58.86s`, second chorus approx `140.43s`, offset approx `81.55s`.
+- chorus close correspondence: first approx `87.03s`, second approx `168.58s`.
+- corrected range: `140.43s–168.90s`
+- duration: `28.470s`
+- fade: `0.025s in / 0.420s out`
+- preview SHA-256: `b957a9e31bf7bc48a993cfdac51515cfb4f0978822abd72d7b5433c7fae8546d`
 - status: `AWAITING_AESTHETIC_GATE`
+
+### Automation lesson
+
+W02 demonstrates that automated audio processing is available, but excerpt selection still needs a quality Gate. The user correction did not require a new tool or manual editing action from the user; after feedback, Web completed root-cause analysis and re-render automatically. This remains the designed `AESTHETIC_GATE`, not an additional `TECHNICAL_RESCUE` intervention.
 
 ## 状态枚举
 
@@ -88,9 +89,9 @@
 
 | # | Stage | 类型 | 为什么需要用户 | 用户做了什么 | 是否未来可消除 |
 |---|---|---|---|---|---|
-| 1 | W01 | AESTHETIC_GATE | 3个候选均满足自动研究门槛，最终选择涉及用户对歌曲本身的审美偏好；按计划不由系统替代 | 选择 `C3 如果你也刚好抬头看树` | 否；这是设计保留的审美 Gate，不属于自动化缺陷 |
-| 2 | W02 | FILE_INPUT | 网页端可确认官方版本，但官方流媒体未暴露可直接进入本地处理链的完整音频文件；不能把搬运版伪装成官方生产源 | 已上传匹配官方 3:16 原唱母版的 320 kbps MP3；验证通过 | 可能；未来若接入有授权的音频资产源可消除 |
-| 3 | W02 | AESTHETIC_GATE | 精确选段、裁剪和试听文件已自动完成；最终是否采用该歌词段属于用户审美确认 | `PENDING`：试听 v1 后回复 PASS / 重新选段 | 否；这是设计保留的音频审美 Gate |
+| 1 | W01 | AESTHETIC_GATE | 3个候选均满足自动研究门槛，最终选择涉及用户对歌曲本身的审美偏好 | 选择 `C3 如果你也刚好抬头看树` | 否 |
+| 2 | W02 | FILE_INPUT | 官方流媒体未暴露可直接进入本地处理链的完整音频文件 | 上传匹配官方 3:16 原唱母版的 320 kbps MP3；验证通过 | 可能；未来若接入有授权音频资产源可消除 |
+| 3 | W02 | AESTHETIC_GATE | 最终短 MV 音频区间需要听感确认 | v1 反馈：开头不是完整副歌起点、尾句被截断；系统据此自动重切 v2，当前等待再次试听 | 否；这是设计保留的音频审美/质量 Gate |
 
 类型只允许：
 - `AESTHETIC_GATE`
