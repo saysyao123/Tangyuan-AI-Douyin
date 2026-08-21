@@ -6,150 +6,102 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W06-X / W07`
-- STAGE_NAME: `External Seedance generation + dynamic QA / director-structure calibration`
-- STATE: `S1_V2_SOURCE_USABLE / S2_ONE_TAKE_PASS / DIRECTOR_SELECTOR_V1_RECORDED`
+- STAGE: `W07`
+- STAGE_NAME: `Full dynamic QA / trim planning`
+- STATE: `VISUAL_BATCH_PASS_WITH_TRIM / W08_READY`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
-- W06_V1: `06_TESTS/MV/WEB_R2/W06_CAMERA_PROMPT_EXPERIMENT_v1.md`
-- W06_S1_V2: `06_TESTS/MV/WEB_R2/W06_S1_MULTISHOT_CAMERA_TEST_v2.md`
+- FULL_BATCH_QA: `06_TESTS/MV/WEB_R2/W07_FULL_BATCH_QA_v1.md`
 - DIRECTOR_SELECTOR: `06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
-- S1_V2_QA: `06_TESTS/MV/WEB_R2/W07_S1_V2_QA_NOTE.md`
 - UPDATED_AT: `2026-08-21 Asia/Manila`
 
 ## Locked Results
 
 - W00: `AUTO / LOCKED`
-- W01: `HUMAN_GATE / PASSED` — selected `如果你也刚好抬头看树` / 孙天宇
-- W02: `PARTIAL / LOCKED` — final BGM `139.930s–177.050s`, rendered `37.120s`
-- W03: `AUTO / LOCKED` — six Natural Beats, no false Whisper claim
-- W04: `HUMAN_GATE / PASSED` — final director direction `树影之外`
-- W05: `HUMAN_GATE / PASSED` — accepted first frames `9/9`
+- W01: `HUMAN_GATE / PASSED` — `如果你也刚好抬头看树` / 孙天宇
+- W02: `PARTIAL / LOCKED` — BGM `139.930s–177.050s`, rendered `37.120s`
+- W03: `AUTO / LOCKED` — six Natural Beats
+- W04: `HUMAN_GATE / PASSED` — `树影之外`
+- W05: `HUMAN_GATE / PASSED` — first frames `9/9`
+- W06: `AUTO / EXPERIMENTAL` — dynamic prompt set / Director Selector tested
+- W06-X: `EXTERNAL_REQUIRED / COMPLETED FOR CURRENT BATCH` — all 9 raw Seedance clips returned
 
-## W04/W05 Visual Lock
+## W07 Full Batch Result
 
-Final visual system:
-- one fictional East Asian female protagonist;
-- light sand/grey functional veil integrated into wardrobe, always covering nose/mouth/lower face;
-- monumental ancient tree + restrained grey-white curved concrete architecture + large sky negative space;
-- low saturation, motivated natural backlight, real material texture;
-- MV uses non-linear lyrical fragments, not one continuous spatial story;
-- first-frame principle: **unified emotional system + diverse camera system, not unified spatial narrative system**.
+All nine returned clips are ~`5.04s / 720×1280 / 24fps`.
 
-## W06/W07 Generated-video Evidence
+Batch verdict:
+`VISUAL_BATCH_PASS_WITH_TRIM / NO FULL-BATCH REGEN REQUIRED`.
 
-### S1 v1 — FAIL
+Actual directing mix:
+- S1 multi-shot
+- S2 one-take Arc
+- S3 2-shot
+- S4 3-shot
+- S5 one-take breathing shot
+- S6 3-shot discovery
+- S7 multi-shot motion peak
+- S8 one-take rooftop reset
+- S9 one-take cloud release
 
-- 5.09s / 720×1280 / 24fps;
-- fixed extreme-wide one-take read as stiff because tree / wall / light / character scale barely changed;
-- insufficient visual progression pushed motion burden onto fabric;
-- independent white scarf-like cloth detached from character and crossed frame: veil topology failure.
+This confirms the correct direction is **mixed shot structures chosen per lyric task**, not a universal one-take or 3–5-shot template.
 
-Important correction:
-`S1 v1 proves a weak one-take can fail; it does NOT prove one-take is wrong.`
+## Per-clip status
 
-### S1 v2 — PASS_AS_SOURCE / TRIM_REQUIRED
+- `S1 = SOURCE_USABLE / TRIM_REQUIRED`
+  - strong wide → low-angle → eye → canopy progression;
+  - two similar middle low-angle fragments should not both survive final edit.
+- `S2 = PASS_FULL / POSITIVE ONE-TAKE SAMPLE`
+  - orbit/parallax remains a benchmark success.
+- `S3 = PASS_FULL`
+  - useful emotional close-up → medium contrast.
+- `S4 = PASS_FULL / STRONG DYNAMIC SAMPLE`
+  - strong multi-shot body/fabric movement with clear adjacent-shot contrast.
+- `S5 = PASS_FULL / BREATHING SHOT`
+  - strong scale reset; shorten if S1 opening already runs long.
+- `S6 = PASS_FULL / STRONG LYRIC-HIT SAMPLE`
+  - person → bird → person reads clearly; bird hold may be slightly shortened.
+- `S7 = SOURCE_USABLE / TRIM_REQUIRED / REGEN_WATCH`
+  - early motion peak is strong;
+  - ~2.8–4.0s pale fabric becomes topology-ambiguous / visually over-dominant;
+  - first try trim, regenerate only if final edit lacks enough clean peak duration.
+- `S8 = PASS_FULL / SHORTEN IN SEQUENCE`
+  - useful rooftop reset but visually overlaps S9.
+- `S9 = PASS_FULL / FINAL RELEASE`
+  - prioritize as the longer final hold.
 
-User-returned raw clip:
-- 5.088s / 720×1280 / 24fps;
-- clear multi-shot execution with meaningful scale / angle / focal changes;
-- visual level and camera energy are substantially better than S1 v1;
-- extreme-wide opening, eye close-up and final canopy Tilt Up are usable source material;
-- clip is accepted into the source pool, but not locked for full-length use.
+## Whole-set repetition risks
 
-Detected visual discontinuities approximately at:
-`2.04s / 2.42s / 3.13s / 3.88s`.
+1. S1 middle: adjacent low-angle character fragments repeat.
+2. S1 vs S5: both use giant tree + light shaft + small person; do not give both long screen time.
+3. S8 vs S9: strongest whole-set repetition; shorten S8 and reserve longer release for S9.
 
-Middle issue:
-- `2.04–3.12s` contains two similar low-angle character beats;
-- foreground occlusion differentiates them slightly, but shot size / angle / action state repeat enough to feel redundant;
-- W08 should keep only the stronger portion or trim both aggressively; **do not regenerate solely for this**.
+## Audio HARD status
 
-New source-material principle:
-`Generated clip QA is not binary whole-clip accept/reject. A clip can be SOURCE_USABLE / TRIM_REQUIRED; final BGM and edit rhythm decide which internal shots survive.`
+All 9 returned MP4s contain AAC source audio.
 
-### S1 v2 Audio — SOURCE_AUDIO_POLICY_FAIL
+Therefore all are `SOURCE_AUDIO_PRESENT` regardless of visual pass.
 
-Returned clip includes non-ambient music-like audio even though the prompt used soft wording similar to `不需要BGM`.
+Workflow consequence:
+- strip/detach all Seedance source audio at ingest;
+- W02 locked song master is the only music truth;
+- AI source audio never drives beat or subtitle timing;
+- prompt-level Source Audio hard rule remains active, but visual material is not rejected solely because Seedance ignored the audio request.
 
-Extracted audio evidence:
-- AAC stereo 44.1kHz;
-- integrated loudness approx `-18.7 LUFS`;
-- strongly harmonic continuous content, inconsistent with wind/leaves-only ambience.
+## Watermark status
 
-Visual source remains usable because final MV uses the locked external song and removes AI source audio.
+All returned clips visibly include a lower-right `豆包AI生成` platform mark.
 
-Core `04_HARNESS/rules/ai_video.md` upgraded to v1.2 with a stronger Source Audio HARD RULE:
-- explicitly forbid BGM / music / melody / beat / chords / singing / humming / narration / dialogue / voices;
-- allow only physically motivated natural ambience when useful;
-- default `SOURCE_AUDIO = REMOVE`;
-- if music still appears, mark `SOURCE_AUDIO_POLICY_FAIL`, keep good visuals and strip source audio in W08;
-- AI source audio never determines edit Beat or subtitle timing.
-
-### S2 v1 — PASS / POSITIVE SAMPLE
-
-User-returned raw clip:
-- 5.04s / 720×1280 / 24fps;
-- continuous small Arc / orbit-like camera move;
-- foreground tree trunk, character and curved wall produce readable parallax through the full clip;
-- camera changes the character-space relationship continuously and resolves at a more flattering three-quarter angle;
-- character action remains simple: reach / look upward; model load stays controlled;
-- result reads fluid and visually progressive despite being one continuous shot;
-- user judgement: `S2效果不错，环绕运镜的感觉挺好`.
-
-S2 success hypothesis:
-`strong first-frame depth + simple continuous performance + foreground/midground/background parallax + one clear camera path + a more beautiful endpoint = one-take can outperform unnecessary cuts.`
-
-## Director Structure Correction
-
-The current experiment rejects both absolutes:
-- `every 5s clip should be one take` — false;
-- `every 5s clip should be 3–5 shots` — false.
-
-Decision order:
-`lyric task → first-frame performance potential → choose shot count → assign one Camera Contract per Shot → motion-load check → beauty/comfort gate`.
-
-Shot-count options:
-- `1 Shot`: continuous emotion / complete gesture / spatial reveal / release where camera motion itself provides sustained progression;
-- `2–3 Shots`: setup → event → aftermath, character/detail shift, one semantic turn;
-- `3–5 Shots`: dense lyric / motion peak / strong Hook where angle/scale contrast is actually needed.
-
-Every Cut must add new emotion, information or viewpoint.
-
-### Adjacent Shot Contrast Gate — EXPERIMENTAL
-
-S1 v2 shows multi-shot prompts can still repeat themselves if adjacent shots are too similar.
-
-Before generation, consecutive Shots should differ in at least 2 of:
-- shot size;
-- angle;
-- subject scale;
-- camera direction;
-- focal plane;
-- dominant action;
-- dominant visual subject.
-
-If not, merge or remove one Shot before generation.
-
-Full experimental selector:
-`06_TESTS/MV/WEB_R2/W06_DIRECTOR_SHOT_STRUCTURE_SELECTOR_v1.md`
-
-## Current Direction
-
-- S1 v2 stays in the source pool; trim repetition later rather than regenerate now.
-- S2 remains the one-take positive sample and should not be rewritten merely to add cuts.
-- S3–S9 must be reconsidered individually with the Director Selector.
-- Future prompts use the strengthened Source Audio hard wording from `ai_video.md v1.2`.
-- Camera/shot-count rules remain experimental; audio source policy is promoted because it strengthens an existing verified hard rule rather than inventing a new director formula.
+W08 must remove/cover/inpaint it consistently across all retained fragments before final delivery.
 
 ## Next Allowed Action
 
-Automatically redesign S3–S9 shot structures and prompts segment by segment using:
-1. lyric task;
-2. accepted first frame;
-3. S1/S2 generated evidence;
-4. Adjacent Shot Contrast Gate;
-5. strengthened Source Audio hard rule.
-
-Seedance execution remains `EXTERNAL_REQUIRED`; prompt/director analysis remains automatic.
+Enter W08 automatically:
+1. strip all source audio;
+2. map clean usable windows from S1–S9;
+3. build the 37.120s edit against the locked BGM;
+4. trim repeated / topology-risk frames;
+5. remove platform marks;
+6. generate subtitles from verified locked-audio evidence only;
+7. only if the cut exposes insufficient peak coverage, regenerate S7 surgically.
