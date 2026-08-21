@@ -6,9 +6,9 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W00`
-- STAGE_NAME: `Bootstrap / Capability Baseline`
-- STATE: `READY_TO_START`
+- STAGE: `W01`
+- STAGE_NAME: `Song Discovery / Benchmark Selection`
+- STATE: `IN_PROGRESS`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -48,6 +48,22 @@ R1 Golden Sample 是质量下限，不要求复制纸墨视觉：
 - `W08` Edit + subtitle alignment + final polish
 - `W09` Automation retrospective / Round close
 
+## W00 Result — LOCKED
+
+Actual state: `AUTO`
+
+Verified capability baseline:
+- GitHub connector read/write: available and verified on `test/mv-web-r2`.
+- Public Web research: available; W01 will validate the actual discovery workflow.
+- Files / conversation uploads / Library analysis: available.
+- Image Generation interface: available; production quality is not pre-claimed and will be tested in W05.
+- Local audio/video processing: ffmpeg, ffprobe, MoviePy, pydub and OpenCV available.
+- Dedicated Whisper / faster-whisper: not present in current local environment; later subtitle work must not pretend Whisper ran.
+- Direct Seedance execution: not available in current exposed toolset; do not assume browser/login control.
+- User local machine/browser control: unavailable.
+
+No user intervention was required in W00.
+
 ## Expected Automation Hypothesis
 
 Initial hypothesis to test, not pre-declared truth:
@@ -65,12 +81,8 @@ These must be updated from real execution evidence.
 
 ## Next Allowed Action
 
-Run `W00` only.
+Execute `W01`.
 
-Read:
-1. `README.md`
-2. `WEB_R2_MASTER_PLAN.md`
-3. `AUTOMATION_MATRIX.md`
-4. `WEB_START_PROMPT.md` only as launch contract
+JIT-load only the benchmark material needed for current song discovery. Automatically refresh about five MV/music observation sources for roughly the last 30 days, look for repeated/spreading songs, and present 3–5 strong candidates with real video links. Do not ask the user what song they want before doing the research.
 
-Then establish actual available tools and move to W01 without asking the user questions that can be resolved automatically.
+W01 Gate: user performs only the final `AESTHETIC_GATE` song choice.
