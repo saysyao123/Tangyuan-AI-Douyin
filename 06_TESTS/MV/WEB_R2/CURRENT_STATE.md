@@ -6,9 +6,9 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W01`
-- STAGE_NAME: `Song Discovery / Benchmark Selection`
-- STATE: `AWAITING_AESTHETIC_GATE`
+- STAGE: `W02`
+- STAGE_NAME: `Reference BGM acquisition + exact clip lock`
+- STATE: `REFERENCE_VERSION_CONFIRMED / SOURCE_FILE_REQUIRED`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -64,36 +64,52 @@ Verified capability baseline:
 
 No user intervention was required in W00.
 
-## W01 Research Result — GATE PENDING
+## W01 Result — LOCKED
 
-Web research and filtering completed automatically. Current strong shortlist:
+Research state: `AUTO`.
+Total stage state: `HUMAN_GATE`.
 
-1. `C1 山风山风等等我`
-   - current heat: strong; 2026-08-06 music chart #1 plus recent AIMV and ordinary Douyin diffusion.
-   - visual fit: very high; strong space / wind / mountain / movement vocabulary.
-   - main risk: generic ancient-costume mountain-and-wind imagery.
-   - video: https://jingxuan.douyin.com/m/video/7674486948253289782
+User passed the aesthetic gate and selected:
 
-2. `C2 踏马寻花向自由`
-   - current heat: strong; 2026-08-06 music chart #8 plus recent AIMV, dance, fitness and remix adoption.
-   - visual fit: very high and high-motion; especially suitable for testing more varied camera grammar.
-   - main risk: literal horse + flowers + wuxia imagery is already highly obvious and must be avoided.
-   - video: https://www.bilibili.com/list/3493080640522749?bvid=BV1Dh4y1Z7g8&oid=658319006
+- Reference song: `如果你也刚好抬头看树`
+- Artist / official vocal version: `孙天宇`
+- Selection reason from user: prefers this song over the other shortlist options.
 
-3. `C3 如果你也刚好抬头看树`
-   - current heat: strong/sustained; late-July Douyin hot-topic evidence plus continued August use and recent AIMV adoption.
-   - visual fit: very high and poetic; tree / light / leaves / looking up / stopping can become lyric-specific visual events.
-   - main risk: must not collapse into static pretty landscape shots.
-   - video/reference: http://t.cn/AXKFfKnH
+No R1 re-explanation was requested.
 
-W01 research state: `AUTO`.
-W01 total stage state: `HUMAN_GATE`, because final song choice is intentionally reserved for user aesthetics.
+## W02 Current Evidence
+
+### Official reference version confirmed
+
+Primary version to lock:
+- Title: `如果你也刚好抬头看树`
+- Artist: `孙天宇`
+- Type: official vocal master
+- Official streaming duration evidence: `3:16`
+- Companion instrumental version: `如果你也刚好抬头看树 - 伴奏`, also `3:16`
+- International release metadata: `2026-07-22`
+- Rights metadata: `℗ 2026 Columbia Records China`
+
+Cross-platform identity evidence:
+- Artist's verified social post on `2026-07-20` linked the same song to QQ Music, NetEase Cloud Music, Kugou, Kuwo and Qishui Music.
+- Apple Music also lists the vocal and instrumental versions under the same 2026 Single.
+
+### Rejected as exact source
+
+- A Bilibili user upload indexed at about `3:12` is not treated as the locked source because its duration differs from the official `3:16` master.
+- Public streaming / user-uploaded copies may be used for identification or listening position only; they are not treated as a redistributable production source.
+
+### Acquisition boundary
+
+The Web can verify the exact version, but the current tools do not expose a lawful downloadable full audio file from the official streaming services.
+
+Therefore W02 has now reached a legitimate `FILE_INPUT` boundary: to perform exact waveform analysis, choose the excerpt, render preview, and lock downstream timing, the actual official vocal master file must be supplied as MP3/WAV (or another directly processable audio file).
 
 ## Expected Automation Hypothesis
 
 Initial hypothesis to test, not pre-declared truth:
-- W01: mostly AUTO, user only final song preference gate.
-- W02: AUTO if usable audio file/source is available; otherwise may require minimal user upload.
+- W01: mostly AUTO, user only final song preference gate. **Validated.**
+- W02: AUTO if usable audio file/source is available; otherwise may require minimal user upload. **Current result: version discovery AUTO; source acquisition requires FILE_INPUT.**
 - W03: AUTO.
 - W04: AUTO + optional user creative review.
 - W05: prompts AUTO, image generation AUTO in ChatGPT, user review is HUMAN_GATE.
@@ -106,10 +122,13 @@ These must be updated from real execution evidence.
 
 ## Next Allowed Action
 
-`AESTHETIC_GATE` only: user selects one Reference BGM from `C1 / C2 / C3`.
+`FILE_INPUT`:
+- obtain the actual `孙天宇 - 如果你也刚好抬头看树` official vocal master as a processable audio file;
+- do not substitute the 3:12 Bilibili upload or another cover / derivative version.
 
-Do not start W02 before the song is selected.
-After selection:
-1. lock W01 as passed;
-2. update `AUTOMATION_MATRIX.md` and this file;
-3. enter W02 and automatically pursue the actual usable audio/version before asking for `FILE_INPUT`.
+Once the file is available, Web should automatically:
+1. verify duration/version against the confirmed 3:16 master;
+2. analyze waveform + musical / lyrical structure;
+3. choose the strongest semantically complete short-MV excerpt;
+4. render a natural-fade preview;
+5. request only a `PASS / 重新选段` aesthetic gate.
