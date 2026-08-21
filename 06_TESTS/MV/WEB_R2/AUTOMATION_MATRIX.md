@@ -4,9 +4,9 @@
 
 ## Overall
 
-- Current Stage: `W03`
+- Current Stage: `W04`
 - Overall State: `READY_TO_START`
-- Fully automated stages: `1`
+- Fully automated stages: `2`
 - Human aesthetic gates encountered: `2`
 - Human aesthetic gates passed: `2`
 - External-required stages encountered: `0`
@@ -18,9 +18,9 @@
 |---|---|---|---|---|---|
 | W00 | 能力基线 | AUTO | AUTO | 无 | GitHub/Web/Files/local AV stack verified；无独立 Whisper/faster-whisper；不能直接执行 Seedance |
 | W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE / PASSED | 最终选歌 | 研究与筛选 AUTO；用户选择 `如果你也刚好抬头看树` |
-| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / LOCKED | 上传官方原唱；两次边界修正；最终试听确认 | v3 锁定 `139.930s–177.050s`，37.120s；本轮 one-shot clip lock 未通过，工作流已升级 |
-| W03 | Beat分析 | AUTO | READY_TO_START | 无 | 使用已锁 v3 BGM |
-| W04 | 导演/生产分配 | HUMAN_GATE | NOT_STARTED | 审美确认 | |
+| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / LOCKED | 上传官方原唱；两次边界修正；最终试听确认 | v3 锁定 `139.930s–177.050s`，37.120s；one-shot clip lock 未通过，工作流已升级到 v1.1 |
+| W03 | Beat分析 | AUTO | AUTO / LOCKED | 无 | 无 Whisper；同版本歌词 + locked audio + waveform/repeated-section/beat evidence 完成结构分析，未伪造字幕级时间戳 |
+| W04 | 导演/生产分配 | HUMAN_GATE | READY_TO_START | 审美确认 | 先自动完成 focused benchmark + director/coverage/camera plan，再请求一次导演方向 Gate |
 | W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | Image Generation 实际生产能力在本 Stage 验证 |
 | W06 | 动态提示词 | AUTO | NOT_STARTED | 无 | |
 | W06-X | Seedance视频生成 | EXTERNAL_REQUIRED | NOT_STARTED | 外部生成+上传 | 当前能力基线未发现可直接执行 Seedance 的工具；到 W06-X 依真实执行正式记账 |
@@ -48,68 +48,19 @@
 
 ## W02 Final Evidence
 
-### Version / source
+- Locked source: official vocal master matching `3:16`, uploaded MP3 320 kbps / 44.1 kHz / stereo.
+- Locked excerpt: `139.930s–177.050s`, `37.120s`, `0.020s` fade-in / `0.950s` fade-out.
+- v1 objective boundary failure + v2 boundary-quality failure required two user corrections.
+- W02 total = `PARTIAL`; new Audio Boundary Gate promoted into `workflows/mv.md v1.1`.
 
-- official vocal master: `孙天宇 - 如果你也刚好抬头看树`
-- official streaming duration: `3:16`
-- uploaded production source: `196.127347s`, MP3 / 320 kbps / 44.1 kHz / stereo
-- source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
+## W03 Final Evidence
 
-### Preview history
-
-#### v1 — REJECTED / TECHNICAL FAILURE
-- range: `130.72s–163.82s`
-- opening contained non-chorus preceding material;
-- final lyric line was incomplete;
-- this should have been blocked before user delivery.
-
-#### v2 — REJECTED / BOUNDARY QUALITY FAILURE
-- range: `140.430s–168.900s`
-- correct repeated chorus isolated;
-- still lacked enough musical pickup at the start and ended before the more natural one-line release;
-- user had to specify `~0.5s` additional pre-roll and one extra complete line.
-
-#### v3 — LOCKED / PASSED
-- range: `139.930s–177.050s`
-- duration: `37.120s`
-- fade: `0.020s in / 0.950s out`
-- includes exactly one complete release line after the title-line chorus close;
-- preview SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
-- user final gate: `PASSED`
-
-### Automation judgment
-
-W02 is **not** counted as successful one-shot automatic clipping.
-
-What worked automatically:
-- official version verification;
-- uploaded-file validation;
-- waveform / repeated-section analysis;
-- local trimming / fade / rendering.
-
-What failed:
-- first-pass excerpt boundary judgment;
-- pre-delivery edge QA;
-- correct accounting initially treated objective repair as aesthetic feedback.
-
-Therefore W02 final state is `PARTIAL`.
-
-### Workflow correction promoted
-
-`04_HARNESS/workflows/mv.md` upgraded from `v1.0` to `v1.1`.
-
-New mandatory `Audio Boundary Gate` requires before any preview is shown:
-1. intended section identity;
-2. no previous-lyric contamination;
-3. musical pickup / opening-breath test;
-4. complete final lyric;
-5. one-extra-release-line test;
-6. fade only after vocal / semantic resolution;
-7. platform/Douyin usage cross-check when reliable evidence exists;
-8. isolated first ~3s / last ~4s listen + full excerpt listen;
-9. duration follows musical completeness, not a forced numeric target.
-
-Expected future behavior: user should receive one technically valid first preview and only need an aesthetic `PASS / change direction`, not boundary repair.
+- Dedicated ASR unavailable; not claimed.
+- No trustworthy public same-version timed LRC found.
+- Exact lyric sequence cross-checked against same-song sources.
+- Locked audio analyzed locally; beat estimate ~`103.36 BPM`.
+- Six Natural Beats established for directing; primary motion peak is `一颗心叽叽喳喳飞过了树梢`, recognition anchors are the repeated title line, final release is `向一朵白云学习如何漂浮`.
+- W03 requires no user action and is counted `AUTO`.
 
 ## Manual Intervention Log
 
