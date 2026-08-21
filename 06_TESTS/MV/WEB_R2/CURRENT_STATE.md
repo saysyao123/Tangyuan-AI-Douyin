@@ -8,7 +8,7 @@
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W01`
 - STAGE_NAME: `Song Discovery / Benchmark Selection`
-- STATE: `IN_PROGRESS`
+- STATE: `AWAITING_AESTHETIC_GATE`
 - BRANCH: `test/mv-web-r2`
 - GOLDEN_REFERENCE: `06_TESTS/MV/ROUND_01/`
 - WORKFLOW: `04_HARNESS/workflows/mv.md`
@@ -54,7 +54,7 @@ Actual state: `AUTO`
 
 Verified capability baseline:
 - GitHub connector read/write: available and verified on `test/mv-web-r2`.
-- Public Web research: available; W01 will validate the actual discovery workflow.
+- Public Web research: available; W01 validated actual discovery use.
 - Files / conversation uploads / Library analysis: available.
 - Image Generation interface: available; production quality is not pre-claimed and will be tested in W05.
 - Local audio/video processing: ffmpeg, ffprobe, MoviePy, pydub and OpenCV available.
@@ -63,6 +63,31 @@ Verified capability baseline:
 - User local machine/browser control: unavailable.
 
 No user intervention was required in W00.
+
+## W01 Research Result — GATE PENDING
+
+Web research and filtering completed automatically. Current strong shortlist:
+
+1. `C1 山风山风等等我`
+   - current heat: strong; 2026-08-06 music chart #1 plus recent AIMV and ordinary Douyin diffusion.
+   - visual fit: very high; strong space / wind / mountain / movement vocabulary.
+   - main risk: generic ancient-costume mountain-and-wind imagery.
+   - video: https://jingxuan.douyin.com/m/video/7674486948253289782
+
+2. `C2 踏马寻花向自由`
+   - current heat: strong; 2026-08-06 music chart #8 plus recent AIMV, dance, fitness and remix adoption.
+   - visual fit: very high and high-motion; especially suitable for testing more varied camera grammar.
+   - main risk: literal horse + flowers + wuxia imagery is already highly obvious and must be avoided.
+   - video: https://www.bilibili.com/list/3493080640522749?bvid=BV1Dh4y1Z7g8&oid=658319006
+
+3. `C3 如果你也刚好抬头看树`
+   - current heat: strong/sustained; late-July Douyin hot-topic evidence plus continued August use and recent AIMV adoption.
+   - visual fit: very high and poetic; tree / light / leaves / looking up / stopping can become lyric-specific visual events.
+   - main risk: must not collapse into static pretty landscape shots.
+   - video/reference: http://t.cn/AXKFfKnH
+
+W01 research state: `AUTO`.
+W01 total stage state: `HUMAN_GATE`, because final song choice is intentionally reserved for user aesthetics.
 
 ## Expected Automation Hypothesis
 
@@ -81,8 +106,10 @@ These must be updated from real execution evidence.
 
 ## Next Allowed Action
 
-Execute `W01`.
+`AESTHETIC_GATE` only: user selects one Reference BGM from `C1 / C2 / C3`.
 
-JIT-load only the benchmark material needed for current song discovery. Automatically refresh about five MV/music observation sources for roughly the last 30 days, look for repeated/spreading songs, and present 3–5 strong candidates with real video links. Do not ask the user what song they want before doing the research.
-
-W01 Gate: user performs only the final `AESTHETIC_GATE` song choice.
+Do not start W02 before the song is selected.
+After selection:
+1. lock W01 as passed;
+2. update `AUTOMATION_MATRIX.md` and this file;
+3. enter W02 and automatically pursue the actual usable audio/version before asking for `FILE_INPUT`.
