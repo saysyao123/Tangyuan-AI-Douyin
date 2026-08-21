@@ -4,28 +4,39 @@
 
 ## Overall
 
-- Current Stage: `W00`
-- Overall State: `NOT_STARTED`
-- Fully automated stages: `0`
-- Human aesthetic gates: `0`
-- External-required stages: `0`
+- Current Stage: `W01`
+- Overall State: `IN_PROGRESS`
+- Fully automated stages: `1`
+- Human aesthetic gates passed: `0`
+- External-required stages encountered: `0`
 - Non-aesthetic manual interventions: `0`
 
 ## Stage Board
 
 | Stage | 内容 | 预期 | 实际 | 用户操作 | 备注 |
 |---|---|---|---|---|---|
-| W00 | 能力基线 | AUTO | NOT_STARTED | 无 | |
-| W01 | 选歌研究 | HUMAN_GATE | NOT_STARTED | 最终选歌 | |
+| W00 | 能力基线 | AUTO | AUTO | 无 | GitHub read/write 可用；Web 可用；Files/Library 可用；Image Generation 接口存在，实际生产留 W05 验证；本地 ffmpeg/ffprobe、MoviePy、pydub、OpenCV 可用；无独立 Whisper/faster-whisper；不能控制用户本机/浏览器或 Seedance 外部站点 |
+| W01 | 选歌研究 | HUMAN_GATE | IN_PROGRESS | 最终选歌 | 自动刷新观察源并筛候选，用户只做最终审美选择 |
 | W02 | 音频截取 | HUMAN_GATE/PARTIAL | NOT_STARTED | 可能上传音频 + 试听确认 | |
 | W03 | Beat分析 | AUTO | NOT_STARTED | 无 | |
 | W04 | 导演/生产分配 | HUMAN_GATE | NOT_STARTED | 审美确认 | |
-| W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | |
+| W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | Image Generation 实际生产能力在本 Stage 验证 |
 | W06 | 动态提示词 | AUTO | NOT_STARTED | 无 | |
-| W06-X | Seedance视频生成 | EXTERNAL_REQUIRED | NOT_STARTED | 外部生成+上传 | |
+| W06-X | Seedance视频生成 | EXTERNAL_REQUIRED | NOT_STARTED | 外部生成+上传 | 当前能力基线未发现可直接执行 Seedance 的工具；到 W06-X 依真实执行正式记账 |
 | W07 | 动态QA/返工设计 | AUTO | NOT_STARTED | 外部失败段重生成 | |
-| W08 | 剪辑/字幕/Final | AUTO if inputs ready | NOT_STARTED | 看片确认 | |
+| W08 | 剪辑/字幕/Final | AUTO if inputs ready | NOT_STARTED | 看片确认 | W00 已验证本地音视频处理工具；当前无独立 Whisper/faster-whisper，字幕对齐方法到 W08 按同版本可靠 LRC/音频证据验证 |
 | W09 | 复盘/锁定 | HUMAN_GATE | NOT_STARTED | 最终验收 | |
+
+## W00 Capability Baseline Evidence
+
+- GitHub connector: `VERIFIED` — 已从 `test/mv-web-r2` 读取指定文件，并可向同分支写回状态文件。
+- Public Web research: `AVAILABLE` — 当前对话具备网页搜索/打开页面能力；具体选歌研究在 W01 实测。
+- Files / uploads / Library analysis: `AVAILABLE` — 可搜索、读取、物化会话与 Library 文件。
+- Image Generation: `AVAILABLE_INTERFACE` — 当前对话暴露生图能力；是否满足本项目首帧质量线延后到 W05 实测，不在 W00 虚报通过。
+- Local audio/video processing: `VERIFIED` — `ffmpeg`、`ffprobe`、MoviePy、pydub、OpenCV 可用，可进行裁剪、转码、抽帧、合成等本地处理。
+- ASR / Whisper: `NOT_PRESENT_AS_DEDICATED_LOCAL_CAPABILITY` — 未检测到 `whisper` / `faster_whisper`；后续不得声称 Whisper 已运行。
+- Seedance execution: `NOT_AVAILABLE_IN_CURRENT_WEB_TOOLSET` — 不假设能登录或控制外部 Seedance；正式状态在 W06-X 记录。
+- User local machine/browser control: `NOT_AVAILABLE`。
 
 ## 状态枚举
 
