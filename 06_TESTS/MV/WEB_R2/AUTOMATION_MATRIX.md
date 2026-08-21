@@ -5,9 +5,9 @@
 ## Overall
 
 - Current Stage: `W02`
-- Overall State: `SOURCE_FILE_REQUIRED`
+- Overall State: `AWAITING_AUDIO_AESTHETIC_GATE`
 - Fully automated stages: `1`
-- Human aesthetic gates encountered: `1`
+- Human aesthetic gates encountered: `2`
 - Human aesthetic gates passed: `1`
 - External-required stages encountered: `0`
 - Non-aesthetic manual interventions: `1`
@@ -18,7 +18,7 @@
 |---|---|---|---|---|---|
 | W00 | 能力基线 | AUTO | AUTO | 无 | GitHub read/write 可用；Web 可用；Files/Library 可用；Image Generation 接口存在，实际生产留 W05 验证；本地 ffmpeg/ffprobe、MoviePy、pydub、OpenCV 可用；无独立 Whisper/faster-whisper；不能控制用户本机/浏览器或 Seedance 外部站点 |
 | W01 | 选歌研究 | HUMAN_GATE | HUMAN_GATE | 最终选歌 | 研究与筛选自动完成；用户选择 `如果你也刚好抬头看树`，Gate 已通过 |
-| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL | 上传官方原唱实际音频文件 + 后续试听确认 | 已自动确认孙天宇官方原唱母版 3:16；官方流媒体无可直接交给本地处理的完整音频文件，因此触发 FILE_INPUT；拿到文件后裁剪/分析应继续 AUTO |
+| W02 | 音频截取 | HUMAN_GATE/PARTIAL | PARTIAL / GATE_PENDING | 已上传官方原唱实际音频；试听确认待定 | 官方版本确认 AUTO；FILE_INPUT 已完成；文件核验、结构分析、选段和裁剪均 AUTO；预览 v1 已生成，等待 PASS / 重新选段 |
 | W03 | Beat分析 | AUTO | NOT_STARTED | 无 | |
 | W04 | 导演/生产分配 | HUMAN_GATE | NOT_STARTED | 审美确认 | |
 | W05 | 首帧提示词+生图 | HUMAN_GATE | NOT_STARTED | 整组审美确认 | Image Generation 实际生产能力在本 Stage 验证 |
@@ -41,29 +41,39 @@
 
 ## W01 Discovery Evidence
 
-### Observation sources refreshed
-
-1. `AI MV导演曹斌Johnny` — `ACTIVE_7D`。近期连续出现《山风山风等等我》《像我这样爱你的人》《踏马寻花向自由》《如果你也刚好抬头看树》等 AIMV / 卡拉OK内容，是当前最直接的 MV_VERTICAL_ADOPTION 观察源。
-2. `丹鸾歌行` — `ACTIVE_7D`。近期主要信号为 Seedance2.5 影视叙事、动作与二创，不强行把其非歌曲型作品计入歌曲热度；用于确认当前 AI 影视动态审美仍在快速抬升。
-3. `野仙仙AI` — `SPECIALIST_REFERENCE`。公开索引中最近可确认的代表 MV 仍为火星电台×窦靖童《Somewhere In Winter》，未发现最近约30天足够可靠的新歌曲采用信号，因此不用于抬高本轮候选热度。
-4. `SANGR桑瑞` — `SPECIALIST_REFERENCE / WATCHLIST`。本轮公开索引未取得最近约30天足够可靠的新 AIMV 歌曲采用证据，不伪造活跃度。
-5. `current music / platform diffusion check` — 酷我 2026-08-06 榜单 + 抖音普通创作者近30天扩散样本，用于补足 PLATFORM_HEAT / RECENT_SPREAD 信号；其中《山风山风等等我》榜单第1，《踏马寻花向自由》第8。
-
 ### Final selection
 
 - `C3 如果你也刚好抬头看树`
 - Artist / reference version: `孙天宇`
 - User aesthetic gate: `PASSED`
 
-## W02 Version Evidence
+## W02 Evidence
+
+### Version identity
 
 - Official vocal master: `孙天宇 - 如果你也刚好抬头看树`
 - Official streaming duration: `3:16`
 - Instrumental companion: `如果你也刚好抬头看树 - 伴奏`, `3:16`
 - Spotify release metadata: `2026-07-22`, `℗ 2026 Columbia Records China`
-- Artist verified post on `2026-07-20` linked the song across QQ Music / NetEase Cloud Music / Kugou / Kuwo / Qishui Music.
-- Apple Music independently lists the vocal and instrumental under the same Single.
-- Indexed Bilibili full-song user upload is about `3:12`; rejected as exact locked source because duration does not match the official 3:16 master.
+- Indexed Bilibili full-song user upload at about `3:12` rejected as exact source.
+
+### Uploaded source verification
+
+- file: `如果你也刚好抬头看树-孙天宇.mp3`
+- measured duration: `196.127347s`
+- encoding: `MP3 / 320 kbps / 44.1 kHz / stereo`
+- embedded title / artist / album match the confirmed master
+- source SHA-256: `ad30cefef4e4a5ffedab81b26b1e38a0b679bf2b32752b6ebd29f5d97f18d7ab`
+- result: `ACCEPTED_AS_W02_PRODUCTION_SOURCE`
+
+### Preview v1
+
+- source range: `130.72s–163.82s`
+- rendered duration: `33.149388s`
+- lyric section: second chorus, `我要学着树叶翩翩起舞` → `如果你也刚好抬头看树`
+- fade: `0.08s in / 0.90s out`
+- preview SHA-256: `6d831c7bb1dadc13de79161677285d46d8a47cdaca76e5c83b508fdc36b8bf2d`
+- status: `AWAITING_AESTHETIC_GATE`
 
 ## 状态枚举
 
@@ -79,7 +89,8 @@
 | # | Stage | 类型 | 为什么需要用户 | 用户做了什么 | 是否未来可消除 |
 |---|---|---|---|---|---|
 | 1 | W01 | AESTHETIC_GATE | 3个候选均满足自动研究门槛，最终选择涉及用户对歌曲本身的审美偏好；按计划不由系统替代 | 选择 `C3 如果你也刚好抬头看树` | 否；这是设计保留的审美 Gate，不属于自动化缺陷 |
-| 2 | W02 | FILE_INPUT | 网页端可确认官方版本，但官方流媒体未暴露可直接进入本地处理链的完整音频文件；不能把搬运版伪装成官方生产源 | `PENDING`：上传孙天宇官方原唱 3:16 对应实际 MP3/WAV/可处理音频文件 | 可能；未来若接入有授权的音频资产源可消除 |
+| 2 | W02 | FILE_INPUT | 网页端可确认官方版本，但官方流媒体未暴露可直接进入本地处理链的完整音频文件；不能把搬运版伪装成官方生产源 | 已上传匹配官方 3:16 原唱母版的 320 kbps MP3；验证通过 | 可能；未来若接入有授权的音频资产源可消除 |
+| 3 | W02 | AESTHETIC_GATE | 精确选段、裁剪和试听文件已自动完成；最终是否采用该歌词段属于用户审美确认 | `PENDING`：试听 v1 后回复 PASS / 重新选段 | 否；这是设计保留的音频审美 Gate |
 
 类型只允许：
 - `AESTHETIC_GATE`
