@@ -1,4 +1,4 @@
-# Rules｜AI First Frame & Image-to-Video v1.1
+# Rules｜AI First Frame & Image-to-Video v1.2
 
 ## Use Gate
 AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outro / Capability Proof 中，能显著增加表达价值时使用。真实Evidence仍由真实素材承担。
@@ -66,6 +66,8 @@ R1验证：该前缀解决了多段 Seedance 图生视频因肖像保护而无�
 - 不允许为了“看起来更电影”机械切三镜；
 - 同一组视频必须检查镜头结构重复度，避免全部慢推或全部三镜同模板。
 
+> 更大的 `1镜 / 2–3镜 / 3–5镜` Director Selector 当前仍在 `WEB_R2` 实验层。未经更多 generated-video 证据，不在本文件写成固定配方。
+
 ## Camera / Motion Repetition Gate
 
 整组生成前检查：
@@ -88,6 +90,30 @@ R1验证：该前缀解决了多段 Seedance 图生视频因肖像保护而无�
 
 R1中，大幅移动纸张曾被模型误生成破洞；改为摄影机驱动的实体边缘遮挡后通过。
 
+## Source Audio｜HARD RULE
+
+AI MV / 动态歌词 MV 默认把 AI 视频视为**视觉素材源**，最终音乐统一以后期锁定 BGM 为准。
+
+### Prompt hard wording
+
+人物或环境动态提示词不能只写模糊的“不要BGM / 不需要音乐”。默认明确写：
+
+`声音硬规则：禁止生成任何BGM、配乐、音乐、旋律、节拍、和弦、歌声、哼唱、旁白、对白或其他人声。只允许与当前画面物理事件直接对应的自然环境声，例如轻风、树叶摩擦、雨声、水声、脚步、衣料轻响；不得出现任何音乐性声音。最终MV统一删除所有AI源音轨，并以后期锁定BGM为唯一音乐。`
+
+若当前段连环境声也无意义，可进一步写：
+
+`声音硬规则：不要生成任何音乐、人声或主动声音设计；保持无配乐、无对白、无旁白，仅允许极低自然底噪。`
+
+### Pipeline policy
+
+- 默认 `SOURCE_AUDIO = REMOVE`；
+- AI 生成音轨不得决定剪辑卡点、Beat、字幕时间或成片音乐结构；
+- 最终锁定 BGM 才是 MV 音乐唯一真源；
+- 即使提示词已经明确禁止，模型仍可能自发生成音乐。若视觉素材质量合格，不因此整段报废：标记 `SOURCE_AUDIO_POLICY_FAIL`，保留画面，在 W08 强制移除源音轨；
+- 若项目明确需要原生环境声，Director 必须单独声明 `SOURCE_AUDIO = KEEP_AMBIENCE`，且仍禁止BGM / 歌声 / 旁白 / 未授权人声。
+
+R2验证：S1 v2 在已写“不需要BGM”的情况下仍返回明显音乐性音轨，说明软否定不足，因此升级为显式声音黑名单。
+
 ## QA
 检查：
 - 身份 / 物体连续；
@@ -98,6 +124,7 @@ R1中，大幅移动纸张曾被模型误生成破洞；改为摄影机驱动的
 - 运镜是否执行正确；
 - 首帧美感是否被明显破坏；
 - 结束帧是否可剪；
-- 源音轨状态。
+- 源音轨状态；
+- 若出现模型自带BGM/音乐性声音，标记 `SOURCE_AUDIO_POLICY_FAIL`，视觉可用则保留，后期强制静音。
 
-AI素材默认 `SOURCE_AUDIO = REMOVE`，除非Director明确保留。
+AI素材默认 `SOURCE_AUDIO = REMOVE`，除非Director明确保留环境声。
