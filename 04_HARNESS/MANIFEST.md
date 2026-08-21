@@ -1,4 +1,4 @@
-# Runtime Manifest v3.1
+# Runtime Manifest v3.2
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
@@ -20,7 +20,7 @@
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项：选歌 / BGM截取 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 歌词 / 终审 | `workflows/mv.md` | `rules/ai_video.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md` + `knowledge/MV_BENCHMARK_LAYER.md`；按阶段 JIT 加载 |
+| MV专项：选歌 / BGM截取 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 歌词 / 终审 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/ai_video.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md` + `knowledge/MV_BENCHMARK_LAYER.md`；按阶段 JIT 加载 |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
@@ -30,10 +30,13 @@
 
 MV任务默认先读：
 1. `workflows/mv.md`
-2. 当前 MV Round `CURRENT_STATE.md`
-3. 当前阶段明确需要的 Rules / Prompt / Benchmark Snapshot
+2. `rules/mv_golden_runtime.md`
+3. 当前 MV Round `CURRENT_STATE.md`
+4. 当前阶段明确需要的 Rules / Prompt / Benchmark Snapshot
 
-R1历史复盘、失败样本、旧Prompt只有在排错或规则溯源时加载，禁止默认全读。
+`mv_golden_runtime.md` 是跨Round的 Golden 运行契约，必须默认参与 Runtime。它只继承经过验证的生产正确性 / 最低质量规则，不复制 R1 的歌曲、视觉世界、人物或镜头清单。
+
+R1历史复盘、失败样本、旧Prompt仍只在排错或规则溯源时加载，禁止默认全读。历史文件不负责运行时继承；需要跨Round继承的关键经验必须先晋升到 `rules/mv_golden_runtime.md`、对应权威Rule或 `workflows/mv.md` 的可验收 Gate。
 
 ## MV Benchmark JIT Rule
 
@@ -70,8 +73,8 @@ R1历史复盘、失败样本、旧Prompt只有在排错或规则溯源时加载
 ## Context Budget
 
 默认目标：
-- 启动层：≤ 3个文件
-- 单模块执行：≤ 6个核心文件
+- 启动层：≤ 4个文件
+- 单模块执行：≤ 7个核心文件
 - 排错/迁移：才允许扩大上下文
 
 任何新增文件都必须回答：它属于 Workflow、Rule、Template、Knowledge、State 还是 Documentation；回答不清则不要新增。
