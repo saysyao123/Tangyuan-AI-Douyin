@@ -1,0 +1,26 @@
+name: MV Audio Timeline Gate Tests
+
+on:
+  push:
+    paths:
+      - '04_HARNESS/tools/mv_audio_timeline/**'
+      - '04_HARNESS/rules/mv_audio_timeline.md'
+      - '04_HARNESS/workflows/mv.md'
+  pull_request:
+    paths:
+      - '04_HARNESS/tools/mv_audio_timeline/**'
+      - '04_HARNESS/rules/mv_audio_timeline.md'
+      - '04_HARNESS/workflows/mv.md'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ffmpeg/ffprobe
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Run audio timeline package regression suite
+        run: |
+          python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py
