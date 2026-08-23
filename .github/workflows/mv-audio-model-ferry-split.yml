@@ -1,0 +1,186 @@
+name: MV Audio Alignment Model Ferry Split
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - test/mv-web-r2
+    paths:
+      - '.github/workflows/mv-audio-model-ferry-split.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-split-pinned-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install model downloader
+        run: python -m pip install --disable-pip-version-check 'huggingface_hub>=0.27,<1.0'
+
+      - name: Download only required pinned model files
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from huggingface_hub import snapshot_download
+
+          repo_id = 'jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn'
+          revision = 'd2af85f00e501bb8b8bcedef3b5c51eabb883088'
+          out = Path('mv_alignment_model')
+          common = [
+              'config.json',
+              'preprocessor_config.json',
+              'tokenizer_config.json',
+              'vocab.json',
+              'special_tokens_map.json',
+              'added_tokens.json',
+          ]
+          snapshot_download(repo_id=repo_id, revision=revision, local_dir=out,
+                            allow_patterns=common + ['model.safetensors'])
+          if not (out / 'model.safetensors').exists():
+              snapshot_download(repo_id=repo_id, revision=revision, local_dir=out,
+                                allow_patterns=common + ['pytorch_model.bin'])
+          weights = [p.name for p in out.iterdir() if p.name in {'model.safetensors','pytorch_model.bin'}]
+          if not weights:
+              raise SystemExit('No model weights downloaded')
+          # Never ferry duplicate weight formats.
+          if 'model.safetensors' in weights and (out / 'pytorch_model.bin').exists():
+              (out / 'pytorch_model.bin').unlink()
+          print('weight_files=', [p.name for p in out.iterdir() if p.name in {'model.safetensors','pytorch_model.bin'}])
+          PY
+
+      - name: Build immutable manifest and split archive
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('mv_alignment_model')
+          files=[]
+          for p in sorted(x for x in root.rglob('*') if x.is_file()):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(8*1024*1024), b''): h.update(b)
+              files.append({'path':p.relative_to(root).as_posix(),'size':p.stat().st_size,'sha256':h.hexdigest()})
+          manifest={'repo_id':'jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn','revision':'d2af85f00e501bb8b8bcedef3b5c51eabb883088','files':files}
+          Path('mv_alignment_model_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
+          print('model_files',len(files),'bytes',sum(x['size'] for x in files))
+          PY
+          tar -cf mv_alignment_model.tar mv_alignment_model mv_alignment_model_manifest.json
+          sha256sum mv_alignment_model.tar > mv_alignment_model.tar.sha256
+          split -b 400M -d -a 2 mv_alignment_model.tar mv_alignment_model.tar.part-
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          parts=[]
+          for p in sorted(Path('.').glob('mv_alignment_model.tar.part-*')):
+              h=hashlib.sha256(p.read_bytes()).hexdigest()
+              parts.append({'file':p.name,'size':p.stat().st_size,'sha256':h})
+          tar_sha=Path('mv_alignment_model.tar.sha256').read_text().split()[0]
+          out={'tar_sha256':tar_sha,'tar_size':Path('mv_alignment_model.tar').stat().st_size,'parts':parts}
+          Path('mv_alignment_model_split_manifest.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps(out,indent=2))
+          PY
+
+      - name: Upload chunk 00
+        if: ${{ hashFiles('mv_alignment_model.tar.part-00') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-00
+          path: mv_alignment_model.tar.part-00
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 01
+        if: ${{ hashFiles('mv_alignment_model.tar.part-01') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-01
+          path: mv_alignment_model.tar.part-01
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 02
+        if: ${{ hashFiles('mv_alignment_model.tar.part-02') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-02
+          path: mv_alignment_model.tar.part-02
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 03
+        if: ${{ hashFiles('mv_alignment_model.tar.part-03') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-03
+          path: mv_alignment_model.tar.part-03
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 04
+        if: ${{ hashFiles('mv_alignment_model.tar.part-04') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-04
+          path: mv_alignment_model.tar.part-04
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 05
+        if: ${{ hashFiles('mv_alignment_model.tar.part-05') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-05
+          path: mv_alignment_model.tar.part-05
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 06
+        if: ${{ hashFiles('mv_alignment_model.tar.part-06') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-06
+          path: mv_alignment_model.tar.part-06
+          compression-level: 0
+          retention-days: 3
+      - name: Upload chunk 07
+        if: ${{ hashFiles('mv_alignment_model.tar.part-07') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-zh-ctc-chunk-07
+          path: mv_alignment_model.tar.part-07
+          compression-level: 0
+          retention-days: 3
+
+      - name: Write split-ferry receipt back to WEB R2 branch
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          split=json.loads(Path('mv_alignment_model_split_manifest.json').read_text())
+          receipt={
+            'schema_version':'1.0',
+            'status':'MODEL_SPLIT_ARTIFACTS_READY',
+            'repo_id':'jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn',
+            'revision':'d2af85f00e501bb8b8bcedef3b5c51eabb883088',
+            'workflow_run_id':os.environ['GITHUB_RUN_ID'],
+            'workflow_run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],
+            'workflow_commit_sha':os.environ['GITHUB_SHA'],
+            **split,
+          }
+          path=Path('06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/model_ferry_split_receipt.json')
+          path.parent.mkdir(parents=True,exist_ok=True)
+          path.write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/model_ferry_split_receipt.json
+          git commit -m 'ci: record split pinned MV alignment model artifacts'
+          git pull --rebase origin test/mv-web-r2
+          git push origin HEAD:test/mv-web-r2
