@@ -6,14 +6,16 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W08B / V3_EDIT_MAP`
-- STAGE_NAME: `Picture Edit Map using locked Audio Timeline Package + existing visual source pool`
-- STATE: `V1_REVOKED / V2_REVOKED / W02A_PASS / EDITOR_AUDIO_GATE_PASS / V3_EDIT_MAP_NOT_YET_LOCKED`
+- STAGE: `W08B / V3_EDIT_PREVIEW_VIEWING_GATE`
+- STAGE_NAME: `V3 Picture+BGM Preview human aesthetic viewing`
+- STATE: `V1_REVOKED / V2_REVOKED / W02A_PASS / EDITOR_AUDIO_GATE_PASS / EDIT_MAP_LOCKED / PICTURE_PREVIEW_RENDERED / TECH_QA_PASS / AESTHETIC_VIEWING_PENDING`
 - BRANCH: `test/mv-web-r2`
 - WORKFLOW: `04_HARNESS/workflows/mv.md` v1.3
 - GOLDEN_RUNTIME: `04_HARNESS/rules/mv_golden_runtime.md` v1.2
 - AUDIO_TIMELINE_RULE: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
 - AUDIO_PACKAGE: `06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/`
+- EDIT_MAP: `06_TESTS/MV/WEB_R2/W08B_V3_EDIT_MAP_v1.csv`
+- EDIT_PREVIEW_QA: `06_TESTS/MV/WEB_R2/W08B_V3_EDIT_PREVIEW_QA_v1.md`
 - W02A_GATE_RECEIPT: `06_TESTS/MV/WEB_R2/W02A_GATE_PASS_RECEIPT.json`
 - W02A_SYNC_RECEIPT: `06_TESTS/MV/WEB_R2/W02A_PACKAGE_SYNC_RECEIPT.json`
 - ROOT_CAUSE_AUDIT: `06_TESTS/MV/WEB_R2/W08_V2_TIMING_PROVENANCE_FAILURE_AUDIT.md`
@@ -26,14 +28,14 @@
 - W02A: `AUDIO_TIMELINE_PACKAGE_LOCKED / PASS`
 - W04: `DIRECTOR_PLAN_LOCKED` — `树影之外`
 - W05: `FIRST_FRAME_SET_LOCKED` — 9/9 accepted
-- W06: dynamic prompt/camera experiment completed
-- W06-X: S1–S9 returned
+- W06/W06-X: dynamic prompt/camera experiment + S1–S9 returned
 - W07: `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT` — visual batch pass with trim
 - W08A: `EDITOR_AUDIO_GATE_PASS`
+- W08B: `EDIT_MAP_LOCKED / V3 Picture Preview rendered`
 
-Visual assets produced before Workflow v1.3 remain valid. Do not reopen approved visual-generation stages unless the verified V3 Edit Map proves a specific source-duration or source-quality gap.
+Do not reopen approved visual-generation stages unless a specific preview defect proves a source-duration/source-quality gap.
 
-## Revoked edit artifacts
+## Revoked artifacts｜HARD
 
 ### V1
 `REVOKED / TECHNICAL_RESCUE`
@@ -46,36 +48,37 @@ Reason:
 `REVOKED / TECHNICAL_RESCUE / EVIDENCE_PROVENANCE_FAIL`
 
 Reason:
-- wrong nine-line excerpt lyric assumption;
-- `lyrics_exact_v2.srt` reused acoustic-candidate timing family under the wrong lyric mapping;
-- QA verified render-vs-SRT, not SRT-vs-vocal ground truth.
+- wrong nine-line excerpt assumption;
+- diagnostic acoustic timing was repackaged as exact;
+- QA proved render-vs-SRT, not SRT-vs-vocal ground truth.
 
-Packaging/mux was ruled out:
-- final audio vs locked BGM global lag: `0.000s`;
-- waveform correlation: ~`0.999`.
+V1/V2 timing assets may not be reused as timing truth.
+Visual source-selection lessons may be reused.
 
-## W02A Strong Route resolution
+## W02A canonical timing truth
 
-The previous model-download blocker was solved without changing the locked model or publishing the song audio.
-
-Pinned production identity:
-- aligner route: trusted Chinese lyrics -> CTC forced alignment;
+Strong Route:
+- trusted Chinese lyrics -> CTC forced alignment;
 - model: `jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn`;
 - revision: `d2af85f00e501bb8b8bcedef3b5c51eabb883088`;
 - 92 target tokens -> 92 aligned spans;
-- free ASR transcription was not used as lyric truth.
-
-The model was ferried through GitHub Actions in integrity-checked artifacts because the web/container runtime could not directly resolve the model host. The exact locked v3 BGM was aligned locally and remained private.
+- no free ASR lyric transcription used as truth.
 
 Ground-truth QA:
-- CTC vs prior diagnostic acoustic candidate median absolute line-start delta: `0.125s`;
-- main conflicts were reviewed rather than averaged;
-- first/second repeated chorus L01–L07 independently aligned with median source-time shift `81.527s`;
-- maximum deviation from that repeat-shift median: `0.061s`;
-- no repeated-chorus occurrence swap detected.
+- CTC vs prior diagnostic candidate median absolute line-start delta: `0.125s`;
+- repeated chorus L01–L07 source-time shift median: `81.527s`;
+- maximum repeat-shift deviation: `0.061s`;
+- no chorus occurrence swap.
 
-Canonical QA report:
-`AUDIO_TIMELINE_PACKAGE/alignment_qa_report.md`
+Machine Gates:
+- Timing Core Gate: exit `0`, 10 lines, 0 errors/warnings;
+- Complete Package Gate: exit `0`, 10 lines, 10 anchors, 21 music events, 0 errors/warnings;
+- `package_manifest.json`: `AUDIO_TIMELINE_PACKAGE_LOCKED=true`.
+
+Canonical sync:
+- workflow run `32655263045`;
+- payload ZIP SHA `c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be`;
+- status `W02A_CANONICAL_PACKAGE_SYNCED`.
 
 ## Canonical lyric timeline
 
@@ -92,7 +95,7 @@ Canonical QA report:
 | L09 | 在某天某个随机的清晨或是下午 | 28.415 | 32.838 |
 | L10 | 坐下来别那么严肃 | 32.838 | 37.120 |
 
-Canonical files:
+Canonical timing/editor files:
 - `AUDIO_TIMELINE_PACKAGE/line_timeline.csv`
 - `AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`
 - `AUDIO_TIMELINE_PACKAGE/anchor_words.csv`
@@ -101,31 +104,71 @@ Canonical files:
 - `AUDIO_TIMELINE_PACKAGE/alignment_provenance.json`
 - `AUDIO_TIMELINE_PACKAGE/package_manifest.json`
 
-## Machine Gate result
+## W08B V3 Edit Map result
 
-Timing Core Gate:
-- exit `0`;
-- `pass=true`;
-- 10/10 lines;
-- 0 errors;
-- 0 warnings.
+The old V1/V2 visual order was not reused because it was built around the wrong first-lyric assumption.
 
-Complete Package Gate:
-- exit `0`;
-- `pass=true`;
-- 10 lines;
-- 10 anchor entries;
-- 21 music events;
-- 0 errors;
-- 0 warnings;
-- generated `package_manifest.json` with `AUDIO_TIMELINE_PACKAGE_LOCKED=true`.
+V3 reorders accepted material against canonical timing:
+- opening: S2 leaf/hand -> S4 dance for L01;
+- L02: short S5 upward/giant-tree cue without prematurely revealing bird;
+- L03: S3 intimate eye/veil;
+- L04: S6 person -> bird -> person, with bird reveal ~`8.542s` vs `鸟儿` anchor `8.525s`;
+- L06: S4 energy rise -> S7 clean peak -> S7 clean canopy resolve;
+- L07/title: S1 monumental tree -> low-angle look-up -> eye -> canopy;
+- L08: shortened S8 literal cloud -> S3 floating veil;
+- L09: S5 morning light -> S4 human bridge;
+- L10/tail: long S9 cloud/sky release.
 
-Canonical package sync:
-- workflow run: `32655263045`;
-- payload ZIP SHA-256: `c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be`;
-- sync receipt status: `W02A_CANONICAL_PACKAGE_SYNCED`.
+W07 risk exclusions preserved:
+- S1 source frames `58–75` excluded (duplicate low-angle family);
+- S7 source frames `65–97` excluded (fabric topology risk);
+- S8 ~`2.917s`, S9 ~`4.292s` to preserve short reset vs long final-release roles.
 
-## Current Package state
+Picture clock:
+- `24fps`;
+- `891 frames`;
+- `37.125s`;
+- locked audio content `37.120s`;
+- end quantization delta `+0.005s`.
+
+`EDIT_MAP_LOCKED = YES`
+
+## V3 Picture+BGM Preview technical QA
+
+Preview identity:
+- filename: `如果你也刚好抬头看树_MV_WEB_R2_V3_PicturePreview.mp4`
+- SHA-256: `09e68c852d50fd43059fa70b8555ec7a742451af27ca2e3c177595ae5f240111`
+- H.264 `720×1280`, 24fps, SAR `1:1`;
+- video `37.125s / 891 frames`;
+- AAC audio `37.120s`.
+
+Audio implementation check:
+- Preview decoded audio vs locked v3 BGM best global lag: `0.000s`;
+- normalized correlation: ~`0.99960`;
+- no new AAC/FFmpeg global timing shift.
+
+Source audio policy:
+- all Seedance source audio ignored at ingest;
+- only locked W02 v3 BGM is mapped.
+
+Preview safe crop:
+- `crop=630:1120:20:72 -> scale=720:1280 -> SAR 1:1`;
+- used consistently for the viewing preview.
+
+Anchor-frame spot checks:
+- ~8.40s person -> ~8.55s bird;
+- 20.85s low-angle look-up;
+- 21.40s eye close-up;
+- 24.35s white cloud;
+- 26.05s wind/veil portrait;
+- 30.70s morning light / giant tree;
+- 32.83s transition into final cloud release.
+
+`PICTURE_PREVIEW_RENDERED = YES`
+`EDIT_PREVIEW_TECH_QA_PASS = YES`
+`EDIT_PREVIEW_QA_PASS = NO / AESTHETIC_VIEWING_PENDING`
+
+## Current Package / Runtime state
 
 - `AUDIO_IDENTITY_LOCKED = YES`
 - `LYRIC_TEXT_LOCKED = YES`
@@ -137,42 +180,22 @@ Canonical package sync:
 - `MUSIC_EVENT_MAP_VERIFIED = YES`
 - `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
 - `EDITOR_AUDIO_GATE_PASS = YES`
-- `EDIT_MAP_LOCKED = NO`
-- `EDIT_PREVIEW_QA_PASS = NO`
+- `EDIT_MAP_LOCKED = YES`
+- `PICTURE_PREVIEW_RENDERED = YES`
+- `EDIT_PREVIEW_TECH_QA_PASS = YES`
+- `EDIT_PREVIEW_QA_PASS = NO / AESTHETIC_VIEWING_PENDING`
+- `SUBTITLE_STYLE_QA_PASS = NO`
+- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
 - `DELIVERABLE_RENDERED = NO`
-
-## Editor hard entry revalidation
-
-W08A has passed because:
-- canonical `package_manifest.json` exists;
-- manifest audio SHA equals the locked v3 BGM SHA;
-- content timeline remains `37.120s`;
-- no source clip start/end change;
-- no speed/time-stretch change;
-- trusted lyric text/order remains the canonical 10 lines;
-- `AUDIO_TIMELINE_PACKAGE_LOCKED = true`.
-
-Editing may now load the Package. Editing must not create a second lyric timing model.
 
 ## Next Allowed Action
 
-Only valid next path:
+**Human viewing Gate on the actual V3 Picture+BGM Preview.**
 
-`W08B V3 Edit Map`
+If user accepts:
+`EDIT_PREVIEW_QA_PASS -> W09 Subtitle Style + Implementation QA`.
 
-Load together:
-1. `AUDIO_TIMELINE_PACKAGE/line_timeline.csv`;
-2. `AUDIO_TIMELINE_PACKAGE/anchor_words.csv`;
-3. `AUDIO_TIMELINE_PACKAGE/music_events.csv`;
-4. existing locked `VISUAL_SOURCE_MAP` / W07 usable windows;
-5. existing W04 Director intent.
+W09 must use canonical `AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`; it may style/render subtitles but may not invent or nudge a parallel lyric timing table.
 
-Then create the V3 Edit Map using the three clocks:
-`lyric clock + music-event clock + visual-action clock`.
-
-Hard rules:
-- do not reopen W01/W02/W04/W05/W06/W07 by default;
-- do not derive lyric timing from picture cuts;
-- do not reuse V1/V2 timing assets;
-- picture may pre-enter a lyric, but semantic hits should target verified anchors/music events;
-- no V3 final render until `EDIT_MAP_LOCKED` and subsequent preview QA pass.
+If user identifies a specific visual rhythm problem:
+modify only the affected W08B fragment(s); W02A remains locked unless the audio itself changes.
