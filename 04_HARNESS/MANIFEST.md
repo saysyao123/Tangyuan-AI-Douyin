@@ -1,4 +1,4 @@
-# Runtime Manifest v3.2
+# Runtime Manifest v3.3
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
@@ -20,7 +20,7 @@
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项：选歌 / BGM截取 / Hook / 导演 / 首帧 / 动态 / 剪辑 / 歌词 / 终审 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/ai_video.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md` + `knowledge/MV_BENCHMARK_LAYER.md`；按阶段 JIT 加载 |
+| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_audio_timeline.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md`；时间轴阶段加载 `templates/mv_audio_timeline_package_contract.md`；Benchmark 按需 |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
@@ -31,50 +31,58 @@
 MV任务默认先读：
 1. `workflows/mv.md`
 2. `rules/mv_golden_runtime.md`
-3. 当前 MV Round `CURRENT_STATE.md`
-4. 当前阶段明确需要的 Rules / Prompt / Benchmark Snapshot
+3. `rules/mv_audio_timeline.md`
+4. 当前 MV Round `CURRENT_STATE.md`
+5. 当前阶段 JIT 需要的 Rules / Template / Benchmark。
 
-`mv_golden_runtime.md` 是跨Round的 Golden 运行契约，必须默认参与 Runtime。它只继承经过验证的生产正确性 / 最低质量规则，不复制 R1 的歌曲、视觉世界、人物或镜头清单。
+这 4 个默认入口负责：
+- 权威流程；
+- 跨Round Golden正确性；
+- BGM之后第一个硬节点 `AUDIO_TIMELINE_PACKAGE`；
+- 当前项目状态。
 
-R1历史复盘、失败样本、旧Prompt仍只在排错或规则溯源时加载，禁止默认全读。历史文件不负责运行时继承；需要跨Round继承的关键经验必须先晋升到 `rules/mv_golden_runtime.md`、对应权威Rule或 `workflows/mv.md` 的可验收 Gate。
+R1历史复盘、失败样本、旧Prompt只在排错/规则溯源/回归测试时加载。历史文件不负责正常Runtime继承；需要跨Round保留的经验必须晋升到 Rule / Workflow / Template / Gate。
+
+## MV Audio Timeline JIT Rule
+
+BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
+- `rules/mv_audio_timeline.md`
+- `templates/mv_audio_timeline_package_contract.md`
+
+在 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES` 之前：
+- 不进入正式 Natural Beat timing allocation；
+- 不进入 Director timing allocation；
+- 不进入 Picture Edit；
+- 不进入 Subtitle timing/render。
+
+进入剪辑时只做 Package revalidation，不允许剪辑模块临时重新猜时间轴。
 
 ## MV Benchmark JIT Rule
 
 `MV_BENCHMARK_LAYER.md` 是 External Knowledge，不是硬规则正文：
-- S01 / 新 Round：刷新最近 7 天轻量快照；
-- Director：只挑当前歌曲相关的 3–5 个 Focused works；
-- First-frame：只挑 2–3 个 Beauty references；
-- Dynamic：只挑 2–3 个 Director / Action references；
-- Final QA：只挑 2–3 个完成度 / 市场 references。
+- 新 Round：刷新最近7天轻量快照；
+- Director：只挑当前歌曲相关3–5个Focused works；
+- First-frame：只挑2–3个Beauty references；
+- Dynamic：只挑2–3个Director/Action references；
+- Final QA：只挑2–3个完成度/市场references。
 
-禁止因为 Benchmark 作者采用某个做法，就直接升级为 Locked Rule。必须先经过本项目实验和用户验收。
+禁止因为Benchmark作者采用某个做法就直接升级为Locked Rule；必须经过本项目实验和用户验收。
 
 ## Legacy Reference Policy
 
-以下旧文件保留用于追溯，但默认不参与 Runtime：
+旧Harness/复盘文件默认不参与Runtime。只有：
+1. 新模块缺必要细节；
+2. 需要追溯规则来源；
+3. 做迁移/回归测试；
+才加载。
 
-- `KNOWLEDGE_SCRIPT_HARNESS.md`
-- `TOPIC_SELECTION_HARNESS.md`
-- `AUDIO_PRODUCTION_HARNESS.md`
-- `AI_VIDEO_HARNESS.md`
-- `VIDEO_PRODUCTION_HARNESS.md`
-- `HYPERFRAMES_EXPLANATION_HARNESS.md`
-- `HYPERFRAMES_ASSET_HARNESS.md`
-- `HYPERFRAMES_SEMANTIC_TEXT_ANCHOR_ADDENDUM_v1.1.md`
-- `DATA_REVIEW_HARNESS.md`
-
-只有以下情况才加载旧文件：
-1. 新模块缺少必要细节；
-2. 需要追溯某条规则来源；
-3. 正在做迁移或回归测试。
-
-若旧文件与 `rules/*` 冲突，以 `rules/*` 为准，并记录待清理项。
+若旧文件与 `rules/*` 冲突，以当前权威 Rule/Workflow 为准，并记录待清理项。
 
 ## Context Budget
 
 默认目标：
-- 启动层：≤ 4个文件
-- 单模块执行：≤ 7个核心文件
-- 排错/迁移：才允许扩大上下文
+- 启动层：≤4个核心文件；
+- 单模块执行：≤7个核心文件；
+- 排错/迁移才扩大上下文。
 
-任何新增文件都必须回答：它属于 Workflow、Rule、Template、Knowledge、State 还是 Documentation；回答不清则不要新增。
+任何新增文件必须明确属于 Workflow、Rule、Template、Knowledge、State 或 Documentation；无法归类则不要新增。
