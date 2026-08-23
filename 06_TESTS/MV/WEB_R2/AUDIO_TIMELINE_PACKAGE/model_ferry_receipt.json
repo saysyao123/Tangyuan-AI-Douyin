@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "status": "MODEL_ARTIFACT_READY",
+  "repo_id": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+  "revision": "d2af85f00e501bb8b8bcedef3b5c51eabb883088",
+  "workflow_run_id": "32653971469",
+  "workflow_run_attempt": "1",
+  "workflow_commit_sha": "fbae6ca872c6e6288b5938dbceb079a4145f2148",
+  "artifact_id": "9496953530",
+  "artifact_url": "https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/32653971469/artifacts/9496953530",
+  "artifact_name": "mv-w02a-zh-ctc-model-d2af85f"
+}
