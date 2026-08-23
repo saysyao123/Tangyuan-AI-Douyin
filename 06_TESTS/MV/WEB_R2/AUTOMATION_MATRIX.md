@@ -1,96 +1,100 @@
 # WEB R2｜AUTOMATION MATRIX
 
-> 目标：真实记录网页端自动化程度，不因文件被渲染出来就高估自动化或正确性。
+> 目标：真实记录自动化程度，不因“渲染出文件”就高估正确性。
 
 ## Overall
 
-- Current Stage: `W08A`
-- Overall State: `V2_REVOKED / LYRIC_ALIGNMENT_EVIDENCE_BLOCKED`
-- Fully automated successful stages: `4` (`W00`, `W03 director-level analysis`, `W06 research/prompt drafting`, `W07 batch QA`)
+- Current Stage: `W08A / RETROFIT_STAGE_2A`
+- Overall State: `V1_REVOKED / V2_REVOKED / AUDIO_TIMELINE_PACKAGE_BLOCKED`
 - Human aesthetic gates passed: `4`
 - External-required stages encountered: `1`
-- Non-aesthetic manual interventions / technical rescues: `8`
+- Timing technical rescues: `2 major edit failures`
 
 ## Stage Board
 
-| Stage | 内容 | 实际状态 | 用户操作/备注 |
+| Stage | 内容 | 实际状态 | 备注 |
 |---|---|---|---|
-| W00 | 能力基线 | AUTO / PASS | 无 |
-| W01 | 选歌 | HUMAN_GATE / PASSED | 用户选择歌曲 |
-| W02 | BGM截取 | PARTIAL / LOCKED | 用户上传母版并最终确认37.120s片段 |
-| W03 | 歌词文本/导演Beat | AUTO / PASS | 精确歌词文本 + Natural Beats；不等于精确时间轴 |
-| W04 | 导演方向 | HUMAN_GATE / PASSED | `树影之外` |
-| W05 | 首帧 | HUMAN_GATE / PASSED | 9/9通过 |
-| W06 | 动态提示词 | AUTO / EXPERIMENTAL PASS | Camera/Shot selector形成 |
-| W06-X | Seedance生成 | EXTERNAL_REQUIRED / COMPLETE | 用户外部生成S1–S9 |
-| W07 | 动态QA | AUTO / PASS WITH TRIM | 全组可进入素材池 |
-| W08A | 歌词时间轴证据 | `BLOCKED / EVIDENCE_PROVENANCE_FAIL` | v2没有独立ASR/LRC/官方timed lyric原始证据 |
-| W08B | Picture Edit | `INVALIDATED / REVOKED` | v1/v2均依赖未锁时间轴，不能算成功自动化 |
-| W09 | Subtitle | `INVALIDATED / REVOKED` | 样式可复用；timing correctness未通过 |
-| W10 | Final QA | `INVALIDATED` | 技术封装检查通过不等于歌词同步正确 |
-| W11 | Round Close | NOT_STARTED | 必须在真实时间轴+成片通过后 |
+| W00 | 能力基线 | AUTO / PASS | |
+| W01 | 选歌 | HUMAN_GATE / PASSED | 用户选歌 |
+| W02 | BGM截取 | LOCKED | 37.120s + hash |
+| **W02A** | **AUDIO_TIMELINE_PACKAGE** | **RETROFIT / BLOCKED** | v1.3新增首个post-BGM硬节点；当前R2必须补齐后才能V3 |
+| W03 | 语义/Natural Beat | HISTORICAL PASS | 视觉语义仍有效；时间部分以后必须由W02A Package驱动 |
+| W04 | 导演 | PASSED | `树影之外`；已生成素材不作废 |
+| W05 | 首帧 | PASSED | 9/9 |
+| W06 | 动态提示词 | PASS / EXPERIMENTAL | Camera selector有效 |
+| W06-X | Seedance生成 | EXTERNAL_REQUIRED / COMPLETE | S1–S9 |
+| W07 | 动态QA | PASS WITH TRIM | 素材池有效 |
+| W08A | Editor Audio Gate | BLOCKED | 当前等价于补W02A；Package未锁 |
+| W08B | Picture Edit | INVALIDATED | v1/v2撤销 |
+| W09 | Subtitle | INVALIDATED | 样式可继承；timing未锁 |
+| W10 | Final QA | INVALIDATED | 封装PASS不能代替同步PASS |
+| W11 | Close | NOT_STARTED | |
 
-## Why v2 is revoked
+## Why V1/V2 are revoked
 
-V2 used line starts:
-`0.470 / 5.451 / 10.954 / 13.827 / 16.788 / 19.702 / 23.470 / 28.439 / 32.618`.
+### V1
+- 未建立真实歌词时间轴就进入Picture Edit/Subtitle；
+- 字幕样式也发生R1 Golden漂移。
 
-These are essentially the same acoustic candidate family that the W08 blocking gate had already labelled diagnostic-only and forbidden as timing truth.
+### V2
+- 把早先已标为 `DIAGNOSTIC_ONLY` 的声学候选重新包装成 `exact` SRT/CSV；
+- 没有独立ASR/forced alignment/可靠同版本LRC；
+- QA只证明视频服从SRT，没有证明SRT服从真实人声。
 
-No raw ASR/forced-alignment result, reliable same-version LRC, or official timed-lyric source was introduced before the file was renamed/generated as `lyrics_exact_v2.srt`.
+分类：
+`TECHNICAL_RESCUE / EVIDENCE_PROVENANCE_FAIL`。
 
-Classification:
-`TECHNICAL_RESCUE / EVIDENCE_PROVENANCE_FAIL`.
+AAC/FFmpeg全局偏移已排除：
+- lag `0.000s`；
+- correlation ~`0.999`。
 
-## Circular QA lesson
+## New process truth after retrofit
 
-The earlier internal QA verified:
-`rendered subtitles follow SRT`.
+Authoritative runtime now requires：
 
-It did not verify:
-`SRT follows actual vocals`.
+`BGM_LOCKED`
+→ `AUDIO_TIMELINE_PACKAGE_LOCKED`
+→ semantic Beat / Director timing allocation
+→ visual production
+→ Editor Package revalidation
+→ Picture Edit
+→ Subtitle implementation
+→ Final QA。
 
-Future required separation:
-- `ALIGNMENT_GROUND_TRUTH_QA_PASS`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS`
+Package rule：
+`04_HARNESS/rules/mv_audio_timeline.md`
 
-The second cannot validate the first.
+Contract：
+`04_HARNESS/templates/mv_audio_timeline_package_contract.md`
 
-## Audio packaging ruled out
+Current package path：
+`06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/`
 
-V2 final AAC vs locked BGM:
-- best global lag `0.000s`;
-- waveform correlation ~`0.999`.
+## Current timing evidence status
 
-Therefore FFmpeg/AAC global shift is not the cause.
+- locked audio identity: YES
+- exact lyric text/order: YES
+- public timed lyric candidate found: YES, but rejected as truth because timestamps conflict with locked audio/version ordering
+- strong accepted raw timing evidence: NO
+- provenance verified: NO
+- ground-truth alignment QA: NO
+- Package locked: NO
 
-## Manual Intervention Log
+Preferred resolution：
+1. trusted Chinese lyrics + Chinese CTC forced alignment on locked audio;
+2. independent CJK/song alignment cross-check;
+3. if a truly same-version platform LRC is later found, use it as fast-path/cross-check after version verification.
 
-| # | Stage | 类型 | 为什么需要用户 | 是否未来可消除 |
-|---|---|---|---|---|
-| 1 | W01 | AESTHETIC_GATE | 最终歌曲偏好 | 否 |
-| 2 | W02 | FILE_INPUT | 缺实际可处理母版 | 可能 |
-| 3 | W02 | TECHNICAL_RESCUE | v1选段边界错误 | 是 |
-| 4 | W02 | TECHNICAL_RESCUE | v2选段入口/尾部不足 | 是 |
-| 5 | W04 | AESTHETIC_GATE | 导演方向 | 否 |
-| 6 | W05 | TECHNICAL_RESCUE | 生图流程停顿/偏虚 | 是 |
-| 7 | W06/W07 | TECHNICAL_RESCUE | per-shot运镜误扩大为per-clip单运镜；S1/S2用户纠正 | 是 |
-| 8 | W07 | TECHNICAL_RESCUE | S1重复与AI自带BGM未先被系统指出 | 是 |
-| 9 | W08 v1 | TECHNICAL_RESCUE | 未锁歌词时间轴即剪辑/字幕，字幕样式漂移 | 是 |
-| 10 | W08 v2 | TECHNICAL_RESCUE | 把诊断候选重新包装成exact时间轴；QA循环自证；用户再次发现歌词不同步 | 是；已加入provenance + independent alignment QA硬门禁 |
+## Manual Intervention lesson
 
-> 上方 Overall 的 non-aesthetic manual interventions 计当前 R2 主要技术救援/外部输入口径，不把所有历史审美Gate重复计入；Round close时统一清算。
-
-## Process truth fixes after v2
-
-- `mv_golden_runtime.md` upgraded to v1.1: timing provenance mandatory;
-- round Master Plan downgraded to summary authority and updated to pre-edit W08A alignment Gate;
-- ZERO-CONTEXT START order now loads authoritative Workflow + Golden Runtime before round summaries;
-- R1 Golden close requirement upgraded: preserve accepted timing asset/provenance, not only its filename in docs.
+The user should not need to catch timing failures after final render.
+A future timing problem counts as `TECHNICAL_RESCUE` if:
+- Package was claimed PASS without strong raw evidence/provenance；or
+- ground-truth QA was replaced by render-vs-SRT implementation QA。
 
 ## Next
 
-Only valid next path:
-`W08A -> acquire real timing evidence -> provenance -> ground-truth alignment QA -> lyric timeline lock`.
+Only valid next path：
+`AUDIO_TIMELINE_PACKAGE -> raw evidence -> provenance -> ground-truth QA -> Package LOCK -> Editor Audio Gate`。
 
-No v3 render until this passes.
+No V3 render until Package passes.
