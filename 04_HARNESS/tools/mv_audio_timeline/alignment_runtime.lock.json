@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Reproducible MV trusted-lyrics alignment runtime. Update only with regression evidence.",
+  "python": {
+    "recommended": "3.11",
+    "supported_for_primary": ">=3.11,<3.14"
+  },
+  "system": {
+    "ffmpeg_required": true,
+    "ffprobe_required": true
+  },
+  "primary": {
+    "name": "xingyu-lyrics-aligner",
+    "version": "0.7.0",
+    "repository": "https://github.com/wangjiqing/xingyu-lyrics-aligner.git",
+    "git_commit": "ef5ad02a0059ab07f4cc92f608d373447c89b007",
+    "install_extra": "alignment",
+    "cli": "xingyu-align",
+    "language": "zh",
+    "alignment_backend": "WhisperX CTC forced alignment",
+    "whisperx_version": "3.8.6",
+    "alignment_model": {
+      "id": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+      "reference_revision": "d2af85f00e501bb8b8bcedef3b5c51eabb883088",
+      "note": "Xingyu resolves this model through WhisperX. Cache/preheat and preserve environment manifest; do not silently substitute another Chinese align model."
+    }
+  },
+  "secondary": {
+    "name": "lyric-align",
+    "version": "0.3.0",
+    "repository": "https://github.com/ijuinryukichi/lyric-align.git",
+    "git_commit": "50aefb487deb30dd8b0590b78e1a705199ed9189",
+    "install_extras": ["asr", "separate"],
+    "cli": "lyric-align",
+    "default_asr_model": "medium",
+    "asr_model_reference": {
+      "id": "Systran/faster-whisper-medium",
+      "reference_revision": "08e178d48790749d25932bbc082711ddcfdfbc4f"
+    }
+  },
+  "gate_thresholds": {
+    "cross_source_line_start_median_delta_max_s": 0.25,
+    "cross_source_line_start_single_delta_max_s": 0.5,
+    "container_padding_tolerance_s": 0.1
+  },
+  "upgrade_policy": "Never float primary/secondary commits or model identity inside production. Any upgrade requires package-tool regression PASS plus at least one Golden audio regression comparison."
+}
