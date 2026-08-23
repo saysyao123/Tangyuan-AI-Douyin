@@ -1,0 +1,80 @@
+name: MV Audio Transformers Wheelhouse Ferry
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - test/mv-web-r2
+    paths:
+      - '.github/workflows/mv-audio-transformers-wheelhouse-ferry.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-wheelhouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Download pinned inference wheels
+        run: |
+          mkdir -p wheelhouse
+          python -m pip download --only-binary=:all: --dest wheelhouse \
+            'transformers==4.57.6' \
+            'tokenizers==0.22.2' \
+            'safetensors==0.8.0' \
+            'huggingface_hub==0.36.2'
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          files=[]
+          for p in sorted(Path('wheelhouse').glob('*')):
+              files.append({'file':p.name,'size':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          Path('wheelhouse_manifest.json').write_text(json.dumps({'files':files},indent=2)+'\n')
+          print(json.dumps({'files':files},indent=2))
+          PY
+      - name: Upload wheelhouse
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-transformers-wheelhouse-py313
+          path: |
+            wheelhouse/
+            wheelhouse_manifest.json
+          compression-level: 0
+          retention-days: 3
+      - name: Write wheelhouse receipt
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          manifest=json.loads(Path('wheelhouse_manifest.json').read_text())
+          receipt={
+            'schema_version':'1.0',
+            'status':'WHEELHOUSE_ARTIFACT_READY',
+            'workflow_run_id':os.environ['GITHUB_RUN_ID'],
+            'workflow_commit_sha':os.environ['GITHUB_SHA'],
+            'artifact_name':'mv-w02a-transformers-wheelhouse-py313',
+            'pins':{
+              'transformers':'4.57.6',
+              'tokenizers':'0.22.2',
+              'safetensors':'0.8.0',
+              'huggingface_hub':'0.36.2'
+            },
+            **manifest,
+          }
+          p=Path('06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/wheelhouse_ferry_receipt.json')
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/wheelhouse_ferry_receipt.json
+          git commit -m 'ci: record offline transformers wheelhouse artifact'
+          git pull --rebase origin test/mv-web-r2
+          git push origin HEAD:test/mv-web-r2
