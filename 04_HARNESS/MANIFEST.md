@@ -1,4 +1,4 @@
-# Runtime Manifest v3.3
+# Runtime Manifest v3.4
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
@@ -20,7 +20,7 @@
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_audio_timeline.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md`；时间轴阶段加载 `templates/mv_audio_timeline_package_contract.md`；Benchmark 按需 |
+| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_audio_timeline.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md`；时间轴阶段加载 `templates/mv_audio_timeline_package_contract.md` + `tools/mv_audio_timeline/*`；Benchmark 按需 |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
@@ -48,6 +48,18 @@ R1历史复盘、失败样本、旧Prompt只在排错/规则溯源/回归测试�
 BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
 - `rules/mv_audio_timeline.md`
 - `templates/mv_audio_timeline_package_contract.md`
+- `tools/mv_audio_timeline/package_tool.py`
+- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`
+
+时间轴模块的最终 PASS **不得由 Agent 自报**。必须运行：
+
+`python 04_HARNESS/tools/mv_audio_timeline/package_tool.py validate ...`
+
+并得到进程退出码 `0`，同时写出 `package_manifest.json`，才允许设置：
+`AUDIO_TIMELINE_PACKAGE_LOCKED = YES`。
+
+任何非零退出码、缺 raw evidence、缺 provenance、音频 SHA 不一致、歌词顺序不一致、任一行 QA 非 PASS 或跨源冲突超阈值：
+`AUDIO_TIMELINE_PACKAGE_BLOCKED`。
 
 在 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES` 之前：
 - 不进入正式 Natural Beat timing allocation；
@@ -56,6 +68,23 @@ BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
 - 不进入 Subtitle timing/render。
 
 进入剪辑时只做 Package revalidation，不允许剪辑模块临时重新猜时间轴。
+
+## MV Audio Timeline Regression Rule
+
+时间轴工具/规则/Workflow发生修改时，必须运行：
+
+`python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py`
+
+当前回归套件必须至少覆盖：
+- raw evidence缺失 → FAIL；
+- diagnostic候选改名exact → FAIL；
+- BGM SHA变化 → FAIL；
+- repeated lyric occurrence保持顺序；
+- LRC offset转换正确；
+- 双源时间差超阈值 → FAIL；
+- 完整强证据Package → PASS并生成manifest/SRT。
+
+仓库 `.github/workflows/mv-audio-timeline-gate-tests.yml` 负责在相关代码/规则变更时自动运行同一套测试。
 
 ## MV Benchmark JIT Rule
 
