@@ -1,4 +1,4 @@
-# Runtime Manifest v3.4
+# Runtime Manifest v3.5
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
@@ -49,16 +49,35 @@ BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
 - `rules/mv_audio_timeline.md`
 - `templates/mv_audio_timeline_package_contract.md`
 - `tools/mv_audio_timeline/package_tool.py`
-- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`
+- `tools/mv_audio_timeline/final_gate.py`
+- `tools/mv_audio_timeline/alignment_runtime.lock.json`
+- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`；需要准备环境时调用 `bootstrap_alignment_env.py`。
 
-时间轴模块的最终 PASS **不得由 Agent 自报**。必须运行：
+时间轴模块分两层机器验证：
 
+### Layer 1｜Timing Core Gate
+运行：
 `python 04_HARNESS/tools/mv_audio_timeline/package_tool.py validate ...`
 
-并得到进程退出码 `0`，同时写出 `package_manifest.json`，才允许设置：
+它验证：强证据、raw evidence、provenance、音频 SHA/时长、歌词顺序、line timeline、逐行QA、可选双源差异。
+
+### Layer 2｜Complete Package Gate｜FINAL AUTHORITY
+运行：
+`python 04_HARNESS/tools/mv_audio_timeline/final_gate.py validate ... --write-manifest`
+
+它在 Layer 1 PASS 基础上继续验证：
+- `lyrics_exact.srt` 与 line timeline 完全一致；
+- `anchor_words.csv` 的关键歌词锚点落在对应歌词窗内；
+- `music_events.csv` 合法且在当前 content timeline 内；
+- `alignment_qa_report.md` 存在，并由 provenance SHA 引用；
+- 完整Package资产齐全。
+
+**只有 Layer 2 退出码 `0` 且由它写出 `package_manifest.json`，才允许设置：**
 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`。
 
-任何非零退出码、缺 raw evidence、缺 provenance、音频 SHA 不一致、歌词顺序不一致、任一行 QA 非 PASS 或跨源冲突超阈值：
+Agent不得自行创建/修改一个写着 locked=true 的manifest来绕过 Final Gate。
+
+任何非零退出码、缺 raw evidence/provenance、音频 SHA 不一致、歌词顺序不一致、任一行/Anchor/Event QA 非 PASS、SRT与timeline不一致、QA报告未seal、跨源冲突超阈值：
 `AUDIO_TIMELINE_PACKAGE_BLOCKED`。
 
 在 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES` 之前：
@@ -67,24 +86,48 @@ BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
 - 不进入 Picture Edit；
 - 不进入 Subtitle timing/render。
 
-进入剪辑时只做 Package revalidation，不允许剪辑模块临时重新猜时间轴。
+进入剪辑时重新运行 Complete Package Gate，不允许剪辑模块临时重新猜时间轴。
+
+## Alignment Runtime Reproducibility Rule
+
+标准环境版本由：
+`tools/mv_audio_timeline/alignment_runtime.lock.json`
+锁定。
+
+当前主路线固定：
+- Python 3.11 recommended；
+- `xingyu-lyrics-aligner` 0.7.0，固定 Git commit；
+- WhisperX 3.8.6；
+- 固定中文 CTC align model identity。
+
+副交叉验证器固定：
+- `lyric-align` 0.3.0，固定 Git commit；
+- faster-whisper model identity记录在lock文件。
+
+环境建立/检查：
+`python tools/mv_audio_timeline/bootstrap_alignment_env.py install|doctor ...`
+
+缺引擎/缺模型/doctor失败必须返回 `AUDIO_ALIGNMENT_RUNTIME_BLOCKED`，不得切回 waveform guess。
 
 ## MV Audio Timeline Regression Rule
 
-时间轴工具/规则/Workflow发生修改时，必须运行：
+时间轴工具/规则/Workflow发生修改时，必须通过：
+- `python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py`
+- `python 04_HARNESS/tools/mv_audio_timeline/tests/test_final_gate.py`
+- Python syntax check for all timing tools.
 
-`python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py`
-
-当前回归套件必须至少覆盖：
+当前回归范围至少覆盖：
 - raw evidence缺失 → FAIL；
 - diagnostic候选改名exact → FAIL；
 - BGM SHA变化 → FAIL；
 - repeated lyric occurrence保持顺序；
 - LRC offset转换正确；
 - 双源时间差超阈值 → FAIL；
-- 完整强证据Package → PASS并生成manifest/SRT。
+- 不完整Package → FAIL；
+- Anchor越出歌词窗 → FAIL；
+- 完整强证据Package → PASS并由Final Gate生成manifest。
 
-仓库 `.github/workflows/mv-audio-timeline-gate-tests.yml` 负责在相关代码/规则变更时自动运行同一套测试。
+仓库 `.github/workflows/mv-audio-timeline-gate-tests.yml` 在相关代码/规则变更时运行同一套测试。CI未返回成功状态前，不得声称新改动已经通过CI；可以单独记录本地测试结果。
 
 ## MV Benchmark JIT Rule
 
