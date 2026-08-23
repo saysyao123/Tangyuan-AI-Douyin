@@ -9,7 +9,7 @@ on:
       - '.github/workflows/mv-audio-model-ferry.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   fetch-pinned-model:
@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -75,6 +77,7 @@ jobs:
           PY
 
       - name: Upload pinned model artifact
+        id: upload_model
         uses: actions/upload-artifact@v4
         with:
           name: mv-w02a-zh-ctc-model-d2af85f
@@ -84,3 +87,35 @@ jobs:
           compression-level: 0
           retention-days: 3
           if-no-files-found: error
+
+      - name: Write model-ferry receipt back to WEB R2 branch
+        env:
+          ARTIFACT_ID: ${{ steps.upload_model.outputs.artifact-id }}
+          ARTIFACT_URL: ${{ steps.upload_model.outputs.artifact-url }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          receipt = {
+              'schema_version': '1.0',
+              'status': 'MODEL_ARTIFACT_READY',
+              'repo_id': 'jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn',
+              'revision': 'd2af85f00e501bb8b8bcedef3b5c51eabb883088',
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'workflow_run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'workflow_commit_sha': os.environ['GITHUB_SHA'],
+              'artifact_id': os.environ['ARTIFACT_ID'],
+              'artifact_url': os.environ.get('ARTIFACT_URL', ''),
+              'artifact_name': 'mv-w02a-zh-ctc-model-d2af85f',
+          }
+          path = Path('06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/model_ferry_receipt.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/model_ferry_receipt.json
+          git commit -m 'ci: record pinned MV alignment model artifact'
+          git pull --rebase origin test/mv-web-r2
+          git push origin HEAD:test/mv-web-r2
