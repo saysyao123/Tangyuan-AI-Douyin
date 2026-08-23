@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "status": "W02A_AUDIO_TIMELINE_PACKAGE_PASS",
+  "executed_at": "2026-08-24 Asia/Manila",
+  "locked_audio_sha256": "bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33",
+  "content_timeline_s": 37.12,
+  "evidence_class": "ASR_FORCED_ALIGNMENT",
+  "forced_alignment": {
+    "method": "trusted Chinese lyrics -> CTC forced alignment; no free ASR lyric transcription",
+    "model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "revision": "d2af85f00e501bb8b8bcedef3b5c51eabb883088",
+    "target_tokens": 92,
+    "aligned_spans": 92
+  },
+  "ground_truth_qa": {
+    "status": "PASS",
+    "ctc_vs_prior_candidate_median_abs_start_delta_s": 0.125,
+    "repeat_chorus_shift_median_s": 81.527,
+    "repeat_chorus_max_deviation_from_median_s": 0.061
+  },
+  "timing_core_gate": {
+    "exit_code": 0,
+    "pass": true,
+    "lines": 10,
+    "errors": [],
+    "warnings": []
+  },
+  "complete_package_gate": {
+    "exit_code": 0,
+    "pass": true,
+    "lines": 10,
+    "anchors": 10,
+    "music_events": 21,
+    "errors": [],
+    "warnings": [],
+    "package_manifest_sha256": "baff5ad82b69cb42659b61e9e9a215738c81385b43dd70a1857f403c81e35573"
+  },
+  "canonical_sync": {
+    "status": "W02A_CANONICAL_PACKAGE_SYNCED",
+    "workflow_run_id": "32655263045",
+    "payload_zip_sha256": "c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be"
+  },
+  "resulting_states": {
+    "AUDIO_TIMELINE_PACKAGE_LOCKED": true,
+    "EDITOR_AUDIO_GATE_PASS": true,
+    "EDIT_MAP_LOCKED": false
+  },
+  "next_allowed_stage": "W08B / V3 Edit Map"
+}
