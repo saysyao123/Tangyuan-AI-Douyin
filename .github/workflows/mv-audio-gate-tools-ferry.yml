@@ -1,0 +1,46 @@
+name: MV Audio Gate Tools Ferry
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - test/mv-web-r2
+    paths:
+      - '.github/workflows/mv-audio-gate-tools-ferry.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ferry-gate-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Upload exact gate tools
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-w02a-gate-tools
+          path: |
+            04_HARNESS/tools/mv_audio_timeline/package_tool.py
+            04_HARNESS/tools/mv_audio_timeline/final_gate.py
+          retention-days: 3
+      - name: Write gate-tool receipt
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          paths=[Path('04_HARNESS/tools/mv_audio_timeline/package_tool.py'),Path('04_HARNESS/tools/mv_audio_timeline/final_gate.py')]
+          receipt={'status':'GATE_TOOLS_ARTIFACT_READY','workflow_run_id':os.environ['GITHUB_RUN_ID'],'workflow_commit_sha':os.environ['GITHUB_SHA'],'artifact_name':'mv-w02a-gate-tools','files':[]}
+          for p in paths:
+              receipt['files'].append({'path':p.as_posix(),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'size':p.stat().st_size})
+          out=Path('06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/gate_tools_ferry_receipt.json')
+          out.write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/gate_tools_ferry_receipt.json
+          git commit -m 'ci: record MV audio gate tools artifact'
+          git pull --rebase origin test/mv-web-r2
+          git push origin HEAD:test/mv-web-r2
