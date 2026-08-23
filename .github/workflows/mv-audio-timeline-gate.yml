@@ -1,0 +1,27 @@
+name: MV Audio Timeline Gate
+
+on:
+  push:
+    paths:
+      - '04_HARNESS/tools/mv_audio_timeline_package.py'
+      - '04_HARNESS/tools/tests/test_mv_audio_timeline_package.py'
+      - '04_HARNESS/rules/mv_audio_timeline.md'
+      - '04_HARNESS/templates/mv_audio_timeline_package_contract.md'
+      - '.github/workflows/mv-audio-timeline-gate.yml'
+  pull_request:
+    paths:
+      - '04_HARNESS/tools/mv_audio_timeline_package.py'
+      - '04_HARNESS/tools/tests/test_mv_audio_timeline_package.py'
+      - '04_HARNESS/rules/mv_audio_timeline.md'
+      - '04_HARNESS/templates/mv_audio_timeline_package_contract.md'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run deterministic timeline-gate regression tests
+        run: python -m unittest -v 04_HARNESS/tools/tests/test_mv_audio_timeline_package.py
