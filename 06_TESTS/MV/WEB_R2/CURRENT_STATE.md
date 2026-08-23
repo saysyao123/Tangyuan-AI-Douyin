@@ -11,10 +11,14 @@
 - STATE: `V1_REVOKED / V2_REVOKED / HIGH_CONFIDENCE_LINE_TIMELINE_READY / PACKAGE_NOT_YET_LOCKED`
 - BRANCH: `test/mv-web-r2`
 - WORKFLOW: `04_HARNESS/workflows/mv.md` v1.3
+- MANIFEST: `04_HARNESS/MANIFEST.md` v3.5
 - GOLDEN_RUNTIME: `04_HARNESS/rules/mv_golden_runtime.md` v1.2
 - AUDIO_TIMELINE_RULE: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
-- AUDIO_TIMELINE_TOOL: `04_HARNESS/tools/mv_audio_timeline/package_tool.py`
+- TIMING_CORE_TOOL: `04_HARNESS/tools/mv_audio_timeline/package_tool.py`
+- COMPLETE_PACKAGE_GATE: `04_HARNESS/tools/mv_audio_timeline/final_gate.py`
 - ALIGNMENT_ADAPTER: `04_HARNESS/tools/mv_audio_timeline/run_alignment.py`
+- ALIGNMENT_BOOTSTRAP: `04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py`
+- ALIGNMENT_RUNTIME_LOCK: `04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json`
 - AUDIO_PACKAGE: `06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/`
 - ROOT_CAUSE_AUDIT: `06_TESTS/MV/WEB_R2/W08_V2_TIMING_PROVENANCE_FAILURE_AUDIT.md`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
@@ -56,15 +60,12 @@ Packaging/mux ruled out:
 - normalized cross-correlation for source-offset verification: ~`0.99997`;
 - source content duration: `177.050 - 139.930 = 37.120s`;
 - MP3 container duration from ffprobe: `37.146122s`;
-- ~`0.026122s` difference is stored separately as container/encoder padding and must not redefine lyric timeline;
-- therefore W02 source offset/content window remains confirmed correct.
+- ~`0.026122s` difference is recorded as container/encoder padding, not lyric-timeline shift.
 
 Canonical audio identity:
 `AUDIO_TIMELINE_PACKAGE/audio_identity.json`
 
-### Critical lyric-sequence correction
-The previously assumed excerpt order was wrong.
-The locked 37.12s excerpt does not begin with a complete `如果你也刚好抬头看树` line.
+### Corrected actual excerpt lyrics
 The first full lyric is:
 `我要学着树叶翩翩起舞`
 
@@ -74,64 +75,105 @@ The excerpt continues through:
 Canonical corrected lyrics:
 `AUDIO_TIMELINE_PACKAGE/trusted_lyrics.txt`
 
-High-confidence candidate:
+Current high-confidence review candidate:
 `AUDIO_TIMELINE_PACKAGE/line_timeline.candidate.csv`
 
-Legacy evidence/reference files retained:
-- `trusted_lyrics_actual_excerpt_v1.txt`
-- `line_timeline_high_confidence_v1.csv`
-- `alignment_provenance_high_confidence_v1.md`
+It is deliberately marked:
+`DIAGNOSTIC_ONLY / HIGH_CONFIDENCE_PARTIAL / NOT_LOCKABLE`.
 
-### Evidence method used for current candidate
-1. exact source offset by audio fingerprint;
-2. same-title/artist timed-LRC candidate establishes second-chorus order/coarse anchors;
-3. lyric/release metadata cross-checks the recording sequence;
-4. acoustic phrase-boundary analysis on locked excerpt refines coarse anchors.
+## Timing evidence cross-check status
 
-This remains `DIAGNOSTIC_ONLY / HIGH_CONFIDENCE_PARTIAL`, not Strong Route truth.
+A public same-title/artist LRC matches the formal recording lyric order but uses coarse whole-second timestamps.
+Against the current acoustic-refined candidate, approximate line-start differences have:
+- median absolute delta ~`0.375s`;
+- max delta ~`0.79s`.
 
-## Reusable timing infrastructure now implemented
+This does not meet the automatic dual-source green thresholds:
+- median <= `0.25s`;
+- individual line <= `0.50s` unless reviewed/resolved.
 
-The timing system is no longer only prose.
+Therefore public coarse LRC is retained only as supporting evidence, not Strong Route lock.
 
-Executable package gate:
-`04_HARNESS/tools/mv_audio_timeline/package_tool.py`
+## Reusable timing infrastructure implemented
 
-Capabilities:
-- initialize canonical audio identity + trusted lyrics;
-- transform verified same-version LRC with exact clip offset;
-- import external forced-alignment line timelines;
-- preserve raw evidence + provenance;
-- export SRT only from QA-passed line timeline;
-- validate audio SHA/container duration/content duration separately;
-- validate lyric sequence/repeated occurrences/time bounds/line QA;
-- optional independent cross-source delta checks;
-- write `package_manifest.json` only after machine PASS.
+### 1. Timing Core Gate
+`package_tool.py`
 
-Alignment adapter:
-`04_HARNESS/tools/mv_audio_timeline/run_alignment.py`
+Verifies:
+- strong evidence class;
+- raw evidence + SHA;
+- provenance;
+- locked audio SHA;
+- content duration vs MP3 container duration separately;
+- lyric order/repeated occurrences;
+- line-time monotonicity/bounds;
+- every line QA PASS;
+- optional independent-source timing delta.
 
-Supported adapter contracts:
-- `xingyu-align` trusted-lyrics CTC alignment;
-- `lyric-align` CJK/song-oriented known-lyrics alignment;
-- unavailable engine/model returns `AUDIO_TIMELINE_PACKAGE_BLOCKED`; no silent downgrade.
+It cannot promote `DIAGNOSTIC_ONLY` simply because a file is renamed `exact`.
 
-Regression tests:
-`04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py`
+### 2. Complete Package Gate｜Final lock authority
+`final_gate.py`
 
-Local validation result: `6/6 PASS`.
-Covered failure classes:
-- missing raw evidence;
-- diagnostic candidate renamed exact;
-- audio SHA mismatch;
-- LRC offset + repeated occurrence mapping;
-- excessive independent-source timing delta;
-- valid strong-evidence package pass/manifest/SRT.
+Only this layer may create a final manifest with:
+`AUDIO_TIMELINE_PACKAGE_LOCKED = true`.
 
-CI definition:
+It requires Core Gate PASS plus:
+- `lyrics_exact.srt` exactly matches locked line timeline;
+- `anchor_words.csv` anchors are inside their lyric windows and QA PASS;
+- `music_events.csv` events are valid, sorted, in current content timeline and QA PASS;
+- `alignment_qa_report.md` exists and its SHA is sealed into provenance;
+- all mandatory editor-facing assets exist.
+
+### 3. Alignment adapters
+`run_alignment.py`
+
+Supported engine contracts:
+- primary `xingyu-align`: trusted Chinese lyrics -> CTC forced alignment;
+- secondary `lyric-align`: CJK/song known-lyrics anchoring;
+- missing engine/model => `AUDIO_TIMELINE_PACKAGE_BLOCKED`, no waveform fallback.
+
+### 4. Reproducible environment lock
+`alignment_runtime.lock.json`
+
+Pinned current environment:
+- Python 3.11 recommended;
+- primary `xingyu-lyrics-aligner` v0.7.0 at exact Git commit;
+- WhisperX 3.8.6;
+- Chinese wav2vec2 align-model identity recorded;
+- secondary `lyric-align` v0.3.0 at exact Git commit;
+- secondary faster-whisper model identity recorded;
+- timing thresholds locked.
+
+`bootstrap_alignment_env.py` installs/checks this pinned environment explicitly. It never silently downgrades when model/network preparation fails.
+
+### 5. Regression protection
+Core regression suite:
+`tests/test_package_tool.py`
+
+Previously executed locally: `6/6 PASS`.
+
+Complete-package regression suite:
+`tests/test_final_gate.py`
+
+Newly added cases:
+- incomplete package -> FAIL;
+- anchor outside lyric window -> FAIL;
+- complete package -> PASS + final manifest.
+
+CI:
 `.github/workflows/mv-audio-timeline-gate-tests.yml`
 
-The current R2 candidate was intentionally tested against the new validator and remains BLOCKED (non-zero exit), because no strong-evidence final `line_timeline.csv` exists. This is expected and correct.
+CI now syntax-checks all timing tools and runs both suites. Current web/container environment cannot independently retrieve the workflow run status, so the new final-gate tests are `DEFINED / CI_RESULT_NOT_YET_CONFIRMED`; do not claim CI PASS until evidence is available.
+
+## Current runtime limitation
+
+This web/container runtime cannot currently download the large forced-alignment model weights because outbound model-host/DNS access is restricted.
+
+Therefore:
+- integration contract and pinned environment are implemented;
+- current R2 strong forced-alignment result is **not** falsely claimed;
+- final package remains blocked until Strong Route raw evidence is actually produced in a capable runtime or a verified higher-precision same-version timed lyric source is acquired.
 
 ## Current Package state
 
@@ -142,6 +184,7 @@ The current R2 candidate was intentionally tested against the new validator and 
 - `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED = PARTIAL`
 - `ALIGNMENT_GROUND_TRUTH_QA_PASS = HIGH_CONFIDENCE_PARTIAL`
 - `LYRIC_TIMELINE_LOCKED = NO`
+- `ANCHOR_WORD_MAP_LOCKED = NO`
 - `MUSIC_EVENT_MAP_VERIFIED = NO`
 - `AUDIO_TIMELINE_PACKAGE_LOCKED = NO`
 - `EDITOR_AUDIO_GATE_PASS = NO`
@@ -150,20 +193,23 @@ The current R2 candidate was intentionally tested against the new validator and 
 
 ## Editor hard entry condition
 
-A future Agent may not self-report this Gate as PASS.
-It must run the package validator against the exact current locked BGM and receive exit code `0`.
-Only then may `package_manifest.json` be written with:
-`AUDIO_TIMELINE_PACKAGE_LOCKED = true`.
+Future Agent may not self-report this Gate as PASS.
+It must run both machine gates against the exact current BGM:
+1. Timing Core Gate -> exit `0`;
+2. Complete Package Gate -> exit `0` + final manifest.
 
-Until then, V3 editing remains forbidden.
+Only then may Editor start.
 
 ## Next Allowed Action
 
-1. acquire Strong Route alignment raw evidence for the canonical 10-line lyrics;
-2. import it into the canonical Package;
-3. perform line-by-line Ground-truth QA and optional second-source cross-check;
-4. run executable Package Validator until exit code `0`;
-5. create anchor-word/music-event maps;
-6. only then create V3 Edit Map.
+1. obtain Strong Route raw timing evidence for the canonical 10-line lyrics:
+   - preferred: pinned trusted-lyrics forced alignment runtime; or
+   - verified higher-precision same-version timed lyric source;
+2. import/retain raw evidence + provenance;
+3. line-by-line Ground-truth QA and optional second-source check;
+4. generate exact SRT + anchor-word map + music-event map + QA report;
+5. pass Timing Core Gate;
+6. pass Complete Package Gate and generate final manifest;
+7. only then create V3 Edit Map.
 
 Do not reopen approved visual-generation stages unless the verified Edit Map proves a specific source-duration gap.
