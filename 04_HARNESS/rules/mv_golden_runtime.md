@@ -1,222 +1,184 @@
-# Rules｜MV Golden Runtime Contract v1.1
+# Rules｜MV Golden Runtime Contract v1.2
 
 > Status: `PRODUCTION_VALIDATED / ACTIVE`
-> Purpose: make cross-round MV lessons executable at runtime without loading full historical rounds.
-> Evidence base: Round 01 Golden Sample + WEB R2 repeated timing failures / technical rescues.
+> Purpose: inherit cross-round correctness without loading full historical rounds.
+> Evidence base: R1 Golden Sample + WEB R2 repeated lyric-timing failures.
 
-## 1. Golden inheritance rule｜HARD
+## 1. Golden inheritance｜HARD
 
-At the start of every MV task / new MV Round, load in this order:
+At every MV start load:
 1. `04_HARNESS/workflows/mv.md`
 2. `04_HARNESS/rules/mv_golden_runtime.md`
-3. current MV Round `CURRENT_STATE.md`
-4. stage-specific rules / benchmark / templates JIT.
+3. `04_HARNESS/rules/mv_audio_timeline.md`
+4. current MV Round `CURRENT_STATE.md`
+5. stage-specific rules JIT.
 
-Round-specific Master Plans are summaries only. They may not override the authoritative Workflow or this Runtime Contract.
-
-Historical R1 files remain audit/debug/regression references. New rounds must not rediscover correctness-critical lessons from history; those lessons must already be represented here or in the authoritative workflow/rule layer.
-
----
-
-## 2. Audio truth before picture edit｜HARD
-
-The exact BGM file/version/excerpt must be locked before downstream work.
-Exact lyric text/order for that excerpt must also be locked.
-
-A picture edit that depends on lyric/music timing is forbidden until a durable line-level lyric timing asset has been independently verified from the locked audio.
-
-Forbidden as standalone timing truth:
-- BPM grid;
-- waveform valleys;
-- onset/energy peaks;
-- rough syllable-duration estimates;
-- editor intuition;
-- picture segment boundaries.
-
-These may only support/cross-check a stronger timing source.
-
-Preferred timing evidence:
-1. actual ASR / forced alignment on the locked audio;
-2. reliable same-version LRC / timed lyric source;
-3. exact timestamps from an official same-version timed lyric/video source.
-
-If no strong timing evidence exists:
-`LYRIC_TIMELINE_BLOCKED`
-
-Stop before picture edit. Do not silently downgrade the evidence standard.
+Round Master Plans are summaries only and cannot override these runtime sources.
 
 ---
 
-## 3. Lyric timing evidence provenance｜HARD
+## 2. Audio Timeline Package is the first post-BGM hard node｜HARD
 
-A `.srt`, `.lrc`, CSV, JSON or MD table does **not** become exact merely because a durable file exists or its filename contains `exact` / `locked`.
+R1 proved the correct principle but did not preserve the full reproducible asset chain.
+WEB R2 proved that a rule sentence or an `exact.srt` filename is not enough.
 
-Before `LYRIC_TIMELINE_LOCKED = YES`, save a provenance record with all applicable fields:
-- locked audio identity + SHA/hash;
-- evidence class: `ASR_FORCED_ALIGNMENT | SAME_VERSION_LRC | OFFICIAL_TIMED_LYRIC`;
-- raw evidence asset path or stable source reference;
-- tool/model/version, or source/platform identity;
-- original timestamps before transformation;
-- transformation rule, including exact clip-start subtraction when used;
-- generated line-level timing asset path + SHA/hash;
-- repeated identical lyric occurrences mapped separately;
-- per-line start/end audit result;
-- final `ALIGNMENT_GROUND_TRUTH_QA_PASS` status.
+Therefore after `BGM_LOCKED`, every MV must build and lock:
+`AUDIO_TIMELINE_PACKAGE`.
 
-No raw evidence asset/reference = no provenance.
-No provenance = no lyric timeline lock.
+No timing-dependent Director allocation, Picture Edit or Subtitle Render may proceed before:
+`AUDIO_TIMELINE_PACKAGE_LOCKED = YES`.
 
-Acoustic diagnostic candidates must be explicitly labelled `DIAGNOSTIC_ONLY` and may never be copied/renamed into an `exact` timing asset without an independent strong source.
+Detailed contract:
+`rules/mv_audio_timeline.md`.
 
 ---
 
-## 4. Two-layer subtitle QA｜HARD
+## 3. R1 timing lesson｜HARD
 
-Never collapse these two tests:
+R1 final successful correction:
+`same-version LRC -> subtract exact clip start 01:23.800 -> corrected clip timeline -> user playback review`.
 
-### A. Ground-truth Alignment QA
+Stable lesson:
+- subtitle/lyric time comes from locked audio alignment, never visual segment boundaries;
+- exact clip offset matters;
+- repeated lyric occurrences must remain distinct.
+
+Reproducibility gap from R1:
+- raw LRC/source ID was not preserved;
+- accepted `lyrics_exact_v3_1.srt` was named in docs but not reliably packaged as a canonical runtime asset.
+
+Future Golden close is incomplete without the full Audio Timeline Package.
+
+---
+
+## 4. Evidence provenance｜HARD
+
+A timing file becomes authoritative only with independent provenance.
+
+Allowed primary evidence classes:
+- `SAME_VERSION_LRC`
+- `ASR_FORCED_ALIGNMENT`
+- `OFFICIAL_TIMED_LYRIC`
+
+Required provenance:
+- locked audio identity + hash;
+- raw evidence path/reference;
+- source/platform/tool/model/version;
+- original timestamps;
+- transformation rule;
+- final timing asset/hash;
+- repeated-line mapping;
+- warnings/unmatched;
+- per-line ground-truth QA.
+
+No raw evidence/provenance = no lock.
+
+Waveform/BPM/onset candidates are `DIAGNOSTIC_ONLY`.
+They may support strong evidence but never replace it.
+
+---
+
+## 5. Two-layer subtitle QA｜HARD
+
+### Ground-truth Alignment QA
 Question:
-`Does the timing asset match the singer's actual vocal timing in the locked audio?`
+`Does the timing asset match the singer in the locked audio?`
 
-This must be checked before picture edit/subtitle rendering can treat the timeline as truth.
-Required state:
-`ALIGNMENT_GROUND_TRUTH_QA_PASS`
+This belongs to the Audio Timeline Package.
+Required:
+`ALIGNMENT_GROUND_TRUTH_QA_PASS`.
 
-### B. Subtitle Implementation QA
+### Subtitle Implementation QA
 Question:
-`Does the rendered video show the subtitle at the already-locked timestamps?`
+`Does the rendered subtitle follow the already-locked timing asset?`
 
-Sampling before/inside/after an SRT window tests only implementation. It cannot validate the SRT itself.
-Required state:
-`SUBTITLE_IMPLEMENTATION_QA_PASS`
+Required:
+`SUBTITLE_IMPLEMENTATION_QA_PASS`.
 
-Implementation QA can only run meaningfully after Ground-truth Alignment QA has passed.
-
----
-
-## 5. R1 Golden timing reproducibility｜HARD
-
-Round close is incomplete for timing/subtitle correctness unless the accepted timing assets are preserved, not merely named in documentation.
-
-For every accepted Golden MV preserve:
-- final locked audio identity/hash;
-- exact accepted SRT/LRC/timing table;
-- provenance record/raw timing source where legally/technically retainable;
-- transformation/offset method;
-- user acceptance state.
-
-`documented success != reproducible success`
-
-A future Round must be able to audit how the accepted subtitle times were obtained.
+Implementation QA cannot validate Ground Truth.
 
 ---
 
 ## 6. Subtitle Golden baseline｜HARD
 
-Base lyric subtitle system inherited from R1:
-- Chinese lyrics;
+R1 accepted base style:
+- Chinese lyric;
 - light text;
-- dark semi-transparent rounded background tightly fitting the actual lyric;
-- text visually centered horizontally and vertically inside the box;
-- consistent inner padding;
-- fixed comfortable lower safe-area placement;
+- dark semi-transparent rounded box tightly fitted to text;
+- text centered horizontally/vertically;
+- consistent padding;
+- comfortable fixed lower safe area;
 - restrained fade;
 - max 2 lines;
-- no default karaoke / word-by-word effect.
+- no default karaoke/word-by-word effect.
 
-Before full subtitle render, inspect at minimum:
-- first lyric;
-- middle lyric;
-- longest lyric;
-- final lyric.
-
-A new subtitle aesthetic may replace this only through an explicit aesthetic decision, not accidental drift.
+A new style requires an explicit aesthetic decision, not accidental drift.
 
 ---
 
 ## 7. First-frame / dynamic inheritance
 
-Stable inherited rules:
-- first frame = `0-second dynamic anchor`, not a poster;
-- conceptual visual units and production segments are separate decisions;
-- character-containing image-to-video prompts obey the exact portrait-safety prefix in `rules/ai_video.md`;
-- first-frame character closure remains mandatory;
-- shot count is selected by lyric/director task, not a fixed quota;
-- single-shot, 2–3-shot and denser structures are all valid when they earn their use;
-- camera / shot repetition must be reviewed across the whole set;
-- dynamic retries are root-cause driven rather than whole-set resets.
+Stable:
+- first frame = `0-second dynamic anchor`;
+- conceptual units and production segments are separate;
+- first-frame character closure;
+- exact AI-fictional-character safety prefix from `rules/ai_video.md`;
+- shot count selected by lyric/director task, not fixed quota;
+- whole-set camera repetition review;
+- retry by root cause.
 
----
-
-## 8. Generated-source QA inheritance
-
-Raw AI video QA is not binary whole-clip pass/fail.
-Allowed statuses:
+Raw dynamic QA statuses:
 - `PASS_FULL`
 - `SOURCE_USABLE / TRIM_REQUIRED`
 - `REGEN_WATCH`
 - `REGENERATE`
 
-Good internal shots may enter the material pool even if other frames need trimming.
-Regenerate only when the usable clean window is insufficient for the final edit.
-
-All AI source audio is non-authoritative:
-- final MV timing/music truth is the locked BGM;
-- strip AI source audio at ingest unless a Director explicitly locks a motivated ambience workflow;
-- unintended AI BGM does not invalidate otherwise good visuals, but is marked `SOURCE_AUDIO_POLICY_FAIL`.
+AI source audio is non-authoritative and stripped before final edit unless a deliberately motivated ambience workflow is separately locked.
 
 ---
 
-## 9. Edit inheritance
+## 8. Edit inheritance
 
-Do not mechanically equal-trim source clips.
 Priority:
 `verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`.
 
-Preserve useful internal motion arcs first, then solve total duration with selective trim / overlap / transition / earlier-later exits tied to verified musical events.
+Do not mechanically equal-trim 5s clips.
+Preserve useful internal motion arcs, then use selective trim / overlap / transition / earlier-later exit tied to verified music events.
 
-Every retained picture fragment must have a traceable reason tied to at least one of:
-- lyric line / semantic beat;
+Every retained fragment should trace to at least one:
+- lyric/semantic Beat;
+- Anchor Word;
 - verified musical event;
 - motion arc;
-- visual contrast / release.
+- contrast/release.
 
 ---
 
-## 10. No-skip correctness promotion rule｜HARD
+## 9. No-skip correctness promotion｜HARD
 
-A correctness failure that the user had to identify and that should have been caught automatically may not be preserved only as a retrospective lesson.
+A correctness failure caught by the user must be promoted as:
+`failure evidence -> root cause -> stable rule -> required artifact/state -> independent Gate`.
 
-Promotion path:
-`failure evidence -> root cause -> stable rule -> required artifact/state -> independent self-audit gate`.
-
-Examples:
-- wrong lyric timing -> provenance + `ALIGNMENT_GROUND_TRUTH_QA_PASS` + `LYRIC_TIMELINE_LOCKED`;
-- subtitle visual drift -> `SUBTITLE_STYLE_QA_PASS`;
-- subtitle rendering not following locked SRT -> `SUBTITLE_IMPLEMENTATION_QA_PASS`;
-- source-audio leakage -> source-audio strip + `FINAL_TECH_QA_PASS`;
-- non-square pixel aspect -> technical validation before delivery.
-
-If a rule can be satisfied only by renaming an artifact or self-referencing its own output, the Gate is insufficient and must be strengthened.
+A Gate that can be passed merely by renaming a file or testing an output against itself is invalid.
 
 ---
 
-## 11. Minimum runtime state chain
-
-The authoritative detailed sequence lives in `workflows/mv.md`.
-At minimum, timing/edit delivery may not occur unless these states exist in order:
+## 10. Minimum runtime state chain
 
 `REFERENCE_BGM_LOCKED`
 → `BGM_LOCKED`
+→ `AUDIO_IDENTITY_LOCKED`
 → `LYRIC_TEXT_LOCKED`
-→ `DIRECTOR_PLAN_LOCKED`
-→ `FIRST_FRAME_SET_LOCKED`
-→ `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
 → `LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED`
 → `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED`
 → `ALIGNMENT_GROUND_TRUTH_QA_PASS`
 → `LYRIC_TIMELINE_LOCKED`
-→ `BEAT_MAP_VERIFIED`
+→ `MUSIC_EVENT_MAP_VERIFIED`
+→ `AUDIO_TIMELINE_PACKAGE_LOCKED`
+→ `DIRECTOR_PLAN_LOCKED`
+→ `FIRST_FRAME_SET_LOCKED`
+→ `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
+→ `EDITOR_AUDIO_GATE_PASS`
 → `EDIT_MAP_LOCKED`
 → `EDIT_PREVIEW_QA_PASS`
 → `SUBTITLE_STYLE_QA_PASS`
@@ -224,20 +186,33 @@ At minimum, timing/edit delivery may not occur unless these states exist in orde
 → `FINAL_TECH_QA_PASS`
 → `DELIVERABLE_RENDERED`
 
-A later state is invalid when an upstream required state is missing.
+Any later state is invalid if an earlier required state is absent.
 
 ---
 
-## 12. What this contract does NOT freeze
+## 11. Package invalidation｜HARD
 
-Not inherited as universal creative rules:
-- R1 song choice;
-- R1 paper/ink world;
-- R1 exact shot list;
-- fixed number of first frames / videos;
+Automatically invalidate timing/edit/subtitle dependency if any changes:
+- BGM hash/version;
+- clip start/end;
+- lead-in/padding;
+- speed/time-stretch;
+- trusted lyric text/order;
+- repeated occurrence mapping.
+
+Then return to Audio Timeline Package rebuild/revalidation.
+
+---
+
+## 12. What Golden does NOT freeze
+
+Do not inherit as universal creative rules:
+- R1 song;
+- R1 visual world;
+- R1 exact shots;
+- fixed first-frame/video count;
 - fixed 3-shot grammar;
-- fixed camera movement recipes;
-- complex lyric animation;
-- any one creator/reference style.
+- fixed camera recipe;
+- complex lyric animation.
 
 Golden inheritance protects correctness and minimum production quality, not creative repetition.
