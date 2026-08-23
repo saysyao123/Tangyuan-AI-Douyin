@@ -1,0 +1,20 @@
+{
+  "package_version": "1.0",
+  "evidence_class": "DIAGNOSTIC_ONLY",
+  "source_identity": "R2 high-confidence reconstruction: exact audio fingerprint offset + public timed-LRC coarse anchors + locked-audio acoustic phrase-boundary refinement",
+  "raw_evidence_path": null,
+  "raw_evidence_sha256": null,
+  "ground_truth_qa": "HIGH_CONFIDENCE_PARTIAL",
+  "status": "NOT_LOCKABLE",
+  "reason": "No retained strong-route raw LRC / forced-alignment raw result yet. This candidate is useful for review but must fail package_tool validate until independent strong evidence is acquired.",
+  "transform": {
+    "source_clip_start_s": 139.93,
+    "source_clip_end_s": 177.05,
+    "formula": "source absolute time = clip time + 139.930"
+  },
+  "known_failure_prevention": [
+    "do not rename candidate to exact",
+    "do not infer lock from filename",
+    "do not use picture cuts as lyric timing evidence"
+  ]
+}
