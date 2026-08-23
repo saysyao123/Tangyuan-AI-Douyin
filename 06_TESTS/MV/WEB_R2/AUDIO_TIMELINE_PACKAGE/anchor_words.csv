@@ -1,0 +1,11 @@
+anchor_id,line_id,phrase,start_s,end_s,evidence,qa_status,note
+A01,L01,树叶,1.581,1.961,CTC_CHAR_SPANS,PASS,树/叶 both directly represented in model vocab
+A02,L02,布谷布谷,4.522,5.183,CTC_CHAR_SPANS,PASS,full repeated phrase
+A03,L04,鸟儿,8.525,8.925,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A04,L06,飞过树梢,15.008,18.290,CTC_PHRASE_SPANS,PASS,terminal 梢 is <unk>; phrase boundary reviewed against line/repeat/acoustic evidence
+A05,L07,抬头,20.851,21.211,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A06,L07,看树,21.392,21.732,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A07,L08,白云,24.353,24.693,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A08,L08,漂浮,26.054,26.454,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A09,L09,清晨,30.697,31.077,CTC_CHAR_SPANS,PASS,direct vocab tokens
+A10,L10,坐下来,32.838,33.438,CTC_CHAR_SPANS,PASS,direct vocab tokens
