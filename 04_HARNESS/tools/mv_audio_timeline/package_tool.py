@@ -69,17 +69,13 @@ def read_lyrics(path: Path) -> list[str]:
 def find_subsequence(lrc: list[LrcLine], lyrics: list[str], min_similarity: float = 0.78) -> list[int]:
     from difflib import SequenceMatcher
     norm_lrc = [normalize_lyric(x.text) for x in lrc]
-    indices: list[int] = []
-    cursor = 0
+    indices: list[int] = []; cursor = 0
     for lyric in lyrics:
-        target = normalize_lyric(lyric)
-        best_i, best_score = -1, -1.0
+        target = normalize_lyric(lyric); best_i, best_score = -1, -1.0
         for i in range(cursor, len(lrc)):
             score = 1.0 if norm_lrc[i] == target else SequenceMatcher(None, target, norm_lrc[i]).ratio()
-            if score > best_score:
-                best_i, best_score = i, score
-            if score == 1.0:
-                break
+            if score > best_score: best_i, best_score = i, score
+            if score == 1.0: break
         if best_i < 0 or best_score < min_similarity:
             raise ValueError(f"Cannot map trusted lyric monotonically: {lyric!r}; best score={best_score:.3f}")
         indices.append(best_i); cursor = best_i + 1
@@ -98,23 +94,26 @@ def load_csv(path: Path) -> list[dict[str, str]]:
 
 
 def format_srt_time(t: float) -> str:
-    ms = int(round(max(0, t) * 1000))
-    h, rem = divmod(ms, 3600000); m, rem = divmod(rem, 60000); s, ms = divmod(rem, 1000)
+    ms = int(round(max(0, t) * 1000)); h, rem = divmod(ms, 3600000); m, rem = divmod(rem, 60000); s, ms = divmod(rem, 1000)
     return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 
 
 def cmd_init(args: argparse.Namespace) -> int:
     pkg = Path(args.package); pkg.mkdir(parents=True, exist_ok=True)
-    audio = Path(args.audio).resolve(); lyrics = Path(args.lyrics).resolve(); duration = ffprobe_duration(audio)
+    audio = Path(args.audio).resolve(); lyrics = Path(args.lyrics).resolve()
+    container_duration = ffprobe_duration(audio)
+    content_duration = (args.source_clip_end - args.source_clip_start) / args.speed_factor
     identity = {
         "package_version": PACKAGE_VERSION, "title": args.title, "artist": args.artist, "version": args.version,
-        "audio_path": str(audio), "audio_sha256": sha256_file(audio), "rendered_duration_s": round(duration, 6),
+        "audio_path": str(audio), "audio_sha256": sha256_file(audio),
+        "content_duration_s": round(content_duration, 6), "container_duration_s": round(container_duration, 6),
+        "timeline_duration_s": round(content_duration, 6),
         "source_clip_start_s": args.source_clip_start, "source_clip_end_s": args.source_clip_end,
         "speed_factor": args.speed_factor, "time_stretched": abs(args.speed_factor - 1.0) > 1e-9,
     }
     (pkg / "audio_identity.json").write_text(json.dumps(identity, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (pkg / "trusted_lyrics.txt").write_text("\n".join(read_lyrics(lyrics)) + "\n", encoding="utf-8")
-    print(json.dumps({"success": True, "package": str(pkg), "audio_sha256": identity["audio_sha256"], "duration_s": duration}, ensure_ascii=False))
+    print(json.dumps({"success": True, "package": str(pkg), "audio_sha256": identity["audio_sha256"], "content_duration_s": content_duration, "container_duration_s": container_duration}, ensure_ascii=False))
     return 0
 
 
@@ -123,7 +122,7 @@ def cmd_from_lrc(args: argparse.Namespace) -> int:
     identity = json.loads((pkg / "audio_identity.json").read_text(encoding="utf-8")); lyrics = read_lyrics(pkg / "trusted_lyrics.txt")
     lrc_path = Path(args.lrc).resolve(); lrc = parse_lrc(lrc_path); idx = find_subsequence(lrc, lyrics, args.min_similarity)
     clip_start = float(identity.get("source_clip_start_s") if args.clip_start is None else args.clip_start)
-    lead_in = args.render_lead_in; duration = float(identity["rendered_duration_s"]); rows = []
+    lead_in = args.render_lead_in; duration = float(identity.get("timeline_duration_s", identity.get("rendered_duration_s"))); rows = []
     for n, (lyric, i) in enumerate(zip(lyrics, idx), start=1):
         source_start = lrc[i].time_s; clip_t = source_start - clip_start + lead_in
         if n < len(idx):
@@ -139,24 +138,20 @@ def cmd_from_lrc(args: argparse.Namespace) -> int:
     write_csv(pkg / "line_timeline.candidate.csv", rows, list(rows[0].keys()))
     provenance = {
         "package_version": PACKAGE_VERSION, "evidence_class": "SAME_VERSION_LRC", "source_identity": args.source_identity,
-        "platform_song_id": args.platform_song_id, "raw_evidence_path": str(raw_copy.relative_to(pkg)),
-        "raw_evidence_sha256": sha256_file(raw_copy),
+        "platform_song_id": args.platform_song_id, "raw_evidence_path": str(raw_copy.relative_to(pkg)), "raw_evidence_sha256": sha256_file(raw_copy),
         "transform": {"formula": "clip_time = source_song_time - source_clip_start + render_lead_in", "source_clip_start_s": clip_start, "render_lead_in_s": lead_in},
         "trusted_lyrics_count": len(lyrics), "mapped_lrc_indices": idx, "ground_truth_qa": "PENDING",
     }
     (pkg / "alignment_provenance.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"success": True, "mapped_lines": len(rows), "candidate": str(pkg / "line_timeline.candidate.csv")}, ensure_ascii=False))
-    return 0
+    print(json.dumps({"success": True, "mapped_lines": len(rows), "candidate": str(pkg / "line_timeline.candidate.csv")}, ensure_ascii=False)); return 0
 
 
 def cmd_import_alignment(args: argparse.Namespace) -> int:
     pkg = Path(args.package); src = Path(args.timeline).resolve(); rows = load_csv(src)
     required = {"line_id", "lyric", "clip_start_s", "clip_end_s"}
-    if not rows or not required.issubset(rows[0]):
-        raise ValueError(f"alignment CSV missing required columns {sorted(required)}")
+    if not rows or not required.issubset(rows[0]): raise ValueError(f"alignment CSV missing required columns {sorted(required)}")
     lyrics = read_lyrics(pkg / "trusted_lyrics.txt")
-    if [normalize_lyric(r["lyric"]) for r in rows] != [normalize_lyric(x) for x in lyrics]:
-        raise ValueError("alignment lyric sequence does not match trusted_lyrics.txt")
+    if [normalize_lyric(r["lyric"]) for r in rows] != [normalize_lyric(x) for x in lyrics]: raise ValueError("alignment lyric sequence does not match trusted_lyrics.txt")
     out_rows = []
     for r in rows:
         out_rows.append({
@@ -166,30 +161,23 @@ def cmd_import_alignment(args: argparse.Namespace) -> int:
         })
     raw_dir = pkg / "raw_evidence"; raw_dir.mkdir(exist_ok=True); raw_copy = raw_dir / src.name; raw_copy.write_bytes(src.read_bytes())
     write_csv(pkg / "line_timeline.candidate.csv", out_rows, list(out_rows[0].keys()))
-    provenance = {
-        "package_version": PACKAGE_VERSION, "evidence_class": args.evidence_class, "tool": args.tool, "tool_version": args.tool_version,
-        "raw_evidence_path": str(raw_copy.relative_to(pkg)), "raw_evidence_sha256": sha256_file(raw_copy), "ground_truth_qa": "PENDING",
-    }
-    (pkg / "alignment_provenance.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return 0
+    provenance = {"package_version": PACKAGE_VERSION, "evidence_class": args.evidence_class, "tool": args.tool, "tool_version": args.tool_version, "raw_evidence_path": str(raw_copy.relative_to(pkg)), "raw_evidence_sha256": sha256_file(raw_copy), "ground_truth_qa": "PENDING"}
+    (pkg / "alignment_provenance.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"); return 0
 
 
 def cmd_mark_qa(args: argparse.Namespace) -> int:
-    pkg = Path(args.package); candidate = pkg / "line_timeline.candidate.csv"; rows = load_csv(candidate)
+    pkg = Path(args.package); rows = load_csv(pkg / "line_timeline.candidate.csv")
     prov = json.loads((pkg / "alignment_provenance.json").read_text(encoding="utf-8")); prov["qa_note"] = args.note
     if args.pass_qa:
         for r in rows: r["qa_status"] = "PASS"
         write_csv(pkg / "line_timeline.csv", rows, list(rows[0].keys())); prov["ground_truth_qa"] = "PASS"
-    else:
-        prov["ground_truth_qa"] = "FAIL"
-    (pkg / "alignment_provenance.json").write_text(json.dumps(prov, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return 0
+    else: prov["ground_truth_qa"] = "FAIL"
+    (pkg / "alignment_provenance.json").write_text(json.dumps(prov, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"); return 0
 
 
 def cmd_export_srt(args: argparse.Namespace) -> int:
     pkg = Path(args.package); rows = load_csv(pkg / "line_timeline.csv"); blocks = []
-    for i, r in enumerate(rows, 1):
-        blocks.append(f"{i}\n{format_srt_time(float(r['clip_start_s']))} --> {format_srt_time(float(r['clip_end_s']))}\n{r['lyric']}\n")
+    for i, r in enumerate(rows, 1): blocks.append(f"{i}\n{format_srt_time(float(r['clip_start_s']))} --> {format_srt_time(float(r['clip_end_s']))}\n{r['lyric']}\n")
     out = pkg / "lyrics_exact.srt"; out.write_text("\n".join(blocks), encoding="utf-8"); print(out); return 0
 
 
@@ -210,21 +198,21 @@ def cmd_validate(args: argparse.Namespace) -> int:
     if audio_path.exists():
         if sha256_file(audio_path) != identity.get("audio_sha256"): errors.append("locked audio SHA mismatch")
         try:
-            actual_dur = ffprobe_duration(audio_path)
-            if abs(actual_dur - float(identity["rendered_duration_s"])) > args.duration_tolerance:
-                errors.append(f"audio duration mismatch: actual {actual_dur:.6f}, locked {identity['rendered_duration_s']}")
+            actual_dur = ffprobe_duration(audio_path); locked_container = float(identity.get("container_duration_s", identity.get("rendered_duration_s")))
+            if abs(actual_dur - locked_container) > args.duration_tolerance: errors.append(f"container duration mismatch: actual {actual_dur:.6f}, locked {locked_container:.6f}")
+            if "content_duration_s" in identity:
+                expected_content = (float(identity["source_clip_end_s"]) - float(identity["source_clip_start_s"])) / float(identity.get("speed_factor", 1.0))
+                if abs(expected_content - float(identity["content_duration_s"])) > 0.001: errors.append("content duration does not match source clip span / speed factor")
+                if abs(actual_dur - float(identity["content_duration_s"])) > args.container_padding_tolerance: errors.append(f"container/content duration delta too large: {actual_dur - float(identity['content_duration_s']):.6f}s")
         except Exception as e: errors.append(f"audio duration probe failed: {e}")
-    else:
-        warnings.append("audio file not present locally; identity/hash not re-verified in this run")
-    if not rows:
-        errors.append("empty line_timeline.csv")
+    else: warnings.append("audio file not present locally; identity/hash not re-verified in this run")
+    if not rows: errors.append("empty line_timeline.csv")
     else:
         if [normalize_lyric(r["lyric"]) for r in rows] != [normalize_lyric(x) for x in lyrics]: errors.append("timeline lyric order/text does not match trusted lyrics")
-        prev_start = -1.0; duration = float(identity["rendered_duration_s"])
+        prev_start = -1.0; duration = float(identity.get("timeline_duration_s", identity.get("rendered_duration_s")))
         for r in rows:
             try: start, end = float(r["clip_start_s"]), float(r["clip_end_s"])
-            except Exception:
-                errors.append(f"invalid numeric time in {r.get('line_id')}"); continue
+            except Exception: errors.append(f"invalid numeric time in {r.get('line_id')}"); continue
             if start < prev_start: errors.append(f"non-monotonic line starts at {r.get('line_id')}")
             if start < 0 or end <= start or end > duration + args.duration_tolerance: errors.append(f"invalid bounds {r.get('line_id')}: {start}-{end} duration={duration}")
             if r.get("qa_status") != "PASS": errors.append(f"line QA not PASS: {r.get('line_id')}={r.get('qa_status')}")
@@ -253,17 +241,12 @@ def cmd_validate(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description=__doc__); sub = p.add_subparsers(dest="cmd", required=True)
-    a = sub.add_parser("init"); a.add_argument("--package", required=True); a.add_argument("--audio", required=True); a.add_argument("--lyrics", required=True)
-    a.add_argument("--title", required=True); a.add_argument("--artist", required=True); a.add_argument("--version", default="official")
-    a.add_argument("--source-clip-start", type=float, required=True); a.add_argument("--source-clip-end", type=float, required=True); a.add_argument("--speed-factor", type=float, default=1.0); a.set_defaults(func=cmd_init)
-    a = sub.add_parser("from-lrc"); a.add_argument("--package", required=True); a.add_argument("--lrc", required=True); a.add_argument("--clip-start", type=float)
-    a.add_argument("--render-lead-in", type=float, default=0.0); a.add_argument("--source-identity", required=True); a.add_argument("--platform-song-id", default=""); a.add_argument("--min-similarity", type=float, default=0.78); a.set_defaults(func=cmd_from_lrc)
-    a = sub.add_parser("import-alignment"); a.add_argument("--package", required=True); a.add_argument("--timeline", required=True); a.add_argument("--evidence-class", choices=sorted(STRONG_EVIDENCE), required=True)
-    a.add_argument("--tool", required=True); a.add_argument("--tool-version", required=True); a.set_defaults(func=cmd_import_alignment)
+    a = sub.add_parser("init"); a.add_argument("--package", required=True); a.add_argument("--audio", required=True); a.add_argument("--lyrics", required=True); a.add_argument("--title", required=True); a.add_argument("--artist", required=True); a.add_argument("--version", default="official"); a.add_argument("--source-clip-start", type=float, required=True); a.add_argument("--source-clip-end", type=float, required=True); a.add_argument("--speed-factor", type=float, default=1.0); a.set_defaults(func=cmd_init)
+    a = sub.add_parser("from-lrc"); a.add_argument("--package", required=True); a.add_argument("--lrc", required=True); a.add_argument("--clip-start", type=float); a.add_argument("--render-lead-in", type=float, default=0.0); a.add_argument("--source-identity", required=True); a.add_argument("--platform-song-id", default=""); a.add_argument("--min-similarity", type=float, default=0.78); a.set_defaults(func=cmd_from_lrc)
+    a = sub.add_parser("import-alignment"); a.add_argument("--package", required=True); a.add_argument("--timeline", required=True); a.add_argument("--evidence-class", choices=sorted(STRONG_EVIDENCE), required=True); a.add_argument("--tool", required=True); a.add_argument("--tool-version", required=True); a.set_defaults(func=cmd_import_alignment)
     a = sub.add_parser("mark-qa"); a.add_argument("--package", required=True); g = a.add_mutually_exclusive_group(required=True); g.add_argument("--pass-qa", action="store_true"); g.add_argument("--fail-qa", action="store_true"); a.add_argument("--note", required=True); a.set_defaults(func=cmd_mark_qa)
     a = sub.add_parser("export-srt"); a.add_argument("--package", required=True); a.set_defaults(func=cmd_export_srt)
-    a = sub.add_parser("validate"); a.add_argument("--package", required=True); a.add_argument("--audio"); a.add_argument("--crosscheck")
-    a.add_argument("--max-line-delta", type=float, default=0.50); a.add_argument("--max-median-delta", type=float, default=0.25); a.add_argument("--duration-tolerance", type=float, default=0.05); a.add_argument("--write-manifest", action="store_true"); a.set_defaults(func=cmd_validate)
+    a = sub.add_parser("validate"); a.add_argument("--package", required=True); a.add_argument("--audio"); a.add_argument("--crosscheck"); a.add_argument("--max-line-delta", type=float, default=0.50); a.add_argument("--max-median-delta", type=float, default=0.25); a.add_argument("--duration-tolerance", type=float, default=0.05); a.add_argument("--container-padding-tolerance", type=float, default=0.10); a.add_argument("--write-manifest", action="store_true"); a.set_defaults(func=cmd_validate)
     return p
 
 
