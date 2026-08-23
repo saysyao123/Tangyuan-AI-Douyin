@@ -5,7 +5,7 @@ on:
     branches:
       - test/mv-web-r2
     paths:
-      - '06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.b64'
+      - '06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.ready'
   workflow_dispatch:
 
 permissions:
@@ -20,16 +20,16 @@ jobs:
           fetch-depth: 0
       - name: Decode canonical package payload
         run: |
-          PAYLOAD='06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.b64'
-          if [ ! -f "$PAYLOAD" ]; then
+          READY='06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.ready'
+          DIR='06_TESTS/MV/WEB_R2/.transfer'
+          if [ ! -f "$READY" ]; then
             echo 'payload already consumed; nothing to do'
             exit 0
           fi
-          mkdir -p /tmp/w02a_package
-          base64 -d "$PAYLOAD" > /tmp/w02a_package.zip
+          cat "$DIR"/W02A_PACKAGE_PAYLOAD.part-* | base64 -d > /tmp/w02a_package.zip
           echo 'c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be  /tmp/w02a_package.zip' | sha256sum -c -
           unzip -o /tmp/w02a_package.zip -d 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/
-          rm "$PAYLOAD"
+          rm -f "$DIR"/W02A_PACKAGE_PAYLOAD.part-* "$READY"
           python - <<'PY'
           import json,os
           from pathlib import Path
