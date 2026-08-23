@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "status": "MODEL_SPLIT_ARTIFACTS_READY",
+  "repo_id": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+  "revision": "d2af85f00e501bb8b8bcedef3b5c51eabb883088",
+  "workflow_run_id": "32654104674",
+  "workflow_run_attempt": "1",
+  "workflow_commit_sha": "90cf9e382468631f4bd9bc82dd7fb0ecd8b39dd2",
+  "tar_sha256": "2a87a3756ba282f47ec54b13080a85e8d33308e2a21da45be269e637a9eb67cb",
+  "tar_size": 1276364800,
+  "parts": [
+    {
+      "file": "mv_alignment_model.tar.part-00",
+      "size": 419430400,
+      "sha256": "68b0252be353cad68566667699043fb5c6bfde39fb796c2177be12c4634d0fb2"
+    },
+    {
+      "file": "mv_alignment_model.tar.part-01",
+      "size": 419430400,
+      "sha256": "80b62265fb4b2f4cab9a6e61f373a04ec89dbabe125db3a5980d7a2c050292c7"
+    },
+    {
+      "file": "mv_alignment_model.tar.part-02",
+      "size": 419430400,
+      "sha256": "1d9de0ec6f0b714af2245ab650f3c8074bfdaee5b58c4addf4f996a24ed2db5b"
+    },
+    {
+      "file": "mv_alignment_model.tar.part-03",
+      "size": 18073600,
+      "sha256": "df818790c0c8c3e6ef9661ed328b256f795d90d1aad81f370181c3583e6a49ba"
+    }
+  ]
+}
