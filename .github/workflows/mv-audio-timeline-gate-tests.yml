@@ -6,21 +6,35 @@ on:
       - '04_HARNESS/tools/mv_audio_timeline/**'
       - '04_HARNESS/rules/mv_audio_timeline.md'
       - '04_HARNESS/workflows/mv.md'
+      - '04_HARNESS/MANIFEST.md'
   pull_request:
     paths:
       - '04_HARNESS/tools/mv_audio_timeline/**'
       - '04_HARNESS/rules/mv_audio_timeline.md'
       - '04_HARNESS/workflows/mv.md'
+      - '04_HARNESS/MANIFEST.md'
 
 jobs:
   regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Install ffmpeg/ffprobe
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-      - name: Run audio timeline package regression suite
+      - name: Syntax check timing tools
         run: |
-          python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py
+          python -m py_compile \
+            04_HARNESS/tools/mv_audio_timeline/package_tool.py \
+            04_HARNESS/tools/mv_audio_timeline/final_gate.py \
+            04_HARNESS/tools/mv_audio_timeline/run_alignment.py \
+            04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py
+      - name: Run timing-core regression suite
+        run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py
+      - name: Run complete-package gate regression suite
+        run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_final_gate.py
