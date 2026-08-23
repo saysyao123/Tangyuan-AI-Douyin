@@ -1,36 +1,32 @@
-# WEB R2｜MASTER PLAN v1.1
+# WEB R2｜MASTER PLAN v1.2
 
 ## Goal
 
-测试网页端 ChatGPT 在不依赖 Codex 的情况下，能否从新歌开始完整推进 AI MV，并记录真实自动化边界。
+测试网页端 ChatGPT 在不依赖 Codex 的情况下，完整推进 AI MV，并记录真实自动化边界。
 
-R1 Golden Sample 是质量下限，但不限制 R2 的歌曲、人物、世界或视觉概念。
+R1 Golden Sample 是质量下限，不限制 R2 的歌曲、人物、世界或视觉概念。
 
 ## Authority rule
 
-本文件是 **Round summary / stage map**，不是运行时权威流程。
-
-Operational truth 优先级固定为：
+本文件只是 Round summary / stage map。
+Operational truth：
 1. `04_HARNESS/workflows/mv.md`
 2. `04_HARNESS/rules/mv_golden_runtime.md`
-3. current Round `CURRENT_STATE.md`
-4. 本 Master Plan
-
-本文件若与 Workflow / Runtime Rule 冲突，以前两者为准，并更新本文件，禁止同时保留两套不同流程。
-
----
-
-# W00｜Bootstrap / Capability Baseline
-
-读取权威 Workflow + Golden Runtime + 当前状态，确认网页端实际能力与外部工具边界。
-
-Output：更新 `AUTOMATION_MATRIX.md`、`CURRENT_STATE.md`。
+3. `04_HARNESS/rules/mv_audio_timeline.md`
+4. current Round `CURRENT_STATE.md`
+5. 本 Master Plan
 
 ---
 
-# W01｜Song Discovery / Benchmark Selection
+# W00｜Bootstrap
 
-自动刷新少量高相关MV/音乐观察源，筛3–5首候选；用户只做最终歌曲审美选择。
+读取权威 Workflow + Runtime Rules + Current State，确认工具边界。
+
+---
+
+# W01｜Song Discovery
+
+筛3–5首候选；用户只做歌曲审美选择。
 
 Gate：`REFERENCE_BGM_LOCKED`。
 
@@ -38,32 +34,63 @@ Gate：`REFERENCE_BGM_LOCKED`。
 
 # W02｜Reference BGM / Exact Clip Lock
 
-拿到实际源音频后自动分析/裁剪/试听，锁定版本、起止点、时长、fade、文件身份/hash。
+锁定实际音频版本、起止点、时长、fade、hash。
 
 Gate：`BGM_LOCKED`。
 
 ---
 
-# W03｜Music / Lyric / Beat Analysis
+# W02A｜AUDIO TIMELINE PACKAGE｜FIRST HARD GATE
 
-自动完成：
-- 精确歌词文本；
-- 情绪/语义结构；
+**BGM 锁定后的下一份强制交付。未 PASS 不进入正式 W03/W04。**
+
+必须产出 canonical：
+`<ROUND>/AUDIO_TIMELINE_PACKAGE/`
+
+核心内容：
+- audio identity/hash；
+- trusted lyrics；
+- raw timing evidence；
+- provenance；
+- line timeline；
+- exact SRT；
+- selected Anchor Word timings；
+- verified music events；
+- ground-truth QA；
+- package manifest。
+
+Timing route：
+1. 同版本可靠 LRC；或
+2. trusted lyrics + forced alignment；或
+3. 官方同版本 timed lyric/video。
+
+波形/BPM/onset 只能 supporting，不能单独成为真值。
+
+Gate：
+`AUDIO_TIMELINE_PACKAGE_LOCKED`。
+
+当前 WEB R2 视觉素材在该 Gate 加入前已完成，因此不自动作废；但任何 V3 edit 都必须先补齐本 Gate。
+
+---
+
+# W03｜Music / Lyric / Natural Beat Analysis
+
+使用已锁 Package，不再创建平行时间轴。
+
+分析：
+- 语义/情绪结构；
 - Natural Beats；
-- 强弱分布；
-- 视觉机会。
+- 强弱；
+- Anchor Word视觉机会；
+- Hook / Peak / Release。
 
-重要：W03 可形成导演级 Beat Map，但**不能用波形/BPM/估算替代精确歌词时间轴**。
-
-Gate：`LYRIC_TEXT_LOCKED + DIRECTOR_BEAT_MAP`。
+Gate：`DIRECTOR_BEAT_MAP`。
 
 ---
 
 # W04｜Director + Production Allocation
 
-自动完成导演概念、视觉世界、角色政策、每Beat主事件、生产段数量、镜头/运镜差异化和素材覆盖余量。
-
-用户做导演方向审美 Gate。
+基于真实 line/anchor/music-event timing 做导演分配、生产段数量、镜头差异化、素材余量。
 
 Gate：`DIRECTOR_PLAN_LOCKED`。
 
@@ -71,113 +98,76 @@ Gate：`DIRECTOR_PLAN_LOCKED`。
 
 # W05｜First Frames
 
-生成并自检整组 `0-second dynamic anchors`，用户整组审美确认。
+整组 `0-second dynamic anchors`。
 
 Gate：`FIRST_FRAME_SET_LOCKED`。
 
 ---
 
-# W06｜Dynamic Prompt Design + External Generation
+# W06｜Dynamic Prompt + External Generation
 
-按歌词任务逐段选择一镜 / 2–3镜 / 更密集多镜；每个Shot使用明确 Camera Contract；做整组重复度 Gate。
+按歌词/导演任务选择一镜 / 2–3镜 / 更密多镜；做 Camera Repetition Gate。
 
-当前网页端无 Seedance 执行接口时：用户只负责外部生成并上传原始视频。
-
-Gate：`DYNAMIC_PROMPT_SET_READY`；外部执行标记 `EXTERNAL_REQUIRED`。
+Gate：`DYNAMIC_PROMPT_SET_READY`；外部执行可标记 `EXTERNAL_REQUIRED`。
 
 ---
 
-# W07｜Dynamic QA + Retry
+# W07｜Dynamic QA
 
-自动做人物/面纱/肢体/场景/主事件/运镜/重复度 QA，并按：
-- `PASS_FULL`
-- `SOURCE_USABLE / TRIM_REQUIRED`
-- `REGEN_WATCH`
-- `REGENERATE`
-分级。
+按 `PASS_FULL / SOURCE_USABLE-TRIM_REQUIRED / REGEN_WATCH / REGENERATE` 分级，并建立 clean `VISUAL_SOURCE_MAP`。
 
 Gate：`DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`。
 
 ---
 
-# W08A｜Lyric Timing Evidence / Alignment｜MANDATORY PRE-EDIT
+# W08A｜Editor Audio Gate Revalidation
 
-**禁止先剪视频。**
+此处不再获取/猜时间轴，只验证 W02A Package 仍对应当前 BGM hash/version/duration。
 
-必须先取得独立强时间证据：
-1. 实际 ASR / forced alignment；或
-2. 同版本可靠 LRC；或
-3. 官方同版本 timed lyric/video。
+Gate：`EDITOR_AUDIO_GATE_PASS`。
 
-并保存：
-- raw evidence；
-- provenance；
-- 转换方式；
-- 逐句时间轴；
-- Ground-truth Alignment QA。
-
-BPM/波形谷值/能量/onset 只能做交叉验证，不能单独升级为精确时间轴。
-
-Required states：
-`LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED`
-→ `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED`
-→ `ALIGNMENT_GROUND_TRUTH_QA_PASS`
-→ `LYRIC_TIMELINE_LOCKED`
-→ `BEAT_MAP_VERIFIED`
-
-任何一项缺失：`LYRIC_TIMELINE_BLOCKED`，停止，不生成剪辑版。
+不通过 → 回 W02A。
 
 ---
 
 # W08B｜Picture Edit
 
-只有 W08A 全部通过后才允许建立剪辑时间线。
+使用三只时钟：
+- lyric clock；
+- music-event clock；
+- visual-action clock。
 
 原则：
-`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > mechanical equal timing`
+`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`。
 
-每个片段记录 source in/out、final in/out、服务的歌词/Beat、剪切理由、动作弧。
-
-Gate：`EDIT_MAP_LOCKED -> EDIT_PREVIEW_QA_PASS`。
+Gate：
+`EDIT_MAP_LOCKED -> EDIT_PREVIEW_QA_PASS`。
 
 ---
 
 # W09｜Subtitle Style + Implementation QA
 
-字幕时间来自已锁 `LYRIC_TIMELINE`，此阶段禁止再通过画面重新估算时间。
-
-先加载 R1 Golden 字幕规格，再做样式 QA。
+时间来自 W02A `lyrics_exact.srt`，本阶段只做 Golden 样式和实现检查。
 
 必须区分：
-- Ground-truth Alignment QA：时间轴是否跟真实人声对；在W08A完成；
-- Subtitle Implementation QA：视频是否按锁定时间显示字幕；在W09完成。
+- Ground-truth Alignment QA：W02A；
+- Subtitle Implementation QA：W09。
 
 Gate：
-`SUBTITLE_STYLE_QA_PASS`
-→ `SUBTITLE_IMPLEMENTATION_QA_PASS`。
+`SUBTITLE_STYLE_QA_PASS -> SUBTITLE_IMPLEMENTATION_QA_PASS`。
 
 ---
 
-# W10｜Final Technical QA / Delivery
+# W10｜Final QA / Delivery
 
-检查：
-- 锁定BGM与最终音轨一致；
-- 无AI源音轨；
-- 画幅/SAR/FPS；
-- 无黑帧/错误重复/已知风险帧；
-- 字幕样式和实现；
-- 完整成片复看。
+检查音频、时间轴Package identity、画幅/SAR/FPS、风险帧、字幕、完整观看、交付ZIP完整性。
 
 Gate：`FINAL_TECH_QA_PASS -> DELIVERABLE_RENDERED`。
 
-交付文件优先 ZIP，ZIP 内使用兼容文件名并做完整性测试。
-
 ---
 
-# W11｜Automation Retrospective / Close
+# W11｜Retrospective / Close
 
-输出最终 Automation Matrix、人工干预、可自动化边界、规则晋升和 Golden 资产。
+只有用户最终验收后才 `COMPLETE_LOCKED`。
 
-Round 只有在用户最终验收后才能 `COMPLETE_LOCKED`。
-
-Golden close 必须保存可复现资产，不得只在文档里写文件名：尤其是锁定音频、最终SRT/LRC/时间轴及其 provenance。
+Golden close 必须保存完整 `AUDIO_TIMELINE_PACKAGE`，不能只在文档里写“准确字幕文件叫xxx”。
