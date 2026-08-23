@@ -1,0 +1,56 @@
+name: MV W02A Package Sync
+
+on:
+  push:
+    branches:
+      - test/mv-web-r2
+    paths:
+      - '06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.b64'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Decode canonical package payload
+        run: |
+          PAYLOAD='06_TESTS/MV/WEB_R2/.transfer/W02A_PACKAGE_PAYLOAD.b64'
+          if [ ! -f "$PAYLOAD" ]; then
+            echo 'payload already consumed; nothing to do'
+            exit 0
+          fi
+          mkdir -p /tmp/w02a_package
+          base64 -d "$PAYLOAD" > /tmp/w02a_package.zip
+          echo 'c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be  /tmp/w02a_package.zip' | sha256sum -c -
+          unzip -o /tmp/w02a_package.zip -d 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/
+          rm "$PAYLOAD"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          receipt={
+            'status':'W02A_CANONICAL_PACKAGE_SYNCED',
+            'workflow_run_id':os.environ['GITHUB_RUN_ID'],
+            'workflow_source_sha':os.environ['GITHUB_SHA'],
+            'payload_zip_sha256':'c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be',
+            'package_manifest':'AUDIO_TIMELINE_PACKAGE/package_manifest.json'
+          }
+          Path('06_TESTS/MV/WEB_R2/W02A_PACKAGE_SYNC_RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+      - name: Commit canonical W02A package
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A 06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE 06_TESTS/MV/WEB_R2/.transfer 06_TESTS/MV/WEB_R2/W02A_PACKAGE_SYNC_RECEIPT.json
+          if git diff --cached --quiet; then
+            echo 'No package changes to commit'
+            exit 0
+          fi
+          git commit -m 'lock: sync W02A audio timeline package'
+          git pull --rebase origin test/mv-web-r2
+          git push origin HEAD:test/mv-web-r2
