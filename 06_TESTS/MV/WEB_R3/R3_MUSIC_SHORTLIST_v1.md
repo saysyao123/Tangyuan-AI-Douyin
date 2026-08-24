@@ -1,8 +1,26 @@
 # WEB R3｜A3 Music Shortlist v1
 
 > Date: 2026-08-24
-> Status: `READY FOR HG01`
-> Goal: 从已验证的7天雷达中，给出真正值得进入R3-B的3–5首，不以“重复最多”作为唯一标准。
+> Status: `CANDIDATE LOGIC VALID / HG01 DELIVERY REPACK REQUIRED`
+> Correction: 首轮趋势 shortlist 的分类逻辑保留，但 `READY FOR HG01` 状态撤回。用户指出 HG01 必须直接看到支撑候选的对应抖音作品，而不是外部试听链接或只有文字结论。新的强制交付合同：`R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md`。
+
+## Evidence correction
+
+本 shortlist 使用了三种证据：
+1. 用户提供核心 Benchmark 账号用于账号角色/视觉/包装分类；
+2. supplemental public creators / official program creators 的近期作品；
+3. 汽水音乐/搜索/榜单等 corroboration。
+
+由于火乐乐、泡泡与茶、乐丨青春等用户核心账号的完整近7天作品没有被公开 Web 搜索稳定索引，本 shortlist **不能表述为“这些歌已经在用户指定账号中重复验证”**。
+
+当前候选仍可保留为 `RADAR CANDIDATES`，但进入 HG01 前必须为每首重建 `DIRECT DOUYIN EVIDENCE PACK`：
+- >=2 个近期可直接打开的抖音作品；
+- >=2 个独立账号；
+- 明确 Tier A（用户核心账号）/ Tier B（补充/官方账号）；
+- 报告 core-account coverage；
+- 不再用微博/外部音频链接替代抖音决策材料。
+
+---
 
 ## Selection logic
 
@@ -15,7 +33,7 @@ R3 首首不是单纯追最热，而是要同时满足：
 
 ---
 
-# Tier 1｜优先进入 HG01
+# Tier 1｜Radar priority candidates
 
 ## A｜《雨后轻风有香》｜EARLY_RISE / STRATEGIC FIT #1
 
@@ -26,24 +44,16 @@ R3 首首不是单纯追最热，而是要同时满足：
 - SONG_FAMILY 已经开始出现解析、音乐内容、曲谱等多种传播形式。
 
 ### Why us
-治愈视觉适配当前最高：
-- 雨后；
-- 轻风；
-- 荒草；
-- 丘壑；
-- 枝柯；
-- 岁月/消散。
+治愈视觉适配当前最高：雨后 / 轻风 / 荒草 / 丘壑 / 枝柯 / 岁月消散。
+天然适合：`Aura/XIANGJISHI自然空间 + 佩佩治愈Ai轻梦幻人物`。
 
-天然适合：
-`Aura/XIANGJISHI自然空间 + 佩佩治愈Ai轻梦幻人物`。
+### Evidence status for HG01
+`CORE_ACCOUNT_COVERAGE = UNCONFIRMED / DIRECT DOUYIN REPACK REQUIRED`
 
 ### Risk
 - 网络内容存在`轻风/清风`写法差异；
 - 已出现孙丽芳原曲、不同cover/发行版本；
-- HG01 只锁 SONG_FAMILY，Stage2 必须重新核 exact AUDIO_VERSION。
-
-### R3 test value
-**最高。**它既能测试 Music Radar，也能测试 R3-B 新治愈视觉，变量方向最一致。
+- Stage2 必须重新核 exact AUDIO_VERSION。
 
 ---
 
@@ -55,19 +65,15 @@ R3 首首不是单纯追最热，而是要同时满足：
 - 当前属于“新舞台推动后的起势窗口”。
 
 ### Why us
-有较强情绪张力，能够测试：
-- 人物治愈；
-- 情绪克制；
-- 风景/空间释放；
-- 高潮与长镜头的平衡。
+可测试人物治愈 / 情绪克制 / 风景释放 / 高潮与长镜头平衡。
+
+### Evidence status for HG01
+`CORE_ACCOUNT_COVERAGE = UNCONFIRMED / SUPPLEMENTAL DIRECT DOUYIN EVIDENCE AVAILABLE`
 
 ### Risk
 - 有“15秒70字”的高密度歌词段；
-- 如果选错 excerpt，会把R3-B变成歌词密度压力测试，而不是视觉升级测试；
-- 多个cover/remix开始出现，Stage2需锁exact version。
-
-### R3 test value
-**很高。**如果想验证“我们能否抢正在迅速起势的歌”，它比《雨后轻风有香》更强。
+- 多个cover/remix开始出现；
+- Stage2需锁exact version。
 
 ---
 
@@ -79,85 +85,49 @@ R3 首首不是单纯追最热，而是要同时满足：
 - 汽水音乐生态反复出现李佳薇版本。
 
 ### Why us
-歌词情绪清晰：
-- 两清；
-- 陌生；
-- 回到甲乙丙丁；
-- 成年人的克制失去。
+适合“伤感 → 克制 → 释怀”的治愈MV。
 
-适合做“伤感 → 克制 → 释怀”的治愈MV，而不是明亮童话。
+### Evidence status for HG01
+`CORE_ACCOUNT_COVERAGE = UNCONFIRMED / STRONG SUPPLEMENTAL + OFFICIAL DIRECT DOUYIN EVIDENCE`
 
 ### Risk
-- 当前已经明显进入确认热阶段；
-- 饱和度正在升高；
-- 视觉同质化风险会比前两首高。
-
-### R3 test value
-**高，但偏稳妥。**最适合测试“已经确认热的歌，我们的AI视觉能否明显跑出差异”。
+- 已明显进入确认热阶段；
+- 饱和度上升；
+- 视觉同质化风险较高。
 
 ---
 
-# Tier 2｜有价值备选
+# Tier 2｜Watch / backup
 
 ## D｜《我不难过》｜CONFIRMED CLASSIC REVIVAL
-
-### Why now
-约24h内马呜呜、志鹏Cello、DSD音乐等至少3个高质量音乐账号集中重新讨论。
-
-### Strength
-- 经典歌认知度高；
-- 情绪厚度高；
-- 适合“破碎之后的治愈/释怀”；
-- 音频版本相对容易锁。
-
-### Weakness
-- 它更像经典复热，不是新趋势抢跑；
-- R3-B若目标是向佩佩式明亮治愈升级，视觉方向会更暗、更克制。
-
-### R3 test value
-中高，适合作为“经典复热型音推”样本，而不是第一优先。
-
----
+约24h内多个高质量音乐账号集中重新讨论；适合经典复热型音推，但更暗、更克制。
 
 ## E｜《琵琶曲》（东船与西舫段）｜CONFIRMED VISUAL / VERSION RISK
-
-### Why now
-近约3天多个古典舞/音乐账号围绕`东船与西舫，琴音袅袅于心上`传播。
-
-### Strength
-- 国风视觉非常强；
-- 可做水、月、舟、琴音、风、丝绸、古典人物；
-- 我们现有导演能力很容易做漂亮。
-
-### Weakness
-- 当前传播格式偏舞蹈；
-- exact song title / audio version 存在识别歧义；
-- 很容易又回到我们过去已经做很多的古风面纱世界，不一定能验证R3的“新治愈视觉升级”。
-
-### R3 test value
-中等。画面容易漂亮，但对新系统的增量验证反而不如A/B/C。
+视觉强，但传播偏舞蹈，exact song/audio version 识别歧义较高，也容易回到既有古风面纱路径。
 
 ---
 
 # Excluded from HG01 Priority
 
-## 《第57次取消发送》｜OVERHEATED
-重复很强，但主要扩散在舞蹈/手势舞/教程；饱和和format mismatch都高，不建议作为R3第一首。
-
-## 《开始懂了》｜WATCH
-有近期复热信号，但当前独立重复证据仍弱于《我不难过》，先观察。
+- `第57次取消发送 = OVERHEATED / FORMAT_MISMATCH`
+- `开始懂了 = WATCH`
 
 ---
 
-# Recommended HG01 decision
+# Current decision
 
-如果按“R3测试价值”而不是只按歌曲本身喜好，我的建议排序：
+原排序只作为 Radar 候选优先级：
+1. 雨后轻风有香
+2. 循迹
+3. 甲乙丙丁
+4. 我不难过
+5. 琵琶曲
 
-1. **《雨后轻风有香》** — 最适合验证“音推雷达 + 新治愈视觉”完整假设；
-2. **《循迹》** — 最适合验证“抢正在快速起势的歌”；
-3. **《甲乙丙丁》** — 最适合验证“确认热歌 + AI视觉差异化”；
-4. 《我不难过》 — 经典复热路线；
-5. 《琵琶曲》 — 高视觉适配但测试增量较低。
+**Do not run HG01 yet.**
 
-HG01 只需要选择 SONG_FAMILY。
-选择后进入 R3-B0：查找/确认 exact AUDIO_VERSION + 截取 BGM + HG02听感确认，然后重建 Audio Timeline Package。
+Next:
+`A3_DIRECT_DOUYIN_EVIDENCE_REPACK`
+→ 每首给出可直接查看的抖音作品证据包
+→ 报告是否来自用户核心账号
+→ 用户实际看/听
+→ 才允许 `HG01_READY = YES`。
