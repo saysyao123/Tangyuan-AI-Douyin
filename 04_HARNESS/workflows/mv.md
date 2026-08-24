@@ -1,8 +1,8 @@
-# Workflow｜AI MV Production v1.7
+# Workflow｜AI MV Production v1.8
 
-> Status: `AUTHORITATIVE / R1 + WEB_R2 VALIDATED`
+> Status: `AUTHORITATIVE / R1 + WEB_R2 VALIDATED + WEB_R3 AUDIO DISCOVERY PROMOTED`
 > Role: MV 单一路径主流程。只定义阶段、输入/输出、Gate 与回滚边界；技术细节由独立 Rule JIT 加载。
-> Core: **先锁声音坐标，再按坐标导演素材；生成的是可剪素材池，不是 5 秒成片；局部问题只回滚最近根因。**
+> Core: **先从真实平台音乐资产锁版本，再锁声音坐标，再按坐标导演素材；生成的是可剪素材池，不是 5 秒成片；局部问题只回滚最近根因。**
 
 ---
 
@@ -11,8 +11,9 @@
 默认只加载：
 1. `04_HARNESS/workflows/mv.md`
 2. `04_HARNESS/rules/mv_golden_runtime.md`
-3. `04_HARNESS/rules/mv_audio_timeline.md`
-4. current MV Round `CURRENT_STATE.md`
+3. `04_HARNESS/rules/mv_bgm_discovery.md`
+4. `04_HARNESS/rules/mv_audio_timeline.md`
+5. current MV Round `CURRENT_STATE.md`
 
 Stage-specific JIT：
 - Human decision boundary：`rules/mv_human_gates.md`
@@ -21,13 +22,14 @@ Stage-specific JIT：
 - Stage 7.5/8：`rules/mv_source_normalization.md`
 - Stage 9：`rules/mv_subtitle.md`
 
-历史 R1/R2 文件只用于排错、回归、溯源；正常 Runtime 不全文加载。
+历史 R1/R2/R3 文件只用于排错、回归、溯源；正常 Runtime 不全文加载。
 
 ---
 
 # Single Path｜固定主链
 
 `Song Discovery`
+→ `Douyin-first Exact BGM Version Discovery`
 → `Exact BGM Clip Lock`
 → **`AUDIO_TIMELINE_PACKAGE`**
 → `Natural Beat`
@@ -61,10 +63,53 @@ Stage-specific JIT：
 
 ---
 
+# Stage 1.5｜Exact BGM Version Discovery｜DOUYIN FIRST
+
+详细规则：`rules/mv_bgm_discovery.md`。
+
+### Work
+歌曲家族通过 HG01 后，默认按以下顺序找真实版本：
+
+`Verified Douyin music asset`
+→ `Douyin-asset-anchored full-track discovery`
+→ `generic public full-track discovery`
+→ `other recovery routes`。
+
+优先从真实抖音作品反查：
+- aweme id / work URL；
+- music asset id；
+- displayed title / author；
+- direct asset reference（如可得）；
+- 实际解码音频；
+- 多作品 fingerprint / alignment 结果。
+
+如果多个作品使用同 asset：
+- 优先选择最长、音质最好、结构最完整的实际趋势版本作为 HG02 listening reference；
+- 短版本若只是同起点 truncation，不误判为 remix；
+- 用户未要求更长时，不为了凑时长主动换成未知完整版。
+
+如果用户需要 30–40s 扩展版：
+- 先锁 Douyin asset；
+- 再找完整发行版；
+- 必须证明完整版与已锁 asset 声学对齐后才能扩展。
+
+### Required evidence
+至少保存 BGM discovery provenance；推荐：
+`BGM_DISCOVERY/asset_probe_report.json`。
+
+### Gate
+- `SONG_FAMILY_LOCKED`
+- `TREND_REFERENCE_AUDIO_VERSION_LOCKED` 或等价 high-confidence version state。
+
+版本证据不足则：
+`BGM_VERSION_DISCOVERY_BLOCKED`。
+
+---
+
 # Stage 2｜Exact BGM Clip Lock
 
 ### Work
-使用实际 MP3/WAV/发布音频：
+使用 Stage 1.5 已验证的实际 MP3/WAV/发布音频：
 - 核对 title / artist / exact version；
 - 选择语义完整段落；
 - 检查前一句污染；
@@ -73,6 +118,8 @@ Stage-specific JIT：
 - 结尾不舒服时优先多留完整 release line；
 - fade 在人声完成后发生；
 - 保存 source start/end、duration、speed、fade、SHA。
+
+若存在已验证 Douyin trend-native 片段，默认先把它提交 HG02；只有用户觉得太短/结构不完整时才进入 asset-anchored extended route。
 
 ### Human Gate
 `HG02 BGM Excerpt Listening Gate`。
@@ -388,6 +435,7 @@ Gate：`FINAL_TECH_QA_PASS`
 
 保存可复刻资产，不只保存最终 MP4：
 - final accepted MV + hash；
+- BGM discovery provenance / exact asset identity；
 - BGM identity；
 - full Audio Timeline Package/raw evidence/provenance；
 - Director/first-frame pointers；
@@ -407,6 +455,7 @@ Gate：`COMPLETE_LOCKED`。
 # Mandatory State Chain
 
 `REFERENCE_BGM_LOCKED`
+→ `TREND_REFERENCE_AUDIO_VERSION_LOCKED`（Douyin route 时）
 → `BGM_LOCKED`
 → `AUDIO_TIMELINE_PACKAGE_LOCKED`
 → `DIRECTOR_BEAT_MAP`
@@ -431,6 +480,7 @@ Gate：`COMPLETE_LOCKED`。
 详细人工/异常 Gate：`rules/mv_human_gates.md`。
 
 默认只回最近根因：
+- BGM discovery 版本证据错 → Stage 1.5；
 - BGM改 → Stage 2A 及 timing-dependent 下游失效；
 - timing错 → 2A；
 - 首帧/视觉错 → 4/5；
