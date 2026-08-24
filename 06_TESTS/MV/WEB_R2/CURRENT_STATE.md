@@ -7,7 +7,7 @@
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
 - STAGE: `W09 / R1_SCREENSHOT_SUBTITLE_CALIBRATION`
-- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / PREVIOUS_R1_PROXY_REJECTED / ACTUAL_R1_SCREENSHOT_REFERENCE_ACTIVE / HUMAN_VIEW_PENDING`
+- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / PREVIOUS_R1_PROXY_REJECTED / ACTUAL_R1_SCREENSHOT_REFERENCE_ACTIVE / V2_EQUAL_PADDING_CANDIDATE_RENDERED / HUMAN_VIEW_PENDING`
 - BRANCH: `test/mv-web-r2`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
@@ -63,38 +63,50 @@ States:
 
 Correction:
 - the prior WEB implementation labeled `R1_GOLDEN` was only a prose-spec proxy and was rejected by user visual comparison;
-- do not treat that proxy as accepted R1 style;
-- the user-provided actual R1 screenshot is now the higher-priority visual reference for subtitle appearance.
+- the user-provided actual R1 screenshot is the higher-priority visual reference for subtitle appearance.
 
 Observed R1 screenshot characteristics:
-- materially larger and heavier Chinese subtitle than the rejected proxy;
 - bold clean sans serif;
 - near-white text;
-- darker, more substantial semi-transparent rounded rectangle;
-- visibly larger horizontal and vertical padding;
+- dark substantial semi-transparent rounded rectangle;
 - text optically centered inside the box;
-- lower safe-area center still roughly around the historical `y≈1010` family;
-- restrained fade remains compatible with R1 documentation;
+- lower safe-area center around the historical `y≈1010` family;
+- restrained fade;
 - max 2 lines; no karaoke/decorative extras.
 
-Current calibrated WEB candidate:
-- `Noto Sans CJK SC Bold`;
-- nominal size `46` on 720×1280;
-- rounded dark box with approx `20px` horizontal padding and `12px` vertical padding;
-- center `x=360 / y≈1010`;
+### Current calibrated WEB candidate v2｜EQUAL PADDING
+
+User feedback on v1:
+- overall direction acceptable;
+- background left/right excess too large;
+- all four sides should use a consistent modest padding;
+- text must be centered horizontally and vertically inside the background.
+
+Implementation correction:
+- do **not** estimate box width from character count × nominal font size;
+- first measure the actual rendered glyph pixel bounds from libass;
+- construct the rounded rectangle from those real bounds;
+- fixed padding: `22px` on top / bottom / left / right at 720×1280;
+- nominal font: `Noto Sans CJK SC Bold`, size `46`;
+- subtitle center: `x=360 / y≈1009–1010`;
+- rounded radius approx `12px`;
 - fade `100ms in / 180ms out`;
 - canonical W02A subtitle timing unchanged.
 
+This removes the v1 failure where horizontal box padding was much larger than vertical padding because box width used incorrect nominal-font metrics.
+
 Current states:
 - `PREVIOUS_R1_PROXY_STYLE = REJECTED`
-- `SUBTITLE_STYLE_QA_PASS = NO / HUMAN_VIEW_PENDING`
+- `R1_SCREENSHOT_CALIBRATION_V1 = REVISE_PADDING`
+- `R1_SCREENSHOT_CALIBRATION_V2_EQUAL_PADDING = HUMAN_VIEW_PENDING`
+- `SUBTITLE_STYLE_QA_PASS = NO`
 - `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
 - `FINAL_TECH_QA_PASS = NO`
 - `DELIVERABLE_RENDERED = NO`
 
 ## Next Allowed Action
 
-1. Human-view the screenshot-calibrated subtitle candidate.
-2. If visually accepted, lock exact WEB subtitle geometry/style parameters as the R1-derived runtime reference.
-3. Then perform subtitle implementation QA against canonical W02A timing.
+1. Human-view v2 equal-padding subtitle candidate.
+2. If visually accepted, lock the exact equal-padding geometry/style parameters as the R1-derived runtime subtitle reference.
+3. Perform subtitle implementation QA against canonical W02A timing.
 4. Enter W10 final technical/full-watch QA only after subtitle style + implementation pass.
