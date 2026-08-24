@@ -1,0 +1,41 @@
+{
+  "round": "WEB_R2",
+  "date": "2026-08-24",
+  "status": "COMPLETE_LOCKED",
+  "user_acceptance": "目前，我觉得这个已经OK了，可以进行一次收口",
+  "song": "如果你也刚好抬头看树",
+  "artist": "孙天宇",
+  "locked_bgm_sha256": "bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33",
+  "final_video": "如果你也刚好抬头看树_MV_WEB_R2_FINAL.mp4",
+  "final_sha256": "ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286",
+  "final_technical": {
+    "resolution": "720x1280",
+    "fps": 24,
+    "frames": 891,
+    "picture_duration_s": 37.125,
+    "audio_duration_s": 37.12,
+    "audio_global_lag_s": 0.0,
+    "subtitle_max_implementation_delta_s": 0.005,
+    "blackdetect_events": 0
+  },
+  "promoted_runtime": [
+    "04_HARNESS/workflows/mv.md v1.7",
+    "04_HARNESS/rules/mv_golden_runtime.md v1.4",
+    "04_HARNESS/rules/mv_audio_timeline.md v1.0",
+    "04_HARNESS/rules/mv_human_gates.md v1.0",
+    "04_HARNESS/rules/mv_editing.md v1.1+",
+    "04_HARNESS/rules/mv_source_normalization.md v1.0",
+    "04_HARNESS/rules/mv_subtitle.md v1.0",
+    "04_HARNESS/templates/mv_zero_context_start_prompt.md v1.0"
+  ],
+  "core_promotions": [
+    "BGM_LOCKED immediately followed by AUDIO_TIMELINE_PACKAGE hard gate",
+    "1-3 shot RAW SOURCE normalized into Atom/Arc library before final edit",
+    "long-cut-first and visible-shot Fragmentation Gate",
+    "WEB batch uniform watermark-safe crop/zoom fallback",
+    "locked subtitle baseline with glyph-bbox fresh-box generation and all-line geometry QA",
+    "five fixed human gates plus conditional exception gates",
+    "nearest-cause rollback / Patch Don't Cascade"
+  ],
+  "retrospective": "06_TESTS/MV/WEB_R2/WEB_R2_FINAL_RETROSPECTIVE_AND_SOP_v1.md"
+}
