@@ -1,0 +1,103 @@
+{
+  "observed_at": "2026-08-24T17:47:17+08:00",
+  "coverage": [
+    {
+      "account_id": "DYCORE01",
+      "nickname": "黑米与糖豆",
+      "trend_weight": 0.7,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-17T18:02:00+08:00",
+      "newest_age_hours": 167.8,
+      "freshness_threshold_hours": 72,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE02",
+      "nickname": "佩佩治愈Ai",
+      "trend_weight": 0.25,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-17T22:41:09+08:00",
+      "newest_age_hours": 163.1,
+      "freshness_threshold_hours": 168,
+      "latest_edge_fresh": true
+    },
+    {
+      "account_id": "DYCORE03",
+      "nickname": "乐 ♩青春",
+      "trend_weight": 0.65,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-17T20:27:32+08:00",
+      "newest_age_hours": 165.3,
+      "freshness_threshold_hours": 72,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE04",
+      "nickname": "Aura",
+      "trend_weight": 0.35,
+      "window_15d_complete": 0,
+      "newest_work": "2026-08-17T15:36:16+08:00",
+      "newest_age_hours": 170.2,
+      "freshness_threshold_hours": 168,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE05",
+      "nickname": "Lynne小凌",
+      "trend_weight": 0.5,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-16T20:16:04+08:00",
+      "newest_age_hours": 189.5,
+      "freshness_threshold_hours": 168,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE06",
+      "nickname": "泡泡与茶",
+      "trend_weight": 0.9,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-16T18:30:00+08:00",
+      "newest_age_hours": 191.3,
+      "freshness_threshold_hours": 72,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE07",
+      "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+      "trend_weight": 0.45,
+      "window_15d_complete": 0,
+      "newest_work": "2026-08-17T20:55:46+08:00",
+      "newest_age_hours": 164.9,
+      "freshness_threshold_hours": 168,
+      "latest_edge_fresh": true
+    },
+    {
+      "account_id": "DYCORE08",
+      "nickname": "火乐烁",
+      "trend_weight": 1.0,
+      "window_15d_complete": 1,
+      "newest_work": "2026-08-17T21:36:22+08:00",
+      "newest_age_hours": 164.2,
+      "freshness_threshold_hours": 72,
+      "latest_edge_fresh": false
+    },
+    {
+      "account_id": "DYCORE09",
+      "nickname": "爱的魔力小姐姐",
+      "trend_weight": 0.25,
+      "window_15d_complete": 1,
+      "newest_work": "",
+      "newest_age_hours": null,
+      "freshness_threshold_hours": 168,
+      "latest_edge_fresh": false
+    }
+  ],
+  "high_trend_latest_edge_fail_accounts": [
+    "DYCORE01",
+    "DYCORE03",
+    "DYCORE06",
+    "DYCORE08"
+  ],
+  "latest_edge_gate_pass": false,
+  "note": "Current repeats are lower bounds until latest-edge freshness and all requested 15d windows are closed."
+}
