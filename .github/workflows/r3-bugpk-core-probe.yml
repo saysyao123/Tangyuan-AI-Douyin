@@ -1,0 +1,42 @@
+name: R3 BugPk Historical Path Probe
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/core_profile_links_input.json'
+      - '06_TESTS/MV/WEB_R3/tools/run_bugpk_core_probe.py'
+      - '06_TESTS/MV/WEB_R3/bugpk_probe_trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout probe ref
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install probe dependency
+        run: python -m pip install requests
+
+      - name: Run BugPk historical-path regression
+        run: python 06_TESTS/MV/WEB_R3/tools/run_bugpk_core_probe.py
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-bugpk-core-probe
+          path: 06_TESTS/MV/WEB_R3/_bugpk_probe_output
+          if-no-files-found: warn
+          retention-days: 7
