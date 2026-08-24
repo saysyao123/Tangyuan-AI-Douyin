@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W09 / R1_SCREENSHOT_SUBTITLE_CALIBRATION`
-- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / PREVIOUS_R1_PROXY_REJECTED / ACTUAL_R1_SCREENSHOT_REFERENCE_ACTIVE / V2_EQUAL_PADDING_CANDIDATE_RENDERED / HUMAN_VIEW_PENDING`
+- STAGE: `W10 PASS / W11 CLOSE_PENDING`
+- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED`
 - BRANCH: `test/mv-web-r2`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
@@ -16,7 +16,7 @@
 - Workflow: `04_HARNESS/workflows/mv.md` v1.5
 - Golden Runtime: `04_HARNESS/rules/mv_golden_runtime.md` v1.3
 - Audio Timeline: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
-- Editing Runtime: `04_HARNESS/rules/mv_editing.md` v1.0
+- Editing Runtime: `04_HARNESS/rules/mv_editing.md` v1.1+
 - Source Normalization: `04_HARNESS/rules/mv_source_normalization.md` v1.0
 - AI Video: `04_HARNESS/rules/ai_video.md` v1.3
 
@@ -38,8 +38,8 @@ Canonical timing package:
 
 ## W07.5 Shot Library｜LOCKED
 
-- all 9 original sources preserved;
-- 22 usable Atom/Arc edit units mapped;
+- 9 original ~5s files preserved;
+- 22 usable Atom/Arc units mapped;
 - duplicate/topology-risk/meaningless micro-shots excluded;
 - derived WEB proxies source-audio removed;
 - WEB batch transform: `crop=576:1024:72:128 -> scale=720:1280` (~`1.25×`).
@@ -59,54 +59,69 @@ States:
 - `EDIT_MAP_LOCKED = YES`
 - `EDIT_PREVIEW_QA_PASS = YES`
 
-## W09 Subtitle｜ACTUAL R1 SCREENSHOT IS VISUAL TRUTH
+## W09 Subtitle｜LOCKED
 
-Correction:
-- the prior WEB implementation labeled `R1_GOLDEN` was only a prose-spec proxy and was rejected by user visual comparison;
-- the user-provided actual R1 screenshot is the higher-priority visual reference for subtitle appearance.
+User accepted the R1-derived screenshot-calibrated subtitle system and requested it become the stable default instead of restarting style exploration each project.
 
-Observed R1 screenshot characteristics:
-- bold clean sans serif;
-- near-white text;
-- dark substantial semi-transparent rounded rectangle;
-- text optically centered inside the box;
-- lower safe-area center around the historical `y≈1010` family;
-- restrained fade;
-- max 2 lines; no karaoke/decorative extras.
+Lock receipt:
+`06_TESTS/MV/WEB_R2/W09_SUBTITLE_STYLE_LOCK_RECEIPT.json`
 
-### Current calibrated WEB candidate v2｜EQUAL PADDING
-
-User feedback on v1:
-- overall direction acceptable;
-- background left/right excess too large;
-- all four sides should use a consistent modest padding;
-- text must be centered horizontally and vertically inside the background.
-
-Implementation correction:
-- do **not** estimate box width from character count × nominal font size;
-- first measure the actual rendered glyph pixel bounds from libass;
-- construct the rounded rectangle from those real bounds;
-- fixed padding: `22px` on top / bottom / left / right at 720×1280;
-- nominal font: `Noto Sans CJK SC Bold`, size `46`;
-- subtitle center: `x=360 / y≈1009–1010`;
-- rounded radius approx `12px`;
+720×1280 baseline:
+- `Noto Sans CJK SC Bold`, nominal `46px`;
+- near-white text + restrained dark outline;
+- lower center around `x=360 / y=1009`;
+- dark semi-transparent rounded box;
+- **10px padding on all four sides**;
+- max 2 lines;
 - fade `100ms in / 180ms out`;
-- canonical W02A subtitle timing unchanged.
+- timing exclusively from canonical Audio Timeline Package.
 
-This removes the v1 failure where horizontal box padding was much larger than vertical padding because box width used incorrect nominal-font metrics.
+Hard implementation rule:
+- measure actual rendered glyph/text bbox for every line;
+- generate box fresh from that bbox + target padding;
+- never resize/inset a legacy rounded path;
+- QA every line: four-side padding target ±1px; text/box center error <=1px;
+- shortest line + longest one-line + two-line + first + final are mandatory sampled QA cases.
 
-Current states:
-- `PREVIOUS_R1_PROXY_STYLE = REJECTED`
-- `R1_SCREENSHOT_CALIBRATION_V1 = REVISE_PADDING`
-- `R1_SCREENSHOT_CALIBRATION_V2_EQUAL_PADDING = HUMAN_VIEW_PENDING`
-- `SUBTITLE_STYLE_QA_PASS = NO`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
-- `FINAL_TECH_QA_PASS = NO`
-- `DELIVERABLE_RENDERED = NO`
+W09 implementation result:
+- 10 lines checked;
+- max ASS-vs-canonical time delta `0.005s`;
+- all geometry `10/10/10/10px` PASS;
+- prior short-line defect `L05 好吧哎哟哎哟` PASS after bbox regeneration;
+- two-line L09 PASS.
+
+States:
+- `SUBTITLE_STYLE_QA_PASS = YES`
+- `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
+
+## W10 Final QA｜PASS
+
+Receipt:
+`06_TESTS/MV/WEB_R2/W10_FINAL_TECH_QA_RECEIPT.json`
+
+Final technical identity:
+- 720×1280 / H.264 / 24fps / 891 frames;
+- picture `37.125s`;
+- locked audio `37.120s`;
+- preview/final decoded audio vs locked BGM global lag `0.000000s`;
+- no detected black frames;
+- WEB top-left/bottom-right watermark-risk samples clear;
+- source metadata stripped by stream-copy final remux; no picture/audio retime introduced.
+
+Final file:
+`如果你也刚好抬头看树_MV_WEB_R2_FINAL.mp4`
+
+Final SHA-256:
+`ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`
+
+States:
+- `FINAL_TECH_QA_PASS = YES`
+- `DELIVERABLE_RENDERED = YES`
 
 ## Next Allowed Action
 
-1. Human-view v2 equal-padding subtitle candidate.
-2. If visually accepted, lock the exact equal-padding geometry/style parameters as the R1-derived runtime subtitle reference.
-3. Perform subtitle implementation QA against canonical W02A timing.
-4. Enter W10 final technical/full-watch QA only after subtitle style + implementation pass.
+W11 close:
+1. deliver final package to user;
+2. preserve accepted subtitle rule/gate as reusable runtime baseline;
+3. write final WEB R2 retrospective only if it adds new durable rules not already promoted;
+4. mark Round closed after final user acceptance.
