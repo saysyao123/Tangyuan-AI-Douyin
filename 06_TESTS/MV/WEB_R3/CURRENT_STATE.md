@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-B / DYNAMIC SOURCE HUMAN REVIEW + PHYSICS PATCH`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / PATCH_BATCH_REQUIRED`
+- STAGE: `R3-B / PHYSICS PATCH ANALYSIS`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / V3_PATCH_RETEST_REVIEWED / S04_PASS / S05_PASS / S02_S06_PATCH_REQUIRED`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
@@ -41,99 +41,84 @@ Duration: `24.320000s`
 
 ## Veil policy clarification
 
-For this R3 production, the face veil is primarily a **Doubao generation-entry / compatibility device**.
+For this R3 production, the veil is primarily a Doubao generation-entry / compatibility device, not a final narrative HARD continuity gate. Final QA prioritizes visual quality, identity stability, lyric fit, physical plausibility and editability.
 
-Therefore:
-- first frame / prompt may still use the veil to enable generation;
-- final dynamic source is **not automatically failed** merely because the veil shifts or reveals more of the lower face;
-- veil continuity is no longer a final narrative HARD gate for this song;
-- final QA should prioritize visual quality, identity stability, lyric fit, physical plausibility and editability.
+## Dynamic camera / physics research
 
-This clarification overrides earlier R3 machine-QA assumptions where veil reveal alone caused failure.
+- stable baseline: `R3_B_DYNAMIC_PROMPTS_v1.md`
+- camera calibration: `R3_B_DYNAMIC_PROMPTS_v2_CAMERA_CALIBRATION.md`
+- camera matrix: `R3_B_CAMERA_CALIBRATION_MATRIX_v1.md`
+- human review: `R3_B_DYNAMIC_SOURCE_HUMAN_REVIEW_v1.md`
+- physics gate: `R3_B_PHYSICAL_PLAUSIBILITY_GATE_v1.md`
+- open-source control research + next patch: `R3_B_OPEN_SOURCE_CONTROL_RESEARCH_AND_PATCH_PLAN_v1.md`
 
-## Dynamic Camera Calibration
+## v3 patch retest result
 
-Prompt package:
-`R3_B_DYNAMIC_PROMPTS_v2_CAMERA_CALIBRATION.md`
+Uploaded retest batch:
+- `3S02.mp4`
+- `3S4.mp4`
+- `3S5.mp4`
+- `3S06.mp4`
 
-Camera matrix:
-`R3_B_CAMERA_CALIBRATION_MATRIX_v1.md`
+### S04
+`PASS ENOUGH FOR CURRENT LOOP`
+- partial foreground occlusion materially improves same-scene continuity;
+- keep current source;
+- full occlusion remains reserved for intentional hidden transition tests.
 
-Generated batch:
-`S01–S08 / 8 x 5s Seedance 2 mini`
+### S05
+`PASS ENOUGH FOR CURRENT LOOP`
+- dry mirror + separately located rainy background window solves the major surface-ownership problem;
+- keep current source.
 
-Machine QA:
-`R3_B_DYNAMIC_SOURCE_QA_v1.md`
+### S02
+`FAIL / RAIN PHYSICS`
+- rain is still visually over-large / tube-like / spatially ambiguous;
+- do not keep adding prose around droplet merging;
+- next route: first-frame preload of an already-existing thin exterior rain rivulet + one simple downward track;
+- freeze camera for the physics retry and use only one slow rack focus.
 
-Human review override:
-`R3_B_DYNAMIC_SOURCE_HUMAN_REVIEW_v1.md`
+### S06
+`FAIL / CONCEPT + OBJECT PHYSICS`
+- transparent ice object is not stably established because it was not clearly present in frame 0;
+- hand / face / veil / transparent object / phase-change stack is too complex;
+- full new first frame is mandatory;
+- next route: ice object resting on dark saucer in foreground, already wet with one visible bead; woman soft-focus background; no hand interaction; one bead detaches and falls; locked camera + one rack focus.
 
-Physics gate:
-`R3_B_PHYSICAL_PLAUSIBILITY_GATE_v1.md`
+## Key experimental rules from retest
 
-Patch plan:
-`R3_B_PATCH_PLAN_v2_PHYSICS_DIRECTOR.md`
+### FIRST-FRAME STATE PRELOAD
+Any small transparent / reflective / deforming object that carries the lyric event must be clearly present in the first frame.
 
-## Human source decisions
+### ONE PHYSICS EVENT PER SOURCE
+One 5s source contains at most one difficult material interaction.
 
-### Keep
-- `S01` — accepted visually; veil reveal is not a blocker.
-- `S03` — no major issue.
-- `S07` — overall works.
-- `S08` — strong benchmark; camera + emotional release highly approved.
+### CONTROL BUDGET
+For difficult physics:
+- camera complexity LOW;
+- one object/material event only;
+- character performance LOW.
 
-### Conditional
-- `S02` — overall usable, but rain/glass physics are incorrect or ambiguous; quality-first patch preferred.
-
-### Regenerate / redesign
-- `S04` — camera move excellent, but full occlusion causes uncontrolled post-occlusion scene/pose reconstruction; current second half is narratively unclear.
-- `S05` — rain/water appears on the wrong side / inside the glass volume; surface ownership failure.
-- `S06` — full concept failure, not merely a mask issue; rebuild shot from first principles.
-
-Recommended patch batch:
-`S02 / S04 / S05 / S06`
-
-## Camera-learning status
-
-### Strong positive evidence
-- `S08 SLOW CRANE / WORLD-OPENING RELEASE` — current benchmark.
-- `S03 SLOW DOLLY-OUT REVEAL` — useful positive evidence.
-
-### Valuable but needs correct use
-- `FULL FOREGROUND OCCLUSION` — good as an intentional hidden transition from Scene A -> Scene B; risky for same-scene continuity.
-- `PARTIAL FOREGROUND REVEAL` — preferred for same-scene continuity.
-
-### Not yet proven as stable grammar
-- lateral slider along glass;
-- mini orbit around reflection;
-- diagonal slider + rack focus.
-
-## Physical Plausibility Gate
-
-Before camera motion, every complex shot must define:
-- camera side;
-- character side;
-- boundary plane(s);
-- effect ownership (rain / reflection / condensation / light);
-- gravity / flow direction;
-- occlusion continuity;
-- post-occlusion target state.
-
-New QA axis:
-`PHYSICAL_PLAUSIBILITY = PASS / PARTIAL / FAIL`
-
-A beautiful shot with obvious impossible physics cannot receive final source lock.
+For difficult camera motion:
+- simple scene physics;
+- no material phase transformation.
 
 ## Current Gate / Next execution
 
 `SHOT_LIBRARY_LOCKED = NO`
 
+Keep without more generation:
+`S01 / S03 / S04(v3) / S05(v3) / S07 / S08`
+
+Tomorrow patch only:
+`S02 / S06`
+
 Next:
-1. rewrite S02 / S04 / S05 / S06 using physics-first topology;
-2. regenerate only those four sources;
-3. run patch QA;
-4. if pass, lock shot library;
-5. enter Picture Edit / HG04.
+1. prepare S02 v4 first-frame state with thin exterior rivulet;
+2. prepare NEW S06 v4 first frame with ice + pre-existing bead + woman background;
+3. generate only S02/S06 with simplified physics/control budgets;
+4. run physical plausibility QA;
+5. if pass, lock shot library and enter Picture Edit / HG04.
 
 ## State chain
 
@@ -145,4 +130,6 @@ Next:
 → `CAMERA CALIBRATION GENERATED`
 → `HUMAN REVIEW COMPLETE`
 → `PHYSICAL PLAUSIBILITY GATE READY`
-→ **`PATCH BATCH S02/S04/S05/S06`**
+→ `V3 PATCH RETEST`
+→ `S04 PASS / S05 PASS`
+→ **`TOMORROW PATCH S02 + S06 ONLY`**
