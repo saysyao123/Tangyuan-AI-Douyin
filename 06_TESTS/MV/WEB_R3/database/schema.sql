@@ -60,7 +60,13 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
     stop_reason TEXT,
     error TEXT,
     collector TEXT NOT NULL,
-    observed_at TEXT NOT NULL
+    observed_at TEXT NOT NULL,
+    profile_auth_pass INTEGER,
+    first_page_auth_pass INTEGER,
+    latest_ownership_pass INTEGER,
+    window_closure_pass INTEGER,
+    profile_aweme_count INTEGER,
+    latest_verified_aweme_id TEXT
 );
 
 -- R3 correction: normalization is work-level, not raw-music-level.
