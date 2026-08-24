@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W09 / R1_GOLDEN_SUBTITLE_IMPLEMENTATION_QA`
-- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / R1_GOLDEN_SUBTITLE_STYLE_TARGET_LOCKED / IMPLEMENTATION_QA_NEXT`
+- STAGE: `W09 / R1_SCREENSHOT_SUBTITLE_CALIBRATION`
+- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / PREVIOUS_R1_PROXY_REJECTED / ACTUAL_R1_SCREENSHOT_REFERENCE_ACTIVE / HUMAN_VIEW_PENDING`
 - BRANCH: `test/mv-web-r2`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
@@ -49,53 +49,52 @@ Map:
 
 ## W08B V3.2 Picture Edit｜LOCKED
 
-User accepted V3.2 Atom-first direction.
-
 Accepted Edit Map:
 `06_TESTS/MV/WEB_R2/W08B_V3_2_ATOMIC_ROUGH_EDIT_MAP.csv`
 
 Gate receipt:
 `06_TESTS/MV/WEB_R2/W08B_V3_2_PICTURE_GATE_PASS_RECEIPT.json`
 
-Technical identity:
-- 13 selected visible units;
-- 891 frames / 24fps / 37.125s picture;
-- locked audio 37.120s;
-- preview-vs-locked-BGM global lag `0.000000s`.
-
 States:
 - `EDIT_MAP_LOCKED = YES`
 - `EDIT_PREVIEW_QA_PASS = YES`
 
-## W09 Subtitle｜R1 GOLDEN TARGET LOCKED
+## W09 Subtitle｜ACTUAL R1 SCREENSHOT IS VISUAL TRUTH
 
-User rejected new A/B/C experiments and explicitly selected the previously accepted R1 subtitle standard.
+Correction:
+- the prior WEB implementation labeled `R1_GOLDEN` was only a prose-spec proxy and was rejected by user visual comparison;
+- do not treat that proxy as accepted R1 style;
+- the user-provided actual R1 screenshot is now the higher-priority visual reference for subtitle appearance.
 
-Lock note:
-`06_TESTS/MV/WEB_R2/W09_R1_GOLDEN_SUBTITLE_STYLE_LOCK.md`
-
-R1 target:
-- bold clean Chinese sans serif;
+Observed R1 screenshot characteristics:
+- materially larger and heavier Chinese subtitle than the rejected proxy;
+- bold clean sans serif;
 - near-white text;
-- tight dark semi-transparent background box;
-- centered horizontally/vertically in box;
-- subtitle center around `y≈1010` on 720×1280;
-- max 2 lines;
-- restrained fade ~`0.1s in / 0.15–0.2s out`;
-- no karaoke/decorative extras.
+- darker, more substantial semi-transparent rounded rectangle;
+- visibly larger horizontal and vertical padding;
+- text optically centered inside the box;
+- lower safe-area center still roughly around the historical `y≈1010` family;
+- restrained fade remains compatible with R1 documentation;
+- max 2 lines; no karaoke/decorative extras.
 
-Current WEB implementation uses `Noto Sans CJK SC Bold`, size `34`, center `x=360/y=1010`, `100ms/180ms` fade as a layout-faithful R1 proxy. Exact numeric font size was not preserved as a hard R1 equality target; R1 Golden prioritizes layout/readability.
-
-Timing remains canonical W02A and is not changed.
+Current calibrated WEB candidate:
+- `Noto Sans CJK SC Bold`;
+- nominal size `46` on 720×1280;
+- rounded dark box with approx `20px` horizontal padding and `12px` vertical padding;
+- center `x=360 / y≈1010`;
+- fade `100ms in / 180ms out`;
+- canonical W02A subtitle timing unchanged.
 
 Current states:
-- `SUBTITLE_STYLE_TARGET_LOCKED = R1_GOLDEN`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO / NEXT`
+- `PREVIOUS_R1_PROXY_STYLE = REJECTED`
+- `SUBTITLE_STYLE_QA_PASS = NO / HUMAN_VIEW_PENDING`
+- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
 - `FINAL_TECH_QA_PASS = NO`
 - `DELIVERABLE_RENDERED = NO`
 
 ## Next Allowed Action
 
-1. Verify current R1-style burned subtitles against canonical W02A timing.
-2. If implementation QA passes, enter W10 final technical/full-watch QA.
-3. No new subtitle style exploration unless user explicitly reopens it.
+1. Human-view the screenshot-calibrated subtitle candidate.
+2. If visually accepted, lock exact WEB subtitle geometry/style parameters as the R1-derived runtime reference.
+3. Then perform subtitle implementation QA against canonical W02A timing.
+4. Enter W10 final technical/full-watch QA only after subtitle style + implementation pass.
