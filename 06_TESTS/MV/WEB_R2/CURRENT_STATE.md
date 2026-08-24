@@ -1,86 +1,59 @@
 # WEB R2｜CURRENT_STATE
 
-> WEB R2唯一状态入口。新 Chat / Agent 必须先读 Workflow v1.3 + Golden Runtime + MV Audio Timeline Rule，再读本文件。
+> WEB R2 唯一状态入口。新 Chat / Agent 必须先读 Workflow v1.3 + Golden Runtime + MV Audio Timeline Rule，再读本文件。
 
 ## Current Status
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W08B / V3_EDIT_PREVIEW_VIEWING_GATE`
-- STAGE_NAME: `V3 Picture+BGM Preview human aesthetic viewing`
-- STATE: `V1_REVOKED / V2_REVOKED / W02A_PASS / EDITOR_AUDIO_GATE_PASS / EDIT_MAP_LOCKED / PICTURE_PREVIEW_RENDERED / TECH_QA_PASS / AESTHETIC_VIEWING_PENDING`
+- STAGE: `W08B / V3.1_LONG_CUT_SUBTITLE_VIEWING_GATE`
+- STAGE_NAME: `V3.1 long-cut picture edit + diagnostic exact-lyric subtitle human viewing`
+- STATE: `V1_REVOKED / V2_REVOKED / W02A_PASS / EDITOR_AUDIO_GATE_PASS / V3_SUPERSEDED_BY_USER_FEEDBACK / V3_1_CANDIDATE_RENDERED / TECH_QA_PASS / HUMAN_VIEW_PENDING`
 - BRANCH: `test/mv-web-r2`
 - WORKFLOW: `04_HARNESS/workflows/mv.md` v1.3
 - GOLDEN_RUNTIME: `04_HARNESS/rules/mv_golden_runtime.md` v1.2
 - AUDIO_TIMELINE_RULE: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
 - AUDIO_PACKAGE: `06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/`
-- EDIT_MAP: `06_TESTS/MV/WEB_R2/W08B_V3_EDIT_MAP_v1.csv`
-- EDIT_PREVIEW_QA: `06_TESTS/MV/WEB_R2/W08B_V3_EDIT_PREVIEW_QA_v1.md`
+- CURRENT_EDIT_MAP: `06_TESTS/MV/WEB_R2/W08B_V3_1_LONG_CUT_EDIT_MAP_v1.csv`
+- CURRENT_PREVIEW_QA: `06_TESTS/MV/WEB_R2/W08B_V3_1_LONG_CUT_SUBTITLE_PREVIEW_QA.md`
+- PREVIOUS_V3_EDIT_MAP: `06_TESTS/MV/WEB_R2/W08B_V3_EDIT_MAP_v1.csv`
 - W02A_GATE_RECEIPT: `06_TESTS/MV/WEB_R2/W02A_GATE_PASS_RECEIPT.json`
 - W02A_SYNC_RECEIPT: `06_TESTS/MV/WEB_R2/W02A_PACKAGE_SYNC_RECEIPT.json`
-- ROOT_CAUSE_AUDIT: `06_TESTS/MV/WEB_R2/W08_V2_TIMING_PROVENANCE_FAILURE_AUDIT.md`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Valid locked upstream results
+## Locked upstream truth
 
 - W01: `HUMAN_GATE / PASSED` — `如果你也刚好抬头看树` / 孙天宇
 - W02: `BGM_LOCKED` — source `139.930s–177.050s`, content timeline `37.120s`, SHA-256 `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
 - W02A: `AUDIO_TIMELINE_PACKAGE_LOCKED / PASS`
 - W04: `DIRECTOR_PLAN_LOCKED` — `树影之外`
 - W05: `FIRST_FRAME_SET_LOCKED` — 9/9 accepted
-- W06/W06-X: dynamic prompt/camera experiment + S1–S9 returned
+- W06/W06-X: dynamic prompt/camera experiment + 2S1–2S9 returned
 - W07: `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT` — visual batch pass with trim
 - W08A: `EDITOR_AUDIO_GATE_PASS`
-- W08B: `EDIT_MAP_LOCKED / V3 Picture Preview rendered`
 
-Do not reopen approved visual-generation stages unless a specific preview defect proves a source-duration/source-quality gap.
+Do not reopen approved visual-generation stages unless a specific preview defect proves a real source shortage.
 
-## Revoked artifacts｜HARD
+## Revoked / superseded edit artifacts
 
 ### V1
 `REVOKED / TECHNICAL_RESCUE`
-
-Reason:
-- edit/subtitle proceeded before valid lyric timing;
-- subtitle style drifted from R1 Golden.
+- picture/subtitle work began before valid lyric timing;
+- subtitle style drifted.
 
 ### V2
 `REVOKED / TECHNICAL_RESCUE / EVIDENCE_PROVENANCE_FAIL`
+- wrong excerpt assumption;
+- diagnostic timing was promoted without Strong Route provenance;
+- QA proved render-vs-SRT, not SRT-vs-vocal.
 
-Reason:
-- wrong nine-line excerpt assumption;
-- diagnostic acoustic timing was repackaged as exact;
-- QA proved render-vs-SRT, not SRT-vs-vocal ground truth.
+### V3
+`SUPERSEDED_BY_USER_AESTHETIC_FEEDBACK`
+- timing/order correction was materially better;
+- user feedback: external cuts still felt too fragmented / visually busy;
+- V3 timing truth remains valid, but its 17-fragment picture map is no longer the active candidate.
 
-V1/V2 timing assets may not be reused as timing truth.
-Visual source-selection lessons may be reused.
-
-## W02A canonical timing truth
-
-Strong Route:
-- trusted Chinese lyrics -> CTC forced alignment;
-- model: `jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn`;
-- revision: `d2af85f00e501bb8b8bcedef3b5c51eabb883088`;
-- 92 target tokens -> 92 aligned spans;
-- no free ASR lyric transcription used as truth.
-
-Ground-truth QA:
-- CTC vs prior diagnostic candidate median absolute line-start delta: `0.125s`;
-- repeated chorus L01–L07 source-time shift median: `81.527s`;
-- maximum repeat-shift deviation: `0.061s`;
-- no chorus occurrence swap.
-
-Machine Gates:
-- Timing Core Gate: exit `0`, 10 lines, 0 errors/warnings;
-- Complete Package Gate: exit `0`, 10 lines, 10 anchors, 21 music events, 0 errors/warnings;
-- `package_manifest.json`: `AUDIO_TIMELINE_PACKAGE_LOCKED=true`.
-
-Canonical sync:
-- workflow run `32655263045`;
-- payload ZIP SHA `c8308512c9f1dd63fabe70dcafb27e0a75b2d0d3450f80371429f665866656be`;
-- status `W02A_CANONICAL_PACKAGE_SYNCED`.
-
-## Canonical lyric timeline
+## Canonical W02A lyric clock
 
 | Line | Lyric | Start | End |
 |---|---|---:|---:|
@@ -95,7 +68,7 @@ Canonical sync:
 | L09 | 在某天某个随机的清晨或是下午 | 28.415 | 32.838 |
 | L10 | 坐下来别那么严肃 | 32.838 | 37.120 |
 
-Canonical timing/editor files:
+Canonical files:
 - `AUDIO_TIMELINE_PACKAGE/line_timeline.csv`
 - `AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`
 - `AUDIO_TIMELINE_PACKAGE/anchor_words.csv`
@@ -104,98 +77,97 @@ Canonical timing/editor files:
 - `AUDIO_TIMELINE_PACKAGE/alignment_provenance.json`
 - `AUDIO_TIMELINE_PACKAGE/package_manifest.json`
 
-## W08B V3 Edit Map result
+W02A machine gates remain PASS; the audio/lyric truth is not reopened by V3.1 picture changes.
 
-The old V1/V2 visual order was not reused because it was built around the wrong first-lyric assumption.
+## V3.1 Long-Cut strategy
 
-V3 reorders accepted material against canonical timing:
-- opening: S2 leaf/hand -> S4 dance for L01;
-- L02: short S5 upward/giant-tree cue without prematurely revealing bird;
-- L03: S3 intimate eye/veil;
-- L04: S6 person -> bird -> person, with bird reveal ~`8.542s` vs `鸟儿` anchor `8.525s`;
-- L06: S4 energy rise -> S7 clean peak -> S7 clean canopy resolve;
-- L07/title: S1 monumental tree -> low-angle look-up -> eye -> canopy;
-- L08: shortened S8 literal cloud -> S3 floating veil;
-- L09: S5 morning light -> S4 human bridge;
-- L10/tail: long S9 cloud/sky release.
+User requested a less fragmented cut and requested subtitles be embedded to judge alignment.
 
-W07 risk exclusions preserved:
-- S1 source frames `58–75` excluded (duplicate low-angle family);
-- S7 source frames `65–97` excluded (fabric topology risk);
-- S8 ~`2.917s`, S9 ~`4.292s` to preserve short reset vs long final-release roles.
+Main change:
+- V3 external fragments: `17`
+- V3.1 external fragments: `9`
+- no V3.1 external fragment shorter than `2.0s`
+- Anchor Word no longer automatically equals picture cut
+- generated clips with useful internal multi-shot grammar are allowed to carry semantic hits internally
 
-Picture clock:
-- `24fps`;
-- `891 frames`;
-- `37.125s`;
-- locked audio content `37.120s`;
-- end quantization delta `+0.005s`.
+Active sequence:
+1. S2 Arc / leaves — `0.000–3.000`
+2. S4 dance long section — `3.000–7.125`
+3. S6 person→bird→person complete structure — `7.125–12.125`
+4. S3 emotional close-up — `12.125–14.125`
+5. S7 clean motion peak — `14.125–16.833`
+6. S5 one-take breathing shot, slowed smoothly — `16.833–23.625`
+7. S8 sky/space long shot — `23.625–28.417`
+8. S1 giant-tree/morning-light source sequence — `28.417–32.833`
+9. S9 final release — `32.833–37.125`
 
-`EDIT_MAP_LOCKED = YES`
+Key semantics retained:
+- S6 internal bird reveal remains ~`8.54s`, near `鸟儿 8.525s`;
+- S7 clean early region carries `飞过树梢` peak;
+- title line L07 is carried inside the long S5 breathing shot without external cuts;
+- L09 begins essentially with S1 giant-tree/morning-light sequence;
+- S9 enters ~5ms before L10 and remains uninterrupted through tail.
 
-## V3 Picture+BGM Preview technical QA
+## V3.1 subtitle diagnostic overlay
 
-Preview identity:
-- filename: `如果你也刚好抬头看树_MV_WEB_R2_V3_PicturePreview.mp4`
-- SHA-256: `09e68c852d50fd43059fa70b8555ec7a742451af27ca2e3c177595ae5f240111`
-- H.264 `720×1280`, 24fps, SAR `1:1`;
-- video `37.125s / 891 frames`;
-- AAC audio `37.120s`.
+User explicitly requested subtitles in this preview to judge alignment.
 
-Audio implementation check:
-- Preview decoded audio vs locked v3 BGM best global lag: `0.000s`;
-- normalized correlation: ~`0.99960`;
-- no new AAC/FFmpeg global timing shift.
+Rules:
+- source timing: canonical W02A `line_timeline.csv` only;
+- no free ASR / no manual nudge / no picture-derived subtitle timing;
+- subtitle fade intentionally disabled for this diagnostic preview so apparent timing is not distorted by fade;
+- rendering at 24fps means only normal display-frame quantization applies (`<41.667ms`; measured maximum start quantization ~`37ms`);
+- visual style for this preview: centered light text + semi-transparent dark tight box + lower safe area;
+- this overlay does **not** lock W09 final subtitle style.
 
-Source audio policy:
-- all Seedance source audio ignored at ingest;
-- only locked W02 v3 BGM is mapped.
+## V3.1 technical QA
 
-Preview safe crop:
-- `crop=630:1120:20:72 -> scale=720:1280 -> SAR 1:1`;
-- used consistently for the viewing preview.
+Preview SHA-256:
+`9088dc30c06bc65cacf50dd0b28bbd2042de95ea9a7dcf5a461aef9e903d3c0e`
 
-Anchor-frame spot checks:
-- ~8.40s person -> ~8.55s bird;
-- 20.85s low-angle look-up;
-- 21.40s eye close-up;
-- 24.35s white cloud;
-- 26.05s wind/veil portrait;
-- 30.70s morning light / giant tree;
-- 32.83s transition into final cloud release.
+Technical state:
+- H.264 `720×1280`
+- 24fps / SAR `1:1`
+- video `891 frames / 37.125s`
+- locked-audio content `37.120s`
+- decoded preview audio vs locked v3 BGM best global lag: `0.000000s`
+- audio correlation: `0.999043`
+- all Seedance source audio discarded
+- consistent safe crop used to remove lower-right platform mark in reviewed frames
 
-`PICTURE_PREVIEW_RENDERED = YES`
-`EDIT_PREVIEW_TECH_QA_PASS = YES`
-`EDIT_PREVIEW_QA_PASS = NO / AESTHETIC_VIEWING_PENDING`
+`V3_1_PREVIEW_RENDERED = YES`
+`V3_1_TECH_QA_PASS = YES`
+`V3_1_AESTHETIC_QA_PASS = NO / HUMAN_VIEW_PENDING`
+`V3_1_SUBTITLE_ALIGNMENT_VIEW_PASS = NO / HUMAN_VIEW_PENDING`
 
-## Current Package / Runtime state
+## Current runtime states
 
-- `AUDIO_IDENTITY_LOCKED = YES`
-- `LYRIC_TEXT_LOCKED = YES`
-- `LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED = YES`
-- `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED = YES`
-- `ALIGNMENT_GROUND_TRUTH_QA_PASS = YES`
-- `LYRIC_TIMELINE_LOCKED = YES`
-- `ANCHOR_WORD_MAP_LOCKED = YES`
-- `MUSIC_EVENT_MAP_VERIFIED = YES`
 - `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
 - `EDITOR_AUDIO_GATE_PASS = YES`
-- `EDIT_MAP_LOCKED = YES`
-- `PICTURE_PREVIEW_RENDERED = YES`
-- `EDIT_PREVIEW_TECH_QA_PASS = YES`
-- `EDIT_PREVIEW_QA_PASS = NO / AESTHETIC_VIEWING_PENDING`
+- `EDIT_MAP_LOCKED = NO` — previous V3 lock superseded; V3.1 candidate awaits user acceptance
+- `PICTURE_PREVIEW_RENDERED = YES / V3.1`
+- `EDIT_PREVIEW_TECH_QA_PASS = YES / V3.1`
+- `EDIT_PREVIEW_QA_PASS = NO / HUMAN_VIEW_PENDING`
 - `SUBTITLE_STYLE_QA_PASS = NO`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
+- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO` — diagnostic overlay is not W09 lock
+- `FINAL_TECH_QA_PASS = NO`
 - `DELIVERABLE_RENDERED = NO`
 
 ## Next Allowed Action
 
-**Human viewing Gate on the actual V3 Picture+BGM Preview.**
+**Human viewing Gate on V3.1 long-cut + exact-subtitle diagnostic preview.**
 
-If user accepts:
-`EDIT_PREVIEW_QA_PASS -> W09 Subtitle Style + Implementation QA`.
+The user should judge two things separately:
+1. whether the 9-fragment long-cut rhythm is calmer / more coherent;
+2. whether each lyric subtitle visually enters/exits with the sung vocal.
 
-W09 must use canonical `AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`; it may style/render subtitles but may not invent or nudge a parallel lyric timing table.
+If both are accepted:
+- lock V3.1 Edit Map;
+- `EDIT_PREVIEW_QA_PASS = YES`;
+- enter W09 and finalize subtitle style/implementation without changing canonical timing.
 
-If user identifies a specific visual rhythm problem:
-modify only the affected W08B fragment(s); W02A remains locked unless the audio itself changes.
+If only picture rhythm needs changes:
+- modify W08B picture fragments only.
+
+If the user perceives subtitle timing mismatch:
+- first inspect the exact reported line against W02A ground-truth assets; do not manually nudge all subtitles or reopen unrelated picture work.
