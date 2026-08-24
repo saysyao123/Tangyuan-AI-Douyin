@@ -1,131 +1,143 @@
 # WEB R2｜CURRENT_STATE
 
-> WEB R2 唯一状态入口。只记录当前状态与权威资产指针；稳定方法论放在 `04_HARNESS/rules/`。
+> WEB R2 唯一状态入口。Round 已完成；稳定方法论已晋升到 `04_HARNESS/workflows|rules|templates/`，本文件只保留最终状态与资产指针。
 
 ## Current Status
 
 - ROUND: `WEB_R2`
 - MODE: `WEB_AUTOMATION_CALIBRATION`
-- STAGE: `W10 PASS / W11 CLOSE_PENDING`
-- STATE: `W02A_PASS / SHOT_LIBRARY_READY / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED`
+- STAGE: `W11 / CLOSED`
+- STATE: `COMPLETE_LOCKED`
 - BRANCH: `test/mv-web-r2`
-- UPDATED_AT: `2026-08-24 Asia/Manila`
+- CLOSED_AT: `2026-08-24 Asia/Manila`
+- USER_FINAL_ACCEPTANCE: `目前，我觉得这个已经OK了，可以进行一次收口`
 
-## Runtime authority
+## Runtime authority promoted from R2
 
-- Workflow: `04_HARNESS/workflows/mv.md` v1.6
-- Golden Runtime: `04_HARNESS/rules/mv_golden_runtime.md` v1.3
+- Workflow: `04_HARNESS/workflows/mv.md` v1.7
+- Golden Runtime: `04_HARNESS/rules/mv_golden_runtime.md` v1.4
 - Audio Timeline: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
+- Human Gates: `04_HARNESS/rules/mv_human_gates.md` v1.0
 - Editing Runtime: `04_HARNESS/rules/mv_editing.md` v1.1+
-- Subtitle Runtime: `04_HARNESS/rules/mv_subtitle.md` v1.0
 - Source Normalization: `04_HARNESS/rules/mv_source_normalization.md` v1.0
-- AI Video: `04_HARNESS/rules/ai_video.md` v1.3
+- Subtitle Runtime: `04_HARNESS/rules/mv_subtitle.md` v1.0
+- AI Video: `04_HARNESS/rules/ai_video.md` v1.3+
+- Zero-context next-round template: `04_HARNESS/templates/mv_zero_context_start_prompt.md` v1.0
 
-## Locked upstream truth
+## Final accepted identity
 
 - song: `如果你也刚好抬头看树` / 孙天宇
-- locked BGM: source `139.930s–177.050s`; content `37.120s`
-- BGM SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
-- `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
-- Director: `树影之外`
-- first frames: 9/9 accepted
-- dynamic sources: 2S1–2S9
-- `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT = YES`
-- `SHOT_LIBRARY_READY = YES`
-- `EDITOR_AUDIO_GATE_PASS = YES`
+- locked BGM source: `139.930s–177.050s`
+- locked BGM content: `37.120s`
+- locked BGM SHA-256: `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
+- final video: `如果你也刚好抬头看树_MV_WEB_R2_FINAL.mp4`
+- final SHA-256: `ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`
 
-Canonical timing package:
+## Locked production assets
+
+### Audio truth
 `06_TESTS/MV/WEB_R2/AUDIO_TIMELINE_PACKAGE/`
 
-## W07.5 Shot Library｜LOCKED
+State:
+`AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
 
-- 9 original ~5s files preserved;
-- 22 usable Atom/Arc units mapped;
-- duplicate/topology-risk/meaningless micro-shots excluded;
-- derived WEB proxies source-audio removed;
-- WEB batch transform: `crop=576:1024:72:128 -> scale=720:1280` (~`1.25×`).
+### Director / first frames / dynamic
+- Director concept: `树影之外`
+- first frames: `9/9 accepted`
+- dynamic sources: `2S1–2S9`
+- source QA: `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT = YES`
 
-Map:
+### Shot Library
 `06_TESTS/MV/WEB_R2/W07_5_NORMALIZED_SHOT_LIBRARY_MAP.csv`
 
-## W08B V3.2 Picture Edit｜LOCKED
+State:
+`SHOT_LIBRARY_READY = YES`
 
-Accepted Edit Map:
+R2 WEB fallback used consistent batch crop/zoom around `1.25×`; value is batch-specific, method is reusable.
+
+### Picture Edit
 `06_TESTS/MV/WEB_R2/W08B_V3_2_ATOMIC_ROUGH_EDIT_MAP.csv`
 
-Gate receipt:
-`06_TESTS/MV/WEB_R2/W08B_V3_2_PICTURE_GATE_PASS_RECEIPT.json`
-
 States:
+- `EDITOR_AUDIO_GATE_PASS = YES`
 - `EDIT_MAP_LOCKED = YES`
 - `EDIT_PREVIEW_QA_PASS = YES`
 
-## W09 Subtitle｜LOCKED
+Accepted basis:
+- Atom-first;
+- retain Arc only when it has Director value;
+- long-cut-first;
+- count perceptible visible shots, not external blocks only.
 
-User accepted the R1-derived screenshot-calibrated subtitle system and requested it become the stable default instead of restarting style exploration each project.
-
-Reusable runtime:
+### Subtitle
+Runtime:
 `04_HARNESS/rules/mv_subtitle.md`
 
 Lock receipt:
 `06_TESTS/MV/WEB_R2/W09_SUBTITLE_STYLE_LOCK_RECEIPT.json`
 
-720×1280 baseline:
-- `Noto Sans CJK SC Bold`, nominal `46px`;
-- near-white text + restrained dark outline;
-- lower center around `x=360 / y=1009`;
+Accepted 720×1280 baseline:
+- bold clean Chinese sans serif / nominal 46px family;
+- center around `360,1009`;
 - dark semi-transparent rounded box;
-- **10px padding on all four sides**;
+- four-side padding `10px`;
+- actual glyph bbox -> fresh box generation;
 - max 2 lines;
-- fade `100ms in / 180ms out`;
-- timing exclusively from canonical Audio Timeline Package.
-
-Hard implementation rule:
-- measure actual rendered glyph/text bbox for every line;
-- generate box fresh from that bbox + target padding;
-- never resize/inset a legacy rounded path;
-- QA every line: four-side padding target ±1px; text/box center error <=1px;
-- shortest line + longest one-line + two-line + first + final are mandatory sampled QA cases.
-
-W09 implementation result:
-- 10 lines checked;
-- max ASS-vs-canonical time delta `0.005s`;
-- all geometry `10/10/10/10px` PASS;
-- prior short-line defect `L05 好吧哎哟哎哟` PASS after bbox regeneration;
-- two-line L09 PASS.
+- fade `100ms / 180ms`;
+- all-line geometry QA required.
 
 States:
 - `SUBTITLE_STYLE_QA_PASS = YES`
 - `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
 
-## W10 Final QA｜PASS
-
+### Final QA
 Receipt:
 `06_TESTS/MV/WEB_R2/W10_FINAL_TECH_QA_RECEIPT.json`
 
-Final technical identity:
-- 720×1280 / H.264 / 24fps / 891 frames;
-- picture `37.125s`;
-- locked audio `37.120s`;
-- preview/final decoded audio vs locked BGM global lag `0.000000s`;
-- no detected black frames;
-- WEB top-left/bottom-right watermark-risk samples clear;
-- source metadata stripped by stream-copy final remux; no picture/audio retime introduced.
-
-Final file:
-`如果你也刚好抬头看树_MV_WEB_R2_FINAL.mp4`
-
-Final SHA-256:
-`ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`
+Result:
+- `720×1280 / 24fps / 891 frames`
+- picture `37.125s`
+- audio `37.120s`
+- audio global lag `0.000000s`
+- subtitle max implementation delta `0.005s`
+- blackdetect `0`
+- WEB sampled corner watermark-risk clear
 
 States:
 - `FINAL_TECH_QA_PASS = YES`
 - `DELIVERABLE_RENDERED = YES`
 
-## Next Allowed Action
+## Close assets
 
-W11 close:
-1. deliver final package to user;
-2. preserve accepted subtitle rule/gate as reusable runtime baseline;
-3. write final WEB R2 retrospective only if it adds new durable rules not already promoted;
-4. mark Round closed after final user acceptance.
+- Final retrospective + future SOP:
+  `06_TESTS/MV/WEB_R2/WEB_R2_FINAL_RETROSPECTIVE_AND_SOP_v1.md`
+- Close receipt:
+  `06_TESTS/MV/WEB_R2/W11_CLOSE_RECEIPT.json`
+
+## Final state chain
+
+`REFERENCE_BGM_LOCKED`
+→ `BGM_LOCKED`
+→ `AUDIO_TIMELINE_PACKAGE_LOCKED`
+→ `DIRECTOR_BEAT_MAP`
+→ `DIRECTOR_PLAN_LOCKED`
+→ `FIRST_FRAME_SET_LOCKED`
+→ `DYNAMIC_PROMPT_SET_READY`
+→ `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
+→ `SHOT_LIBRARY_READY`
+→ `EDITOR_AUDIO_GATE_PASS`
+→ `EDIT_MAP_LOCKED`
+→ `EDIT_PREVIEW_QA_PASS`
+→ `SUBTITLE_STYLE_QA_PASS`
+→ `SUBTITLE_IMPLEMENTATION_QA_PASS`
+→ `FINAL_TECH_QA_PASS`
+→ `DELIVERABLE_RENDERED`
+→ **`COMPLETE_LOCKED`**
+
+## Reopen policy
+
+WEB R2 is closed. Do not continue editing this Round by default.
+If a future regression needs R2 evidence, load only the specific receipt/artifact/rule required for diagnosis.
+New MV work should use:
+`04_HARNESS/templates/mv_zero_context_start_prompt.md`
+with a new Round state rather than reopening WEB R2.
