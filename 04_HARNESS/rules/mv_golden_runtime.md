@@ -1,8 +1,8 @@
-# Rules｜MV Golden Runtime Contract v1.4
+# Rules｜MV Golden Runtime Contract v1.5
 
 > Status: `PRODUCTION_VALIDATED / ACTIVE`
 > Purpose: 跨 Round 继承 correctness 与已验证生产纪律，不加载整轮历史。
-> Evidence base: R1 Golden + WEB R2 full close。
+> Evidence base: R1 Golden + WEB R2 full close + WEB R3 Douyin asset discovery validation。
 
 ---
 
@@ -11,9 +11,10 @@
 每次 MV 默认加载：
 1. `workflows/mv.md`
 2. `rules/mv_golden_runtime.md`
-3. `rules/mv_audio_timeline.md`
-4. current Round `CURRENT_STATE.md`
-5. stage-specific Rules JIT。
+3. `rules/mv_bgm_discovery.md`
+4. `rules/mv_audio_timeline.md`
+5. current Round `CURRENT_STATE.md`
+6. stage-specific Rules JIT。
 
 Round Master Plan / retrospective 只做 summary / provenance，不能覆盖 Workflow/Rule。
 
@@ -37,6 +38,37 @@ WEB R2 已晋升的典型：
 - 视觉时间线少段但实际镜头仍碎 → `Shot Normalization + visible-shot Fragmentation Gate`；
 - 字幕框偏心 → glyph bbox fresh-box algorithm + all-line geometry QA；
 - WEB 水印反复漏角 → batch uniform crop/zoom + corner-risk QA。
+
+WEB R3 新增晋升：
+- 同歌名无法保证同录音版本 → `mv_bgm_discovery.md`；
+- BGM 原曲默认先反查真实抖音 `music asset`，多作品 asset id + decoded audio fingerprint 建立版本证据；
+- 公开完整版搜索降为 fallback，若需要扩展时必须以已验证 Douyin asset 为锚点做声学对齐。
+
+---
+
+## 2A. Douyin-first BGM discovery｜HARD PRIORITY
+
+权威：`rules/mv_bgm_discovery.md`。
+
+固定优先级：
+`Verified Douyin music asset`
+→ `Douyin-asset-anchored full-track discovery`
+→ `generic public full-track discovery`
+→ `other recovery routes`。
+
+默认不得一上来按歌名寻找完整 MP3。
+
+Strong trend-native evidence 优先包含：
+- 多个真实 aweme 样本；
+- 相同 music asset id / metadata；
+- 实际解码音频 fingerprint 高一致；
+- alignment shift 可解释；
+- provenance receipt。
+
+用户只需要短趋势版时，优先提交最长、最完整的同 asset 实际使用片段做 HG02。
+用户需要更长版本时，先锁 asset，再与完整发行版对齐后扩展。
+
+“抖音正在使用/平台原生可用”是版本与平台使用证据，不等同跨平台版权法律保证。
 
 ---
 
