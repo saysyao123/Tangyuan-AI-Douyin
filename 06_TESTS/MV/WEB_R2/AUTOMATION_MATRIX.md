@@ -1,87 +1,123 @@
-# WEB R2｜AUTOMATION MATRIX
+# WEB R2｜AUTOMATION MATRIX｜CLOSED
 
-> 只记录自动化/人工 Gate 状态；方法论细节放在 rules 文件。
+> Round final status. 只记录自动化/人工边界与最终 Gate；方法论由 `04_HARNESS/workflows|rules/` 负责。
 
 ## Overall
 
-- Current Stage: `W10 PASS / W11 CLOSE_PENDING`
-- Overall State: `W02A_PASS / W07_PASS / SHOT_LIBRARY_READY / EDITOR_AUDIO_GATE_PASS / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED`
-- Audio timeline hard gate: `PASS`
-- Source normalization layer: `PASS / PROMOTED`
-- Picture edit human gate: `PASS`
-- Subtitle style: `PASS / LOCKED`
-- Subtitle implementation: `PASS`
+- Round Status: `COMPLETE_LOCKED`
+- User Final Acceptance: `PASS`
+- Audio timeline hard gate: `PASS / PROMOTED`
+- Source normalization: `PASS / PROMOTED`
+- Picture edit: `PASS / V3.2 LOCKED`
+- Subtitle baseline: `PASS / LOCKED`
+- Subtitle implementation QA: `PASS / PROMOTED`
 - Final technical QA: `PASS`
 
-## Stage Board
+## Final Stage Board
 
-| Stage | 内容 | 实际状态 | 备注 |
+| Stage | 内容 | 自动化边界 | 最终状态 |
 |---|---|---|---|
-| W00 | 能力基线 | PASS | |
-| W01 | 选歌 | HUMAN PASS | |
-| W02 | BGM截取 | LOCKED | 37.120s + SHA |
-| W02A | Audio Timeline Package | PASS / LOCKED | Director/Edit/Subtitle 唯一时间真源 |
-| W03 | Natural Beat | PASS | canonical Package |
-| W04 | Director | PASS | `树影之外` |
-| W05 | 首帧 | PASS | 9/9 |
-| W06 | 动态提示词 | PASS | 1–3镜混合素材 |
-| W06-X | Seedance生成 | COMPLETE | 2S1–2S9 |
-| W07 | Dynamic Source QA | PASS WITH TRIM | 风险窗已识别 |
-| W07.5 | Shot Normalization | PASS / SHOT_LIBRARY_READY | 22 Atom/Arc；原片保留；WEB统一1.25×安全裁切 |
-| W08A | Editor Audio Gate | PASS | locked BGM + Package revalidated |
-| W08B | Picture Edit | PASS / V3.2 LOCKED | Atom-first；用户确认 |
-| **W09** | **Subtitle** | **PASS / LOCKED** | R1-derived screenshot-calibrated baseline；padding10；bbox geometry gate |
-| **W10** | **Final QA** | **PASS** | 0 audio lag；no black frames；watermark-risk sample clear |
-| W11 | Close | HUMAN FINAL ACCEPTANCE PENDING | final package rendered |
+| W00 | Bootstrap | AUTO | PASS |
+| W01 | Song Discovery | AUTO shortlist + HUMAN taste | `REFERENCE_BGM_LOCKED` |
+| W02 | Exact BGM Clip | AUTO analysis/render + HUMAN listening | `BGM_LOCKED` |
+| W02A | Audio Timeline Package | AUTO strong-evidence pipeline; conditional exception only | PASS / LOCKED |
+| W03 | Natural Beat | AUTO | PASS |
+| W04 | Director Allocation | AUTO | PASS |
+| W05 | First Frames | AUTO generation/QA + HUMAN visual set gate | 9/9 PASS |
+| W06 | Dynamic Prompt | AUTO design；external generation handoff | PASS |
+| W06-X | Seedance generation | EXTERNAL USER/CAPABILITY | COMPLETE |
+| W07 | Dynamic Source QA | AUTO | PASS WITH TRIM |
+| W07.5 | Atom/Arc Normalization | AUTO | `SHOT_LIBRARY_READY` |
+| W08A | Editor Audio Gate | AUTO | PASS |
+| W08B | Picture Edit | AUTO edit/tech QA + HUMAN rhythm gate | V3.2 PASS / LOCKED |
+| W09 | Subtitle | AUTO baseline/render/geometry/timing QA | PASS / LOCKED |
+| W10 | Final QA | AUTO technical/full-watch/package + HUMAN final acceptance | PASS |
+| W11 | Close | AUTO after final acceptance | `COMPLETE_LOCKED` |
 
-## Locked subtitle baseline
+---
 
-Receipt:
-`W09_SUBTITLE_STYLE_LOCK_RECEIPT.json`
+## Fixed Human Gates｜future default
 
-At 720×1280:
-- bold Chinese sans serif, nominal 46px;
-- near-white text;
-- center around `360,1009`;
-- dark semi-transparent rounded box;
-- four-side padding `10px`;
-- max 2 lines;
-- fade `100ms / 180ms`;
-- actual rendered glyph bbox -> fresh box generation;
-- no legacy rounded-path inset/scale;
-- geometry auto QA: each side target ±1px and center error <=1px;
-- mandatory short-line and two-line samples.
+Reusable authority:
+`04_HARNESS/rules/mv_human_gates.md`
 
-## W10 result
+Normal project target = **5 human confirmations**:
 
-Receipt:
-`W10_FINAL_TECH_QA_RECEIPT.json`
+1. `HG01 Song Aesthetic Gate`
+2. `HG02 BGM Excerpt Listening Gate`
+3. `HG03 Visual Direction / First-frame Set Gate`
+4. `HG04 Picture Edit Rhythm Gate`
+5. `HG05 Final Acceptance Gate`
+
+Conditional only:
+- `CHG-A Audio Alignment Exception`
+- `CHG-B Dynamic Regeneration Decision`
+- `CHG-C New Subtitle Style`
+
+If a normal MV repeatedly needs more than 5 human confirmations, review which technical Gate is missing or late.
+
+---
+
+## Stable AUTO responsibilities after R2
+
+System should complete before asking user:
+- BGM boundary contamination/incomplete-line checks；
+- audio hash/version identity；
+- strong Audio Timeline evidence/provenance/package gate；
+- repeated-occurrence/timing QA；
+- Director Beat/Allocation；
+- set-level first-frame QA；
+- dynamic source risk/clean-window mapping；
+- source-audio strip；
+- internal-cut mapping + Atom/Arc library；
+- WEB batch watermark-safe normalization；
+- Editor Audio Gate；
+- three-clock Edit Map；
+- Fragmentation Gate using external + visible-shot counts；
+- audio global-lag check；
+- locked subtitle baseline render；
+- all-line glyph bbox / 10px geometry QA；
+- subtitle timing implementation QA；
+- final black/SAR/fps/audio/subtitle/package QA。
+
+Users should no longer be the first detector of these implementation defects.
+
+---
+
+## Locked final identity
+
+Song: `如果你也刚好抬头看树` / 孙天宇
+
+BGM:
+- source `139.930–177.050s`
+- content `37.120s`
+- SHA `bc41422b91588b5d62ad37ce37545bdf1b1b0ef0857a6731d6ceb9748b1fab33`
 
 Final:
-- 720×1280 / 24fps / 891 frames;
-- picture 37.125s;
-- audio 37.120s;
-- global lag vs locked BGM `0.000000s`;
-- subtitle max implementation delta `0.005s`;
-- blackdetect events `0`;
-- sampled top-left / bottom-right WEB watermark zones clear;
-- final SHA `ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`.
+- `720×1280 / 24fps / 891 frames`
+- picture `37.125s`
+- audio `37.120s`
+- global lag `0.000000s`
+- subtitle max implementation delta `0.005s`
+- blackdetect `0`
+- SHA `ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`
 
-## Current states
+---
 
-- `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
-- `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT = YES`
-- `SHOT_LIBRARY_READY = YES`
-- `EDITOR_AUDIO_GATE_PASS = YES`
-- `EDIT_MAP_LOCKED = YES`
-- `EDIT_PREVIEW_QA_PASS = YES`
-- `SUBTITLE_STYLE_QA_PASS = YES`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
-- `FINAL_TECH_QA_PASS = YES`
-- `DELIVERABLE_RENDERED = YES`
+## Reusable promoted files
 
-## Next
+- `04_HARNESS/workflows/mv.md` v1.7
+- `04_HARNESS/rules/mv_golden_runtime.md` v1.4
+- `04_HARNESS/rules/mv_audio_timeline.md`
+- `04_HARNESS/rules/mv_human_gates.md`
+- `04_HARNESS/rules/mv_editing.md`
+- `04_HARNESS/rules/mv_source_normalization.md`
+- `04_HARNESS/rules/mv_subtitle.md`
+- `04_HARNESS/rules/ai_video.md`
+- `04_HARNESS/templates/mv_zero_context_start_prompt.md`
 
-W11 Close only:
-- user final acceptance;
-- close Round and preserve final reproducible assets / receipts / rules.
+Round retrospective:
+`06_TESTS/MV/WEB_R2/WEB_R2_FINAL_RETROSPECTIVE_AND_SOP_v1.md`
+
+Close receipt:
+`06_TESTS/MV/WEB_R2/W11_CLOSE_RECEIPT.json`
