@@ -13,7 +13,7 @@
 
 ## Runtime authority
 
-- Workflow: `04_HARNESS/workflows/mv.md` v1.4
+- Workflow: `04_HARNESS/workflows/mv.md` v1.5
 - Golden Runtime: `04_HARNESS/rules/mv_golden_runtime.md` v1.3
 - Audio Timeline: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
 - Editing Runtime: `04_HARNESS/rules/mv_editing.md` v1.0
