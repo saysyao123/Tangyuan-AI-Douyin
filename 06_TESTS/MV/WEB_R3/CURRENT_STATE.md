@@ -6,100 +6,97 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / DIRECT_DOUYIN_EVIDENCE_REPACK`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_PASS / RADAR_SHORTLIST_EXISTS / HG01_NOT_READY / DIRECT_DOUYIN_EVIDENCE_PACK_REQUIRED`
+- STAGE: `R3-A3 / CORE_ACCOUNT_15D_PATH_VALIDATION`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_RADAR_METHOD_PASS / OLD_SHORTLIST_DOWNGRADED / CORE_ACCOUNT_IDENTITIES_LOCKED / CORE_PROFILE_URLS_REQUIRED / CORE_15D_WORK_ENUMERATION_BLOCKED / HG01_NOT_READY`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Why A3 was reopened
+## Why A3 was corrected again
 
-用户指出首轮 HG01 交付逻辑有缺陷：
-- shortlist 声称来自趋势/Benchmark 分析；
-- 但用户没有拿到“对应账号 → 对应抖音作品 → 可直接点开看/听”的决策材料；
-- 外部平台试听链接不能替代抖音作品证据；
-- 搜不到某核心账号作品也不能推断“抖音没有这首歌”。
+用户明确收紧 R3 选歌验证逻辑：
 
-因此：
-- A2 Radar 分类逻辑保留；
-- `R3_MUSIC_SHORTLIST_v1.md` 降级为 Radar candidates；
-- 原 `READY FOR HG01` 状态撤回；
-- 新增 `R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md`；
-- HG01 只有在 direct Douyin evidence pack 完成后才能重新开启。
+> 最终验证必须优先落在用户亲自提供的核心账号中。先检查这些核心账号近15天作品，直接比较重复歌曲，并把对应核心账号的具体抖音视频交付给用户确认；外围音推账号只作补充。
 
-## R2 frozen baseline
+因此旧逻辑：
+`public trend radar -> candidate -> later try core evidence`
+被替换为：
+`user core accounts -> 15d works -> direct work links -> song repeat -> candidate -> supplemental evidence`。
 
-Do not retest unless regression evidence appears:
-- `AUDIO_TIMELINE_PACKAGE` after BGM lock；
-- strong-evidence lyric timing；
-- 1–3 shot raw source logic；
-- W07 source QA；
-- W07.5 Atom/Arc normalization；
-- long-cut-first Picture Edit；
-- visible-shot Fragmentation Gate；
-- R1/WEB R2 locked subtitle baseline；
-- 5 fixed Human Gates；
-- Patch, Don't Cascade。
+Authority for current R3-A:
+`R3_CORE_ACCOUNT_15D_PROTOCOL_v1.md`
 
-## R3-A1｜PASS
+## User-seeded core accounts｜IDENTITY LOCKED
 
-Registry:
-`R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
+| Account | Douyin ID from screenshot | R3 role |
+|---|---|---|
+| 泡泡与茶 | `paopaoandtea` | music/cover/revival core |
+| 火乐乐 | `HaoShuo2` | music-push/OST core |
+| 乐丨青春 | `87136360039` | music+MV/edit core |
+| XIANGJISHI | `153552032` | scenery music-push core |
+| Aura | `Auraaa0131` | scenery/music immersion core |
+| 黑米与糖豆 | `48003855484` | new-song/original/packaging core |
+| 佩佩治愈Ai | `25927051780` | visual core; music auxiliary |
+| 爱的魔力小姐姐 | `326111404` | mixed auxiliary core |
 
-## R3-A2｜PASS
+`CORE_ACCOUNT_IDENTITIES_LOCKED = YES`
 
-Radar:
-`R3_MUSIC_RADAR_WEEK_01.csv`
+## Required 15-day window
 
-A2 proved the Radar can distinguish:
-- EARLY_RISE
-- CONFIRMED
-- CLASSIC_REVIVAL
-- OVERHEATED
+- start: `2026-08-10`
+- end: `2026-08-24`
 
-and can penalize saturation / format mismatch / audio-version ambiguity.
+Target deliverable per core account:
+- exact recent works；
+- direct Douyin/Douyin精选 work URL；
+- publish date/time；
+- caption/title；
+- displayed song/audio；
+- normalized SONG_FAMILY；
+- AUDIO_VERSION when known；
+- visible performance / visual format / packaging observations。
 
-## R3-A3｜EVIDENCE REPACK
+## Current retrieval limitation｜BLOCKED, NOT GUESSED
 
-Radar candidate priority remains:
-1. 雨后轻风有香
-2. 循迹
-3. 甲乙丙丁
-4. 我不难过
-5. 琵琶曲（东船与西舫）
+User provided profile screenshots, which are sufficient to identify nickname + Douyin ID, but screenshots do not contain canonical profile/share URLs (`/user/<sec_uid>`).
 
-But this ranking is **not yet a user decision packet**.
+Current public web indexing does not reliably surface these exact accounts by Douyin ID/name, so it cannot truthfully enumerate the full recent 15-day work list from screenshots alone.
 
-Required before HG01:
-- `DIRECT_DOUYIN_EVIDENCE_PACK_READY = YES`
-- each HG01 candidate has >=2 direct recent Douyin/Douyin精选 work links from >=2 accounts；
-- each link labels account / date / duration / Tier A or Tier B；
-- core benchmark account coverage explicitly reported；
-- missing core-account indexing marked UNKNOWN/INDEX_PENDING, never 0；
-- no Weibo/other external audio link used as substitute for Douyin viewing evidence。
+Correct state:
+- `CORE_PROFILE_URLS_READY = NO`
+- `CORE_15D_WORK_ENUMERATION = BLOCKED`
+- `PUBLIC_INDEX_MISSING != NO_POSTS`
 
-Contract:
-`R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md`
+Minimal unblock input:
+user provides each core account's **Share profile / Copy link** once. User does **not** need to manually send individual videos.
 
-## Current allowed work
+After profile links are supplied, target execution is:
+1. open/resolve each exact core profile；
+2. enumerate works from 2026-08-10 to 2026-08-24；
+3. collect direct work links；
+4. normalize SONG_FAMILY；
+5. compute core cross-account repeats；
+6. build clickable Core Douyin Evidence Pack；
+7. only then set `HG01_READY = YES`。
 
-Allowed:
-- retrieve direct Douyin works for top candidates；
-- prioritize user-seeded Benchmark accounts；
-- where core accounts cannot be publicly indexed, say so and use supplemental Douyin evidence only with lower confidence；
-- build a clickable HG01 decision packet。
+## Old A2/A3 artifacts
 
-Not allowed:
-- ask user to choose before the direct evidence pack is usable；
-- lock SONG_FAMILY；
-- enter BGM Stage 2/B0；
-- start visual R3-B1/B2；
-- modify R2 correctness runtime。
+Previous external/public radar remains useful as supplemental research only:
+- `R3_MUSIC_RADAR_WEEK_01.csv`
+- `R3_A2_FIRST_SWEEP_REPORT_v1.md`
+- `R3_A2_SECOND_SWEEP_REPORT_v1.md`
+- `R3_MUSIC_SHORTLIST_v1.md`
+
+They must **not** be used as the primary HG01 decision packet until the core-account path is complete.
+
+## Not allowed now
+
+- no HG01 song choice from old shortlist；
+- no BGM lock；
+- no R3-B visual work；
+- no further expansion of peripheral trend accounts as the main task；
+- no assumption that missing public index means a core account did not use a song。
 
 ## Next Gate
 
-Finish `DIRECT DOUYIN EVIDENCE PACK`.
+Unblock `CORE_PROFILE_URLS_READY`.
 
-Then:
-`HG01_READY = YES`
-→ user directly views/listens to Douyin works
-→ selects SONG_FAMILY
-→ enter R3-B0 exact AUDIO_VERSION + BGM excerpt + HG02.
+Then execute the 15-day core-account comparison and return only direct core-account Douyin evidence to user first.
