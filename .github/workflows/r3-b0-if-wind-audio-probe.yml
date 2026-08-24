@@ -7,6 +7,13 @@ on:
     paths:
       - '06_TESTS/MV/WEB_R3/tools/b0_probe_if_wind_audio.py'
       - '.github/workflows/r3-b0-if-wind-audio-probe.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/tools/b0_probe_if_wind_audio.py'
+      - '06_TESTS/MV/WEB_R3/b0_audio_probe_trigger.txt'
+      - '.github/workflows/r3-b0-if-wind-audio-probe.yml'
   workflow_dispatch:
 
 permissions:
@@ -18,8 +25,6 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: test/mv-web-r3
 
       - uses: actions/setup-python@v5
         with:
@@ -34,7 +39,8 @@ jobs:
       - name: Probe three core Douyin works
         run: python 06_TESTS/MV/WEB_R3/tools/b0_probe_if_wind_audio.py
 
-      - name: Persist probe report
+      - name: Persist probe report on canonical branch
+        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
