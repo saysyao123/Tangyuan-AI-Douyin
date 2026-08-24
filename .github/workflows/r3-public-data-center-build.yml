@@ -7,6 +7,8 @@ on:
     paths:
       - '06_TESTS/MV/WEB_R3/tools/run_public_observed_30d.py'
       - '06_TESTS/MV/WEB_R3/database/build_public_data_center.py'
+      - '06_TESTS/MV/WEB_R3/database/query_data_center.py'
+      - '06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_RUNTIME_CONTRACT_v1.md'
       - '06_TESTS/MV/WEB_R3/data_center_build_trigger.txt'
       - '.github/workflows/r3-public-data-center-build.yml'
   pull_request:
@@ -15,6 +17,8 @@ on:
     paths:
       - '06_TESTS/MV/WEB_R3/tools/run_public_observed_30d.py'
       - '06_TESTS/MV/WEB_R3/database/build_public_data_center.py'
+      - '06_TESTS/MV/WEB_R3/database/query_data_center.py'
+      - '06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_RUNTIME_CONTRACT_v1.md'
       - '06_TESTS/MV/WEB_R3/data_center_build_trigger.txt'
       - '.github/workflows/r3-public-data-center-build.yml'
   workflow_dispatch:
@@ -42,20 +46,9 @@ jobs:
       - name: Validate generated data center
         shell: bash
         run: |
-          python - <<'PY'
-          import csv, json, pathlib
-          p=pathlib.Path('06_TESTS/MV/WEB_R3/database/data_center')
-          m=json.loads((p/'manifest.json').read_text(encoding='utf-8'))
-          works=list(csv.DictReader((p/'observed_works.csv').open(encoding='utf-8-sig')))
-          ids=[x['aweme_id'] for x in works]
-          assert m['locked_core_accounts']==9, m
-          assert len(works)>0, m
-          assert len(ids)==len(set(ids)), 'duplicate aweme_id in observed_works.csv'
-          assert all(x['work_url'].startswith('http') for x in works), 'invalid work URL'
-          assert (p/'song_normalization.csv').exists()
-          assert (p/'direct_douyin_evidence.json').exists()
-          print(json.dumps(m, ensure_ascii=False, indent=2))
-          PY
+          python 06_TESTS/MV/WEB_R3/database/query_data_center.py --json health
+          python 06_TESTS/MV/WEB_R3/database/query_data_center.py --json status
+          python 06_TESTS/MV/WEB_R3/database/query_data_center.py --json repeats --limit 3
       - name: Persist canonical data center on R3 branch
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         shell: bash
