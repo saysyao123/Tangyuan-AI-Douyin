@@ -1,0 +1,32 @@
+{
+  "primary_route": "SAME_VERSION_LRC",
+  "primary_source": {
+    "site": "悦听音乐网 / 170歌词下载网",
+    "song_title": "如果风会替我说话",
+    "artist": "张蓓蓓&林叙",
+    "album": "如果风会替我说话",
+    "source_update": "2026-08-15 20:04:19",
+    "timestamp_precision": "integer-second line starts",
+    "first_occurrence_used": true
+  },
+  "production_audio_identity": {
+    "douyin_music_asset_id": "7670880580757867270",
+    "sha256": "f128163c62f16eb94e5e302d2f97f725bcaa775a457fc09ffd21b9c4f65a8553",
+    "hg02": "PASS"
+  },
+  "version_evidence": [
+    "three independent Douyin works expose the same asset id",
+    "pairwise Chromaprint similarity >= 0.986020 with shift=0",
+    "public full-release identity matches title/artist family",
+    "locked trend-native clip begins with the first hook occurrence"
+  ],
+  "supporting_checks": [
+    "RMS/local-boundary structure around source LRC line transitions",
+    "onset map used only for music-event support",
+    "decoded tail reaches near-silence around 24.277s"
+  ],
+  "known_limitations": [
+    "source LRC line starts are integer-second precision",
+    "word-level anchors are semantic windows, not forced-alignment word timestamps"
+  ]
+}
