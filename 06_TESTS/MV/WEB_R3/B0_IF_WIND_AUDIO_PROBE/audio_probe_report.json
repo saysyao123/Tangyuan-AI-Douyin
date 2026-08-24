@@ -1,0 +1,161 @@
+{
+  "summary": {
+    "song_family": "如果风会替我说话",
+    "targets": 3,
+    "all_detail_parse_pass": true,
+    "pairwise_min_similarity": 0.98602,
+    "same_audio_family": true,
+    "decision": "SAME_AUDIO_FAMILY_CONFIRMED"
+  },
+  "works": [
+    {
+      "account": "火乐烁",
+      "aweme_id": "7674213606980010597",
+      "work_url": "https://www.douyin.com/video/7674213606980010597",
+      "detail_msg": "解析成功-esa",
+      "detail_type": "video",
+      "detail_title": "#歌曲如果风会替我说话#如果风会替我说话林叙 重要的事情说三遍！带耳机听！带耳机听！带耳机听！#氛围感 #emo #火乐烁",
+      "author": {
+        "name": "火乐烁",
+        "id": "4065329307451802",
+        "avatar": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_a1ca954bff3c0006a6034da2df0bee8b.jpeg?from=327834062"
+      },
+      "music": {
+        "title": "@林叙（错位秋天已上线）创作的原声",
+        "author": "林叙（错位秋天已上线）",
+        "url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7670880580757867270.mp3",
+        "cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_940a9c721a7e690e781d966fc32605d7.jpeg?from=327834062"
+      },
+      "bytes": 67363083,
+      "ffprobe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "hevc",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "24.286621"
+        }
+      },
+      "fp_duration": 24.0,
+      "fingerprint_length": 175
+    },
+    {
+      "account": "XIANGJISHI",
+      "aweme_id": "7674182530162440933",
+      "work_url": "https://www.douyin.com/video/7674182530162440933",
+      "detail_msg": "解析成功-esa",
+      "detail_type": "video",
+      "detail_title": "“如果风会替我说话 如果雨会替我回答…” #歌曲如果风会替我说话  #如果风会替我说话林叙  #星空  #银河  #星轨",
+      "author": {
+        "name": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "id": "63423113705",
+        "avatar": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813c000-ce_oUzgI8GUEDAAytAQA8FpJ7UADB7gDEFfQPfTfE.jpeg?from=327834062"
+      },
+      "music": {
+        "title": "@林叙（错位秋天已上线）创作的原声",
+        "author": "林叙（错位秋天已上线）",
+        "url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7670880580757867270.mp3",
+        "cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_940a9c721a7e690e781d966fc32605d7.jpeg?from=327834062"
+      },
+      "bytes": 15036830,
+      "ffprobe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "hevc",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "11.900667"
+        }
+      },
+      "fp_duration": 11.0,
+      "fingerprint_length": 75
+    },
+    {
+      "account": "乐 ♩青春",
+      "aweme_id": "7673915982527960265",
+      "work_url": "https://www.douyin.com/video/7673915982527960265",
+      "detail_msg": "解析成功-esa",
+      "detail_type": "video",
+      "detail_title": "如果风会替我说话 万般心底话，风代为诉说，雨代为应答。#音乐推荐 #如果风会替我说话 #自由风氛围感 #风和自由  #旅行推荐官",
+      "author": {
+        "name": "乐 ♩青春",
+        "id": 1029578227458845,
+        "avatar": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813_oA85zNHNAh5CIhHZWAygfCGMEYegAA0GDAqARB.jpeg?from=327834062"
+      },
+      "music": {
+        "title": "@林叙（错位秋天已上线）创作的原声",
+        "author": "林叙（错位秋天已上线）",
+        "url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7670880580757867270.mp3",
+        "cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_940a9c721a7e690e781d966fc32605d7.jpeg?from=327834062"
+      },
+      "bytes": 7500936,
+      "ffprobe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "hevc",
+            "codec_type": "video"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "12.073991"
+        }
+      },
+      "fp_duration": 12.0,
+      "fingerprint_length": 76
+    }
+  ],
+  "pairwise": [
+    {
+      "a_account": "火乐烁",
+      "a_aweme_id": "7674213606980010597",
+      "b_account": "XIANGJISHI",
+      "b_aweme_id": "7674182530162440933",
+      "score": 0.994583,
+      "shift": 0,
+      "overlap": 75
+    },
+    {
+      "a_account": "火乐烁",
+      "a_aweme_id": "7674213606980010597",
+      "b_account": "乐 ♩青春",
+      "b_aweme_id": "7673915982527960265",
+      "score": 0.98602,
+      "shift": 0,
+      "overlap": 76
+    },
+    {
+      "a_account": "XIANGJISHI",
+      "a_aweme_id": "7674182530162440933",
+      "b_account": "乐 ♩青春",
+      "b_aweme_id": "7673915982527960265",
+      "score": 0.98625,
+      "shift": 0,
+      "overlap": 75
+    }
+  ]
+}
