@@ -6,93 +6,130 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / NINE_ACCOUNT_DATABASE + COMPLETENESS`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / DOUYIN_DATA_PATH_PASS / DATABASE_BOOTSTRAP_PASS / SQLITE_VALIDATION_PASS / 7_OF_9_15D_COMPLETE / AURA_PAGINATION_PENDING / XIANGJISHI_PAGINATION_PENDING / SONG_NORMALIZATION_PENDING / HG01_NOT_READY`
+- STAGE: `R3-A3 / PUBLIC_OBSERVED_30D`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / PUBLIC_DATA_PATH_PASS / HISTORICAL_OBSERVATION_MODE_LOCKED / 30D_POSITIVE_EVIDENCE_ONLY / BIWEEKLY_REFRESH / SONG_NORMALIZATION_NEXT / HG01_NOT_READY`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Current authority
+## Current R3 strategy｜SIMPLIFIED
 
-Primary R3-A authority is now:
-`R3_DOUYIN_DATABASE_PROTOCOL_v1.md`
+R3 no longer requires real-time/latest-edge completeness before the first song test.
 
-Database source of truth:
-`06_TESTS/MV/WEB_R3/database/`
+Current test path:
 
-The old public-search shortlist remains supplemental only and cannot bypass the database path.
+`9 CORE ACCOUNTS -> PUBLIC OBSERVED SNAPSHOT -> 30-DAY HISTORICAL WINDOW -> WORK-LEVEL SONG_FAMILY -> CROSS-ACCOUNT POSITIVE REPEAT -> DIRECT DOUYIN WORK EVIDENCE -> HG01`
 
-## Nine-account R3 test scope｜LOCKED FOR THIS ROUND
+The goal of R3-A is now to prove that a stable public historical sample is sufficient to select a useful song and complete one full MV loop.
 
-This calibration round uses exactly 9 unique Douyin accounts. Do not expand the sample pool before the first complete database -> normalization -> analysis -> HG01 loop is finished.
+Authenticated F2 / jiji / TikHub remain future upgrade paths and are **not** prerequisites for the first R3 loop.
 
-Current identities are stored in `database/accounts.csv` with `sec_uid` as the stable external key and `aweme_id` as the work key.
+## Nine-account R3 test scope｜LOCKED
 
-The ninth account, `Lynne小凌`, is currently `R3_TEST_SUPPLEMENT`; its permanent role/weight is deliberately left for post-test calibration.
+Exactly 9 unique Douyin accounts are used for this calibration round.
+Do not expand the core pool before the first observed-data -> song -> MV -> publish loop is complete.
 
-## Database bootstrap result｜PASS
+Stable identity:
+- account key: `sec_uid`;
+- work key: `aweme_id`;
+- nickname is mutable.
 
-Automated bootstrap run at `2026-08-24 17:05 +08:00` produced:
+## Historical Observation Mode｜LOCKED FOR R3 TEST
+
+### Anchor
+
+Use the latest reliably observed work timestamp from the current public collection as the analysis anchor.
+
+### Window
+
+Create a rolling 30-day historical observation window ending at the anchor day.
+
+Example when anchor day is `2026-08-17`:
+- window start: approximately `2026-07-19 00:00:00`;
+- window end exclusive: `2026-08-18 00:00:00`.
+
+### Evidence semantics
+
+This mode uses **positive evidence only**.
+
+Allowed inference:
+- if the same normalized SONG_FAMILY is directly observed in 2/3/4 independent core accounts, that cross-account repeat is valid evidence.
+
+Forbidden inference:
+- a work not observed does NOT mean the account did not publish it;
+- a song not seen on an account does NOT count as a negative signal;
+- partial public pagination must not be converted into zero.
+
+Therefore missing high-frequency historical pages reduce recall, but they do not invalidate a positive repeated-song signal.
+
+## Refresh cadence｜15 DAYS
+
+For the first R3 operating model:
+- refresh the 9-account public snapshot every ~15 days;
+- merge by `aweme_id` instead of replacing history;
+- keep the latest observed anchor of every snapshot;
+- accumulate historical works over time;
+- after multiple refreshes, dependence on deep historical pagination naturally decreases.
+
+Real-time monitoring is explicitly out of scope for the first R3 loop.
+
+## Existing database result｜SEED DATA
+
+The first public bootstrap produced:
 - 9 unique accounts;
-- 89 real works in the current 15-day window;
-- 89 engagement snapshots;
-- 9 ingestion-run records;
-- generated SQLite validation: `foreign_key_check = PASS`;
-- `song_normalization` intentionally empty pending the next stage.
+- 89 real work rows in the previously requested 15-day slice;
+- work URLs, captions, raw music metadata, hashtags and interaction snapshots;
+- SQLite foreign-key validation PASS.
 
-Canonical files:
-- `database/accounts.csv`
-- `database/works.csv`
-- `database/work_metrics.csv`
-- `database/ingestion_runs.csv`
-- `database/song_normalization.csv`
-- `database/manifest.json`
-- `database/schema.sql`
-- `database/build_sqlite.py`
+These rows remain valid seed observations, but prior `7/9 COMPLETE` labels are no longer used as a prerequisite for HG01 in Historical Observation Mode.
 
-## 15-day completeness｜PARTIAL, EXPLICIT
+## Current public capability boundary
 
-Requested test window:
-- start: `2026-08-10 00:00:00`
-- end exclusive: `2026-08-25 00:00:00`
+Reliable now:
+- shared profile URL -> `sec_uid`;
+- core account identity;
+- public first-page work observations;
+- `aweme_id` + publish time + caption + hashtags;
+- raw music title/author;
+- direct Douyin work URL;
+- engagement snapshot;
+- known-work single-video parsing;
+- on-demand MP4 resolution/download.
 
-Current closure:
-- 7/9 accounts = `COMPLETE`;
-- Aura = `INCOMPLETE / EMPTY_PAGE_WITH_HAS_MORE`;
-- XIANGJISHI = `INCOMPLETE / EMPTY_PAGE_WITH_HAS_MORE`.
+Not required for this R3 loop:
+- latest-minute freshness;
+- complete deep pagination for every high-frequency account;
+- full account history;
+- authenticated Douyin session.
 
-This does **not** mean Aura / XIANGJISHI have no earlier works. Their page-1 data is real, but public pagination did not close the requested window.
+## New collection artifact
 
-Correct rollback/fallback path:
-`PUBLIC_FAST -> SELF_HOST(cookie) -> SESSION_FALLBACK(jiji/browser)`.
+Historical observed collector:
+`tools/run_public_observed_30d.py`
 
-## Data rules now locked for R3
+Expected snapshot output:
+`database/public_observed_30d/`
 
-- nickname is mutable and never a join key;
-- `sec_uid` identifies account;
-- `aweme_id` identifies work;
-- signed CDN video/music URLs are not canonical DB fields;
-- engagement is stored as time-series snapshots;
-- incomplete retrieval never silently becomes zero;
-- trend calculations must use normalized `SONG_FAMILY`;
-- actual MV production later locks exact `AUDIO_VERSION`.
+Semantics:
+`PUBLIC_OBSERVED_30D / POSITIVE_EVIDENCE_ONLY`.
 
 ## Next execution order
 
-1. Close Aura + XIANGJISHI 15-day pagination with fallback collector paths.
-2. Populate `song_normalization.csv` from the 89+ work rows.
-3. Compute database-only analysis:
-   - `distinct_account_repeat_15d`;
-   - `distinct_account_repeat_7d`;
-   - `music_radar_weighted_repeat`;
-   - `visual_account_repeat`;
-   - `72h_concentration`;
-   - `audio_version_consistency`.
-4. Build direct Douyin work Evidence Pack for strongest candidates.
-5. Only then set `HG01_READY = YES` and ask user to choose the R3 song.
+1. Build the first 30-day observed public snapshot from the 9 locked accounts.
+2. Normalize works to `SONG_FAMILY` at `aweme_id` level.
+3. Rank only positive cross-account repeats.
+4. For strongest candidates, generate a direct Douyin Evidence Pack:
+   - account;
+   - publish time;
+   - exact work URL;
+   - caption / song evidence;
+   - observed audio version when identifiable.
+5. Open HG01 and let the user choose one SONG_FAMILY.
+6. Continue the existing R2-validated BGM/timeline/MV production chain.
+7. Refresh the account sample again in ~15 days and compare new observations.
 
 ## Not allowed now
 
-- no expansion beyond these 9 accounts as the main R3 test sample;
-- no HG01 choice from the old shortlist;
-- no BGM lock;
-- no R3-B visual work;
-- no treating the current 89 works as full 9-account coverage until Aura / XIANGJISHI are closed or explicitly fallback-failed with evidence.
+- no expansion beyond 9 core accounts before first loop closes;
+- no claim that this is a complete real-time Douyin trend database;
+- no treating unobserved works as negative evidence;
+- no requirement to log in to the user's Douyin account for the first R3 loop;
+- no BGM lock or visual work before HG01.
