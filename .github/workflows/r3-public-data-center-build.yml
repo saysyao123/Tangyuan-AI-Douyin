@@ -9,6 +9,14 @@ on:
       - '06_TESTS/MV/WEB_R3/database/build_public_data_center.py'
       - '06_TESTS/MV/WEB_R3/data_center_build_trigger.txt'
       - '.github/workflows/r3-public-data-center-build.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/tools/run_public_observed_30d.py'
+      - '06_TESTS/MV/WEB_R3/database/build_public_data_center.py'
+      - '06_TESTS/MV/WEB_R3/data_center_build_trigger.txt'
+      - '.github/workflows/r3-public-data-center-build.yml'
   workflow_dispatch:
 
 permissions:
@@ -33,7 +41,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import csv, json, pathlib, sys
+          import csv, json, pathlib
           p=pathlib.Path('06_TESTS/MV/WEB_R3/database/data_center')
           m=json.loads((p/'manifest.json').read_text(encoding='utf-8'))
           works=list(csv.DictReader((p/'observed_works.csv').open(encoding='utf-8-sig')))
