@@ -6,10 +6,24 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / MUSIC_SHORTLIST_VALIDATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_PASS / SHORTLIST_READY / HG01_PENDING`
-- CREATED_AT: `2026-08-24 Asia/Manila`
+- STAGE: `R3-A3 / DIRECT_DOUYIN_EVIDENCE_REPACK`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_PASS / RADAR_SHORTLIST_EXISTS / HG01_NOT_READY / DIRECT_DOUYIN_EVIDENCE_PACK_REQUIRED`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
+
+## Why A3 was reopened
+
+用户指出首轮 HG01 交付逻辑有缺陷：
+- shortlist 声称来自趋势/Benchmark 分析；
+- 但用户没有拿到“对应账号 → 对应抖音作品 → 可直接点开看/听”的决策材料；
+- 外部平台试听链接不能替代抖音作品证据；
+- 搜不到某核心账号作品也不能推断“抖音没有这首歌”。
+
+因此：
+- A2 Radar 分类逻辑保留；
+- `R3_MUSIC_SHORTLIST_v1.md` 降级为 Radar candidates；
+- 原 `READY FOR HG01` 状态撤回；
+- 新增 `R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md`；
+- HG01 只有在 direct Douyin evidence pack 完成后才能重新开启。
 
 ## R2 frozen baseline
 
@@ -25,117 +39,67 @@ Do not retest unless regression evidence appears:
 - 5 fixed Human Gates；
 - Patch, Don't Cascade。
 
-Authority:
-- `04_HARNESS/workflows/mv.md`
-- `04_HARNESS/rules/mv_golden_runtime.md`
-- `04_HARNESS/rules/mv_audio_timeline.md`
-- `04_HARNESS/rules/mv_human_gates.md`
-
-## R3 staged program
-
-1. `R3-A Music Radar / Benchmark Calibration`
-2. `R3-B Healing Visual Calibration`
-3. `R3-C Full MV Integration Test`
-4. `R3-D Publish Packaging Calibration`
-
-Master:
-`06_TESTS/MV/WEB_R3/R3_MASTER_PLAN.md`
-
-Micro-round matrix:
-`06_TESTS/MV/WEB_R3/R3_TEST_MATRIX_v1.md`
-
 ## R3-A1｜PASS
 
 Registry:
-`06_TESTS/MV/WEB_R3/R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
-
-State:
-`R3_A1_ACCOUNT_REGISTRY_PASS = YES`
+`R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
 
 ## R3-A2｜PASS
 
-Raw radar:
-`06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv`
-
-Reports:
-- `R3_A2_FIRST_SWEEP_REPORT_v1.md`
-- `R3_A2_SECOND_SWEEP_REPORT_v1.md`
+Radar:
+`R3_MUSIC_RADAR_WEEK_01.csv`
 
 A2 proved the Radar can distinguish:
-- `EARLY_RISE`
-- `CONFIRMED`
-- `CLASSIC_REVIVAL`
-- `OVERHEATED`
+- EARLY_RISE
+- CONFIRMED
+- CLASSIC_REVIVAL
+- OVERHEATED
 
-and can down-rank songs with:
-- saturation risk；
-- format mismatch；
-- AUDIO_VERSION ambiguity；
-while preserving visually strong early-rise candidates.
+and can penalize saturation / format mismatch / audio-version ambiguity.
 
-State:
-`R3_A2_7DAY_MUSIC_RADAR_PASS = YES`
+## R3-A3｜EVIDENCE REPACK
 
-## R3-A3｜SHORTLIST READY
+Radar candidate priority remains:
+1. 雨后轻风有香
+2. 循迹
+3. 甲乙丙丁
+4. 我不难过
+5. 琵琶曲（东船与西舫）
 
-Shortlist:
-`06_TESTS/MV/WEB_R3/R3_MUSIC_SHORTLIST_v1.md`
+But this ranking is **not yet a user decision packet**.
 
-Priority candidates:
+Required before HG01:
+- `DIRECT_DOUYIN_EVIDENCE_PACK_READY = YES`
+- each HG01 candidate has >=2 direct recent Douyin/Douyin精选 work links from >=2 accounts；
+- each link labels account / date / duration / Tier A or Tier B；
+- core benchmark account coverage explicitly reported；
+- missing core-account indexing marked UNKNOWN/INDEX_PENDING, never 0；
+- no Weibo/other external audio link used as substitute for Douyin viewing evidence。
 
-1. `雨后轻风有香`
-   - class: `EARLY_RISE`
-   - strongest healing-visual fit；
-   - strategic test fit #1；
-   - audio-title/version ambiguity must be resolved at Stage 2.
+Contract:
+`R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md`
 
-2. `循迹`
-   - class: `EARLY_RISE`
-   - strongest recent 48–72h velocity；
-   - high-density lyric section means excerpt selection is critical.
+## Current allowed work
 
-3. `甲乙丙丁`
-   - class: `CONFIRMED`
-   - strongest trend certainty / >=7 recent independent signals；
-   - saturation rising.
+Allowed:
+- retrieve direct Douyin works for top candidates；
+- prioritize user-seeded Benchmark accounts；
+- where core accounts cannot be publicly indexed, say so and use supplemental Douyin evidence only with lower confidence；
+- build a clickable HG01 decision packet。
 
-4. `我不难过`
-   - class: `CONFIRMED_CLASSIC_REVIVAL`
-   - high-quality music-account revival signal；
-   - darker healing direction.
+Not allowed:
+- ask user to choose before the direct evidence pack is usable；
+- lock SONG_FAMILY；
+- enter BGM Stage 2/B0；
+- start visual R3-B1/B2；
+- modify R2 correctness runtime。
 
-5. `琵琶曲（东船与西舫）`
-   - class: `CONFIRMED_VISUAL`
-   - very strong visual fit but format/version risks higher.
+## Next Gate
 
-Excluded priority example:
-`第57次取消发送 = OVERHEATED / FORMAT_MISMATCH`.
+Finish `DIRECT DOUYIN EVIDENCE PACK`.
 
-## Current Gate｜HG01
-
-User should now select only the `SONG_FAMILY` to enter R3-B0.
-
-Recommended R3 test-value order:
-1. `雨后轻风有香`
-2. `循迹`
-3. `甲乙丙丁`
-4. `我不难过`
-5. `琵琶曲（东船与西舫）`
-
-## Not allowed until HG01 PASS
-
-- exact AUDIO_VERSION lock；
-- BGM excerpt render；
-- Audio Timeline Package；
-- Healing Visual B1/B2 tests；
-- full R3 MV。
-
-## Next after HG01
-
-`R3-B0`:
-1. identify exact audio version candidates；
-2. obtain actual audio；
-3. create full-sentence excerpt candidate；
-4. run `HG02 BGM Excerpt Listening Gate`；
-5. only after BGM lock build a fresh `AUDIO_TIMELINE_PACKAGE`；
-6. then enter R3-B1 Static Healing Visual mini-test.
+Then:
+`HG01_READY = YES`
+→ user directly views/listens to Douyin works
+→ selects SONG_FAMILY
+→ enter R3-B0 exact AUDIO_VERSION + BGM excerpt + HG02.
