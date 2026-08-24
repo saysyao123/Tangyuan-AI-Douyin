@@ -1,0 +1,21 @@
+{
+  "node": "D02",
+  "name": "HG01 Candidate Evidence Pack",
+  "status": "IN_PROGRESS / USER_LISTEN_WATCH_REVIEW_REQUIRED",
+  "upstream_gate": "D01_PASS",
+  "candidate_count": 8,
+  "priority_group_a": [
+    "如果风会替我说话",
+    "我救自己于人间水火",
+    "Summer Love 爱在盛夏",
+    "若爱有尽头"
+  ],
+  "secondary_group_b": [
+    "有几次想你了",
+    "杀破狼",
+    "爱让人脑袋空空",
+    "做她的大地别做她的天"
+  ],
+  "pass_condition": "user reviews direct core-account Douyin evidence and explicitly selects one SONG_FAMILY",
+  "next_after_pass": "R3-B0 exact AUDIO_VERSION discovery"
+}
