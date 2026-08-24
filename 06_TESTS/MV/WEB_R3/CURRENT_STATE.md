@@ -6,130 +6,137 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / PUBLIC_OBSERVED_30D`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / PUBLIC_DATA_PATH_PASS / HISTORICAL_OBSERVATION_MODE_LOCKED / 30D_POSITIVE_EVIDENCE_ONLY / BIWEEKLY_REFRESH / SONG_NORMALIZATION_NEXT / HG01_NOT_READY`
+- STAGE: `R3-A3 / DATA_CENTER_READY -> DIRECT_EVIDENCE_QA`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / PUBLIC_HISTORICAL_MODE_LOCKED / DATA_CENTER_V1_PASS / 30D_POSITIVE_EVIDENCE_PASS / AUTO_REFRESH_PASS / SONG_NORMALIZATION_PASS / REPEAT_ANALYSIS_PASS / HG01_DATA_READY / HG01_PENDING_USER_REVIEW`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Current R3 strategy｜SIMPLIFIED
+## Current authority
 
-R3 no longer requires real-time/latest-edge completeness before the first song test.
+Canonical R3-A data center:
+`06_TESTS/MV/WEB_R3/database/data_center/`
 
-Current test path:
+Operating contract:
+`database/data_center/README.md`
 
-`9 CORE ACCOUNTS -> PUBLIC OBSERVED SNAPSHOT -> 30-DAY HISTORICAL WINDOW -> WORK-LEVEL SONG_FAMILY -> CROSS-ACCOUNT POSITIVE REPEAT -> DIRECT DOUYIN WORK EVIDENCE -> HG01`
+Machine state:
+`database/data_center/manifest.json`
 
-The goal of R3-A is now to prove that a stable public historical sample is sufficient to select a useful song and complete one full MV loop.
+Human status:
+`database/data_center/DATA_CENTER_STATUS.md`
 
-Authenticated F2 / jiji / TikHub remain future upgrade paths and are **not** prerequisites for the first R3 loop.
+The old public-search shortlist is historical/supplemental only and cannot bypass the data-center evidence path.
 
-## Nine-account R3 test scope｜LOCKED
+## Locked R3-A operating mode
+
+`9 CORE ACCOUNTS -> PUBLIC OBSERVED SNAPSHOT -> ROLLING 30D -> AWEME_ID MERGE -> WORK-LEVEL SONG_FAMILY -> POSITIVE CROSS-ACCOUNT REPEAT -> DIRECT DOUYIN EVIDENCE -> HG01`
+
+Mode:
+`PUBLIC_OBSERVED_30D / POSITIVE_EVIDENCE_ONLY`
+
+Evidence semantics:
+- directly observed repetition across independent core accounts is valid positive evidence;
+- unobserved work/song = `UNKNOWN`, never negative evidence;
+- the data center is an observed-repeat system, not a complete real-time Douyin census.
+
+Authenticated F2 / jiji / TikHub are retained as future upgrade/fallback paths and are not prerequisites for the first R3 loop.
+
+## Nine-account core pool｜LOCKED
 
 Exactly 9 unique Douyin accounts are used for this calibration round.
-Do not expand the core pool before the first observed-data -> song -> MV -> publish loop is complete.
+Do not expand the main sample pool until the first data -> song -> MV -> publish loop is complete.
 
 Stable identity:
-- account key: `sec_uid`;
-- work key: `aweme_id`;
+- account: `sec_uid` / internal `account_id`;
+- work: `aweme_id`;
 - nickname is mutable.
 
-## Historical Observation Mode｜LOCKED FOR R3 TEST
+## Data Center v1｜PASS
 
-### Anchor
+First canonical build completed at approximately `2026-08-24 20:29 +08:00`.
 
-Use the latest reliably observed work timestamp from the current public collection as the analysis anchor.
+Current observation anchor:
+- latest reliably observed work: `2026-08-17 22:41:09`;
+- rolling window start: `2026-07-19 00:00:00`;
+- rolling window end exclusive: `2026-08-18 00:00:00`.
 
-### Window
+Current dataset:
+- core accounts: `9`;
+- fresh public observations: `134` works;
+- cumulative unique observed works: `134`;
+- AUTO_HIGH normalized works in current window: `98`;
+- REVIEW_REQUIRED: `24`;
+- UNRESOLVED: `12`;
+- cross-account repeated SONG_FAMILY: `8`.
 
-Create a rolling 30-day historical observation window ending at the anchor day.
+Current strongest observed repeat:
+- `如果风会替我说话`;
+- observed in `3` independent core accounts;
+- all 3 observations fall inside the latest 15-day half-window;
+- best 72h concentration: `3` accounts;
+- visual-overlap accounts: `2`;
+- evidence grade: `STRONG`.
 
-Example when anchor day is `2026-08-17`:
-- window start: approximately `2026-07-19 00:00:00`;
-- window end exclusive: `2026-08-18 00:00:00`.
+Other observed repeats (2 independent accounts each):
+- `爱让人脑袋空空`;
+- `有几次想你了`;
+- `做她的大地别做她的天`;
+- `杀破狼`;
+- `若爱有尽头`;
+- `我救自己于人间水火`;
+- `Summer Love 爱在盛夏`.
 
-### Evidence semantics
+## Canonical data-center files
 
-This mode uses **positive evidence only**.
+- `database/data_center/observed_works.csv` — cumulative observed work facts;
+- `database/data_center/observed_metrics.csv` — engagement snapshots;
+- `database/data_center/snapshots.csv` — refresh receipts;
+- `database/data_center/coverage_latest.csv` — latest public-page account coverage;
+- `database/data_center/song_normalization.csv` — work-level SONG_FAMILY/AUDIO_VERSION mapping;
+- `database/data_center/song_repeat_candidates.csv` — repeat ranking;
+- `database/data_center/direct_douyin_evidence.json` — exact account/work links for HG01;
+- `database/data_center/manifest.json` — machine-readable state;
+- `database/data_center/DATA_CENTER_STATUS.md` — human-readable status.
 
-Allowed inference:
-- if the same normalized SONG_FAMILY is directly observed in 2/3/4 independent core accounts, that cross-account repeat is valid evidence.
+## Refresh automation｜PASS
 
-Forbidden inference:
-- a work not observed does NOT mean the account did not publish it;
-- a song not seen on an account does NOT count as a negative signal;
-- partial public pagination must not be converted into zero.
-
-Therefore missing high-frequency historical pages reduce recall, but they do not invalidate a positive repeated-song signal.
-
-## Refresh cadence｜15 DAYS
-
-For the first R3 operating model:
-- refresh the 9-account public snapshot every ~15 days;
-- merge by `aweme_id` instead of replacing history;
-- keep the latest observed anchor of every snapshot;
-- accumulate historical works over time;
-- after multiple refreshes, dependence on deep historical pagination naturally decreases.
-
-Real-time monitoring is explicitly out of scope for the first R3 loop.
-
-## Existing database result｜SEED DATA
-
-The first public bootstrap produced:
-- 9 unique accounts;
-- 89 real work rows in the previously requested 15-day slice;
-- work URLs, captions, raw music metadata, hashtags and interaction snapshots;
-- SQLite foreign-key validation PASS.
-
-These rows remain valid seed observations, but prior `7/9 COMPLETE` labels are no longer used as a prerequisite for HG01 in Historical Observation Mode.
-
-## Current public capability boundary
-
-Reliable now:
-- shared profile URL -> `sec_uid`;
-- core account identity;
-- public first-page work observations;
-- `aweme_id` + publish time + caption + hashtags;
-- raw music title/author;
-- direct Douyin work URL;
-- engagement snapshot;
-- known-work single-video parsing;
-- on-demand MP4 resolution/download.
-
-Not required for this R3 loop:
-- latest-minute freshness;
-- complete deep pagination for every high-frequency account;
-- full account history;
-- authenticated Douyin session.
-
-## New collection artifact
-
-Historical observed collector:
+Collector:
 `tools/run_public_observed_30d.py`
 
-Expected snapshot output:
-`database/public_observed_30d/`
+Builder:
+`database/build_public_data_center.py`
 
-Semantics:
-`PUBLIC_OBSERVED_30D / POSITIVE_EVIDENCE_ONLY`.
+Workflow:
+`.github/workflows/r3-public-data-center-build.yml`
+
+Validated flow:
+`public collect -> 30d snapshot -> aweme_id merge -> normalization -> repeat analysis -> validation -> auto-commit back to test/mv-web-r3`.
+
+Target cadence:
+- refresh approximately every `15 days`;
+- current approximate next refresh: `2026-09-08`;
+- every refresh preserves prior observations and merges by `aweme_id`.
+
+## Current Gate
+
+`HG01_DATA_READY = YES`
+
+But HG01 has **not** passed yet.
+
+Next required step is to turn the strongest database candidates into a user-facing Direct Douyin Evidence Pack and let the user inspect the exact core-account works before choosing one `SONG_FAMILY`.
 
 ## Next execution order
 
-1. Build the first 30-day observed public snapshot from the 9 locked accounts.
-2. Normalize works to `SONG_FAMILY` at `aweme_id` level.
-3. Rank only positive cross-account repeats.
-4. For strongest candidates, generate a direct Douyin Evidence Pack:
-   - account;
-   - publish time;
-   - exact work URL;
-   - caption / song evidence;
-   - observed audio version when identifiable.
-5. Open HG01 and let the user choose one SONG_FAMILY.
-6. Continue the existing R2-validated BGM/timeline/MV production chain.
-7. Refresh the account sample again in ~15 days and compare new observations.
+1. QA `direct_douyin_evidence.json` for the strongest candidates.
+2. Deliver direct core-account Douyin work links to the user, starting with the strongest repeated families.
+3. Run `HG01 Song Aesthetic Gate` and lock one `SONG_FAMILY` only after user confirmation.
+4. Enter R3-B0 exact `AUDIO_VERSION` discovery and HG02 BGM listening.
+5. Continue the R2-validated audio timeline / director / MV chain.
+6. Refresh the data center again in ~15 days and merge new observations.
 
 ## Not allowed now
 
-- no expansion beyond 9 core accounts before first loop closes;
+- no expansion beyond the 9 core accounts before the first loop closes;
+- no claim that observed absence means an account did not publish something;
 - no claim that this is a complete real-time Douyin trend database;
-- no treating unobserved works as negative evidence;
 - no requirement to log in to the user's Douyin account for the first R3 loop;
-- no BGM lock or visual work before HG01.
+- no BGM lock or visual work before HG01 PASS.
