@@ -1,0 +1,9 @@
+anchor_id,line_id,start_sec,end_sec,text,visual_role
+A01,L01,0.000,3.000,风 / 说话,HOOK / carrier
+A02,L02,3.000,6.000,雨 / 回答,RESPONSE / reflection
+A03,L03,6.000,8.000,想起他,MEMORY / absence
+A04,L04,8.000,12.000,一起回家,HOME / warmth
+A05,L05,12.000,15.000,梦 / 真假,DREAM / ambiguity
+A06,L06,15.000,18.000,痛 / 融化,HEALING / dissolve
+A07,L07,18.000,20.000,我们 / 傻瓜,INTIMACY / tenderness
+A08,L08,20.000,24.000,爱 / 童话,RELEASE / hope
