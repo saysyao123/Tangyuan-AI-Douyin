@@ -21,3 +21,9 @@ tmp/
 temp/
 cache/
 renders/
+
+# WEB R3 authenticated Douyin data layer: local-only secrets/runtime.
+06_TESTS/MV/WEB_R3/.secrets/
+06_TESTS/MV/WEB_R3/.local_raw/
+.venv-r3-douyin/
+*.sqlite3
