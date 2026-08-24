@@ -1,8 +1,8 @@
-# Rules｜MV Golden Runtime Contract v1.2
+# Rules｜MV Golden Runtime Contract v1.3
 
 > Status: `PRODUCTION_VALIDATED / ACTIVE`
 > Purpose: inherit cross-round correctness without loading full historical rounds.
-> Evidence base: R1 Golden Sample + WEB R2 repeated lyric-timing failures.
+> Evidence base: R1 Golden Sample + WEB R2 repeated lyric-timing failures + WEB R2 V3/V3.1 editing calibration.
 
 ## 1. Golden inheritance｜HARD
 
@@ -13,17 +13,20 @@ At every MV start load:
 4. current MV Round `CURRENT_STATE.md`
 5. stage-specific rules JIT.
 
+Editing detail is intentionally not duplicated here. Load `rules/mv_editing.md` JIT for Stage 4/6/7/8/9.
 Round Master Plans are summaries only and cannot override these runtime sources.
 
 ---
 
 ## 2. Audio Timeline Package is the first post-BGM hard node｜HARD
 
-R1 proved the correct principle but did not preserve the full reproducible asset chain.
-WEB R2 proved that a rule sentence or an `exact.srt` filename is not enough.
-
-Therefore after `BGM_LOCKED`, every MV must build and lock:
+After `BGM_LOCKED`, every MV must build and lock:
 `AUDIO_TIMELINE_PACKAGE`.
+
+This position is deliberate:
+- before BGM lock, clip/version may still change and alignment work may be wasted;
+- immediately after BGM lock, exact audio identity is stable enough for alignment;
+- any later placement allows Natural Beat, Director allocation, dynamic production or subtitles to inherit guessed lyric positions.
 
 No timing-dependent Director allocation, Picture Edit or Subtitle Render may proceed before:
 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`.
@@ -33,27 +36,21 @@ Detailed contract:
 
 ---
 
-## 3. R1 timing lesson｜HARD
+## 3. R1 / R2 timing lesson｜HARD
 
-R1 final successful correction:
-`same-version LRC -> subtract exact clip start 01:23.800 -> corrected clip timeline -> user playback review`.
+R1 successful path:
+`same-version LRC -> subtract exact clip start -> corrected clip timeline -> playback review`.
 
-Stable lesson:
-- subtitle/lyric time comes from locked audio alignment, never visual segment boundaries;
-- exact clip offset matters;
-- repeated lyric occurrences must remain distinct.
-
-Reproducibility gap from R1:
-- raw LRC/source ID was not preserved;
-- accepted `lyrics_exact_v3_1.srt` was named in docs but not reliably packaged as a canonical runtime asset.
-
-Future Golden close is incomplete without the full Audio Timeline Package.
+WEB R2 proved the stronger engineering requirement:
+- timing truth requires raw evidence + provenance + ground-truth QA;
+- an `exact.srt` filename or waveform candidate is not sufficient;
+- visual segments cannot define lyric timing;
+- repeated occurrences must remain distinct;
+- the Package must exist before time-dependent production.
 
 ---
 
 ## 4. Evidence provenance｜HARD
-
-A timing file becomes authoritative only with independent provenance.
 
 Allowed primary evidence classes:
 - `SAME_VERSION_LRC`
@@ -72,9 +69,7 @@ Required provenance:
 - per-line ground-truth QA.
 
 No raw evidence/provenance = no lock.
-
 Waveform/BPM/onset candidates are `DIAGNOSTIC_ONLY`.
-They may support strong evidence but never replace it.
 
 ---
 
@@ -96,6 +91,8 @@ Required:
 `SUBTITLE_IMPLEMENTATION_QA_PASS`.
 
 Implementation QA cannot validate Ground Truth.
+
+For human timing-review previews, subtitle fade may be temporarily disabled so fade latency is not mistaken for timing error. After timing perception is accepted, style/fade can be optimized without changing timestamps.
 
 ---
 
@@ -125,7 +122,16 @@ Stable:
 - exact AI-fictional-character safety prefix from `rules/ai_video.md`;
 - shot count selected by lyric/director task, not fixed quota;
 - whole-set camera repetition review;
-- retry by root cause.
+- retry by root cause;
+- dynamic source is an **editing material pool**, not a pre-cut final timeline.
+
+WEB R2 promoted source-portfolio lesson:
+- 1-shot / one-take for hold, space, emotion, release;
+- 2-shot as common setup/event or detail/emotion structure;
+- 3-shot for task-specific discovery or peak;
+- >3-shot only when a real hook/peak earns the density.
+
+For ~5s generation, default preference is 1–2 shots, not dense multi-shot everywhere.
 
 Raw dynamic QA statuses:
 - `PASS_FULL`
@@ -133,31 +139,45 @@ Raw dynamic QA statuses:
 - `REGEN_WATCH`
 - `REGENERATE`
 
+W07 must preserve an executable `VISUAL_SOURCE_MAP` with clean/risk windows and edit roles.
+
 AI source audio is non-authoritative and stripped before final edit unless a deliberately motivated ambience workflow is separately locked.
 
 ---
 
 ## 8. Edit inheritance
 
+Detailed execution: `rules/mv_editing.md`.
+
 Priority:
 `verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`.
 
-Do not mechanically equal-trim 5s clips.
-Preserve useful internal motion arcs, then use selective trim / overlap / transition / earlier-later exit tied to verified music events.
+Promoted WEB R2 lessons:
+- **Anchor Word != mandatory picture cut**;
+- lyrical/emotional MV defaults to long-cut-first;
+- preserve useful internal source arcs;
+- avoid repeated external micro-cuts and short A-B-A recycling;
+- dense internal multi-shot source + dense external edit compounds fragmentation;
+- use mixed 1–3-shot source portfolio instead;
+- final release deserves breathing room;
+- user should not have to discover watermark leakage or frame-aspect errors.
 
-Every retained fragment should trace to at least one:
-- lyric/semantic Beat;
-- Anchor Word;
-- verified musical event;
-- motion arc;
-- contrast/release.
+WEB current limitation fallback:
+if precise watermark cleanup is unavailable, use a consistent whole-source zoom/crop derived from worst-case batch marks, preserve 9:16/SAR1:1, and validate top-left/bottom-right risk frames before handoff.
+This is a WEB preview fallback, not the preferred publish-grade path.
 
 ---
 
 ## 9. No-skip correctness promotion｜HARD
 
-A correctness failure caught by the user must be promoted as:
-`failure evidence -> root cause -> stable rule -> required artifact/state -> independent Gate`.
+A correctness or repeated quality failure caught by the user must be promoted as:
+`failure evidence -> root cause -> stable rule -> required artifact/state -> independent Gate/check`.
+
+Examples now promoted:
+- lyric timing failure -> Audio Timeline Package Gate;
+- fragmented “every anchor = cut” edit -> Fragmentation Gate;
+- prose-only dynamic QA -> executable VISUAL_SOURCE_MAP;
+- recurring WEB watermark leak -> uniform watermark-safe preview transform + risk-frame QA.
 
 A Gate that can be passed merely by renaming a file or testing an output against itself is invalid.
 
@@ -207,12 +227,13 @@ Then return to Audio Timeline Package rebuild/revalidation.
 ## 12. What Golden does NOT freeze
 
 Do not inherit as universal creative rules:
-- R1 song;
-- R1 visual world;
-- R1 exact shots;
+- R1/R2 song;
+- exact visual world;
+- exact shots;
 - fixed first-frame/video count;
 - fixed 3-shot grammar;
 - fixed camera recipe;
+- fixed external fragment count for all genres;
 - complex lyric animation.
 
-Golden inheritance protects correctness and minimum production quality, not creative repetition.
+Golden inheritance protects correctness and validated production discipline, not creative repetition.
