@@ -1,0 +1,5 @@
+R3 public historical data center build
+2026-08-24T20:15+08:00
+mode=PUBLIC_OBSERVED_30D
+semantics=POSITIVE_EVIDENCE_ONLY
+refresh_cadence_days=15
