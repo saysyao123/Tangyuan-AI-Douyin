@@ -1,203 +1,234 @@
-# Rules｜MV Golden Runtime Contract v1.3
+# Rules｜MV Golden Runtime Contract v1.4
 
 > Status: `PRODUCTION_VALIDATED / ACTIVE`
-> Purpose: inherit cross-round correctness without loading full historical rounds.
-> Evidence base: R1 Golden Sample + WEB R2 repeated lyric-timing failures + WEB R2 V3/V3.1 editing calibration.
+> Purpose: 跨 Round 继承 correctness 与已验证生产纪律，不加载整轮历史。
+> Evidence base: R1 Golden + WEB R2 full close。
+
+---
 
 ## 1. Golden inheritance｜HARD
 
-At every MV start load:
-1. `04_HARNESS/workflows/mv.md`
-2. `04_HARNESS/rules/mv_golden_runtime.md`
-3. `04_HARNESS/rules/mv_audio_timeline.md`
-4. current MV Round `CURRENT_STATE.md`
-5. stage-specific rules JIT.
+每次 MV 默认加载：
+1. `workflows/mv.md`
+2. `rules/mv_golden_runtime.md`
+3. `rules/mv_audio_timeline.md`
+4. current Round `CURRENT_STATE.md`
+5. stage-specific Rules JIT。
 
-Editing detail is intentionally not duplicated here. Load `rules/mv_editing.md` JIT for Stage 4/6/7/8/9.
-Round Master Plans are summaries only and cannot override these runtime sources.
-
----
-
-## 2. Audio Timeline Package is the first post-BGM hard node｜HARD
-
-After `BGM_LOCKED`, every MV must build and lock:
-`AUDIO_TIMELINE_PACKAGE`.
-
-This position is deliberate:
-- before BGM lock, clip/version may still change and alignment work may be wasted;
-- immediately after BGM lock, exact audio identity is stable enough for alignment;
-- any later placement allows Natural Beat, Director allocation, dynamic production or subtitles to inherit guessed lyric positions.
-
-No timing-dependent Director allocation, Picture Edit or Subtitle Render may proceed before:
-`AUDIO_TIMELINE_PACKAGE_LOCKED = YES`.
-
-Detailed contract:
-`rules/mv_audio_timeline.md`.
+Round Master Plan / retrospective 只做 summary / provenance，不能覆盖 Workflow/Rule。
 
 ---
 
-## 3. R1 / R2 timing lesson｜HARD
+## 2. Correctness promotion standard｜HARD
 
-R1 successful path:
-`same-version LRC -> subtract exact clip start -> corrected clip timeline -> playback review`.
+用户抓到的 correctness 或重复质量问题，只有完成以下链条才算真正解决：
 
-WEB R2 proved the stronger engineering requirement:
-- timing truth requires raw evidence + provenance + ground-truth QA;
-- an `exact.srt` filename or waveform candidate is not sufficient;
-- visual segments cannot define lyric timing;
-- repeated occurrences must remain distinct;
-- the Package must exist before time-dependent production.
+`failure evidence`
+→ `root cause`
+→ `stable rule`
+→ `required artifact/state`
+→ `independent Gate/check`
+→ `regression evidence`
+
+仅仅在复盘里写一句“以后注意”不算晋升。
+
+WEB R2 已晋升的典型：
+- 歌词时间轴失败 → `AUDIO_TIMELINE_PACKAGE`；
+- 视觉时间线少段但实际镜头仍碎 → `Shot Normalization + visible-shot Fragmentation Gate`；
+- 字幕框偏心 → glyph bbox fresh-box algorithm + all-line geometry QA；
+- WEB 水印反复漏角 → batch uniform crop/zoom + corner-risk QA。
 
 ---
 
-## 4. Evidence provenance｜HARD
+## 3. Audio Timeline is the first post-BGM hard node｜HARD
 
-Allowed primary evidence classes:
+固定顺序：
+`BGM_LOCKED -> AUDIO_TIMELINE_PACKAGE_LOCKED -> time-dependent downstream work`。
+
+原因：
+- 更早：音频版本/截取可能变化，强制对齐会白做；
+- 更晚：Natural Beat/Director/Edit/Subtitle 会继承猜测时间。
+
+Package 详细权威：`rules/mv_audio_timeline.md`。
+
+Strong evidence only：
 - `SAME_VERSION_LRC`
 - `ASR_FORCED_ALIGNMENT`
 - `OFFICIAL_TIMED_LYRIC`
 
-Required provenance:
-- locked audio identity + hash;
-- raw evidence path/reference;
-- source/platform/tool/model/version;
-- original timestamps;
-- transformation rule;
-- final timing asset/hash;
-- repeated-line mapping;
-- warnings/unmatched;
-- per-line ground-truth QA.
+Waveform/BPM/onset 只能 diagnostic/supporting。
 
-No raw evidence/provenance = no lock.
-Waveform/BPM/onset candidates are `DIAGNOSTIC_ONLY`.
+缺能力/证据必须 `BLOCKED`，不得为了“保持自动化”降级真值标准。
 
 ---
 
-## 5. Two-layer subtitle QA｜HARD
+## 4. Three clocks｜HARD
 
-### Ground-truth Alignment QA
-Question:
-`Does the timing asset match the singer in the locked audio?`
+必须区分：
+1. lyric clock；
+2. music-event clock；
+3. visual-action clock。
 
-This belongs to the Audio Timeline Package.
-Required:
-`ALIGNMENT_GROUND_TRUTH_QA_PASS`.
+Audio Timeline Package 锁 1+2；生成/素材 QA 提供 3；Picture Edit 协调三者。
 
-### Subtitle Implementation QA
-Question:
-`Does the rendered subtitle follow the already-locked timing asset?`
-
-Required:
-`SUBTITLE_IMPLEMENTATION_QA_PASS`.
-
-Implementation QA cannot validate Ground Truth.
-
-For human timing-review previews, subtitle fade may be temporarily disabled so fade latency is not mistaken for timing error. After timing perception is accepted, style/fade can be optimized without changing timestamps.
+Subtitle 只服从 lyric clock。
+Picture cut / visual segment 不得反向修改 lyric clock。
 
 ---
 
-## 6. Subtitle Golden baseline｜HARD
+## 5. Human Gate inheritance
 
-R1 accepted base style:
-- Chinese lyric;
-- light text;
-- dark semi-transparent rounded box tightly fitted to text;
-- text centered horizontally/vertically;
-- consistent padding;
-- comfortable fixed lower safe area;
-- restrained fade;
-- max 2 lines;
-- no default karaoke/word-by-word effect.
+权威：`rules/mv_human_gates.md`。
 
-A new style requires an explicit aesthetic decision, not accidental drift.
+正常项目只保留 5 个固定人工 Gate：
+1. Song Aesthetic；
+2. BGM Excerpt Listening；
+3. Visual Direction / First-frame Set；
+4. Picture Edit Rhythm；
+5. Final Acceptance。
+
+其余正确性/实现 QA 应在提交用户前完成。
+
+异常才打开：Audio Alignment Exception / Dynamic Regeneration / New Subtitle Style。
+
+目标：用户审核审美与最终授权，不承担机器应该完成的基础技术 QA。
 
 ---
 
-## 7. First-frame / dynamic inheritance
+## 6. First-frame / dynamic source inheritance
 
-Stable:
-- first frame = `0-second dynamic anchor`;
-- conceptual units and production segments are separate;
-- first-frame character closure;
-- exact AI-fictional-character safety prefix from `rules/ai_video.md`;
-- shot count selected by lyric/director task, not fixed quota;
-- whole-set camera repetition review;
-- retry by root cause;
-- dynamic source is an **editing material pool**, not a pre-cut final timeline.
+Stable：
+- first frame = `0-second dynamic anchor`；
+- conceptual units 与 production segments 分离；
+- 人物首帧 closure；
+- character I2V 安全前缀由 `rules/ai_video.md` 管理；
+- shot count 按歌词/导演任务，不固定配额；
+- whole-set camera repetition review；
+- retry by root cause；
+- dynamic video 是 **editing source pool**。
 
-WEB R2 promoted source-portfolio lesson:
-- 1-shot / one-take for hold, space, emotion, release;
-- 2-shot as common setup/event or detail/emotion structure;
-- 3-shot for task-specific discovery or peak;
-- >3-shot only when a real hook/peak earns the density.
+WEB R2 validated portfolio：
+- 1-shot：hold / space / emotion / release；
+- 2-shot：常用 setup-event / detail-emotion；
+- 3-shot：task-specific discovery / peak；
+- >3-shot：exceptional hook/peak only。
 
-For ~5s generation, default preference is 1–2 shots, not dense multi-shot everywhere.
+约 5s 生成默认优先 **1–2 shots**，3-shot 必须有明确任务。
 
-Raw dynamic QA statuses:
+---
+
+## 7. Dynamic QA + Source Normalization inheritance｜HARD FOR MULTI-SHOT
+
+Raw QA status：
 - `PASS_FULL`
 - `SOURCE_USABLE / TRIM_REQUIRED`
 - `REGEN_WATCH`
 - `REGENERATE`
 
-W07 must preserve an executable `VISUAL_SOURCE_MAP` with clean/risk windows and edit roles.
+W07 必须产出 executable `VISUAL_SOURCE_MAP`，包含 clean/risk/internal-cut/action/edit-role 信息。
 
-AI source audio is non-authoritative and stripped before final edit unless a deliberately motivated ambience workflow is separately locked.
+对于 1–3 镜/多镜 source，进入 Picture Edit 前必须按 `rules/mv_source_normalization.md`：
+- 保留原始 5s；
+- 映射内部真实镜头；
+- 派生 `ATOM`；
+- 只有导演语法成立才保留 `ARC`；
+- 排除 duplicate / topology-risk / meaningless micro-shot；
+- 输出 `NORMALIZED_SHOT_LIBRARY_MAP.csv`；
+- Gate `SHOT_LIBRARY_READY`。
 
----
-
-## 8. Edit inheritance
-
-Detailed execution: `rules/mv_editing.md`.
-
-Priority:
-`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`.
-
-Promoted WEB R2 lessons:
-- **Anchor Word != mandatory picture cut**;
-- lyrical/emotional MV defaults to long-cut-first;
-- preserve useful internal source arcs;
-- avoid repeated external micro-cuts and short A-B-A recycling;
-- dense internal multi-shot source + dense external edit compounds fragmentation;
-- use mixed 1–3-shot source portfolio instead;
-- final release deserves breathing room;
-- user should not have to discover watermark leakage or frame-aspect errors.
-
-WEB current limitation fallback:
-if precise watermark cleanup is unavailable, use a consistent whole-source zoom/crop derived from worst-case batch marks, preserve 9:16/SAR1:1, and validate top-left/bottom-right risk frames before handoff.
-This is a WEB preview fallback, not the preferred publish-grade path.
+核心经验：
+**少量 timeline block 不等于少镜头。**必须统计 perceptible visible-shot count。
 
 ---
 
-## 9. No-skip correctness promotion｜HARD
+## 8. Editing inheritance
 
-A correctness or repeated quality failure caught by the user must be promoted as:
-`failure evidence -> root cause -> stable rule -> required artifact/state -> independent Gate/check`.
+权威：`rules/mv_editing.md`。
 
-Examples now promoted:
-- lyric timing failure -> Audio Timeline Package Gate;
-- fragmented “every anchor = cut” edit -> Fragmentation Gate;
-- prose-only dynamic QA -> executable VISUAL_SOURCE_MAP;
-- recurring WEB watermark leak -> uniform watermark-safe preview transform + risk-frame QA.
+Priority：
+`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`。
 
-A Gate that can be passed merely by renaming a file or testing an output against itself is invalid.
+Promoted defaults for lyrical/emotional MV：
+- long-cut first；
+- Anchor Word != mandatory cut；
+- lyric start != mandatory cut；
+- semantic hit can occur inside shot；
+- preserve useful motion arc；
+- avoid short A-B-A recycling；
+- final release 留呼吸；
+- Fragmentation Gate 同时检查 external fragment 与 perceptible visible-shot count。
+
+WEB 当前限制：精确水印处理不可用时，使用整批统一 zoom/crop，保持 9:16 / SAR1:1，并抽查左右角最危险帧。它只是 WEB fallback，不是 publish-grade 首选。
 
 ---
 
-## 10. Minimum runtime state chain
+## 9. Subtitle inheritance｜LOCKED BASELINE
+
+权威：`rules/mv_subtitle.md`。
+
+默认不再每首歌重新 A/B/C 探索。
+只有用户明确要求新的字幕审美才打开 Style Exploration。
+
+720×1280 validated baseline：
+- bold clean Chinese sans serif；
+- nominal 46px family；
+- near-white text；
+- lower center around `360,1009`；
+- dark semi-transparent rounded box；
+- four-side padding `10px`；
+- max 2 lines；
+- fade `100ms / 180ms`；
+- no default karaoke。
+
+Implementation hard rule：
+`actual rendered glyph bbox -> fresh rounded box -> 10px padding each side -> all-line geometry QA`。
+
+禁止 resize/inset legacy rounded path；禁止 character-count 估算框宽；短句必须专项抽查。
+
+Two QA layers remain separate：
+- Ground-truth Alignment QA：Stage 2A；
+- Subtitle Implementation QA：Stage 9。
+
+---
+
+## 10. Source audio / publish quality inheritance
+
+AI source audio 非时间真源；final edit 默认物理移除 source audio，锁定 BGM 是唯一 music truth。
+
+Publish-grade priority：
+`watermark-free HD source > Codex/precise cleanup > WEB uniform crop fallback`。
+
+不得为了清水印偷偷改变已批准的 timing/directing。
+
+---
+
+## 11. Patch, Don't Cascade｜HARD
+
+问题只回滚最近根因：
+- BGM 变化 → Stage 2A 及 timing-dependent 下游失效；
+- timing 真值错 → 2A；
+- 首帧/视觉方向错 → 4/5；
+- 单条动态 source 崩 → 6/7；
+- hidden multi-shot complexity → 7.5；
+- Picture 太碎 → 8B；
+- subtitle geometry/implementation bug → 9；
+- codec/SAR/metadata bug → 10。
+
+下游实现 bug 不自动重开已通过的上游审美 Gate。
+
+---
+
+## 12. Minimum runtime state chain
 
 `REFERENCE_BGM_LOCKED`
 → `BGM_LOCKED`
-→ `AUDIO_IDENTITY_LOCKED`
-→ `LYRIC_TEXT_LOCKED`
-→ `LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED`
-→ `LYRIC_ALIGNMENT_PROVENANCE_VERIFIED`
-→ `ALIGNMENT_GROUND_TRUTH_QA_PASS`
-→ `LYRIC_TIMELINE_LOCKED`
-→ `MUSIC_EVENT_MAP_VERIFIED`
 → `AUDIO_TIMELINE_PACKAGE_LOCKED`
+→ `DIRECTOR_BEAT_MAP`
 → `DIRECTOR_PLAN_LOCKED`
 → `FIRST_FRAME_SET_LOCKED`
+→ `DYNAMIC_PROMPT_SET_READY`
 → `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
+→ `SHOT_LIBRARY_READY`（multi-shot source 时）
 → `EDITOR_AUDIO_GATE_PASS`
 → `EDIT_MAP_LOCKED`
 → `EDIT_PREVIEW_QA_PASS`
@@ -205,35 +236,21 @@ A Gate that can be passed merely by renaming a file or testing an output against
 → `SUBTITLE_IMPLEMENTATION_QA_PASS`
 → `FINAL_TECH_QA_PASS`
 → `DELIVERABLE_RENDERED`
+→ `COMPLETE_LOCKED`
 
-Any later state is invalid if an earlier required state is absent.
-
----
-
-## 11. Package invalidation｜HARD
-
-Automatically invalidate timing/edit/subtitle dependency if any changes:
-- BGM hash/version;
-- clip start/end;
-- lead-in/padding;
-- speed/time-stretch;
-- trusted lyric text/order;
-- repeated occurrence mapping.
-
-Then return to Audio Timeline Package rebuild/revalidation.
+任一 required upstream state 缺失，later state 无效。
 
 ---
 
-## 12. What Golden does NOT freeze
+## 13. What Golden does NOT freeze
 
-Do not inherit as universal creative rules:
-- R1/R2 song;
-- exact visual world;
-- exact shots;
-- fixed first-frame/video count;
-- fixed 3-shot grammar;
-- fixed camera recipe;
-- fixed external fragment count for all genres;
-- complex lyric animation.
+禁止把以下变成跨歌固定模板：
+- R1/R2 歌曲；
+- 人物/世界/材质；
+- first-frame/video 固定数量；
+- 固定 3-shot grammar；
+- 固定 camera recipe；
+- 所有类型歌曲统一 8–12 cuts；
+- 复杂歌词特效。
 
-Golden inheritance protects correctness and validated production discipline, not creative repetition.
+Golden 保护 correctness 和 validated production discipline，不保护创意重复。
