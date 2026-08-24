@@ -1,6 +1,6 @@
 R3 public historical data center build
-2026-08-24T20:18+08:00
+2026-08-24T20:30+08:00
 mode=PUBLIC_OBSERVED_30D
 semantics=POSITIVE_EVIDENCE_ONLY
 refresh_cadence_days=15
-run=2
+run=3_AUTO_PERSIST
