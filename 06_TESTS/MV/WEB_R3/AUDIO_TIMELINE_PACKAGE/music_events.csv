@@ -1,0 +1,10 @@
+event_id,time_sec,event_type,strength,source,note
+M01,0.058,ENTRY_ATTACK,HIGH,WAVEFORM_SUPPORTING,locked asset opening transient
+M02,4.644,PHRASE_MOTION,MEDIUM,WAVEFORM_SUPPORTING,strong onset cluster
+M03,6.664,PHRASE_MOTION,MEDIUM,WAVEFORM_SUPPORTING,strong onset near L03 transition
+M04,12.411,SECTION_LIFT,HIGH,WAVEFORM_SUPPORTING,strong onset at L05 region
+M05,15.639,EMOTIONAL_LIFT,HIGH,WAVEFORM_SUPPORTING,strong onset in L06 region
+M06,18.413,PHRASE_LIFT,HIGH,WAVEFORM_SUPPORTING,strong onset near L07
+M07,19.412,CONNECTIVE_HIT,HIGH,WAVEFORM_SUPPORTING,secondary accent before final line
+M08,21.664,FINAL_PEAK,HIGHEST,WAVEFORM_SUPPORTING,strongest observed onset in final line
+M09,24.277,TAIL_SILENCE,LOW,WAVEFORM_SUPPORTING,decoded asset reaches near-silence
