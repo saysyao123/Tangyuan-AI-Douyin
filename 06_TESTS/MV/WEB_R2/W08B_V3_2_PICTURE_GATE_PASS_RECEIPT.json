@@ -1,0 +1,33 @@
+{
+  "round": "WEB_R2",
+  "stage": "W08B",
+  "candidate": "V3.2_ATOM_FIRST",
+  "status": "PICTURE_EDIT_HUMAN_GATE_PASS",
+  "user_feedback": "这次的效果不错，按这个方案先进行固化",
+  "accepted_basis": {
+    "shot_normalization": "W07.5 SHOT_LIBRARY_READY",
+    "edit_map": "W08B_V3_2_ATOMIC_ROUGH_EDIT_MAP.csv",
+    "source_strategy": "ATOM_FIRST; retain coherent ARC only when intentionally justified",
+    "visible_units": 13,
+    "web_preview_transform": "crop=576:1024:72:128 -> scale=720:1280 (~1.25x)",
+    "subtitle_timing_source": "AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt"
+  },
+  "technical_evidence": {
+    "picture_frames": 891,
+    "fps": 24,
+    "picture_duration_s": 37.125,
+    "locked_audio_duration_s": 37.120,
+    "preview_vs_locked_bgm_global_lag_s": 0.0,
+    "preview_sha256": "797ac52cf470fb871f312b7699247b9f0bbc46120d1124813e39a459f4f1812f"
+  },
+  "states": {
+    "SHOT_LIBRARY_READY": true,
+    "EDIT_MAP_LOCKED": true,
+    "EDIT_PREVIEW_QA_PASS": true,
+    "SUBTITLE_STYLE_QA_PASS": false,
+    "SUBTITLE_IMPLEMENTATION_QA_PASS": false,
+    "FINAL_TECH_QA_PASS": false
+  },
+  "next_stage": "W09_SUBTITLE_STYLE_OPTIMIZATION",
+  "locked_at": "2026-08-24 Asia/Manila"
+}
