@@ -1,8 +1,8 @@
-# Rules｜MV Editing Runtime Contract v1.0
+# Rules｜MV Editing Runtime Contract v1.1
 
 > Status: `ACTIVE / WEB_R2_VALIDATED`
 > Role: MV 后期剪辑的独立运行规则。主 Workflow 只定义阶段与 Gate；本文件负责可复用的 Picture Edit / 网页端预览 / Fragmentation / 字幕实现接口。
-> Evidence base: WEB R2 V1/V2 timing failures + V3 fragmented-cut feedback + V3.1 long-cut improvement.
+> Evidence base: WEB R2 V1/V2 timing failures + V3 fragmented-cut feedback + V3.1 long-cut improvement + W09 subtitle geometry calibration.
 
 ---
 
@@ -175,8 +175,23 @@ W07 不只写“PASS/FAIL”，必须给编辑器可执行素材地图：
 - restrained fade；
 - 与画面亮暗的可读性。
 
+### Subtitle-box geometry｜HARD
+
+当字幕采用“紧贴文字的半透明圆角底框”时：
+- **底框必须从该句字幕实际渲染后的 glyph/text pixel bounding box 重新生成**；
+- 禁止通过“把上一版圆角路径整体内收/外扩 N px”来改变 padding；圆角路径含控制点，几何缩放容易产生非对称框；
+- 禁止仅用 `字符数 × 字号` 估算框宽；必须基于实际渲染字形；
+- 当前 R1-derived WEB 基线 padding：`10px`，四边一致；
+- 单行与双行字幕使用同一 bbox→padding 算法；
+- 自动 QA：`left/right/top/bottom padding = target ±1px`；
+- 自动 QA：`text bbox center` 与 `box bbox center` 的 x/y 偏差均 `<=1px`；
+- 短句必须作为专项 QA 样本，因为短框最容易放大非对称误差；
+- 修改 padding 时必须**从文字 bbox 重建底框**，不得修改旧框坐标后复用。
+
+WEB R2 证据：`好吧哎哟哎哟` 为短句，旧版 22→10px 通过旧圆角路径坐标内收后产生明显视觉偏心；重建 bbox 后消除。该问题属于实现错误，不允许单句手工特判作为最终解决方案。
+
 顺序固定：
-`timing truth -> implementation check -> style optimization -> implementation re-check`。
+`timing truth -> implementation check -> style optimization -> geometry QA -> implementation re-check`。
 
 ---
 
@@ -190,4 +205,5 @@ W07 不只写“PASS/FAIL”，必须给编辑器可执行素材地图：
 - W07 必须产出可执行 VISUAL_SOURCE_MAP；
 - WEB Preview 当前统一放大裁水印；
 - 字幕先验证 timing，再优化 style；
+- 字幕底框必须由实际 glyph bbox 重建，并通过四边 padding / 中心误差自动 QA；
 - 用户指出的同类问题必须升级成规则/Gate，而不是只修当前视频。
