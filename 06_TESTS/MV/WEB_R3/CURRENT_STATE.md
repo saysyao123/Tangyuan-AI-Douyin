@@ -6,97 +6,93 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / CORE_ACCOUNT_15D_PATH_VALIDATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_RADAR_METHOD_PASS / OLD_SHORTLIST_DOWNGRADED / CORE_ACCOUNT_IDENTITIES_LOCKED / CORE_PROFILE_URLS_REQUIRED / CORE_15D_WORK_ENUMERATION_BLOCKED / HG01_NOT_READY`
+- STAGE: `R3-A3 / NINE_ACCOUNT_DATABASE + COMPLETENESS`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / DOUYIN_DATA_PATH_PASS / DATABASE_BOOTSTRAP_PASS / SQLITE_VALIDATION_PASS / 7_OF_9_15D_COMPLETE / AURA_PAGINATION_PENDING / XIANGJISHI_PAGINATION_PENDING / SONG_NORMALIZATION_PENDING / HG01_NOT_READY`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Why A3 was corrected again
+## Current authority
 
-用户明确收紧 R3 选歌验证逻辑：
+Primary R3-A authority is now:
+`R3_DOUYIN_DATABASE_PROTOCOL_v1.md`
 
-> 最终验证必须优先落在用户亲自提供的核心账号中。先检查这些核心账号近15天作品，直接比较重复歌曲，并把对应核心账号的具体抖音视频交付给用户确认；外围音推账号只作补充。
+Database source of truth:
+`06_TESTS/MV/WEB_R3/database/`
 
-因此旧逻辑：
-`public trend radar -> candidate -> later try core evidence`
-被替换为：
-`user core accounts -> 15d works -> direct work links -> song repeat -> candidate -> supplemental evidence`。
+The old public-search shortlist remains supplemental only and cannot bypass the database path.
 
-Authority for current R3-A:
-`R3_CORE_ACCOUNT_15D_PROTOCOL_v1.md`
+## Nine-account R3 test scope｜LOCKED FOR THIS ROUND
 
-## User-seeded core accounts｜IDENTITY LOCKED
+This calibration round uses exactly 9 unique Douyin accounts. Do not expand the sample pool before the first complete database -> normalization -> analysis -> HG01 loop is finished.
 
-| Account | Douyin ID from screenshot | R3 role |
-|---|---|---|
-| 泡泡与茶 | `paopaoandtea` | music/cover/revival core |
-| 火乐乐 | `HaoShuo2` | music-push/OST core |
-| 乐丨青春 | `87136360039` | music+MV/edit core |
-| XIANGJISHI | `153552032` | scenery music-push core |
-| Aura | `Auraaa0131` | scenery/music immersion core |
-| 黑米与糖豆 | `48003855484` | new-song/original/packaging core |
-| 佩佩治愈Ai | `25927051780` | visual core; music auxiliary |
-| 爱的魔力小姐姐 | `326111404` | mixed auxiliary core |
+Current identities are stored in `database/accounts.csv` with `sec_uid` as the stable external key and `aweme_id` as the work key.
 
-`CORE_ACCOUNT_IDENTITIES_LOCKED = YES`
+The ninth account, `Lynne小凌`, is currently `R3_TEST_SUPPLEMENT`; its permanent role/weight is deliberately left for post-test calibration.
 
-## Required 15-day window
+## Database bootstrap result｜PASS
 
-- start: `2026-08-10`
-- end: `2026-08-24`
+Automated bootstrap run at `2026-08-24 17:05 +08:00` produced:
+- 9 unique accounts;
+- 89 real works in the current 15-day window;
+- 89 engagement snapshots;
+- 9 ingestion-run records;
+- generated SQLite validation: `foreign_key_check = PASS`;
+- `song_normalization` intentionally empty pending the next stage.
 
-Target deliverable per core account:
-- exact recent works；
-- direct Douyin/Douyin精选 work URL；
-- publish date/time；
-- caption/title；
-- displayed song/audio；
-- normalized SONG_FAMILY；
-- AUDIO_VERSION when known；
-- visible performance / visual format / packaging observations。
+Canonical files:
+- `database/accounts.csv`
+- `database/works.csv`
+- `database/work_metrics.csv`
+- `database/ingestion_runs.csv`
+- `database/song_normalization.csv`
+- `database/manifest.json`
+- `database/schema.sql`
+- `database/build_sqlite.py`
 
-## Current retrieval limitation｜BLOCKED, NOT GUESSED
+## 15-day completeness｜PARTIAL, EXPLICIT
 
-User provided profile screenshots, which are sufficient to identify nickname + Douyin ID, but screenshots do not contain canonical profile/share URLs (`/user/<sec_uid>`).
+Requested test window:
+- start: `2026-08-10 00:00:00`
+- end exclusive: `2026-08-25 00:00:00`
 
-Current public web indexing does not reliably surface these exact accounts by Douyin ID/name, so it cannot truthfully enumerate the full recent 15-day work list from screenshots alone.
+Current closure:
+- 7/9 accounts = `COMPLETE`;
+- Aura = `INCOMPLETE / EMPTY_PAGE_WITH_HAS_MORE`;
+- XIANGJISHI = `INCOMPLETE / EMPTY_PAGE_WITH_HAS_MORE`.
 
-Correct state:
-- `CORE_PROFILE_URLS_READY = NO`
-- `CORE_15D_WORK_ENUMERATION = BLOCKED`
-- `PUBLIC_INDEX_MISSING != NO_POSTS`
+This does **not** mean Aura / XIANGJISHI have no earlier works. Their page-1 data is real, but public pagination did not close the requested window.
 
-Minimal unblock input:
-user provides each core account's **Share profile / Copy link** once. User does **not** need to manually send individual videos.
+Correct rollback/fallback path:
+`PUBLIC_FAST -> SELF_HOST(cookie) -> SESSION_FALLBACK(jiji/browser)`.
 
-After profile links are supplied, target execution is:
-1. open/resolve each exact core profile；
-2. enumerate works from 2026-08-10 to 2026-08-24；
-3. collect direct work links；
-4. normalize SONG_FAMILY；
-5. compute core cross-account repeats；
-6. build clickable Core Douyin Evidence Pack；
-7. only then set `HG01_READY = YES`。
+## Data rules now locked for R3
 
-## Old A2/A3 artifacts
+- nickname is mutable and never a join key;
+- `sec_uid` identifies account;
+- `aweme_id` identifies work;
+- signed CDN video/music URLs are not canonical DB fields;
+- engagement is stored as time-series snapshots;
+- incomplete retrieval never silently becomes zero;
+- trend calculations must use normalized `SONG_FAMILY`;
+- actual MV production later locks exact `AUDIO_VERSION`.
 
-Previous external/public radar remains useful as supplemental research only:
-- `R3_MUSIC_RADAR_WEEK_01.csv`
-- `R3_A2_FIRST_SWEEP_REPORT_v1.md`
-- `R3_A2_SECOND_SWEEP_REPORT_v1.md`
-- `R3_MUSIC_SHORTLIST_v1.md`
+## Next execution order
 
-They must **not** be used as the primary HG01 decision packet until the core-account path is complete.
+1. Close Aura + XIANGJISHI 15-day pagination with fallback collector paths.
+2. Populate `song_normalization.csv` from the 89+ work rows.
+3. Compute database-only analysis:
+   - `distinct_account_repeat_15d`;
+   - `distinct_account_repeat_7d`;
+   - `music_radar_weighted_repeat`;
+   - `visual_account_repeat`;
+   - `72h_concentration`;
+   - `audio_version_consistency`.
+4. Build direct Douyin work Evidence Pack for strongest candidates.
+5. Only then set `HG01_READY = YES` and ask user to choose the R3 song.
 
 ## Not allowed now
 
-- no HG01 song choice from old shortlist；
-- no BGM lock；
-- no R3-B visual work；
-- no further expansion of peripheral trend accounts as the main task；
-- no assumption that missing public index means a core account did not use a song。
-
-## Next Gate
-
-Unblock `CORE_PROFILE_URLS_READY`.
-
-Then execute the 15-day core-account comparison and return only direct core-account Douyin evidence to user first.
+- no expansion beyond these 9 accounts as the main R3 test sample;
+- no HG01 choice from the old shortlist;
+- no BGM lock;
+- no R3-B visual work;
+- no treating the current 89 works as full 9-account coverage until Aura / XIANGJISHI are closed or explicitly fallback-failed with evidence.
