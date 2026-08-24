@@ -1,0 +1,36 @@
+name: R3 F2 Native Douyin Probe
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/f2_probe_trigger.txt'
+      - '06_TESTS/MV/WEB_R3/tools/run_f2_public_probe.py'
+      - '.github/workflows/r3-f2-public-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned F2
+        run: python -m pip install 'git+https://github.com/Johnserf-Seed/f2.git@7dab3e2ffffaa2535834d28fca99dbc2e89fa9d3'
+      - name: Run native F2 public-profile probe
+        env:
+          DOUYIN_COOKIE: ${{ secrets.DOUYIN_COOKIE }}
+        run: python 06_TESTS/MV/WEB_R3/tools/run_f2_public_probe.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-f2-native-probe
+          path: 06_TESTS/MV/WEB_R3/_f2_public_probe
+          retention-days: 7
