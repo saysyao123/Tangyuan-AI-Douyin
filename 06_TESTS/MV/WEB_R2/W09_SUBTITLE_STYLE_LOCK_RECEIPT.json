@@ -1,0 +1,34 @@
+{
+  "round": "WEB_R2",
+  "stage": "W09",
+  "status": "SUBTITLE_STYLE_QA_PASS",
+  "accepted_by_user": true,
+  "accepted_at": "2026-08-24 Asia/Manila",
+  "visual_reference": "R1 actual accepted subtitle screenshot + WEB R2 calibration",
+  "baseline_720x1280": {
+    "font_family": "Noto Sans CJK SC",
+    "font_weight": "Bold",
+    "font_size_px": 46,
+    "text_color": "near-white / #F8F8F8 family",
+    "outline_px": 1,
+    "subtitle_center": {"x": 360, "y": 1009},
+    "max_lines": 2,
+    "fade_in_ms": 100,
+    "fade_out_ms": 180,
+    "box_color": "#383838 family",
+    "box_alpha_ass": "H55",
+    "box_padding_px": {"top": 10, "bottom": 10, "left": 10, "right": 10},
+    "box_radius_px_approx": 8,
+    "box_geometry_source": "actual rendered glyph/text pixel bbox"
+  },
+  "hard_geometry_rules": {
+    "regenerate_box_from_current_text_bbox": true,
+    "no_legacy_rounded_path_inset_or_scale": true,
+    "padding_tolerance_px": 1,
+    "text_box_center_error_max_px": 1,
+    "short_line_special_qa_required": true,
+    "two_line_qa_required": true
+  },
+  "timing_policy": "canonical AUDIO_TIMELINE_PACKAGE only; no picture-cut nudging",
+  "user_note": "之后按这个标准来，不要来回循环处理；字幕需要固定审核确保没问题"
+}
