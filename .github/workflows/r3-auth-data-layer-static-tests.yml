@@ -12,6 +12,18 @@ on:
       - '06_TESTS/MV/WEB_R3/run_douyin_refresh.ps1'
       - '.gitignore'
       - '.github/workflows/r3-auth-data-layer-static-tests.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/data_layer/**'
+      - '06_TESTS/MV/WEB_R3/tools/setup_douyin_cookie.py'
+      - '06_TESTS/MV/WEB_R3/tools/collect_core_accounts_f2_auth.py'
+      - '06_TESTS/MV/WEB_R3/database/**'
+      - '06_TESTS/MV/WEB_R3/run_douyin_refresh.ps1'
+      - '06_TESTS/MV/WEB_R3/auth_static_test_trigger.txt'
+      - '.gitignore'
+      - '.github/workflows/r3-auth-data-layer-static-tests.yml'
   workflow_dispatch:
 
 permissions:
