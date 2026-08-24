@@ -63,14 +63,15 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
     observed_at TEXT NOT NULL
 );
 
+-- R3 correction: normalization is work-level, not raw-music-level.
+-- One Douyin original-sound label may contain multiple different SONG_FAMILY values.
 CREATE TABLE IF NOT EXISTS song_normalization (
-    song_key TEXT PRIMARY KEY,
-    music_title_raw TEXT,
-    music_author_raw TEXT,
+    aweme_id TEXT PRIMARY KEY REFERENCES works(aweme_id),
     song_family TEXT,
     audio_version TEXT,
-    normalization_status TEXT,
+    normalization_status TEXT NOT NULL,
     confidence REAL,
+    evidence_method TEXT,
     reviewed_at TEXT,
     notes TEXT
 );
@@ -79,3 +80,4 @@ CREATE INDEX IF NOT EXISTS idx_works_account_time ON works(account_id, create_ti
 CREATE INDEX IF NOT EXISTS idx_works_music_raw ON works(music_title_raw, music_author_raw);
 CREATE INDEX IF NOT EXISTS idx_metrics_aweme_time ON work_metrics(aweme_id, observed_at);
 CREATE INDEX IF NOT EXISTS idx_ingestion_account_time ON ingestion_runs(account_id, observed_at);
+CREATE INDEX IF NOT EXISTS idx_song_norm_family ON song_normalization(song_family);
