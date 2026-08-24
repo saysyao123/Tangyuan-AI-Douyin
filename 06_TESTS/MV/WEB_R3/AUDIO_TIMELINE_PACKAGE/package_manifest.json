@@ -1,0 +1,23 @@
+{
+  "package": "WEB_R3_AUDIO_TIMELINE_PACKAGE_v1",
+  "status": "LOCKED",
+  "audio_sha256": "f128163c62f16eb94e5e302d2f97f725bcaa775a457fc09ffd21b9c4f65a8553",
+  "duration_sec": 24.32,
+  "line_count": 8,
+  "primary_timing_route": "SAME_VERSION_LRC",
+  "files": [
+    "audio_identity.json",
+    "trusted_lyrics.txt",
+    "raw_evidence/timed_lyrics_source.md",
+    "alignment_provenance.json",
+    "line_timeline.csv",
+    "lyrics_exact.srt",
+    "anchor_words.csv",
+    "music_events.csv",
+    "alignment_qa_report.md"
+  ],
+  "gate": {
+    "AUDIO_TIMELINE_PACKAGE_LOCKED": true,
+    "word_level_karaoke_timing_claimed": false
+  }
+}
