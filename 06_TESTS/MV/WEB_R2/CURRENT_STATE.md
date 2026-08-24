@@ -13,10 +13,11 @@
 
 ## Runtime authority
 
-- Workflow: `04_HARNESS/workflows/mv.md` v1.5
+- Workflow: `04_HARNESS/workflows/mv.md` v1.6
 - Golden Runtime: `04_HARNESS/rules/mv_golden_runtime.md` v1.3
 - Audio Timeline: `04_HARNESS/rules/mv_audio_timeline.md` v1.0
 - Editing Runtime: `04_HARNESS/rules/mv_editing.md` v1.1+
+- Subtitle Runtime: `04_HARNESS/rules/mv_subtitle.md` v1.0
 - Source Normalization: `04_HARNESS/rules/mv_source_normalization.md` v1.0
 - AI Video: `04_HARNESS/rules/ai_video.md` v1.3
 
@@ -62,6 +63,9 @@ States:
 ## W09 Subtitle｜LOCKED
 
 User accepted the R1-derived screenshot-calibrated subtitle system and requested it become the stable default instead of restarting style exploration each project.
+
+Reusable runtime:
+`04_HARNESS/rules/mv_subtitle.md`
 
 Lock receipt:
 `06_TESTS/MV/WEB_R2/W09_SUBTITLE_STYLE_LOCK_RECEIPT.json`
