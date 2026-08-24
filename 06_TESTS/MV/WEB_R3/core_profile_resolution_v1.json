@@ -1,0 +1,12 @@
+[
+  {"case_id":"P01","input_link":"https://v.douyin.com/_YS8e0YhgWo/","sec_uid":"MS4wLjABAAAAf_8qxBTpR-lJ33P-nD-xiz_6-7r3dWPItLwyxC0_g-zQxSggtsoTao2hb7E-NxBR","duplicate_of":null},
+  {"case_id":"P02","input_link":"https://v.douyin.com/wIybp87hyRc/","sec_uid":"MS4wLjABAAAAweCqFMUURmYCeeUtf2K80y-9xij_b9mv_td9mmWy4Z1QDLdA0T1rj9EUX1ZOMvC1","duplicate_of":null},
+  {"case_id":"P03","input_link":"https://v.douyin.com/CjEXFsxea4E/","sec_uid":"MS4wLjABAAAAHsK7MKRJ_Yh8utLU5VHv4X48Ng9vhdqxYgbxBRDA_kOl0GDl0HcNAso2QXIRREAD","duplicate_of":null},
+  {"case_id":"P04","input_link":"https://v.douyin.com/u8LKkQ0QoY4/","sec_uid":"MS4wLjABAAAA_TyjlQm1QDz9oQlS4x7f3MzHvuL-V9IYMQ2Qsc2xWg4","duplicate_of":null},
+  {"case_id":"P05","input_link":"https://v.douyin.com/GkxtPfYaRFk/","sec_uid":"MS4wLjABAAAAA7AZUWzmrKI7pp_Ds4W7UvRzQhzleOq_H5QBzi1wUikZUBpD8bUjgkqwMIXwCvpo","duplicate_of":null},
+  {"case_id":"P06","input_link":"https://v.douyin.com/TJckP4icg1A/","sec_uid":"MS4wLjABAAAAd8OIqp9KLGK-xhkI2WVFY_6B2or9rxUa3D76YOLDauWbnV31_r37QSPHEwJtrx1s","duplicate_of":null},
+  {"case_id":"P07","input_link":"https://v.douyin.com/Gy5W5QEGc_s/","sec_uid":"MS4wLjABAAAAtxmz8hjhGyax79DGnNe5KojkphdWs1GOojeMcq3H-y4","duplicate_of":null},
+  {"case_id":"P08","input_link":"https://v.douyin.com/CZfBApZ33X8/","sec_uid":"MS4wLjABAAAAHsK7MKRJ_Yh8utLU5VHv4X48Ng9vhdqxYgbxBRDA_kOl0GDl0HcNAso2QXIRREAD","duplicate_of":"P03"},
+  {"case_id":"P09","input_link":"https://v.douyin.com/usOw3DchtXY/","sec_uid":"MS4wLjABAAAAa35gEPqHzLItRgy6Jf4T59m0Si3tx7YP2MV5G0TuOwmxxoFVK8M3pBpWZuKH8gfV","duplicate_of":null},
+  {"case_id":"P10","input_link":"https://v.douyin.com/vZceq-VjuH8/","sec_uid":"MS4wLjABAAAAjOlawHZ7VUXrucHJn6TfSU7Hm7bYP-fP_uCYBgDDalo","duplicate_of":null}
+]
