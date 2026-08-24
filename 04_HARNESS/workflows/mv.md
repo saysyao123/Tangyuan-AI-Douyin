@@ -1,8 +1,9 @@
-# Workflow｜AI MV Production v1.3
+# Workflow｜AI MV Production v1.4
 
-> Source: Round 01 Golden Sample + WEB R2 camera calibration + WEB R2 repeated timing technical rescue.
+> Source: Round 01 Golden Sample + WEB R2 camera calibration + WEB R2 timing rescue + WEB R2 V3/V3.1 editing calibration.
 > Role: authoritative MV execution workflow.
 > Core discipline: **no downstream stage may execute unless every required upstream Gate has a durable PASS artifact.**
+> Editing detail is intentionally modularized into `rules/mv_editing.md` and loaded JIT rather than expanding this workflow indefinitely.
 
 ## Entry Gate
 
@@ -12,6 +13,10 @@ Default runtime load order:
 3. `04_HARNESS/rules/mv_audio_timeline.md`
 4. current MV Round `CURRENT_STATE.md`
 5. stage-specific rules/templates JIT.
+
+JIT rule:
+- Stage 4/6/7/8/9 when production/edit decisions are needed: load `04_HARNESS/rules/mv_editing.md`.
+- Character image-to-video work: load `04_HARNESS/rules/ai_video.md`.
 
 Do not load full historical rounds unless debugging/regression.
 
@@ -75,7 +80,12 @@ No silent source/version swap after this point.
 > Contract template: `04_HARNESS/templates/mv_audio_timeline_package_contract.md`
 
 Purpose:
-lock the actual song timeline before any time-dependent directing/editing.
+lock the actual song timeline **before any time-dependent semantic analysis, director allocation, dynamic production, editing or subtitle work**.
+
+Why this position is fixed:
+- before Stage 2 the exact excerpt/version is not yet stable, so alignment work may be wasted;
+- after Stage 2, the audio identity is stable enough to align;
+- doing it later causes downstream visual allocation and subtitle timing to inherit guessed lyric positions, as WEB R2 V1/V2 demonstrated.
 
 Package must establish:
 1. exact locked-audio identity;
@@ -114,8 +124,6 @@ If any fails:
 
 **Do not enter Stage 3 until `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`.**
 
-Current WEB R2 exception: visual assets created before v1.3 remain valid, but no V3 edit may proceed until its package passes.
-
 ---
 
 # Stage 3｜Music / Lyric / Natural Beat Analysis
@@ -142,6 +150,8 @@ Its actual time ranges must reference the locked Package.
 
 # Stage 4｜Director Concept + Production Allocation
 
+Load `rules/mv_editing.md` JIT before deciding production segments.
+
 Define:
 - overall visual concept/world/palette/material;
 - character policy;
@@ -149,15 +159,14 @@ Define:
 - camera/motion differentiation;
 - conceptual visual units;
 - actual production segments;
-- raw-video headroom against locked BGM duration.
+- raw-video headroom against locked BGM duration;
+- **edit value of each planned source**: HOLD / BRIDGE / HIT / PEAK / RELEASE.
 
 Important:
-`conceptual unit != first-frame count != dynamic-video count`.
+`conceptual unit != first-frame count != dynamic-video count != final edit fragment count`.
 
-R1 validated example only:
-`36.8s final -> 8 × 5s raw = 40s source`.
-
-Director timing decisions must use Package line/anchor/music events, not approximate lyric guesses.
+Dynamic source is a material pool for editing, not a pre-cut final timeline.
+Director must plan both generation stability and downstream editability.
 
 Gate:
 `DIRECTOR_PLAN_LOCKED`
@@ -173,14 +182,16 @@ Each anchor should contain:
 - action entrance;
 - camera/spatial room;
 - secondary physical motion;
-- stable character/object closure.
+- stable character/object closure;
+- enough room for a clean source arc and usable endpoint.
 
 Review whole set for:
 - beauty;
 - lyric hit;
 - differentiation;
 - world continuity;
-- dynamic executability.
+- dynamic executability;
+- edit value.
 
 Gate:
 `FIRST_FRAME_SET_LOCKED`
@@ -190,13 +201,17 @@ Gate:
 # Stage 6｜Dynamic Prompt Design
 
 Default generation unit: Seedance 2 mini ~5s.
+Load `rules/mv_editing.md` + `rules/ai_video.md` JIT.
 
-Character image-to-video obeys `rules/ai_video.md` exact fictional-character prefix and first-frame character closure.
+Shot count is selected by lyric/director task, not by a fixed quota.
+WEB R2 validated production default:
+- `1-shot / one-take`: breathing, spatial progression, emotion hold, final release;
+- `2-shot`: common default for setup/event or detail/emotion;
+- `3-shot`: task-specific discovery / setup-event-aftermath / peak;
+- `>3-shot`: exceptional hook/peak only, not default.
 
-Shot count is selected by lyric/director task:
-- one-take when continuous progression is strong;
-- 2–3 shots for setup/event/aftermath, discovery, detail/emotion shifts;
-- denser structures for earned hook/motion peaks.
+For a 5s source, default preference is **1–2 shots**, with 3 shots used only when the semantic task earns it.
+The goal is not to create a mini finished MV inside every 5s clip; the goal is to create an edit-friendly source with a complete visual-action arc and clean in/out.
 
 Per Shot Camera Contract:
 `shot size + angle + start + movement + speed + subject relation + endpoint`.
@@ -206,7 +221,8 @@ Whole-set repetition Gate:
 - repeated standing/look-up;
 - repeated camera direction;
 - multi-shots that differ only nominally;
-- environment motion used as fake action.
+- environment motion used as fake action;
+- dense internal cut structures repeated across the batch.
 
 Gate:
 `DYNAMIC_PROMPT_SET_READY`
@@ -215,6 +231,7 @@ Gate:
 
 # Stage 7｜Dynamic Source QA / Retry
 
+Load `rules/mv_editing.md` JIT.
 Review the full raw source.
 
 Allowed status:
@@ -232,16 +249,28 @@ Check:
 - camera execution;
 - visual beauty;
 - whole-set repetition;
-- source audio policy.
+- source audio policy;
+- clean in/out and useful internal action windows.
 
 Retry by root cause; do not reset approved material unnecessarily.
 
 AI source audio is non-authoritative and is stripped at ingest unless a deliberately motivated ambience workflow is separately locked.
 
+### Required editor-facing output｜HARD
+
+W07 must output an executable `VISUAL_SOURCE_MAP`, including at minimum:
+- source clip id;
+- duration/fps;
+- clean usable window(s);
+- internal cut/action-event timing where relevant;
+- known risk window(s);
+- recommended edit role: HOLD / BRIDGE / HIT / PEAK / RELEASE;
+- QA status.
+
+A prose-only “this clip is good” review is insufficient for reusable editing.
+
 Gate:
 `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
-
-Output should include a `VISUAL_SOURCE_MAP` of clean/usable internal windows.
 
 ---
 
@@ -274,6 +303,7 @@ No picture timeline may be created before this check.
 
 # Stage 8B｜Picture Edit
 
+Load `rules/mv_editing.md` JIT.
 Load:
 - `line_timeline.csv`
 - `anchor_words.csv`
@@ -288,34 +318,27 @@ Create Edit Map from three clocks:
 Priority:
 `verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`.
 
+### Long-cut first default
+For lyrical/emotional MV, first build Natural-Beat-sized visual blocks and preserve complete source motion arcs.
 Do not force lyric start = picture cut.
-A picture may pre-enter a lyric to set up an action; the semantic hit should land near the verified Anchor Word/music event.
+Do not force Anchor Word = picture cut.
+A picture may pre-enter a lyric; a verified semantic hit should preferably happen inside the already-running shot.
 
-For every fragment record:
-- source clip;
-- source in/out;
-- final timeline in/out;
-- lyric/Beat served;
-- music event/Anchor Word served;
-- motion-arc reason;
-- full/trimmed status.
+WEB R2 default for ~35–40s lyrical MV:
+- roughly `8–12` external source fragments;
+- avoid multiple consecutive external fragments under `2s`;
+- avoid short-distance `A -> B -> A` recycling;
+- preserve a longer final release when material allows.
 
-R1 validated edit lesson:
-preserve good internal 5s actions; solve total duration by selective trim + short overlap/transition instead of equal mechanical trimming.
+Run the **Fragmentation Gate** from `rules/mv_editing.md` before Edit Map lock.
 
-Self-audit:
-- every lyric has intentional visual coverage;
-- semantic hits use verified time, not guessed phrase positions;
-- no accidental duplicate source;
-- repeated visual families separated where possible;
-- known topology-risk windows excluded;
-- peak/release aligned to verified music map;
-- final tail has breathing room.
+### Web preview watermark fallback
+When current web tooling cannot clean generator marks precisely, use one consistent whole-source zoom/crop transform derived from the worst watermark position across the batch. Do not use mixed per-shot hiding. Recheck top-left and bottom-right risk frames before user delivery. Preserve 9:16 and `SAR 1:1`.
 
 Gate:
 `EDIT_MAP_LOCKED`
 
-Then render picture + locked BGM preview and perform rhythm/full-watch QA.
+Then render Picture + locked BGM preview and perform rhythm/full-watch QA plus audio-lag implementation check.
 
 Gate:
 `EDIT_PREVIEW_QA_PASS`
@@ -324,16 +347,26 @@ Gate:
 
 # Stage 9｜Subtitle Render + QA
 
+Load `rules/mv_editing.md` JIT.
 Subtitle timing is already fixed by the Audio Timeline Package.
 Stage 9 may style/render it but may not invent a new timing table from picture cuts.
 
-Base Golden style from R1:
-- Chinese lyrics;
+### Phase 9A｜Alignment-check preview
+When alignment still needs human perceptual confirmation:
+- use canonical `lyrics_exact.srt` directly;
+- temporarily disable subtitle fade if needed so fade latency cannot be mistaken for timing drift;
+- record frame-quantization error;
+- do not manually nudge subtitle timing to match picture cuts.
+
+### Phase 9B｜Style optimization
+After timing perception is accepted, optimize:
+- Chinese lyric typography;
 - light text;
 - dark semi-transparent rounded box tightly fit to text;
 - horizontal + vertical centering;
 - consistent padding;
 - fixed lower safe area;
+- longest-line wrapping;
 - restrained fade;
 - max 2 lines;
 - no default karaoke.
@@ -360,7 +393,7 @@ Once edit + subtitle pass:
 - strip AI source audio;
 - locked BGM is the sole music truth;
 - replace watermarked proxy with HD/no-watermark source where available without changing timing;
-- preserve approved composition where possible rather than solving watermark by arbitrary crop.
+- preserve approved composition where possible.
 
 Mandatory final QA:
 
@@ -432,10 +465,11 @@ A Round closes only after preserving:
 - user-accepted complete MV;
 - locked BGM identity/hash;
 - full `AUDIO_TIMELINE_PACKAGE` including raw timing evidence/provenance;
+- accepted `VISUAL_SOURCE_MAP`;
 - accepted Edit Map;
 - accepted subtitle style/timing asset;
 - success/failure root-cause notes;
 - promoted rules separated from experiments;
 - Current State / Automation Matrix.
 
-Do not record only the name of an accepted SRT/LRC. Preserve the executable timing asset and provenance so the Golden result is reproducible.
+Do not record only the name of an accepted SRT/LRC or a vague clip-quality note. Preserve executable timing and visual-source assets so the Golden result is reproducible.
