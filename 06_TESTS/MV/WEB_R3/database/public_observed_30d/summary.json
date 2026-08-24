@@ -1,0 +1,10 @@
+{
+  "mode": "PUBLIC_OBSERVED_30D",
+  "anchor_latest_observed": "2026-08-17 22:41:09",
+  "window_start": "2026-07-19 00:00:00",
+  "window_end_exclusive": "2026-08-18 00:00:00",
+  "unique_accounts": 9,
+  "observable_rows": 134,
+  "source": "BUGPK_DYZY_PUBLIC_PAGE1",
+  "semantics": "positive evidence only; absence is UNKNOWN, never NO_WORK; refresh every 15 days and merge by aweme_id"
+}

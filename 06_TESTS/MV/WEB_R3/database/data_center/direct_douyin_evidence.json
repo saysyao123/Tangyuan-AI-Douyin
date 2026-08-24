@@ -1,0 +1,228 @@
+[
+  {
+    "song_family": "如果风会替我说话",
+    "evidence_grade": "STRONG",
+    "distinct_accounts": 3,
+    "works": [
+      {
+        "account_id": "DYCORE08",
+        "nickname": "火乐烁",
+        "douyin_id": "HaoShuo2",
+        "create_time": "2026-08-15 19:08:14",
+        "aweme_id": "7674213606980010597",
+        "work_url": "https://www.douyin.com/video/7674213606980010597",
+        "caption": "#歌曲如果风会替我说话#如果风会替我说话林叙 重要的事情说三遍！带耳机听！带耳机听！带耳机听！#氛围感 #emo #火乐烁",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:林叙(错位秋天已上线)"
+      },
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-15 17:07:38",
+        "aweme_id": "7674182530162440933",
+        "work_url": "https://www.douyin.com/video/7674182530162440933",
+        "caption": "“如果风会替我说话 如果雨会替我回答…” #歌曲如果风会替我说话  #如果风会替我说话林叙  #星空  #银河  #星轨",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:林叙(错位秋天已上线)"
+      },
+      {
+        "account_id": "DYCORE03",
+        "nickname": "乐 ♩青春",
+        "douyin_id": "87136360039",
+        "create_time": "2026-08-14 23:53:17",
+        "aweme_id": "7673915982527960265",
+        "work_url": "https://www.douyin.com/video/7673915982527960265",
+        "caption": "如果风会替我说话 万般心底话，风代为诉说，雨代为应答。#音乐推荐 #如果风会替我说话 #自由风氛围感 #风和自由  #旅行推荐官",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:林叙(错位秋天已上线)"
+      }
+    ]
+  },
+  {
+    "song_family": "有几次想你了",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE08",
+        "nickname": "火乐烁",
+        "douyin_id": "HaoShuo2",
+        "create_time": "2026-08-15 19:02:51",
+        "aweme_id": "7674212223707078833",
+        "work_url": "https://www.douyin.com/video/7674212223707078833",
+        "caption": "#有几次想你了林叙#歌曲有几次想你了 是找ta还是算了？#emo #破碎感",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:林叙(错位秋天已上线)"
+      },
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-15 14:10:43",
+        "aweme_id": "7674136937083676665",
+        "work_url": "https://www.douyin.com/video/7674136937083676665",
+        "caption": "有几次想你了 有几次忍住了 有几句想说的 都变成算了 #歌曲有几次想你了  #有几次想你了林叙  #星空  #星轨  #银河",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:林叙(错位秋天已上线)"
+      }
+    ]
+  },
+  {
+    "song_family": "做她的大地别做她的天",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE08",
+        "nickname": "火乐烁",
+        "douyin_id": "HaoShuo2",
+        "create_time": "2026-08-15 17:05:47",
+        "aweme_id": "7674182052884173553",
+        "work_url": "https://www.douyin.com/video/7674182052884173553",
+        "caption": "#大眼仔版做她的大地别做她的天 “做她的大地 别做她的天”#宝妈 #宝爸带娃 #张若昀",
+        "audio_version": "R&B+EDIT_EXCERPT+NAMED_AUDIO"
+      },
+      {
+        "account_id": "DYCORE04",
+        "nickname": "Aura",
+        "douyin_id": "Auraaa0131",
+        "create_time": "2026-08-14 16:11:14",
+        "aweme_id": "7673796884212895016",
+        "work_url": "https://www.douyin.com/video/7673796884212895016",
+        "caption": "做她的大地 别做她的天.#日落 #inmyfeeling #海边 #大眼仔版做她的大地别做她的天",
+        "audio_version": "R&B+EDIT_EXCERPT+NAMED_AUDIO"
+      }
+    ]
+  },
+  {
+    "song_family": "杀破狼",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-14 20:03:41",
+        "aweme_id": "7673856812899138149",
+        "work_url": "https://www.douyin.com/video/7673856812899138149",
+        "caption": "#杀破狼rnb氛围版  #杀破狼  #萧泽   生是为了证明 爱存在的痕迹  #冰岛  #黑沙滩",
+        "audio_version": "R&B+DOUYIN_ORIGINAL_SOUND:萧泽x.z"
+      },
+      {
+        "account_id": "DYCORE03",
+        "nickname": "乐 ♩青春",
+        "douyin_id": "87136360039",
+        "create_time": "2026-08-14 00:02:20",
+        "aweme_id": "7673547221526478026",
+        "work_url": "https://www.douyin.com/video/7673547221526478026",
+        "caption": "杀破狼  纵是破灭的宿命 也要寻一点爱的痕迹 #音乐推荐 #杀破狼 #经典歌曲翻唱 #如何成为自己命运的主人 #旅行推荐官",
+        "audio_version": "COVER+DOUYIN_ORIGINAL_SOUND:萧泽x.z"
+      }
+    ]
+  },
+  {
+    "song_family": "爱让人脑袋空空",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE08",
+        "nickname": "火乐烁",
+        "douyin_id": "HaoShuo2",
+        "create_time": "2026-08-14 18:22:13",
+        "aweme_id": "7673830659274810033",
+        "work_url": "https://www.douyin.com/video/7673830659274810033",
+        "caption": "#爱让人脑袋空空电音版 爱总是 好了疤 忘了痛 让人脑袋空空#音乐分享 #火乐烁",
+        "audio_version": "ELECTRONIC+DOUYIN_ORIGINAL_SOUND:火乐烁"
+      },
+      {
+        "account_id": "DYCORE03",
+        "nickname": "乐 ♩青春",
+        "douyin_id": "87136360039",
+        "create_time": "2026-08-11 02:46:58",
+        "aweme_id": "7672476381650263962",
+        "work_url": "https://www.douyin.com/video/7672476381650263962",
+        "caption": "爱让人脑袋空空  受过的伤记不住，才会一再奔赴同一份汹涌。#音乐推荐 #爱让人脑袋空空 #旷野自由感 #当山川不只是出现在教科书上 #旅行推荐官",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:乐乐动画"
+      }
+    ]
+  },
+  {
+    "song_family": "若爱有尽头",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-14 17:43:48",
+        "aweme_id": "7673820758652768945",
+        "work_url": "https://www.douyin.com/video/7673820758652768945",
+        "caption": "“如果爱有尽头 怎么想念没有”  #歌曲若爱有尽头  #星空  #星轨  #银河  #inmyfeeling",
+        "audio_version": "NAMED_AUDIO"
+      },
+      {
+        "account_id": "DYCORE03",
+        "nickname": "乐 ♩青春",
+        "douyin_id": "87136360039",
+        "create_time": "2026-08-11 23:07:14",
+        "aweme_id": "7672790854586937178",
+        "work_url": "https://www.douyin.com/video/7672790854586937178",
+        "caption": "若爱有尽头 如果爱有尽头！怎么想念没有！#音乐推荐 #歌曲若爱有尽头 #失约的海鸥我替你看了  #每个人心中都有一片孤独的海   #旅行推荐官",
+        "audio_version": "NAMED_AUDIO"
+      }
+    ]
+  },
+  {
+    "song_family": "我救自己于人间水火",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE04",
+        "nickname": "Aura",
+        "douyin_id": "Auraaa0131",
+        "create_time": "2026-08-13 18:25:19",
+        "aweme_id": "7673460363010018611",
+        "work_url": "https://www.douyin.com/video/7673460363010018611",
+        "caption": "你是我花开那的一朵 祝你永远会记得我.#冰岛 #歌曲我救自己于人间水火 #inmyfeeling",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:Aura"
+      },
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-13 17:15:23",
+        "aweme_id": "7673442358406957285",
+        "work_url": "https://www.douyin.com/video/7673442358406957285",
+        "caption": "“我救自己于人间水火 我爱自己于苦难生活” #歌曲我救自己于人间水火  #inmyfeeling  #治愈  #氛围感",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:XIANGJISHI"
+      }
+    ]
+  },
+  {
+    "song_family": "Summer Love 爱在盛夏",
+    "evidence_grade": "CONFIRMED_REPEAT",
+    "distinct_accounts": 2,
+    "works": [
+      {
+        "account_id": "DYCORE04",
+        "nickname": "Aura",
+        "douyin_id": "Auraaa0131",
+        "create_time": "2026-08-13 17:00:00",
+        "aweme_id": "7673385877871136042",
+        "work_url": "https://www.douyin.com/video/7673385877871136042",
+        "caption": "与我坠入爱河吧 在这个盛夏.#海 #夏日  #歌曲summerlove爱在盛夏 #三棱镜 #inmyfeeling",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:三棱镜(8.28杭州个人专场)"
+      },
+      {
+        "account_id": "DYCORE07",
+        "nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+        "douyin_id": "153552032",
+        "create_time": "2026-08-12 17:03:01",
+        "aweme_id": "7673068083896814202",
+        "work_url": "https://www.douyin.com/video/7673068083896814202",
+        "caption": "与我坠入爱河吧 在这个盛夏 #歌曲summerlove爱在盛夏  #三棱镜   #inmyfeeling  #自由  #夏天",
+        "audio_version": "DOUYIN_ORIGINAL_SOUND:三棱镜(8.28杭州个人专场)"
+      }
+    ]
+  }
+]
