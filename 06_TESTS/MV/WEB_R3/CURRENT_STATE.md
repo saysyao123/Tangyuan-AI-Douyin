@@ -6,9 +6,10 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A / MUSIC_RADAR_BENCHMARK_CALIBRATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / BENCHMARK_SEEDS_DEFINED / MUSIC_RADAR_PENDING`
+- STAGE: `R3-A2 / 7-DAY_MUSIC_RADAR`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_ACCOUNT_REGISTRY_PASS / A2_FIRST_SWEEP_COMPLETE / A2_EXPANSION_PENDING`
 - CREATED_AT: `2026-08-24 Asia/Manila`
+- UPDATED_AT: `2026-08-24 Asia/Manila`
 
 ## R2 frozen baseline
 
@@ -40,53 +41,96 @@ Authority:
 Master:
 `06_TESTS/MV/WEB_R3/R3_MASTER_PLAN.md`
 
-## Current allowed work｜R3-A ONLY
+Micro-round matrix:
+`06_TESTS/MV/WEB_R3/R3_TEST_MATRIX_v1.md`
+
+## R3-A1｜PASS
+
+Registry:
+`06_TESTS/MV/WEB_R3/R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
+
+Current registry includes:
+- 8 user-seeded benchmark accounts；
+- 6 supplemental public music-radar accounts；
+- platform corroboration channels；
+- separate trend / visual / packaging weights。
+
+State:
+`R3_A1_ACCOUNT_REGISTRY_PASS = YES`
+
+## R3-A2｜FIRST SWEEP COMPLETE / NOT YET PASS
+
+Raw radar:
+`06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv`
+
+First-sweep report:
+`06_TESTS/MV/WEB_R3/R3_A2_FIRST_SWEEP_REPORT_v1.md`
+
+Current strongest observed SONG_FAMILY signals:
+
+1. `第57次取消发送`
+   - >=6 independent creator signals in roughly 2–6d；
+   - saturation / dance-format mismatch risk HIGH；
+   - strong trend signal but not automatically suitable for our MV.
+
+2. `甲乙丙丁`
+   - >=3 independent creator signals concentrated around <1d；
+   - platform corroboration present；
+   - visual fit ~8/10；
+   - current strong active-push candidate.
+
+3. `我不难过`
+   - >=3 independent music-account signals around <1d；
+   - strong classic-revival signal；
+   - visual fit ~8/10.
+
+4. `雨后轻风有香`
+   - >=2 creator signals + platform/search corroboration in 1–5d；
+   - visual fit ~10/10；
+   - low-medium saturation；
+   - important early-rise healing candidate.
+
+5. `开始懂了`
+   - >=2 creator signals in 1–5d；
+   - medium revival signal；
+   - visual fit ~8/10.
+
+Platform-watch only for now:
+- `我怀念的`
+- `一直很安静`
+- `情歌`
+
+## A2 evidence policy
+
+- 搜不到某用户核心账号的近7天作品 != 该账号没发；标 `INDEX_PENDING`；
+- platform playlist appearance != independent creator post；
+- SONG_FAMILY 用于趋势聚合，AUDIO_VERSION 进入 MV Stage 2 才锁；
+- A3 shortlist 必须报告 evidence coverage；
+- repetition alone cannot win：必须扣除 saturation / format mismatch / audio-version ambiguity。
+
+## Current allowed work｜A2 ONLY
 
 Allowed:
-- establish benchmark account registry；
-- add more head music-push accounts；
-- inspect recent 7-day posts；
-- normalize song family / audio version；
-- calculate cross-account repeat / recency / velocity / saturation；
-- analyze title / caption / tag / cover packaging；
-- produce shortlist for HG01。
+- expand public recent music-push/revival creator evidence；
+- track current top SONG_FAMILY signals；
+- attempt to fill recent posts from user-seeded core accounts；
+- normalize AUDIO_VERSION variants；
+- compute weighted repeat / 72h velocity / visual fit / saturation；
+- observe title / caption / tag / cover patterns associated with top songs。
 
 Not allowed yet:
-- lock R3 song before shortlist；
-- generate R3 first frames；
-- change R2 subtitle/edit/timeline rules；
-- run R3-B visual experiments；
-- build full R3 MV；
-- promote benchmark observations to hard runtime rules。
-
-## Seed benchmark accounts from user
-
-Core music/trend:
-- 泡泡与茶
-- 火乐乐
-
-Visual / music integration:
-- 乐丨青春
-- XIANGJISHI
-- Aura
-
-Healing AI visual target:
-- 佩佩治愈Ai
-
-Original/new-song packaging:
-- 黑米与糖豆
-
-Auxiliary:
-- 爱的魔力小姐姐
+- HG01 song lock；
+- BGM clip lock；
+- R3-B first-frame tests；
+- full R3 MV；
+- changing R2 correctness runtime。
 
 ## Next Gate
 
-Deliver:
-- `R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
-- `R3_MUSIC_RADAR_WEEK_01.csv`
-- `R3_MUSIC_SHORTLIST_v1.md`
+Finish A2 expansion and produce weighted candidate table.
 
-Then run:
-`HG01 Song Aesthetic Gate`
+Then create:
+`R3_MUSIC_SHORTLIST_v1.md`
 
-Only after HG01 PASS + actual BGM excerpt HG02 may R3-B begin.
+Only after that run:
+`HG01 Song Aesthetic Gate`.
