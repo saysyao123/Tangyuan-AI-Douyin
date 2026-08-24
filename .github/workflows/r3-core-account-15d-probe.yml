@@ -8,6 +8,13 @@ on:
       - '06_TESTS/MV/WEB_R3/core_profile_links_input.json'
       - '06_TESTS/MV/WEB_R3/tools/run_core_15d_probe.py'
       - '.github/workflows/r3-core-account-15d-probe.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/core_profile_links_input.json'
+      - '06_TESTS/MV/WEB_R3/tools/run_core_15d_probe.py'
+      - '06_TESTS/MV/WEB_R3/probe_trigger.txt'
   workflow_dispatch:
 
 permissions:
@@ -18,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout R3
+      - name: Checkout probe ref
         uses: actions/checkout@v4
 
       - name: Set up Python
