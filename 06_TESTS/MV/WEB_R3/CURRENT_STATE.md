@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-B / DYNAMIC SOURCE GENERATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / DATA_CENTER_V1_PASS / D01_PASS / D02_PASS / HG01_PASS / SONG_FAMILY_LOCKED / TREND_REFERENCE_AUDIO_LOCKED / HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / R3_B_CHARACTER_VISUAL_BASELINE_LOCKED / FIRST_FRAME_DIRECTOR_PLAN_READY / MMP01_READY / FIRST_FRAME_EXECUTION_PLAN_READY / FIRST_FRAME_SET_QA_PASS / HG03_PASS / FIRST_FRAME_SET_LOCKED / DYNAMIC_PROMPTS_V1_READY`
+- STAGE: `R3-B / DYNAMIC SOURCE GENERATION + CAMERA CALIBRATION`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / DATA_CENTER_V1_PASS / D01_PASS / D02_PASS / HG01_PASS / SONG_FAMILY_LOCKED / TREND_REFERENCE_AUDIO_LOCKED / HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / R3_B_CHARACTER_VISUAL_BASELINE_LOCKED / FIRST_FRAME_DIRECTOR_PLAN_READY / MMP01_READY / FIRST_FRAME_EXECUTION_PLAN_READY / FIRST_FRAME_SET_QA_PASS / HG03_PASS / FIRST_FRAME_SET_LOCKED / DYNAMIC_PROMPTS_V1_READY / CAMERA_CALIBRATION_MATRIX_READY / DYNAMIC_PROMPTS_V2_CAMERA_CALIBRATION_READY`
 - UPDATED_AT: `2026-08-24 Asia/Shanghai`
 
 ## Locked Audio
@@ -89,34 +89,63 @@ States:
 
 ## Dynamic Stage
 
-Dynamic prompt package:
+Stable baseline prompt package:
 `R3_B_DYNAMIC_PROMPTS_v1.md`
 
-Target:
-- Seedance 2 mini;
-- 5s source per segment;
-- 9:16;
-- default 1–2 shots, edit-driven;
-- one dominant visual event per source;
-- first-frame character closure enforced;
-- veil continuity enforced;
+Active R3 camera-calibration package:
+`R3_B_DYNAMIC_PROMPTS_v2_CAMERA_CALIBRATION.md`
+
+Camera experiment matrix:
+`R3_B_CAMERA_CALIBRATION_MATRIX_v1.md`
+
+### v2 camera grammar by segment
+- S01: `MICRO DOLLY-IN`
+- S02: `LATERAL SLIDER PARALLEL TO GLASS`
+- S03: `SLOW DOLLY-OUT REVEAL`
+- S04: `FOREGROUND OCCLUSION SLIDE / REVEAL`
+- S05: `MINI ARC / ORBIT 6–10°`
+- S06: `LOCKED-OFF PERFORMANCE CONTROL`
+- S07: `DIAGONAL SLIDER + RACK FOCUS`
+- S08: `SLOW CRANE-RETREAT`
+
+Policy:
+- each 5s source has one primary camera grammar only;
+- camera movement must serve lyric/emotion rather than motion density;
+- first-frame character closure and veil continuity remain HARD;
 - `SOURCE_AUDIO = REMOVE`;
-- no BGM / singing / dialogue / narration generated in source clips.
+- v1 remains rollback baseline;
+- failed v2 grammar must fall back to nearest stable motion instead of adding complexity.
 
 Generation order:
 `R3_S01 -> R3_S02 -> R3_S03 -> R3_S04 -> R3_S05 -> R3_S06 -> R3_S07 -> R3_S08`
 
+## Camera QA extension
+
+In addition to W07 source QA, record per source:
+- `CAMERA_EXECUTION: PASS / PARTIAL / FAIL`
+- `IDENTITY_STABILITY`
+- `VEIL_STABILITY`
+- `SPACE_TOPOLOGY`
+- `LYRIC_FIT: 1–5`
+- `EDITABILITY: 1–5`
+- `CLEAN_ENDPOINT`
+- `REUSABLE_CAMERA_GRAMMAR`
+
+Promotion policy:
+R3 success is only `POSITIVE_EVIDENCE`. Camera grammar is not promoted to long-term Runtime until it is stable across at least two different scenes/songs.
+
 ## Current Gate / Next execution
 
 Current stage:
-`DYNAMIC_SOURCES_PENDING_EXTERNAL_GENERATION`
+`DYNAMIC_SOURCES_PENDING_EXTERNAL_GENERATION / CAMERA_CALIBRATION_ACTIVE`
 
 Next actions:
-1. generate eight 5s image-to-video sources from the locked first frames using `R3_B_DYNAMIC_PROMPTS_v1.md`;
+1. generate eight 5s image-to-video sources using `R3_B_DYNAMIC_PROMPTS_v2_CAMERA_CALIBRATION.md`;
 2. return sources in sequence S01–S08;
-3. run W07-style source QA: identity / veil / topology / event / camera / clean in-out / source audio;
-4. patch only failing sources at the nearest cause;
-5. when source QA passes, lock normalized shot library and enter Picture Edit / HG04.
+3. run W07-style source QA + camera calibration scoring;
+4. for v2 failures, compare against v1 nearest stable grammar and patch only the camera root cause;
+5. when source QA passes, lock normalized shot library and enter Picture Edit / HG04;
+6. after R3 close, only repeatedly validated camera grammars may be promoted into an MV Camera Library / Runtime rule.
 
 ## State chain
 
@@ -130,7 +159,9 @@ Next actions:
 → `HG03 PASS`
 → `FIRST_FRAME_SET_LOCKED`
 → `DYNAMIC_PROMPTS_V1_READY`
-→ **`DYNAMIC_SOURCES_PENDING_EXTERNAL_GENERATION`**
+→ `CAMERA_CALIBRATION_MATRIX_READY`
+→ `DYNAMIC_PROMPTS_V2_CAMERA_CALIBRATION_READY`
+→ **`DYNAMIC_SOURCES_PENDING_EXTERNAL_GENERATION / CAMERA_CALIBRATION_ACTIVE`**
 
 ## Data center refresh
 
