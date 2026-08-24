@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -28,6 +28,8 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -54,6 +56,21 @@ jobs:
           assert (p/'direct_douyin_evidence.json').exists()
           print(json.dumps(m, ensure_ascii=False, indent=2))
           PY
+      - name: Persist canonical data center on R3 branch
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            06_TESTS/MV/WEB_R3/database/public_observed_30d \
+            06_TESTS/MV/WEB_R3/database/data_center
+          if git diff --cached --quiet; then
+            echo 'No data-center changes to persist.'
+          else
+            git commit -m 'R3 data center: refresh public observed snapshot'
+            git push origin HEAD:test/mv-web-r3
+          fi
       - name: Upload data center build
         uses: actions/upload-artifact@v4
         with:
