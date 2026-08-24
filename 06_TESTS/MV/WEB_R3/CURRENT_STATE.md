@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A2 / 7-DAY_MUSIC_RADAR`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_ACCOUNT_REGISTRY_PASS / A2_FIRST_SWEEP_COMPLETE / A2_EXPANSION_PENDING`
+- STAGE: `R3-A3 / MUSIC_SHORTLIST_VALIDATION`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / A1_PASS / A2_PASS / SHORTLIST_READY / HG01_PENDING`
 - CREATED_AT: `2026-08-24 Asia/Manila`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
@@ -49,88 +49,93 @@ Micro-round matrix:
 Registry:
 `06_TESTS/MV/WEB_R3/R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
 
-Current registry includes:
-- 8 user-seeded benchmark accounts；
-- 6 supplemental public music-radar accounts；
-- platform corroboration channels；
-- separate trend / visual / packaging weights。
-
 State:
 `R3_A1_ACCOUNT_REGISTRY_PASS = YES`
 
-## R3-A2｜FIRST SWEEP COMPLETE / NOT YET PASS
+## R3-A2｜PASS
 
 Raw radar:
 `06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv`
 
-First-sweep report:
-`06_TESTS/MV/WEB_R3/R3_A2_FIRST_SWEEP_REPORT_v1.md`
+Reports:
+- `R3_A2_FIRST_SWEEP_REPORT_v1.md`
+- `R3_A2_SECOND_SWEEP_REPORT_v1.md`
 
-Current strongest observed SONG_FAMILY signals:
+A2 proved the Radar can distinguish:
+- `EARLY_RISE`
+- `CONFIRMED`
+- `CLASSIC_REVIVAL`
+- `OVERHEATED`
 
-1. `第57次取消发送`
-   - >=6 independent creator signals in roughly 2–6d；
-   - saturation / dance-format mismatch risk HIGH；
-   - strong trend signal but not automatically suitable for our MV.
+and can down-rank songs with:
+- saturation risk；
+- format mismatch；
+- AUDIO_VERSION ambiguity；
+while preserving visually strong early-rise candidates.
 
-2. `甲乙丙丁`
-   - >=3 independent creator signals concentrated around <1d；
-   - platform corroboration present；
-   - visual fit ~8/10；
-   - current strong active-push candidate.
+State:
+`R3_A2_7DAY_MUSIC_RADAR_PASS = YES`
 
-3. `我不难过`
-   - >=3 independent music-account signals around <1d；
-   - strong classic-revival signal；
-   - visual fit ~8/10.
+## R3-A3｜SHORTLIST READY
 
-4. `雨后轻风有香`
-   - >=2 creator signals + platform/search corroboration in 1–5d；
-   - visual fit ~10/10；
-   - low-medium saturation；
-   - important early-rise healing candidate.
+Shortlist:
+`06_TESTS/MV/WEB_R3/R3_MUSIC_SHORTLIST_v1.md`
 
-5. `开始懂了`
-   - >=2 creator signals in 1–5d；
-   - medium revival signal；
-   - visual fit ~8/10.
+Priority candidates:
 
-Platform-watch only for now:
-- `我怀念的`
-- `一直很安静`
-- `情歌`
+1. `雨后轻风有香`
+   - class: `EARLY_RISE`
+   - strongest healing-visual fit；
+   - strategic test fit #1；
+   - audio-title/version ambiguity must be resolved at Stage 2.
 
-## A2 evidence policy
+2. `循迹`
+   - class: `EARLY_RISE`
+   - strongest recent 48–72h velocity；
+   - high-density lyric section means excerpt selection is critical.
 
-- 搜不到某用户核心账号的近7天作品 != 该账号没发；标 `INDEX_PENDING`；
-- platform playlist appearance != independent creator post；
-- SONG_FAMILY 用于趋势聚合，AUDIO_VERSION 进入 MV Stage 2 才锁；
-- A3 shortlist 必须报告 evidence coverage；
-- repetition alone cannot win：必须扣除 saturation / format mismatch / audio-version ambiguity。
+3. `甲乙丙丁`
+   - class: `CONFIRMED`
+   - strongest trend certainty / >=7 recent independent signals；
+   - saturation rising.
 
-## Current allowed work｜A2 ONLY
+4. `我不难过`
+   - class: `CONFIRMED_CLASSIC_REVIVAL`
+   - high-quality music-account revival signal；
+   - darker healing direction.
 
-Allowed:
-- expand public recent music-push/revival creator evidence；
-- track current top SONG_FAMILY signals；
-- attempt to fill recent posts from user-seeded core accounts；
-- normalize AUDIO_VERSION variants；
-- compute weighted repeat / 72h velocity / visual fit / saturation；
-- observe title / caption / tag / cover patterns associated with top songs。
+5. `琵琶曲（东船与西舫）`
+   - class: `CONFIRMED_VISUAL`
+   - very strong visual fit but format/version risks higher.
 
-Not allowed yet:
-- HG01 song lock；
-- BGM clip lock；
-- R3-B first-frame tests；
-- full R3 MV；
-- changing R2 correctness runtime。
+Excluded priority example:
+`第57次取消发送 = OVERHEATED / FORMAT_MISMATCH`.
 
-## Next Gate
+## Current Gate｜HG01
 
-Finish A2 expansion and produce weighted candidate table.
+User should now select only the `SONG_FAMILY` to enter R3-B0.
 
-Then create:
-`R3_MUSIC_SHORTLIST_v1.md`
+Recommended R3 test-value order:
+1. `雨后轻风有香`
+2. `循迹`
+3. `甲乙丙丁`
+4. `我不难过`
+5. `琵琶曲（东船与西舫）`
 
-Only after that run:
-`HG01 Song Aesthetic Gate`.
+## Not allowed until HG01 PASS
+
+- exact AUDIO_VERSION lock；
+- BGM excerpt render；
+- Audio Timeline Package；
+- Healing Visual B1/B2 tests；
+- full R3 MV。
+
+## Next after HG01
+
+`R3-B0`:
+1. identify exact audio version candidates；
+2. obtain actual audio；
+3. create full-sentence excerpt candidate；
+4. run `HG02 BGM Excerpt Listening Gate`；
+5. only after BGM lock build a fresh `AUDIO_TIMELINE_PACKAGE`；
+6. then enter R3-B1 Static Healing Visual mini-test.
