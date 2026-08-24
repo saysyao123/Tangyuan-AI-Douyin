@@ -1,0 +1,23 @@
+{
+  "version": "DATA_CENTER_v1",
+  "mode": "PUBLIC_OBSERVED_30D",
+  "semantics": "POSITIVE_EVIDENCE_ONLY",
+  "observed_at": "2026-08-24T20:21:50+08:00",
+  "anchor_latest_observed": "2026-08-17 22:41:09",
+  "rolling_window_start": "2026-07-19 00:00:00",
+  "rolling_window_end_exclusive": "2026-08-18 00:00:00",
+  "locked_core_accounts": 9,
+  "fresh_snapshot_rows": 134,
+  "cumulative_unique_works": 134,
+  "current_window_auto_high_works": 98,
+  "repeated_song_families": 8,
+  "normalization_status_counts": {
+    "AUTO_HIGH": 98,
+    "UNRESOLVED": 12,
+    "REVIEW_REQUIRED": 24
+  },
+  "refresh_cadence_days": 15,
+  "next_refresh_due_approx": "2026-09-08",
+  "absence_semantics": "UNKNOWN_NOT_NEGATIVE",
+  "hg01_evidence_ready": true
+}
