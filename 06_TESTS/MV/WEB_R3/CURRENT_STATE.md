@@ -6,9 +6,9 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-B0 / EXACT AUDIO VERSION -> HG02 LISTENING`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / DATA_CENTER_V1_PASS / D01_PASS / D02_PASS / HG01_PASS / SONG_FAMILY_LOCKED / TREND_REFERENCE_AUDIO_LOCKED / HG02_PENDING_USER_LISTEN`
-- UPDATED_AT: `2026-08-24 Asia/Manila`
+- STAGE: `R3-B0 / STAGE 2A AUDIO TIMELINE PACKAGE`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / DATA_CENTER_V1_PASS / D01_PASS / D02_PASS / HG01_PASS / SONG_FAMILY_LOCKED / TREND_REFERENCE_AUDIO_LOCKED / HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_BUILDING`
+- UPDATED_AT: `2026-08-24 Asia/Tokyo`
 
 ## Locked upstream nodes
 
@@ -65,58 +65,75 @@ Trend-native audio reference:
 Public full-track discovery currently identifies a likely full release as:
 `如果风会替我说话 — 张蓓蓓、林叙`
 
-The full release is not yet the production BGM lock.
+The full release is not the production BGM for this R3 test.
 
-## HG02 listening reference
+## HG02｜BGM lock
 
-A `24.320s` listening reference has been built from the actual 火乐烁 core work using the shared trend-native audio.
+Human Gate:
+`PASS`
 
-Purpose:
-`HG02 listening only`
+Receipt:
+`B0_HG02_BGM_LOCK_RECEIPT_v1.md`
 
-Current decision options:
+Locked artifact:
+`如果风会替我说话_R3_HG02_抖音同款24秒试听.mp3`
 
-### Option A｜Trend-native short MV
-Lock the ~24s shared Douyin version.
+Locked identity:
+- duration: `24.320000s`
+- sample rate: `44100 Hz`
+- channels: `2`
+- SHA-256: `f128163c62f16eb94e5e302d2f97f725bcaa775a457fc09ffd21b9c4f65a8553`
+- speed/time-stretch: `none after HG02 artifact creation`
 
-Advantages:
-- exact audio already repeated across 3 core accounts;
-- strongest trend/version fidelity;
-- fits short high-completion music-promotion format;
-- avoids unnecessary version drift.
+States:
+- `HG02_BGM_LISTENING_PASS = YES`
+- `BGM_LOCKED = YES`
 
-### Option B｜Extended MV
-Continue to obtain/validate the full `张蓓蓓、林叙` track and choose a `30–40s` excerpt containing the same hook.
+## Stage 2A｜Audio Timeline Package
 
-Advantages:
-- more lyric/visual beat space.
+Status:
+`BUILDING`
 
-Cost/risk:
-- another source-version alignment step;
-- may drift away from the exact audio asset already validated by the database.
+Authority:
+`04_HARNESS/rules/mv_audio_timeline.md`
 
-## Current Gate
+Required before downstream timing work:
+- exact audio identity
+- trusted lyrics
+- raw strong timing evidence
+- provenance
+- line timeline
+- exact SRT
+- anchor words
+- music events
+- alignment QA
+- package manifest
 
-- `D01 = PASS`
-- `D02 = PASS`
-- `HG01 SONG AESTHETIC GATE = PASS`
-- `SONG_FAMILY_LOCKED = 如果风会替我说话`
-- `TREND_REFERENCE_AUDIO_VERSION_LOCKED = YES`
-- `HG02 BGM LISTENING = PENDING`
-- `BGM_LOCKED = NO`
+Current Gate:
+- `AUDIO_TIMELINE_PACKAGE_LOCKED = NO`
 
-No Audio Timeline Package, director work, first frames, dynamic prompts or visual generation may begin before HG02 PASS.
+No formal Director timing allocation, First Frames, Dynamic prompts, Picture Edit, or Subtitle production may begin before Stage 2A PASS.
+
+## Current state chain
+
+`D01 PASS`
+→ `D02 PASS`
+→ `HG01 PASS`
+→ `SONG_FAMILY_LOCKED`
+→ `TREND_REFERENCE_AUDIO_VERSION_LOCKED`
+→ `HG02 PASS`
+→ `BGM_LOCKED`
+→ **`AUDIO_TIMELINE_PACKAGE_BUILDING`**
 
 ## Next execution order
 
-1. User listens to the ~24s trend-native HG02 reference.
-2. User chooses:
-   - `A / 24s trend-native`, or
-   - `B / continue full-track discovery for a longer excerpt`.
-3. If A: lock BGM and create Audio Timeline Package.
-4. If B: obtain/validate the full track, create 1–2 excerpt candidates, then HG02 again.
-5. Only after BGM lock continue into the R2-validated audio timeline / director / visual chain.
+1. Obtain/lock trusted lyric text for the exact 24.32s clip.
+2. Build a Strong Route alignment against the locked BGM.
+3. Independently cross-check first/middle/final lines and repeated occurrences if any.
+4. Build `line_timeline.csv + lyrics_exact.srt + anchor_words.csv + music_events.csv`.
+5. Run ground-truth QA and package manifest/hash checks.
+6. If all hard states PASS: `AUDIO_TIMELINE_PACKAGE_LOCKED = YES` and only then enter Natural Beat / R3-B visual calibration.
 
 ## Data center refresh
 
-Keep the current 9-account data center intact and refresh approximately every 15 days by `aweme_id` incremental merge. Database refresh is independent of the current B0/HG02 production Gate.
+Keep the current 9-account data center intact and refresh approximately every 15 days by `aweme_id` incremental merge. Database refresh is independent of the current Stage 2A production Gate.
