@@ -17,9 +17,9 @@ GENERIC_TAGS = {
     '氛围感','治愈','治愈系','自由','夏天','夏日','星空','星轨','银河','冰岛','冰岛黑沙滩','海边','海',
     'inmyfeeling','inmyfeelings','旅行推荐官','一站式ai创作工作台','ai视频生产级时代','即梦ai','抖音ai创作大赛',
     '中式美学','中式意境','国风','古风','油画风格','极端天气','infp','情侣','异地恋','宝妈','宝爸带娃',
+    '火乐烁','泡泡与茶','黑米与糖豆','佩佩治愈ai','xiangjishi','鱼子西','张宇宙','大溪地','天宫',
 }
 
-# Explicit variants we have already observed in the nine-account R3 sample.
 ALIASES = {
     '如果风会替我说话林叙': ('如果风会替我说话', None),
     '有几次想你了林叙': ('有几次想你了', None),
@@ -41,6 +41,9 @@ VERSION_PATTERNS = [
     ('古筝', 'INSTRUMENTAL_GUZHENG'), ('剪辑版', 'EDIT_EXCERPT'), ('片段', 'EDIT_EXCERPT'),
     ('翻唱', 'COVER'), ('粤语', 'CANTONESE'),
 ]
+
+MUSIC_ROLE_PREFIXES = ('MUSIC_', 'EDIT_LYRIC_MUSIC')
+MUSIC_CONTEXT_TAGS = {'音乐推荐','音乐分享','音乐种草计划','音乐种草激励计划','新歌推荐','原创音乐','原创歌曲推荐','翻唱','热歌榜翻唱','好听的音乐分享'}
 
 
 def norm(text: str) -> str:
@@ -74,13 +77,13 @@ def clean_family(value: str) -> tuple[str, str | None]:
         c = compact(value)
         if c in ALIASES:
             return ALIASES[c]
-    # Common audio-title suffixes: keep the song family, move variant to audio_version.
     version = None
     low = value.lower()
     for needle, label in VERSION_PATTERNS:
         if needle in low:
             version = label if version is None else f'{version}+{label}'
-    value = re.sub(r'[（(](?:剪辑版\d*|片段|副歌|氛围片段|r&b|rnb|电音版)[）)]', '', value, flags=re.I)
+    value = re.sub(r'[（(](?:剪辑版\d*|片段|副歌|氛围片段|r&b|rnb|电音版|古筝版)[）)]', '', value, flags=re.I)
+    value = re.sub(r'[（(](?:电音版)[）)].*$', '', value, flags=re.I)
     value = re.sub(r'[-—_](?:副歌|片段).*$', '', value, flags=re.I)
     value = re.sub(r'(?:电音版|电音remix|rnb氛围版)$', '', value, flags=re.I)
     value = value.strip(' -—_·')
@@ -89,7 +92,7 @@ def clean_family(value: str) -> tuple[str, str | None]:
 
 def plausible_tag(tag: str) -> bool:
     t = compact(tag)
-    if not t or t in GENERIC_TAGS:
+    if not t or t in {compact(x) for x in GENERIC_TAGS}:
         return False
     if len(t) < 2 or len(t) > 26:
         return False
@@ -98,86 +101,84 @@ def plausible_tag(tag: str) -> bool:
     return True
 
 
-def normalize_row(row: dict[str, str], reviewed_at: str) -> dict[str, str | float]:
+def result(aweme_id, family, version, status, confidence, method, reviewed_at, notes=''):
+    return {
+        'aweme_id': aweme_id, 'song_family': family, 'audio_version': version,
+        'normalization_status': status, 'confidence': confidence,
+        'evidence_method': method, 'reviewed_at': reviewed_at, 'notes': notes,
+    }
+
+
+def normalize_row(row: dict[str, str], role_category: str, reviewed_at: str):
     aweme_id = row['aweme_id']
     caption = norm(row.get('caption', ''))
+    body = caption.split('#', 1)[0].strip()
     raw_title = norm(row.get('music_title_raw', ''))
     raw_author = norm(row.get('music_author_raw', ''))
     hashtags = [norm(x) for x in str(row.get('hashtags', '')).split('|') if norm(x)]
 
-    # 1. Explicit '#歌曲X' is the strongest Douyin-visible song identity evidence.
+    # 1. Explicit '#歌曲X' is strongest work-level evidence.
     for tag in hashtags:
         if compact(tag).startswith('歌曲') and len(norm(tag)) > 2:
             family, alias_version = clean_family(tag)
             version = infer_version(tag, hashtags, raw_title, raw_author)
             if alias_version and alias_version not in version:
                 version = f'{alias_version}+{version}'
-            return {
-                'aweme_id': aweme_id, 'song_family': family, 'audio_version': version,
-                'normalization_status': 'AUTO_HIGH', 'confidence': 0.98,
-                'evidence_method': 'EXPLICIT_SONG_HASHTAG', 'reviewed_at': reviewed_at,
-                'notes': f'source_tag={tag}'
-            }
+            return result(aweme_id, family, version, 'AUTO_HIGH', 0.98, 'EXPLICIT_SONG_HASHTAG', reviewed_at, f'source_tag={tag}')
 
-    # 2. A real named music title is normally much stronger than generic original-sound labels.
+    # 2. Non-generic named audio metadata is strong evidence.
     if raw_title and raw_title != '模板音乐' and not raw_title.startswith('@'):
         family, title_version = clean_family(raw_title)
         if family:
             version = infer_version(raw_title, hashtags, raw_title, raw_author)
             if title_version and title_version not in version:
                 version = f'{title_version}+{version}'
-            return {
-                'aweme_id': aweme_id, 'song_family': family, 'audio_version': version,
-                'normalization_status': 'AUTO_HIGH', 'confidence': 0.95,
-                'evidence_method': 'NAMED_MUSIC_METADATA', 'reviewed_at': reviewed_at,
-                'notes': f'raw_title={raw_title}'
-            }
+            return result(aweme_id, family, version, 'AUTO_HIGH', 0.95, 'NAMED_MUSIC_METADATA', reviewed_at, f'raw_title={raw_title}')
 
-    # 3. For creator-original-sound labels, accept a song-like hashtag only when caption also corroborates it.
-    for tag in hashtags:
-        if not plausible_tag(tag):
-            continue
-        family, alias_version = clean_family(tag)
-        if not family:
-            continue
-        if compact(tag) in compact(caption) or compact(family) in compact(caption):
-            version = infer_version(tag, hashtags, raw_title, raw_author)
-            if alias_version and alias_version not in version:
-                version = f'{alias_version}+{version}'
-            return {
-                'aweme_id': aweme_id, 'song_family': family, 'audio_version': version,
-                'normalization_status': 'AUTO_HIGH', 'confidence': 0.89,
-                'evidence_method': 'CAPTION_HASHTAG_CORROBORATION', 'reviewed_at': reviewed_at,
-                'notes': f'corroborated_tag={tag}'
-            }
-
-    # 4. Keep a plausible hashtag as a review lead, but do not let it enter primary trend counts yet.
+    plausible = []
     for tag in hashtags:
         if plausible_tag(tag):
             family, alias_version = clean_family(tag)
+            if family:
+                plausible.append((tag, family, alias_version))
+
+    # 3. Caption BODY corroboration only. Hashtags appended to caption do NOT count as corroboration.
+    for tag, family, alias_version in plausible:
+        if body and (compact(tag) in compact(body) or compact(family) in compact(body)):
             version = infer_version(tag, hashtags, raw_title, raw_author)
             if alias_version and alias_version not in version:
                 version = f'{alias_version}+{version}'
-            return {
-                'aweme_id': aweme_id, 'song_family': family, 'audio_version': version,
-                'normalization_status': 'REVIEW_REQUIRED', 'confidence': 0.65,
-                'evidence_method': 'PLAUSIBLE_HASHTAG_ONLY', 'reviewed_at': reviewed_at,
-                'notes': f'candidate_tag={tag}'
-            }
+            return result(aweme_id, family, version, 'AUTO_HIGH', 0.90, 'BODY_HASHTAG_CORROBORATION', reviewed_at, f'body_tag={tag}')
 
-    return {
-        'aweme_id': aweme_id, 'song_family': '', 'audio_version': infer_version('', hashtags, raw_title, raw_author),
-        'normalization_status': 'UNRESOLVED', 'confidence': 0.0,
-        'evidence_method': 'NO_RELIABLE_SONG_IDENTITY', 'reviewed_at': reviewed_at,
-        'notes': ''
-    }
+    # 4. Active music accounts often put the song name only in the first useful hashtag.
+    # Require explicit music-post context; visual accounts do not get this shortcut.
+    is_music_role = role_category.startswith(MUSIC_ROLE_PREFIXES) if isinstance(MUSIC_ROLE_PREFIXES, str) else (role_category.startswith('MUSIC_') or role_category == 'EDIT_LYRIC_MUSIC')
+    has_music_context = any(compact(t) in {compact(x) for x in MUSIC_CONTEXT_TAGS} for t in hashtags)
+    if is_music_role and has_music_context and plausible:
+        tag, family, alias_version = plausible[0]
+        version = infer_version(tag, hashtags, raw_title, raw_author)
+        if alias_version and alias_version not in version:
+            version = f'{alias_version}+{version}'
+        return result(aweme_id, family, version, 'AUTO_HIGH', 0.87, 'MUSIC_ACCOUNT_CONTEXT_HASHTAG', reviewed_at, f'context_tag={tag}')
+
+    # 5. Everything else is a review lead, not a primary trend fact.
+    if plausible:
+        tag, family, alias_version = plausible[0]
+        version = infer_version(tag, hashtags, raw_title, raw_author)
+        if alias_version and alias_version not in version:
+            version = f'{alias_version}+{version}'
+        return result(aweme_id, family, version, 'REVIEW_REQUIRED', 0.65, 'PLAUSIBLE_HASHTAG_ONLY', reviewed_at, f'candidate_tag={tag}')
+
+    return result(aweme_id, '', infer_version('', hashtags, raw_title, raw_author), 'UNRESOLVED', 0.0, 'NO_RELIABLE_SONG_IDENTITY', reviewed_at)
 
 
 def main() -> int:
     reviewed_at = datetime.now(ZoneInfo('Asia/Manila')).isoformat(timespec='seconds')
     with (DATA_DIR / 'works.csv').open('r', encoding='utf-8-sig', newline='') as f:
         works = list(csv.DictReader(f))
-    rows = [normalize_row(row, reviewed_at) for row in works]
+    with (DATA_DIR / 'accounts.csv').open('r', encoding='utf-8-sig', newline='') as f:
+        accounts = {r['account_id']: r for r in csv.DictReader(f)}
+    rows = [normalize_row(row, accounts.get(row['account_id'], {}).get('role_category',''), reviewed_at) for row in works]
     fields = ['aweme_id','song_family','audio_version','normalization_status','confidence','evidence_method','reviewed_at','notes']
     with (DATA_DIR / 'song_normalization.csv').open('w', encoding='utf-8', newline='') as f:
         w = csv.DictWriter(f, fieldnames=fields, lineterminator='\n')
