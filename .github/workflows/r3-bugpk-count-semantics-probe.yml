@@ -7,6 +7,13 @@ on:
     paths:
       - '06_TESTS/MV/WEB_R3/tools/run_bugpk_count_semantics_probe.py'
       - '.github/workflows/r3-bugpk-count-semantics-probe.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/count_semantics_probe_trigger.txt'
+      - '06_TESTS/MV/WEB_R3/tools/run_bugpk_count_semantics_probe.py'
+      - '.github/workflows/r3-bugpk-count-semantics-probe.yml'
   workflow_dispatch:
 
 permissions:
