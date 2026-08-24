@@ -1,0 +1,45 @@
+{
+  "round": "WEB_R2",
+  "stage": "W10",
+  "status": "FINAL_TECH_QA_PASS",
+  "checked_at": "2026-08-24 Asia/Manila",
+  "final_file": "如果你也刚好抬头看树_MV_WEB_R2_FINAL.mp4",
+  "final_sha256": "ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286",
+  "picture": {
+    "codec": "h264",
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "frames": 891,
+    "duration_s": 37.125,
+    "sar": "1:1",
+    "dar": "9:16"
+  },
+  "audio": {
+    "codec": "aac",
+    "sample_rate": 44100,
+    "channels": 2,
+    "duration_s": 37.120,
+    "locked_bgm_global_lag_s": 0.0,
+    "decoded_correlation": 0.999047,
+    "ai_source_audio_leakage": false
+  },
+  "subtitle": {
+    "lines": 10,
+    "timing_source": "canonical AUDIO_TIMELINE_PACKAGE",
+    "max_abs_ass_vs_canonical_time_delta_s": 0.005,
+    "padding_px": 10,
+    "geometry_all_lines_pass": true,
+    "short_line_L05_pass": true,
+    "two_line_L09_pass": true
+  },
+  "visual_qa": {
+    "blackdetect_events": 0,
+    "web_watermark_safe_crop": "1.25x batch crop/zoom baseline",
+    "sampled_top_left_corner_marks": "clear",
+    "sampled_bottom_right_corner_marks": "clear",
+    "opening_peak_core_ending_samples": "reviewed"
+  },
+  "finalization": "metadata stripped by stream-copy remux; no picture/audio retime or re-encode introduced",
+  "gate": "FINAL_TECH_QA_PASS"
+}
