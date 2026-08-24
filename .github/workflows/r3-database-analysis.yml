@@ -1,0 +1,54 @@
+name: R3 Database Song Analysis
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/database_analysis_trigger.txt'
+      - '06_TESTS/MV/WEB_R3/database/normalize_songs.py'
+      - '06_TESTS/MV/WEB_R3/database/analyze_song_repeats.py'
+      - '06_TESTS/MV/WEB_R3/database/schema.sql'
+      - '06_TESTS/MV/WEB_R3/database/song_normalization.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Normalize work-level song identities
+        run: python 06_TESTS/MV/WEB_R3/database/normalize_songs.py
+      - name: Validate generated SQLite
+        run: python 06_TESTS/MV/WEB_R3/database/build_sqlite.py --out "$RUNNER_TEMP/r3_douyin_analysis.sqlite3"
+      - name: Analyze core-account repeats
+        run: python 06_TESTS/MV/WEB_R3/database/analyze_song_repeats.py
+      - name: Commit analysis back to PR branch
+        if: github.event_name == 'pull_request'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R3/database/song_normalization.csv 06_TESTS/MV/WEB_R3/database/analysis
+          if git diff --cached --quiet; then
+            echo 'No analysis changes.'
+          else
+            git commit -m 'R3: normalize nine-account songs and analyze repeats'
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
+      - name: Upload analysis DB
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-database-song-analysis
+          path: ${{ runner.temp }}/r3_douyin_analysis.sqlite3
+          retention-days: 7
