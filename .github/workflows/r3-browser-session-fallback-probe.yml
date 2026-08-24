@@ -1,0 +1,33 @@
+name: R3 Browser Session Fallback Probe
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/browser_session_probe_trigger.txt'
+      - '06_TESTS/MV/WEB_R3/tools/run_browser_session_fallback_probe.py'
+      - '.github/workflows/r3-browser-session-fallback-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests playwright
+      - run: python -m playwright install --with-deps chromium
+      - run: python 06_TESTS/MV/WEB_R3/tools/run_browser_session_fallback_probe.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-browser-session-fallback
+          path: 06_TESTS/MV/WEB_R3/_browser_session_fallback
+          retention-days: 7
