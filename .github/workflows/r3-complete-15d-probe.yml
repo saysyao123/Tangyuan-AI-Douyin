@@ -1,0 +1,35 @@
+name: R3 Complete 15D Core Account Probe
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/core_profile_resolution_v1.json'
+      - '06_TESTS/MV/WEB_R3/tools/run_bugpk_complete_15d_probe.py'
+      - '06_TESTS/MV/WEB_R3/complete_15d_probe_trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests
+      - name: Close the full 15-day window
+        run: python 06_TESTS/MV/WEB_R3/tools/run_bugpk_complete_15d_probe.py
+      - name: Upload completeness evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-complete-15d-core-probe
+          path: 06_TESTS/MV/WEB_R3/_complete_15d_probe
+          if-no-files-found: warn
+          retention-days: 7
