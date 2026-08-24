@@ -1,9 +1,9 @@
-# Workflow｜AI MV Production v1.5
+# Workflow｜AI MV Production v1.6
 
-> Source: Round 01 Golden + WEB R2 timing rescue + V3/V3.1 editing calibration + V3.2 shot normalization.
+> Source: Round 01 Golden + WEB R2 timing rescue + V3/V3.1 editing calibration + V3.2 shot normalization + W09 subtitle calibration.
 > Role: authoritative MV execution workflow.
 > Core: **no downstream stage executes unless required upstream Gate has a durable PASS artifact.**
-> Detailed timing/edit/source-normalization rules are modular and loaded JIT.
+> Detailed timing/edit/source-normalization/subtitle rules are modular and loaded JIT.
 
 ## Runtime load order
 
@@ -17,6 +17,7 @@ JIT:
 - Stage 4/6/7/8/9: `rules/mv_editing.md`
 - Stage 6 character I2V: `rules/ai_video.md`
 - Stage 7.5/8: `rules/mv_source_normalization.md`
+- **Stage 9: `rules/mv_subtitle.md`**
 
 A stage is complete only when its required artifact exists and its Gate is PASS. Missing evidence/capability means `BLOCKED/PARTIAL`; never silently downgrade evidence.
 
@@ -269,6 +270,8 @@ Gate: `EDIT_PREVIEW_QA_PASS`
 
 # Stage 9｜Subtitle Render + QA
 
+**Load `rules/mv_subtitle.md` JIT.**
+
 Subtitle timing already comes from the locked Audio Timeline Package. Stage 9 cannot invent/nudge a second timing table from picture cuts.
 
 ### 9A Alignment-check preview
@@ -278,18 +281,23 @@ When perceptual confirmation is needed:
 - record frame quantization;
 - investigate a reported line against Stage 2A evidence before any timing change.
 
-### 9B Style optimization
-After timing is accepted, optimize:
-- Chinese typography;
-- light text;
-- tight semi-transparent dark box;
-- horizontal/vertical centering;
-- padding;
-- lower safe area;
-- long-line wrapping;
-- restrained fade;
-- max two lines;
-- no default karaoke.
+### 9B Default style
+When the locked subtitle baseline has already been user-accepted:
+- **reuse it directly**;
+- do not restart A/B/C style exploration per song;
+- render the established typography/position/rounded-box/padding/fade system;
+- only reopen style design if the user explicitly requests a different subtitle look.
+
+### 9C Fixed implementation QA｜HARD
+Run the Subtitle Runtime Gate:
+- all-line timing implementation check against canonical SRT;
+- actual rendered glyph bbox -> fresh rounded box generation;
+- all-line four-side padding QA;
+- all-line text/box center QA;
+- mandatory first / shortest / longest-one-line / two-line / final visual samples;
+- no overflow / critical-subject cover / unsafe-area failure.
+
+Implementation defects are fixed as implementation defects; they do not automatically reopen style exploration.
 
 Gates:
 `SUBTITLE_STYLE_QA_PASS`
@@ -353,8 +361,8 @@ Preserve:
 - accepted `VISUAL_SOURCE_MAP`;
 - normalized Shot Library Map when used;
 - accepted Edit Map;
-- accepted subtitle timing/style asset;
+- accepted subtitle timing/style asset + geometry/timing QA report;
 - root-cause notes and promoted rules;
 - Current State / Automation Matrix.
 
-Do not preserve only filenames or vague QA prose. Preserve executable timing/source/edit assets so the result is reproducible.
+Do not preserve only filenames or vague QA prose. Preserve executable timing/source/edit/subtitle assets so the result is reproducible.
