@@ -4,12 +4,14 @@
 
 ## Overall
 
-- Current Stage: `W09 / SUBTITLE_STYLE_OPTIMIZATION`
-- Overall State: `W02A_PASS / W07_PASS / SHOT_LIBRARY_READY / EDITOR_AUDIO_GATE_PASS / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / SUBTITLE_STYLE_PENDING`
+- Current Stage: `W10 PASS / W11 CLOSE_PENDING`
+- Overall State: `W02A_PASS / W07_PASS / SHOT_LIBRARY_READY / EDITOR_AUDIO_GATE_PASS / V3_2_PICTURE_LOCKED / EDIT_PREVIEW_QA_PASS / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED`
 - Audio timeline hard gate: `PASS`
 - Source normalization layer: `PASS / PROMOTED`
 - Picture edit human gate: `PASS`
-- Subtitle style: `NOT LOCKED`
+- Subtitle style: `PASS / LOCKED`
+- Subtitle implementation: `PASS`
+- Final technical QA: `PASS`
 
 ## Stage Board
 
@@ -27,21 +29,43 @@
 | W07 | Dynamic Source QA | PASS WITH TRIM | 风险窗已识别 |
 | W07.5 | Shot Normalization | PASS / SHOT_LIBRARY_READY | 22 Atom/Arc；原片保留；WEB统一1.25×安全裁切 |
 | W08A | Editor Audio Gate | PASS | locked BGM + Package revalidated |
-| **W08B** | **Picture Edit** | **PASS / V3.2 LOCKED** | 用户确认“这次效果不错，按这个方案固化” |
-| **W09** | **Subtitle** | **IN PROGRESS / STYLE OPTIMIZATION** | timing锁定；只优化形式与实现 |
-| W10 | Final QA | NOT STARTED | |
-| W11 | Close | NOT STARTED | |
+| W08B | Picture Edit | PASS / V3.2 LOCKED | Atom-first；用户确认 |
+| **W09** | **Subtitle** | **PASS / LOCKED** | R1-derived screenshot-calibrated baseline；padding10；bbox geometry gate |
+| **W10** | **Final QA** | **PASS** | 0 audio lag；no black frames；watermark-risk sample clear |
+| W11 | Close | HUMAN FINAL ACCEPTANCE PENDING | final package rendered |
 
-## V3.2 locked picture basis
+## Locked subtitle baseline
 
-- accepted Edit Map: `W08B_V3_2_ATOMIC_ROUGH_EDIT_MAP.csv`
-- receipt: `W08B_V3_2_PICTURE_GATE_PASS_RECEIPT.json`
-- 13 selected visible units
-- Atom-first; coherent Arc retained only when explicitly justified
-- 891 frames / 24fps / 37.125s
-- locked audio 37.120s
-- preview-vs-locked-BGM lag `0.000000s`
-- accepted preview SHA `797ac52cf470fb871f312b7699247b9f0bbc46120d1124813e39a459f4f1812f`
+Receipt:
+`W09_SUBTITLE_STYLE_LOCK_RECEIPT.json`
+
+At 720×1280:
+- bold Chinese sans serif, nominal 46px;
+- near-white text;
+- center around `360,1009`;
+- dark semi-transparent rounded box;
+- four-side padding `10px`;
+- max 2 lines;
+- fade `100ms / 180ms`;
+- actual rendered glyph bbox -> fresh box generation;
+- no legacy rounded-path inset/scale;
+- geometry auto QA: each side target ±1px and center error <=1px;
+- mandatory short-line and two-line samples.
+
+## W10 result
+
+Receipt:
+`W10_FINAL_TECH_QA_RECEIPT.json`
+
+Final:
+- 720×1280 / 24fps / 891 frames;
+- picture 37.125s;
+- audio 37.120s;
+- global lag vs locked BGM `0.000000s`;
+- subtitle max implementation delta `0.005s`;
+- blackdetect events `0`;
+- sampled top-left / bottom-right WEB watermark zones clear;
+- final SHA `ac0cc8da59cebad3485a6da13c7d9a6d1ff00d4baaafbe2ffdfce2405b939286`.
 
 ## Current states
 
@@ -51,18 +75,13 @@
 - `EDITOR_AUDIO_GATE_PASS = YES`
 - `EDIT_MAP_LOCKED = YES`
 - `EDIT_PREVIEW_QA_PASS = YES`
-- `SUBTITLE_STYLE_QA_PASS = NO`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = NO`
-- `FINAL_TECH_QA_PASS = NO`
-- `DELIVERABLE_RENDERED = NO`
+- `SUBTITLE_STYLE_QA_PASS = YES`
+- `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
+- `FINAL_TECH_QA_PASS = YES`
+- `DELIVERABLE_RENDERED = YES`
 
 ## Next
 
-W09 Subtitle Style Optimization:
-- keep canonical `lyrics_exact.srt` timing unchanged;
-- optimize typography, size, tight semi-transparent box, centering, padding, safe area, long-line wrap and restrained fade;
-- inspect first/middle/longest/final lines;
-- then run subtitle implementation QA against the canonical SRT.
-
-After W09 PASS:
-`W10 Final Polish + full-watch technical QA -> DELIVERABLE_RENDERED`.
+W11 Close only:
+- user final acceptance;
+- close Round and preserve final reproducible assets / receipts / rules.
