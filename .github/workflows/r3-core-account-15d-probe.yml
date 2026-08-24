@@ -1,0 +1,49 @@
+name: R3 Core Account 15D Probe
+
+on:
+  push:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/core_profile_links_input.json'
+      - '06_TESTS/MV/WEB_R3/tools/run_core_15d_probe.py'
+      - '.github/workflows/r3-core-account-15d-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout R3
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Prepare public Douyin metadata backend
+        shell: bash
+        run: |
+          git clone --depth 1 https://github.com/jiji262/douyin-downloader.git .tmp_douyin_downloader
+          python -m pip install --upgrade pip
+          python -m pip install -r .tmp_douyin_downloader/requirements.txt
+
+      - name: Probe core profiles - metadata only
+        shell: bash
+        run: |
+          python 06_TESTS/MV/WEB_R3/tools/run_core_15d_probe.py
+
+      - name: Upload R3 probe evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-core-account-15d-probe
+          path: |
+            06_TESTS/MV/WEB_R3/_probe_output
+          if-no-files-found: warn
+          retention-days: 7
