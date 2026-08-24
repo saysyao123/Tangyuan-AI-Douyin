@@ -6,6 +6,7 @@ on:
       - test/mv-web-r3
     paths:
       - '06_TESTS/MV/WEB_R3/core_profile_links_input.json'
+      - '06_TESTS/MV/WEB_R3/core_profile_resolution_v1.json'
       - '06_TESTS/MV/WEB_R3/tools/run_bugpk_core_probe.py'
       - '06_TESTS/MV/WEB_R3/bugpk_probe_trigger.txt'
   workflow_dispatch:
@@ -16,7 +17,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - name: Checkout probe ref
         uses: actions/checkout@v4
