@@ -1,0 +1,15 @@
+{
+  "song_family": "如果风会替我说话",
+  "display_artist": "张蓓蓓、林叙",
+  "production_audio": "如果风会替我说话_R3_HG02_抖音同款24秒试听.mp3",
+  "douyin_music_asset_id": "7670880580757867270",
+  "container_duration_sec": 24.32,
+  "decoded_content_duration_sec": 24.286621,
+  "sample_rate_hz": 44100,
+  "channels": 2,
+  "sha256": "f128163c62f16eb94e5e302d2f97f725bcaa775a457fc09ffd21b9c4f65a8553",
+  "speed_time_stretch": "none after HG02 artifact creation",
+  "source_clip_start_sec": 0.0,
+  "source_clip_end_sec": 24.32,
+  "hg02": "PASS"
+}
