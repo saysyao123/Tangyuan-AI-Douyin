@@ -6,189 +6,117 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-A3 / DATA_CENTER_RUNTIME_LOCKED -> DIRECT_EVIDENCE_QA`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / NINE_ACCOUNT_TEST_SCOPE_LOCKED / PUBLIC_HISTORICAL_MODE_LOCKED / DATA_CENTER_V1_PASS / DATABASE_PROTOTYPE_STABLE / QUERY_INTERFACE_V1_PASS / HEALTH_GATE_PASS / AUTO_REFRESH_PASS / SONG_NORMALIZATION_PASS / REPEAT_ANALYSIS_PASS / HG01_DATA_READY / HG01_PENDING_USER_REVIEW`
+- STAGE: `R3-B0 / EXACT AUDIO VERSION -> HG02 LISTENING`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / DATA_CENTER_V1_PASS / D01_PASS / D02_PASS / HG01_PASS / SONG_FAMILY_LOCKED / TREND_REFERENCE_AUDIO_LOCKED / HG02_PENDING_USER_LISTEN`
 - UPDATED_AT: `2026-08-24 Asia/Manila`
 
-## Current authority
+## Locked upstream nodes
 
-Canonical R3-A data center:
+### D01｜Database Evidence Node
+`PASS`
+
+Canonical data center:
 `06_TESTS/MV/WEB_R3/database/data_center/`
-
-Runtime/query/update contract:
-`database/data_center/DATA_CENTER_RUNTIME_CONTRACT_v1.md`
-
-Human operating README:
-`database/data_center/README.md`
-
-Stable query interface:
-`database/query_data_center.py`
-
-Machine state:
-`database/data_center/manifest.json`
-
-Human status:
-`database/data_center/DATA_CENTER_STATUS.md`
-
-The old public-search shortlist is historical/supplemental only and cannot bypass the data-center evidence path.
-
-## Database prototype decision｜LOCKED
-
-`DATA_CENTER_v1` is now accepted as the stable R3 database prototype for the first production loop.
-
-It supports three persistent operations:
-
-1. **REFERENCE** — query accounts, works, songs, repeated SONG_FAMILY values, direct Douyin evidence and current machine state.
-2. **UPDATE** — refresh the locked 9-account public observation snapshot, merge by `aweme_id`, append metric/snapshot history, recompute normalization and repeats, validate, then persist back to the R3 branch.
-3. **CALL** — use the stable `query_data_center.py` interface or read the canonical data-center files directly from GitHub in a new conversation/Codex session.
-
-Validated query commands:
-- `status`;
-- `health`;
-- `accounts`;
-- `account <query>`;
-- `repeats`;
-- `song <query>`;
-- `work <aweme_id>`;
-- `search <keyword>`.
-
-The canonical rebuild was re-run after the query interface was introduced. The full workflow passed collection, build, `health`, `status`, `repeats`, and artifact validation.
-
-This is a stable Git-tracked analytical database prototype, not yet a hosted real-time SQL/API service.
-
-## Locked R3-A operating mode
-
-`9 CORE ACCOUNTS -> PUBLIC OBSERVED SNAPSHOT -> ROLLING 30D -> AWEME_ID MERGE -> WORK-LEVEL SONG_FAMILY -> POSITIVE CROSS-ACCOUNT REPEAT -> DIRECT DOUYIN EVIDENCE -> HG01`
 
 Mode:
 `PUBLIC_OBSERVED_30D / POSITIVE_EVIDENCE_ONLY`
 
-Evidence semantics:
-- directly observed repetition across independent core accounts is valid positive evidence;
-- unobserved work/song = `UNKNOWN`, never negative evidence;
-- the data center is an observed-repeat system, not a complete real-time Douyin census.
+Database prototype:
+`STABLE / QUERY_INTERFACE_V1_PASS / HEALTH_GATE_PASS`
 
-Authenticated F2 / jiji / TikHub are retained as future upgrade/fallback paths and are not prerequisites for the first R3 loop.
+### D02｜HG01 Candidate Evidence
+`PASS`
 
-## Nine-account core pool｜LOCKED
+Selection receipt:
+`D02_HG01_SELECTION_RECEIPT_v1.md`
 
-Exactly 9 unique Douyin accounts are used for this calibration round.
-Do not expand the main sample pool until the first data -> song -> MV -> publish loop is complete.
+Locked SONG_FAMILY:
+`如果风会替我说话`
 
-Stable identity:
-- account: `sec_uid` / internal `account_id`;
-- work: `aweme_id`;
-- nickname is mutable.
+Other D02 songs remain candidates for future rounds.
 
-## Data Center v1｜PASS
+## B0｜Exact Audio Version Discovery
 
-First canonical build completed on `2026-08-24`.
+Core audio probe:
+`B0_IF_WIND_AUDIO_PROBE/audio_probe_report.json`
 
-Current observation anchor:
-- latest reliably observed work: `2026-08-17 22:41:09`;
-- rolling window start: `2026-07-19 00:00:00`;
-- rolling window end exclusive: `2026-08-18 00:00:00`.
+Three direct core-account works were fully parsed/downloaded and compared:
+- 火乐烁 — aweme `7674213606980010597` — `24.286621s`
+- XIANGJISHI — aweme `7674182530162440933` — `11.900667s`
+- 乐 ♩青春 — aweme `7673915982527960265` — `12.073991s`
 
-Current dataset:
-- core accounts: `9`;
-- cumulative unique observed works: `134`;
-- AUTO_HIGH normalized works in current window: `98`;
-- REVIEW_REQUIRED: `24`;
-- UNRESOLVED: `12`;
-- cross-account repeated SONG_FAMILY: `8`.
+All three use the exact same Douyin music asset:
+- asset id: `7670880580757867270`
+- display: `@林叙（错位秋天已上线）创作的原声`
 
-Current strongest observed repeat:
-- `如果风会替我说话`;
-- observed in `3` independent core accounts;
-- all 3 observations fall inside the latest 15-day half-window;
-- best 72h concentration: `3` accounts;
-- visual-overlap accounts: `2`;
-- evidence grade: `STRONG`.
+Pairwise Chromaprint similarity:
+- 火乐烁 / XIANGJISHI: `0.994583`
+- 火乐烁 / 乐 ♩青春: `0.986020`
+- XIANGJISHI / 乐 ♩青春: `0.986250`
 
-Other observed repeats (2 independent accounts each):
-- `爱让人脑袋空空`;
-- `有几次想你了`;
-- `做她的大地别做她的天`;
-- `杀破狼`;
-- `若爱有尽头`;
-- `我救自己于人间水火`;
-- `Summer Love 爱在盛夏`.
+All best alignments use `shift=0`.
 
-## Canonical data-center files
+Decision:
+`SAME_AUDIO_FAMILY_CONFIRMED`
 
-- `database/data_center/observed_works.csv` — cumulative observed work facts;
-- `database/data_center/observed_metrics.csv` — engagement snapshots;
-- `database/data_center/snapshots.csv` — refresh receipts;
-- `database/data_center/coverage_latest.csv` — latest public-page account coverage;
-- `database/data_center/song_normalization.csv` — work-level SONG_FAMILY/AUDIO_VERSION mapping;
-- `database/data_center/song_repeat_candidates.csv` — repeat ranking;
-- `database/data_center/direct_douyin_evidence.json` — exact account/work links for HG01;
-- `database/data_center/manifest.json` — machine-readable state;
-- `database/data_center/DATA_CENTER_STATUS.md` — human-readable status.
+Trend-native audio reference:
+`DOUYIN_MUSIC_ASSET:7670880580757867270`
 
-## Refresh automation｜PASS
+Public full-track discovery currently identifies a likely full release as:
+`如果风会替我说话 — 张蓓蓓、林叙`
 
-Collector:
-`tools/run_public_observed_30d.py`
+The full release is not yet the production BGM lock.
 
-Builder:
-`database/build_public_data_center.py`
+## HG02 listening reference
 
-Query/health:
-`database/query_data_center.py`
+A `24.320s` listening reference has been built from the actual 火乐烁 core work using the shared trend-native audio.
 
-Workflow:
-`.github/workflows/r3-public-data-center-build.yml`
+Purpose:
+`HG02 listening only`
 
-Validated flow:
-`public collect -> rolling 30d -> aweme_id merge -> normalization -> repeat analysis -> query health validation -> auto-commit back to test/mv-web-r3`.
+Current decision options:
 
-Target cadence:
-- refresh approximately every `15 days`;
-- current approximate next refresh: `2026-09-08`;
-- every refresh preserves prior observations and merges by `aweme_id`.
+### Option A｜Trend-native short MV
+Lock the ~24s shared Douyin version.
 
-## Natural-language usage contract
+Advantages:
+- exact audio already repeated across 3 core accounts;
+- strongest trend/version fidelity;
+- fits short high-completion music-promotion format;
+- avoids unnecessary version drift.
 
-When the user says equivalents of:
-- `查数据库：X`;
-- `数据库里找 X`;
-- `看 X 账号`;
-- `看 X 这首歌`;
-- `查重复歌曲`;
+### Option B｜Extended MV
+Continue to obtain/validate the full `张蓓蓓、林叙` track and choose a `30–40s` excerpt containing the same hook.
 
-use this canonical data center first.
+Advantages:
+- more lyric/visual beat space.
 
-When the user says equivalents of:
-- `更新数据库`;
-- `刷新抖音数据库`;
-- `跑一轮数据中心`;
-
-run the canonical refresh/build/health path and persist the result back to `test/mv-web-r3`.
-
-No new context explanation is required from the user.
+Cost/risk:
+- another source-version alignment step;
+- may drift away from the exact audio asset already validated by the database.
 
 ## Current Gate
 
-`HG01_DATA_READY = YES`
+- `D01 = PASS`
+- `D02 = PASS`
+- `HG01 SONG AESTHETIC GATE = PASS`
+- `SONG_FAMILY_LOCKED = 如果风会替我说话`
+- `TREND_REFERENCE_AUDIO_VERSION_LOCKED = YES`
+- `HG02 BGM LISTENING = PENDING`
+- `BGM_LOCKED = NO`
 
-But HG01 has **not** passed yet.
-
-Next required step is to QA the strongest database candidates and deliver their exact core-account Douyin work evidence before locking one `SONG_FAMILY`.
+No Audio Timeline Package, director work, first frames, dynamic prompts or visual generation may begin before HG02 PASS.
 
 ## Next execution order
 
-1. QA `direct_douyin_evidence.json` for the strongest candidates.
-2. Deliver direct core-account Douyin work links to the user.
-3. Run `HG01 Song Aesthetic Gate` and lock one `SONG_FAMILY` only after user confirmation.
-4. Enter R3-B0 exact `AUDIO_VERSION` discovery and HG02 BGM listening.
-5. Continue the R2-validated audio timeline / director / MV chain.
-6. Refresh the data center again in ~15 days and merge new observations.
+1. User listens to the ~24s trend-native HG02 reference.
+2. User chooses:
+   - `A / 24s trend-native`, or
+   - `B / continue full-track discovery for a longer excerpt`.
+3. If A: lock BGM and create Audio Timeline Package.
+4. If B: obtain/validate the full track, create 1–2 excerpt candidates, then HG02 again.
+5. Only after BGM lock continue into the R2-validated audio timeline / director / visual chain.
 
-## Not allowed now
+## Data center refresh
 
-- no expansion beyond the 9 core accounts before the first loop closes;
-- no claim that observed absence means an account did not publish something;
-- no claim that this is a complete real-time Douyin trend database;
-- no requirement to log in to the user's Douyin account for the first R3 loop;
-- no BGM lock or visual work before HG01 PASS.
+Keep the current 9-account data center intact and refresh approximately every 15 days by `aweme_id` incremental merge. Database refresh is independent of the current B0/HG02 production Gate.
