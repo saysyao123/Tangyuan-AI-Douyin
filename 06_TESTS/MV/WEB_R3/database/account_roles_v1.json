@@ -1,0 +1,11 @@
+{
+  "P01": {"douyin_id":"48003855484","role":"新歌/原创/音推包装","role_category":"MUSIC_PACKAGING","trend_weight":0.70,"visual_weight":0.45,"packaging_weight":0.80,"registry_source":"USER_SEEDED_CORE"},
+  "P02": {"douyin_id":"25927051780","role":"人物型AI治愈视觉；用歌辅助","role_category":"VISUAL_AI_HEALING","trend_weight":0.25,"visual_weight":1.00,"packaging_weight":0.35,"registry_source":"USER_SEEDED_CORE"},
+  "P03": {"douyin_id":"87136360039","role":"音乐+剪辑+歌词+卡点","role_category":"EDIT_LYRIC_MUSIC","trend_weight":0.65,"visual_weight":0.80,"packaging_weight":0.75,"registry_source":"USER_SEEDED_CORE"},
+  "P04": {"douyin_id":"Auraaa0131","role":"高审美风景/低文字沉浸","role_category":"VISUAL_SCENERY","trend_weight":0.35,"visual_weight":0.95,"packaging_weight":0.40,"registry_source":"USER_SEEDED_CORE"},
+  "P05": {"douyin_id":"","role":"R3第9账号；角色/权重待首轮数据校准","role_category":"R3_TEST_SUPPLEMENT","trend_weight":0.50,"visual_weight":0.50,"packaging_weight":0.50,"registry_source":"R3_TEST_CORE"},
+  "P06": {"douyin_id":"paopaoandtea","role":"翻唱/复热信号+温暖人设音乐","role_category":"MUSIC_COVER_REVIVAL","trend_weight":0.90,"visual_weight":0.45,"packaging_weight":0.70,"registry_source":"USER_SEEDED_CORE"},
+  "P07": {"douyin_id":"153552032","role":"风景音推/治愈空间","role_category":"VISUAL_MUSIC_SCENERY","trend_weight":0.45,"visual_weight":0.90,"packaging_weight":0.55,"registry_source":"USER_SEEDED_CORE"},
+  "P09": {"douyin_id":"HaoShuo2","role":"高频音推/OST/热歌信息","role_category":"MUSIC_RADAR","trend_weight":1.00,"visual_weight":0.25,"packaging_weight":1.00,"registry_source":"USER_SEEDED_CORE"},
+  "P10": {"douyin_id":"326111404","role":"混合内容辅助样本","role_category":"AUXILIARY_MIXED","trend_weight":0.25,"visual_weight":0.30,"packaging_weight":0.30,"registry_source":"USER_SEEDED_CORE"}
+}
