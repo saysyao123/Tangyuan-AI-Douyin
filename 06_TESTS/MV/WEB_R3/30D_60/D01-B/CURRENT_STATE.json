@@ -4,7 +4,7 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / VIDEO_SET_PASS / PICTURE_EDIT_V1_READY",
+  "status": "HG04_PASS / WEB_SOURCE_ROUGH_CUT_PASS / SUBTITLE_QA_PASS / FINAL_TECH_QA_PASS / READY_FOR_HG05",
   "song_family": "我救自己于人间水火",
   "audio_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE_15.96s",
   "audio_asset": "7673442361086610233",
@@ -42,17 +42,27 @@
   },
   "picture_edit": {
     "plan": "06_TESTS/MV/WEB_R3/30D_60/D01-B/PICTURE_EDIT_PLAN_v1.md",
-    "preview": "D01-B_PICTURE_EDIT_V1_HG04_PREVIEW.mp4",
-    "status": "READY_FOR_HG04",
-    "transition_policy": "hard cuts only for rhythm review",
-    "subtitle_status": "not applied",
-    "grading_status": "not applied",
-    "watermark_cleanup_status": "deferred until publish-master"
+    "hg04_receipt": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG04_PICTURE_EDIT_PASS_RECEIPT_v1.md",
+    "hg04_status": "PASS",
+    "clean_proxy_map": "06_TESTS/MV/WEB_R3/30D_60/D01-B/WEB_SOURCE_ROUGH_CUT_MAP.csv",
+    "clean_proxy_qa": "06_TESTS/MV/WEB_R3/30D_60/D01-B/WEB_SOURCE_ROUGH_CUT_QA.md",
+    "web_source_rough_cut_gate": "PASS",
+    "transition_policy": "hard cuts / user-approved rhythm",
+    "watermark_cleanup_status": "PASS / uniform 1.25x crop baseline"
   },
-  "current_machine_stage": "Stage 6 Picture Edit V1 rendered",
-  "current_gate": "HG04 / Picture Edit Rhythm",
-  "next_human_gate": "HG04 / Picture Edit Rhythm",
-  "pass_condition": "User approves picture-edit rhythm before subtitle/grade/publish-master work.",
-  "rollback_policy": "HG04 changes stay inside source trims/cut points. Passed video sources and locked BGM remain unchanged unless user explicitly requests otherwise.",
-  "updated_at": "2026-08-25 17:01 Asia/Shanghai"
+  "final_stage": {
+    "color_grade": "06_TESTS/MV/WEB_R3/30D_60/D01-B/COLOR_GRADE_PLAN_v1.md",
+    "subtitle_qa": "06_TESTS/MV/WEB_R3/30D_60/D01-B/SUBTITLE_IMPLEMENTATION_QA_v1.md",
+    "subtitle_status": "PASS / locked baseline",
+    "final_tech_qa": "06_TESTS/MV/WEB_R3/30D_60/D01-B/FINAL_TECH_QA_v1.md",
+    "final_tech_qa_status": "PASS",
+    "final_preview_file": "D01-B_FINAL_HG05_PREVIEW_v2.mp4",
+    "final_preview_sha256": "ab85a5cbae917c4e3b3bbb0ad673df1178c8c6e55a73b84960dea4174f5b0fe4"
+  },
+  "current_machine_stage": "Stage 10 Final rendered and technical QA passed",
+  "current_gate": "HG05 / Final Acceptance",
+  "next_human_gate": "HG05 / Final Acceptance",
+  "pass_condition": "User confirms the final master is acceptable for publication.",
+  "rollback_policy": "Only explicit final creative issues reopen the nearest upstream stage; technical defects patch locally without cascading.",
+  "updated_at": "2026-08-25 17:08 Asia/Shanghai"
 }
