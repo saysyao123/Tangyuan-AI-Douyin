@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-C / FINAL VISUAL POLISH + SUBTITLE INTEGRATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / PICTURE_EDIT_V1_READY / HG04_PASS / PICTURE_EDIT_LOCKED / WATERMARK_POLISH_PENDING`
+- STAGE: `R3-C / WEB SOURCE ROUGH-CUT GATE PASS -> SUBTITLE INTEGRATION`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / PICTURE_EDIT_CLEAN_REGRESSION_READY / HG04_PASS / PICTURE_EDIT_LOCKED`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
@@ -30,7 +30,7 @@ Duration: `24.320000s`
 7. `18–20` 如果我们还是傻瓜
 8. `20–24` 如果爱不只是童话
 
-## R3-B material / learning lock for current loop
+## R3-B material / learning lock
 
 Canonical reports:
 - `R3_B_FINAL_MATERIAL_REVIEW_AND_REUSABLE_LESSONS_v1.md`
@@ -61,23 +61,46 @@ Camera positive evidence:
 - S04 foreground reveal / occlusion as transition grammar;
 - S08 `WORLD-OPENING CRANE / RETREAT` benchmark.
 
-## Picture Edit v1
+## R2 WEB Source Rough-Cut Gate restored
 
-Canonical EDL:
+User identified that R3 had incorrectly deferred watermark/source rough-cut handling until after HG04. R2 already promoted this as a WEB technical Gate.
+
+Authoritative rule:
+`04_HARNESS/rules/mv_web_source_roughcut.md`
+
+R2 validated WEB geometry restored:
+`crop=576:1024:72:128 -> scale=720:1280`
+= approx `1.25×` whole-source zoom.
+
+Hard WEB behavior:
+- all final edit sources get the same batch geometry;
+- no per-shot local watermark hiding by default;
+- derived proxy only; raw sources preserved;
+- source audio physically removed;
+- 720×1280 / 24fps / SAR1:1;
+- left-top + right-bottom worst-case corner QA before Picture Edit;
+- any visible generator mark => Gate FAIL.
+
+Current R3 artifacts:
+- `R3_C_WEB_SOURCE_ROUGH_CUT_MAP_v1.csv`
+- `R3_C_WEB_SOURCE_ROUGH_CUT_QA_v1.md`
+
+Current result:
+`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`
+
+Eight clean WEB proxies were generated from the final source pool. Reviewed proxy samples show no visible top-left / bottom-right generator marks.
+
+## Picture Edit clean regression
+
+Canonical EDL remains:
 `R3_C_PICTURE_EDIT_V1_EDL.md`
 
-Picture Edit v1 uses the latest user/Doubao-rewritten S02 and S06 outputs as primary material, combined with previously accepted S01/S03/S04/S05/S07/S08 sources.
+The same accepted edit points were re-rendered using only the WEB rough-cut clean proxies.
 
-Edit principles:
-- generated 5s source is a reservoir, not a mandatory final shot length;
-- use selective stable windows;
-- remove all generated source audio;
-- locked BGM is the only production audio;
-- trim around visually loud liquid artifacts;
-- use S04 foreground occlusion as a motivated cut point;
-- preserve S08 continuous release as much as possible.
+Clean regression preview:
+`如果风会替我说话_R3_PictureEdit_v1_WEB_RoughCutClean.mp4`
 
-Current locked timeline:
+Final edit timing intent remains unchanged:
 - S01 final 0–3s from source `0.15–3.15`
 - S02 final 3–6s from latest rain source `2.00–5.00`
 - S03 final 6–8s from source `0.60–2.60`
@@ -87,43 +110,43 @@ Current locked timeline:
 - S07 final 18–20s from source `0.80–2.80`
 - S08 final 20–24.32s from source `0.40–4.72`
 
+Technical clean preview:
+- 720×1280
+- 24fps
+- SAR1:1
+- locked BGM only
+- container/frame-quantized duration ≈ `24.333333s`
+- SHA-256 `70d066ca4466e72bd5876fc83b3e3c0328ac412a9eccb9e94fe566dc8cc3089a`
+
 ## HG04
 
 Human Gate receipt:
 `R3_C_HG04_PICTURE_EDIT_LOCK_v1.md`
 
-Human review result:
-- overall picture effect accepted;
-- rhythm and musical hit-point / cut-point effect accepted;
-- no need to reopen picture rhythm before final polish;
-- rough-cut did not yet solve visible source watermark / provenance-mark handling; this is explicitly deferred into the next stage.
+User accepted:
+- overall picture effect;
+- rhythm;
+- musical hit/cut-point feeling.
+
+R2 Gate retrofit decision:
+- preserve `HG04_PASS` because edit points/timing were not changed;
+- previous raw-source preview is superseded by clean-proxy regression implementation;
+- only reopen HG04 if the uniform crop is later judged to materially damage composition/rhythm.
 
 `HG04_PASS = YES`
 `PICTURE_EDIT_LOCKED = YES`
 
-## Watermark / clean-source final-polish TODO
-
-`WATERMARK_POLISH_PENDING = YES`
-
-Handling priority:
-1. prefer legitimate clean / no-overlay export when available;
-2. otherwise composition-safe crop / reframe where framing remains strong;
-3. otherwise use alternate accepted clean region / take when available;
-4. avoid reopening generation solely for watermark until these paths are exhausted.
-
-This task must be checked together with subtitle-safe-area design.
-
 ## Current Gate / Next execution
 
 Current state:
-`FINAL_VISUAL_POLISH + SUBTITLE_INTEGRATION`
+`SUBTITLE INTEGRATION / FINAL VISUAL QA`
 
 Next:
-1. watermark / clean-source handling shot-by-shot;
-2. frame-level trim refinements only if necessary;
-3. integrate subtitles from locked audio timeline / exact SRT;
-4. verify subtitle placement, readability, safe area and visual consistency;
-5. verify generated source audio is fully removed;
+1. use clean-proxy Picture Edit as the only picture baseline;
+2. integrate subtitles from Stage 2A exact SRT / locked subtitle baseline;
+3. run subtitle geometry / safe-area / readability QA;
+4. verify no source-audio leakage;
+5. verify watermark consistency again in final render;
 6. export final candidate;
 7. run HG05 final acceptance.
 
@@ -137,7 +160,8 @@ Next:
 → `CAMERA / PHYSICS ITERATION COMPLETE FOR CURRENT LOOP`
 → `DOUBAO PROMPT REWRITE VALIDATED`
 → `FINAL MATERIAL REVIEW COMPLETE`
-→ `PICTURE EDIT V1 READY`
+→ **`WEB SOURCE ROUGH-CUT GATE PASS`**
+→ `PICTURE EDIT CLEAN REGRESSION`
 → `HG04 PASS`
 → `PICTURE EDIT LOCKED`
-→ **`FINAL VISUAL POLISH + SUBTITLE INTEGRATION / WATERMARK POLISH PENDING`**
+→ **`SUBTITLE INTEGRATION / FINAL VISUAL QA`**
