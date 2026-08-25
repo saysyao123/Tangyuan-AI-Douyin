@@ -1,0 +1,62 @@
+name: R3 D02-A Lyric Consensus
+
+on:
+  push:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '.github/workflows/r3-d02a-lyric-consensus.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  consensus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install transcription dependencies
+        run: |
+          python -m pip install --disable-pip-version-check faster-whisper requests opencc-python-reimplemented
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Run independent medium and large-v3 exact-master transcriptions
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, requests, hashlib, subprocess
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+          from opencc import OpenCC
+
+          root = Path('06_TESTS/MV/WEB_R3/30D_60/D02-A')
+          report = json.loads((root/'BGM_DISCOVERY/asset_probe_report.json').read_text(encoding='utf-8'))
+          url = report['works'][0]['music']['url']
+          src = Path('/tmp/d02a_exact_asset.m4a')
+          r = requests.get(url, timeout=120, headers={'User-Agent':'Mozilla/5.0','Referer':'https://www.douyin.com/'})
+          r.raise_for_status(); src.write_bytes(r.content)
+          wav = Path('/tmp/d02a_16k.wav')
+          subprocess.run(['ffmpeg','-y','-i',str(src),'-ac','1','-ar','16000',str(wav)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          cc = OpenCC('t2s')
+          out={'asset_sha256':hashlib.sha256(src.read_bytes()).hexdigest(),'models':{}}
+          for model_name in ['medium','large-v3']:
+              model=WhisperModel(model_name,device='cpu',compute_type='int8')
+              segs,info=model.transcribe(str(wav),language='zh',beam_size=5,best_of=5,temperature=0,word_timestamps=True,vad_filter=False)
+              rows=[]
+              for s in segs:
+                  rows.append({'start':round(s.start,3),'end':round(s.end,3),'text_raw':s.text.strip(),'text_hans':cc.convert(s.text.strip())})
+              out['models'][model_name]={'language_probability':info.language_probability,'segments':rows,'joined_hans':' '.join(r['text_hans'] for r in rows)}
+          Path('/tmp/d02a_lyric_consensus.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('===D02A_LYRIC_CONSENSUS===')
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r3-d02a-lyric-consensus
+          path: /tmp/d02a_lyric_consensus.json
+          retention-days: 2
