@@ -6,6 +6,7 @@ on:
       - test/mv-web-r3
     paths:
       - '06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_probe_audio.py'
+      - '06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_finalize_audio_probe.py'
       - '.github/workflows/r3-d02a-audio-probe.yml'
   workflow_dispatch:
 
@@ -28,6 +29,8 @@ jobs:
           sudo apt-get install -y ffmpeg libchromaprint-tools
       - name: Probe D02-A core Douyin works and build HG02 reference
         run: python 06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_probe_audio.py
+      - name: Normalize signed-URL asset identity classification
+        run: python 06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_finalize_audio_probe.py
       - name: Persist provenance report
         if: always() && github.event_name == 'push'
         run: |
