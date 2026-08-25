@@ -46,11 +46,13 @@ jobs:
             git commit -m "D01-B: persist 我救自己于人间水火 audio probe report"
             git push origin HEAD:test/mv-web-r3
           fi
-      - name: Upload HG02 listening artifact
+      - name: Upload HG02 listening artifact and provenance
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: r3-d01b-hg02-audio
-          path: 06_TESTS/MV/WEB_R3/30D_60/D01-B/_hg02_audio_artifact
+          path: |
+            06_TESTS/MV/WEB_R3/30D_60/D01-B/_hg02_audio_artifact
+            06_TESTS/MV/WEB_R3/30D_60/D01-B/BGM_DISCOVERY/asset_probe_report.json
           if-no-files-found: warn
           retention-days: 7
