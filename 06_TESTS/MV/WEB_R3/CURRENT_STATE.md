@@ -7,7 +7,7 @@
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
 - STAGE: `R3-D1 REAL PACKAGE LOCKED / R3-D2 WAITING FOR ACTUAL PUBLISH`
-- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / REAL_PUBLISH_PACKAGE_LOCKED / R3_D2_WAITING_FOR_PUBLISH_TIMESTAMP`
+- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / REAL_PUBLISH_PACKAGE_LOCKED / FRONT_FACING_ACCOUNT_NAME_LOCKED / R3_D2_WAITING_FOR_PUBLISH_TIMESTAMP`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Program-level status
@@ -66,7 +66,7 @@ Locked description:
 `戴耳机听，会更完整。`
 
 Locked hashtags:
-`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #AI视觉`
+`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #音乐MV`
 
 Locked pinned comment:
 `这段里你最喜欢哪一句？我最想留下的是最后那句。`
@@ -79,23 +79,30 @@ S01 eye / veil / wind close-up.
 
 The alternate `EMOTION_FIRST` must not be duplicate-posted with the same MV.
 
-## Account operating shift
+## Account operating shift｜LOCKED
 
-User decided that the next ~30 days will primarily publish music-MV content at approximately 2 posts/day, target ~60 real posts.
+User confirmed the new Douyin front-facing display name:
+
+**`汤圆音乐映像`**
+
+Locked public bio:
+`每天2条音乐MV｜热歌 × 电影感画面`
+`把喜欢的歌词，做成能看见的故事`
+`30天60条`
+
+Front-facing brand rule:
+- ordinary Douyin account/publication identity does not foreground `AI`;
+- no `AI` in account name or bio;
+- no default `AI生成 / AI视觉 / AIGC` in ordinary MV cover/title/tags;
+- viewer-facing promise = music + lyrics + cinematic emotion;
+- AI remains fully available as backstage production / R&D infrastructure;
+- explicit behind-the-scenes / workflow posts are the exception and may mention AI because technology is then the content subject.
 
 Current account operating authority:
 - `05_IP_ASSETS/ACCOUNT_POSITIONING.md`
 - `05_IP_ASSETS/PUBLISH_SYSTEM.md`
 - `05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md`
 - `05_IP_ASSETS/MV_30D_60_TRACKER.csv`
-
-Recommended current display name:
-`汤圆AI视觉`
-
-Recommended bio:
-`每天2条音乐MV｜热歌 × AI电影感视觉`
-`把喜欢的歌词，做成能看见的画面`
-`30天60条`
 
 Portfolio target:
 - Lane P Primary/Trend = 30;
@@ -143,7 +150,7 @@ Single-post evidence remains `EXPERIMENT`, not `PERFORMANCE_VALIDATED`.
 
 ## Next action
 
-1. user manually updates Douyin profile if accepting the recommended account name/bio;
+1. user manually updates Douyin display name to `汤圆音乐映像` and applies the locked bio;
 2. publish the locked MUSIC_FIRST package once;
 3. record exact actual publish timestamp;
 4. enter R3-D2 1h / 3h / 24h review;
