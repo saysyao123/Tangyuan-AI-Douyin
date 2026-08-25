@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-C / PICTURE EDIT V1`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / PICTURE_EDIT_V1_READY / HG04_PENDING`
+- STAGE: `R3-C / FINAL VISUAL POLISH + SUBTITLE INTEGRATION`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / PICTURE_EDIT_V1_READY / HG04_PASS / PICTURE_EDIT_LOCKED / WATERMARK_POLISH_PENDING`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
@@ -75,10 +75,9 @@ Edit principles:
 - locked BGM is the only production audio;
 - trim around visually loud liquid artifacts;
 - use S04 foreground occlusion as a motivated cut point;
-- preserve S08 continuous release as much as possible;
-- no subtitles / final packaging yet.
+- preserve S08 continuous release as much as possible.
 
-Current candidate timeline:
+Current locked timeline:
 - S01 final 0–3s from source `0.15–3.15`
 - S02 final 3–6s from latest rain source `2.00–5.00`
 - S03 final 6–8s from source `0.60–2.60`
@@ -88,20 +87,45 @@ Current candidate timeline:
 - S07 final 18–20s from source `0.80–2.80`
 - S08 final 20–24.32s from source `0.40–4.72`
 
-`PICTURE_EDIT_V1_READY = YES`
-`HG04_PASS = NO / PENDING HUMAN REVIEW`
+## HG04
 
-## HG04 review scope
+Human Gate receipt:
+`R3_C_HG04_PICTURE_EDIT_LOCK_v1.md`
 
-Human Gate 04 reviews only:
-1. picture rhythm against BGM;
-2. lyric-to-visual fit;
-3. continuity / shot-scale breathing;
-4. S04 -> S05 occlusion cut quality;
-5. whether S02/S06 remaining physical artifacts are sufficiently hidden at real playback speed;
-6. whether edit points need frame-level patching.
+Human review result:
+- overall picture effect accepted;
+- rhythm and musical hit-point / cut-point effect accepted;
+- no need to reopen picture rhythm before final polish;
+- rough-cut did not yet solve visible source watermark / provenance-mark handling; this is explicitly deferred into the next stage.
 
-Do NOT add subtitles or final publish polish before HG04.
+`HG04_PASS = YES`
+`PICTURE_EDIT_LOCKED = YES`
+
+## Watermark / clean-source final-polish TODO
+
+`WATERMARK_POLISH_PENDING = YES`
+
+Handling priority:
+1. prefer legitimate clean / no-overlay export when available;
+2. otherwise composition-safe crop / reframe where framing remains strong;
+3. otherwise use alternate accepted clean region / take when available;
+4. avoid reopening generation solely for watermark until these paths are exhausted.
+
+This task must be checked together with subtitle-safe-area design.
+
+## Current Gate / Next execution
+
+Current state:
+`FINAL_VISUAL_POLISH + SUBTITLE_INTEGRATION`
+
+Next:
+1. watermark / clean-source handling shot-by-shot;
+2. frame-level trim refinements only if necessary;
+3. integrate subtitles from locked audio timeline / exact SRT;
+4. verify subtitle placement, readability, safe area and visual consistency;
+5. verify generated source audio is fully removed;
+6. export final candidate;
+7. run HG05 final acceptance.
 
 ## State chain
 
@@ -113,4 +137,7 @@ Do NOT add subtitles or final publish polish before HG04.
 → `CAMERA / PHYSICS ITERATION COMPLETE FOR CURRENT LOOP`
 → `DOUBAO PROMPT REWRITE VALIDATED`
 → `FINAL MATERIAL REVIEW COMPLETE`
-→ **`PICTURE EDIT V1 READY / HG04 PENDING`**
+→ `PICTURE EDIT V1 READY`
+→ `HG04 PASS`
+→ `PICTURE EDIT LOCKED`
+→ **`FINAL VISUAL POLISH + SUBTITLE INTEGRATION / WATERMARK POLISH PENDING`**
