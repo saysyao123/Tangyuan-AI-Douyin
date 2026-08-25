@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-D1 REAL PACKAGE LOCKED / R3-D2 WAITING FOR ACTUAL PUBLISH`
-- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / REAL_PUBLISH_PACKAGE_LOCKED / FRONT_FACING_ACCOUNT_NAME_LOCKED / R3_D2_WAITING_FOR_PUBLISH_TIMESTAMP`
+- STAGE: `R3-D1 FINAL FIRST-POST PACKAGE LOCKED / R3-D2 WAITING FOR ACTUAL PUBLISH`
+- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / FIRST_POST_BENCHMARK_CALIBRATION_COMPLETE / REAL_PUBLISH_PACKAGE_LOCKED / FRONT_FACING_ACCOUNT_NAME_LOCKED / R3_D2_WAITING_FOR_PUBLISH_TIMESTAMP`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Program-level status
@@ -15,7 +15,7 @@
 - `R3-A Music Radar / Benchmark Calibration = PASS`
 - `R3-B Healing Visual Calibration = PASS FOR CURRENT CALIBRATION`
 - `R3-C Full MV Integration = PASS / HG05`
-- `R3-D1 Publish Packaging Benchmark = PASS / REAL PACKAGE SELECTED`
+- `R3-D1 Publish Packaging Benchmark = PASS / FINAL FIRST-POST PACKAGE LOCKED`
 - `R3-D2 Live Data Feedback = WAITING FOR ACTUAL POST`
 
 `R3_PROGRAM_COMPLETE = NO`
@@ -44,37 +44,49 @@ Upstream remains locked:
 
 Do not reopen production variables during R3-D data testing.
 
-## R3-D1 selection
+## R3-D1 final publish authority
 
-Benchmark artifact:
+Packaging benchmark:
 `R3_D1_PUBLISH_PACKAGING_BENCHMARK_v1.md`
 
 Selection receipt:
-`R3_D1_REAL_PUBLISH_SELECTION_RECEIPT_v1.md`
+`R3_D1_REAL_PUBLISH_SELECTION_RECEIPT_v1.md` (v1.2 content)
+
+Final first-post plan:
+`R3_D1_FIRST_POST_FINAL_PUBLISH_PLAN_v1.md`
 
 Human selected:
 `MUSIC_FIRST`
 
-Locked title:
-`如果风会替我说话｜有些话没说出口，就让风替我说吧`
+### Locked cover
+- frame: `S01` eye / veil / wind close-up;
+- preferred clean frame around `0.2–0.8s`;
+- cover text one line only: `如果风会替我说话`.
 
-Locked description:
-`有些牵挂，不一定真的要说出口。`
+### Locked caption
+`如果风会替我说话。`
+`有些没说出口的话，就让风替我说吧。`
+`风替她开口，雨替她回答，天亮以后，就继续往前走。`
 
-`这次把《如果风会替我说话》做成了一段雨夜到天亮的治愈画面：风替她开口，雨替她回答，最后把没有说完的话留在天亮以后。`
+### Locked hashtags
+`#如果风会替我说话 #如果风会替我说话林叙 #音乐推荐 #氛围感 #治愈系`
 
-`戴耳机听，会更完整。`
+### Locked pinned comment
+`如果风真的能替你说一句话，你最想让它替你说什么？`
 
-Locked hashtags:
-`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #音乐MV`
+### Recommended first-post time baseline
+`19:00–20:00 local time`
 
-Locked pinned comment:
-`这段里你最喜欢哪一句？我最想留下的是最后那句。`
+This is an experimental baseline, not a permanent best-time rule.
 
-Preferred cover:
-S01 eye / veil / wind close-up.
+### Exact audio reference
+- asset id: `7670880580757867270`;
+- displayed title: `@林叙（错位秋天已上线）创作的原声`.
+
+Use the exact platform sound only if frame-0 sync remains correct. Never allow two audible BGM copies. If soundtrack attachment introduces offset/trim, preserve the accepted embedded-audio sync instead.
 
 `R3_D1_REAL_PUBLISH_PACKAGE_LOCKED = YES`
+`FIRST_POST_FINAL_PACKAGE_READY = YES`
 `ACTUAL_PUBLISH_TIMESTAMP = PENDING`
 
 The alternate `EMOTION_FIRST` must not be duplicate-posted with the same MV.
@@ -151,7 +163,7 @@ Single-post evidence remains `EXPERIMENT`, not `PERFORMANCE_VALIDATED`.
 ## Next action
 
 1. user manually updates Douyin display name to `汤圆音乐映像` and applies the locked bio;
-2. publish the locked MUSIC_FIRST package once;
+2. publish the benchmark-calibrated first-post package once;
 3. record exact actual publish timestamp;
 4. enter R3-D2 1h / 3h / 24h review;
 5. in parallel, begin filling the 30D/60 song queue and batch HG01/HG02 for the next production set.
