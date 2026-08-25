@@ -1,0 +1,9 @@
+anchor_id,line_id,semantic_anchor,start_s,end_s,evidence,director_use
+A01,L01_SELF_RESCUE,rescue-self,1.080,2.080,forced_alignment_word_window,agency action begins
+A02,L01_SELF_RESCUE,worldly-fire-and-water,2.080,4.260,forced_alignment_word_window,environment reveals pressure without literal disaster
+A03,L02_SELF_LOVE,love-self,4.540,5.840,forced_alignment_word_window,self-care gesture becomes readable
+A04,L02_SELF_LOVE,hardship-life,6.580,7.840,forced_alignment_word_window,hold on bodily steadiness rather than victimhood
+A05,L03_REMEMBER_BLOOM,remember,8.560,9.400,forced_alignment_word_window,gaze or reflector finds the target
+A06,L03_REMEMBER_BLOOM,flower-bloom,9.880,11.880,forced_alignment_word_window,light reaches the living flower
+A07,L04_SEEKING,up-and-down,13.160,14.120,forced_alignment_word_window,vertical ascent and world depth become explicit
+A08,L04_SEEKING,seek,14.640,15.560,forced_alignment_word_window,climbing/reaching action lands before the fade tail
