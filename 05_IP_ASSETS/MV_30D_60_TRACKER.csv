@@ -1,5 +1,5 @@
 slot_id,day,slot,lane,song_family,audio_asset,status,packaging,publish_time,views_1h,views_3h,views_24h,likes_24h,comments_24h,favorites_24h,shares_24h,new_follows_24h,completion_24h,avg_watch_24h,notes
-D01-A,1,A,P,,,PLANNED,MUSIC_FIRST,,,,,,,,,,,,
+D01-A,1,A,P,如果风会替我说话,7670880580757867270,SCHEDULED,MUSIC_FIRST,2026-08-25 17:30 Asia/Shanghai,,,,,,,,,,,首发基准；实际发布时间发布后回填
 D01-B,1,B,S,,,PLANNED,TBD,,,,,,,,,,,,
 D02-A,2,A,P,,,PLANNED,MUSIC_FIRST,,,,,,,,,,,,
 D02-B,2,B,S,,,PLANNED,TBD,,,,,,,,,,,,
