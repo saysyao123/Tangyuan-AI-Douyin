@@ -1,4 +1,4 @@
-# Rules｜AI First Frame & Image-to-Video v1.3
+# Rules｜AI First Frame & Image-to-Video v1.4
 
 ## Use Gate
 AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outro / Capability Proof 中，能显著增加表达价值时使用。真实Evidence仍由真实素材承担。
@@ -11,6 +11,17 @@ AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outr
 - 这条动态素材在最终剪辑里更适合作为 `HOLD / BRIDGE / HIT / PEAK / RELEASE` 中哪一种？
 
 答不清则不生成。
+
+## JIT Knowledge｜R3 positive evidence, not hard rules
+
+当镜头包含高风险材质 / 玻璃反射 / 雨水 / 冰 / 复杂前景遮挡，或本轮明确要测试摄影机语法时，JIT 读取：
+- `04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md`
+- `04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md`
+
+这两个文件属于 `POSITIVE_EVIDENCE / EXPERIMENTAL KNOWLEDGE`：
+- 用于下一轮减少重复踩坑；
+- 不覆盖本 Rule 的 HARD 条款；
+- 未跨歌复验前，不把具体雨水/运镜经验写死到 Golden Runtime。
 
 ## First Frame
 - 一次只生成1张独立9:16竖图、单一完整构图。
@@ -135,6 +146,7 @@ Pipeline policy：
 - 无穿模跳变；
 - 核心事件是否发生；
 - 运镜是否执行正确；
+- **现实物理关系是否可信：surface ownership / reflection geometry / gravity / occlusion continuity / object causality；**
 - 首帧美感是否被明显破坏；
 - 结束帧是否可剪；
 - clean in/out 是否存在；
