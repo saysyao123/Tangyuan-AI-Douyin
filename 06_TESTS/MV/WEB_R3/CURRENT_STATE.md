@@ -6,15 +6,15 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-C / WEB SOURCE ROUGH-CUT GATE PASS -> SUBTITLE INTEGRATION`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / PICTURE_EDIT_CLEAN_REGRESSION_READY / HG04_PASS / PICTURE_EDIT_LOCKED`
+- STAGE: `R3-C / FINAL CANDIDATE READY / HG05 PENDING`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / HG04_PASS / PICTURE_EDIT_LOCKED / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED / HG05_PENDING`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
 
 Song family: `如果风会替我说话`
 Locked BGM: `如果风会替我说话_R3_HG02_抖音同款24秒试听.mp3`
-Duration: `24.320000s`
+Duration target: `24.320000s`
 `BGM_LOCKED = YES`
 
 ## Canonical lyric timeline
@@ -29,6 +29,9 @@ Duration: `24.320000s`
 6. `15–18` 如果痛能随之融化
 7. `18–20` 如果我们还是傻瓜
 8. `20–24` 如果爱不只是童话
+
+Canonical timing source:
+`AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`
 
 ## R3-B material / learning lock
 
@@ -61,94 +64,129 @@ Camera positive evidence:
 - S04 foreground reveal / occlusion as transition grammar;
 - S08 `WORLD-OPENING CRANE / RETREAT` benchmark.
 
-## R2 WEB Source Rough-Cut Gate restored
-
-User identified that R3 had incorrectly deferred watermark/source rough-cut handling until after HG04. R2 already promoted this as a WEB technical Gate.
+## WEB Source Rough-Cut Gate
 
 Authoritative rule:
 `04_HARNESS/rules/mv_web_source_roughcut.md`
 
-R2 validated WEB geometry restored:
+R2 validated WEB baseline restored and applied:
 `crop=576:1024:72:128 -> scale=720:1280`
 = approx `1.25×` whole-source zoom.
 
-Hard WEB behavior:
-- all final edit sources get the same batch geometry;
-- no per-shot local watermark hiding by default;
-- derived proxy only; raw sources preserved;
-- source audio physically removed;
-- 720×1280 / 24fps / SAR1:1;
-- left-top + right-bottom worst-case corner QA before Picture Edit;
-- any visible generator mark => Gate FAIL.
-
-Current R3 artifacts:
+Current artifacts:
 - `R3_C_WEB_SOURCE_ROUGH_CUT_MAP_v1.csv`
 - `R3_C_WEB_SOURCE_ROUGH_CUT_QA_v1.md`
 
-Current result:
+Result:
 `WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`
 
-Eight clean WEB proxies were generated from the final source pool. Reviewed proxy samples show no visible top-left / bottom-right generator marks.
+All final WEB edit sources:
+- use one batch geometry;
+- preserve raw source separately;
+- source audio removed in clean proxy;
+- 720×1280 / 24fps / SAR1:1;
+- no visible top-left / bottom-right generator mark in reviewed risk samples.
 
-## Picture Edit clean regression
+## Picture Edit / HG04
 
-Canonical EDL remains:
+Canonical EDL:
 `R3_C_PICTURE_EDIT_V1_EDL.md`
 
-The same accepted edit points were re-rendered using only the WEB rough-cut clean proxies.
-
-Clean regression preview:
+Clean Picture Edit baseline:
 `如果风会替我说话_R3_PictureEdit_v1_WEB_RoughCutClean.mp4`
 
-Final edit timing intent remains unchanged:
-- S01 final 0–3s from source `0.15–3.15`
-- S02 final 3–6s from latest rain source `2.00–5.00`
-- S03 final 6–8s from source `0.60–2.60`
-- S04 final 8–12s from source `0.20–4.20`
-- S05 final 12–15s from source `0.30–3.30`
-- S06 final 15–18s from latest ice source `2.00–5.00`
-- S07 final 18–20s from source `0.80–2.80`
-- S08 final 20–24.32s from source `0.40–4.72`
-
-Technical clean preview:
-- 720×1280
-- 24fps
-- SAR1:1
-- locked BGM only
-- container/frame-quantized duration ≈ `24.333333s`
-- SHA-256 `70d066ca4466e72bd5876fc83b3e3c0328ac412a9eccb9e94fe566dc8cc3089a`
-
-## HG04
-
-Human Gate receipt:
-`R3_C_HG04_PICTURE_EDIT_LOCK_v1.md`
+Locked edit intent:
+- S01 `0.15–3.15`
+- S02 latest rain source `2.00–5.00`
+- S03 `0.60–2.60`
+- S04 `0.20–4.20`
+- S05 `0.30–3.30`
+- S06 latest ice source `2.00–5.00`
+- S07 `0.80–2.80`
+- S08 `0.40–4.72`
 
 User accepted:
 - overall picture effect;
 - rhythm;
 - musical hit/cut-point feeling.
 
-R2 Gate retrofit decision:
-- preserve `HG04_PASS` because edit points/timing were not changed;
-- previous raw-source preview is superseded by clean-proxy regression implementation;
-- only reopen HG04 if the uniform crop is later judged to materially damage composition/rhythm.
-
 `HG04_PASS = YES`
 `PICTURE_EDIT_LOCKED = YES`
 
+## Subtitle implementation
+
+Authority:
+`04_HARNESS/rules/mv_subtitle.md`
+
+Artifact:
+`R3_C_SUBTITLE_IMPLEMENTATION_QA_v1.md`
+
+Baseline applied:
+- Noto Sans CJK SC Bold;
+- nominal 46px;
+- near-white text;
+- dark semi-transparent rounded box;
+- subtitle center approx `(360,1009)`;
+- 10px padding on all four sides;
+- 100ms fade-in / 180ms fade-out;
+- no karaoke;
+- exact Stage 2A SRT timings unchanged.
+
+All 8 lines:
+- actual glyph bbox -> fresh rounded box;
+- L/R/T/B = `10/10/10/10px`;
+- text/box center geometry error = `0px` in generated overlay specification;
+- no timing nudge;
+- no overflow / critical eye obstruction in reviewed samples.
+
+`SUBTITLE_STYLE_QA_PASS = YES`
+`SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
+
+## Final Candidate / Final Tech QA
+
+Final candidate:
+`如果风会替我说话_R3_FinalCandidate_Subtitled_v1.mp4`
+
+SHA-256:
+`b96ddb81395772395ed8946b3fc30341f124bef14124f47a203dda87a3ef9f42`
+
+Technical:
+- H.264 video;
+- `720×1280`;
+- `24fps`;
+- `SAR=1:1`;
+- video/container duration `24.333333s` (24fps frame-quantized tail around 24.32s target);
+- AAC locked production audio;
+- final audio vs clean Picture Edit decoded PCM correlation = `1.000000`;
+- no AI source-audio leakage;
+- no black interval >= 0.08s under QA threshold;
+- final watermark regression samples PASS;
+- subtitle geometry/timing QA PASS.
+
+Artifact:
+`R3_C_FINAL_TECH_QA_v1.md`
+
+`FINAL_TECH_QA_PASS = YES`
+`DELIVERABLE_RENDERED = YES`
+
 ## Current Gate / Next execution
 
-Current state:
-`SUBTITLE INTEGRATION / FINAL VISUAL QA`
+Current Gate:
+**`HG05 Final Acceptance Gate`**
 
-Next:
-1. use clean-proxy Picture Edit as the only picture baseline;
-2. integrate subtitles from Stage 2A exact SRT / locked subtitle baseline;
-3. run subtitle geometry / safe-area / readability QA;
-4. verify no source-audio leakage;
-5. verify watermark consistency again in final render;
-6. export final candidate;
-7. run HG05 final acceptance.
+User should review only the final candidate as a finished MV:
+- overall emotional flow;
+- subtitle feel/readability;
+- final crop/composition after WEB rough-cut;
+- transitions and release ending;
+- whether any remaining visual artifact is still noticeable at normal playback speed.
+
+If PASS:
+→ create HG05 receipt
+→ Stage 11 Close / retrospective / reusable-rule promotion audit.
+
+If patch needed:
+→ patch only the nearest implementation layer; do not cascade into BGM / Audio Timeline / accepted Director work unless the defect proves an upstream root cause.
 
 ## State chain
 
@@ -157,11 +195,13 @@ Next:
 → `AUDIO TIMELINE LOCKED`
 → `HG03 PASS`
 → `FIRST FRAME SET LOCKED`
-→ `CAMERA / PHYSICS ITERATION COMPLETE FOR CURRENT LOOP`
+→ `CAMERA / PHYSICS ITERATION COMPLETE`
 → `DOUBAO PROMPT REWRITE VALIDATED`
 → `FINAL MATERIAL REVIEW COMPLETE`
-→ **`WEB SOURCE ROUGH-CUT GATE PASS`**
-→ `PICTURE EDIT CLEAN REGRESSION`
+→ `WEB SOURCE ROUGH-CUT GATE PASS`
 → `HG04 PASS`
 → `PICTURE EDIT LOCKED`
-→ **`SUBTITLE INTEGRATION / FINAL VISUAL QA`**
+→ `SUBTITLE IMPLEMENTATION QA PASS`
+→ `FINAL TECH QA PASS`
+→ `DELIVERABLE RENDERED`
+→ **`HG05 PENDING`**
