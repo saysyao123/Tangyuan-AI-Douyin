@@ -1,0 +1,28 @@
+{
+  "package_version": "D01-B_ATP_v1",
+  "song_family": "我救自己于人间水火",
+  "exact_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE",
+  "douyin_music_asset_id": "7673442361086610233",
+  "equivalent_recording_asset_aliases": [
+    "7673442361086610233",
+    "7673460389337762610"
+  ],
+  "raw_asset_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65",
+  "locked_bgm_file": "我救自己于人间水火_HG02_B_尾部柔和淡出版_15.96s.mp3",
+  "locked_bgm_sha256": "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5",
+  "rendered_duration_s": 15.986939,
+  "speed": 1.0,
+  "time_stretch": false,
+  "lead_in_s": 0.0,
+  "transform": {
+    "type": "audio_fade_out",
+    "fade_start_s": 15.1608,
+    "fade_duration_s": 0.8,
+    "curve": "tri_linear",
+    "content_start_s": 0.0,
+    "content_end_s": 15.986939
+  },
+  "hg02": "PASS",
+  "bgm_locked": true,
+  "invalidation": "Any change to asset, SHA, duration, speed, lead-in or fade coordinates invalidates this package."
+}
