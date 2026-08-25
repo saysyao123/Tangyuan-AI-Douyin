@@ -4,8 +4,8 @@
   "day": 2,
   "slot": "A",
   "lane": "P",
-  "status": "HG01_READY / USER_AESTHETIC_SELECTION_REQUIRED",
-  "song_family": null,
+  "status": "HG01_PASS / BGM_VERSION_DISCOVERY_ACTIVE",
+  "song_family": "做她的大地别做她的天",
   "audio_version": null,
   "audio_asset": null,
   "project_isolation": {
@@ -22,17 +22,28 @@
     "relationship_grammar": ["HOLD_OBSERVE", "FOLLOW", "LEAD", "YIELD", "OVERTAKE", "DISCOVER_REVEAL"],
     "prompt_control_skeleton": "HARD FREEZE -> FRAME-0 -> STATIC BASE -> ONE EVENT -> BOUND -> MOTION LOAD -> PHASES -> CAMERA -> FEEDBACK -> RESIDUE -> END STATE -> SOUND -> AVOID"
   },
-  "current_machine_stage": "Song Discovery / HG01 Candidate Screening Complete",
-  "current_gate": "HG01 / Song Aesthetic",
-  "next_human_gate": "HG01 / user selects exactly one SONG_FAMILY",
-  "candidate_pack": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
-  "pass_condition": "USER_EXPLICITLY_SELECTS_ONE_SONG_FAMILY = YES",
+  "hg01": {
+    "status": "PASS",
+    "selected_song_family": "做她的大地别做她的天",
+    "user_selection": "EXPLICIT",
+    "receipt": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG01_SELECTION_RECEIPT_v1.md"
+  },
+  "bgm_discovery": {
+    "priority": "P1_VERIFIED_DOUYIN_MUSIC_ASSET_FIRST",
+    "target_audio_family": "做她的大地别做她的天（r&b）（氛围片段） / 大眼仔",
+    "sampled_aweme_ids": ["7674182052884173553", "7673796884212895016"],
+    "probe_status": "PENDING_GITHUB_ACTIONS",
+    "report": "06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json"
+  },
+  "current_machine_stage": "Stage 2 / BGM Version Discovery",
+  "current_gate": "HG02 PREP / machine audio QA before listening gate",
+  "next_human_gate": "HG02 / BGM Excerpt Listening",
+  "pass_condition": "SYSTEM_PROVIDES_QA-PASSED_LISTENING_ARTIFACT_AND_USER_APPROVES_EXCERPT = YES",
   "after_pass": [
-    "lock SONG_FAMILY",
-    "discover exact Douyin-native AUDIO_VERSION / asset",
-    "prepare HG02 BGM excerpt listening",
-    "after HG02 PASS build trusted Audio Timeline Package",
-    "no timed directing or first-frame generation before audio gates complete"
+    "set BGM_LOCKED",
+    "build trusted Audio Timeline Package",
+    "run alignment QA",
+    "only then enter lyric beat and visual directing"
   ],
-  "updated_at": "2026-08-25 23:58 Asia/Shanghai"
+  "updated_at": "2026-08-26 00:11 Asia/Shanghai"
 }
