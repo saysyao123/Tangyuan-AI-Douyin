@@ -4,7 +4,7 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG04_PASS / WEB_SOURCE_ROUGH_CUT_PASS / SUBTITLE_QA_PASS / FINAL_TECH_QA_PASS / READY_FOR_HG05",
+  "status": "COMPLETE_LOCKED / READY_TO_PUBLISH",
   "song_family": "我救自己于人间水火",
   "audio_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE_15.96s",
   "audio_asset": "7673442361086610233",
@@ -57,12 +57,21 @@
     "final_tech_qa": "06_TESTS/MV/WEB_R3/30D_60/D01-B/FINAL_TECH_QA_v1.md",
     "final_tech_qa_status": "PASS",
     "final_preview_file": "D01-B_FINAL_HG05_PREVIEW_v2.mp4",
-    "final_preview_sha256": "ab85a5cbae917c4e3b3bbb0ad673df1178c8c6e55a73b84960dea4174f5b0fe4"
+    "final_preview_sha256": "ab85a5cbae917c4e3b3bbb0ad673df1178c8c6e55a73b84960dea4174f5b0fe4",
+    "hg05_receipt": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG05_FINAL_ACCEPTANCE_PASS_RECEIPT_v1.md",
+    "hg05_status": "PASS"
   },
-  "current_machine_stage": "Stage 10 Final rendered and technical QA passed",
-  "current_gate": "HG05 / Final Acceptance",
-  "next_human_gate": "HG05 / Final Acceptance",
-  "pass_condition": "User confirms the final master is acceptable for publication.",
-  "rollback_policy": "Only explicit final creative issues reopen the nearest upstream stage; technical defects patch locally without cascading.",
-  "updated_at": "2026-08-25 17:08 Asia/Shanghai"
+  "publish_stage": {
+    "package": "06_TESTS/MV/WEB_R3/30D_60/D01-B/PUBLISH_PACKAGE_v1.md",
+    "packaging": "MUSIC_FIRST",
+    "status": "READY_TO_PUBLISH",
+    "actual_publish_time": null,
+    "performance_tracking": "pending publish"
+  },
+  "current_machine_stage": "Complete / publish package ready",
+  "current_gate": "NONE / all five human gates passed",
+  "next_human_gate": "NONE",
+  "pass_condition": "COMPLETE_LOCKED",
+  "rollback_policy": "Published performance observations do not reopen production unless repeated evidence supports a controlled experiment.",
+  "updated_at": "2026-08-25 20:43 Asia/Shanghai"
 }
