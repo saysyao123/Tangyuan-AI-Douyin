@@ -1,0 +1,39 @@
+name: R3 D01-B Timeline Verify
+
+on:
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/30D_60/D01-B/tools/d01b_timeline_verify.py'
+      - '06_TESTS/MV/WEB_R3/30D_60/D01-B/timeline_verify_trigger.txt'
+      - '.github/workflows/r3-d01b-timeline-verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install verifier dependencies
+        run: |
+          python -m pip install requests "lyric-align[asr]"
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Verify trusted LRC against locked Douyin asset
+        run: python 06_TESTS/MV/WEB_R3/30D_60/D01-B/tools/d01b_timeline_verify.py
+      - name: Upload redacted verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-d01b-timeline-verify
+          path: 06_TESTS/MV/WEB_R3/30D_60/D01-B/AUDIO_TIMELINE_PACKAGE_VERIFY/alignment_verification_redacted.json
+          if-no-files-found: warn
+          retention-days: 7
