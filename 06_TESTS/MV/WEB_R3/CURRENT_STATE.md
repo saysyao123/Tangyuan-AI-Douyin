@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-D2 / FIRST POST SCHEDULED / WAITING FOR ACTUAL PUBLISH + LIVE DATA`
-- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / FIRST_POST_FINAL_PACKAGE_LOCKED / FRONT_FACING_ACCOUNT_NAME_LOCKED / D01_A_SCHEDULED / R3_D2_WAITING_FOR_ACTUAL_PUBLISH`
+- STAGE: `R3-D2 / FIRST POST PUBLISHED / LIVE DATA COLLECTION ACTIVE`
+- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / FIRST_POST_FINAL_PACKAGE_LOCKED / FRONT_FACING_ACCOUNT_NAME_LOCKED / D01_A_PUBLISHED / R3_D2_DATA_ACTIVE`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Program-level status
@@ -16,7 +16,7 @@
 - `R3-B Healing Visual Calibration = PASS FOR CURRENT CALIBRATION`
 - `R3-C Full MV Integration = PASS / HG05`
 - `R3-D1 Publish Packaging Benchmark = PASS / FINAL FIRST-POST PACKAGE LOCKED`
-- `R3-D2 Live Data Feedback = WAITING FOR ACTUAL POST`
+- `R3-D2 Live Data Feedback = ACTIVE`
 
 `R3_PROGRAM_COMPLETE = NO`
 
@@ -55,20 +55,25 @@ Locked pinned comment:
 Exact audio asset id:
 `7670880580757867270`
 
-## Scheduled publication｜D01-A
+## Publication｜D01-A
 
 Tracker slot:
 `D01-A / Lane P / MUSIC_FIRST`
 
-User scheduled publication for approximately:
-`2026-08-25 17:30 Asia/Shanghai`
+User has confirmed the post is live.
 
-This is a scheduled target, not the actual publish timestamp.
-After the post is actually live, replace with exact actual timestamp and begin 1h / 3h / 24h observations.
+Exact actual publish timestamp:
+`timestamp_pending_backfill`
 
-`D01_A_STATUS = SCHEDULED`
-`SCHEDULED_PUBLISH_AT = 2026-08-25 17:30 Asia/Shanghai`
-`ACTUAL_PUBLISH_TIMESTAMP = PENDING`
+Early observation reported by user:
+`approximately 2 views`.
+
+Important: elapsed time for that observation was not normalized to a confirmed 1h / 3h checkpoint, so it is stored only as an early observation and must not be written as `views_1h` or `views_3h` without timing evidence.
+
+`D01_A_STATUS = PUBLISHED`
+`LIVE_DATA_COLLECTION = ACTIVE`
+
+Do not reopen the production chain because of this single low-view observation.
 
 ## Account operating shift｜LOCKED
 
@@ -87,7 +92,7 @@ Front-facing brand rule:
 
 Current account operating authority:
 - `05_IP_ASSETS/ACCOUNT_POSITIONING.md`
-- `05_IP_ASSETS/PUBLISH_SYSTEM.md`
+- `05_IP_ASSETS/PUBLISH_SYSTEM.md` v3.1+
 - `05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md`
 - `05_IP_ASSETS/MV_30D_60_TRACKER.csv`
 
@@ -96,17 +101,33 @@ Portfolio target:
 - Lane S Stable/Fast = 24;
 - Lane R Camera/Director R&D = 6.
 
+## Production Runtime hardening after D01-B
+
+The active production workflow is now `04_HARNESS/workflows/mv.md` v1.9+.
+
+Promoted hardening includes:
+- machine Stage Entry Checklist;
+- first-frame beauty + differentiation QA;
+- accepted actual first frame / K0 outranks older prose;
+- full dynamic prompt control skeleton promoted into `rules/ai_video.md`;
+- WEB rough-cut gate enforced before formal HG04;
+- account-level cover/caption component contract;
+- `POST_PUBLISH_SYNC` for durable state consistency.
+
+Audit:
+`06_TESTS/MV/WEB_R3/30D_60/MV_PIPELINE_STABILITY_AUDIT_2026-08-25.md`
+
 ## Conversation / project boundary｜IMPORTANT
 
-R3 should now remain the evidence/data thread for D01-A.
+R3 remains the evidence/data thread for D01-A.
 
-The **next MV should start in a new conversation as a new 30D/60 production instance**, not as a continuation of this song's R3 creative context.
+New MV production should use a new independent 30D/60 slot/context and must not automatically inherit a previous song's concrete visual world.
 
 Reason:
-- prevent current-song visual residue (rain/night/veil/ice/etc.) from contaminating the next song;
+- prevent current-song visual residue from contaminating the next song;
 - keep each MV's creative context small;
 - reuse Runtime/Rules/Knowledge through GitHub instead of carrying historical chat context;
-- allow R3-D2 data tracking to continue independently from next-video production.
+- allow live-data tracking to continue independently from next-video production.
 
 New-conversation authority:
 `05_IP_ASSETS/MV_30D_60_NEW_CHAT_START_PROMPT.md`
@@ -114,14 +135,13 @@ New-conversation authority:
 ## Next actions
 
 ### D01-A data lane
-1. wait for actual publication;
-2. record exact actual publish timestamp;
-3. update tracker from `SCHEDULED` to `PUBLISHED`;
-4. collect 1h / 3h / 24h metrics.
+1. backfill exact actual publish timestamp when available;
+2. collect normalized +1h / +3h / +24h metrics when timing is known;
+3. record views / likes / comments / favorites / shares / follows / completion / avg watch where visible;
+4. do not promote a packaging/content rule from one post.
 
-### Next-MV production lane
-1. open a new chat;
-2. paste `MV_30D_60_NEW_CHAT_START_PROMPT.md` contents or equivalent startup command;
-3. new chat reads current production runtime + account OS;
-4. start from Song Queue / batch HG01 unless the user already supplies a song;
-5. do not ask the user to re-explain R1/R2/R3.
+### 30D/60 production lane
+1. continue with the same v1.9 single path, not a new workflow;
+2. use the hardened first-frame / dynamic / stage-entry rules;
+3. keep MUSIC_FIRST packaging family stable through the initial baseline block;
+4. separate production correctness from distribution performance.
