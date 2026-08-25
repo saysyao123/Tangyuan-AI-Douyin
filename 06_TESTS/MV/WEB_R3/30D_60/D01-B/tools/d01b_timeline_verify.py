@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import csv
 import hashlib
 import html
 import json
 import re
 import subprocess
-import sys
 from pathlib import Path
 
 import requests
@@ -17,7 +15,11 @@ OUT = ROOT / "AUDIO_TIMELINE_PACKAGE_VERIFY"
 OUT.mkdir(parents=True, exist_ok=True)
 
 ASSET_URL = "https://lf3-music-east.douyinstatic.com/obj/ies-music-hj/7673442361086610233.mp3"
-LRC_PAGE = "https://www.gequbao.com/music/58674784"
+LRC_SOURCE_ORIGINAL = "https://www.gequbao.com/music/58674784"
+LRC_FETCH_URLS = [
+    "https://r.jina.ai/http://www.gequbao.com/music/58674784",
+    "https://r.jina.ai/https://www.gequbao.com/music/58674784",
+]
 EXPECTED_SOURCE_STARTS = [91.11, 94.84, 98.71, 102.60, 105.96]
 SEMANTIC_IDS = [
     "L01_SELF_RESCUE_HOOK",
@@ -41,9 +43,19 @@ def sha_file(path: Path) -> str:
 
 
 def fetch(url: str, binary: bool = False):
-    r = requests.get(url, timeout=60, headers={"User-Agent": "Mozilla/5.0"})
+    r = requests.get(url, timeout=90, headers={"User-Agent": "Mozilla/5.0"})
     r.raise_for_status()
     return r.content if binary else r.text
+
+
+def fetch_lrc_page() -> tuple[str, str]:
+    errors = []
+    for url in LRC_FETCH_URLS:
+        try:
+            return fetch(url), url
+        except Exception as exc:
+            errors.append(f"{url}: {exc!r}")
+    raise RuntimeError("all LRC fetch routes failed: " + " | ".join(errors))
 
 
 def extract_timed_lines(page: str) -> list[tuple[float, str]]:
@@ -55,7 +67,6 @@ def extract_timed_lines(page: str) -> list[tuple[float, str]]:
         lyric = m.group(3).strip()
         if lyric:
             found.append((round(sec, 3), lyric))
-    # de-dupe exact timestamp/text copies caused by page rendering.
     uniq = []
     seen = set()
     for item in found:
@@ -94,7 +105,7 @@ def main() -> int:
     asset.write_bytes(fetch(ASSET_URL, binary=True))
     probe = ffprobe(asset)
 
-    page = fetch(LRC_PAGE)
+    page, lrc_fetch_route = fetch_lrc_page()
     timed = extract_timed_lines(page)
     selected = select_target(timed)
     trusted = OUT / "trusted_runtime_lyrics.txt"
@@ -109,7 +120,6 @@ def main() -> int:
     proc = run(cmd)
     raw = json.loads(aligned.read_text(encoding="utf-8"))
 
-    # Normalize likely JSON shapes without preserving copyrighted text.
     items = raw.get("lines") if isinstance(raw, dict) else raw
     if not isinstance(items, list):
         for key in ("aligned", "results", "segments"):
@@ -152,7 +162,6 @@ def main() -> int:
     matched4 = all(x["secondary_matched"] and x["secondary_align_start_s"] is not None for x in normalized[:4])
     median_delta = sorted(deltas)[len(deltas)//2] if deltas else None
     max_delta = max(deltas) if deltas else None
-    # Hard green thresholds mirror mv_audio_timeline.md initial thresholds.
     green = bool(matched4 and median_delta is not None and median_delta <= 0.25 and max_delta is not None and max_delta <= 0.50)
 
     contamination = normalized[4]
@@ -163,7 +172,8 @@ def main() -> int:
         "audio_sha256": sha_file(asset),
         "audio_probe": probe,
         "primary_route": "CANDIDATE_SAME_VERSION_LRC",
-        "primary_source_url": LRC_PAGE,
+        "primary_source_url": LRC_SOURCE_ORIGINAL,
+        "primary_fetch_route": lrc_fetch_route,
         "source_occurrence": "SECOND_CHORUS_CANDIDATE",
         "source_clip_offset_s": EXPECTED_SOURCE_STARTS[0],
         "secondary_route": "LYRIC_ALIGN_FASTER_WHISPER_CJK_FUZZY_ANCHOR",
@@ -181,7 +191,6 @@ def main() -> int:
     }
     (OUT / "alignment_verification_redacted.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    # Remove runtime plaintext and raw text-bearing alignment before artifact upload.
     trusted.unlink(missing_ok=True)
     aligned.unlink(missing_ok=True)
     asset.unlink(missing_ok=True)
