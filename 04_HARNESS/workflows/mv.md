@@ -1,6 +1,6 @@
-# Workflow｜AI MV Production v1.8
+# Workflow｜AI MV Production v1.9
 
-> Status: `AUTHORITATIVE / R1 + WEB_R2 VALIDATED + WEB_R3 AUDIO DISCOVERY PROMOTED`
+> Status: `AUTHORITATIVE / R1 + WEB_R2 VALIDATED + WEB_R3 + D01-B CROSS-SONG HARDENED`
 > Role: MV 单一路径主流程。只定义阶段、输入/输出、Gate 与回滚边界；技术细节由独立 Rule JIT 加载。
 > Core: **先从真实平台音乐资产锁版本，再锁声音坐标，再按坐标导演素材；生成的是可剪素材池，不是 5 秒成片；局部问题只回滚最近根因。**
 
@@ -16,13 +16,17 @@
 5. current MV Round `CURRENT_STATE.md`
 
 Stage-specific JIT：
+- Stage-entry machine enforcement：`rules/mv_stage_entry_checklist.md`
 - Human decision boundary：`rules/mv_human_gates.md`
 - Stage 4/6/7/8：`rules/mv_editing.md`
-- Stage 6 character I2V：`rules/ai_video.md`
+- Stage 5 first-frame set QA：`rules/mv_first_frame_qa.md`
+- Stage 5/6 character / I2V：`rules/ai_video.md`
 - Stage 7.5/8：`rules/mv_source_normalization.md`
 - Stage 9：`rules/mv_subtitle.md`
 
 历史 R1/R2/R3 文件只用于排错、回归、溯源；正常 Runtime 不全文加载。
+
+关键 Stage 5 / 6 / 8B / 9 / 10 执行前必须通过 `mv_stage_entry_checklist.md` 的 machine entry check。已存在的技术 Gate 不允许被“先做一版看看”跳过。
 
 ---
 
@@ -43,6 +47,7 @@ Stage-specific JIT：
 → `Subtitle Render + QA`
 → `Final QA`
 → `Close`
+→ `Post-Publish Sync`（30D/60真实发布后）
 
 禁止跳过 Stage 2A 后再在剪辑/字幕阶段补时间真值。
 
@@ -127,7 +132,20 @@ Stage-specific JIT：
 ### Output / Gate
 `BGM_LOCKED`。
 
-任何后续音频版本/起止点变化都使 Stage 2A 及其 timing-dependent 下游失效。
+### BGM authority｜HARD / D01-B promoted
+
+用户通过 HG02 实际试听后的锁定 BGM 是下游工作的音频真值。
+
+下游公共 LRC、弱版本证据、波形推断或不确定 occurrence **不得为了适配自己而自动修改已通过的 BGM**。
+
+只有以下情况允许重开 Stage 2：
+- 强证据证明当前音频本身错版 / 损坏；
+- 明确发现实际人声被截断且 HG02 判断依据有误；
+- 用户明确要求更改音频版本 / 起止 / fade。
+
+否则：时间轴证据必须适配已锁 BGM；证据冲突进入 Stage 2A / CHG-A，而不是先改 BGM。
+
+任何真正的后续音频版本/起止点变化都使 Stage 2A 及其 timing-dependent 下游失效。
 
 ---
 
@@ -157,6 +175,8 @@ Primary strong evidence：
 - official same-version timed lyric/video。
 
 Waveform/BPM/onset 只能 supporting。
+
+Repeated chorus / repeated lyric occurrence 必须在做边界结论前先锁定 occurrence；不得把另一遍副歌的时间戳套到当前 BGM。
 
 ### Human Gate
 正常 PASS 不需要用户逐行人工核时间。
@@ -193,7 +213,7 @@ Natural Beat 是语义/情绪单元，不是 5 秒配额。
 
 # Stage 4｜Director Concept + Production Allocation
 
-JIT：`rules/mv_editing.md`。
+JIT：`rules/mv_editing.md` + `rules/mv_first_frame_qa.md`。
 
 ### Work
 定义：
@@ -208,6 +228,13 @@ JIT：`rules/mv_editing.md`。
 Hard concept：
 `conceptual unit != first-frame count != dynamic-video count != final edit fragment count`。
 
+导演方案必须同时回答：
+1. 为什么语义命中；
+2. 为什么画面本身值得看；
+3. 整组为什么不会变成重复景别 / 重复动作 / 功能演示。
+
+“语义解释正确但画面功能化、工具化、说明书化”不能自动进入首帧生产。
+
 ### Output / Gate
 `DIRECTOR_PLAN_LOCKED`。
 
@@ -216,6 +243,11 @@ Hard concept：
 ---
 
 # Stage 5｜First Frames
+
+### Entry
+必须通过：`rules/mv_stage_entry_checklist.md`。
+
+JIT：`rules/mv_first_frame_qa.md` + `rules/ai_video.md`。
 
 ### Work
 每个 production segment 形成 0 秒动态锚点：
@@ -226,7 +258,17 @@ Hard concept：
 - 人物/物体 closure；
 - clean source-arc potential。
 
-整组 QA：歌词命中、美感、差异、连续性、动态可执行性、编辑价值。
+整组 machine QA 固定包括：
+- lyric-specific hit；
+- standalone beauty；
+- palette / wardrobe / world coherence；
+- shot-scale / camera-angle differentiation；
+- dominant-event differentiation；
+- continuity；
+- dynamic performability；
+- edit value。
+
+如果 2 张以上在缩略图级别承担近似相同的空间/人物/动作职责，或方案仅“语义正确但不美”，先在 Stage 4/5 修正，不把基础问题交给 HG03。
 
 ### Human Gate
 `HG03 Visual Direction / First-frame Set Gate`。
@@ -238,10 +280,23 @@ Hard concept：
 
 # Stage 6｜Dynamic Prompt + External Generation
 
+### Entry
+必须通过：`rules/mv_stage_entry_checklist.md`。
+
 JIT：`rules/mv_editing.md` + `rules/ai_video.md`。
+
+### Visual authority｜HARD
+
+HG03 后：
+`accepted actual first-frame image / K0 pixels > old prompt > old Director prose`。
+
+动态提示词必须围绕实际验收图片写，不允许为了恢复废弃方案而让视频模型重构空间/道具/人物状态。
 
 ### Source philosophy
 动态视频是 `RAW SOURCE`，不是最终 5 秒成片。
+
+生产版人物 I2V Prompt 必须满足 `ai_video.md` 的完整控制骨架，不得退化为普通描述：
+`HARD FREEZE -> FRAME-0 -> STATIC BASE -> ONE EVENT -> BOUND -> MOTION LOAD -> PHASES -> CAMERA -> PHYSICAL FEEDBACK -> RESIDUE -> SETTLED END -> SOUND -> AVOID`。
 
 对约 5s Seedance 类素材：
 - 1-shot：空间/情绪/连续动作/release；
@@ -289,6 +344,8 @@ AI source audio 默认在 ingest 物理移除；锁定 BGM 是唯一音乐真源
 ### Conditional Human Gate
 只有确实 `REGENERATE` / clean duration 不足才触发 `CHG-B`；`TRIM_REQUIRED` 先剪，不先重生成。
 
+单条 source 失败默认只修该 source。D01-B 已跨歌曲验证 `3 KEEP + 1 local regen` 路径可行；禁止无原因整组级联重生。
+
 ### Gate
 `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`。
 
@@ -308,6 +365,10 @@ JIT：`rules/mv_source_normalization.md`。
 - 排除 duplicate / topology-risk / meaningless micro-shot；
 - WEB derived proxy 统一去 source audio；
 - WEB 有角落标记时整批使用同一 watermark-safe crop/zoom。
+
+### WEB rough-cut hard gate
+WEB 正式 Picture Edit 前，必须完成 `rules/mv_web_source_roughcut.md` 并得到：
+`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`。
 
 ### Output / Gate
 `NORMALIZED_SHOT_LIBRARY_MAP.csv`
@@ -330,6 +391,15 @@ Gate：`EDITOR_AUDIO_GATE_PASS`。
 ---
 
 # Stage 8B｜Picture Edit
+
+### Entry｜HARD
+必须通过：`rules/mv_stage_entry_checklist.md`。
+
+WEB formal HG04 preview 额外要求：
+**`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES` before render.**
+
+带角落平台标记的 raw source 不得作为正式 HG04 evidence。
+若只是提前做内部节奏诊断，必须明确标记 `DIAGNOSTIC_ONLY / NOT_HG04`。
 
 JIT：`rules/mv_editing.md` + `rules/mv_source_normalization.md`。
 
@@ -365,8 +435,8 @@ Priority：
 
 约 35–40s 抒情 MV 可参考 8–12 个外部 block，但最终以 visible-shot flow 为准。
 
-### WEB fallback
-角落平台标记无法精确处理时：整批统一 zoom/crop，保持 9:16 + SAR1:1，抽查左上/右下 worst-case。
+### WEB geometry
+按照 `rules/mv_web_source_roughcut.md` 使用当前批次统一 clean proxy geometry；不得到 HG04 后才临时追水印。
 
 ### Gates
 `EDIT_MAP_LOCKED`
@@ -380,6 +450,9 @@ Priority：
 ---
 
 # Stage 9｜Subtitle Render + QA
+
+### Entry
+必须通过：`rules/mv_stage_entry_checklist.md`。
 
 JIT：`rules/mv_subtitle.md`。
 
@@ -408,6 +481,9 @@ Gates：
 ---
 
 # Stage 10｜Final QA / Delivery
+
+### Entry
+必须通过：`rules/mv_stage_entry_checklist.md`。
 
 ### Mandatory machine QA before user
 - locked BGM identity/duration/hash；
@@ -450,6 +526,24 @@ Gate：`FINAL_TECH_QA_PASS`
 
 Gate：`COMPLETE_LOCKED`。
 
+`COMPLETE_LOCKED` 表示生产链关闭，不等于真实平台已经发布。
+
+---
+
+# Stage 12｜Post-Publish Sync｜30D/60
+
+当用户明确确认作品已发布：
+
+执行 `POST_PUBLISH_SYNC`，至少同步：
+1. per-slot `CURRENT_STATE` -> `PUBLISHED / DATA_COLLECTION_ACTIVE`；
+2. `05_IP_ASSETS/MV_30D_60_TRACKER.csv` -> `PUBLISHED`；
+3. program/root data state if applicable；
+4. known publish time / first observed metrics；
+5. 若 exact timestamp 未知，写 `timestamp_pending_backfill`，禁止猜时间。
+
+发布后的低播放/高播放属于 `PERFORMANCE EVIDENCE`，默认不自动重开已锁生产链。
+单条结果不得晋升/推翻 Production Rule。
+
 ---
 
 # Mandatory State Chain
@@ -464,6 +558,7 @@ Gate：`COMPLETE_LOCKED`。
 → `DYNAMIC_PROMPT_SET_READY`
 → `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
 → `SHOT_LIBRARY_READY`（multi-shot source 时）
+→ `WEB_SOURCE_ROUGH_CUT_GATE_PASS`（WEB）
 → `EDITOR_AUDIO_GATE_PASS`
 → `EDIT_MAP_LOCKED`
 → `EDIT_PREVIEW_QA_PASS`
@@ -472,6 +567,7 @@ Gate：`COMPLETE_LOCKED`。
 → `FINAL_TECH_QA_PASS`
 → `DELIVERABLE_RENDERED`
 → `COMPLETE_LOCKED`
+→ `PUBLISHED / DATA_COLLECTION_ACTIVE`（真实发布后）
 
 ---
 
@@ -481,13 +577,16 @@ Gate：`COMPLETE_LOCKED`。
 
 默认只回最近根因：
 - BGM discovery 版本证据错 → Stage 1.5；
-- BGM改 → Stage 2A 及 timing-dependent 下游失效；
-- timing错 → 2A；
+- 用户/强证据真正改 BGM → Stage 2A 及 timing-dependent 下游失效；
+- weak downstream timing evidence 与用户已通过 BGM 冲突 → Stage 2A / CHG-A，不先改 BGM；
+- timing / occurrence 错 → 2A；
 - 首帧/视觉错 → 4/5；
 - 单条动态崩 → 6/7该 source；
 - 隐藏多镜/碎镜 → 7.5；
+- WEB 水印 proxy Gate 漏做 → 7.5 / WEB rough-cut，复用同一 EDL；
 - Picture太碎 → 8B；
 - 字幕框/实现错 → 9；
-- Final codec/SAR/metadata错 → 10。
+- Final codec/SAR/metadata错 → 10；
+- 发布后 Tracker/状态不同步 → Stage 12，仅同步状态。
 
 **下游实现 bug 不得自动重开已通过的上游审美 Gate。**
