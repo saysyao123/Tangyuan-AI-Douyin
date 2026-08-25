@@ -1,0 +1,20 @@
+{
+  "slot_id": "D02-A",
+  "song_family": "做她的大地别做她的天",
+  "audio_version": "DOUYIN_NATIVE / 做她的大地别做她的天（r&b）（氛围片段） / 大眼仔 / HG02-B SOFT-FADE",
+  "exact_master_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+  "trusted_lyrics_source": "EXACT_MASTER_MULTI_MODEL_TRANSCRIPTION_CONSENSUS",
+  "external_exact_lyric_page": "NOT_FOUND_FOR_THIS_SPECIFIC_REMIX / GENERIC_SAME-TITLE_LYRICS_REJECTED",
+  "consensus_models": ["faster-whisper medium", "faster-whisper large-v3"],
+  "language_probability": 1.0,
+  "normalization": [
+    "title phrase homophones normalized from 作/田 to 做/天 using Douyin music metadata plus large-v3 consensus",
+    "traditional 著 normalized to simplified 着",
+    "retain 拖着你的肩 because medium and large-v3 agree acoustically",
+    "retain 万花千变 because medium and large-v3 agree acoustically"
+  ],
+  "trusted_text_status": "LYRIC_TEXT_LOCKED",
+  "timing_method": "PENDING_XINGYU_CHINESE_CTC_FORCED_ALIGNMENT",
+  "asr_timestamps_role": "CROSS_CHECK_ONLY",
+  "rule": "trusted lyric text is locked before timing; ASR timestamps alone are not authoritative"
+}
