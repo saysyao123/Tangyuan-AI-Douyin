@@ -1,0 +1,59 @@
+{
+  "song_family": "我救自己于人间水火",
+  "discovery_priority_used": "P1_VERIFIED_DOUYIN_WORKS",
+  "sampled_aweme_ids": [
+    "7673460363010018611",
+    "7673442358406957285"
+  ],
+  "works": [
+    {
+      "account": "Aura",
+      "aweme_id": "7673460363010018611",
+      "work_url": "https://www.douyin.com/video/7673460363010018611",
+      "music_title": "@Aura创作的原声",
+      "music_author": "Aura",
+      "music_url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7673460389337762610.mp3",
+      "music_asset_id": "7673460389337762610",
+      "direct_asset_duration_s": 15.986938,
+      "direct_asset_sample_rate": 44100,
+      "direct_asset_channels": 2,
+      "direct_asset_bitrate": 128000,
+      "direct_asset_sha256": "4f7fa80b978c97e99e46ea6184c88504078c6b1a81c47f9d5c4b6d0342ef2ba2"
+    },
+    {
+      "account": "XIANGJISHI",
+      "aweme_id": "7673442358406957285",
+      "work_url": "https://www.douyin.com/video/7673442358406957285",
+      "music_title": "@𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰创作的原声",
+      "music_author": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+      "music_url": "https://lf3-music-east.douyinstatic.com/obj/ies-music-hj/7673442361086610233.mp3",
+      "music_asset_id": "7673442361086610233",
+      "direct_asset_duration_s": 15.960813,
+      "direct_asset_sample_rate": 44100,
+      "direct_asset_channels": 2,
+      "direct_asset_bitrate": 128000,
+      "direct_asset_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65"
+    }
+  ],
+  "pairwise_video_fingerprint": {
+    "method": "Chromaprint",
+    "score": 0.995327,
+    "shift": 0,
+    "overlap": 107
+  },
+  "exact_asset_id_identity": false,
+  "same_recording_by_fingerprint": true,
+  "version_interpretation": "Two independently uploaded Douyin original-sound assets resolve to different asset IDs but contain the same underlying recording with zero-shift, 0.995327 fingerprint similarity.",
+  "douyin_music_asset_high_confidence": true,
+  "selected_listening_source_aweme_id": "7673442358406957285",
+  "selected_listening_source_account": "XIANGJISHI",
+  "selected_listening_source_kind": "direct_douyin_music_asset",
+  "selected_listening_asset_id": "7673442361086610233",
+  "selected_listening_file": "HG02_reference_我救自己于人间水火.mp3",
+  "selected_listening_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65",
+  "selected_listening_duration_s": 15.960813,
+  "decision": "SAME_RECORDING_DIFFERENT_ASSET_IDS / HIGH_CONFIDENCE_RECORDING_FAMILY",
+  "probe_run_id": 32814784473,
+  "probe_artifact_id": 9551030404,
+  "probe_artifact_sha256": "cf710ca637f6a2561ce8a3ca851e4b67ce361e765f0b55a1a4ea9a53e582da58"
+}
