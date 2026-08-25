@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-B / PHYSICS PATCH ANALYSIS`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / V3_PATCH_RETEST_REVIEWED / S04_PASS / S05_PASS / S02_S06_PATCH_REQUIRED`
+- STAGE: `R3-B / S02+S06 V4 PHYSICS RETEST`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / V3_PATCH_RETEST_REVIEWED / S04_PASS / S05_PASS / S02_S06_V4_FIRST_FRAMES_READY / S02_S06_V4_DYNAMIC_PROMPTS_READY`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
@@ -30,95 +30,67 @@ Duration: `24.320000s`
 7. `18–20` 如果我们还是傻瓜
 8. `20–24` 如果爱不只是童话
 
-## Visual / First-frame
+## Keep without more generation
 
-- `R3_B_VISUAL_DIRECTION_LOCK_v1.md`
-- `R3_B_FIRST_FRAME_DIRECTOR_PLAN_v1.md`
-- `R3_B_FIRST_FRAME_EXECUTION_PLAN_v1.md`
-- `R3_B_HG03_FIRST_FRAME_SET_LOCK_v1.md`
+`S01 / S03 / S04(v3) / S05(v3) / S07 / S08`
 
-`FIRST_FRAME_SET_LOCKED = YES`
+S08 remains the current `WORLD-OPENING RELEASE` benchmark.
 
-## Veil policy clarification
+## Physics / control evidence
 
-For this R3 production, the veil is primarily a Doubao generation-entry / compatibility device, not a final narrative HARD continuity gate. Final QA prioritizes visual quality, identity stability, lyric fit, physical plausibility and editability.
+- `R3_B_PHYSICAL_PLAUSIBILITY_GATE_v1.md`
+- `R3_B_OPEN_SOURCE_CONTROL_RESEARCH_AND_PATCH_PLAN_v1.md`
+- `R3_B_DYNAMIC_PROMPTS_v4_S02_S06_PHYSICS_PATCH.md`
 
-## Dynamic camera / physics research
+Experimental rules active for this retest:
+- `FIRST-FRAME STATE PRELOAD`
+- `ONE PHYSICS EVENT PER SOURCE`
+- `CONTROL BUDGET`
+- `STATE -> TRACK -> CAMERA -> RESIDUE`
 
-- stable baseline: `R3_B_DYNAMIC_PROMPTS_v1.md`
-- camera calibration: `R3_B_DYNAMIC_PROMPTS_v2_CAMERA_CALIBRATION.md`
-- camera matrix: `R3_B_CAMERA_CALIBRATION_MATRIX_v1.md`
-- human review: `R3_B_DYNAMIC_SOURCE_HUMAN_REVIEW_v1.md`
-- physics gate: `R3_B_PHYSICAL_PLAUSIBILITY_GATE_v1.md`
-- open-source control research + next patch: `R3_B_OPEN_SOURCE_CONTROL_RESEARCH_AND_PATCH_PLAN_v1.md`
+## S02 v4
 
-## v3 patch retest result
+New first-frame state is ready:
+- same woman at rain window;
+- existing thin rain trails already visible on the exterior-facing glass surface;
+- reflection already established;
+- no need for droplet birth/merge.
 
-Uploaded retest batch:
-- `3S02.mp4`
-- `3S4.mp4`
-- `3S5.mp4`
-- `3S06.mp4`
+Dynamic target:
+`PRELOADED EXTERIOR RIVULET`
+- locked camera;
+- one existing thin rivulet moves downward only;
+- no new droplets / merging / size explosion;
+- local reflection distortion only;
+- one slow rack focus.
 
-### S04
-`PASS ENOUGH FOR CURRENT LOOP`
-- partial foreground occlusion materially improves same-scene continuity;
-- keep current source;
-- full occlusion remains reserved for intentional hidden transition tests.
+## S06 v4
 
-### S05
-`PASS ENOUGH FOR CURRENT LOOP`
-- dry mirror + separately located rainy background window solves the major surface-ownership problem;
-- keep current source.
+New first-frame state is ready:
+- foreground ice cube already established on dark tray;
+- ice already wet;
+- one small bead already exists at lower edge;
+- woman remains soft-focus background observer;
+- no hand interaction.
 
-### S02
-`FAIL / RAIN PHYSICS`
-- rain is still visually over-large / tube-like / spatially ambiguous;
-- do not keep adding prose around droplet merging;
-- next route: first-frame preload of an already-existing thin exterior rain rivulet + one simple downward track;
-- freeze camera for the physics retry and use only one slow rack focus.
-
-### S06
-`FAIL / CONCEPT + OBJECT PHYSICS`
-- transparent ice object is not stably established because it was not clearly present in frame 0;
-- hand / face / veil / transparent object / phase-change stack is too complex;
-- full new first frame is mandatory;
-- next route: ice object resting on dark saucer in foreground, already wet with one visible bead; woman soft-focus background; no hand interaction; one bead detaches and falls; locked camera + one rack focus.
-
-## Key experimental rules from retest
-
-### FIRST-FRAME STATE PRELOAD
-Any small transparent / reflective / deforming object that carries the lyric event must be clearly present in the first frame.
-
-### ONE PHYSICS EVENT PER SOURCE
-One 5s source contains at most one difficult material interaction.
-
-### CONTROL BUDGET
-For difficult physics:
-- camera complexity LOW;
-- one object/material event only;
-- character performance LOW.
-
-For difficult camera motion:
-- simple scene physics;
-- no material phase transformation.
+Dynamic target:
+`PRELOADED ICE + SINGLE DROP`
+- locked camera;
+- one pre-existing bead detaches once and falls vertically;
+- ice geometry remains stable;
+- one slow rack focus from ice to eyes;
+- minimal character performance.
 
 ## Current Gate / Next execution
 
 `SHOT_LIBRARY_LOCKED = NO`
 
-Keep without more generation:
-`S01 / S03 / S04(v3) / S05(v3) / S07 / S08`
-
-Tomorrow patch only:
-`S02 / S06`
-
 Next:
-1. prepare S02 v4 first-frame state with thin exterior rivulet;
-2. prepare NEW S06 v4 first frame with ice + pre-existing bead + woman background;
-3. generate only S02/S06 with simplified physics/control budgets;
-4. run physical plausibility QA;
-5. if pass, lock shot library and enter Picture Edit / HG04.
+1. generate S02 v4 from the new rain-window first frame;
+2. generate S06 v4 from the new ice first frame;
+3. run physical plausibility QA only on these two clips;
+4. if both pass, lock shot library;
+5. enter Picture Edit / HG04.
 
 ## State chain
 
@@ -132,4 +104,5 @@ Next:
 → `PHYSICAL PLAUSIBILITY GATE READY`
 → `V3 PATCH RETEST`
 → `S04 PASS / S05 PASS`
-→ **`TOMORROW PATCH S02 + S06 ONLY`**
+→ `S02+S06 V4 FIRST FRAMES READY`
+→ **`S02+S06 V4 PHYSICS RETEST READY`**
