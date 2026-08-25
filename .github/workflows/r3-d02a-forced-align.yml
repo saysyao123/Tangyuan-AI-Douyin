@@ -1,0 +1,74 @@
+name: R3 D02-A Forced Align
+
+on:
+  push:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '.github/workflows/r3-d02a-forced-align.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Install Xingyu forced aligner
+        run: |
+          git clone --depth 1 https://github.com/wangjiqing/xingyu-lyrics-aligner.git /tmp/xingyu-lyrics-aligner
+          python -m pip install --disable-pip-version-check -e '/tmp/xingyu-lyrics-aligner[alignment]'
+      - name: Fetch exact Douyin master
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, requests, hashlib
+          from pathlib import Path
+          report = json.loads(Path('06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json').read_text(encoding='utf-8'))
+          url = report['works'][0]['music']['url']
+          dst = Path('/tmp/d02a_exact_asset.m4a')
+          r = requests.get(url, timeout=120, headers={'User-Agent':'Mozilla/5.0','Referer':'https://www.douyin.com/'})
+          r.raise_for_status(); dst.write_bytes(r.content)
+          got = hashlib.sha256(dst.read_bytes()).hexdigest()
+          expected = 'b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d'
+          print({'sha256':got,'expected':expected,'match':got==expected})
+          if got != expected:
+              raise SystemExit('exact master hash mismatch')
+          PY
+      - name: Pull Chinese alignment model
+        run: |
+          xingyu-align models pull --language zh --device cpu
+      - name: Run trusted-lyrics CTC forced alignment
+        shell: bash
+        run: |
+          mkdir -p /tmp/d02a_align_out
+          xingyu-align align \
+            --audio /tmp/d02a_exact_asset.m4a \
+            --lyrics '06_TESTS/MV/WEB_R3/30D_60/D02-A/AUDIO_TIMELINE_PACKAGE/trusted_lyrics.txt' \
+            --output-dir /tmp/d02a_align_out \
+            --language zh \
+            --device cpu \
+            --json-result | tee /tmp/d02a_align_cli_result.json
+          echo '===D02A_ALIGNMENT_JSON_BEGIN==='
+          cat /tmp/d02a_align_out/alignment.json
+          echo '===D02A_ALIGNMENT_JSON_END==='
+          echo '===D02A_ALIGNMENT_REPORT_BEGIN==='
+          cat /tmp/d02a_align_out/report.json
+          echo '===D02A_ALIGNMENT_REPORT_END==='
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r3-d02a-forced-align
+          path: |
+            /tmp/d02a_align_out
+            /tmp/d02a_align_cli_result.json
+          retention-days: 3
