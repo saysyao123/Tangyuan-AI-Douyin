@@ -1,0 +1,5 @@
+line_id,semantic_role,start_s,vocal_end_s,display_end_s,evidence,confidence,qa_status
+L01_SELF_RESCUE,self-rescue from worldly hardship,0.000,4.260,4.540,forced_alignment_exact_B,HIGH,PASS
+L02_SELF_LOVE,self-love through a difficult life,4.540,7.840,8.420,forced_alignment_exact_B,HIGH,PASS
+L03_REMEMBER_BLOOM,remembering the flower that blooms,8.420,11.880,12.360,forced_alignment_exact_B,HIGH,PASS
+L04_SEEKING,continuing to seek upward and downward,12.360,15.560,15.987,forced_alignment_exact_B,HIGH,PASS
