@@ -1,102 +1,140 @@
-# PUBLISH_SYSTEM v1.0
+# PUBLISH_SYSTEM v2｜Music-MV Sprint
 
-> 目标：建立30天统一但不僵化的发布包装。
+> Current season: `30D / ~60 AI MUSIC MV`
+> Previous DAY-series `37→1000` publish package is historical and no longer the current front-facing default.
 
-## 1. 系列封面骨架
+## 1. Default packaging identity
 
-固定：
+Current first baseline:
+`MUSIC_FIRST`
 
-- 左上：`汤圆AI实战`
-- 右上：`DAY XX`
-- 中央：本期唯一冲突 / 结果
-- 底部：`30天AI账号实验｜37→1000`
+Order:
+1. exact song identity;
+2. one restrained emotional reason to stay;
+3. healing / atmosphere category;
+4. AI only as production attribute / secondary differentiator.
 
-变化：
+Do not lead every title with `AI生成`.
+Do not make every cover a creator-process experiment.
+The viewer should first understand what song/emotion they are getting.
 
-只变化中央本期主题。
+## 2. Cover
 
-Day1：
+Default:
+- choose the strongest still frame from the actual MV;
+- one main line, usually exact song name;
+- optional one short emotional secondary line only when composition remains clean;
+- no DAY number as primary hierarchy;
+- no `37→1000` line;
+- no long explanatory paragraph;
+- no decorative English by default.
 
-> 做了这么多视频  
-> 为什么才37粉？
+Cover-frame preference is song-specific:
+- human-gaze Hook when thumbnail stop power matters;
+- world-opening / landscape frame when profile visual variety needs breathing room.
 
-## 2. 标题规则
+## 3. Title baseline
 
-标题把最宝贵的位置留给：
+Default structure:
+`歌曲名｜一句具体情绪/视觉理由`
 
-**本期冲突 + 认知发现**
+Example locked for first R3-D publication:
+`如果风会替我说话｜有些话没说出口，就让风替我说吧`
 
-不建议固定从：
-`Day XX｜...`
-开始。
+Avoid:
+- title starting with generic `AI做了一个MV`;
+- keyword stuffing;
+- repeated identical emotion templates across 60 videos.
 
-DAY编号由封面承担。
+## 4. Description baseline
 
-Day1确认版：
+Recommended 2–3 short paragraphs:
+1. one emotional statement;
+2. one sentence describing this MV's visual interpretation;
+3. optional listening / participation cue.
 
-> 做了这么多视频，我终于知道为什么只有37粉
+Do not beg for follows.
+Do not claim virality / guaranteed healing.
 
-## 3. 简介结构
+## 5. Hashtags
 
-固定三段：
+Default structure:
+1. exact song/search identity;
+2. music-category tag;
+3. visual/emotion category;
+4. one relevant production attribute.
 
-1. 真实背景/问题
-2. 本期核心发现
-3. 连续实验与下一集理由
+Typical baseline:
+`#歌曲名 #音乐推荐 #治愈系 #氛围感 #AI视觉`
 
-避免：
-- 求关注
-- 夸张成功承诺
-- 假装已经跑通
+Do not waste most tag slots on self-created brand tags during the calibration month.
 
-## 4. 标签结构
+## 6. Pinned comment / comment entry
 
-不固定每天同样的标签文字。
+Default low-friction prompt tied to the actual lyric or emotion.
 
-固定结构：
+Examples:
+- `这段里你最喜欢哪一句？`
+- `如果风能替你说一句话，你最想说什么？`
 
-1. 目标人群
-2. 内容赛道
-3. 本期精准关键词
-4. 次级赛道 / 当前高度相关话题
+Do not use generic `求关注 / 求点赞` as default CTA.
 
-Day1确认版：
+## 7. Controlled packaging tests
 
-`#普通人学AI #自媒体运营 #账号定位 #短视频运营`
+Do not randomly change title/cover identity every post.
 
-品牌系列感由：
-- 账号名
-- 封面
-- DAY
-- 37→1000
+Baseline block:
+- first 10 real MV posts: primarily `MUSIC_FIRST`;
+- later selected posts may use `EMOTION_FIRST` on different videos;
+- never duplicate-post the same finished MV solely to A/B packaging.
 
-承担，不需要每次浪费标签位做自创品牌话题。
+Packaging conclusions are `PERFORMANCE` hypotheses and require repeated real-data validation.
 
-## 5. BGM
+## 8. Publishing cadence
 
-发布前不再临时花大量时间找音乐。
+Current target average: ~2 posts/day.
 
-默认声音家族：
+Use two separated posting windows initially; exact timestamps must be recorded.
+Do not assume a universal best time before the account itself has enough evidence.
 
-- 无歌词
-- 轻科技纪录片感
-- 克制
-- 不抢真人声音
+After the first 7–10 days, compare window performance and adjust as an experiment rather than a permanent rule.
 
-建议建立3类预设：
-- Review：复盘/踩坑
-- Method：教程/方法
-- Result：结果/实验
+## 9. Performance review
 
-声音主体永远是真人旁白。
+Record at:
+- 1h;
+- 3h;
+- 24h.
 
-BGM只做底色。
+When visible:
+- views;
+- likes;
+- comments;
+- favorites;
+- shares;
+- profile visits;
+- new follows;
+- followers before/after;
+- completion rate;
+- average watch time.
 
-## 6. 发布数据
+Primary growth normalization:
+`follows_per_1000_views = new_follows / views * 1000`.
 
-发布后固定记录：
-- 1h
-- 3h
-- 24h
+Also track:
+- like rate;
+- favorite rate;
+- comment rate;
+- share rate;
+- completion / duration relationship.
 
-封面/标题/标签是否有效属于性能实验，不能因个人审美直接锁为增长规律。
+## 10. Production lanes
+
+Reference:
+`05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md`
+
+- P: Primary / Trend MV
+- S: Stable / Fast MV
+- R: Director / Camera R&D MV
+
+Packaging should record the lane so production complexity can be separated from performance.
