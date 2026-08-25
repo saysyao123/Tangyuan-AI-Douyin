@@ -1,0 +1,29 @@
+{
+  "package_version": "D01-B_ATP_v1",
+  "locked_at": "2026-08-25T15:00:00+08:00",
+  "canonical_audio_sha256": "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5",
+  "files": {
+    "audio_identity.json": {"git_blob_sha": "c62950a5e5ba67b38e92e6ea4b1586a54f30a47b"},
+    "trusted_lyrics.txt": {"git_blob_sha": "f41a470d8ee1f732d03750f35415d8e384f4f29a"},
+    "trusted_lyrics_ref.json": {"git_blob_sha": "3468efe3a8b9be5d63fced51f38ad855e43982a2"},
+    "alignment_raw_reference.json": {"git_blob_sha": "59f54bdd8e30405b22e274258cf78283f1c71cab"},
+    "alignment_provenance.json": {"git_blob_sha": "6679a33cd050f51596a717229e8e46e5896da42b"},
+    "line_timeline.csv": {"git_blob_sha": "4660ce6199b0ea7c680577c2abda57d72da644f5"},
+    "lyrics_exact.srt": {"git_blob_sha": "d735a3a9be17552c76453075483481549056a44f"},
+    "anchor_words.csv": {"git_blob_sha": "6be682c48bf316f074e48807519dc9a5ecd6452c"},
+    "music_events.csv": {"git_blob_sha": "ea3926ea38c322a08e7579141a37198d4faf0f78"},
+    "alignment_qa_report.md": {"git_blob_sha": "5bdd48e82c0be4c5defd94a11c1694024efd4e2c"}
+  },
+  "states": {
+    "AUDIO_IDENTITY_LOCKED": true,
+    "LYRIC_TEXT_LOCKED": true,
+    "LYRIC_ALIGNMENT_RAW_EVIDENCE_SAVED": true,
+    "LYRIC_ALIGNMENT_PROVENANCE_VERIFIED": true,
+    "ALIGNMENT_GROUND_TRUTH_QA_PASS": true,
+    "LYRIC_TIMELINE_LOCKED": true,
+    "MUSIC_EVENT_MAP_VERIFIED": true,
+    "AUDIO_TIMELINE_PACKAGE_LOCKED": true
+  },
+  "lyric_plaintext_policy": "Semantic IDs and normalized hashes are persistent. Subtitle plaintext must be loaded from an authorized source and hash-verified before render.",
+  "next": "DIRECTOR_BEAT_MAP"
+}
