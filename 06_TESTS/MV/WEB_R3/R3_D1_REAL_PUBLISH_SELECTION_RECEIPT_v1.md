@@ -1,18 +1,19 @@
-# WEB R3｜D1 Real Publish Selection Receipt v1.1
+# WEB R3｜D1 Real Publish Selection Receipt v1.2
 
 > Song: `如果风会替我说话`
 > Stage: `R3-D1`
-> Status: `REAL_PUBLISH_PACKAGE_LOCKED / WAITING_FOR_ACTUAL_POST`
+> Status: `REAL_PUBLISH_PACKAGE_LOCKED / BENCHMARK-CALIBRATED / WAITING_FOR_ACTUAL_POST`
 > Selected candidate: `MUSIC_FIRST`
 > Front-facing account identity: `汤圆音乐映像`
+> Final publish authority: `R3_D1_FIRST_POST_FINAL_PUBLISH_PLAN_v1.md`
 
 ## Human decision
 
-User explicitly selected Candidate A / `MUSIC_FIRST` for the real publication test.
+User explicitly selected Candidate A / `MUSIC_FIRST` for the real publication test and then requested a deeper calibration against the previously locked benchmark creators.
 
 The alternate `EMOTION_FIRST` package remains counterfactual evidence only and must not be posted as a duplicate of the same MV.
 
-User also explicitly locked the new front-facing account identity as `汤圆音乐映像` and requested that ordinary Douyin account/publication packaging not foreground AI.
+User locked the new front-facing account identity as `汤圆音乐映像` and requested that ordinary Douyin account/publication packaging not foreground AI.
 
 ## Locked video
 
@@ -21,33 +22,45 @@ User also explicitly locked the new front-facing account identity as `汤圆音�
 SHA-256:
 `b96ddb81395772395ed8946b3fc30341f124bef14124f47a203dda87a3ef9f42`
 
-## Locked real-publish package
+## Benchmark-calibrated final real-publish package
 
 ### Cover frame
-Preferred: `S01` eye / veil / wind close-up.
+`S01` eye / veil / wind close-up.
+
+Preferred extraction:
+`~0.2–0.8s`, select the cleanest frame.
 
 ### Cover text
-Primary:
+One line only:
 `如果风会替我说话`
 
-Optional small secondary line only if clean:
-`有些话，就让风替我说`
+No secondary line for the first post.
 
-### Post title
-`如果风会替我说话｜有些话没说出口，就让风替我说吧`
-
-### Description
-`有些牵挂，不一定真的要说出口。`
-
-`这次把《如果风会替我说话》做成了一段雨夜到天亮的治愈画面：风替她开口，雨替她回答，最后把没有说完的话留在天亮以后。`
-
-`戴耳机听，会更完整。`
+### Caption
+`如果风会替我说话。`
+`有些没说出口的话，就让风替我说吧。`
+`风替她开口，雨替她回答，天亮以后，就继续往前走。`
 
 ### Hashtags
-`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #音乐MV`
+`#如果风会替我说话 #如果风会替我说话林叙 #音乐推荐 #氛围感 #治愈系`
 
 ### Pinned comment
-`这段里你最喜欢哪一句？我最想留下的是最后那句。`
+`如果风真的能替你说一句话，你最想让它替你说什么？`
+
+### Recommended first-post time baseline
+`19:00–20:00 local time`
+
+This is an experiment baseline, not a universal timing rule.
+
+## Exact audio reference
+
+Verified Douyin asset:
+`7670880580757867270`
+
+Displayed title:
+`@林叙（错位秋天已上线）创作的原声`
+
+If the platform can attach the exact sound without changing frame-0 sync, use it. Never allow two audible copies of the same BGM. If soundtrack attachment creates offset or trim, preserve the accepted embedded-audio sync instead.
 
 ## Front-facing brand rule
 
@@ -66,5 +79,6 @@ For ordinary MV posts in this sprint:
 
 `R3_D1_REAL_PUBLISH_SELECTION = MUSIC_FIRST`
 `R3_D1_REAL_PUBLISH_PACKAGE_LOCKED = YES`
+`FIRST_POST_BENCHMARK_CALIBRATION_COMPLETE = YES`
 `FRONT_FACING_ACCOUNT_NAME = 汤圆音乐映像`
 `ACTUAL_PUBLISH_TIMESTAMP = PENDING`
