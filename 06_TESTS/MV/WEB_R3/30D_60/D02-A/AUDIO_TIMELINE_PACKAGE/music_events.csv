@@ -1,0 +1,9 @@
+event_id,time_s,event_type,evidence,purpose
+M00,0.000000,intro_start,"source_asset_start","pre-vocal visual establish"
+M01,2.622000,vocal_entry,"CTC firstAlignedLyricStartMs","first lyric/visual event"
+M02,8.027000,phrase_boundary,"CTC line boundary L01->L02","director transition"
+M03,14.113000,phrase_boundary,"CTC line boundary L02->L03","director transition"
+M04,19.518000,phrase_boundary,"CTC line boundary L03->L04","director transition"
+M05,25.223991,approved_fade_start,"HG02-B locked transform","amplitude-only tail softening"
+M06,25.704000,vocal_release,"CTC L04 end","final lyric release"
+M07,26.423991,tail_end,"exact source duration","musical end truth"
