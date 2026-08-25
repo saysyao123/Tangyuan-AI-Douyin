@@ -1,55 +1,73 @@
-# MV 30D/60｜Operating System v1
+# MV 30D/60｜Operating System v1.1
 
 > Status: `ACTIVE EXPERIMENT / ACCOUNT-LEVEL OPERATING PLAN`
 > Horizon: next 30 days
 > Output target: approximately 60 music-MV posts / ~2 per day
+> Front-facing brand: `汤圆音乐映像`
 > Principle: scale the validated R3 production system without reproducing R3-level R&D cost on every single post.
 
 ---
 
 # 1. Account experiment objective
 
-For the next 30 days, the account's primary content identity becomes:
+For the next 30 days, the account's public content identity becomes:
 
 `music / lyric emotion`
-+ `AI cinematic visual`
++ `cinematic visual`
 + `healing / atmosphere`
-+ `repeatable production system`.
++ `repeatable publishing rhythm`.
+
+Backstage production may continue to use AI extensively, but **AI is not the normal public-facing category or selling point**.
 
 This is no longer the previous `37 -> 1000 / general AI practical experiment` front-facing content season.
 That previous phase remains historical evidence in `PROFILE_HISTORY.md`.
 
 Current 30-day question:
 
-> Can a repeatable AI music-MV pipeline produce enough quality and consistency at ~2 posts/day to build a clear audience expectation and generate useful performance evidence?
+> Can a repeatable music-MV production pipeline produce enough quality and consistency at ~2 posts/day to build a clear audience expectation and generate useful performance evidence?
 
 Do not promise 60 viral videos.
 The target is 60 controlled production/publication samples.
 
 ---
 
-# 2. Recommended profile direction
+# 2. Locked profile direction
 
-Recommended display name for this 30-day sprint:
+Display name:
 
-`汤圆AI视觉`
+`汤圆音乐映像`
 
-Reason:
-- preserves the existing `汤圆 + AI` brand memory;
-- removes `实战`, which strongly implies tutorials / methods / talking-head explanation;
-- broad enough to continue beyond music after the sprint;
-- bio can make music-MV identity explicit.
+Locked bio:
 
-Recommended bio:
-
-`每天2条音乐MV｜热歌 × AI电影感视觉`
-`把喜欢的歌词，做成能看见的画面`
+`每天2条音乐MV｜热歌 × 电影感画面`
+`把喜欢的歌词，做成能看见的故事`
 `30天60条`
 
-Alternative if maximum music clarity is preferred:
-`汤圆AI视觉｜音乐MV`
-
 Do not put `37粉→1000粉` in the current bio during this sprint; it is an old experiment objective and conflicts with the new content promise.
+
+## Frontstage / backstage split
+
+Frontstage defaults:
+- music;
+- lyrics;
+- cinematic imagery;
+- emotion / healing / atmosphere.
+
+Do not normally foreground:
+- `AI` in account name;
+- `AI生成 / AI视觉 / AIGC` in bio;
+- `AI` in normal MV covers/titles/default tags.
+
+Backstage remains free to use the full production system:
+- Music Radar;
+- exact Douyin audio discovery;
+- Audio Timeline Package;
+- first-frame generation;
+- dynamic video generation;
+- camera / physical plausibility experiments;
+- rough cut / edit / subtitle / data review.
+
+Exception: explicit behind-the-scenes / workflow / production-method posts may mention AI because technology is then the actual subject.
 
 ---
 
@@ -262,9 +280,10 @@ Initial baseline:
 Core order:
 - exact song identity;
 - one emotional reason to stay;
-- AI as secondary production attribute;
-- restrained cover text;
-- song-first hashtag.
+- cinematic/healing visual identity;
+- production technology stays backstage.
+
+Normal public packaging does not use AI as the default discovery tag.
 
 Use `EMOTION_FIRST` only as a controlled variable on a different video, not duplicate repost of the same MV.
 
