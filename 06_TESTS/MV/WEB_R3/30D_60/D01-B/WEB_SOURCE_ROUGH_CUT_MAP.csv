@@ -1,0 +1,5 @@
+source_id,source_file,source_in,source_out,internal_cut_note,risk_trim_note,proxy_file,crop_w,crop_h,crop_x,crop_y,output_w,output_h,SAR,source_audio_removed,watermark_left_top_pass,watermark_right_bottom_pass,status
+S01,生成5秒竖版东方女性走出水火残境视频.mp4,0.000,5.041667,one-shot,none,S01_clean.mp4,576,1024,72,128,720,1280,1:1,YES,YES,YES,PASS
+S02,生成5秒竖版东方女性走出水火残境视频 (1).mp4,0.000,5.041667,one-shot,none,S02_clean.mp4,576,1024,72,128,720,1280,1:1,YES,YES,YES,PASS
+S03,生成5秒竖版东方女性走出水火残境视频 (4).mp4,0.000,5.041667,one-shot final S03,none,S03_clean.mp4,576,1024,72,128,720,1280,1:1,YES,YES,YES,PASS
+S04,生成5秒竖版东方女性走出水火残境视频 (3).mp4,0.000,5.041667,one-shot,none,S04_clean.mp4,576,1024,72,128,720,1280,1:1,YES,YES,YES,PASS
