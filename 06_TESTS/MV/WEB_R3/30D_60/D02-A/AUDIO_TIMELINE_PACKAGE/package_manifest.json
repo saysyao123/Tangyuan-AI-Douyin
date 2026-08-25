@@ -14,15 +14,15 @@
     {"line_id":"L04","start_s":19.518,"end_s":25.704}
   ],
   "files": {
-    "audio_identity.json": {"sha256":"9b08c5770b4b83ea0fc94ced39426600037f17a658b39dc05b2d76e3cb22c452"},
-    "trusted_lyrics.txt": {"sha256":"79eba764271a05518ded25a25289f02b41e57eec31749cf25d84943c05bdf907"},
-    "alignment_raw.json": {"sha256":"3d05f0483c0b6481ea6427a4f301a7a9a8cd7a02c96111aedf715d0c06cd6559"},
-    "alignment_provenance.json": {"sha256":"f083c63ce38047e118127927e95d71ab72f4030dc10945468be2c657a9b27b8a"},
-    "line_timeline.csv": {"sha256":"21ea44e6c5878c9bf65910779fed249064d9a5f5e8323d3ca0cea5870bb1bf14"},
-    "lyrics_exact.srt": {"sha256":"72a234e84919e7d4b91d8ddd78506d5bd15f5fe2397c5fda40407d3f6af90ee5"},
-    "anchor_words.csv": {"sha256":"3b63f2c533e63519daa6b955ac8dd6a5cacb32af144571c7e62e4a767ea0df63"},
-    "music_events.csv": {"sha256":"18b04c26340b7f7c5b80d6a700a330893c94f0d734e899e24e364a540a50e149"},
-    "alignment_qa_report.md": {"sha256":"42634641a6f3e278ae42590be3af706d559fac8eb52a4066807d68111ae7672d"}
+    "audio_identity.json": {"github_blob_sha":"44836d9eb339927b5bc85081481dddecb673b7ad"},
+    "trusted_lyrics.txt": {"github_blob_sha":"aace6d3064cf3f083e98a3cd7f2882a2d16fd05b"},
+    "alignment_raw.json": {"github_blob_sha":"4827485f96912d32b5ec8123f43e32671f748c82"},
+    "alignment_provenance.json": {"github_blob_sha":"d63c838bd21cc901cf57264fd01ba9e7d6256f70"},
+    "line_timeline.csv": {"github_blob_sha":"bea7adf8c353d9d11eccbb43a27cb6a5ec29ec13"},
+    "lyrics_exact.srt": {"github_blob_sha":"9f74fa7af30d461d40d628ce3355e03ea04cfe5d"},
+    "anchor_words.csv": {"github_blob_sha":"8edf6c56fd1d4564ffd069ba0798feba99a7eaa5"},
+    "music_events.csv": {"github_blob_sha":"411a5c5dfe0947be60ef2ba0fdbc0126b5eee552"},
+    "alignment_qa_report.md": {"github_blob_sha":"de45c36086d15cb35c471e8f0ced82ed982e29c2"}
   },
   "qa": {
     "route": "STRONG_ROUTE_B",
@@ -32,5 +32,6 @@
     "chg_a_triggered": false,
     "decision": "PASS"
   },
+  "identity_policy": "audio bytes use SHA256; repository text artifacts use verified GitHub blob SHA",
   "locked_at": "2026-08-26T00:43:00+08:00"
 }
