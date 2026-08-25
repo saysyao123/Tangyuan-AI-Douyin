@@ -1,0 +1,32 @@
+{
+  "evidence_class": "ASR_FORCED_ALIGNMENT",
+  "route": "trusted lyrics + Chinese-capable character alignment",
+  "audio_identity": {
+    "asset_id": "7673442361086610233",
+    "canonical_locked_bgm_sha256": "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5",
+    "raw_asset_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65"
+  },
+  "tool": {
+    "name": "faster-whisper",
+    "version": "1.2.1",
+    "model": "small",
+    "language": "zh",
+    "compute_type": "int8",
+    "word_timestamps": true
+  },
+  "independent_input_paths": [
+    "locked_B_pcm",
+    "locked_B_vocal_enhanced"
+  ],
+  "selected_input": "locked_B_pcm",
+  "workflow_evidence": {
+    "run_id": 32818949767,
+    "job_id": 97712867585,
+    "artifact_id": 9552415338,
+    "artifact_name": "r3-d01b-hg02-audio",
+    "artifact_zip_sha256": "1bfd07d56368e0053861e3a98030010e6b3cbe577ea7fa58c6c23d9404be6ddc",
+    "retention_days": 7
+  },
+  "automatic_decision": "ALIGNMENT_CANDIDATE_PASS",
+  "raw_plaintext_policy": "Raw temporary evidence may contain lyric/ASR text and is not merged into the persistent repository. Persistent assets retain semantic IDs, hashes, timestamps and QA results."
+}
