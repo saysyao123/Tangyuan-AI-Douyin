@@ -4,14 +4,10 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / DIRECTOR_STAGE_AUTHORIZED",
+  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / VISUAL_REDIRECT_V2_ACTIVE",
   "song_family": "我救自己于人间水火",
   "audio_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE_15.96s",
   "audio_asset": "7673442361086610233",
-  "audio_asset_aliases": [
-    "7673442361086610233",
-    "7673460389337762610"
-  ],
   "audio_transform": {
     "variant": "B / user-approved soft fade",
     "fade_start_s": 15.1608,
@@ -25,35 +21,27 @@
   "audio_timeline_package": {
     "path": "06_TESTS/MV/WEB_R3/30D_60/D01-B/AUDIO_TIMELINE_PACKAGE",
     "locked": true,
-    "alignment_route": "TRUSTED_LYRICS_PLUS_FORCED_ALIGNMENT",
-    "workflow_run_id": 32818949767,
-    "artifact_id": 9552415338,
-    "artifact_zip_sha256": "1bfd07d56368e0053861e3a98030010e6b3cbe577ea7fa58c6c23d9404be6ddc",
     "line_timeline": [
       {"line_id": "L01_SELF_RESCUE", "start_s": 0.0, "vocal_end_s": 4.26, "display_end_s": 4.54},
       {"line_id": "L02_SELF_LOVE", "start_s": 4.54, "vocal_end_s": 7.84, "display_end_s": 8.42},
       {"line_id": "L03_REMEMBER_BLOOM", "start_s": 8.42, "vocal_end_s": 11.88, "display_end_s": 12.36},
       {"line_id": "L04_SEEKING", "start_s": 12.36, "vocal_end_s": 15.56, "display_end_s": 15.986939}
-    ],
-    "following_repeat_detected": false
+    ]
   },
-  "upstream": {
-    "tracker_slot_verified": true,
-    "account_operating_system_loaded": true,
-    "mv_runtime_loaded": true,
-    "previous_song_specific_visual_assets_inherited": false,
-    "previous_song_family_excluded": "如果风会替我说话",
-    "hg01_pass": true,
-    "hg02_pass": true,
-    "bgm_locked": true,
-    "audio_timeline_package_locked": true,
-    "wrong_second_chorus_occurrence_rejected": true,
-    "candidate_c_rejected": true
+  "visual_stage": {
+    "natural_beat_status": "LOCKED / unchanged",
+    "director_plan_v1": "REJECTED_BY_USER_VISUAL_REVIEW",
+    "director_plan_v1_failure": "industrial greenhouse/mechanical labor world lacked overall beauty and conflicted with veil + pearl-glow ancient heroine direction",
+    "director_plan_v2": "06_TESTS/MV/WEB_R3/30D_60/D01-B/DIRECTOR_PLAN_v2.md",
+    "director_plan_v2_status": "ACTIVE",
+    "new_world": "白石鸢尾水庭 / fictional Eastern high-mountain sanctuary",
+    "heroine": "Iris Misty Silver Pearl Glow + translucent pearl-gray-lilac veil",
+    "regen_policy": "regenerate S01 first as visual sanity check; if direction holds, continue S02-S04"
   },
-  "current_machine_stage": "Stage 3 Natural Beat -> Stage 4 Director Allocation -> Stage 5 First Frames",
-  "current_gate": "Machine production before HG03",
+  "current_machine_stage": "Stage 4 Director Allocation V2 -> Stage 5 First Frame Regen",
+  "current_gate": "Machine visual correction before HG03",
   "next_human_gate": "HG03 / Visual Direction + Full First-frame Set",
-  "pass_condition": "Complete first-frame set generated and set-level QA passed before user review.",
-  "rollback_policy": "Timing issues return only to Stage 2A; visual issues return only to Stage 4/5. BGM remains locked unless the user explicitly changes it.",
-  "updated_at": "2026-08-25 15:05 Asia/Shanghai"
+  "pass_condition": "All four regenerated first frames satisfy set-level beauty QA and semantic hit before user review.",
+  "rollback_policy": "Visual issues stay in Stage 4/5; audio and timeline remain locked unless the user explicitly changes them.",
+  "updated_at": "2026-08-25 15:16 Asia/Shanghai"
 }
