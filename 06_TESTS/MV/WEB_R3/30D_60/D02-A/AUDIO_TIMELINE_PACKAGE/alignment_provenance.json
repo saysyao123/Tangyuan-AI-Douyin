@@ -5,16 +5,58 @@
   "exact_master_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
   "trusted_lyrics_source": "EXACT_MASTER_MULTI_MODEL_TRANSCRIPTION_CONSENSUS",
   "external_exact_lyric_page": "NOT_FOUND_FOR_THIS_SPECIFIC_REMIX / GENERIC_SAME-TITLE_LYRICS_REJECTED",
-  "consensus_models": ["faster-whisper medium", "faster-whisper large-v3"],
-  "language_probability": 1.0,
+  "consensus_models": [
+    {"model": "faster-whisper medium", "role": "independent text cross-check"},
+    {"model": "faster-whisper large-v3", "role": "independent text + segment-timing cross-check"}
+  ],
+  "trusted_text_status": "LYRIC_TEXT_LOCKED_BEFORE_TIMING",
+  "primary_timing_method": {
+    "route": "STRONG_ROUTE_B",
+    "tool": "xingyu-lyrics-aligner",
+    "version": "0.7.0",
+    "engine": "WhisperX CTC",
+    "model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "device": "cpu",
+    "workflow_run_id": 32873312711,
+    "workflow_job_id": 97885256870
+  },
+  "primary_alignment_result": {
+    "aligned_lines": 4,
+    "total_lines": 4,
+    "timed_characters": 47,
+    "total_characters": 47,
+    "missing_character_timestamps": 0,
+    "skipped_lines": 0,
+    "non_monotonic_lines": 0,
+    "warnings": [],
+    "coverage": 1.0,
+    "status": "PASS"
+  },
+  "secondary_timing_cross_check": {
+    "source": "faster-whisper large-v3 free-ASR segment boundaries",
+    "line_start_s": [1.78, 7.06, 12.84, 18.60],
+    "ctc_line_start_s": [2.622, 8.027, 14.113, 19.518],
+    "ctc_minus_asr_delta_s": [0.842, 0.967, 1.273, 0.918],
+    "mean_delta_s": 1.0,
+    "median_delta_s": 0.9425,
+    "population_std_delta_s": 0.163788,
+    "automatic_green_threshold": "NOT_MET",
+    "review": "EXPLAINED_SECONDARY_DRIFT",
+    "explanation": "Free ASR segments lead the trusted-lyrics CTC boundaries by a nearly systematic ~1s. Line order/occurrence and lyric semantics agree; the free-ASR timestamps are supporting evidence only. The trusted-text CTC route has complete monotonic coverage and zero warnings, so no CHG-A is triggered."
+  },
   "normalization": [
-    "title phrase homophones normalized from 作/田 to 做/天 using Douyin music metadata plus large-v3 consensus",
-    "traditional 著 normalized to simplified 着",
+    "title phrase homophones normalized using Douyin music metadata plus large-v3 consensus",
+    "traditional character variants normalized to simplified Chinese",
     "retain 拖着你的肩 because medium and large-v3 agree acoustically",
     "retain 万花千变 because medium and large-v3 agree acoustically"
   ],
-  "trusted_text_status": "LYRIC_TEXT_LOCKED",
-  "timing_method": "PENDING_XINGYU_CHINESE_CTC_FORCED_ALIGNMENT",
+  "fade_note": {
+    "fade_start_s": 25.223991,
+    "final_vocal_end_s": 25.704,
+    "fade_vocal_overlap_s": 0.480009,
+    "status": "USER_APPROVED_AT_HG02",
+    "timing_effect": "NONE / amplitude-only transform"
+  },
   "asr_timestamps_role": "CROSS_CHECK_ONLY",
-  "rule": "trusted lyric text is locked before timing; ASR timestamps alone are not authoritative"
+  "decision": "AUDIO_TIMELINE_PACKAGE_CAN_LOCK"
 }
