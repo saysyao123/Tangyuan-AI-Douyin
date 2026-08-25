@@ -1,0 +1,44 @@
+{
+  "primary_route": "TRUSTED_LYRICS_PLUS_FORCED_ALIGNMENT",
+  "primary_evidence_class": "ASR_FORCED_ALIGNMENT",
+  "primary_result": "PASS",
+  "lyric_occurrence": "FIRST_CHORUS",
+  "source_audio": {
+    "douyin_asset_id": "7673442361086610233",
+    "canonical_bgm_sha256": "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5",
+    "duration_s": 15.986939
+  },
+  "audio_to_alignment_transform": "Decode verified raw asset; apply canonical B fade at 15.1608s for 0.8s; resample to 16kHz mono PCM without changing time origin or duration.",
+  "secondary_cross_checks": [
+    {
+      "type": "PUBLIC_TIMED_LRC_OCCURRENCE_ORDER",
+      "role": "supporting only",
+      "result": "First-chorus line order is consistent; public line timestamps are not used as final clip truth."
+    },
+    {
+      "type": "MUSIC_ONSET_MAP",
+      "role": "supporting only",
+      "result": "Phrase transitions are compatible with the forced-alignment line starts."
+    },
+    {
+      "type": "SECOND_AUDIO_PATH",
+      "role": "independent silent-failure check",
+      "result": "Vocal-enhanced PCM was evaluated in addition to the canonical mix; final timestamps remain mapped to the canonical mix."
+    }
+  ],
+  "corrected_failure": {
+    "prior_assumption": "SECOND_CHORUS",
+    "failure_signal": "Third and fourth semantic lines did not align to the locked audio.",
+    "root_cause": "Wrong repeated-chorus occurrence selected from a public lyric source.",
+    "correction": "Use the first-chorus occurrence demonstrated by exact-audio forced alignment.",
+    "bgm_changed": false
+  },
+  "warnings": [
+    "Final line phonetic ASR text was imperfect, but trusted-text character alignment matched all seven normalized characters in monotonic order.",
+    "No fifth repeated hook was detected inside the locked B file."
+  ],
+  "repeated_line_mapping": {
+    "included_occurrence": "FIRST_CHORUS_L01_TO_L04",
+    "following_repeat_included": false
+  }
+}
