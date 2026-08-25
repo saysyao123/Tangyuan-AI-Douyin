@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "language": "zh",
+  "source": {
+    "audio_name": "d02a_exact_asset.m4a",
+    "audio_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+    "alignment_engine": "whisperx_ctc",
+    "alignment_model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "aligner_package": "xingyu-lyrics-aligner",
+    "aligner_version": "0.7.0",
+    "requested_device": "cpu",
+    "actual_alignment_device": "cpu",
+    "workflow_run_id": 32873312711,
+    "workflow_job_id": 97885256870
+  },
+  "lines": [
+    {
+      "line_id": "L01",
+      "index": 0,
+      "text": "做她的大地 别做她的天",
+      "start": 2.622,
+      "end": 8.027,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {"text":"做","start":2.622,"end":3.363,"estimated":false},
+        {"text":"她","start":3.363,"end":3.763,"estimated":false},
+        {"text":"的","start":3.763,"end":4.104,"estimated":false},
+        {"text":"大地","start":4.104,"end":5.545,"estimated":false},
+        {"text":" ","start":null,"end":null,"estimated":false},
+        {"text":"别","start":5.545,"end":5.905,"estimated":false},
+        {"text":"做","start":5.905,"end":6.246,"estimated":false},
+        {"text":"她","start":6.246,"end":6.626,"estimated":false},
+        {"text":"的","start":6.626,"end":6.926,"estimated":false},
+        {"text":"天","start":6.926,"end":8.027,"estimated":false}
+      ],
+      "sourceLineIndex": 0
+    },
+    {
+      "line_id": "L02",
+      "index": 1,
+      "text": "天总会刮风下雨 我会拖着你的肩",
+      "start": 8.027,
+      "end": 14.113,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {"text":"天","start":8.027,"end":8.388,"estimated":false},
+        {"text":"总会","start":8.388,"end":9.128,"estimated":false},
+        {"text":"刮风下雨","start":9.128,"end":10.91,"estimated":false},
+        {"text":" ","start":null,"end":null,"estimated":false},
+        {"text":"我会","start":10.91,"end":11.27,"estimated":false},
+        {"text":"拖","start":11.27,"end":11.631,"estimated":false},
+        {"text":"着","start":11.631,"end":11.971,"estimated":false},
+        {"text":"你","start":11.971,"end":12.351,"estimated":false},
+        {"text":"的","start":12.351,"end":12.692,"estimated":false},
+        {"text":"肩","start":12.692,"end":14.113,"estimated":false}
+      ],
+      "sourceLineIndex": 1
+    },
+    {
+      "line_id": "L03",
+      "index": 2,
+      "text": "做她的月光 别让她孤单",
+      "start": 14.113,
+      "end": 19.518,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {"text":"做","start":14.113,"end":14.874,"estimated":false},
+        {"text":"她","start":14.874,"end":15.274,"estimated":false},
+        {"text":"的","start":15.274,"end":15.554,"estimated":false},
+        {"text":"月光","start":15.554,"end":17.036,"estimated":false},
+        {"text":" ","start":null,"end":null,"estimated":false},
+        {"text":"别","start":17.036,"end":17.396,"estimated":false},
+        {"text":"让","start":17.396,"end":17.756,"estimated":false},
+        {"text":"她","start":17.756,"end":18.137,"estimated":false},
+        {"text":"孤单","start":18.137,"end":19.518,"estimated":false}
+      ],
+      "sourceLineIndex": 2
+    },
+    {
+      "line_id": "L04",
+      "index": 3,
+      "text": "世界会万花千变 我一直在身边",
+      "start": 19.518,
+      "end": 25.704,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {"text":"世界","start":19.518,"end":20.279,"estimated":false},
+        {"text":"会万花","start":20.279,"end":21.32,"estimated":false},
+        {"text":"千变","start":21.32,"end":22.441,"estimated":false},
+        {"text":" ","start":null,"end":null,"estimated":false},
+        {"text":"我","start":22.441,"end":22.801,"estimated":false},
+        {"text":"一直","start":22.801,"end":24.242,"estimated":false},
+        {"text":"在","start":24.242,"end":25.283,"estimated":false},
+        {"text":"身边","start":25.283,"end":25.704,"estimated":false}
+      ],
+      "sourceLineIndex": 3
+    }
+  ],
+  "warnings": [],
+  "firstAlignedLyricStartMs": 2622,
+  "report": {
+    "line_count": 4,
+    "aligned_or_partial_lines": 4,
+    "input_alignment_characters": 47,
+    "timed_character_entries": 47,
+    "missing_character_timestamps": 0,
+    "character_count_matches": true,
+    "non_monotonic_line_count": 0,
+    "status_counts": {"aligned": 4},
+    "estimated_token_count": 25,
+    "skipped_line_count": 0,
+    "warnings": [],
+    "coverage": 1.0,
+    "unmatched_line_predictions": 0,
+    "unmatched_reference_predictions": 0
+  }
+}
