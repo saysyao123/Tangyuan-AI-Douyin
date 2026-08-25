@@ -1,0 +1,30 @@
+{
+  "program": "汤圆音乐映像｜30天60条",
+  "slot_id": "D01-B",
+  "day": 1,
+  "slot": "B",
+  "lane": "S",
+  "status": "HG01_READY / USER_AESTHETIC_SELECTION_REQUIRED",
+  "song_family": null,
+  "audio_version": null,
+  "audio_asset": null,
+  "upstream": {
+    "tracker_slot_verified": true,
+    "account_operating_system_loaded": true,
+    "mv_runtime_loaded": true,
+    "previous_song_specific_visual_assets_inherited": false,
+    "previous_song_family_excluded": "如果风会替我说话"
+  },
+  "current_gate": "HG01 Song Aesthetic Gate",
+  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+  "candidate_song_families": [
+    "Summer Love 爱在盛夏",
+    "我救自己于人间水火",
+    "若爱有尽头",
+    "杀破狼"
+  ],
+  "pass_condition": "user explicitly selects exactly one SONG_FAMILY",
+  "next_after_pass": "exact AUDIO_VERSION / Douyin audio asset discovery -> HG02 BGM excerpt listening",
+  "tracker_write_policy": "Do not write song_family/audio_asset into MV_30D_60_TRACKER.csv before HG01/HG02 lock.",
+  "updated_at": "2026-08-25 Asia/Shanghai"
+}
