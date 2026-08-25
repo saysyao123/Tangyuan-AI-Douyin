@@ -1,7 +1,8 @@
-# PUBLISH_SYSTEM v2｜Music-MV Sprint
+# PUBLISH_SYSTEM v3｜Music-MV Sprint
 
-> Current season: `30D / ~60 AI MUSIC MV`
+> Current season: `30D / ~60 MUSIC MV`
 > Previous DAY-series `37→1000` publish package is historical and no longer the current front-facing default.
+> Front-facing brand: **汤圆音乐映像**.
 
 ## 1. Default packaging identity
 
@@ -11,12 +12,17 @@ Current first baseline:
 Order:
 1. exact song identity;
 2. one restrained emotional reason to stay;
-3. healing / atmosphere category;
-4. AI only as production attribute / secondary differentiator.
+3. healing / atmosphere / cinematic visual category;
+4. production technology stays backstage by default.
 
-Do not lead every title with `AI生成`.
-Do not make every cover a creator-process experiment.
-The viewer should first understand what song/emotion they are getting.
+Hard front-facing rule for ordinary MV posts:
+- do not lead with `AI生成`;
+- do not use `AI视觉 / AIGC` as default tags;
+- do not make the cover a creator-process experiment;
+- do not make technical production identity compete with song/emotion identity.
+
+Exception:
+Only posts whose actual subject is behind-the-scenes creation / workflow / technical review may explicitly mention AI.
 
 ## 2. Cover
 
@@ -26,6 +32,7 @@ Default:
 - optional one short emotional secondary line only when composition remains clean;
 - no DAY number as primary hierarchy;
 - no `37→1000` line;
+- no `AI生成` / `AI视觉` label by default;
 - no long explanatory paragraph;
 - no decorative English by default.
 
@@ -42,7 +49,7 @@ Example locked for first R3-D publication:
 `如果风会替我说话｜有些话没说出口，就让风替我说吧`
 
 Avoid:
-- title starting with generic `AI做了一个MV`;
+- title starting with generic production-method language;
 - keyword stuffing;
 - repeated identical emotion templates across 60 videos.
 
@@ -55,6 +62,7 @@ Recommended 2–3 short paragraphs:
 
 Do not beg for follows.
 Do not claim virality / guaranteed healing.
+Do not explain AI production unless the post itself is a creation-process post.
 
 ## 5. Hashtags
 
@@ -62,10 +70,17 @@ Default structure:
 1. exact song/search identity;
 2. music-category tag;
 3. visual/emotion category;
-4. one relevant production attribute.
+4. one precise song- or mood-relevant tag.
 
 Typical baseline:
-`#歌曲名 #音乐推荐 #治愈系 #氛围感 #AI视觉`
+`#歌曲名 #音乐推荐 #治愈系 #氛围感 #音乐MV`
+
+Default forbidden front-facing production tags during this sprint:
+- `#AI视觉`
+- `#AI生成`
+- `#AIGC`
+
+These may only be used on explicit behind-the-scenes / production-process content.
 
 Do not waste most tag slots on self-created brand tags during the calibration month.
 
@@ -78,6 +93,7 @@ Examples:
 - `如果风能替你说一句话，你最想说什么？`
 
 Do not use generic `求关注 / 求点赞` as default CTA.
+Do not turn the pinned comment into a technical-production explanation.
 
 ## 7. Controlled packaging tests
 
