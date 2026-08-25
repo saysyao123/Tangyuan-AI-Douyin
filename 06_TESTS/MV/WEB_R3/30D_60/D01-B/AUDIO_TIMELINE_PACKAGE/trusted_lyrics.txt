@@ -1,0 +1,6 @@
+# Plaintext intentionally not persisted.
+# Resolve authorized normalized text at subtitle stage and verify the SHA-256 values below.
+L01_SELF_RESCUE|chars=9|sha256=17c60d2820eb34f421224f41230d66224c6a0e5164eae944433ad171a49520f8
+L02_SELF_LOVE|chars=9|sha256=c624f95bad7b6ca6e5cb9deb69122d21c6e0d9fea33502138c6be3b08cc871a9
+L03_REMEMBER_BLOOM|chars=9|sha256=0617a73d8d14a999d33807793a62f482a40e4f5c9473b0bfd110accbe192948e
+L04_SEEKING|chars=7|sha256=25e21bc2eefc59b88d5eae1c0d476618783e1830088c303fc6d532950f7c70a1
