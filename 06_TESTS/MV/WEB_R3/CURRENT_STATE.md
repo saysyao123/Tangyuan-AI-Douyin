@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-D1 / PACKAGING CANDIDATES READY / REAL-PUBLISH SELECTION PENDING`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / R3_A_PASS / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / R3_B_CURRENT_CALIBRATION_PASS / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / HG04_PASS / PICTURE_EDIT_LOCKED / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED / HG05_PASS / R3_C_FULL_MV_INTEGRATION_PASS / RETROSPECTIVE_COMPLETE / R3_D1_PACKAGING_CANDIDATES_READY / REAL_PUBLISH_SELECTION_PENDING`
+- STAGE: `R3-D1 REAL PACKAGE LOCKED / R3-D2 WAITING FOR ACTUAL PUBLISH`
+- STATE: `R3_A_PASS / R3_B_CURRENT_CALIBRATION_PASS / R3_C_FULL_MV_INTEGRATION_PASS / HG05_PASS / R3_D1_PACKAGING_BENCHMARK_COMPLETE / MUSIC_FIRST_SELECTED / REAL_PUBLISH_PACKAGE_LOCKED / R3_D2_WAITING_FOR_PUBLISH_TIMESTAMP`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Program-level status
@@ -15,94 +15,114 @@
 - `R3-A Music Radar / Benchmark Calibration = PASS`
 - `R3-B Healing Visual Calibration = PASS FOR CURRENT CALIBRATION`
 - `R3-C Full MV Integration = PASS / HG05`
-- `R3-D1 Publish Packaging Benchmark = CANDIDATES READY`
-- `R3-D2 Live Data Feedback = NOT STARTED`
+- `R3-D1 Publish Packaging Benchmark = PASS / REAL PACKAGE SELECTED`
+- `R3-D2 Live Data Feedback = WAITING FOR ACTUAL POST`
 
-Therefore:
 `R3_PROGRAM_COMPLETE = NO`
 
 ## Accepted production asset
 
-Song family: `如果风会替我说话`
+Song family:
+`如果风会替我说话`
+
 Final accepted MV:
 `如果风会替我说话_R3_FinalCandidate_Subtitled_v1.mp4`
+
 SHA-256:
 `b96ddb81395772395ed8946b3fc30341f124bef14124f47a203dda87a3ef9f42`
 
-Upstream production remains locked:
-- `BGM_LOCKED = YES`
-- `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
-- `HG03_PASS = YES`
-- `WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`
-- `HG04_PASS = YES`
-- `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
-- `FINAL_TECH_QA_PASS = YES`
-- `HG05_PASS = YES`
-- `R3_C_FULL_MV_INTEGRATION_PASS = YES`
+Upstream remains locked:
+- BGM / exact Douyin version;
+- Audio Timeline Package;
+- HG03 first-frame set;
+- Dynamic / material pool;
+- WEB Source Rough-Cut Gate;
+- HG04 Picture Edit;
+- subtitle implementation;
+- Final Tech QA;
+- HG05 final acceptance.
 
-Do not reopen production variables during D-series packaging/data tests.
+Do not reopen production variables during R3-D data testing.
 
-## R3-D1 authority
+## R3-D1 selection
 
-Artifact:
+Benchmark artifact:
 `R3_D1_PUBLISH_PACKAGING_BENCHMARK_v1.md`
 
-Two controlled packaging candidates:
+Selection receipt:
+`R3_D1_REAL_PUBLISH_SELECTION_RECEIPT_v1.md`
 
-### Candidate A — `MUSIC_FIRST`
-Core strategy:
-- exact song identity first;
-- one restrained emotional reason to stay;
-- search clarity highest;
-- AI remains production attribute, not first content identity.
-
-Recommended cover frame:
-`S01` close eye/veil/wind frame.
-
-Recommended title:
-`如果风会替我说话｜有些话没说出口，就让风替我说吧`
-
-Recommended tags:
-`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #AI视觉`
-
-### Candidate B — `EMOTION_FIRST`
-Core strategy:
-- unsaid-feeling hook first;
-- song identity second;
-- stronger self-projection/comment potential;
-- larger packaging variable, therefore weaker attribution clarity for first live test.
-
-Recommended cover frame:
-`S08` world-opening release frame.
-
-Recommended title:
-`没说出口的话，风真的会替你说吗？｜如果风会替我说话`
-
-Recommended tags:
-`#如果风会替我说话 #氛围感 #治愈系 #音乐推荐 #AI视觉`
-
-## Controlled-test recommendation
-
-Recommended first real publish:
+Human selected:
 `MUSIC_FIRST`
 
-Reason:
-The R3 production song itself came from the new Music Radar. The first live-data test should keep song identity explicit so D2 can more cleanly evaluate whether:
-`radar-selected song + exact Douyin version + improved visual system`
-works in real publication.
+Locked title:
+`如果风会替我说话｜有些话没说出口，就让风替我说吧`
 
-Do NOT post both packages with the same video.
-The alternate remains a counterfactual candidate for a later different MV.
+Locked description:
+`有些牵挂，不一定真的要说出口。`
 
-`R3_D1_PACKAGING_CANDIDATES_READY = YES`
-`REAL_PUBLISH_SELECTION = PENDING HUMAN CHOICE`
+`这次把《如果风会替我说话》做成了一段雨夜到天亮的治愈画面：风替她开口，雨替她回答，最后把没有说完的话留在天亮以后。`
 
-## R3-D2 metric contract after publication
+`戴耳机听，会更完整。`
 
-Record at:
-- `1h`
-- `3h`
-- `24h`
+Locked hashtags:
+`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #AI视觉`
+
+Locked pinned comment:
+`这段里你最喜欢哪一句？我最想留下的是最后那句。`
+
+Preferred cover:
+S01 eye / veil / wind close-up.
+
+`R3_D1_REAL_PUBLISH_PACKAGE_LOCKED = YES`
+`ACTUAL_PUBLISH_TIMESTAMP = PENDING`
+
+The alternate `EMOTION_FIRST` must not be duplicate-posted with the same MV.
+
+## Account operating shift
+
+User decided that the next ~30 days will primarily publish music-MV content at approximately 2 posts/day, target ~60 real posts.
+
+Current account operating authority:
+- `05_IP_ASSETS/ACCOUNT_POSITIONING.md`
+- `05_IP_ASSETS/PUBLISH_SYSTEM.md`
+- `05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md`
+- `05_IP_ASSETS/MV_30D_60_TRACKER.csv`
+
+Recommended current display name:
+`汤圆AI视觉`
+
+Recommended bio:
+`每天2条音乐MV｜热歌 × AI电影感视觉`
+`把喜欢的歌词，做成能看见的画面`
+`30天60条`
+
+Portfolio target:
+- Lane P Primary/Trend = 30;
+- Lane S Stable/Fast = 24;
+- Lane R Camera/Director R&D = 6.
+
+The previous `汤圆AI实战 / 37→1000` phase remains historical evidence, not the current front-facing promise.
+
+## Scale discipline
+
+Do not reproduce full R3 R&D intensity on every one of the ~60 posts.
+
+Preserve correctness but batch human review:
+- batch HG01 song review;
+- batch HG02 BGM listening;
+- batch HG03 first-frame sets;
+- batch HG04 clean Picture Edits;
+- small-batch HG05 final candidates.
+
+Dynamic production defaults should favor stable, physically believable motion. Camera-language experiments are isolated into Lane R instead of being mixed into every normal production source.
+
+## R3-D2 metric contract
+
+After actual publication, record exact publish timestamp and metrics at:
+- 1h;
+- 3h;
+- 24h.
 
 When visible:
 - views;
@@ -121,19 +141,10 @@ Primary normalized metric:
 
 Single-post evidence remains `EXPERIMENT`, not `PERFORMANCE_VALIDATED`.
 
-## Main branch / promotion boundary
-
-Do not blindly merge the entire test branch.
-Curated production promotion remains the correct path for Harness runtime/rules/templates/selected tools/knowledge. R3 packaging conclusions cannot be promoted until live-data repetition exists.
-
 ## Next action
 
-Human selects exactly one real-publish candidate:
-- `MUSIC_FIRST` (recommended), or
-- `EMOTION_FIRST`.
-
-After explicit selection:
-→ create `R3_D1_REAL_PUBLISH_RECEIPT`
-→ record exact final package
-→ record actual publish timestamp after posting
-→ enter `R3-D2 Live Data Feedback`.
+1. user manually updates Douyin profile if accepting the recommended account name/bio;
+2. publish the locked MUSIC_FIRST package once;
+3. record exact actual publish timestamp;
+4. enter R3-D2 1h / 3h / 24h review;
+5. in parallel, begin filling the 30D/60 song queue and batch HG01/HG02 for the next production set.
