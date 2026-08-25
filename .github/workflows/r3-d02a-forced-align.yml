@@ -72,3 +72,5 @@ jobs:
             /tmp/d02a_align_out
             /tmp/d02a_align_cli_result.json
           retention-days: 3
+
+# trigger: trusted lyric text locked after exact-master consensus
