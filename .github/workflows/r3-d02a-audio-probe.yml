@@ -1,0 +1,50 @@
+name: R3 D02-A Audio Probe
+
+on:
+  push:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_probe_audio.py'
+      - '.github/workflows/r3-d02a-audio-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install requests
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libchromaprint-tools
+      - name: Probe D02-A core Douyin works and build HG02 reference
+        run: python 06_TESTS/MV/WEB_R3/30D_60/D02-A/tools/d02a_probe_audio.py
+      - name: Persist provenance report
+        if: always() && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json || true
+          if git diff --cached --quiet; then
+            echo "No report changes."
+          else
+            git commit -m "D02-A: persist 做她的大地别做她的天 audio probe report"
+            git push origin HEAD:test/mv-web-r3
+          fi
+      - name: Upload HG02 listening artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r3-d02a-hg02-audio
+          path: 06_TESTS/MV/WEB_R3/30D_60/D02-A/_hg02_audio_artifact
+          if-no-files-found: warn
+          retention-days: 7
