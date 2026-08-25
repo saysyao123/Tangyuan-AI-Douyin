@@ -1,0 +1,62 @@
+name: R3 D02-A Timeline Probe
+
+on:
+  push:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '.github/workflows/r3-d02a-timeline-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audio transcription dependencies
+        run: |
+          python -m pip install --disable-pip-version-check faster-whisper requests
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Transcribe exact Douyin asset with word timestamps
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, requests, hashlib, subprocess
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          report = json.loads(Path('06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json').read_text(encoding='utf-8'))
+          url = report['works'][0]['music']['url']
+          src = Path('/tmp/d02a_exact_asset.m4a')
+          r = requests.get(url, timeout=120, headers={'User-Agent':'Mozilla/5.0','Referer':'https://www.douyin.com/'})
+          r.raise_for_status(); src.write_bytes(r.content)
+          h = hashlib.sha256(src.read_bytes()).hexdigest()
+          wav = Path('/tmp/d02a_16k.wav')
+          subprocess.run(['ffmpeg','-y','-i',str(src),'-ac','1','-ar','16000',str(wav)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+
+          model = WhisperModel('small', device='cpu', compute_type='int8')
+          segments, info = model.transcribe(str(wav), language='zh', beam_size=5, word_timestamps=True, vad_filter=False)
+          out = {'asset_sha256':h,'language':info.language,'language_probability':info.language_probability,'segments':[]}
+          for s in segments:
+              row={'start':s.start,'end':s.end,'text':s.text.strip(),'words':[]}
+              for w in (s.words or []):
+                  row['words'].append({'start':w.start,'end':w.end,'word':w.word,'probability':w.probability})
+              out['segments'].append(row)
+          Path('/tmp/d02a_timeline_probe.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('===D02A_TIMELINE_PROBE_BEGIN===')
+          print(json.dumps(out,ensure_ascii=False,indent=2))
+          print('===D02A_TIMELINE_PROBE_END===')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r3-d02a-timeline-probe
+          path: /tmp/d02a_timeline_probe.json
+          retention-days: 2
