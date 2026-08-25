@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+# Trigger note: 2026-08-26 HG02 P1 probe rerun after workflow creation.
+
 import hashlib
 import json
 import re
