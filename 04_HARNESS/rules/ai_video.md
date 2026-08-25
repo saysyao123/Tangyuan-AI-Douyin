@@ -1,4 +1,6 @@
-# Rules｜AI First Frame & Image-to-Video v1.4
+# Rules｜AI First Frame & Image-to-Video v1.5
+
+> Status: `ACTIVE / R1 + WEB_R2 VALIDATED / R3 + D01-B CROSS-SONG HARDENED`
 
 ## Use Gate
 AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outro / Capability Proof 中，能显著增加表达价值时使用。真实Evidence仍由真实素材承担。
@@ -12,16 +14,15 @@ AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outr
 
 答不清则不生成。
 
-## JIT Knowledge｜R3 positive evidence, not hard rules
+## JIT Knowledge｜experimental layer
 
 当镜头包含高风险材质 / 玻璃反射 / 雨水 / 冰 / 复杂前景遮挡，或本轮明确要测试摄影机语法时，JIT 读取：
 - `04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md`
 - `04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md`
 
-这两个文件属于 `POSITIVE_EVIDENCE / EXPERIMENTAL KNOWLEDGE`：
-- 用于下一轮减少重复踩坑；
-- 不覆盖本 Rule 的 HARD 条款；
-- 未跨歌复验前，不把具体雨水/运镜经验写死到 Golden Runtime。
+具体雨水、液体、复杂运镜等经验仍属于 `POSITIVE_EVIDENCE / EXPERIMENTAL KNOWLEDGE`。
+
+但经 R3 `如果风会替我说话` 与 D01-B `我救自己于人间水火` 跨歌曲复验后，下面的**控制骨架**已经晋升为本 Rule 的 HARD production contract。
 
 ## First Frame
 - 一次只生成1张独立9:16竖图、单一完整构图。
@@ -32,6 +33,32 @@ AI不是默认填空工具。只有 Concept / Emotion / Hook / Transition / Outr
 - 首帧同时要为后期留下 clean in / clean out 和动作发展空间。
 
 Prompt基础模板：`templates/ai_first_frame_prompt.md`。
+
+首帧整组美学 / 差异 / 动态可执行性 QA：
+`rules/mv_first_frame_qa.md`。
+
+## Accepted Actual First Frame Authority｜HARD RULE
+
+HG03 通过后，动态阶段的视觉真值顺序固定：
+
+`ACCEPTED ACTUAL FIRST-FRAME IMAGE / K0 PIXELS`
+`>` `accepted image prompt`
+`>` `older Director prose`
+`>` `abandoned concept`。
+
+动态提示词必须先观察实际通过的图片，再写动作。
+
+必须继承实际图片中真实存在的：
+- 人物数量与身份；
+- 服装 / 面纱 / 面罩；
+- 手、身体、视线位置；
+- 道具；
+- 花 / 水 / 布 /门 / 阶梯等关键对象状态；
+- 建筑、地形、光线和构图关系。
+
+禁止要求模型为了迎合旧文档而重新设计已验收首帧。
+
+若实际首帧已经偏离旧计划但用户接受：**改 Prompt / Director State，不改图片事实。**
 
 ## Character Image-to-Video｜Portrait-safe prefix｜HARD RULE
 
@@ -68,6 +95,80 @@ Prompt基础模板：`templates/ai_first_frame_prompt.md`。
 - 可剪的动作弧与 clean endpoint。
 
 禁止让模型自由安排多个彼此竞争的主事件。
+
+## Dynamic Prompt Control Skeleton｜HARD RULE
+
+对人物 I2V / 需要稳定因果的 5 秒动态素材，生产版提示词不得退化为普通“画面描述 + 运镜”文本。
+
+默认完整控制顺序：
+
+1. `PORTRAIT-SAFE PREFIX`（有人物时必须第一行）
+2. `DIRECTOR TASK / LYRIC HIT`
+3. `HARD FREEZE / NON-NEGOTIABLES`
+4. `FRAME-0 STATE / K0`
+5. `STATIC BASE`
+6. `ONE ALLOWED EVENT`
+7. `BOUND / quantified motion limits`（需要时）
+8. `MOTION LOAD / subject-environment-camera intensity`
+9. `PHASE A / PHASE B / PHASE C` 或等价的 0–5s 分阶段动作
+10. `CAMERA`
+11. `ENVIRONMENT / PHYSICAL FEEDBACK`
+12. `RESIDUE`
+13. `SETTLED END STATE / CLEAN ENDPOINT`
+14. `SOUND HARD RULE`
+15. short `AVOID` list
+
+### HARD FREEZE
+明确整个5秒不可改变的身份 / 拓扑 / 面纱 / 服装 / 建筑 / 关键道具 / 关键物体状态。
+
+### FRAME-0 STATE
+不是“参考这个风格”，而是：
+`当前已验收图片 = 视频真实第0秒状态`。
+
+### STATIC BASE
+先写清楚什么不动，再写允许发生什么。尤其是玻璃、水、花、覆盖布、复杂背景、反射等高风险对象。
+
+### ONE ALLOWED EVENT
+每个普通5秒 source 默认只有一个主要可见事件。其他人物细动、环境风、布料、水纹等只能是该事件的响应/余韵，不另起剧情。
+
+### BOUND
+对容易过度生成的动作给出可理解边界，例如：
+- 只移动一次；
+- 只上一阶；
+- 只向一个方向；
+- 小幅位移；
+- 不接触目标物；
+- 物体数量 / 大小 / 位置不变化。
+
+不要为了“精确”堆过多互相冲突的数字；BOUND 的用途是限制自由度。
+
+### MOTION LOAD
+必要时分别声明：
+- subject motion: `S / M / L`
+- environment motion: `S / M / L`
+- camera motion: `S / M / L`
+
+禁止人物、摄影机、复杂物理同时都处于高动态。
+
+### PHASES
+复杂动作优先序列化：
+`建立 / 感知 -> 唯一主动作 -> 稳定/余韵`。
+
+不要同时要求：
+`复杂液体 + 大运镜 + 大人物动作 + 表情高潮`。
+
+### RESIDUE
+主动作结束后必须留下真实可持续的物理余韵，例如：
+- 面纱 / 发丝 / 衣摆回摆；
+- 水纹扩散；
+- 叶片 / 花瓣微颤；
+- 雾 / 光 / 风继续缓慢变化。
+
+### SETTLED END STATE
+明确5秒结束时人物、物体、视线、道具和空间应停在哪里。
+最后约 `0.3–0.7s` 优先形成干净、稳定、可剪的 tail，不在尾部新开剧情。
+
+如果任务天然适合多镜，仍可用2/3镜结构，但每个内部镜头也必须遵守单一叙事任务和 clean endpoint 原则。
 
 ### Shot Count｜EDIT-DRIVEN DEFAULT
 
