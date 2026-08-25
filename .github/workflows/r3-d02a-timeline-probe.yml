@@ -60,3 +60,5 @@ jobs:
           name: r3-d02a-timeline-probe
           path: /tmp/d02a_timeline_probe.json
           retention-days: 2
+
+# trigger: HG02-B locked 2026-08-26
