@@ -7,6 +7,12 @@ on:
     paths:
       - '06_TESTS/MV/WEB_R3/30D_60/D01-B/tools/d01b_probe_audio.py'
       - '.github/workflows/r3-d01b-audio-probe.yml'
+  pull_request:
+    branches:
+      - test/mv-web-r3
+    paths:
+      - '06_TESTS/MV/WEB_R3/30D_60/D01-B/tools/d01b_probe_audio.py'
+      - '.github/workflows/r3-d01b-audio-probe.yml'
   workflow_dispatch:
 
 permissions:
