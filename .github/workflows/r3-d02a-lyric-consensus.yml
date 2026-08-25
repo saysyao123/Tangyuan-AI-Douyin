@@ -60,3 +60,5 @@ jobs:
           name: r3-d02a-lyric-consensus
           path: /tmp/d02a_lyric_consensus.json
           retention-days: 2
+
+# trigger: exact-master consensus after HG02-B lock
