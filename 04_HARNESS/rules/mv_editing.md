@@ -1,8 +1,8 @@
-# Rules｜MV Editing Runtime Contract v1.1
+# Rules｜MV Editing Runtime Contract v1.2
 
-> Status: `ACTIVE / WEB_R2_VALIDATED`
+> Status: `ACTIVE / WEB_R2_VALIDATED / WEB_ROUGH_CUT_GATE_PROMOTED`
 > Role: MV 后期剪辑的独立运行规则。主 Workflow 只定义阶段与 Gate；本文件负责可复用的 Picture Edit / 网页端预览 / Fragmentation / 字幕实现接口。
-> Evidence base: WEB R2 V1/V2 timing failures + V3 fragmented-cut feedback + V3.1 long-cut improvement + W09 subtitle geometry calibration.
+> Evidence base: WEB R2 V1/V2 timing failures + V3 fragmented-cut feedback + V3.1 long-cut improvement + W07.5/V3.2 source normalization + WEB watermark rough-cut validation + W09 subtitle geometry calibration.
 
 ---
 
@@ -12,12 +12,21 @@
 - `BGM_LOCKED`
 - `AUDIO_TIMELINE_PACKAGE_LOCKED`
 - `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
+- `SHOT_LIBRARY_READY`（需要 Atom/Arc 时）
+- **`WEB_SOURCE_ROUGH_CUT_GATE_PASS`（WEB 环境 HARD）**
 - `EDITOR_AUDIO_GATE_PASS`
 
-编辑器只加载：
-`line_timeline.csv + anchor_words.csv + music_events.csv + VISUAL_SOURCE_MAP`。
+WEB 权威粗剪规则：`rules/mv_web_source_roughcut.md`。
 
-禁止在剪辑阶段重新猜歌词时间、根据画面倒推字幕、临时生成第二套 lyric clock。
+编辑器只加载：
+`line_timeline.csv + anchor_words.csv + music_events.csv + VISUAL_SOURCE_MAP + clean WEB proxy / normalized Shot Library`。
+
+禁止：
+- 在剪辑阶段重新猜歌词时间；
+- 根据画面倒推字幕；
+- 临时生成第二套 lyric clock；
+- 把带角落平台生成标记的 raw WEB source 直接塞进正式 Picture Preview；
+- 把水印安全处理拖到 HG04 之后或 Final Polish。
 
 ---
 
@@ -108,7 +117,7 @@ W07 不只写“PASS/FAIL”，必须给编辑器可执行素材地图：
 - fps / duration；
 - clean window(s)；
 - internal cut / action event approximate frame or time；
-- topology / face / fabric risk window；
+- topology / face / fabric / physics risk window；
 - recommended role：`HOLD / BRIDGE / HIT / PEAK / RELEASE`；
 - `PASS_FULL / TRIM_REQUIRED / REGEN_WATCH / REGENERATE`。
 
@@ -116,40 +125,62 @@ W07 不只写“PASS/FAIL”，必须给编辑器可执行素材地图：
 
 ---
 
-## 7. Web preview watermark fallback｜WEB ONLY
+## 7. WEB Source Rough-Cut Gate｜HARD / WEB ONLY
 
-> 这是网页端当前能力限制下的临时 Preview 策略，不替代 Codex / publish-grade 无水印源处理。
+权威：`rules/mv_web_source_roughcut.md`。
 
-当网页端回传 Seedance/平台素材左上角或右下角存在生成标记时：
-- 默认采用**整条素材统一放大 + 固定裁切**，而不是每镜单独移动/局部遮盖；
-- 同一批素材使用同一几何变换，避免构图跳动；
-- 先以整批最严重水印位置确定安全 crop/zoom，再统一应用；
-- 不允许出现部分镜头去掉、部分镜头漏出的混合状态；
-- Preview 输出强制 `SAR=1:1`，保持 9:16，不得因裁切导致拉伸；
-- 渲染后必须抽查至少：第一段、左上角最危险帧、右下角最危险帧、最后一段；
-- 只要仍有一处水印残留，就继续增加统一放大/安全裁切，不把问题交给用户发现。
+> R2 已验证：水印/平台生成标记不能作为 Final Polish TODO；必须在正式 Picture Edit 前，将 raw source 非破坏性派生为 clean WEB proxy。
 
-优先级：
-`无水印 HD 原源 > Codex 精确处理 > WEB 统一放大裁切 fallback`。
+### Default WEB geometry baseline
+对于 720×1280 Doubao/Seedance 角落生成标记，R2 已验证：
+
+`crop=576:1024:72:128 -> scale=720:1280`
+
+等效约 `1.25×` whole-source zoom。
+
+要求：
+- 同一批素材使用同一 crop/zoom；
+- 原始素材不覆盖；
+- source audio 物理移除；
+- 输出 `720×1280 / SAR=1:1 / 9:16`；
+- 禁止逐镜移动画面追水印；
+- 禁止局部模糊/贴片作为默认方案；
+- 以整批最危险左上 / 右下帧做 corner-risk QA；
+- 不允许 mixed state：部分镜头干净、部分仍有平台标记。
+
+新批次先用 R2 1.25× baseline；若水印位置更极端，只能整批统一扩大安全 crop。若统一裁切明显破坏核心构图，触发 `ROUGH_CUT_GEOMETRY_EXCEPTION`，不得静默进入 Picture Edit。
+
+Required outputs：
+- `WEB_SOURCE_ROUGH_CUT_MAP.csv`
+- `WEB_SOURCE_ROUGH_CUT_QA.md`
+
+Gate：
+`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`。
 
 ---
 
 ## 8. Picture-edit workflow
 
 1. Load locked Audio Timeline Package.
-2. Load VISUAL_SOURCE_MAP.
-3. 先按 Natural Beat / emotion 构建“大段”，不要先按歌词行机械切片。
-4. 对每个大段选择最完整的视觉动作 arc。
-5. Anchor Word 优先通过镜头内部动作命中。
-6. Music event 决定必要的换场、峰值和 release。
-7. 执行 Fragmentation Gate。
-8. 应用网页端统一 watermark-safe crop（如果当前环境需要）。
+2. Load VISUAL_SOURCE_MAP / normalized Shot Library as needed.
+3. **确认 WEB_SOURCE_ROUGH_CUT_GATE_PASS；只加载 clean WEB proxy。**
+4. 先按 Natural Beat / emotion 构建“大段”，不要先按歌词行机械切片。
+5. 对每个大段选择最完整的视觉动作 arc。
+6. Anchor Word 优先通过镜头内部动作命中。
+7. Music event 决定必要的换场、峰值和 release。
+8. 执行 Fragmentation Gate。
 9. Render `Picture + locked BGM` Preview。
 10. Audio implementation QA：确认没有新全局 lag。
-11. Human viewing Gate。
+11. Visual technical QA：再次抽查角落标记一致性 / SAR / 拉伸 / risk frames。
+12. Human `HG04 Picture Edit Rhythm Gate`。
 
 只有通过后：
 `EDIT_PREVIEW_QA_PASS = YES`。
+
+如果 HG04 之后发现“只是 WEB 粗剪 Gate 漏做/几何实现错误”：
+- 用同一 EDL 替换成 clean proxy 重渲染；
+- 不自动重开导演/动态生成；
+- 只有统一 crop 实质改变构图/节奏时才重开 HG04。
 
 ---
 
@@ -195,7 +226,7 @@ WEB R2 证据：`好吧哎哟哎哟` 为短句，旧版 22→10px 通过旧圆�
 
 ---
 
-## 10. Final reusable defaults from WEB R2
+## 10. Final reusable defaults from WEB R2/R3
 
 - 先锁音频，再做任何依赖时长的导演生产；
 - 图片/视频素材为剪辑服务，不按“5s就是最终5s”理解；
@@ -203,7 +234,9 @@ WEB R2 证据：`好吧哎哟哎哟` 为短句，旧版 22→10px 通过旧圆�
 - 外部剪辑长镜头优先；
 - Anchor 命中不等于换镜头；
 - W07 必须产出可执行 VISUAL_SOURCE_MAP；
-- WEB Preview 当前统一放大裁水印；
+- **WEB 正式 Picture Edit 前必须先过 Source Rough-Cut Gate；**
+- R2 WEB baseline：统一 1.25× whole-source crop/zoom + corner-risk QA；
+- 水印处理不得拖到 HG04 后；
 - 字幕先验证 timing，再优化 style；
 - 字幕底框必须由实际 glyph bbox 重建，并通过四边 padding / 中心误差自动 QA；
 - 用户指出的同类问题必须升级成规则/Gate，而不是只修当前视频。
