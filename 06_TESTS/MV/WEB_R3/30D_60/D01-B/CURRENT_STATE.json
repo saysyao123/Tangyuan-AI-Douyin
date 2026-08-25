@@ -4,16 +4,15 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG01_PASS / B0_AUDIO_VERSION_HIGH_CONFIDENCE / HG02_READY",
+  "status": "HG01_PASS / HG02_BOUNDARY_CORRECTION_REQUIRED / CHG-A",
   "song_family": "我救自己于人间水火",
-  "audio_version": "DOUYIN_RECORDING_FAMILY / TREND_NATIVE_15.96s",
+  "audio_version": "DOUYIN_RECORDING_FAMILY / TREND_NATIVE",
   "audio_asset": null,
   "audio_asset_candidates": [
     "7673460389337762610",
     "7673442361086610233"
   ],
-  "hg02_reference_asset": "7673442361086610233",
-  "hg02_reference_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65",
+  "preferred_recording_asset": "7673442361086610233",
   "upstream": {
     "tracker_slot_verified": true,
     "account_operating_system_loaded": true,
@@ -24,21 +23,24 @@
     "b0_exact_work_parse_pass": true,
     "same_recording_across_two_core_works": true,
     "chromaprint_similarity": 0.995327,
-    "chromaprint_shift": 0
+    "chromaprint_shift": 0,
+    "hg02_user_initial_choice": "B / soft fade",
+    "boundary_conflict_detected_after_hg02": true,
+    "public_timed_lrc_next_line_clip_start_s": 14.85,
+    "machine_transition_support_s": 14.814
   },
-  "current_gate": "HG02 BGM Excerpt Listening Gate",
-  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/B0_AUDIO_VERSION_DISCOVERY_v1.md",
-  "selected_song_family": "我救自己于人间水火",
-  "sampled_aweme_ids": [
-    "7673460363010018611",
-    "7673442358406957285"
-  ],
-  "hg02_options": [
-    "A / exact trend-native 15.960813s",
-    "B / same source + final ~0.8s soft fade"
-  ],
-  "pass_condition": "user approves A or B, or specifies a boundary correction after listening",
-  "next_after_pass": "BGM_LOCKED -> trusted Audio Timeline Package",
-  "tracker_write_policy": "Keep tracker audio_asset unset until HG02 BGM lock. After HG02 PASS, write the chosen asset/hash into tracker and continue timing-dependent stages.",
-  "updated_at": "2026-08-25 13:58 Asia/Shanghai"
+  "current_gate": "HG02 Boundary Correction / CHG-A",
+  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG02_BOUNDARY_CORRECTION_v1.md",
+  "candidate_c": {
+    "label": "C / clean-line-end soft fade",
+    "content_end_target_s": 14.82,
+    "fade_start_s": 14.30,
+    "fade_end_s": 14.82,
+    "file": "我救自己于人间水火_HG02_C_干净句尾淡出版_14.82s.mp3",
+    "sha256": "f62f245251950dd7f25f3df2c55d551f5c051ee5cd707f0e5097768679add117"
+  },
+  "pass_condition": "user confirms C is comfortable / acceptable",
+  "next_after_pass": "BGM_LOCKED -> copyright-safe Audio Timeline Package -> Natural Beat -> Director Allocation -> full first-frame set -> HG03",
+  "tracker_write_policy": "Do not write final audio_asset into tracker until boundary-corrected HG02 passes.",
+  "updated_at": "2026-08-25 14:31 Asia/Shanghai"
 }
