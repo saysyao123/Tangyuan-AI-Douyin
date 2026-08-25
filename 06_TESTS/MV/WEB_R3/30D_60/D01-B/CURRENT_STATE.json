@@ -4,15 +4,18 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG01_PASS / HG02_BOUNDARY_CORRECTION_REQUIRED / CHG-A",
+  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_REQUIRED",
   "song_family": "我救自己于人间水火",
-  "audio_version": "DOUYIN_RECORDING_FAMILY / TREND_NATIVE",
-  "audio_asset": null,
-  "audio_asset_candidates": [
-    "7673460389337762610",
-    "7673442361086610233"
+  "audio_version": "DOUYIN_RECORDING_FAMILY / TREND_NATIVE_15.96s",
+  "audio_asset": "7673442361086610233",
+  "audio_asset_aliases": [
+    "7673442361086610233",
+    "7673460389337762610"
   ],
-  "preferred_recording_asset": "7673442361086610233",
+  "audio_transform": "B / final ~0.8s soft fade-out",
+  "audio_locked_file": "我救自己于人间水火_HG02_B_尾部柔和淡出版_15.96s.mp3",
+  "audio_locked_duration_s": 15.986939,
+  "audio_locked_sha256": "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5",
   "upstream": {
     "tracker_slot_verified": true,
     "account_operating_system_loaded": true,
@@ -24,23 +27,14 @@
     "same_recording_across_two_core_works": true,
     "chromaprint_similarity": 0.995327,
     "chromaprint_shift": 0,
-    "hg02_user_initial_choice": "B / soft fade",
-    "boundary_conflict_detected_after_hg02": true,
-    "public_timed_lrc_next_line_clip_start_s": 14.85,
-    "machine_transition_support_s": 14.814
+    "hg02_user_choice": "B / soft fade",
+    "candidate_c_rejected": true,
+    "candidate_c_rejection_reason": "over-correction based on public timed-LRC not yet proven same-version strong evidence"
   },
-  "current_gate": "HG02 Boundary Correction / CHG-A",
-  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG02_BOUNDARY_CORRECTION_v1.md",
-  "candidate_c": {
-    "label": "C / clean-line-end soft fade",
-    "content_end_target_s": 14.82,
-    "fade_start_s": 14.30,
-    "fade_end_s": 14.82,
-    "file": "我救自己于人间水火_HG02_C_干净句尾淡出版_14.82s.mp3",
-    "sha256": "f62f245251950dd7f25f3df2c55d551f5c051ee5cd707f0e5097768679add117"
-  },
-  "pass_condition": "user confirms C is comfortable / acceptable",
-  "next_after_pass": "BGM_LOCKED -> copyright-safe Audio Timeline Package -> Natural Beat -> Director Allocation -> full first-frame set -> HG03",
-  "tracker_write_policy": "Do not write final audio_asset into tracker until boundary-corrected HG02 passes.",
-  "updated_at": "2026-08-25 14:31 Asia/Shanghai"
+  "current_gate": "Stage 2A / AUDIO_TIMELINE_PACKAGE",
+  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG02_FINAL_LOCK_RECEIPT_v1.md",
+  "next_human_gate": "HG03 / Visual Direction + First-frame Set",
+  "pass_condition": "AUDIO_TIMELINE_PACKAGE_LOCKED before any time-dependent Director allocation",
+  "tracker_write_policy": "BGM is fixed. Any timing uncertainty must be solved against this exact locked BGM; do not reopen HG02 unless the user explicitly changes the audio preference.",
+  "updated_at": "2026-08-25 14:36 Asia/Shanghai"
 }
