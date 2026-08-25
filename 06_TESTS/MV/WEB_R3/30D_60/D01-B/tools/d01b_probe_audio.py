@@ -24,11 +24,11 @@ FADE_DURATION = 0.8
 LINES = [
     "我救自己于人间水火",
     "我爱自己于苦难生活",
-    "你是我花开的那一朵",
-    "祝你永远会记得我",
-    "我望见了那山坡",
+    "我会记得花开那一朵",
+    "吾将上下而求索",
+    "我救自己于人间水火",
 ]
-LINE_IDS = ["L01_SELF_RESCUE", "L02_SELF_LOVE", "L03_BLOOM_RELATION", "L04_REMEMBER_ME", "L05_NEXT_LINE_PROBE"]
+LINE_IDS = ["L01_SELF_RESCUE", "L02_SELF_LOVE", "L03_REMEMBER_BLOOM", "L04_SEEKING", "L05_REPEAT_HOOK_PROBE"]
 
 
 def run(cmd: list[str]) -> subprocess.CompletedProcess:
@@ -71,8 +71,6 @@ def prepare_audio() -> tuple[Path, Path, dict]:
     if actual_raw_sha != RAW_SHA:
         raise RuntimeError(f"raw asset SHA mismatch: {actual_raw_sha}")
 
-    # Recreate B's time-domain content as PCM. This is encoder-independent while preserving
-    # the exact approved source and fade coordinates previously verified against canonical B.
     run(["ffmpeg", "-y", "-v", "error", "-i", str(raw), "-af", f"afade=t=out:st={FADE_START}:d={FADE_DURATION}", "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", str(pcm)])
     run(["ffmpeg", "-y", "-v", "error", "-i", str(pcm), "-af", "highpass=f=100,lowpass=f=9000,dynaudnorm=f=150:g=9", "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", str(enhanced)])
     probe = json.loads(run(["ffprobe", "-v", "error", "-show_entries", "format=duration,size,bit_rate:stream=codec_name,sample_rate,channels,bit_rate", "-of", "json", str(pcm)]).stdout)
@@ -154,6 +152,7 @@ def main() -> int:
     private = {
         "audio_identity": {"asset_id": "7673442361086610233", "raw_sha256": RAW_SHA, "canonical_B_sha256": CANONICAL_B_SHA, "time_transform": {"fade_start_s": FADE_START, "fade_duration_s": FADE_DURATION, "curve": "tri"}, "pcm_probe": probe},
         "trusted_runtime_lyrics": LINES,
+        "lyric_occurrence": "FIRST_CHORUS",
         "model": "faster-whisper small / int8 / zh",
         "attempts": attempts,
         "selected_input": best["input"],
@@ -169,6 +168,7 @@ def main() -> int:
         "canonical_B_sha256": CANONICAL_B_SHA,
         "raw_asset_sha_verified": True,
         "encoder_independent_pcm_transform_verified": True,
+        "lyric_occurrence": "FIRST_CHORUS",
         "time_transform": {"fade_start_s": FADE_START, "fade_duration_s": FADE_DURATION, "curve": "tri"},
         "evidence_route": "TRUSTED_LYRICS_PLUS_FASTER_WHISPER_CHARACTER_ALIGNMENT",
         "model": "faster-whisper small / int8 / zh",
@@ -176,16 +176,16 @@ def main() -> int:
         "selected_input": best["input"],
         "first_four_coverage_ok": coverage_ok,
         "first_four_monotonic": monotonic,
-        "next_line_probe": best["alignment"]["lines"][4],
+        "repeat_hook_probe": best["alignment"]["lines"][4],
         "automatic_decision": decision,
         "copyright_note": "Persistent report excludes plaintext lyrics and ASR transcript; private artifact is temporary execution evidence.",
     }
     (OUT / "timeline_alignment_redacted.json").write_text(json.dumps(redacted, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (OUT / "manifest.json").write_text(json.dumps({"task": "D01-B exact-B forced alignment", "canonical_B_sha256": CANONICAL_B_SHA, "decision": decision, "selected_input": best["input"]}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUT / "manifest.json").write_text(json.dumps({"task": "D01-B exact-B forced alignment", "canonical_B_sha256": CANONICAL_B_SHA, "lyric_occurrence": "FIRST_CHORUS", "decision": decision, "selected_input": best["input"]}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     for p in [OUT / "_runtime_raw.mp3", pcm, enhanced]:
         p.unlink(missing_ok=True)
-    print(json.dumps({"decision": decision, "selected_input": best["input"], "first_four": first4, "next": best["alignment"]["lines"][4]}, ensure_ascii=False))
+    print(json.dumps({"decision": decision, "selected_input": best["input"], "first_four": first4, "repeat_hook_probe": best["alignment"]["lines"][4]}, ensure_ascii=False))
     return 0
 
 
