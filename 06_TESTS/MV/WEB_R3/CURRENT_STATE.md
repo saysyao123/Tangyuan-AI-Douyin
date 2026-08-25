@@ -1,14 +1,27 @@
 # WEB R3｜CURRENT_STATE
 
-> R3 是多轮阶段性测试，不等于一次完整 MV。R2 correctness baseline 默认冻结。
+> R3 是多轮阶段性测试。R2 correctness baseline 默认冻结。
 
 ## Current Status
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-C / FINAL CANDIDATE READY / HG05 PENDING`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / HG04_PASS / PICTURE_EDIT_LOCKED / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED / HG05_PENDING`
+- STAGE: `R3-C CLOSED / R3-D NEXT`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / R3_A_PASS / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / R3_B_CURRENT_CALIBRATION_PASS / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_COMPLETE_FOR_CURRENT_LOOP / PHYSICAL_PLAUSIBILITY_ITERATION_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / FINAL_MATERIAL_REVIEW_COMPLETE / WEB_SOURCE_ROUGH_CUT_GATE_PASS / HG04_PASS / PICTURE_EDIT_LOCKED / SUBTITLE_STYLE_QA_PASS / SUBTITLE_IMPLEMENTATION_QA_PASS / FINAL_TECH_QA_PASS / DELIVERABLE_RENDERED / HG05_PASS / R3_C_FULL_MV_INTEGRATION_PASS / RETROSPECTIVE_COMPLETE / R3_D_NOT_STARTED`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
+
+## Program-level status
+
+Original R3 modules:
+- `R3-A Music Radar / Benchmark Calibration = PASS`
+- `R3-B Healing Visual Calibration = PASS FOR CURRENT CALIBRATION`
+- `R3-C Full MV Integration = PASS / HG05`
+- `R3-D Publish Packaging + Live Data Feedback = NOT STARTED`
+
+Therefore:
+`R3_PROGRAM_COMPLETE = NO`
+
+Do not mark the whole R3 program `COMPLETE_LOCKED` until R3-D is executed or explicitly cancelled by user decision.
 
 ## Locked Audio
 
@@ -33,36 +46,56 @@ Duration target: `24.320000s`
 Canonical timing source:
 `AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt`
 
-## R3-B material / learning lock
+## R3-A result
 
-Canonical reports:
+Current Data Center mode:
+`PUBLIC_OBSERVED_30D / POSITIVE_EVIDENCE_ONLY`
+
+Current calibrated snapshot:
+- 9 core accounts;
+- 134 cumulative observed works;
+- 98 AUTO_HIGH works;
+- 8 repeated SONG_FAMILY candidates;
+- missing observations = UNKNOWN, not negative evidence.
+
+Current production song was selected from direct multi-account Douyin evidence and then verified to exact Douyin music asset before HG02.
+
+## R3-B reusable learning status
+
+Canonical R3 evidence:
 - `R3_B_FINAL_MATERIAL_REVIEW_AND_REUSABLE_LESSONS_v1.md`
 - `R3_B_DOUBAO_PROMPT_REWRITE_VALIDATION_v1.md`
 - `R3_B_PHYSICAL_PLAUSIBILITY_GATE_v1.md`
 
-Current reusable experimental guidance:
+JIT reusable Knowledge created:
+- `04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md`
+- `04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md`
+
+Current Knowledge candidates include:
 - `TRIM BEFORE REGENERATE`
 - `WEAKEST SUFFICIENT MOTION`
 - `FIRST-FRAME STATE PRELOAD`
+- `STATIC BASE -> ONE ALLOWED EVENT`
 - `ONE DIFFICULT PHYSICS EVENT PER SOURCE`
 - `CONTROL BUDGET`
 - `SURFACE OWNERSHIP`
 - `PHYSICALLY BELIEVABLE > VISUALLY LOUD`
-- `STATIC BASE -> ONE ALLOWED EVENT`
 - `WEAK VERB FOR HIGH-RISK MATERIALS`
 - `SERIALIZE PHYSICS AND FOCUS/CAMERA`
 - `FREEZE NON-TARGET MATERIAL FIELD`
-- partial foreground occlusion for same-scene continuity;
-- full / near-full occlusion as intentional hidden transition / edit point.
+- rain-as-atmosphere candidate;
+- partial occlusion for continuity / near-full occlusion for motivated hidden cut.
 
-Rain strategy candidate:
-- default rain = atmospheric texture, wet-glass sheen, distant streaks, bokeh/reflection;
-- explicit droplet birth / merge / macro-fluid motion is not production-default.
+These are `POSITIVE_EVIDENCE / KNOWLEDGE`, not universal hard rules until cross-song replication.
 
 Camera positive evidence:
 - S03 mild `SLOW DOLLY-OUT REVEAL`;
-- S04 foreground reveal / occlusion as transition grammar;
+- S04 foreground partial reveal / occlusion;
+- S04 near-full occlusion as motivated edit point;
+- S06/S07 rack-focus semantic transfer;
 - S08 `WORLD-OPENING CRANE / RETREAT` benchmark.
+
+Specific camera recipes are not yet promoted to Golden Runtime.
 
 ## WEB Source Rough-Cut Gate
 
@@ -77,15 +110,9 @@ Current artifacts:
 - `R3_C_WEB_SOURCE_ROUGH_CUT_MAP_v1.csv`
 - `R3_C_WEB_SOURCE_ROUGH_CUT_QA_v1.md`
 
-Result:
 `WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`
 
-All final WEB edit sources:
-- use one batch geometry;
-- preserve raw source separately;
-- source audio removed in clean proxy;
-- 720×1280 / 24fps / SAR1:1;
-- no visible top-left / bottom-right generator mark in reviewed risk samples.
+This Gate is now mandatory before WEB Picture Edit and may not be deferred to final polish.
 
 ## Picture Edit / HG04
 
@@ -113,95 +140,109 @@ User accepted:
 `HG04_PASS = YES`
 `PICTURE_EDIT_LOCKED = YES`
 
-## Subtitle implementation
+## Subtitle / Final Tech
 
-Authority:
-`04_HARNESS/rules/mv_subtitle.md`
-
-Artifact:
+Subtitle artifact:
 `R3_C_SUBTITLE_IMPLEMENTATION_QA_v1.md`
 
-Baseline applied:
-- Noto Sans CJK SC Bold;
-- nominal 46px;
-- near-white text;
-- dark semi-transparent rounded box;
-- subtitle center approx `(360,1009)`;
-- 10px padding on all four sides;
-- 100ms fade-in / 180ms fade-out;
-- no karaoke;
-- exact Stage 2A SRT timings unchanged.
+Final technical artifact:
+`R3_C_FINAL_TECH_QA_v1.md`
 
-All 8 lines:
-- actual glyph bbox -> fresh rounded box;
-- L/R/T/B = `10/10/10/10px`;
-- text/box center geometry error = `0px` in generated overlay specification;
-- no timing nudge;
-- no overflow / critical eye obstruction in reviewed samples.
+Subtitle result:
+- exact Stage 2A SRT unchanged;
+- R1/WEB R2 visual baseline reused;
+- glyph bbox -> fresh rounded box;
+- 10px four-side padding;
+- geometry/timing QA PASS.
 
 `SUBTITLE_STYLE_QA_PASS = YES`
 `SUBTITLE_IMPLEMENTATION_QA_PASS = YES`
+`FINAL_TECH_QA_PASS = YES`
 
-## Final Candidate / Final Tech QA
+## Final Accepted MV / HG05
 
-Final candidate:
+Final accepted candidate:
 `如果风会替我说话_R3_FinalCandidate_Subtitled_v1.mp4`
 
 SHA-256:
 `b96ddb81395772395ed8946b3fc30341f124bef14124f47a203dda87a3ef9f42`
 
 Technical:
-- H.264 video;
-- `720×1280`;
-- `24fps`;
-- `SAR=1:1`;
-- video/container duration `24.333333s` (24fps frame-quantized tail around 24.32s target);
-- AAC locked production audio;
-- final audio vs clean Picture Edit decoded PCM correlation = `1.000000`;
+- H.264;
+- 720×1280;
+- 24fps;
+- SAR1:1;
+- video/container ≈24.333333s;
+- approved locked BGM only;
 - no AI source-audio leakage;
-- no black interval >= 0.08s under QA threshold;
-- final watermark regression samples PASS;
-- subtitle geometry/timing QA PASS.
+- watermark consistency PASS;
+- subtitle timing/geometry PASS.
 
-Artifact:
-`R3_C_FINAL_TECH_QA_v1.md`
+HG05 receipt:
+`R3_C_HG05_FINAL_ACCEPTANCE_v1.md`
 
-`FINAL_TECH_QA_PASS = YES`
-`DELIVERABLE_RENDERED = YES`
+User final review:
+- final effect is good;
+- final-stage implementation was essentially accepted in one pass;
+- no upstream redesign requested.
 
-## Current Gate / Next execution
+`HG05_PASS = YES`
+`R3_C_FULL_MV_INTEGRATION_PASS = YES`
 
-Current Gate:
-**`HG05 Final Acceptance Gate`**
+## Retrospective / Promotion Audit
 
-User should review only the final candidate as a finished MV:
-- overall emotional flow;
-- subtitle feel/readability;
-- final crop/composition after WEB rough-cut;
-- transitions and release ending;
-- whether any remaining visual artifact is still noticeable at normal playback speed.
+Canonical closeout analysis:
+`R3_RETROSPECTIVE_AND_PROMOTION_AUDIT_v1.md`
 
-If PASS:
-→ create HG05 receipt
-→ Stage 11 Close / retrospective / reusable-rule promotion audit.
+Key promotion boundary:
+- mature correctness / implementation discipline stays in Runtime Rules;
+- single-song dynamic/physics/camera findings go to Knowledge and require cross-song validation;
+- per-song visual recipes / failed prompts remain R3 evidence only;
+- publish/growth conclusions remain unvalidated until R3-D real-data loop.
 
-If patch needed:
-→ patch only the nearest implementation layer; do not cascade into BGM / Audio Timeline / accepted Director work unless the defect proves an upstream root cause.
+## Main branch status
+
+At closeout audit:
+- `test/mv-web-r3` = 434 commits ahead of `main`;
+- 0 behind.
+
+Do not blindly merge the entire test branch.
+Use a curated production promotion path for Harness runtime / rules / templates / selected tools / knowledge, while keeping probe history and failed experiments in `06_TESTS`.
+
+## Next execution
+
+Default next stage from the original R3 charter:
+
+### `R3-D1 Packaging Benchmark`
+Produce two controlled candidates:
+- `MUSIC_FIRST`
+- `EMOTION_FIRST`
+
+Then select one for actual publication.
+
+### `R3-D2 Live Data Feedback`
+After publication, record performance evidence and decide what packaging / radar / visual signals deserve further promotion.
+
+Parallel next-song R&D goal:
+- reuse selected R3 dynamic-generation Knowledge hypotheses;
+- repeat camera candidate tests in a different song/world;
+- only then promote cross-song stable items into active Rules.
 
 ## State chain
 
-`HG01 PASS`
+`R3-A PASS`
+→ `HG01 PASS`
 → `BGM LOCKED`
 → `AUDIO TIMELINE LOCKED`
+→ `R3-B CURRENT CALIBRATION PASS`
 → `HG03 PASS`
 → `FIRST FRAME SET LOCKED`
-→ `CAMERA / PHYSICS ITERATION COMPLETE`
-→ `DOUBAO PROMPT REWRITE VALIDATED`
-→ `FINAL MATERIAL REVIEW COMPLETE`
+→ `DYNAMIC / CAMERA / PHYSICS ITERATION COMPLETE`
 → `WEB SOURCE ROUGH-CUT GATE PASS`
 → `HG04 PASS`
 → `PICTURE EDIT LOCKED`
 → `SUBTITLE IMPLEMENTATION QA PASS`
 → `FINAL TECH QA PASS`
-→ `DELIVERABLE RENDERED`
-→ **`HG05 PENDING`**
+→ `HG05 PASS`
+→ **`R3-C CLOSED`**
+→ **`R3-D NOT STARTED / NEXT`**
