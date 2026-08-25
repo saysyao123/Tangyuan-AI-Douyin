@@ -6,8 +6,8 @@
 
 - ROUND: `WEB_R3`
 - BRANCH: `test/mv-web-r3`
-- STAGE: `R3-B / FINAL MATERIAL REVIEW COMPLETE`
-- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / V3_PATCH_RETEST_REVIEWED / S04_PASS / S05_PASS / S02_S06_V4_RETEST_GENERATED / FINAL_MATERIAL_REVIEW_COMPLETE / EDIT_CANDIDATE_READY`
+- STAGE: `R3-B / FINAL MATERIAL REVIEW + PROMPT REWRITE VALIDATION COMPLETE`
+- STATE: `R3_INITIALIZED / R2_BASELINE_FROZEN / HG01_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / HG03_PASS / FIRST_FRAME_SET_LOCKED / CAMERA_CALIBRATION_BATCH_GENERATED / HUMAN_REVIEW_COMPLETE / PHYSICAL_PLAUSIBILITY_GATE_READY / V3_PATCH_RETEST_REVIEWED / S04_PASS / S05_PASS / S02_S06_V4_RETEST_GENERATED / FINAL_MATERIAL_REVIEW_COMPLETE / DOUBAO_PROMPT_REWRITE_VALIDATED / EDIT_CANDIDATE_READY`
 - UPDATED_AT: `2026-08-25 Asia/Shanghai`
 
 ## Locked Audio
@@ -55,14 +55,38 @@ Canonical report:
 Decision:
 - no further generation required before first picture-edit test;
 - use selective clean windows rather than full 5s clips;
-- S02 early oversized rain effect should be trimmed away;
 - S04 foreground occlusion should be used as a motivated transition/cut point rather than demanding same-scene recovery;
-- S06 can rely on wet-ice foreground + rack-focus emotional transition even if single droplet is not strongly legible;
 - S08 remains current world-opening release benchmark.
 
 `MATERIAL_REVIEW_COMPLETE = YES`
 `EDIT_CANDIDATE_READY = YES`
 `FINAL_SHOT_LIBRARY_GOLDEN = NO`
+
+## Doubao prompt rewrite validation
+
+Canonical report:
+`R3_B_DOUBAO_PROMPT_REWRITE_VALIDATION_v1.md`
+
+User rewrote S02/S06 prompts directly in Doubao and regenerated two 5s tests.
+
+Observed result:
+- overall outputs are materially more usable;
+- liquid behavior is still not perfectly controlled: rain can still thicken into a tube-like vertical trace, and ice-water separation can still elongate unnaturally;
+- improvement comes mainly from **containing and de-emphasizing** the fluid event rather than solving exact fluid simulation.
+
+Validated R3 prompt-structure candidates:
+- front-load only the highest-value hard constraints;
+- `STATIC BASE -> ONE ALLOWED EVENT`;
+- freeze all non-target liquid/material elements;
+- use weak / low-amplitude action language for high-risk materials;
+- quantify direction / distance / local area;
+- serialize tasks: `PHYSICS EVENT -> END -> RACK FOCUS/CAMERA -> CHARACTER RESIDUE`;
+- avoid concurrent liquid physics + camera/focus changes;
+- `QUANTIFIED LOCAL CHANGE > VAGUE MATERIAL LANGUAGE`.
+
+Important epistemic boundary:
+- treat front-loaded constraints as an empirical Doubao/Seedance heuristic from this R3 test;
+- do not claim as universal architecture fact that prompt order numerically controls model weight or that all negative prompts are inherently lower priority.
 
 ## Reusable experimental lessons
 
@@ -74,6 +98,10 @@ Active R3 evidence candidates:
 - `CONTROL BUDGET`
 - `SURFACE OWNERSHIP`
 - `PHYSICALLY BELIEVABLE > VISUALLY LOUD`
+- `STATIC BASE -> ONE ALLOWED EVENT`
+- `WEAK VERB FOR HIGH-RISK MATERIALS`
+- `SERIALIZE PHYSICS AND FOCUS/CAMERA`
+- `FREEZE NON-TARGET MATERIAL FIELD`
 - same-scene continuity -> partial foreground occlusion;
 - full/near-full occlusion -> intentional hidden transition / edit point.
 
@@ -99,7 +127,7 @@ Future camera testing should be controlled series tests, one camera variable at 
 ## Current Gate / Next execution
 
 Current state:
-`AWAITING HUMAN ACCEPTANCE OF MATERIAL REVIEW`
+`AWAITING HUMAN ACCEPTANCE -> PICTURE EDIT / HG04`
 
 After approval:
 1. build first Picture Edit candidate from locked BGM + lyric timeline;
@@ -107,8 +135,9 @@ After approval:
 3. remove all source audio;
 4. exploit S04 occlusion as motivated edit if rhythm supports it;
 5. preserve S08 continuous release as much as possible;
-6. run HG04 on picture rhythm / lyric fit / flow;
-7. only after HG04 proceed to subtitle/final polish.
+6. trim around any remaining visually loud liquid-artifact frames rather than forcing liquid physics to read;
+7. run HG04 on picture rhythm / lyric fit / flow;
+8. only after HG04 proceed to subtitle/final polish.
 
 ## State chain
 
@@ -122,4 +151,5 @@ After approval:
 → `S04/S05 PATCH PASS`
 → `S02/S06 V4 RETEST`
 → `FINAL MATERIAL REVIEW COMPLETE`
+→ `DOUBAO PROMPT REWRITE VALIDATED`
 → **`AWAIT HUMAN ACCEPTANCE -> PICTURE EDIT / HG04`**
