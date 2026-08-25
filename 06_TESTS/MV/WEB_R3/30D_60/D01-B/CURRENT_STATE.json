@@ -4,26 +4,41 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG01_PASS / B0_AUDIO_VERSION_DISCOVERY_IN_PROGRESS",
+  "status": "HG01_PASS / B0_AUDIO_VERSION_HIGH_CONFIDENCE / HG02_READY",
   "song_family": "我救自己于人间水火",
-  "audio_version": null,
+  "audio_version": "DOUYIN_RECORDING_FAMILY / TREND_NATIVE_15.96s",
   "audio_asset": null,
+  "audio_asset_candidates": [
+    "7673460389337762610",
+    "7673442361086610233"
+  ],
+  "hg02_reference_asset": "7673442361086610233",
+  "hg02_reference_sha256": "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65",
   "upstream": {
     "tracker_slot_verified": true,
     "account_operating_system_loaded": true,
     "mv_runtime_loaded": true,
     "previous_song_specific_visual_assets_inherited": false,
     "previous_song_family_excluded": "如果风会替我说话",
-    "hg01_pass": true
+    "hg01_pass": true,
+    "b0_exact_work_parse_pass": true,
+    "same_recording_across_two_core_works": true,
+    "chromaprint_similarity": 0.995327,
+    "chromaprint_shift": 0
   },
-  "current_gate": "B0 exact AUDIO_VERSION / Douyin audio asset discovery",
-  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/HG01_SELECTION_RECEIPT_v1.md",
+  "current_gate": "HG02 BGM Excerpt Listening Gate",
+  "gate_artifact": "06_TESTS/MV/WEB_R3/30D_60/D01-B/B0_AUDIO_VERSION_DISCOVERY_v1.md",
   "selected_song_family": "我救自己于人间水火",
   "sampled_aweme_ids": [
     "7673460363010018611",
     "7673442358406957285"
   ],
-  "next_after_discovery": "HG02 BGM Excerpt Listening Gate",
-  "tracker_write_policy": "song_family may be locked in instance state after HG01; keep audio_asset unset in tracker until HG02 BGM lock.",
-  "updated_at": "2026-08-25 13:45 Asia/Shanghai"
+  "hg02_options": [
+    "A / exact trend-native 15.960813s",
+    "B / same source + final ~0.8s soft fade"
+  ],
+  "pass_condition": "user approves A or B, or specifies a boundary correction after listening",
+  "next_after_pass": "BGM_LOCKED -> trusted Audio Timeline Package",
+  "tracker_write_policy": "Keep tracker audio_asset unset until HG02 BGM lock. After HG02 PASS, write the chosen asset/hash into tracker and continue timing-dependent stages.",
+  "updated_at": "2026-08-25 13:58 Asia/Shanghai"
 }
