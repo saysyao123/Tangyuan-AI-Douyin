@@ -1,6 +1,6 @@
 slot_id,day,slot,lane,song_family,audio_asset,status,packaging,publish_time,views_1h,views_3h,views_24h,likes_24h,comments_24h,favorites_24h,shares_24h,new_follows_24h,completion_24h,avg_watch_24h,notes
-D01-A,1,A,P,如果风会替我说话,7670880580757867270,SCHEDULED,MUSIC_FIRST,2026-08-25 17:30 Asia/Shanghai,,,,,,,,,,,首发基准；实际发布时间发布后回填
-D01-B,1,B,S,我救自己于人间水火,7673442361086610233,FIRST_FRAME_IN_PRODUCTION,TBD,,,,,,,,,,,,HG02 B锁定；ATP已锁；第一遍副歌四句；进入HG03前完整首帧组生产
+D01-A,1,A,P,如果风会替我说话,7670880580757867270,PUBLISHED,MUSIC_FIRST,timestamp_pending_backfill,,,,,,,,,,,用户确认已发布；当前曾观察到约2次浏览，但未确认对应1h/3h checkpoint；继续采样不改策略
+D01-B,1,B,S,我救自己于人间水火,7673442361086610233,PUBLISHED,MUSIC_FIRST,timestamp_pending_backfill,,,,,,,,,,,HG05 PASS / COMPLETE_LOCKED；用户确认已发布；准确发布时间与1h/3h/24h数据待回填
 D02-A,2,A,P,,,PLANNED,MUSIC_FIRST,,,,,,,,,,,,
 D02-B,2,B,S,,,PLANNED,TBD,,,,,,,,,,,,
 D03-A,3,A,P,,,PLANNED,MUSIC_FIRST,,,,,,,,,,,,
