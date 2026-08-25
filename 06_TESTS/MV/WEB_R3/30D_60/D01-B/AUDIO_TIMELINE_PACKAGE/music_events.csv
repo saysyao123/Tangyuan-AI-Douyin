@@ -1,0 +1,36 @@
+event_id,time_s,event_type,evidence,use
+M001,0.058,opening_onset,onset_map_supporting,hook ignition
+M002,0.604,beat,onset_map_supporting,motion pulse
+M003,1.149,beat,onset_map_supporting,motion pulse
+M004,1.683,beat,onset_map_supporting,motion pulse
+M005,2.125,strong_onset,onset_map_supporting,environment pressure reveal
+M006,2.624,beat,onset_map_supporting,motion pulse
+M007,3.088,beat,onset_map_supporting,motion pulse
+M008,3.564,beat,onset_map_supporting,phrase approach
+M009,4.029,phrase_release,onset_map_supporting,L01 release before L02
+M010,4.493,phrase_pickup,onset_map_supporting,L02 entrance
+M011,4.969,beat,onset_map_supporting,self-care action pulse
+M012,5.433,beat,onset_map_supporting,self-care action pulse
+M013,5.863,strong_onset,onset_map_supporting,self-love emphasis
+M014,6.362,beat,onset_map_supporting,hold
+M015,6.838,beat,onset_map_supporting,hold
+M016,7.314,beat,onset_map_supporting,phrase approach
+M017,7.779,phrase_release,onset_map_supporting,L02 release
+M018,8.255,phrase_pickup,onset_map_supporting,L03 entrance
+M019,8.719,beat,onset_map_supporting,remember action
+M020,9.183,beat,onset_map_supporting,reflector/light alignment
+M021,9.648,strong_onset,onset_map_supporting,bloom reveal
+M022,10.124,beat,onset_map_supporting,light growth
+M023,10.588,beat,onset_map_supporting,light growth
+M024,11.053,beat,onset_map_supporting,hold bloom
+M025,11.529,phrase_release,onset_map_supporting,L03 release
+M026,11.993,phrase_pickup,onset_map_supporting,L04 ascent preparation
+M027,12.469,strong_onset,onset_map_supporting,climb begins
+M028,12.934,beat,onset_map_supporting,vertical motion
+M029,13.410,beat,onset_map_supporting,vertical motion
+M030,13.874,beat,onset_map_supporting,world opens
+M031,14.350,strong_onset,onset_map_supporting,seeking emphasis
+M032,14.814,phrase_peak,onset_map_supporting,reach/visual peak
+M033,15.279,tail_onset,onset_map_supporting,hold and fade
+M034,15.560,vocal_release,forced_alignment,finish primary visual action
+M035,15.987,audio_end,locked_audio_identity,end frame
