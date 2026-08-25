@@ -4,10 +4,19 @@
   "day": 2,
   "slot": "A",
   "lane": "P",
-  "status": "HG01_PASS / BGM_VERSION_DISCOVERY_ACTIVE",
+  "status": "HG02_READY / USER_LISTENING_REQUIRED",
   "song_family": "做她的大地别做她的天",
-  "audio_version": null,
-  "audio_asset": null,
+  "audio_version": "DOUYIN_NATIVE / 做她的大地别做她的天（r&b）（氛围片段） / 大眼仔 / 26.423991s",
+  "audio_asset": {
+    "numeric_asset_id": null,
+    "numeric_asset_id_status": "UNAVAILABLE_FROM_OPAQUE_SIGNED_URL",
+    "content_identity": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
+    "sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+    "duration_s": 26.423991,
+    "codec": "AAC-LC",
+    "sample_rate_hz": 44100,
+    "channels": 2
+  },
   "project_isolation": {
     "new_independent_mv": true,
     "inherit_previous_visual_assets": false,
@@ -32,18 +41,27 @@
     "priority": "P1_VERIFIED_DOUYIN_MUSIC_ASSET_FIRST",
     "target_audio_family": "做她的大地别做她的天（r&b）（氛围片段） / 大眼仔",
     "sampled_aweme_ids": ["7674182052884173553", "7673796884212895016"],
-    "probe_status": "PENDING_GITHUB_ACTIONS",
+    "probe_status": "PASS",
+    "decision": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
+    "pairwise_video_fingerprint_score": 0.946403,
     "report": "06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json"
   },
-  "current_machine_stage": "Stage 2 / BGM Version Discovery",
-  "current_gate": "HG02 PREP / machine audio QA before listening gate",
-  "next_human_gate": "HG02 / BGM Excerpt Listening",
-  "pass_condition": "SYSTEM_PROVIDES_QA-PASSED_LISTENING_ARTIFACT_AND_USER_APPROVES_EXCERPT = YES",
+  "hg02": {
+    "status": "READY / USER_LISTENING_REQUIRED",
+    "listening_pack": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG02_LISTENING_PACK_v1.md",
+    "option_a": "trend-native exact asset / 26.423991s / no transform",
+    "option_b": "same asset / 1.2s tail fade / structure unchanged",
+    "pass_condition": "USER_APPROVES_OPTION_A_OR_B = YES"
+  },
+  "current_machine_stage": "Stage 2 / HG02 listening delivery complete",
+  "current_gate": "HG02 / BGM Excerpt Listening",
+  "next_human_gate": "HG02 / user approves A or B",
   "after_pass": [
+    "freeze selected BGM bytes/transform/hash",
     "set BGM_LOCKED",
     "build trusted Audio Timeline Package",
     "run alignment QA",
     "only then enter lyric beat and visual directing"
   ],
-  "updated_at": "2026-08-26 00:11 Asia/Shanghai"
+  "updated_at": "2026-08-26 Asia/Shanghai"
 }
