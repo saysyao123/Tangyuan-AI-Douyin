@@ -4,7 +4,7 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / VISUAL_REDIRECT_V2_ACTIVE",
+  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED / VIDEO_SET_PASS / PICTURE_EDIT_V1_READY",
   "song_family": "我救自己于人间水火",
   "audio_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE_15.96s",
   "audio_asset": "7673442361086610233",
@@ -29,19 +29,30 @@
     ]
   },
   "visual_stage": {
-    "natural_beat_status": "LOCKED / unchanged",
-    "director_plan_v1": "REJECTED_BY_USER_VISUAL_REVIEW",
-    "director_plan_v1_failure": "industrial greenhouse/mechanical labor world lacked overall beauty and conflicted with veil + pearl-glow ancient heroine direction",
-    "director_plan_v2": "06_TESTS/MV/WEB_R3/30D_60/D01-B/DIRECTOR_PLAN_v2.md",
-    "director_plan_v2_status": "ACTIVE",
-    "new_world": "白石鸢尾水庭 / fictional Eastern high-mountain sanctuary",
-    "heroine": "Iris Misty Silver Pearl Glow + translucent pearl-gray-lilac veil",
-    "regen_policy": "regenerate S01 first as visual sanity check; if direction holds, continue S02-S04"
+    "director_plan_v1": "REJECTED",
+    "director_plan_v2": "ACTIVE / evolved through user-reviewed actual first frames",
+    "video_set_qa": "06_TESTS/MV/WEB_R3/30D_60/D01-B/VIDEO_SET_QA_v1.md",
+    "video_set_status": "PASS",
+    "final_sources": {
+      "S01": "生成5秒竖版东方女性走出水火残境视频.mp4",
+      "S02": "生成5秒竖版东方女性走出水火残境视频 (1).mp4",
+      "S03": "生成5秒竖版东方女性走出水火残境视频 (4).mp4",
+      "S04": "生成5秒竖版东方女性走出水火残境视频 (3).mp4"
+    }
   },
-  "current_machine_stage": "Stage 4 Director Allocation V2 -> Stage 5 First Frame Regen",
-  "current_gate": "Machine visual correction before HG03",
-  "next_human_gate": "HG03 / Visual Direction + Full First-frame Set",
-  "pass_condition": "All four regenerated first frames satisfy set-level beauty QA and semantic hit before user review.",
-  "rollback_policy": "Visual issues stay in Stage 4/5; audio and timeline remain locked unless the user explicitly changes them.",
-  "updated_at": "2026-08-25 15:16 Asia/Shanghai"
+  "picture_edit": {
+    "plan": "06_TESTS/MV/WEB_R3/30D_60/D01-B/PICTURE_EDIT_PLAN_v1.md",
+    "preview": "D01-B_PICTURE_EDIT_V1_HG04_PREVIEW.mp4",
+    "status": "READY_FOR_HG04",
+    "transition_policy": "hard cuts only for rhythm review",
+    "subtitle_status": "not applied",
+    "grading_status": "not applied",
+    "watermark_cleanup_status": "deferred until publish-master"
+  },
+  "current_machine_stage": "Stage 6 Picture Edit V1 rendered",
+  "current_gate": "HG04 / Picture Edit Rhythm",
+  "next_human_gate": "HG04 / Picture Edit Rhythm",
+  "pass_condition": "User approves picture-edit rhythm before subtitle/grade/publish-master work.",
+  "rollback_policy": "HG04 changes stay inside source trims/cut points. Passed video sources and locked BGM remain unchanged unless user explicitly requests otherwise.",
+  "updated_at": "2026-08-25 17:01 Asia/Shanghai"
 }
