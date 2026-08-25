@@ -1,36 +1,47 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import difflib
 import hashlib
 import json
 import re
 import subprocess
-import tempfile
-import time
+import sys
 from pathlib import Path
-from typing import Any
 
 import requests
 
-API = "https://api.bugpk.com/api/douyin"
 ROOT = Path("06_TESTS/MV/WEB_R3/30D_60/D01-B")
-REPORT_DIR = ROOT / "BGM_DISCOVERY"
 ARTIFACT_DIR = ROOT / "_hg02_audio_artifact"
-TARGETS = [
-    {
-        "account": "Aura",
-        "aweme_id": "7673460363010018611",
-        "work_url": "https://www.douyin.com/video/7673460363010018611",
-    },
-    {
-        "account": "XIANGJISHI",
-        "aweme_id": "7673442358406957285",
-        "work_url": "https://www.douyin.com/video/7673442358406957285",
-    },
+ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+RAW_URL = "https://lf3-music-east.douyinstatic.com/obj/ies-music-hj/7673442361086610233.mp3"
+RAW_SHA = "ec6c178e30bf6c910ba4080bf1d3db31b708a7b7003430cb506630b21ac08b65"
+LOCKED_SHA = "cc3da15b00cd554c810c590e61ccc97bedc72db058202bdf850bcefd5bba00e5"
+FADE_START = 15.1608
+FADE_DURATION = 0.8
+
+# Runtime-only trusted excerpt. This temporary probe implementation is restored after execution.
+LINES = [
+    "我救自己于人间水火",
+    "我爱自己于苦难生活",
+    "你是我花开的那一朵",
+    "祝你永远会记得我",
+    "我望见了那山坡",
+]
+LINE_IDS = [
+    "L01_SELF_RESCUE",
+    "L02_SELF_LOVE",
+    "L03_BLOOM_RELATION",
+    "L04_REMEMBER_ME",
+    "L05_NEXT_LINE_CONTAMINATION_PROBE",
 ]
 
 
-def sha256(path: Path) -> str:
+def run(cmd: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run(cmd, check=True, text=True, capture_output=True)
+
+
+def sha_file(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
@@ -38,245 +49,206 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def asset_id_from_url(url: str) -> str | None:
-    m = re.search(r"/ies-music/(\d+)\.mp3", url or "")
-    return m.group(1) if m else None
+def sha_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def popcount32(x: int) -> int:
-    return (x & 0xFFFFFFFF).bit_count()
+def normalize(text: str) -> str:
+    return "".join(re.findall(r"[\u4e00-\u9fff]", text))
 
 
-def parse_fpcalc(path: Path) -> tuple[float, list[int]]:
-    proc = subprocess.run(
-        ["fpcalc", "-raw", "-length", "120", str(path)],
-        check=True, capture_output=True, text=True,
-    )
-    duration = 0.0
-    fp: list[int] = []
-    for line in proc.stdout.splitlines():
-        if line.startswith("DURATION="):
-            duration = float(line.split("=", 1)[1])
-        elif line.startswith("FINGERPRINT="):
-            fp = [int(x) for x in line.split("=", 1)[1].split(",") if x]
-    return duration, fp
+def ensure_whisper():
+    try:
+        from faster_whisper import WhisperModel
+        return WhisperModel
+    except ImportError:
+        subprocess.run([sys.executable, "-m", "pip", "install", "faster-whisper==1.2.1"], check=True)
+        from faster_whisper import WhisperModel
+        return WhisperModel
 
 
-def best_similarity(a: list[int], b: list[int]) -> dict[str, Any]:
-    if not a or not b:
-        return {"score": 0.0, "shift": None, "overlap": 0}
-    min_overlap = min(24, len(a), len(b))
-    if min_overlap < 8:
-        min_overlap = max(4, min(len(a), len(b)))
-    best = {"score": -1.0, "shift": 0, "overlap": 0}
-    for shift in range(-(len(b) - min_overlap), len(a) - min_overlap + 1):
-        a0 = max(0, shift)
-        b0 = max(0, -shift)
-        overlap = min(len(a) - a0, len(b) - b0)
-        if overlap < min_overlap:
-            continue
-        dist = sum(popcount32(a[a0+i] ^ b[b0+i]) for i in range(overlap))
-        score = 1.0 - dist / (32.0 * overlap)
-        if score > best["score"] + 1e-9 or (abs(score - best["score"]) <= 1e-9 and overlap > best["overlap"]):
-            best = {"score": round(score, 6), "shift": shift, "overlap": overlap}
-    return best
+def prepare_audio() -> tuple[Path, Path, dict]:
+    raw = ARTIFACT_DIR / "_runtime_raw.mp3"
+    locked = ARTIFACT_DIR / "_runtime_locked_B.mp3"
+    enhanced = ARTIFACT_DIR / "_runtime_vocal_enhanced.wav"
+    r = requests.get(RAW_URL, timeout=120, headers={"User-Agent": "Mozilla/5.0"})
+    r.raise_for_status()
+    raw.write_bytes(r.content)
+    if sha_file(raw) != RAW_SHA:
+        raise RuntimeError(f"raw SHA mismatch: {sha_file(raw)}")
+    run([
+        "ffmpeg", "-y", "-v", "error", "-i", str(raw),
+        "-af", f"afade=t=out:st={FADE_START}:d={FADE_DURATION}",
+        "-c:a", "libmp3lame", "-b:a", "192k", str(locked),
+    ])
+    if sha_file(locked) != LOCKED_SHA:
+        raise RuntimeError(f"locked SHA mismatch: {sha_file(locked)}")
+    run([
+        "ffmpeg", "-y", "-v", "error", "-i", str(locked),
+        "-af", "pan=mono|c0=0.5*c0+0.5*c1,highpass=f=100,lowpass=f=9000,dynaudnorm=f=150:g=9",
+        "-ar", "16000", "-c:a", "pcm_s16le", str(enhanced),
+    ])
+    p = run([
+        "ffprobe", "-v", "error", "-show_entries",
+        "format=duration,size,bit_rate:stream=codec_name,sample_rate,channels,bit_rate",
+        "-of", "json", str(locked),
+    ])
+    return locked, enhanced, json.loads(p.stdout)
 
 
-def fetch_detail(session: requests.Session, url: str) -> dict[str, Any]:
-    last: Exception | None = None
-    for wait in [0, 3, 7, 15]:
-        if wait:
-            time.sleep(wait)
-        try:
-            r = session.get(API, params={"url": url}, timeout=30)
-            if r.status_code == 429:
+def words_to_chars(segments) -> tuple[str, list[dict], list[dict]]:
+    chars: list[str] = []
+    times: list[dict] = []
+    raw_segments: list[dict] = []
+    for seg in segments:
+        seg_words = []
+        for word in (seg.words or []):
+            token = normalize(word.word or "")
+            if not token:
                 continue
-            r.raise_for_status()
-            data = r.json()
-            if not isinstance(data, dict) or data.get("code") != 200:
-                raise RuntimeError(f"business failure: {data}")
-            return data
-        except Exception as exc:
-            last = exc
-    raise RuntimeError(f"detail request failed: {last}")
+            start = float(word.start if word.start is not None else seg.start)
+            end = float(word.end if word.end is not None else seg.end)
+            span = max(end - start, 0.001)
+            for idx, ch in enumerate(token):
+                cstart = start + span * idx / len(token)
+                cend = start + span * (idx + 1) / len(token)
+                chars.append(ch)
+                times.append({"char": ch, "start": round(cstart, 4), "end": round(cend, 4)})
+            seg_words.append({"token": token, "start": round(start, 4), "end": round(end, 4)})
+        raw_segments.append({
+            "start": round(float(seg.start), 4),
+            "end": round(float(seg.end), 4),
+            "text": seg.text,
+            "words": seg_words,
+        })
+    return "".join(chars), times, raw_segments
 
 
-def media_url(detail: dict[str, Any]) -> str:
-    data = detail.get("data") or {}
-    if not isinstance(data, dict):
-        return ""
-    if data.get("url"):
-        return str(data["url"])
-    backups = data.get("video_backup") or []
-    if backups:
-        first = backups[0]
-        return str(first.get("url") if isinstance(first, dict) else first)
-    return ""
+def align(recognized: str, char_times: list[dict]) -> dict:
+    target = "".join(normalize(line) for line in LINES)
+    matcher = difflib.SequenceMatcher(a=target, b=recognized, autojunk=False)
+    mapping: dict[int, int] = {}
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            for offset in range(i2 - i1):
+                mapping[i1 + offset] = j1 + offset
+    results = []
+    cursor = 0
+    for line_id, line in zip(LINE_IDS, LINES):
+        norm = normalize(line)
+        mapped = [mapping[i] for i in range(cursor, cursor + len(norm)) if i in mapping]
+        coverage = len(mapped) / len(norm)
+        start = min((char_times[i]["start"] for i in mapped), default=None)
+        end = max((char_times[i]["end"] for i in mapped), default=None)
+        results.append({
+            "line_id": line_id,
+            "lyric_sha256": sha_text(norm),
+            "char_count": len(norm),
+            "matched_chars": len(mapped),
+            "coverage": round(coverage, 4),
+            "start": round(start, 4) if start is not None else None,
+            "end": round(end, 4) if end is not None else None,
+        })
+        cursor += len(norm)
+    return {"sequence_ratio": round(matcher.ratio(), 4), "lines": results}
 
 
-def download(session: requests.Session, url: str, path: Path) -> None:
-    with session.get(url, stream=True, timeout=120) as r:
-        r.raise_for_status()
-        with path.open("wb") as f:
-            for chunk in r.iter_content(chunk_size=1024 * 1024):
-                if chunk:
-                    f.write(chunk)
+def transcribe(WhisperModel, model, label: str, path: Path) -> dict:
+    prompt = "，".join(LINES)
+    segments_gen, info = model.transcribe(
+        str(path), language="zh", beam_size=5, temperature=0.0,
+        word_timestamps=True, vad_filter=False, condition_on_previous_text=False,
+        initial_prompt=prompt, suppress_blank=False,
+    )
+    segments = list(segments_gen)
+    recognized, char_times, raw_segments = words_to_chars(segments)
+    return {
+        "input": label,
+        "language": info.language,
+        "language_probability": info.language_probability,
+        "duration": info.duration,
+        "recognized_normalized": recognized,
+        "recognized_sha256": sha_text(recognized),
+        "segments": raw_segments,
+        "alignment": align(recognized, char_times),
+    }
 
 
-def ffprobe(path: Path) -> dict[str, Any]:
-    p = subprocess.run([
-        "ffprobe", "-v", "error",
-        "-show_entries", "format=duration:stream=codec_type,codec_name,sample_rate,channels,bit_rate",
-        "-of", "json", str(path)
-    ], check=True, capture_output=True, text=True)
-    return json.loads(p.stdout)
-
-
-def extract_mp3(src: Path, dst: Path) -> None:
-    subprocess.run([
-        "ffmpeg", "-y", "-i", str(src), "-vn",
-        "-codec:a", "libmp3lame", "-q:a", "2", str(dst)
-    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+def quality(attempt: dict) -> float:
+    lines = attempt["alignment"]["lines"][:4]
+    coverage = sum(x["coverage"] for x in lines) / 4
+    starts = [x["start"] for x in lines]
+    monotonic = all(starts[i] is not None and starts[i+1] is not None and starts[i] < starts[i+1] for i in range(3))
+    return coverage + (0.3 if monotonic else 0.0)
 
 
 def main() -> int:
-    REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/139 Safari/537.36",
-        "Referer": "https://www.douyin.com/",
-    })
+    WhisperModel = ensure_whisper()
+    locked, enhanced, probe = prepare_audio()
+    model = WhisperModel("small", device="cpu", compute_type="int8")
+    attempts = [
+        transcribe(WhisperModel, model, "locked_B_mix", locked),
+        transcribe(WhisperModel, model, "locked_B_vocal_enhanced", enhanced),
+    ]
+    best = max(attempts, key=quality)
+    first4 = best["alignment"]["lines"][:4]
+    starts = [x["start"] for x in first4]
+    coverage_ok = all(x["coverage"] >= 0.55 and x["start"] is not None for x in first4)
+    monotonic = coverage_ok and all(starts[i] < starts[i+1] for i in range(3))
+    next_line = best["alignment"]["lines"][4]
 
-    reports: list[dict[str, Any]] = []
-    fps: dict[str, list[int]] = {}
-    direct_assets: dict[str, Path] = {}
-    video_refs: dict[str, Path] = {}
-
-    with tempfile.TemporaryDirectory(prefix="r3_d01b_audio_") as td:
-        tmp = Path(td)
-        for idx, target in enumerate(TARGETS, 1):
-            detail = fetch_detail(session, target["work_url"])
-            data = detail.get("data") or {}
-            music = data.get("music") if isinstance(data, dict) else None
-            music = music if isinstance(music, dict) else {}
-            murl = str(music.get("url") or "")
-            aid = asset_id_from_url(murl)
-
-            vurl = media_url(detail)
-            if not vurl:
-                raise RuntimeError(f"no media URL for {target['account']}")
-            mp4 = tmp / f"{target['aweme_id']}.mp4"
-            download(session, vurl, mp4)
-            vprobe = ffprobe(mp4)
-            fpdur, fp = parse_fpcalc(mp4)
-            fps[target["aweme_id"]] = fp
-
-            ref_mp3 = ARTIFACT_DIR / f"{idx}_{target['account']}_video_derived.mp3"
-            extract_mp3(mp4, ref_mp3)
-            video_refs[target["aweme_id"]] = ref_mp3
-
-            direct_info: dict[str, Any] | None = None
-            if murl:
-                direct_path = ARTIFACT_DIR / f"{idx}_{target['account']}_direct_music_asset.mp3"
-                try:
-                    download(session, murl, direct_path)
-                    dprobe = ffprobe(direct_path)
-                    ddur, dfp = parse_fpcalc(direct_path)
-                    direct_assets[target["aweme_id"]] = direct_path
-                    direct_info = {
-                        "path": direct_path.name,
-                        "sha256": sha256(direct_path),
-                        "ffprobe": dprobe,
-                        "fp_duration": ddur,
-                        "fingerprint_length": len(dfp),
-                    }
-                except Exception as exc:
-                    direct_info = {"download_error": repr(exc)}
-
-            reports.append({
-                **target,
-                "detail_msg": detail.get("msg", ""),
-                "detail_title": data.get("title") if isinstance(data, dict) else "",
-                "author": data.get("author") if isinstance(data, dict) else None,
-                "music": music,
-                "music_asset_id_from_url": aid,
-                "video_bytes": mp4.stat().st_size,
-                "video_ffprobe": vprobe,
-                "video_fp_duration": fpdur,
-                "video_fingerprint_length": len(fp),
-                "video_reference": {
-                    "path": ref_mp3.name,
-                    "sha256": sha256(ref_mp3),
-                    "ffprobe": ffprobe(ref_mp3),
-                },
-                "direct_music_asset": direct_info,
-            })
-            if idx < len(TARGETS):
-                time.sleep(3)
-
-    pair = best_similarity(fps[TARGETS[0]["aweme_id"]], fps[TARGETS[1]["aweme_id"]])
-    asset_ids = [r.get("music_asset_id_from_url") for r in reports]
-    music_urls = [str((r.get("music") or {}).get("url") or "") for r in reports]
-    exact_asset_same = bool(asset_ids[0] and asset_ids[0] == asset_ids[1])
-    same_recording = pair["score"] >= 0.70
-
-    # Prefer XIANGJISHI as the semantic hook reference when the two works are acoustically compatible.
-    preferred = TARGETS[1]["aweme_id"]
-    selected_path: Path
-    selected_kind: str
-    if preferred in direct_assets:
-        selected_path = direct_assets[preferred]
-        selected_kind = "direct_douyin_music_asset"
-    else:
-        selected_path = video_refs[preferred]
-        selected_kind = "video_derived_listening_reference"
-
-    final_ref = ARTIFACT_DIR / "HG02_reference_我救自己于人间水火.mp3"
-    final_ref.write_bytes(selected_path.read_bytes())
-
-    decision = (
-        "EXACT_ASSET_IDENTITY_CONFIRMED" if exact_asset_same
-        else "SAME_RECORDING_DIFFERENT_ASSET_IDS" if same_recording
-        else "AUDIO_VERSION_CONFLICT_REVIEW_REQUIRED"
-    )
-    payload = {
-        "song_family": "我救自己于人间水火",
-        "discovery_priority_used": "P1_VERIFIED_DOUYIN_WORKS",
-        "sampled_aweme_ids": [t["aweme_id"] for t in TARGETS],
-        "works": reports,
-        "pairwise_video_fingerprint": pair,
-        "asset_ids": asset_ids,
-        "music_urls_same": bool(music_urls[0] and music_urls[0] == music_urls[1]),
-        "exact_asset_identity": exact_asset_same,
-        "same_recording_by_fingerprint": same_recording,
-        "selected_listening_source_aweme_id": preferred,
-        "selected_listening_source_account": "XIANGJISHI",
-        "selected_listening_source_kind": selected_kind,
-        "selected_listening_file": final_ref.name,
-        "selected_listening_sha256": sha256(final_ref),
-        "selected_listening_ffprobe": ffprobe(final_ref),
-        "decision": decision,
+    private = {
+        "audio_identity": {
+            "asset_id": "7673442361086610233",
+            "raw_sha256": RAW_SHA,
+            "locked_sha256": LOCKED_SHA,
+            "transform": {"fade_start_s": FADE_START, "fade_duration_s": FADE_DURATION, "curve": "tri"},
+            "ffprobe": probe,
+        },
+        "trusted_runtime_lyrics": LINES,
+        "model": "faster-whisper small / int8 / zh",
+        "attempts": attempts,
+        "selected_input": best["input"],
+        "automatic_decision": "ALIGNMENT_CANDIDATE_PASS" if coverage_ok and monotonic else "ALIGNMENT_REVIEW_REQUIRED",
     }
-    (REPORT_DIR / "asset_probe_report.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    (ARTIFACT_DIR / "manifest.json").write_text(
-        json.dumps({
-            "song_family": payload["song_family"],
-            "decision": decision,
-            "selected_file": final_ref.name,
-            "selected_sha256": payload["selected_listening_sha256"],
-            "source_aweme_id": preferred,
-            "source_kind": selected_kind,
-        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    print(json.dumps({
-        "decision": decision,
-        "pair_score": pair["score"],
-        "asset_ids": asset_ids,
-        "selected": final_ref.name,
-    }, ensure_ascii=False))
+    (ARTIFACT_DIR / "timeline_alignment_private.json").write_text(json.dumps(private, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    redacted_attempts = []
+    for attempt in attempts:
+        redacted_attempts.append({
+            "input": attempt["input"],
+            "language": attempt["language"],
+            "language_probability": attempt["language_probability"],
+            "duration": attempt["duration"],
+            "recognized_sha256": attempt["recognized_sha256"],
+            "sequence_ratio": attempt["alignment"]["sequence_ratio"],
+            "lines": attempt["alignment"]["lines"],
+        })
+    redacted = {
+        "audio_asset_id": "7673442361086610233",
+        "audio_locked_sha256": LOCKED_SHA,
+        "exact_B_reproduction_pass": True,
+        "evidence_route": "TRUSTED_LYRICS_PLUS_FASTER_WHISPER_CHARACTER_ALIGNMENT",
+        "model": "faster-whisper small / int8 / zh",
+        "attempts": redacted_attempts,
+        "selected_input": best["input"],
+        "first_four_coverage_ok": coverage_ok,
+        "first_four_monotonic": monotonic,
+        "next_line_probe": next_line,
+        "automatic_decision": private["automatic_decision"],
+        "copyright_note": "Persistent report excludes plaintext lyrics and ASR transcript; private artifact is temporary execution evidence.",
+    }
+    (ARTIFACT_DIR / "timeline_alignment_redacted.json").write_text(json.dumps(redacted, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (ARTIFACT_DIR / "manifest.json").write_text(json.dumps({
+        "task": "D01-B exact-B forced alignment",
+        "locked_sha256": LOCKED_SHA,
+        "decision": redacted["automatic_decision"],
+        "selected_input": best["input"],
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    for path in [ARTIFACT_DIR / "_runtime_raw.mp3", locked, enhanced]:
+        path.unlink(missing_ok=True)
+    print(json.dumps({"decision": redacted["automatic_decision"], "lines": first4, "next": next_line}, ensure_ascii=False))
     return 0
 
 
