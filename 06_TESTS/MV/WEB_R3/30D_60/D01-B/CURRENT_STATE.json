@@ -4,7 +4,7 @@
   "day": 1,
   "slot": "B",
   "lane": "S",
-  "status": "COMPLETE_LOCKED / READY_TO_PUBLISH",
+  "status": "PUBLISHED / DATA_COLLECTION_ACTIVE",
   "song_family": "我救自己于人间水火",
   "audio_version": "DOUYIN_RECORDING_FAMILY / FIRST_CHORUS / TREND_NATIVE_15.96s",
   "audio_asset": "7673442361086610233",
@@ -64,14 +64,15 @@
   "publish_stage": {
     "package": "06_TESTS/MV/WEB_R3/30D_60/D01-B/PUBLISH_PACKAGE_v1.md",
     "packaging": "MUSIC_FIRST",
-    "status": "READY_TO_PUBLISH",
+    "status": "PUBLISHED",
     "actual_publish_time": null,
-    "performance_tracking": "pending publish"
+    "publish_time_note": "timestamp_pending_backfill / user confirmed live",
+    "performance_tracking": "ACTIVE / 1h 3h 24h checkpoints pending"
   },
-  "current_machine_stage": "Complete / publish package ready",
-  "current_gate": "NONE / all five human gates passed",
+  "current_machine_stage": "Post-Publish Data Collection",
+  "current_gate": "NONE / production complete",
   "next_human_gate": "NONE",
-  "pass_condition": "COMPLETE_LOCKED",
+  "pass_condition": "Production COMPLETE_LOCKED; publication confirmed; collect performance evidence without reopening production from a single result.",
   "rollback_policy": "Published performance observations do not reopen production unless repeated evidence supports a controlled experiment.",
-  "updated_at": "2026-08-25 20:43 Asia/Shanghai"
+  "updated_at": "2026-08-25 21:01 Asia/Shanghai"
 }
