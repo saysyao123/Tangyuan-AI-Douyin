@@ -1,15 +1,18 @@
-# WEB R3｜D1 Real Publish Selection Receipt v1
+# WEB R3｜D1 Real Publish Selection Receipt v1.1
 
 > Song: `如果风会替我说话`
 > Stage: `R3-D1`
 > Status: `REAL_PUBLISH_PACKAGE_LOCKED / WAITING_FOR_ACTUAL_POST`
 > Selected candidate: `MUSIC_FIRST`
+> Front-facing account identity: `汤圆音乐映像`
 
 ## Human decision
 
 User explicitly selected Candidate A / `MUSIC_FIRST` for the real publication test.
 
 The alternate `EMOTION_FIRST` package remains counterfactual evidence only and must not be posted as a duplicate of the same MV.
+
+User also explicitly locked the new front-facing account identity as `汤圆音乐映像` and requested that ordinary Douyin account/publication packaging not foreground AI.
 
 ## Locked video
 
@@ -41,10 +44,17 @@ Optional small secondary line only if clean:
 `戴耳机听，会更完整。`
 
 ### Hashtags
-`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #AI视觉`
+`#如果风会替我说话 #音乐推荐 #治愈系 #氛围感 #音乐MV`
 
 ### Pinned comment
 `这段里你最喜欢哪一句？我最想留下的是最后那句。`
+
+## Front-facing brand rule
+
+For ordinary MV posts in this sprint:
+- account name / bio / cover / title / default hashtags do not foreground `AI`;
+- production technology remains backstage;
+- exceptions only for explicit behind-the-scenes / workflow content.
 
 ## Publication rule
 
@@ -56,4 +66,5 @@ Optional small secondary line only if clean:
 
 `R3_D1_REAL_PUBLISH_SELECTION = MUSIC_FIRST`
 `R3_D1_REAL_PUBLISH_PACKAGE_LOCKED = YES`
+`FRONT_FACING_ACCOUNT_NAME = 汤圆音乐映像`
 `ACTUAL_PUBLISH_TIMESTAMP = PENDING`
