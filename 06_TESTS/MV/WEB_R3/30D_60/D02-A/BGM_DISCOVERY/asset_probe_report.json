@@ -206,5 +206,12 @@
       "duration": "26.423991"
     }
   },
-  "decision": "SAME_RECORDING_DIFFERENT_ASSET_IDS"
+  "decision": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
+  "direct_music_asset_hashes": [
+    "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+    "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d"
+  ],
+  "exact_asset_content_identity": true,
+  "asset_id_visibility": "UNAVAILABLE_FROM_OPAQUE_SIGNED_URL",
+  "classification_note": "Numeric music asset id is not exposed by the current signed Douyin URL format, but both independent works resolve to byte-identical direct music assets."
 }
