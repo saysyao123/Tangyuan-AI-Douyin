@@ -7,6 +7,7 @@ on:
     paths:
       - '04_HARNESS/runtime/**'
       - '04_HARNESS/tools/mv_runtime_gate.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
       - '.github/workflows/r3-mv-runtime-p0-tests.yml'
   workflow_dispatch:
 
@@ -19,6 +20,32 @@ jobs:
 
       - name: Registry integrity
         run: python 04_HARNESS/tools/mv_runtime_gate.py registry-check
+
+      - name: Canonical v2 contract integrity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('04_HARNESS/runtime')
+          stages = json.loads((root/'mv_stage_registry.json').read_text())
+          artifacts = json.loads((root/'mv_artifact_registry.json').read_text())
+          gates = json.loads((root/'mv_human_gate_registry.json').read_text())
+          scaffold = json.loads((root/'mv_slot_scaffold.json').read_text())
+          transition = json.loads((root/'mv_transition_contract.json').read_text())
+          stage_ids = {x['id'] for x in stages['stages']}
+          artifact_ids = {x['id'] for x in artifacts['artifacts']}
+          assert scaffold['runtime_mode'] == 'canonical_v2'
+          assert scaffold['defaults']['canonical_v2'] is True
+          assert transition['policy']['only_next_stage_may_advance'] is True
+          assert transition['policy']['target_stage_must_validate'] is True
+          assert [x['id'] for x in gates['gates']] == ['HG01','HG02','HG03','HG04','HG05']
+          for item in gates['gates']:
+              assert item['stage_id'] in stage_ids, item
+              assert item['receipt_artifact_id'] in artifact_ids, item
+              for artifact in item['machine_preflight_artifacts']:
+                  assert artifact in artifact_ids, (item['id'], artifact)
+          print('PASS: canonical v2 contract references are internally consistent')
+          PY
 
       - name: Explain conditional normalization gate
         run: >-
@@ -46,7 +73,6 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           report = json.loads(Path('/tmp/d02a-audit.json').read_text(encoding='utf-8'))
           assert report['ok'] is False, report
           assert report['highest_contiguous_valid_stage'] == 'S04_NATURAL_BEAT_LOCKED', report['highest_contiguous_valid_stage']
@@ -76,21 +102,128 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           report = json.loads(Path('/tmp/d01b-audit.json').read_text(encoding='utf-8'))
           assert report['ok'] is False, report
           assert report['highest_contiguous_valid_stage'] == 'S03_AUDIO_TIMELINE_LOCKED', report['highest_contiguous_valid_stage']
           assert 'PUBLISHED' in str(report.get('declared_state') or ''), report.get('declared_state')
           assert report['artifact_summary']['legacy_aliases_used'] > 0, report['artifact_summary']
-          # v1 and v2 Director plans exist; the validator must not silently choose one.
           director = report['artifacts']['DIRECTOR_PLAN']
           assert director['ok'] is False, director
           assert director['source'] == 'ambiguous', director
           assert report['artifact_summary']['ambiguous_legacy_aliases'] > 0, report['artifact_summary']
-          # Subtitle QA is evidence of QA, not a substitute for a subtitle implementation manifest.
           subtitle_impl = report['artifacts']['SUBTITLE_IMPLEMENTATION']
           assert subtitle_impl['ok'] is False, subtitle_impl
           assert subtitle_impl['path'] is None, subtitle_impl
           assert report['artifact_summary']['path_collisions'] == 0, report['artifact_path_collisions']
           print('PASS: legacy aliases are visible, ambiguity blocks, and QA files cannot impersonate implementation artifacts')
           PY
+
+      - name: Canonical v2 state enforcement fixture
+        shell: bash
+        run: |
+          rm -rf /tmp/mv-v2 /tmp/mv-v2-tamper
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot \
+            --slot-root /tmp/mv-v2 --slot-id CI-D00-A --program CI --lane P \
+            > /tmp/init.json
+          cat /tmp/init.json
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root /tmp/mv-v2
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root /tmp/mv-v2 --gate HG01 \
+            --user-decision-text 'fixture selects candidate one' \
+            --approved-artifact 'song:C1' > /tmp/hg01-missing-preflight.json
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "HG01 must block before SONG_CANDIDATE_SET exists"
+            exit 1
+          fi
+
+          cat > /tmp/mv-v2/01_SONG/SONG_CANDIDATE_SET.json <<'JSON'
+          {
+            "schema_version": "1.0",
+            "status": "MACHINE_SCREENED",
+            "candidates": [{"id": "C1", "title": "fixture song", "eligible": true}]
+          }
+          JSON
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py advance \
+            --slot-root /tmp/mv-v2 --to S01_HG01_SONG_LOCKED > /tmp/advance-before-hg01.json
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "S01 advance must block before HG01 receipt exists"
+            exit 1
+          fi
+
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root /tmp/mv-v2 --gate HG01 \
+            --user-decision-text 'fixture selects candidate one' \
+            --approved-artifact 'song:C1'
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root /tmp/mv-v2
+          python 04_HARNESS/tools/mv_runtime_state.py advance \
+            --slot-root /tmp/mv-v2 --to S01_HG01_SONG_LOCKED
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root /tmp/mv-v2
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py advance \
+            --slot-root /tmp/mv-v2 --to S03_AUDIO_TIMELINE_LOCKED > /tmp/skip-stage.json
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "Direct S01 -> S03 stage skip must be blocked"
+            exit 1
+          fi
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root /tmp/mv-v2 --gate HG02 \
+            --user-decision-text 'fixture approves excerpt B' \
+            --approved-artifact 'bgm:B' > /tmp/hg02-missing-preflight.json
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "HG02 must block before BGM_CANDIDATE_PACKAGE exists"
+            exit 1
+          fi
+
+          cat > /tmp/mv-v2/02_BGM/BGM_CANDIDATE_PACKAGE.json <<'JSON'
+          {
+            "schema_version": "1.0",
+            "status": "MACHINE_VERIFIED",
+            "audio_identity": "fixture-audio-sha256",
+            "variants": [{"id": "B", "duration_s": 26.4, "fade": "soft"}]
+          }
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root /tmp/mv-v2 --gate HG02 \
+            --user-decision-text 'fixture approves excerpt B' \
+            --approved-artifact 'bgm:B'
+          python 04_HARNESS/tools/mv_runtime_state.py advance \
+            --slot-root /tmp/mv-v2 --to S02_HG02_BGM_LOCKED
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root /tmp/mv-v2
+
+          cp -a /tmp/mv-v2 /tmp/mv-v2-tamper
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('/tmp/mv-v2-tamper/00_STATE/CURRENT_STATE.json')
+          data = json.loads(path.read_text())
+          data['current_stage'] = 'S03_AUDIO_TIMELINE_LOCKED'
+          data['current_state_token'] = 'AUDIO_TIMELINE_PACKAGE_LOCKED'
+          data['status'] = 'AUDIO_TIMELINE_PACKAGE_LOCKED'
+          path.write_text(json.dumps(data, indent=2) + '\n')
+          PY
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state \
+            --slot-root /tmp/mv-v2-tamper > /tmp/tamper.json
+          code=$?
+          set -e
+          cat /tmp/tamper.json
+          if [ "$code" -ne 1 ]; then
+            echo "Manual state jump must be detected"
+            exit 1
+          fi
+          echo 'PASS: canonical v2 enforces machine preflight, Human Gate receipt, next-stage-only transitions and hash-chain verification'
