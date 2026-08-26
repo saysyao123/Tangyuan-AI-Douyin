@@ -1,0 +1,149 @@
+name: R3 MV Runtime P1 Media Asset Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/mv_media_asset_contract.json'
+      - '04_HARNESS/runtime/mv_slot_scaffold.json'
+      - '04_HARNESS/tools/mv_asset_manifest.py'
+      - '.github/workflows/r3-mv-runtime-p1-media-asset-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  immutable-media-identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize canonical slot and register media lineage
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-assets
+          rm -rf "$ROOT"
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root "$ROOT" --slot-id D98-Y --program CI_ASSETS --lane P
+          test -d "$ROOT/00_STATE/ASSETS"
+
+          mkdir -p "$ROOT/media"
+          printf 'cinematic-master-k0-v1\n' > "$ROOT/media/k0-master.png"
+          printf 'cinematic-master-k0-v1-face-grid-derived\n' > "$ROOT/media/k0-grid.png"
+          printf 'normalized-video-proxy-fixture\n' > "$ROOT/media/video-clean.mp4"
+
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$ROOT" --asset-id K0-S01-MASTER-V001 --media-type image \
+            --role first_frame_master --stage-origin S06_HG03_FIRST_FRAMES_LOCKED \
+            --provenance-kind generated --provenance-description 'synthetic cinematic master K0' \
+            --meta shot_id=S01 --meta variant=master --file "$ROOT/media/k0-master.png" > /tmp/asset-master.json
+
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$ROOT" --asset-id K0-S01-GRID-V001 --media-type image \
+            --role first_frame_i2v_adapter --stage-origin S06_HG03_FIRST_FRAMES_LOCKED \
+            --provenance-kind derived --provenance-description 'synthetic face-grid input adapter' \
+            --parent K0-S01-MASTER-V001 --meta shot_id=S01 --meta variant=grid_adapter \
+            --file "$ROOT/media/k0-grid.png" > /tmp/asset-grid.json
+
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$ROOT" --asset-id VID-S01-CLEAN-V001 --media-type video \
+            --role normalized_edit_source --stage-origin S09_SOURCE_NORMALIZATION_READY \
+            --provenance-kind derived --provenance-description 'synthetic normalized source proxy' \
+            --parent K0-S01-GRID-V001 --file "$ROOT/media/video-clean.mp4" > /tmp/asset-video.json
+
+          SHA=$(printf 'external-raw-video-fixture' | sha256sum | awk '{print $1}')
+          python 04_HARNESS/tools/mv_asset_manifest.py register-external \
+            --slot-root "$ROOT" --asset-id VID-S01-RAW-V001 --media-type video \
+            --role generated_raw_source --stage-origin S08_DYNAMIC_SOURCE_QA_LOCKED \
+            --provenance-kind external_reference --provenance-description 'external generated raw video fixture' \
+            --sha256 "$SHA" --bytes 26 --locator-kind conversation_attachment \
+            --locator 'conversation://fixture/raw-video-S01' > /tmp/asset-external.json
+
+          python 04_HARNESS/tools/mv_asset_manifest.py verify-all --slot-root "$ROOT" > /tmp/assets-all.json
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/assets-all.json', encoding='utf-8'))
+          assert data['ok'] is True
+          assert data['record_count'] == 4
+          assert data['records']['K0-S01-MASTER-V001']['local_bytes_verified'] is True
+          assert data['records']['VID-S01-RAW-V001']['local_bytes_verified'] is False
+          print('PASS: local hashes and external durable identities coexist in one immutable registry.')
+          PY
+
+      - name: Enforce immutability and parent-first lineage
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-assets
+
+          set +e
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$ROOT" --asset-id K0-S01-MASTER-V001 --media-type image \
+            --role duplicate --stage-origin S06_HG03_FIRST_FRAMES_LOCKED \
+            --provenance-kind generated --provenance-description duplicate \
+            --file "$ROOT/media/k0-master.png" > /tmp/asset-duplicate.json
+          duplicate_code=$?
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$ROOT" --asset-id K0-S02-CHILD-V001 --media-type image \
+            --role child --stage-origin S06_HG03_FIRST_FRAMES_LOCKED \
+            --provenance-kind derived --provenance-description 'missing parent should block' \
+            --parent K0-S02-MISSING-V001 --file "$ROOT/media/k0-master.png" > /tmp/asset-parent-missing.json
+          parent_code=$?
+          set -e
+          test "$duplicate_code" -eq 1
+          test "$parent_code" -eq 1
+          grep -q 'immutable' /tmp/asset-duplicate.json
+          grep -q 'parent asset record must already exist' /tmp/asset-parent-missing.json
+          echo 'PASS: asset IDs are immutable and derivation can only point backward to registered parents.'
+
+      - name: Create and validate stage-scoped asset manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-assets
+          python 04_HARNESS/tools/mv_asset_manifest.py create-manifest \
+            --slot-root "$ROOT" --manifest 06_FIRST_FRAMES/MEDIA_BINDINGS.json \
+            --manifest-id FIRST_FRAME_MEDIA_V1 --stage-id S06_HG03_FIRST_FRAMES_LOCKED \
+            --asset 'K0-S01-MASTER-V001|S01|aesthetic_master' \
+            --asset 'K0-S01-GRID-V001|S01|i2v_input_adapter' > /tmp/asset-manifest-create.json
+          python 04_HARNESS/tools/mv_asset_manifest.py verify-manifest \
+            --slot-root "$ROOT" --manifest 06_FIRST_FRAMES/MEDIA_BINDINGS.json > /tmp/asset-manifest-verify.json
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/asset-manifest-verify.json', encoding='utf-8'))
+          assert data['ok'] is True
+          assert data['asset_count'] == 2
+          print('PASS: stage manifest binds production meaning to immutable asset IDs without mutating records.')
+          PY
+
+          set +e
+          python 04_HARNESS/tools/mv_asset_manifest.py create-manifest \
+            --slot-root "$ROOT" --manifest 06_FIRST_FRAMES/BAD_DUPLICATE_BINDINGS.json \
+            --manifest-id BAD_DUP --stage-id S06_HG03_FIRST_FRAMES_LOCKED \
+            --asset 'K0-S01-MASTER-V001|S01|master' --asset 'K0-S01-MASTER-V001|S02|duplicate' > /tmp/asset-manifest-duplicate.json
+          duplicate_binding_code=$?
+          python 04_HARNESS/tools/mv_asset_manifest.py create-manifest \
+            --slot-root "$ROOT" --manifest 06_FIRST_FRAMES/BAD_MISSING_ASSET.json \
+            --manifest-id BAD_MISSING --stage-id S06_HG03_FIRST_FRAMES_LOCKED \
+            --asset 'K0-S99-MISSING-V001|S99|missing' > /tmp/asset-manifest-missing.json
+          missing_code=$?
+          set -e
+          test "$duplicate_binding_code" -eq 1
+          test "$missing_code" -eq 1
+          grep -q 'duplicate asset binding' /tmp/asset-manifest-duplicate.json
+          grep -q 'asset record missing' /tmp/asset-manifest-missing.json
+
+      - name: Detect media-byte tampering without rewriting asset identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-assets
+          cp -a "$ROOT" /tmp/mv-assets-tamper
+          printf 'tampered-media-bytes\n' > /tmp/mv-assets-tamper/media/k0-master.png
+          set +e
+          python 04_HARNESS/tools/mv_asset_manifest.py verify-record --slot-root /tmp/mv-assets-tamper --asset-id K0-S01-MASTER-V001 > /tmp/asset-tamper.json
+          tamper_code=$?
+          set -e
+          test "$tamper_code" -eq 1
+          grep -q 'SHA-256 no longer matches' /tmp/asset-tamper.json
+          python 04_HARNESS/tools/mv_asset_manifest.py verify-record --slot-root "$ROOT" --asset-id K0-S01-MASTER-V001
+          echo 'PASS: changed media bytes cannot silently retain the old asset identity.'
