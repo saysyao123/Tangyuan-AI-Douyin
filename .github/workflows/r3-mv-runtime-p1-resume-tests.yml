@@ -1,0 +1,300 @@
+name: R3 MV Runtime P1 Zero-Context Resume Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/mv_resume_contract.json'
+      - '04_HARNESS/runtime/mv_revision_contract.json'
+      - '04_HARNESS/runtime/mv_media_asset_contract.json'
+      - '04_HARNESS/tools/mv_runtime_resume.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '04_HARNESS/tools/mv_runtime_revision.py'
+      - '04_HARNESS/tools/mv_asset_manifest.py'
+      - '.github/workflows/r3-mv-runtime-p1-resume-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  zero-context-resume:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile controller and validate fresh allocation decision
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            04_HARNESS/tools/mv_runtime_resume.py \
+            04_HARNESS/tools/mv_runtime_revision.py \
+            04_HARNESS/tools/mv_runtime_state.py \
+            04_HARNESS/tools/mv_asset_manifest.py
+
+          ROOT=/tmp/mv-resume-fresh
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D01-A,1,A,P,PLANNED,,,MUSIC_FIRST,
+          D01-B,1,B,S,PLANNED,,,TBD,
+          CSV
+
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/out.json"
+          cat "$ROOT/out.json"
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/mv-resume-fresh/out.json', encoding='utf-8'))
+          assert data['ok'] is True
+          assert data['mode']=='ALLOCATE_NEW_SLOT'
+          assert data['slot_id']=='D01-A'
+          assert data['lane']=='P'
+          assert data['next_action']['action_id']=='INIT_SLOT_AND_PREPARE_HG01'
+          assert data['next_action']['human_gate']=='HG01'
+          assert data['contract_validation']['ok'] is True
+          print('PASS: empty production state deterministically allocates the first eligible tracker slot and stops at HG01.')
+          PY
+
+      - name: Resume one canonical slot and reject tracker/runtime conflicts
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-resume-canonical
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D02-A,2,A,P,PLANNED,,,MUSIC_FIRST,
+          D02-B,2,B,S,PLANNED,,,TBD,
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot \
+            --slot-root "$ROOT/program/D02-A" --slot-id D02-A --program 30D_60 --lane P
+
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/resume.json"
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/mv-resume-canonical/resume.json', encoding='utf-8'))
+          assert data['mode']=='RESUME_CANONICAL'
+          assert data['slot_id']=='D02-A'
+          assert data['current_stage']=='S00_SLOT_CREATED'
+          assert data['active_attempt']==1 and data['revision_sequence']==0
+          assert data['next_action']['action_id']=='PREPARE_HG01_SONG_SELECTION'
+          assert data['next_action']['human_gate']=='HG01'
+          assert all(data['verification'].values())
+          print('PASS: canonical state, not chat memory, determines the current stage and next legal action.')
+          PY
+
+          cp "$ROOT/tracker.csv" "$ROOT/tracker-lane-bad.csv"
+          sed -i 's/D02-A,2,A,P,/D02-A,2,A,R,/' "$ROOT/tracker-lane-bad.csv"
+          set +e
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker-lane-bad.csv" > "$ROOT/lane-bad.json"
+          lane_code=$?
+          set -e
+          test "$lane_code" -eq 1
+          grep -q 'tracker lane disagrees' "$ROOT/lane-bad.json"
+
+          cp "$ROOT/tracker.csv" "$ROOT/tracker-publish-bad.csv"
+          sed -i 's/D02-A,2,A,P,PLANNED/D02-A,2,A,P,PUBLISHED/' "$ROOT/tracker-publish-bad.csv"
+          set +e
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker-publish-bad.csv" > "$ROOT/publish-bad.json"
+          publish_code=$?
+          set -e
+          test "$publish_code" -eq 1
+          grep -q 'pre-publish canonical state cannot have tracker status PUBLISHED' "$ROOT/publish-bad.json"
+          echo 'PASS: tracker conflicts block startup rather than being reconciled from prose or memory.'
+
+      - name: Treat legacy pre-publish state as migration required and never allocate over it
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-resume-legacy
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program/D03-A"
+          echo '{"legacy":true}' > "$ROOT/program/D03-A/CURRENT_STATE.json"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D03-A,3,A,P,PLANNED,,,MUSIC_FIRST,
+          D03-B,3,B,S,PLANNED,,,TBD,
+          CSV
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/migration.json"
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/mv-resume-legacy/migration.json', encoding='utf-8'))
+          assert data['mode']=='MIGRATION_REQUIRED'
+          assert data['slot_id']=='D03-A'
+          assert data['blocked_for_production'] is True
+          assert data['next_action']['action_id']=='PLAN_CONTROLLED_LEGACY_MIGRATION'
+          print('PASS: legacy pre-publish evidence blocks fresh allocation and produces an explicit migration action.')
+          PY
+
+          mkdir -p "$ROOT/program/D03-B"
+          echo '{"legacy":true}' > "$ROOT/program/D03-B/CURRENT_STATE.json"
+          set +e
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/legacy-ambiguous.json"
+          ambiguous_code=$?
+          set -e
+          test "$ambiguous_code" -eq 1
+          grep -q 'multiple pre-publish legacy slots require migration' "$ROOT/legacy-ambiguous.json"
+
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" --slot-id D03-A > "$ROOT/explicit.json"
+          grep -q 'MIGRATION_REQUIRED' "$ROOT/explicit.json"
+          echo 'PASS: ambiguous legacy state requires explicit slot identity; the controller never guesses.'
+
+      - name: Reject multiple active canonical production slots unless explicitly selected
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-resume-multiple
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D04-A,4,A,P,PLANNED,,,MUSIC_FIRST,
+          D04-B,4,B,R,PLANNED,,,TBD,
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot \
+            --slot-root "$ROOT/program/D04-A" --slot-id D04-A --program 30D_60 --lane P
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot \
+            --slot-root "$ROOT/program/D04-B" --slot-id D04-B --program 30D_60 --lane R
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/ambiguous.json"
+          code=$?
+          set -e
+          test "$code" -eq 1
+          grep -q 'multiple pre-publish canonical slots are active' "$ROOT/ambiguous.json"
+
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" --slot-id D04-B > "$ROOT/explicit.json"
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/mv-resume-multiple/explicit.json', encoding='utf-8'))
+          assert data['mode']=='RESUME_CANONICAL' and data['slot_id']=='D04-B' and data['lane']=='R'
+          print('PASS: one explicit slot can resume, while ambiguous active production topology is blocked.')
+          PY
+
+      - name: Resume the correct Attempt after controlled revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-resume-revision
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D05-A,5,A,P,PLANNED,fixture song,fixture-audio,MUSIC_FIRST,
+          CSV
+          SLOT="$ROOT/program/D05-A"
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root "$SLOT" --slot-id D05-A --program 30D_60 --lane P
+
+          cat > "$SLOT/01_SONG/SONG_CANDIDATE_SET.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_SCREENED","candidates":[{"id":"C1","title":"fixture song","eligible":true}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$SLOT" --gate HG01 --user-decision-text 'select C1' --approved-artifact song:C1
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S01_HG01_SONG_LOCKED
+
+          cat > "$SLOT/02_BGM/BGM_CANDIDATE_PACKAGE.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_VERIFIED","audio_identity":"fixture-audio","variants":[{"id":"B","duration_s":26.4}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$SLOT" --gate HG02 --user-decision-text 'approve B' --approved-artifact bgm:B
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S02_HG02_BGM_LOCKED
+
+          cat > "$SLOT/03_AUDIO_TIMELINE/package_manifest.json" <<'JSON'
+          {"schema_version":"1.0","status":"LOCKED","audio_identity":"fixture-audio","coverage":1.0}
+          JSON
+          cat > "$SLOT/03_AUDIO_TIMELINE/alignment_qa_report.md" <<'MD'
+          # Alignment QA
+          PASS / LOCKED. coverage=1.0; all synthetic events aligned without warnings.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S03_AUDIO_TIMELINE_LOCKED
+
+          cat > "$SLOT/04_BEATS/NATURAL_BEAT.md" <<'MD'
+          # Natural Beat
+          LOCKED. Synthetic resume-test beat allocation with enough semantic structure to validate durable stage evidence while avoiding any reusable song-specific creative content.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S04_NATURAL_BEAT_LOCKED
+
+          cat > "$SLOT/05_DIRECTOR/DIRECTOR_BEAT_MAP.md" <<'MD'
+          # Director Beat Map
+          LOCKED. Synthetic resume-test mapping assigns semantic jobs, subject tasks, camera relationships and edit roles to the fixture segments.
+          MD
+          cat > "$SLOT/05_DIRECTOR/DIRECTOR_PLAN.md" <<'MD'
+          # Director Plan
+          LOCKED. Synthetic zero-context resume fixture. Each segment contains a distinct composition, K0 state, one primary event, one camera-subject relationship, bounded physical feedback and a clean endpoint. This file exists only to prove stage and revision recovery.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S05_DIRECTOR_PLAN_LOCKED
+
+          cat > "$SLOT/06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_QA_PASS","frames":[{"id":"S01","asset":"fixture-k0"}]}
+          JSON
+          cat > "$SLOT/06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md" <<'MD'
+          # First Frame Set QA
+          PASS / ACCEPT / LOCK. Synthetic set passes composition, differentiation, continuity and K0 performability checks.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$SLOT" --gate HG03 --user-decision-text 'fixture K0 accepted' --approved-artifact first-frame:fixture-k0
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S06_HG03_FIRST_FRAMES_LOCKED
+
+          cat > "$SLOT/07_DYNAMIC/DYNAMIC_PROMPT_SET.md" <<'MD'
+          # Dynamic Prompt Set v1
+          READY. Synthetic first-attempt prompt set binds accepted K0 truth to one main event, one camera relationship, bounded motion phases, physical feedback, residue, a clean endpoint and explicit avoid constraints. It will be archived by the revision test.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$SLOT" --to S07_DYNAMIC_PROMPT_SET_READY
+
+          python 04_HARNESS/tools/mv_runtime_revision.py rollback --slot-root "$SLOT" \
+            --change-type dynamic_prompt_revision --reason 'replace v1 motion design while keeping accepted K0' \
+            --authority 'CI zero-context revision fixture'
+
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/resume.json"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.load(open('/tmp/mv-resume-revision/resume.json', encoding='utf-8'))
+          assert data['mode']=='RESUME_CANONICAL'
+          assert data['slot_id']=='D05-A'
+          assert data['current_stage']=='S06_HG03_FIRST_FRAMES_LOCKED'
+          assert data['revision_sequence']==1 and data['active_attempt']==2
+          assert data['next_action']['action_id']=='BUILD_DYNAMIC_PROMPT_SET'
+          assert data['last_revision_receipt'].endswith('R001_dynamic_prompt_revision/ROLLBACK_RECEIPT.json')
+          archive=Path('/tmp/mv-resume-revision/program/D05-A/00_STATE/REVISIONS/R001_dynamic_prompt_revision/ARCHIVE/07_DYNAMIC/DYNAMIC_PROMPT_SET.md')
+          assert archive.is_file()
+          print('PASS: a new chat resumes Attempt 2 from the canonical rollback target and does not reopen archived Attempt 1.')
+          PY
+
+      - name: Fail startup when immutable media identity no longer matches bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-resume-asset-tamper
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D06-A,6,A,P,PLANNED,,,MUSIC_FIRST,
+          CSV
+          SLOT="$ROOT/program/D06-A"
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root "$SLOT" --slot-id D06-A --program 30D_60 --lane P
+          printf 'fixture-image-v1' > "$SLOT/fixture-image.bin"
+          python 04_HARNESS/tools/mv_asset_manifest.py register-local \
+            --slot-root "$SLOT" --asset-id K0.TEST.001 --media-type image --role startup_fixture \
+            --stage-origin S00_SLOT_CREATED --provenance-kind generated \
+            --provenance-description 'CI fixture media identity' --file "$SLOT/fixture-image.bin"
+          python 04_HARNESS/tools/mv_runtime_resume.py --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/clean.json"
+          grep -q 'RESUME_CANONICAL' "$ROOT/clean.json"
+
+          printf 'fixture-image-v2-tampered' > "$SLOT/fixture-image.bin"
+          set +e
+          python 04_HARNESS/tools/mv_runtime_resume.py --program-root "$ROOT/program" --tracker "$ROOT/tracker.csv" > "$ROOT/tampered.json"
+          code=$?
+          set -e
+          test "$code" -eq 1
+          grep -q 'media asset identity is invalid' "$ROOT/tampered.json"
+          echo 'PASS: zero-context startup refuses to continue from asset identity drift.'
