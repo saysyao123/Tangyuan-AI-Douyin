@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "ENFORCEMENT_CANDIDATE",
   "policy": {
     "only_next_stage_may_advance": true,
@@ -7,6 +7,7 @@
     "transition_receipt_required_before_state_update": true,
     "previous_receipt_hash_chain_required": true,
     "manual_state_jump_is_invalid": true,
+    "manual_context_edit_is_invalid": true,
     "validator_and_state_mutator_are_separate": true
   },
   "receipt_directory": "00_STATE/TRANSITIONS",
@@ -37,6 +38,9 @@
     "last_transition_receipt",
     "last_transition_receipt_sha256",
     "context",
+    "context_revision",
+    "last_context_receipt",
+    "last_context_receipt_sha256",
     "created_at",
     "updated_at"
   ]
