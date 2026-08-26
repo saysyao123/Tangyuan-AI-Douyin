@@ -1,0 +1,303 @@
+name: R3 MV Runtime P1 Web Bridge Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/mv_runtime_bridge_contract.json'
+      - '04_HARNESS/tools/mv_runtime_bridge.py'
+      - '04_HARNESS/tools/mv_runtime_resume.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '04_HARNESS/tools/mv_runtime_revision.py'
+      - '04_HARNESS/tools/mv_runtime_publish.py'
+      - '.github/workflows/r3-mv-runtime-p1-web-bridge-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  web-bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile bridge and authoritative controllers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            04_HARNESS/tools/mv_runtime_bridge.py \
+            04_HARNESS/tools/mv_runtime_resume.py \
+            04_HARNESS/tools/mv_runtime_state.py \
+            04_HARNESS/tools/mv_runtime_revision.py \
+            04_HARNESS/tools/mv_runtime_publish.py
+
+      - name: Exercise zero-context allocation, init, stale guards, HG01 and advance
+        shell: bash
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-web-bridge
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/program" "$ROOT/requests" "$ROOT/responses"
+          cat > "$ROOT/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D90-A,90,A,P,PLANNED,,,MUSIC_FIRST,
+          D90-B,90,B,S,PLANNED,,,TBD,
+          CSV
+
+          bridge() {
+            python -B 04_HARNESS/tools/mv_runtime_bridge.py \
+              --program-root "$ROOT/program" \
+              --tracker "$ROOT/tracker.csv" \
+              --request-dir "$ROOT/requests" \
+              --response-dir "$ROOT/responses" \
+              process-pending
+          }
+
+          cat > "$ROOT/requests/BR-20260826T170000Z-RESUME1.json" <<'JSON'
+          {
+            "schema_version":"1.0",
+            "request_id":"BR-20260826T170000Z-RESUME1",
+            "command":"RESUME",
+            "slot_id":"D90-A",
+            "payload":{},
+            "requested_by":"ci_fixture",
+            "reason":"obtain deterministic allocation guard"
+          }
+          JSON
+          bridge > "$ROOT/step1.json"
+          python - <<'PY'
+          import json
+          p='/tmp/mv-web-bridge/responses/BR-20260826T170000Z-RESUME1.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['status']=='EXECUTED'
+          assert d['postflight']['mode']=='ALLOCATE_NEW_SLOT'
+          assert d['postflight']['slot_id']=='D90-A'
+          assert d['next_guard']['kind']=='ALLOCATION'
+          assert d['next_guard']['lane']=='P'
+          print('PASS: read-only bridge resume returns an allocation guard.')
+          PY
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          prior=json.load(open(root+'/responses/BR-20260826T170000Z-RESUME1.json',encoding='utf-8'))
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170100Z-INIT01',
+            'command':'INIT_SLOT',
+            'slot_id':'D90-A',
+            'expected_guard':prior['next_guard'],
+            'payload':{'program':'CI_BRIDGE','web':True,'multi_shot':False,'program_30d60':True},
+            'requested_by':'ci_fixture',
+            'reason':'initialize exactly the allocation returned by RESUME'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/step2.json"
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/mv-web-bridge/responses/BR-20260826T170100Z-INIT01.json',encoding='utf-8'))
+          assert d['status']=='EXECUTED'
+          assert d['postflight']['mode']=='RESUME_CANONICAL'
+          assert d['postflight']['current_stage']=='S00_SLOT_CREATED'
+          assert d['next_guard']['kind']=='CANONICAL'
+          assert d['next_guard']['transition_sequence']==0
+          assert len(d['next_guard']['slot_fingerprint_sha256'])==64
+          print('PASS: allocation guard can initialize one canonical slot and returns a canonical guard.')
+          PY
+
+          mkdir -p "$ROOT/program/D90-A/01_SONG"
+          cat > "$ROOT/program/D90-A/01_SONG/SONG_CANDIDATE_SET.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_SCREENED","candidates":[{"id":"C1","title":"bridge fixture song","eligible":true}]}
+          JSON
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          stale=json.load(open(root+'/responses/BR-20260826T170100Z-INIT01.json',encoding='utf-8'))['next_guard']
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170200Z-GATEOLD',
+            'command':'RECORD_HUMAN_GATE',
+            'slot_id':'D90-A',
+            'expected_guard':stale,
+            'payload':{'gate':'HG01','user_decision_text':'select C1','approved_artifacts':['song:C1']},
+            'requested_by':'ci_fixture',
+            'reason':'prove an artifact written after the guard invalidates a stale client'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/step3.json"
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/mv-web-bridge/responses/BR-20260826T170200Z-GATEOLD.json',encoding='utf-8'))
+          assert d['status']=='REJECTED'
+          assert 'stale optimistic-concurrency guard' in d['error']
+          assert 'slot_fingerprint_sha256' in d['error']
+          print('PASS: durable artifact changes invalidate an old slot guard even when CURRENT_STATE itself did not change.')
+          PY
+
+          cat > "$ROOT/requests/BR-20260826T170300Z-RESUME2.json" <<'JSON'
+          {
+            "schema_version":"1.0",
+            "request_id":"BR-20260826T170300Z-RESUME2",
+            "command":"RESUME",
+            "slot_id":"D90-A",
+            "payload":{},
+            "requested_by":"ci_fixture",
+            "reason":"refresh canonical guard after machine artifact creation"
+          }
+          JSON
+          bridge > "$ROOT/step4.json"
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          fresh=json.load(open(root+'/responses/BR-20260826T170300Z-RESUME2.json',encoding='utf-8'))['next_guard']
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170400Z-GATE01',
+            'command':'RECORD_HUMAN_GATE',
+            'slot_id':'D90-A',
+            'expected_guard':fresh,
+            'payload':{'gate':'HG01','user_decision_text':'select C1','approved_artifacts':['song:C1']},
+            'requested_by':'ci_fixture',
+            'reason':'record HG01 using the exact refreshed repository guard'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/step5.json"
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          d=json.load(open(root+'/responses/BR-20260826T170400Z-GATE01.json',encoding='utf-8'))
+          before=json.load(open(root+'/responses/BR-20260826T170300Z-RESUME2.json',encoding='utf-8'))['next_guard']
+          assert d['status']=='EXECUTED'
+          assert d['execution']['controller_payload']['gate']=='HG01'
+          assert d['postflight']['current_stage']=='S00_SLOT_CREATED'
+          assert d['next_guard']['state_sha256']==before['state_sha256']
+          assert d['next_guard']['slot_fingerprint_sha256']!=before['slot_fingerprint_sha256']
+          print('PASS: HG receipt is durable and changes the slot fingerprint without falsely advancing state.')
+          PY
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          pre_gate=json.load(open(root+'/responses/BR-20260826T170300Z-RESUME2.json',encoding='utf-8'))['next_guard']
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170500Z-ADVOLD',
+            'command':'ADVANCE',
+            'slot_id':'D90-A',
+            'expected_guard':pre_gate,
+            'payload':{'to':'S01_HG01_SONG_LOCKED'},
+            'requested_by':'ci_fixture',
+            'reason':'prove a late old-chat ADVANCE cannot consume a gate receipt it did not observe'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/step6.json"
+          grep -q 'REJECTED' "$ROOT/responses/BR-20260826T170500Z-ADVOLD.json"
+          grep -q 'stale optimistic-concurrency guard' "$ROOT/responses/BR-20260826T170500Z-ADVOLD.json"
+          echo 'PASS: a late old-chat ADVANCE is rejected after another request records the Human Gate.'
+
+          cat > "$ROOT/requests/BR-20260826T170600Z-RESUME3.json" <<'JSON'
+          {
+            "schema_version":"1.0",
+            "request_id":"BR-20260826T170600Z-RESUME3",
+            "command":"RESUME",
+            "slot_id":"D90-A",
+            "payload":{},
+            "requested_by":"ci_fixture",
+            "reason":"obtain post-HG01 guard before state advance"
+          }
+          JSON
+          bridge > "$ROOT/step7.json"
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          guard=json.load(open(root+'/responses/BR-20260826T170600Z-RESUME3.json',encoding='utf-8'))['next_guard']
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170700Z-ADV001',
+            'command':'ADVANCE',
+            'slot_id':'D90-A',
+            'expected_guard':guard,
+            'payload':{'to':'S01_HG01_SONG_LOCKED'},
+            'requested_by':'ci_fixture',
+            'reason':'advance only after observing the accepted HG01 receipt'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/step8.json"
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/mv-web-bridge/responses/BR-20260826T170700Z-ADV001.json',encoding='utf-8'))
+          assert d['status']=='EXECUTED'
+          assert d['execution']['controller_payload']['to_stage']=='S01_HG01_SONG_LOCKED'
+          assert d['postflight']['current_stage']=='S01_HG01_SONG_LOCKED'
+          assert d['next_guard']['transition_sequence']==1
+          print('PASS: fresh post-gate guard advances exactly one legal stage to S01.')
+          PY
+
+      - name: Reject forbidden payload keys and detect request tampering after response
+        shell: bash
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-web-bridge
+          bridge() {
+            python -B 04_HARNESS/tools/mv_runtime_bridge.py \
+              --program-root "$ROOT/program" \
+              --tracker "$ROOT/tracker.csv" \
+              --request-dir "$ROOT/requests" \
+              --response-dir "$ROOT/responses" \
+              process-pending
+          }
+
+          python - <<'PY'
+          import json
+          root='/tmp/mv-web-bridge'
+          guard=json.load(open(root+'/responses/BR-20260826T170700Z-ADV001.json',encoding='utf-8'))['next_guard']
+          req={
+            'schema_version':'1.0',
+            'request_id':'BR-20260826T170800Z-BADKEY',
+            'command':'ADVANCE',
+            'slot_id':'D90-A',
+            'expected_guard':guard,
+            'payload':{'to':'S02_HG02_BGM_LOCKED','shell':'rm -rf /'},
+            'requested_by':'ci_fixture',
+            'reason':'negative test for arbitrary command injection'
+          }
+          json.dump(req,open(root+'/requests/'+req['request_id']+'.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          bridge > "$ROOT/badkey-run.json"
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/mv-web-bridge/responses/BR-20260826T170800Z-BADKEY.json',encoding='utf-8'))
+          assert d['status']=='REJECTED'
+          assert 'payload contains forbidden keys' in d['error']
+          print('PASS: arbitrary shell/path-style payload expansion is rejected by the command contract.')
+          PY
+
+          python - <<'PY'
+          import json
+          p='/tmp/mv-web-bridge/requests/BR-20260826T170000Z-RESUME1.json'
+          d=json.load(open(p,encoding='utf-8'))
+          d['reason']='tampered after immutable response'
+          json.dump(d,open(p,'w',encoding='utf-8'),ensure_ascii=False,indent=2)
+          PY
+          set +e
+          bridge > "$ROOT/tamper.json"
+          code=$?
+          set -e
+          test "$code" -eq 1
+          grep -q 'request was modified after immutable response' "$ROOT/tamper.json"
+          echo 'PASS: a request cannot be edited and replayed after its response has locked the request SHA-256.'
