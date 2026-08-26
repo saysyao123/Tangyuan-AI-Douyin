@@ -56,3 +56,31 @@ jobs:
           assert stages['S05_DIRECTOR_PLAN_LOCKED']['chain_ok'] is False, stages['S05_DIRECTOR_PLAN_LOCKED']
           print('PASS: validator detects D02-A declared-state/evidence-chain divergence')
           PY
+
+      - name: Audit D01-B legacy-complete fixture
+        shell: bash
+        run: |
+          set +e
+          python 04_HARNESS/tools/mv_runtime_gate.py audit-slot \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D01-B \
+            --web true --multi-shot false --program-30d60 true \
+            > /tmp/d01b-audit.json
+          code=$?
+          set -e
+          cat /tmp/d01b-audit.json
+          if [ "$code" -ne 1 ]; then
+            echo "Expected historical D01-B to expose canonical artifact gaps; got $code"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('/tmp/d01b-audit.json').read_text(encoding='utf-8'))
+          assert report['ok'] is False, report
+          assert report['highest_contiguous_valid_stage'] is not None, report
+          assert 'PUBLISHED' in str(report.get('declared_state') or ''), report.get('declared_state')
+          # Historical files should be recognized through aliases rather than treated as invisible.
+          assert report['artifact_summary']['legacy_aliases_used'] > 0, report['artifact_summary']
+          print('PASS: validator reads D01-B legacy artifacts but still reports missing canonical chain evidence')
+          PY
