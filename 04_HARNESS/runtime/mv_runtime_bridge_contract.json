@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE",
+  "request_directory": "04_HARNESS/runtime_bridge/requests",
+  "response_directory": "04_HARNESS/runtime_bridge/responses",
+  "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+  "tracker_path": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+  "request_id_pattern": "^BR-[0-9]{8}T[0-9]{6}Z-[A-Z0-9]{4,24}$",
+  "request_filename_template": "{request_id}.json",
+  "response_filename_template": "{request_id}.json",
+  "required_request_fields": [
+    "schema_version",
+    "request_id",
+    "command",
+    "payload",
+    "requested_by",
+    "reason"
+  ],
+  "allowed_requested_by": [
+    "chatgpt_web",
+    "codex",
+    "human_operator",
+    "ci_fixture"
+  ],
+  "canonical_guard_fields": [
+    "kind",
+    "state_sha256",
+    "slot_fingerprint_sha256",
+    "current_stage",
+    "current_state_token",
+    "transition_sequence",
+    "last_transition_receipt_sha256",
+    "context_revision",
+    "last_context_receipt_sha256",
+    "revision_sequence",
+    "last_revision_receipt_sha256"
+  ],
+  "allocation_guard_fields": [
+    "kind",
+    "tracker_sha256",
+    "mode",
+    "slot_id",
+    "lane"
+  ],
+  "commands": {
+    "RESUME": {
+      "mutation": false,
+      "slot_id_required": false,
+      "expected_guard_required": false,
+      "payload_required": [],
+      "payload_allowed": []
+    },
+    "INIT_SLOT": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "ALLOCATION",
+      "payload_required": [],
+      "payload_allowed": [
+        "program",
+        "web",
+        "multi_shot",
+        "program_30d60"
+      ]
+    },
+    "RECORD_HUMAN_GATE": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [
+        "gate",
+        "user_decision_text",
+        "approved_artifacts"
+      ],
+      "payload_allowed": [
+        "gate",
+        "user_decision_text",
+        "approved_artifacts"
+      ]
+    },
+    "ADVANCE": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [
+        "to"
+      ],
+      "payload_allowed": [
+        "to"
+      ]
+    },
+    "UPDATE_CONTEXT": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [
+        "key",
+        "value",
+        "reason"
+      ],
+      "payload_allowed": [
+        "key",
+        "value",
+        "reason"
+      ]
+    },
+    "ROLLBACK": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [
+        "change_type",
+        "reason"
+      ],
+      "payload_allowed": [
+        "change_type",
+        "reason",
+        "authority"
+      ]
+    },
+    "PUBLISH_SYNC": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [
+        "song_family",
+        "audio_asset",
+        "confirmation_source"
+      ],
+      "payload_allowed": [
+        "song_family",
+        "audio_asset",
+        "confirmation_source",
+        "packaging",
+        "publish_time"
+      ]
+    }
+  },
+  "policy": {
+    "requests_are_immutable_after_first_response": true,
+    "responses_are_immutable": true,
+    "arbitrary_shell_is_forbidden": true,
+    "arbitrary_repository_paths_are_forbidden": true,
+    "slot_root_is_derived_from_program_root_and_slot_id": true,
+    "mutations_require_exact_optimistic_concurrency_guard": true,
+    "stale_requests_are_rejected_without_mutation": true,
+    "existing_runtime_controllers_remain_authoritative": true,
+    "publish_sync_requires_real_world_confirmation_source": true,
+    "workflow_processes_pending_requests_serially_per_branch": true,
+    "bot_writeback_must_not_modify_request_files": true
+  }
+}
