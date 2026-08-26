@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "status": "ENFORCEMENT_CANDIDATE",
+  "policy": {
+    "only_next_stage_may_advance": true,
+    "target_stage_must_validate": true,
+    "transition_receipt_required_before_state_update": true,
+    "previous_receipt_hash_chain_required": true,
+    "manual_state_jump_is_invalid": true,
+    "validator_and_state_mutator_are_separate": true
+  },
+  "receipt_directory": "00_STATE/TRANSITIONS",
+  "initial_receipt_name": "000_INIT__S00_SLOT_CREATED.json",
+  "required_fields": [
+    "receipt_version",
+    "sequence",
+    "slot_id",
+    "from_stage",
+    "to_stage",
+    "to_state_token",
+    "previous_receipt_sha256",
+    "state_before_sha256",
+    "evidence_validation",
+    "evidence_snapshot",
+    "created_at"
+  ],
+  "state_required_fields": [
+    "runtime_schema_version",
+    "runtime_mode",
+    "slot_id",
+    "program",
+    "lane",
+    "current_stage",
+    "current_state_token",
+    "status",
+    "transition_sequence",
+    "last_transition_receipt",
+    "last_transition_receipt_sha256",
+    "context",
+    "created_at",
+    "updated_at"
+  ]
+}
