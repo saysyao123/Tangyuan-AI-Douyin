@@ -176,7 +176,7 @@ The objective of opening and documenting the project is to make those methods re
 
 ## License
 
-A public OSS license is being selected before the first formal release. **MIT is currently the recommended default**, pending maintainer confirmation.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
