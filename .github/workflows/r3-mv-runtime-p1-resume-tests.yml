@@ -15,6 +15,9 @@ on:
       - '.github/workflows/r3-mv-runtime-p1-resume-tests.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   zero-context-resume:
     runs-on: ubuntu-latest
