@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE",
+  "revision_directory": "00_STATE/REVISIONS",
+  "receipt_name": "ROLLBACK_RECEIPT.json",
+  "policy": {
+    "rollback_must_be_explicit": true,
+    "reason_required": true,
+    "change_type_selects_single_minimal_target": true,
+    "downstream_transition_receipts_are_archived_not_deleted": true,
+    "downstream_canonical_artifacts_are_archived_not_overwritten": true,
+    "immutable_media_asset_records_are_not_archived": true,
+    "context_events_after_target_are_archived": true,
+    "active_state_is_reset_only_after_archive_succeeds": true,
+    "published_real_world_states_are_not_generically_reversible": true,
+    "revision_history_has_independent_sha256_chain": true
+  },
+  "forbidden_current_stages": [
+    "S17_PUBLISHED_DATA_COLLECTION_ACTIVE",
+    "S18_POST_PUBLISH_REVIEWED"
+  ],
+  "change_types": {
+    "song_change": {"target_stage": "S00_SLOT_CREATED", "invalidates_from": "S01_HG01_SONG_LOCKED"},
+    "bgm_change": {"target_stage": "S01_HG01_SONG_LOCKED", "invalidates_from": "S02_HG02_BGM_LOCKED"},
+    "audio_timeline_revision": {"target_stage": "S02_HG02_BGM_LOCKED", "invalidates_from": "S03_AUDIO_TIMELINE_LOCKED"},
+    "natural_beat_revision": {"target_stage": "S03_AUDIO_TIMELINE_LOCKED", "invalidates_from": "S04_NATURAL_BEAT_LOCKED"},
+    "director_revision": {"target_stage": "S04_NATURAL_BEAT_LOCKED", "invalidates_from": "S05_DIRECTOR_PLAN_LOCKED"},
+    "first_frame_revision": {"target_stage": "S05_DIRECTOR_PLAN_LOCKED", "invalidates_from": "S06_HG03_FIRST_FRAMES_LOCKED"},
+    "dynamic_prompt_revision": {"target_stage": "S06_HG03_FIRST_FRAMES_LOCKED", "invalidates_from": "S07_DYNAMIC_PROMPT_SET_READY"},
+    "dynamic_source_regen": {"target_stage": "S07_DYNAMIC_PROMPT_SET_READY", "invalidates_from": "S08_DYNAMIC_SOURCE_QA_LOCKED"},
+    "normalization_revision": {"target_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED", "invalidates_from": "S09_SOURCE_NORMALIZATION_READY"},
+    "editor_audio_revision": {"target_stage": "S09_SOURCE_NORMALIZATION_READY", "invalidates_from": "S10_EDITOR_AUDIO_GATE_PASS"},
+    "picture_edit_revision": {"target_stage": "S10_EDITOR_AUDIO_GATE_PASS", "invalidates_from": "S11_EDIT_MAP_LOCKED"},
+    "subtitle_revision": {"target_stage": "S12_HG04_PICTURE_EDIT_PASS", "invalidates_from": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS"},
+    "final_render_revision": {"target_stage": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS", "invalidates_from": "S14_FINAL_TECH_QA_PASS"},
+    "final_acceptance_revision": {"target_stage": "S14_FINAL_TECH_QA_PASS", "invalidates_from": "S15_HG05_FINAL_ACCEPTANCE_PASS"},
+    "release_package_revision": {"target_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS", "invalidates_from": "S16_RELEASE_PACKAGE_READY"}
+  }
+}
