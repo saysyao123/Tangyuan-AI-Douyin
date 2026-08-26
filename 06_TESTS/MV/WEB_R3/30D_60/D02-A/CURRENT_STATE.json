@@ -4,75 +4,80 @@
   "day": 2,
   "slot": "A",
   "lane": "P",
-  "status": "HG02_PASS / BGM_LOCKED / AUDIO_TIMELINE_BUILD_ACTIVE",
+  "status": "HG05_PASS / RELEASE_READY / PUBLISH_PENDING",
   "song_family": "做她的大地别做她的天",
   "audio_version": "DOUYIN_NATIVE / 做她的大地别做她的天（r&b）（氛围片段） / 大眼仔 / HG02-B SOFT-FADE",
-  "audio_asset": {
-    "numeric_asset_id": null,
-    "numeric_asset_id_status": "UNAVAILABLE_FROM_OPAQUE_SIGNED_URL",
-    "content_identity": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
-    "source_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
-    "source_duration_s": 26.423991,
-    "codec": "AAC-LC",
-    "sample_rate_hz": 44100,
-    "channels": 2
-  },
   "audio_lock": {
     "status": "BGM_LOCKED",
     "selected_option": "B",
-    "transform": "tail_fade_only",
+    "source_duration_s": 26.423991,
     "fade_start_source_s": 25.223991,
     "fade_duration_s": 1.2,
     "structural_trim": "NONE",
-    "locked_file": "D02-A_HG02_B_尾部1.2s柔和淡出_26.424s.mp3",
+    "source_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
     "locked_file_sha256": "2e7d74c6abbee709bb94bf337684ee742c79c9532228b6b487e1facbb870446e",
-    "locked_container_duration_s": 26.462041,
     "receipt": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG02_BGM_LOCK_RECEIPT_v1.md"
   },
-  "project_isolation": {
-    "new_independent_mv": true,
-    "inherit_previous_visual_assets": false,
-    "inherit_validated_methods_only": true
+  "timeline": {
+    "status": "LOCKED / PASS",
+    "route": "TRUSTED_LYRICS + FORCED_ALIGNMENT",
+    "coverage": 1.0,
+    "lines_aligned": "4/4",
+    "conditional_gate": "CHG-A NOT TRIGGERED"
   },
-  "locked_test_direction": {
+  "director": {
     "priority": "LYRIC_VISUAL_HIT > LIGHT_NARRATIVE_CONTINUITY > CAMERA_MOTION_SHOWCASE",
-    "aesthetic": "MALE_ATTRACTION / CONTROLLED_TENSION + HEALING / BRIGHT / COMFORTABLE + FEMALE_ORIENTED_VIEWING_COMFORT",
-    "face_route": "FACE-DEGRADE -> FACE-COMPLETION / PRODUCTION-READY EXPERIMENTAL / SELECTIVE_BY_LYRIC_FIT",
-    "moving_subject": "ALLOWED / FIRST-CLASS OPTION",
+    "aesthetic": "SINGLE_MALE_LEAD / HEALING_NATURE / CONTROLLED_RELATIONAL_TENSION / BRIGHT_FILMIC_WORLD",
     "camera_subject_relationship_first": true,
-    "relationship_grammar": ["HOLD_OBSERVE", "FOLLOW", "LEAD", "YIELD", "OVERTAKE", "DISCOVER_REVEAL"],
-    "prompt_control_skeleton": "HARD FREEZE -> FRAME-0 -> STATIC BASE -> ONE EVENT -> BOUND -> MOTION LOAD -> PHASES -> CAMERA -> FEEDBACK -> RESIDUE -> END STATE -> SOUND -> AVOID"
+    "relationship_grammar": [
+      "HOLD_OBSERVE",
+      "FOLLOW",
+      "LEAD",
+      "YIELD",
+      "OVERTAKE",
+      "DISCOVER_REVEAL",
+      "WORLD_OPENING"
+    ]
   },
-  "hg01": {
+  "face_input_route": {
+    "status": "REAL_MV_POSITIVE_EVIDENCE / CURRENT_PROJECT_DEFAULT",
+    "master_k0": "GENERATE AT MAXIMUM USEFUL CLARITY AND DIRECTORIAL QUALITY",
+    "adapter": "FACE_GRID_INPUT_ADAPTER",
+    "adapter_rule": "APPLY BLACK LINE GRID ONLY TO FACE REGION FOR DOUYIN INPUT WHEN NEEDED",
+    "video_goal": "FACE_COMPLETION + NATURAL_FACE_PERFORMANCE",
+    "deprecated_for_current_project": [
+      "PERCENTAGE_BASED_FEATURE_BLUR",
+      "HAIR_OCCLUSION_AS_FACE_DEGRADE",
+      "SOFT_FOCUS_FACE_AS_DEFAULT"
+    ],
+    "promotion_boundary": "REQUIRES ADDITIONAL CROSS-SONG POSITIVE EVIDENCE BEFORE UNIVERSAL HARD DEFAULT"
+  },
+  "source_normalization": {
     "status": "PASS",
-    "selected_song_family": "做她的大地别做她的天",
-    "user_selection": "EXPLICIT",
-    "receipt": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG01_SELECTION_RECEIPT_v1.md"
+    "doubao_watermark_baseline": "720x1280 -> crop 576x1024 at x=72,y=128 -> scale back -> SAR 1:1",
+    "rough_cut_map": "06_TESTS/MV/WEB_R3/30D_60/D02-A/WEB_SOURCE_ROUGH_CUT_MAP_v2.csv"
   },
-  "bgm_discovery": {
-    "priority": "P1_VERIFIED_DOUYIN_MUSIC_ASSET_FIRST",
-    "target_audio_family": "做她的大地别做她的天（r&b）（氛围片段） / 大眼仔",
-    "sampled_aweme_ids": ["7674182052884173553", "7673796884212895016"],
-    "probe_status": "PASS",
-    "decision": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
-    "pairwise_video_fingerprint_score": 0.946403,
-    "report": "06_TESTS/MV/WEB_R3/30D_60/D02-A/BGM_DISCOVERY/asset_probe_report.json"
+  "final_render": {
+    "status": "HG05_PASS",
+    "file": "D02-A_做她的大地别做她的天_26.424s_最终发布版_v1.mp4",
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "duration_s": 26.423991,
+    "subtitle_style": "R1_GOLDEN + WEB_R2_VALIDATED BASELINE",
+    "receipt": "06_TESTS/MV/WEB_R3/30D_60/D02-A/FINAL_RENDER_READY_RECEIPT_v1.md"
   },
-  "hg02": {
-    "status": "PASS",
-    "selected_option": "B",
-    "user_reason": "soft fade ending preferred",
-    "receipt": "06_TESTS/MV/WEB_R3/30D_60/D02-A/HG02_BGM_LOCK_RECEIPT_v1.md"
+  "release": {
+    "status": "READY / PUBLISH_PENDING",
+    "package": "06_TESTS/MV/WEB_R3/30D_60/D02-A/RELEASE_PACKAGE_v1.md",
+    "cover_strategy": "S4 RELATIONAL REACH FRAME / TWO-LINE TITLE",
+    "next_gate": "POST-PUBLISH METRICS REVIEW"
   },
-  "current_machine_stage": "Stage 2A / Trusted Audio Timeline Package build",
-  "current_gate": "NONE / machine alignment QA active",
-  "next_human_gate": "HG03 / Visual Direction + First-frame Set",
-  "conditional_gate": "CHG-A only if strong audio-alignment evidence conflicts",
-  "after_timeline_pass": [
-    "Natural Beat mapping",
-    "Director concept / production allocation",
-    "First-frame set generation + set-level QA",
-    "HG03 delivery"
+  "next_action": [
+    "Publish release candidate",
+    "Record 1h / 6h / 24h metrics",
+    "Run post-publish creative and retention review",
+    "Promote or revise Face Grid evidence based on cross-song replication"
   ],
-  "updated_at": "2026-08-26 00:26 Asia/Shanghai"
+  "updated_at": "2026-08-26 Asia/Shanghai"
 }
