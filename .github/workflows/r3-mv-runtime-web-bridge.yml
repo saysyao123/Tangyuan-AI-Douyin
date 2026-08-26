@@ -1,0 +1,65 @@
+name: R3 MV Runtime Web Bridge
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+      - test/mv-web-r3
+    paths:
+      - '04_HARNESS/runtime_bridge/requests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mv-runtime-web-bridge-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  execute-runtime-requests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync latest branch truth before execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin "$GITHUB_REF_NAME"
+
+      - name: Process pending immutable Runtime requests
+        shell: bash
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          python -B 04_HARNESS/tools/mv_runtime_bridge.py process-pending
+
+      - name: Commit Runtime responses and authoritative mutations
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add -A -- \
+            04_HARNESS/runtime_bridge/responses \
+            06_TESTS/MV/WEB_R3/30D_60 \
+            05_IP_ASSETS/MV_30D_60_TRACKER.csv
+
+          if ! git diff --cached --quiet -- 04_HARNESS/runtime_bridge/requests; then
+            echo 'ERROR: bridge writeback attempted to modify immutable request files.'
+            exit 1
+          fi
+
+          if git diff --cached --quiet; then
+            echo 'No pending Runtime response or mutation to commit.'
+            exit 0
+          fi
+
+          git commit -m "runtime: process MV web bridge request(s)"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
