@@ -1,0 +1,8 @@
+source_id,source_file,source_in,source_out,proxy_geometry,source_audio_removed,watermark_left_top_pass,watermark_right_bottom_pass,status
+S1,D2S1(1).mp4,0.600,3.222,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S2,D2S2(1).mp4,0.400,3.578,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S3,D2S3(2).mp4,1.000,3.227,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S4-A,AI动画人物雨中靠近镜头.mp4,1.200,4.083,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S4,D2S4.mp4,0.650,3.853,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S5,D2S5(1).mp4,0.100,5.056,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
+S6,D2S6(1).mp4,0.000,5.056,"crop=576:1024:72:128 -> 720x1280",YES,YES,YES,PASS
