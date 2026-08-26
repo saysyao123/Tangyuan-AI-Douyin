@@ -1,0 +1,58 @@
+name: R3 MV Runtime P0 Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/**'
+      - '04_HARNESS/tools/mv_runtime_gate.py'
+      - '.github/workflows/r3-mv-runtime-p0-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  runtime-p0:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Registry integrity
+        run: python 04_HARNESS/tools/mv_runtime_gate.py registry-check
+
+      - name: Explain conditional normalization gate
+        run: >-
+          python 04_HARNESS/tools/mv_runtime_gate.py explain-stage
+          --stage S09_SOURCE_NORMALIZATION_READY
+          --web true
+          --multi-shot true
+          --program-30d60 true
+
+      - name: Audit D02-A known execution-gap fixture
+        shell: bash
+        run: |
+          set +e
+          python 04_HARNESS/tools/mv_runtime_gate.py audit-slot \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-A \
+            --web true --multi-shot false --program-30d60 true \
+            > /tmp/d02a-audit.json
+          code=$?
+          set -e
+          cat /tmp/d02a-audit.json
+          if [ "$code" -ne 1 ]; then
+            echo "Expected D02-A audit to expose an incomplete durable chain and exit 1; got $code"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('/tmp/d02a-audit.json').read_text(encoding='utf-8'))
+          assert report['ok'] is False, report
+          assert report['highest_contiguous_valid_stage'] is not None, report
+          declared = str(report.get('declared_state') or '')
+          assert 'HG05_PASS' in declared, declared
+          stages = {item['stage_id']: item for item in report['stages']}
+          assert stages['S05_DIRECTOR_PLAN_LOCKED']['chain_ok'] is False, stages['S05_DIRECTOR_PLAN_LOCKED']
+          print('PASS: validator detects D02-A declared-state/evidence-chain divergence')
+          PY
