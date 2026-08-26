@@ -1,6 +1,13 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "CANDIDATE",
+  "proof_model": {
+    "legacy_declared_state_is_non_authoritative": true,
+    "highest_importable_stage_is_evidence_derived": true,
+    "current_maximum_import_stage": "S04_NATURAL_BEAT_LOCKED",
+    "first_unproven_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "real_world_publish_state_is_never_inferred": true
+  },
   "profiles": {
     "LEGACY_PRE_DIRECTOR_S04": {
       "target_stage": "S04_NATURAL_BEAT_LOCKED",
