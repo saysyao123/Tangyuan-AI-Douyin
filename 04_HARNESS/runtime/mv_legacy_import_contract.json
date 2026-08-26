@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE",
+  "profiles": {
+    "LEGACY_PRE_DIRECTOR_S04": {
+      "target_stage": "S04_NATURAL_BEAT_LOCKED",
+      "required_sources": [
+        "LEGACY_STATE",
+        "HG01_CANDIDATE_EVIDENCE",
+        "HG01_SELECTION_RECEIPT",
+        "HG02_LISTENING_PACK",
+        "HG02_LOCK_RECEIPT",
+        "AUDIO_TIMELINE_DIR",
+        "NATURAL_BEAT"
+      ],
+      "reconstructed_canonical_artifacts": [
+        "SONG_CANDIDATE_SET",
+        "HG01_SELECTION_RECEIPT",
+        "BGM_CANDIDATE_PACKAGE",
+        "HG02_BGM_LOCK_RECEIPT"
+      ],
+      "byte_preserved_canonical_artifacts": [
+        "AUDIO_TIMELINE_MANIFEST",
+        "AUDIO_TIMELINE_QA",
+        "NATURAL_BEAT"
+      ],
+      "copy_entire_audio_timeline_directory": true,
+      "downstream_not_proven_from_stage": "S05_DIRECTOR_PLAN_LOCKED"
+    }
+  },
+  "source_kinds": {
+    "LEGACY_STATE": "file",
+    "HG01_CANDIDATE_EVIDENCE": "file",
+    "HG01_SELECTION_RECEIPT": "file",
+    "HG02_LISTENING_PACK": "file",
+    "HG02_LOCK_RECEIPT": "file",
+    "AUDIO_TIMELINE_DIR": "directory",
+    "NATURAL_BEAT": "file"
+  },
+  "canonical_outputs": {
+    "SONG_CANDIDATE_SET": "01_SONG/SONG_CANDIDATE_SET.json",
+    "HG01_SELECTION_RECEIPT": "01_SONG/HG01_SELECTION_RECEIPT.json",
+    "BGM_CANDIDATE_PACKAGE": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+    "HG02_BGM_LOCK_RECEIPT": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+    "AUDIO_TIMELINE_DIR": "03_AUDIO_TIMELINE",
+    "NATURAL_BEAT": "04_BEATS/NATURAL_BEAT.md"
+  },
+  "safety_policy": {
+    "legacy_files_are_read_only": true,
+    "canonical_state_must_not_already_exist": true,
+    "canonical_outputs_must_not_overwrite_existing_files": true,
+    "all_required_sources_must_be_explicitly_selected": true,
+    "all_source_paths_must_stay_inside_slot_root": true,
+    "plan_hash_must_match_at_import_time": true,
+    "slot_lane_song_audio_identity_must_cross_check": true,
+    "human_gate_conversion_requires_explicit_legacy_pass_evidence": true,
+    "audio_timeline_must_be_locked_and_pass": true,
+    "natural_beat_must_be_locked": true,
+    "normal_state_controller_builds_the_transition_chain_after_imported_evidence_is_materialized": true,
+    "import_is_all_or_rollback": true,
+    "S05_and_later_are_not_importable_under_this_profile": true,
+    "S17_published_is_never_inferred_from_legacy_release_ready_state": true
+  }
+}
