@@ -1,0 +1,36 @@
+{
+  "status": "SUBTITLE_IMPLEMENTATION_QA_PASS",
+  "canonical_timing_source": "06_TESTS/MV/WEB_R3/30D_60/D02-A/AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt",
+  "canvas": {"width": 1080, "height": 1920, "fps": 24},
+  "style": {
+    "font_family": "Noto Sans CJK SC",
+    "font_weight": "Bold",
+    "font_size_px": 69,
+    "text_color": "#F8F8F8",
+    "stroke_px": 2,
+    "box_color": "#383838",
+    "box_opacity": 0.667,
+    "box_radius_px": 12,
+    "padding_px": 15,
+    "center_x": 540,
+    "center_y": 1514,
+    "max_lines": 2,
+    "fade_in_ms": 100,
+    "fade_out_ms": 180,
+    "karaoke": false
+  },
+  "semantic_wraps": {
+    "line_2": "two_lines / weather phrase -> support phrase",
+    "line_4": "two_lines / world-change phrase -> stay-near phrase"
+  },
+  "geometry_qa": {
+    "all_lines_padding": "15/15/15/15 px",
+    "text_box_center_error_px": 0,
+    "safe_region_pass": true
+  },
+  "timing_qa": {
+    "implementation_source": "canonical SRT",
+    "manual_nudge": false,
+    "expected_renderer_quantization": "<= 1 frame at 24fps"
+  }
+}
