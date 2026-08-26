@@ -49,12 +49,13 @@ jobs:
 
           report = json.loads(Path('/tmp/d02a-audit.json').read_text(encoding='utf-8'))
           assert report['ok'] is False, report
-          assert report['highest_contiguous_valid_stage'] is not None, report
+          assert report['highest_contiguous_valid_stage'] == 'S04_NATURAL_BEAT_LOCKED', report['highest_contiguous_valid_stage']
           declared = str(report.get('declared_state') or '')
           assert 'HG05_PASS' in declared, declared
           stages = {item['stage_id']: item for item in report['stages']}
           assert stages['S05_DIRECTOR_PLAN_LOCKED']['chain_ok'] is False, stages['S05_DIRECTOR_PLAN_LOCKED']
-          print('PASS: validator detects D02-A declared-state/evidence-chain divergence')
+          assert report['artifact_summary']['path_collisions'] == 0, report['artifact_path_collisions']
+          print('PASS: validator detects D02-A declared-state/evidence-chain divergence without artifact collisions')
           PY
 
       - name: Audit D01-B legacy-complete fixture
@@ -78,9 +79,18 @@ jobs:
 
           report = json.loads(Path('/tmp/d01b-audit.json').read_text(encoding='utf-8'))
           assert report['ok'] is False, report
-          assert report['highest_contiguous_valid_stage'] is not None, report
+          assert report['highest_contiguous_valid_stage'] == 'S03_AUDIO_TIMELINE_LOCKED', report['highest_contiguous_valid_stage']
           assert 'PUBLISHED' in str(report.get('declared_state') or ''), report.get('declared_state')
-          # Historical files should be recognized through aliases rather than treated as invisible.
           assert report['artifact_summary']['legacy_aliases_used'] > 0, report['artifact_summary']
-          print('PASS: validator reads D01-B legacy artifacts but still reports missing canonical chain evidence')
+          # v1 and v2 Director plans exist; the validator must not silently choose one.
+          director = report['artifacts']['DIRECTOR_PLAN']
+          assert director['ok'] is False, director
+          assert director['source'] == 'ambiguous', director
+          assert report['artifact_summary']['ambiguous_legacy_aliases'] > 0, report['artifact_summary']
+          # Subtitle QA is evidence of QA, not a substitute for a subtitle implementation manifest.
+          subtitle_impl = report['artifacts']['SUBTITLE_IMPLEMENTATION']
+          assert subtitle_impl['ok'] is False, subtitle_impl
+          assert subtitle_impl['path'] is None, subtitle_impl
+          assert report['artifact_summary']['path_collisions'] == 0, report['artifact_path_collisions']
+          print('PASS: legacy aliases are visible, ambiguity blocks, and QA files cannot impersonate implementation artifacts')
           PY
