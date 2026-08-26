@@ -1,0 +1,242 @@
+name: R3 MV Runtime P1 Revision Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/mv_revision_contract.json'
+      - '04_HARNESS/tools/mv_runtime_revision.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '.github/workflows/r3-mv-runtime-p1-revision-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  controlled-rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build canonical slot through HG04 with context escalation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-revision
+          rm -rf "$ROOT"
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root "$ROOT" --slot-id D97-X --program CI_REVISION --lane R
+
+          cat > "$ROOT/01_SONG/SONG_CANDIDATE_SET.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_SCREENED","candidates":[{"id":"C1","title":"revision fixture song","eligible":true}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG01 --user-decision-text 'select C1' --approved-artifact song:C1
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S01_HG01_SONG_LOCKED
+
+          cat > "$ROOT/02_BGM/BGM_CANDIDATE_PACKAGE.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_VERIFIED","audio_identity":"revision-audio","variants":[{"id":"B","duration_s":26.4}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG02 --user-decision-text 'approve B' --approved-artifact bgm:B
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S02_HG02_BGM_LOCKED
+
+          cat > "$ROOT/03_AUDIO_TIMELINE/package_manifest.json" <<'JSON'
+          {"schema_version":"1.0","status":"LOCKED","audio_identity":"revision-audio","coverage":1.0}
+          JSON
+          cat > "$ROOT/03_AUDIO_TIMELINE/alignment_qa_report.md" <<'MD'
+          # Alignment QA
+          PASS / LOCKED. coverage=1.0; all fixture events aligned.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S03_AUDIO_TIMELINE_LOCKED
+
+          cat > "$ROOT/04_BEATS/NATURAL_BEAT.md" <<'MD'
+          # Natural Beat
+          LOCKED. Synthetic revision fixture with enough semantic beat structure to serve as durable evidence for rollback testing without encoding reusable creative content.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S04_NATURAL_BEAT_LOCKED
+
+          cat > "$ROOT/05_DIRECTOR/DIRECTOR_BEAT_MAP.md" <<'MD'
+          # Director Beat Map
+          LOCKED. Synthetic mapping assigns semantic function, subject task, camera relation and edit role to each fixture source segment.
+          MD
+          cat > "$ROOT/05_DIRECTOR/DIRECTOR_PLAN.md" <<'MD'
+          # Director Plan
+          LOCKED. Synthetic revision-test director plan. Each source segment has a distinct composition, K0 state, one primary event, bounded motion, camera-subject relationship, physical residue and clean endpoint. This durable fixture exists only to test controlled rollback behavior.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S05_DIRECTOR_PLAN_LOCKED
+
+          cat > "$ROOT/06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_QA_PASS","frames":[{"id":"S01","asset":"k0-v1"}]}
+          JSON
+          cat > "$ROOT/06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md" <<'MD'
+          # First Frame Set QA
+          PASS / ACCEPT / LOCK. Synthetic K0 set passes composition, continuity, differentiation and performability checks.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG03 --user-decision-text 'K0 v1 accepted' --approved-artifact first-frame:k0-v1
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S06_HG03_FIRST_FRAMES_LOCKED
+
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_PROMPT_SET.md" <<'MD'
+          # Dynamic Prompt Set v1
+          READY. Synthetic v1 dynamic contract with K0 truth, one primary event, one camera relationship, bounded motion load, phases, feedback, residue and clean endpoint. This is the first attempt and will intentionally be superseded through controlled revision.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S07_DYNAMIC_PROMPT_SET_READY
+
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_SOURCE_QA.md" <<'MD'
+          # Dynamic Source QA v1
+          PASS / LOCKED_FOR_EDIT. A generated fixture contains perceptible internal multi-shot structure, so normalization is required.
+          MD
+          cat > "$ROOT/07_DYNAMIC/VISUAL_SOURCE_MAP.csv" <<'CSV'
+          source_id,status,internal_shots,edit_role
+          S01,PASS,2,event
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S08_DYNAMIC_SOURCE_QA_LOCKED
+          python 04_HARNESS/tools/mv_runtime_state.py update-context --slot-root "$ROOT" --key multi_shot --value true --reason 'v1 Dynamic QA proves internal multi-shot structure'
+
+          cat > "$ROOT/08_NORMALIZATION/NORMALIZED_SHOT_LIBRARY_MAP.csv" <<'CSV'
+          atom_id,source_id,start_s,end_s,role
+          A01,S01,0.0,2.5,setup
+          A02,S01,2.5,5.0,event
+          CSV
+          cat > "$ROOT/08_NORMALIZATION/SHOT_LIBRARY_QA.md" <<'MD'
+          # Shot Library QA
+          PASS / READY / LOCKED. Synthetic internal shots are normalized into clean edit atoms.
+          MD
+          cat > "$ROOT/08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_MAP.csv" <<'CSV'
+          source_id,proxy,status
+          S01,S01_clean.mp4,CLEAN
+          CSV
+          cat > "$ROOT/08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_QA.md" <<'MD'
+          # WEB Source Rough-Cut QA
+          PASS / WATERMARK SAFE / CLEAN. WEB normalization and source-audio removal completed.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S09_SOURCE_NORMALIZATION_READY
+
+          cat > "$ROOT/09_EDIT/EDITOR_AUDIO_GATE_RECEIPT.md" <<'MD'
+          # Editor Audio Gate
+          PASS / LOCKED. Canonical audio identity and duration are revalidated before edit.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S10_EDITOR_AUDIO_GATE_PASS
+          cat > "$ROOT/09_EDIT/EDIT_MAP.csv" <<'CSV'
+          edit_id,source_id,timeline_start,timeline_end
+          E01,A01,0.0,12.0
+          E02,A02,12.0,26.4
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S11_EDIT_MAP_LOCKED
+          cat > "$ROOT/09_EDIT/EDIT_PREVIEW_QA.md" <<'MD'
+          # Edit Preview QA
+          PASS. fragment integrity, rhythm, canonical audio and watermark checks passed for v1 preview.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG04 --user-decision-text 'v1 picture rhythm accepted' --approved-artifact edit:v1
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S12_HG04_PICTURE_EDIT_PASS
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root "$ROOT"
+
+      - name: Plan and execute minimal dynamic-prompt rollback to S06
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-revision
+          python 04_HARNESS/tools/mv_runtime_revision.py plan --slot-root "$ROOT" --change-type dynamic_prompt_revision > /tmp/revision-plan.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.load(open('/tmp/revision-plan.json', encoding='utf-8'))
+          assert data['current_stage'] == 'S12_HG04_PICTURE_EDIT_PASS'
+          assert data['target_stage'] == 'S06_HG03_FIRST_FRAMES_LOCKED'
+          assert any(x['kind'] == 'context_event' for x in data['files_to_archive'])
+          assert Path('/tmp/mv-revision/07_DYNAMIC/DYNAMIC_PROMPT_SET.md').is_file()
+          print('PASS: dry-run identifies minimal target and performs no writes.')
+          PY
+
+          python 04_HARNESS/tools/mv_runtime_revision.py rollback --slot-root "$ROOT" --change-type dynamic_prompt_revision --reason 'v1 dynamic design is superseded; keep accepted K0 and revise only downstream motion design' --authority 'CI synthetic human decision' > /tmp/revision-r1.json
+          cat /tmp/revision-r1.json
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root "$ROOT" > /tmp/revision-state-r1.json
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root "$ROOT" > /tmp/revision-history-r1.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.load(open('/tmp/mv-revision/00_STATE/CURRENT_STATE.json', encoding='utf-8'))
+          assert state['current_stage'] == 'S06_HG03_FIRST_FRAMES_LOCKED'
+          assert state['context']['multi_shot'] is False
+          assert state['context_revision'] == 0
+          assert state['revision_sequence'] == 1
+          assert Path('/tmp/mv-revision/06_FIRST_FRAMES/HG03_PASS_RECEIPT.json').is_file()
+          assert not Path('/tmp/mv-revision/07_DYNAMIC/DYNAMIC_PROMPT_SET.md').exists()
+          archive = Path('/tmp/mv-revision/00_STATE/REVISIONS/R001_dynamic_prompt_revision/ARCHIVE')
+          assert (archive / '07_DYNAMIC/DYNAMIC_PROMPT_SET.md').is_file()
+          assert (archive / '09_EDIT/HG04_PASS_RECEIPT.json').is_file()
+          assert any((archive / '00_STATE/CONTEXT_EVENTS').glob('*.json'))
+          assert not Path('/tmp/mv-revision/00_STATE/TRANSITIONS/012_S11_EDIT_MAP_LOCKED__S12_HG04_PICTURE_EDIT_PASS.json').exists()
+          history = json.load(open('/tmp/revision-history-r1.json', encoding='utf-8'))
+          assert history['ok'] is True and history['revision_sequence'] == 1
+          print('PASS: downstream evidence is archived, accepted K0 survives, and context reverts with its archived event.')
+          PY
+
+      - name: Re-run revised attempt through S08 without overwriting v1 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-revision
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_PROMPT_SET.md" <<'MD'
+          # Dynamic Prompt Set v2
+          READY. Revised synthetic dynamic contract retains the accepted K0 while changing downstream motion design. It again specifies one event, one camera relationship, bounded phases, feedback, residue and a clean endpoint; v1 remains preserved in the revision archive.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S07_DYNAMIC_PROMPT_SET_READY
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_SOURCE_QA.md" <<'MD'
+          # Dynamic Source QA v2
+          PASS / LOCKED_FOR_EDIT. Revised v2 source is a clean single-shot fixture and no normalization escalation is required beyond WEB source normalization.
+          MD
+          cat > "$ROOT/07_DYNAMIC/VISUAL_SOURCE_MAP.csv" <<'CSV'
+          source_id,status,internal_shots,edit_role
+          S01_V2,PASS,1,event
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S08_DYNAMIC_SOURCE_QA_LOCKED
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root "$ROOT"
+          grep -q 'Dynamic Prompt Set v1' "$ROOT/00_STATE/REVISIONS/R001_dynamic_prompt_revision/ARCHIVE/07_DYNAMIC/DYNAMIC_PROMPT_SET.md"
+          grep -q 'Dynamic Prompt Set v2' "$ROOT/07_DYNAMIC/DYNAMIC_PROMPT_SET.md"
+          echo 'PASS: v2 reuses canonical paths while v1 remains immutable in revision archive.'
+
+      - name: Create second rollback and verify independent revision hash chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-revision
+          python 04_HARNESS/tools/mv_runtime_revision.py rollback --slot-root "$ROOT" --change-type first_frame_revision --reason 'replace accepted first-frame set while preserving Director Plan' --authority 'CI second synthetic revision' > /tmp/revision-r2.json
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root "$ROOT" > /tmp/revision-history-r2.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.load(open('/tmp/mv-revision/00_STATE/CURRENT_STATE.json', encoding='utf-8'))
+          assert state['current_stage'] == 'S05_DIRECTOR_PLAN_LOCKED'
+          assert state['revision_sequence'] == 2
+          r1 = Path('/tmp/mv-revision/00_STATE/REVISIONS/R001_dynamic_prompt_revision/ROLLBACK_RECEIPT.json')
+          r2 = Path('/tmp/mv-revision/00_STATE/REVISIONS/R002_first_frame_revision/ROLLBACK_RECEIPT.json')
+          assert r1.is_file() and r2.is_file()
+          receipt2 = json.loads(r2.read_text())
+          assert receipt2['previous_revision_receipt'].endswith('R001_dynamic_prompt_revision/ROLLBACK_RECEIPT.json')
+          history = json.load(open('/tmp/revision-history-r2.json', encoding='utf-8'))
+          assert history['ok'] is True and history['revision_sequence'] == 2
+          assert not Path('/tmp/mv-revision/06_FIRST_FRAMES/HG03_PASS_RECEIPT.json').exists()
+          assert Path('/tmp/mv-revision/05_DIRECTOR/DIRECTOR_PLAN.md').is_file()
+          print('PASS: second revision is chained and first-frame revision preserves Director truth while invalidating HG03+ downstream.')
+          PY
+
+      - name: Detect revision archive tampering and stray active transitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -a /tmp/mv-revision /tmp/mv-revision-tamper
+          printf '\ntamper\n' >> /tmp/mv-revision-tamper/00_STATE/REVISIONS/R001_dynamic_prompt_revision/ARCHIVE/07_DYNAMIC/DYNAMIC_PROMPT_SET.md
+          set +e
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root /tmp/mv-revision-tamper > /tmp/revision-tamper.json
+          tamper_code=$?
+          set -e
+          test "$tamper_code" -eq 1
+          grep -q 'archived file hash changed' /tmp/revision-tamper.json
+
+          cp -a /tmp/mv-revision /tmp/mv-revision-extra
+          echo '{}' > /tmp/mv-revision-extra/00_STATE/TRANSITIONS/999_STRAY.json
+          set +e
+          python 04_HARNESS/tools/mv_runtime_revision.py verify-history --slot-root /tmp/mv-revision-extra > /tmp/revision-extra.json
+          extra_code=$?
+          set -e
+          test "$extra_code" -eq 1
+          grep -q 'unexpected active downstream transition receipts' /tmp/revision-extra.json
+          echo 'PASS: archived history and active attempt topology are both tamper-evident.'
