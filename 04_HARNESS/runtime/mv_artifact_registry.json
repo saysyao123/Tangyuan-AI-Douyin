@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0",
+  "status": "P0_CANDIDATE",
+  "path_scope": "All artifact paths are relative to one MV slot root unless global_scope=true.",
+  "policy": {
+    "future_slots_use_canonical_paths": true,
+    "legacy_aliases_are_read_only_compatibility": true,
+    "legacy_alias_match_must_be_reported": true,
+    "presence_does_not_imply_pass_when_content_check_is_defined": true
+  },
+  "artifacts": [
+    {
+      "id": "STATE_LEDGER",
+      "canonical_path": "00_STATE/CURRENT_STATE.json",
+      "legacy_patterns": ["CURRENT_STATE.json", "CURRENT_STATE.md"],
+      "type": "state",
+      "required": true,
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "HG01_SELECTION_RECEIPT",
+      "canonical_path": "01_SONG/HG01_SELECTION_RECEIPT.md",
+      "legacy_patterns": ["HG01_SELECTION_RECEIPT*.md", "HG01_*SELECTION*RECEIPT*.md"],
+      "type": "human_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|SELECTED|APPROVED|LOCKED)"}]
+    },
+    {
+      "id": "HG02_BGM_LOCK_RECEIPT",
+      "canonical_path": "02_BGM/HG02_BGM_LOCK_RECEIPT.md",
+      "legacy_patterns": ["HG02_BGM_LOCK_RECEIPT*.md", "HG02_FINAL_LOCK_RECEIPT*.md", "HG02_*LOCK*RECEIPT*.md"],
+      "type": "human_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|LOCKED|APPROVED)"}]
+    },
+    {
+      "id": "AUDIO_TIMELINE_MANIFEST",
+      "canonical_path": "03_AUDIO_TIMELINE/package_manifest.json",
+      "legacy_patterns": ["AUDIO_TIMELINE_PACKAGE/package_manifest.json"],
+      "type": "manifest",
+      "checks": [{"type": "json_object"}, {"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "AUDIO_TIMELINE_QA",
+      "canonical_path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+      "legacy_patterns": ["AUDIO_TIMELINE_PACKAGE/alignment_qa_report.md", "AUDIO_TIMELINE_PACKAGE/*qa*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|LOCKED|coverage|aligned)"}]
+    },
+    {
+      "id": "NATURAL_BEAT",
+      "canonical_path": "04_BEATS/NATURAL_BEAT.md",
+      "legacy_patterns": ["NATURAL_BEAT*.md"],
+      "type": "creative_manifest",
+      "checks": [{"type": "min_size", "bytes": 100}]
+    },
+    {
+      "id": "DIRECTOR_BEAT_MAP",
+      "canonical_path": "05_DIRECTOR/DIRECTOR_BEAT_MAP.md",
+      "legacy_patterns": ["DIRECTOR_BEAT_MAP*.md"],
+      "type": "creative_manifest",
+      "checks": [{"type": "min_size", "bytes": 100}]
+    },
+    {
+      "id": "DIRECTOR_PLAN",
+      "canonical_path": "05_DIRECTOR/DIRECTOR_PLAN.md",
+      "legacy_patterns": ["DIRECTOR_PLAN*.md"],
+      "type": "creative_manifest",
+      "checks": [{"type": "min_size", "bytes": 200}]
+    },
+    {
+      "id": "FIRST_FRAME_SET_MANIFEST",
+      "canonical_path": "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+      "legacy_patterns": ["FIRST_FRAME_SET_MANIFEST*.json", "FIRST_FRAME_MANIFEST*.json"],
+      "type": "asset_manifest",
+      "checks": [{"type": "json_object"}]
+    },
+    {
+      "id": "FIRST_FRAME_SET_QA",
+      "canonical_path": "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md",
+      "legacy_patterns": ["FIRST_FRAME_SET_QA*.md", "FIRST_FRAME_PRE_QA*.md", "FIRST_FRAME_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPT|LOCK)"}]
+    },
+    {
+      "id": "HG03_FIRST_FRAME_RECEIPT",
+      "canonical_path": "06_FIRST_FRAMES/HG03_PASS_RECEIPT.md",
+      "legacy_patterns": ["HG03*RECEIPT*.md", "HG03*PASS*.md"],
+      "type": "human_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
+    },
+    {
+      "id": "DYNAMIC_PROMPT_SET",
+      "canonical_path": "07_DYNAMIC/DYNAMIC_PROMPT_SET.md",
+      "legacy_patterns": ["DYNAMIC_PROMPT_SET*.md", "DYNAMIC_PROMPTS*.md", "VIDEO_PROMPT_SET*.md"],
+      "type": "production_manifest",
+      "checks": [{"type": "min_size", "bytes": 200}]
+    },
+    {
+      "id": "DYNAMIC_SOURCE_QA",
+      "canonical_path": "07_DYNAMIC/DYNAMIC_SOURCE_QA.md",
+      "legacy_patterns": ["DYNAMIC_SOURCE_QA*.md", "VIDEO_SET_QA*.md", "DYNAMIC_VIDEO_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|SOURCE_USABLE|LOCKED_FOR_EDIT|REGENERATE|TRIM_REQUIRED)"}]
+    },
+    {
+      "id": "VISUAL_SOURCE_MAP",
+      "canonical_path": "07_DYNAMIC/VISUAL_SOURCE_MAP.csv",
+      "legacy_patterns": ["VISUAL_SOURCE_MAP*.csv", "VISUAL_SOURCE_MAP*.json"],
+      "type": "edit_source_manifest",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "SHOT_LIBRARY_MAP",
+      "canonical_path": "08_NORMALIZATION/NORMALIZED_SHOT_LIBRARY_MAP.csv",
+      "legacy_patterns": ["NORMALIZED_SHOT_LIBRARY_MAP*.csv"],
+      "type": "edit_source_manifest",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "SHOT_LIBRARY_QA",
+      "canonical_path": "08_NORMALIZATION/SHOT_LIBRARY_QA.md",
+      "legacy_patterns": ["SHOT_LIBRARY_QA*.md", "SHOT_NORMALIZATION_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|READY|LOCKED)"}]
+    },
+    {
+      "id": "WEB_SOURCE_ROUGH_CUT_MAP",
+      "canonical_path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_MAP.csv",
+      "legacy_patterns": ["WEB_SOURCE_ROUGH_CUT_MAP*.csv"],
+      "type": "normalization_manifest",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "WEB_SOURCE_ROUGH_CUT_QA",
+      "canonical_path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_QA.md",
+      "legacy_patterns": ["WEB_SOURCE_ROUGH_CUT_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|WATERMARK|SAFE|CLEAN)"}]
+    },
+    {
+      "id": "EDITOR_AUDIO_GATE_RECEIPT",
+      "canonical_path": "09_EDIT/EDITOR_AUDIO_GATE_RECEIPT.md",
+      "legacy_patterns": ["EDITOR_AUDIO_GATE*.md", "*EDITOR_AUDIO_GATE*RECEIPT*.md"],
+      "type": "technical_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|LOCKED)"}]
+    },
+    {
+      "id": "EDIT_MAP",
+      "canonical_path": "09_EDIT/EDIT_MAP.csv",
+      "legacy_patterns": ["EDIT_MAP*.csv", "PICTURE_EDIT_PLAN*.md", "PICTURE_EDIT_MAP*.csv"],
+      "type": "edit_manifest",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "HG04_PICTURE_EDIT_RECEIPT",
+      "canonical_path": "09_EDIT/HG04_PASS_RECEIPT.md",
+      "legacy_patterns": ["HG04*PASS*RECEIPT*.md", "HG04*PICTURE*RECEIPT*.md"],
+      "type": "human_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
+    },
+    {
+      "id": "SUBTITLE_IMPLEMENTATION",
+      "canonical_path": "10_SUBTITLE/SUBTITLE_IMPLEMENTATION.json",
+      "legacy_patterns": ["SUBTITLE_IMPLEMENTATION*.json", "SUBTITLE_IMPLEMENTATION*.md"],
+      "type": "implementation_manifest",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "SUBTITLE_IMPLEMENTATION_QA",
+      "canonical_path": "10_SUBTITLE/SUBTITLE_IMPLEMENTATION_QA.md",
+      "legacy_patterns": ["SUBTITLE_IMPLEMENTATION_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|geometry|padding|bbox)"}]
+    },
+    {
+      "id": "FINAL_TECH_QA",
+      "canonical_path": "11_FINAL/FINAL_TECH_QA.md",
+      "legacy_patterns": ["FINAL_TECH_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|codec|duration|audio|watermark|SAR)"}]
+    },
+    {
+      "id": "FINAL_RENDER_RECEIPT",
+      "canonical_path": "11_FINAL/FINAL_RENDER_READY_RECEIPT.md",
+      "legacy_patterns": ["FINAL_RENDER_READY_RECEIPT*.md", "FINAL_RENDER*RECEIPT*.md"],
+      "type": "render_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|READY|RENDERED|LOCKED)"}]
+    },
+    {
+      "id": "HG05_FINAL_ACCEPTANCE_RECEIPT",
+      "canonical_path": "11_FINAL/HG05_PASS_RECEIPT.md",
+      "legacy_patterns": ["HG05*PASS*RECEIPT*.md", "HG05_FINAL_ACCEPTANCE_PASS_RECEIPT*.md"],
+      "type": "human_gate_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
+    },
+    {
+      "id": "RELEASE_PACKAGE",
+      "canonical_path": "12_RELEASE/RELEASE_PACKAGE.md",
+      "legacy_patterns": ["RELEASE_PACKAGE*.md", "PUBLISH_PACKAGE*.md"],
+      "type": "release_manifest",
+      "checks": [{"type": "min_size", "bytes": 50}]
+    },
+    {
+      "id": "POST_PUBLISH_SYNC_RECEIPT",
+      "canonical_path": "12_RELEASE/POST_PUBLISH_SYNC_RECEIPT.md",
+      "legacy_patterns": ["POST_PUBLISH_SYNC*.md", "PUBLISH_SYNC_RECEIPT*.md"],
+      "type": "real_world_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PUBLISHED|SYNC|PASS)"}]
+    },
+    {
+      "id": "TRACKER_SYNC_RECEIPT",
+      "canonical_path": "12_RELEASE/TRACKER_SYNC_RECEIPT.md",
+      "legacy_patterns": ["TRACKER_SYNC*.md"],
+      "type": "real_world_receipt",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PUBLISHED|SYNC|PASS)"}]
+    },
+    {
+      "id": "POST_PUBLISH_METRICS",
+      "canonical_path": "13_POST_PUBLISH/METRICS_SNAPSHOT.json",
+      "legacy_patterns": ["*PERFORMANCE_NOTE*.md", "*METRICS*.json", "*METRICS*.md"],
+      "type": "data_snapshot",
+      "checks": [{"type": "min_size", "bytes": 20}]
+    },
+    {
+      "id": "POST_PUBLISH_REVIEW",
+      "canonical_path": "13_POST_PUBLISH/POST_PUBLISH_REVIEW.md",
+      "legacy_patterns": ["POST_PUBLISH_REVIEW*.md", "*PERFORMANCE_REVIEW*.md"],
+      "type": "learning_receipt",
+      "checks": [{"type": "min_size", "bytes": 50}]
+    }
+  ]
+}
