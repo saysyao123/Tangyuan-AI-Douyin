@@ -7,9 +7,9 @@ machine-readable startup decision:
 - MIGRATION_REQUIRED
 - ALLOCATE_NEW_SLOT
 
-It never advances a stage, never records a Human Gate and never mutates the
-Tracker. Invalid or ambiguous repository state blocks startup instead of being
-resolved from chat memory.
+It never advances a stage, records a Human Gate, or mutates the Tracker.
+Invalid or ambiguous repository state blocks startup instead of being resolved
+from chat memory.
 """
 from __future__ import annotations
 
@@ -58,7 +58,9 @@ def relative_to_repo(repo_root: Path, path: Path) -> str:
         return str(path.resolve())
 
 
-def read_tracker(path: Path, contract: dict[str, Any]) -> tuple[list[str], list[dict[str, str]], dict[str, dict[str, str]]]:
+def read_tracker(
+    path: Path, contract: dict[str, Any]
+) -> tuple[list[str], list[dict[str, str]], dict[str, dict[str, str]]]:
     if not path.is_file():
         fail("tracker file missing", str(path))
     try:
@@ -68,7 +70,11 @@ def read_tracker(path: Path, contract: dict[str, Any]) -> tuple[list[str], list[
             rows = [{key: (value or "") for key, value in row.items()} for row in reader]
     except (OSError, UnicodeDecodeError, csv.Error) as exc:
         fail("tracker is unreadable", {"path": str(path), "error": str(exc)})
-    missing = [key for key in contract.get("tracker_required_columns") or [] if key not in fieldnames]
+    missing = [
+        key
+        for key in contract.get("tracker_required_columns") or []
+        if key not in fieldnames
+    ]
     if missing:
         fail("tracker missing required columns", missing)
     by_slot: dict[str, dict[str, str]] = {}
@@ -85,7 +91,9 @@ def read_tracker(path: Path, contract: dict[str, Any]) -> tuple[list[str], list[
     return fieldnames, rows, by_slot
 
 
-def validate_resume_contract(repo_root: Path, runtime: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:
+def validate_resume_contract(
+    repo_root: Path, runtime: dict[str, Any], contract: dict[str, Any]
+) -> dict[str, Any]:
     stages = statectl.stages(runtime)
     stage_ids = [item["id"] for item in stages]
     actions = contract.get("stage_actions") or {}
@@ -108,10 +116,16 @@ def validate_resume_contract(repo_root: Path, runtime: dict[str, Any], contract:
         if expected_next is not None:
             expected_gate = stages[index + 1].get("human_gate")
         if action.get("human_gate") != expected_gate:
-            errors.append(f"{stage_id}: human_gate must match immediate next stage ({expected_gate!r})")
-        if not isinstance(action.get("action_id"), str) or not action.get("action_id", "").strip():
+            errors.append(
+                f"{stage_id}: human_gate must match immediate next stage ({expected_gate!r})"
+            )
+        if not isinstance(action.get("action_id"), str) or not action.get(
+            "action_id", ""
+        ).strip():
             errors.append(f"{stage_id}: action_id missing")
-        if not isinstance(action.get("summary"), str) or not action.get("summary", "").strip():
+        if not isinstance(action.get("summary"), str) or not action.get(
+            "summary", ""
+        ).strip():
             errors.append(f"{stage_id}: summary missing")
         for rel in action.get("jit_reads") or []:
             if not (repo_root / rel).is_file():
@@ -125,10 +139,17 @@ def validate_resume_contract(repo_root: Path, runtime: dict[str, Any], contract:
     for rel in allocation.get("jit_reads") or []:
         if not (repo_root / rel).is_file():
             errors.append(f"allocation JIT read path missing: {rel}")
-    return {"ok": not errors, "errors": errors, "warnings": warnings, "stage_count": len(stages)}
+    return {
+        "ok": not errors,
+        "errors": errors,
+        "warnings": warnings,
+        "stage_count": len(stages),
+    }
 
 
-def stage_range(runtime: dict[str, Any], contract: dict[str, Any]) -> tuple[set[str], set[str], set[str]]:
+def stage_range(
+    runtime: dict[str, Any], contract: dict[str, Any]
+) -> tuple[set[str], set[str], set[str]]:
     stages = statectl.stages(runtime)
     indexes = {item["id"]: index for index, item in enumerate(stages)}
     bounds = contract["production_stage_range"]
@@ -148,7 +169,17 @@ def parse_slot_identity(slot_id: str) -> tuple[str | None, str | None]:
 
 
 def tracker_projection(row: dict[str, str]) -> dict[str, str]:
-    keys = ("slot_id", "day", "slot", "lane", "song_family", "audio_asset", "status", "packaging", "publish_time")
+    keys = (
+        "slot_id",
+        "day",
+        "slot",
+        "lane",
+        "song_family",
+        "audio_asset",
+        "status",
+        "packaging",
+        "publish_time",
+    )
     return {key: row.get(key, "") for key in keys}
 
 
@@ -164,7 +195,9 @@ def validate_tracker_slot_consistency(
     errors: list[str] = []
     slot_id = state["slot_id"]
     if slot_root.name != slot_id:
-        errors.append(f"slot directory {slot_root.name!r} does not equal state slot_id {slot_id!r}")
+        errors.append(
+            f"slot directory {slot_root.name!r} does not equal state slot_id {slot_id!r}"
+        )
     if row.get("slot_id", "").strip() != slot_id:
         errors.append("tracker slot_id disagrees with canonical state")
     if row.get("lane", "").strip() != str(state.get("lane", "")):
@@ -172,14 +205,19 @@ def validate_tracker_slot_consistency(
     expected_day, expected_slot = parse_slot_identity(slot_id)
     if expected_day is not None and row.get("day", "").strip() != expected_day:
         errors.append("tracker day disagrees with slot_id")
-    if expected_slot is not None and row.get("slot", "").strip().upper() != expected_slot:
+    if (
+        expected_slot is not None
+        and row.get("slot", "").strip().upper() != expected_slot
+    ):
         errors.append("tracker slot letter disagrees with slot_id")
     current = state["current_stage"]
     tracker_status = row.get("status", "").strip()
     published = contract["tracker_published_status"]
     if current in post_publish or current in terminal:
         if tracker_status != published:
-            errors.append("published/post-publish canonical state requires tracker status PUBLISHED")
+            errors.append(
+                "published/post-publish canonical state requires tracker status PUBLISHED"
+            )
     elif current in production:
         if tracker_status == published:
             errors.append("pre-publish canonical state cannot have tracker status PUBLISHED")
@@ -188,30 +226,58 @@ def validate_tracker_slot_consistency(
     return errors
 
 
-def discover_canonical_slots(program_root: Path, runtime: dict[str, Any], contract: dict[str, Any], tracker_by_slot: dict[str, dict[str, str]]) -> list[dict[str, Any]]:
+def discover_canonical_slots(
+    program_root: Path,
+    runtime: dict[str, Any],
+    contract: dict[str, Any],
+    tracker_by_slot: dict[str, dict[str, str]],
+    registry_dir: Path,
+) -> list[dict[str, Any]]:
     production, post_publish, terminal = stage_range(runtime, contract)
-    asset_contract, asset_stage_registry = assetctl.load_runtime(RUNTIME_DIR)
-    revision_contract = revisionctl.load_contract(RUNTIME_DIR)
+    asset_contract, asset_stage_registry = assetctl.load_runtime(registry_dir)
+    revision_contract = revisionctl.load_contract(registry_dir)
     discovered: list[dict[str, Any]] = []
     state_rel = Path(contract["canonical_state_relative_path"])
     pattern = f"*/{state_rel.as_posix()}"
-    for state_path in sorted(program_root.glob(pattern)) if program_root.is_dir() else []:
+    state_paths = sorted(program_root.glob(pattern)) if program_root.is_dir() else []
+    for state_path in state_paths:
         slot_root = state_path.parent.parent
         state = statectl.load_canonical_state(slot_root, runtime)
         slot_id = state["slot_id"]
         if slot_id not in tracker_by_slot:
-            fail("canonical slot has no tracker row", {"slot_id": slot_id, "slot_root": str(slot_root)})
+            fail(
+                "canonical slot has no tracker row",
+                {"slot_id": slot_id, "slot_root": str(slot_root)},
+            )
         state_report = statectl.verify_state_internal(slot_root, runtime)
-        revision_report = revisionctl.validate_revision_chain_internal(slot_root, runtime, revision_contract)
+        revision_report = revisionctl.validate_revision_chain_internal(
+            slot_root, runtime, revision_contract
+        )
         if not revision_report.get("ok"):
             fail("canonical slot revision history is invalid", revision_report)
-        asset_report = assetctl.verify_all_internal(slot_root, asset_contract, asset_stage_registry)
+        asset_report = assetctl.verify_all_internal(
+            slot_root, asset_contract, asset_stage_registry
+        )
         if not asset_report.get("ok"):
-            fail("canonical slot media asset identity is invalid", {"slot_id": slot_id, "asset_report": asset_report})
+            fail(
+                "canonical slot media asset identity is invalid",
+                {"slot_id": slot_id, "asset_report": asset_report},
+            )
         row = tracker_by_slot[slot_id]
-        consistency_errors = validate_tracker_slot_consistency(slot_root, state, row, contract, production, post_publish, terminal)
+        consistency_errors = validate_tracker_slot_consistency(
+            slot_root,
+            state,
+            row,
+            contract,
+            production,
+            post_publish,
+            terminal,
+        )
         if consistency_errors:
-            fail("tracker/canonical slot consistency check failed", {"slot_id": slot_id, "errors": consistency_errors})
+            fail(
+                "tracker/canonical slot consistency check failed",
+                {"slot_id": slot_id, "errors": consistency_errors},
+            )
         current = state["current_stage"]
         if current in production:
             stage_class = "production"
@@ -219,20 +285,27 @@ def discover_canonical_slots(program_root: Path, runtime: dict[str, Any], contra
             stage_class = "post_publish"
         else:
             stage_class = "terminal"
-        discovered.append({
-            "slot_id": slot_id,
-            "slot_root": slot_root,
-            "state": state,
-            "state_report": state_report,
-            "revision_report": revision_report,
-            "asset_report": asset_report,
-            "tracker_row": row,
-            "stage_class": stage_class,
-        })
+        discovered.append(
+            {
+                "slot_id": slot_id,
+                "slot_root": slot_root,
+                "state": state,
+                "state_report": state_report,
+                "revision_report": revision_report,
+                "asset_report": asset_report,
+                "tracker_row": row,
+                "stage_class": stage_class,
+            }
+        )
     return discovered
 
 
-def discover_legacy_prepublish_slots(program_root: Path, tracker_by_slot: dict[str, dict[str, str]], contract: dict[str, Any], canonical_slot_ids: set[str]) -> list[dict[str, str]]:
+def discover_legacy_prepublish_slots(
+    program_root: Path,
+    tracker_by_slot: dict[str, dict[str, str]],
+    contract: dict[str, Any],
+    canonical_slot_ids: set[str],
+) -> list[dict[str, str]]:
     values: list[dict[str, str]] = []
     published = contract["tracker_published_status"]
     if not program_root.is_dir():
@@ -245,11 +318,19 @@ def discover_legacy_prepublish_slots(program_root: Path, tracker_by_slot: dict[s
         row = tracker_by_slot[slot_id]
         if row.get("status", "").strip() == published:
             continue
-        values.append({"slot_id": slot_id, "slot_root": str(slot_root), "legacy_state": str(path)})
+        values.append(
+            {
+                "slot_id": slot_id,
+                "slot_root": str(slot_root),
+                "legacy_state": str(path),
+            }
+        )
     return values
 
 
-def allocation_candidate(rows: list[dict[str, str]], contract: dict[str, Any], unavailable: set[str]) -> dict[str, str] | None:
+def allocation_candidate(
+    rows: list[dict[str, str]], contract: dict[str, Any], unavailable: set[str]
+) -> dict[str, str] | None:
     allowed = set(contract.get("tracker_allocation_statuses") or [])
     for row in rows:
         slot_id = row.get("slot_id", "").strip()
@@ -263,7 +344,9 @@ def allocation_candidate(rows: list[dict[str, str]], contract: dict[str, Any], u
     return None
 
 
-def resume_packet(slot: dict[str, Any], contract: dict[str, Any], repo_root: Path) -> dict[str, Any]:
+def resume_packet(
+    slot: dict[str, Any], contract: dict[str, Any], repo_root: Path
+) -> dict[str, Any]:
     state = slot["state"]
     current = state["current_stage"]
     action = contract["stage_actions"][current]
@@ -294,7 +377,12 @@ def resume_packet(slot: dict[str, Any], contract: dict[str, Any], repo_root: Pat
     }
 
 
-def migration_packet(legacy: dict[str, str], tracker_row: dict[str, str], contract: dict[str, Any], repo_root: Path) -> dict[str, Any]:
+def migration_packet(
+    legacy: dict[str, str],
+    tracker_row: dict[str, str],
+    contract: dict[str, Any],
+    repo_root: Path,
+) -> dict[str, Any]:
     return {
         "ok": True,
         "mode": "MIGRATION_REQUIRED",
@@ -302,48 +390,81 @@ def migration_packet(legacy: dict[str, str], tracker_row: dict[str, str], contra
         "slot_id": legacy["slot_id"],
         "slot_root": relative_to_repo(repo_root, Path(legacy["slot_root"])),
         "tracker_row": tracker_projection(tracker_row),
-        "reason": "A pre-publish legacy root-level CURRENT_STATE exists, but canonical_v2 nested state does not. Do not infer progress from chat memory and do not allocate over this directory.",
+        "reason": (
+            "A pre-publish legacy root-level CURRENT_STATE exists, but canonical_v2 "
+            "nested state does not. Do not infer progress from chat memory and do not "
+            "allocate over this directory."
+        ),
         "next_action": {
             "action_id": "PLAN_CONTROLLED_LEGACY_MIGRATION",
-            "summary": "Audit legacy evidence with mv_runtime_migrate.py and migrate explicitly before canonical resume.",
-            "human_gate": null,
-            "jit_reads": ["04_HARNESS/runtime/MV_RUNTIME_V2_MIGRATION_PLAN.md"]
+            "summary": (
+                "Audit legacy evidence with mv_runtime_migrate.py and migrate explicitly "
+                "before canonical resume."
+            ),
+            "human_gate": None,
+            "jit_reads": [
+                "04_HARNESS/tools/mv_runtime_migrate.py",
+                "04_HARNESS/runtime/mv_artifact_registry.json",
+            ],
         },
         "startup_required_reads": contract.get("startup_required_reads") or [],
     }
 
 
-def allocation_packet(row: dict[str, str], contract: dict[str, Any], repo_root: Path, program_root: Path) -> dict[str, Any]:
+def allocation_packet(
+    row: dict[str, str],
+    contract: dict[str, Any],
+    repo_root: Path,
+    program_root: Path,
+) -> dict[str, Any]:
     slot_id = row["slot_id"].strip()
     slot_root = program_root / slot_id
+    lane = row.get("lane", "").strip()
+    rel_root = relative_to_repo(repo_root, slot_root)
     return {
         "ok": True,
         "mode": "ALLOCATE_NEW_SLOT",
         "slot_id": slot_id,
-        "slot_root": relative_to_repo(repo_root, slot_root),
-        "lane": row.get("lane", "").strip(),
+        "slot_root": rel_root,
+        "lane": lane,
         "tracker_row": tracker_projection(row),
         "next_action": contract["allocation"],
         "startup_required_reads": contract.get("startup_required_reads") or [],
         "jit_reads": contract["allocation"].get("jit_reads") or [],
-        "init_command": f"python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root {relative_to_repo(repo_root, slot_root)} --slot-id {slot_id} --program 30D_60 --lane {row.get('lane','').strip()}",
+        "init_command": (
+            "python 04_HARNESS/tools/mv_runtime_state.py init-slot "
+            f"--slot-root {rel_root} --slot-id {slot_id} --program 30D_60 --lane {lane}"
+        ),
     }
 
 
-def startup(args: argparse.Namespace, runtime: dict[str, Any], contract: dict[str, Any]) -> None:
+def startup(
+    args: argparse.Namespace, runtime: dict[str, Any], contract: dict[str, Any]
+) -> None:
     repo_root = args.repo_root.resolve()
-    program_root = resolve_repo_path(repo_root, args.program_root or contract["program_root"])
+    registry_dir = args.registry_dir.resolve()
+    program_root = resolve_repo_path(
+        repo_root, args.program_root or contract["program_root"]
+    )
     tracker_path = resolve_repo_path(repo_root, args.tracker or contract["tracker_path"])
     contract_report = validate_resume_contract(repo_root, runtime, contract)
     if not contract_report["ok"]:
         fail("resume contract validation failed", contract_report)
     _, rows, tracker_by_slot = read_tracker(tracker_path, contract)
-    canonical = discover_canonical_slots(program_root, runtime, contract, tracker_by_slot)
+    canonical = discover_canonical_slots(
+        program_root, runtime, contract, tracker_by_slot, registry_dir
+    )
     canonical_by_id = {item["slot_id"]: item for item in canonical}
-    legacy = discover_legacy_prepublish_slots(program_root, tracker_by_slot, contract, set(canonical_by_id))
+    legacy = discover_legacy_prepublish_slots(
+        program_root, tracker_by_slot, contract, set(canonical_by_id)
+    )
     legacy_by_id = {item["slot_id"]: item for item in legacy}
-    post_publish = [item["slot_id"] for item in canonical if item["stage_class"] == "post_publish"]
-    terminal = [item["slot_id"] for item in canonical if item["stage_class"] == "terminal"]
+    post_publish = [
+        item["slot_id"] for item in canonical if item["stage_class"] == "post_publish"
+    ]
+    terminal = [
+        item["slot_id"] for item in canonical if item["stage_class"] == "terminal"
+    ]
 
     if args.slot_id:
         if args.slot_id not in tracker_by_slot:
@@ -351,22 +472,37 @@ def startup(args: argparse.Namespace, runtime: dict[str, Any], contract: dict[st
         if args.slot_id in canonical_by_id:
             packet = resume_packet(canonical_by_id[args.slot_id], contract, repo_root)
         elif args.slot_id in legacy_by_id:
-            packet = migration_packet(legacy_by_id[args.slot_id], tracker_by_slot[args.slot_id], contract, repo_root)
+            packet = migration_packet(
+                legacy_by_id[args.slot_id], tracker_by_slot[args.slot_id], contract, repo_root
+            )
         else:
             candidate = allocation_candidate([tracker_by_slot[args.slot_id]], contract, set())
             if candidate is None:
-                fail("requested slot is neither canonical-resumable nor eligible for fresh allocation", tracker_projection(tracker_by_slot[args.slot_id]))
+                fail(
+                    "requested slot is neither canonical-resumable nor eligible for fresh allocation",
+                    tracker_projection(tracker_by_slot[args.slot_id]),
+                )
             packet = allocation_packet(candidate, contract, repo_root, program_root)
     else:
-        production_slots = [item for item in canonical if item["stage_class"] == "production"]
+        production_slots = [
+            item for item in canonical if item["stage_class"] == "production"
+        ]
         if len(production_slots) > 1:
-            fail("multiple pre-publish canonical slots are active; explicit --slot-id is required", [item["slot_id"] for item in production_slots])
+            fail(
+                "multiple pre-publish canonical slots are active; explicit --slot-id is required",
+                [item["slot_id"] for item in production_slots],
+            )
         if len(production_slots) == 1:
             packet = resume_packet(production_slots[0], contract, repo_root)
         elif legacy:
             if len(legacy) > 1:
-                fail("multiple pre-publish legacy slots require migration; explicit --slot-id is required", [item["slot_id"] for item in legacy])
-            packet = migration_packet(legacy[0], tracker_by_slot[legacy[0]["slot_id"]], contract, repo_root)
+                fail(
+                    "multiple pre-publish legacy slots require migration; explicit --slot-id is required",
+                    [item["slot_id"] for item in legacy],
+                )
+            packet = migration_packet(
+                legacy[0], tracker_by_slot[legacy[0]["slot_id"]], contract, repo_root
+            )
         else:
             unavailable = set(canonical_by_id) | set(legacy_by_id)
             candidate = allocation_candidate(rows, contract, unavailable)
@@ -383,13 +519,15 @@ def startup(args: argparse.Namespace, runtime: dict[str, Any], contract: dict[st
 
 
 def parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Read-only zero-context startup controller for canonical MV Runtime.")
-    p.add_argument("--repo-root", type=Path, default=REPO_ROOT)
-    p.add_argument("--registry-dir", type=Path, default=RUNTIME_DIR)
-    p.add_argument("--program-root")
-    p.add_argument("--tracker")
-    p.add_argument("--slot-id")
-    return p
+    parser_obj = argparse.ArgumentParser(
+        description="Read-only zero-context startup controller for canonical MV Runtime."
+    )
+    parser_obj.add_argument("--repo-root", type=Path, default=REPO_ROOT)
+    parser_obj.add_argument("--registry-dir", type=Path, default=RUNTIME_DIR)
+    parser_obj.add_argument("--program-root")
+    parser_obj.add_argument("--tracker")
+    parser_obj.add_argument("--slot-id")
+    return parser_obj
 
 
 def main() -> None:
