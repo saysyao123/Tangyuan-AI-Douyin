@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE",
+  "record_directory": "00_STATE/ASSETS",
+  "record_extension": ".json",
+  "asset_id_pattern": "^[A-Z0-9][A-Z0-9._-]{2,95}$",
+  "sha256_pattern": "^[0-9a-f]{64}$",
+  "media_types": ["audio", "image", "video", "document", "other"],
+  "locator_kinds": [
+    "workspace_path",
+    "conversation_attachment",
+    "library_ref",
+    "external_provider",
+    "remote_url",
+    "unknown_external"
+  ],
+  "provenance_kinds": [
+    "user_supplied",
+    "generated",
+    "downloaded",
+    "derived",
+    "rendered",
+    "external_reference"
+  ],
+  "required_record_fields": [
+    "schema_version",
+    "asset_id",
+    "media_type",
+    "role",
+    "stage_origin",
+    "content",
+    "locator",
+    "provenance",
+    "parents",
+    "metadata",
+    "registered_at"
+  ],
+  "content_required_fields": ["sha256", "bytes"],
+  "locator_required_fields": ["kind", "value"],
+  "provenance_required_fields": ["kind", "description"],
+  "policy": {
+    "records_are_immutable": true,
+    "asset_id_is_unique_within_slot": true,
+    "content_sha256_is_required_even_when_media_bytes_are_external": true,
+    "local_registration_must_compute_sha256_from_bytes": true,
+    "external_registration_must_receive_sha256_explicitly": true,
+    "parent_assets_must_already_exist": true,
+    "self_parent_is_forbidden": true,
+    "stage_manifests_reference_asset_ids_instead_of_mutating_asset_records": true,
+    "acceptance_status_belongs_to_stage_manifest_or_gate_receipt_not_asset_record": true,
+    "missing_external_bytes_do_not_invalidate_identity_when_sha256_is durable": true
+  },
+  "manifest_schema": {
+    "required_fields": ["schema_version", "manifest_id", "stage_id", "assets", "created_at"],
+    "asset_binding_required_fields": ["asset_id"],
+    "asset_binding_optional_fields": ["shot_id", "use", "notes"],
+    "duplicate_asset_bindings_forbidden": true
+  }
+}
