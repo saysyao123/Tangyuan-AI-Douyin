@@ -1,0 +1,345 @@
+name: R3 MV Runtime P1 Publish Sync Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/**'
+      - '04_HARNESS/tools/mv_runtime_gate.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '04_HARNESS/tools/mv_runtime_publish.py'
+      - '.github/workflows/r3-mv-runtime-p1-publish-sync-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  publish-transaction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build canonical 30D60 slot through S16
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-publish
+          TRACKER=/tmp/mv-publish-tracker.csv
+          rm -rf "$ROOT" "$TRACKER"
+
+          python 04_HARNESS/tools/mv_runtime_state.py init-slot \
+            --slot-root "$ROOT" --slot-id D99-Z --program CI_30D60 --lane P
+
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          fields = [
+              'slot_id','day','slot','lane','song_family','audio_asset','status','packaging','publish_time',
+              'views_1h','views_3h','views_24h','likes_24h','comments_24h','favorites_24h','shares_24h',
+              'new_follows_24h','completion_24h','avg_watch_24h','notes'
+          ]
+          row = {key: '' for key in fields}
+          row.update({'slot_id':'D99-Z','day':'99','slot':'Z','lane':'P','status':'PLANNED','packaging':'MUSIC_FIRST','views_1h':'123','notes':'fixture note'})
+          with Path('/tmp/mv-publish-tracker.csv').open('w', encoding='utf-8', newline='') as f:
+              w = csv.DictWriter(f, fieldnames=fields, lineterminator='\n')
+              w.writeheader(); w.writerow(row)
+          PY
+
+          cat > "$ROOT/01_SONG/SONG_CANDIDATE_SET.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_SCREENED","candidates":[{"id":"C1","title":"fixture publish song","eligible":true}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG01 --user-decision-text 'select C1' --approved-artifact 'song:C1'
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S01_HG01_SONG_LOCKED
+
+          cat > "$ROOT/02_BGM/BGM_CANDIDATE_PACKAGE.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_VERIFIED","audio_identity":"fixture-audio-99","variants":[{"id":"B","duration_s":26.4,"fade":"soft"}]}
+          JSON
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG02 --user-decision-text 'approve B' --approved-artifact 'bgm:B'
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S02_HG02_BGM_LOCKED
+
+          cat > "$ROOT/03_AUDIO_TIMELINE/package_manifest.json" <<'JSON'
+          {"schema_version":"1.0","status":"LOCKED","audio_identity":"fixture-audio-99","coverage":1.0}
+          JSON
+          cat > "$ROOT/03_AUDIO_TIMELINE/alignment_qa_report.md" <<'MD'
+          # Alignment QA
+          PASS / LOCKED. coverage=1.0; all synthetic lines aligned; no warnings.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S03_AUDIO_TIMELINE_LOCKED
+
+          cat > "$ROOT/04_BEATS/NATURAL_BEAT.md" <<'MD'
+          # Natural Beat
+          LOCKED. Synthetic natural-beat fixture for publish transaction CI. It contains enough semantic allocation detail to satisfy the durable artifact minimum and is not a reusable creative template.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S04_NATURAL_BEAT_LOCKED
+
+          cat > "$ROOT/05_DIRECTOR/DIRECTOR_BEAT_MAP.md" <<'MD'
+          # Director Beat Map
+          LOCKED. Synthetic beat-to-shot allocation for publish transaction CI. Every beat has a role, camera relationship, visual event and edit responsibility.
+          MD
+          cat > "$ROOT/05_DIRECTOR/DIRECTOR_PLAN.md" <<'MD'
+          # Director Plan
+          LOCKED. Synthetic director plan used only for Runtime publish transaction testing. The plan defines distinct shot scales, subject blocking, camera-subject relationships, K0 states, bounded source motion, clean endpoints and edit functions. It deliberately exceeds the artifact-size floor without encoding a production creative template.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S05_DIRECTOR_PLAN_LOCKED
+
+          cat > "$ROOT/06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json" <<'JSON'
+          {"schema_version":"1.0","status":"MACHINE_QA_PASS","frames":[{"id":"S01","asset":"fixture-k0-01"},{"id":"S02","asset":"fixture-k0-02"}]}
+          JSON
+          cat > "$ROOT/06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md" <<'MD'
+          # First Frame Set QA
+          PASS / ACCEPT / LOCK. Composition, lyric hit, identity continuity, differentiation and K0 performability passed for the synthetic fixture.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG03 --user-decision-text 'fixture first frames accepted' --approved-artifact 'first-frame-set:fixture-v1'
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S06_HG03_FIRST_FRAMES_LOCKED
+
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_PROMPT_SET.md" <<'MD'
+          # Dynamic Prompt Set
+          READY. Synthetic source-generation contract with identity freeze, K0 truth, one primary subject event, one camera relationship, bounded motion load, phases, physical feedback, residue, clean endpoint, source-audio prohibition and explicit avoid constraints. This is CI-only durable evidence.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S07_DYNAMIC_PROMPT_SET_READY
+
+          cat > "$ROOT/07_DYNAMIC/DYNAMIC_SOURCE_QA.md" <<'MD'
+          # Dynamic Source QA
+          PASS / LOCKED_FOR_EDIT. Synthetic sources are topology-safe, usable, free of hidden multi-shot structure and ready for WEB normalization.
+          MD
+          cat > "$ROOT/07_DYNAMIC/VISUAL_SOURCE_MAP.csv" <<'CSV'
+          source_id,status,internal_shots,edit_role
+          S01,PASS,1,setup
+          S02,PASS,1,release
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S08_DYNAMIC_SOURCE_QA_LOCKED
+
+          cat > "$ROOT/08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_MAP.csv" <<'CSV'
+          source_id,proxy,status
+          S01,S01_clean.mp4,CLEAN
+          S02,S02_clean.mp4,CLEAN
+          CSV
+          cat > "$ROOT/08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_QA.md" <<'MD'
+          # WEB Source Rough-Cut QA
+          PASS / WATERMARK SAFE / CLEAN. Uniform crop normalization completed and generated source audio removed.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S09_SOURCE_NORMALIZATION_READY
+
+          cat > "$ROOT/09_EDIT/EDITOR_AUDIO_GATE_RECEIPT.md" <<'MD'
+          # Editor Audio Gate
+          PASS / LOCKED. Canonical BGM identity, duration and unique-audio-truth checks passed before edit.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S10_EDITOR_AUDIO_GATE_PASS
+
+          cat > "$ROOT/09_EDIT/EDIT_MAP.csv" <<'CSV'
+          edit_id,source_id,timeline_start,timeline_end
+          E01,S01,0.000,12.000
+          E02,S02,12.000,26.400
+          CSV
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S11_EDIT_MAP_LOCKED
+
+          cat > "$ROOT/09_EDIT/EDIT_PREVIEW_QA.md" <<'MD'
+          # Edit Preview QA
+          PASS. Picture rhythm, fragment integrity, audio sync, watermark safety and transition timing are machine-ready for HG04 review.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG04 --user-decision-text 'fixture picture rhythm accepted' --approved-artifact 'edit-preview:fixture-v1'
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S12_HG04_PICTURE_EDIT_PASS
+
+          cat > "$ROOT/10_SUBTITLE/SUBTITLE_IMPLEMENTATION.json" <<'JSON'
+          {"schema_version":"1.0","status":"IMPLEMENTED","style":"fixture","cue_count":4,"audio_timeline_bound":true}
+          JSON
+          cat > "$ROOT/10_SUBTITLE/SUBTITLE_IMPLEMENTATION_QA.md" <<'MD'
+          # Subtitle Implementation QA
+          PASS. bbox geometry, padding, line breaks and timeline binding satisfy the synthetic subtitle contract.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S13_SUBTITLE_IMPLEMENTATION_QA_PASS
+
+          cat > "$ROOT/11_FINAL/FINAL_TECH_QA.md" <<'MD'
+          # Final Technical QA
+          PASS. codec, duration, audio truth, watermark safety, resolution, SAR and final-frame integrity passed.
+          MD
+          cat > "$ROOT/11_FINAL/FINAL_RENDER_READY_RECEIPT.md" <<'MD'
+          # Final Render Receipt
+          PASS / READY / RENDERED / LOCKED. Synthetic final render is technically ready for HG05.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S14_FINAL_TECH_QA_PASS
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate --slot-root "$ROOT" --gate HG05 --user-decision-text 'fixture final accepted' --approved-artifact 'final-render:fixture-v1'
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S15_HG05_FINAL_ACCEPTANCE_PASS
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_publish.py preflight --slot-root "$ROOT" --tracker "$TRACKER" --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' > /tmp/publish-too-early.json
+          early_code=$?
+          set -e
+          test "$early_code" -eq 1
+          grep -q 'only from S16' /tmp/publish-too-early.json
+
+          cat > "$ROOT/12_RELEASE/RELEASE_PACKAGE.md" <<'MD'
+          # Release Package
+          READY. Synthetic publish package contains final render identity, cover authority, caption package, hashtags, pinned comment and platform packaging metadata for transaction CI.
+          MD
+          python 04_HARNESS/tools/mv_runtime_state.py advance --slot-root "$ROOT" --to S16_RELEASE_PACKAGE_READY
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root "$ROOT"
+
+      - name: Reject ambiguous or conflicting tracker state
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-publish
+          BASE=/tmp/mv-publish-tracker.csv
+
+          cp "$BASE" /tmp/tracker-duplicate.csv
+          tail -n 1 "$BASE" >> /tmp/tracker-duplicate.csv
+          set +e
+          python 04_HARNESS/tools/mv_runtime_publish.py preflight --slot-root "$ROOT" --tracker /tmp/tracker-duplicate.csv --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' > /tmp/publish-duplicate.json
+          duplicate_code=$?
+          set -e
+          test "$duplicate_code" -eq 1
+          grep -q 'exactly one row' /tmp/publish-duplicate.json
+
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          base = Path('/tmp/mv-publish-tracker.csv')
+          def mutate(dest, field, value):
+              with base.open(encoding='utf-8', newline='') as f:
+                  r = csv.DictReader(f); fields = r.fieldnames; rows = list(r)
+              rows[0][field] = value
+              with Path(dest).open('w', encoding='utf-8', newline='') as f:
+                  w = csv.DictWriter(f, fieldnames=fields, lineterminator='\n'); w.writeheader(); w.writerows(rows)
+          mutate('/tmp/tracker-bad-lane.csv', 'lane', 'S')
+          mutate('/tmp/tracker-bad-song.csv', 'song_family', 'conflicting song')
+          mutate('/tmp/tracker-bad-audio.csv', 'audio_asset', 'conflicting-audio')
+          PY
+
+          for case in lane song audio; do
+            set +e
+            python 04_HARNESS/tools/mv_runtime_publish.py preflight --slot-root "$ROOT" --tracker "/tmp/tracker-bad-${case}.csv" --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' > "/tmp/publish-bad-${case}.json"
+            code=$?
+            set -e
+            test "$code" -eq 1
+          done
+          grep -q 'lane does not match' /tmp/publish-bad-lane.json
+          grep -q 'conflicting nonblank' /tmp/publish-bad-song.json
+          grep -q 'conflicting nonblank' /tmp/publish-bad-audio.json
+          echo 'PASS: duplicate and conflicting tracker states block before writes.'
+
+      - name: Prove pending timestamp and transaction rollback
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-publish
+          BASE=/tmp/mv-publish-tracker.csv
+
+          python 04_HARNESS/tools/mv_runtime_publish.py preflight --slot-root "$ROOT" --tracker "$BASE" --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' > /tmp/publish-preflight.json
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/publish-preflight.json', encoding='utf-8'))
+          assert data['ok'] is True
+          assert data['publish_time'] == 'timestamp_pending_backfill'
+          assert data['writes_performed'] is False
+          assert data['tracker_row_after']['status'] == 'PUBLISHED'
+          print('PASS: unknown publish timestamp is explicit pending-backfill, never invented.')
+          PY
+
+          rm -rf /tmp/mv-publish-rollback
+          cp -a "$ROOT" /tmp/mv-publish-rollback
+          cp "$BASE" /tmp/tracker-rollback.csv
+          before=$(sha256sum /tmp/tracker-rollback.csv | awk '{print $1}')
+          echo '{"fixture":"forces state advance failure"}' > /tmp/mv-publish-rollback/00_STATE/TRANSITIONS/017_S16_RELEASE_PACKAGE_READY__S17_PUBLISHED_DATA_COLLECTION_ACTIVE.json
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_publish.py sync --slot-root /tmp/mv-publish-rollback --tracker /tmp/tracker-rollback.csv --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' --confirmation-source 'CI real-world fixture confirmation' > /tmp/publish-rollback.json
+          rollback_code=$?
+          set -e
+          test "$rollback_code" -eq 1
+          after=$(sha256sum /tmp/tracker-rollback.csv | awk '{print $1}')
+          test "$before" = "$after"
+          test ! -e /tmp/mv-publish-rollback/12_RELEASE/TRACKER_SYNC_RECEIPT.md
+          test ! -e /tmp/mv-publish-rollback/12_RELEASE/POST_PUBLISH_SYNC_RECEIPT.md
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root /tmp/mv-publish-rollback > /tmp/rollback-state.json
+          grep -q 'S16_RELEASE_PACKAGE_READY' /tmp/rollback-state.json
+          echo 'PASS: failed S17 state advance rolls tracker and publish receipts back.'
+
+      - name: Commit publish transaction and advance exactly S16 to S17
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-publish
+          TRACKER=/tmp/mv-publish-tracker.csv
+
+          python 04_HARNESS/tools/mv_runtime_publish.py sync --slot-root "$ROOT" --tracker "$TRACKER" --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' --confirmation-source 'CI real-world fixture confirmation' > /tmp/publish-sync.json
+          cat /tmp/publish-sync.json
+          python 04_HARNESS/tools/mv_runtime_publish.py verify --slot-root "$ROOT" --tracker "$TRACKER" > /tmp/publish-verify.json
+          cat /tmp/publish-verify.json
+
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          sync = json.load(open('/tmp/publish-sync.json', encoding='utf-8'))
+          assert sync['ok'] is True
+          assert sync['state']['current_stage'] == 'S17_PUBLISHED_DATA_COLLECTION_ACTIVE'
+          with Path('/tmp/mv-publish-tracker.csv').open(encoding='utf-8', newline='') as f:
+              rows = list(csv.DictReader(f))
+          assert len(rows) == 1
+          row = rows[0]
+          assert row['slot_id'] == 'D99-Z'
+          assert row['status'] == 'PUBLISHED'
+          assert row['song_family'] == 'fixture publish song'
+          assert row['audio_asset'] == 'fixture-audio-99'
+          assert row['publish_time'] == 'timestamp_pending_backfill'
+          assert row['views_1h'] == '123'
+          assert row['notes'].startswith('fixture note')
+          assert 'publish sync confirmed' in row['notes']
+          assert Path('/tmp/mv-publish/12_RELEASE/TRACKER_SYNC_RECEIPT.md').is_file()
+          assert Path('/tmp/mv-publish/12_RELEASE/POST_PUBLISH_SYNC_RECEIPT.md').is_file()
+          print('PASS: publish transaction preserves metrics and advances one canonical stage.')
+          PY
+
+          set +e
+          python 04_HARNESS/tools/mv_runtime_publish.py sync --slot-root "$ROOT" --tracker "$TRACKER" --song-family 'fixture publish song' --audio-asset 'fixture-audio-99' --confirmation-source 'second publish event must fail' > /tmp/publish-second.json
+          second_code=$?
+          set -e
+          test "$second_code" -eq 1
+          grep -q 'only from S16' /tmp/publish-second.json
+
+      - name: Allow metric evolution but detect publish-critical tracker tampering
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT=/tmp/mv-publish
+          TRACKER=/tmp/mv-publish-tracker.csv
+
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p = Path('/tmp/mv-publish-tracker.csv')
+          with p.open(encoding='utf-8', newline='') as f:
+              r = csv.DictReader(f); fields = r.fieldnames; rows = list(r)
+          rows[0]['views_3h'] = '456'
+          with p.open('w', encoding='utf-8', newline='') as f:
+              w = csv.DictWriter(f, fieldnames=fields, lineterminator='\n'); w.writeheader(); w.writerows(rows)
+          PY
+          python 04_HARNESS/tools/mv_runtime_publish.py verify --slot-root "$ROOT" --tracker "$TRACKER" > /tmp/publish-metric-evolution.json
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/publish-metric-evolution.json', encoding='utf-8'))
+          assert data['ok'] is True
+          assert data['tracker_publish_critical_match'] is True
+          assert data['tracker_exact_file_hash_match'] is False
+          assert data['warnings']
+          print('PASS: post-publish metric updates do not invalidate publish identity.')
+          PY
+
+          cp "$TRACKER" /tmp/tracker-tampered.csv
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p = Path('/tmp/tracker-tampered.csv')
+          with p.open(encoding='utf-8', newline='') as f:
+              r = csv.DictReader(f); fields = r.fieldnames; rows = list(r)
+          rows[0]['lane'] = 'S'
+          with p.open('w', encoding='utf-8', newline='') as f:
+              w = csv.DictWriter(f, fieldnames=fields, lineterminator='\n'); w.writeheader(); w.writerows(rows)
+          PY
+          set +e
+          python 04_HARNESS/tools/mv_runtime_publish.py verify --slot-root "$ROOT" --tracker /tmp/tracker-tampered.csv > /tmp/publish-tampered.json
+          tamper_code=$?
+          set -e
+          test "$tamper_code" -eq 1
+          grep -q 'publish-critical fields diverged' /tmp/publish-tampered.json
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root "$ROOT"
+          echo 'PASS: critical tracker tampering is detected while canonical state remains hash-valid.'
