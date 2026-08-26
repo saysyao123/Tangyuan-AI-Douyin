@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0",
-  "status": "P0_CANDIDATE",
+  "schema_version": "1.1",
+  "status": "P0_ENFORCEMENT_CANDIDATE",
   "path_scope": "All artifact paths are relative to one MV slot root unless global_scope=true.",
   "policy": {
     "future_slots_use_canonical_paths": true,
@@ -19,15 +19,36 @@
       "checks": [{"type": "min_size", "bytes": 20}]
     },
     {
+      "id": "SLOT_MANIFEST",
+      "canonical_path": "00_STATE/SLOT_MANIFEST.json",
+      "legacy_patterns": [],
+      "type": "runtime_manifest",
+      "checks": [{"type": "json_object"}, {"type": "min_size", "bytes": 40}]
+    },
+    {
+      "id": "SONG_CANDIDATE_SET",
+      "canonical_path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "legacy_patterns": [],
+      "type": "human_gate_preflight",
+      "checks": [{"type": "json_object"}, {"type": "min_size", "bytes": 40}]
+    },
+    {
       "id": "HG01_SELECTION_RECEIPT",
-      "canonical_path": "01_SONG/HG01_SELECTION_RECEIPT.md",
+      "canonical_path": "01_SONG/HG01_SELECTION_RECEIPT.json",
       "legacy_patterns": ["HG01_SELECTION_RECEIPT*.md", "HG01_*SELECTION*RECEIPT*.md"],
       "type": "human_gate_receipt",
       "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|SELECTED|APPROVED|LOCKED)"}]
     },
     {
+      "id": "BGM_CANDIDATE_PACKAGE",
+      "canonical_path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "legacy_patterns": [],
+      "type": "human_gate_preflight",
+      "checks": [{"type": "json_object"}, {"type": "min_size", "bytes": 40}]
+    },
+    {
       "id": "HG02_BGM_LOCK_RECEIPT",
-      "canonical_path": "02_BGM/HG02_BGM_LOCK_RECEIPT.md",
+      "canonical_path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
       "legacy_patterns": ["HG02_BGM_LOCK_RECEIPT*.md", "HG02_FINAL_LOCK_RECEIPT*.md", "HG02_*LOCK*RECEIPT*.md"],
       "type": "human_gate_receipt",
       "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|LOCKED|APPROVED)"}]
@@ -83,7 +104,7 @@
     },
     {
       "id": "HG03_FIRST_FRAME_RECEIPT",
-      "canonical_path": "06_FIRST_FRAMES/HG03_PASS_RECEIPT.md",
+      "canonical_path": "06_FIRST_FRAMES/HG03_PASS_RECEIPT.json",
       "legacy_patterns": ["HG03*RECEIPT*.md", "HG03*PASS*.md"],
       "type": "human_gate_receipt",
       "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
@@ -152,8 +173,15 @@
       "checks": [{"type": "min_size", "bytes": 20}]
     },
     {
+      "id": "EDIT_PREVIEW_QA",
+      "canonical_path": "09_EDIT/EDIT_PREVIEW_QA.md",
+      "legacy_patterns": ["EDIT_PREVIEW_QA*.md", "PICTURE_EDIT_QA*.md"],
+      "type": "technical_qa",
+      "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|fragment|rhythm|audio|watermark|lag)"}]
+    },
+    {
       "id": "HG04_PICTURE_EDIT_RECEIPT",
-      "canonical_path": "09_EDIT/HG04_PASS_RECEIPT.md",
+      "canonical_path": "09_EDIT/HG04_PASS_RECEIPT.json",
       "legacy_patterns": ["HG04*PASS*RECEIPT*.md", "HG04*PICTURE*RECEIPT*.md"],
       "type": "human_gate_receipt",
       "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
@@ -188,7 +216,7 @@
     },
     {
       "id": "HG05_FINAL_ACCEPTANCE_RECEIPT",
-      "canonical_path": "11_FINAL/HG05_PASS_RECEIPT.md",
+      "canonical_path": "11_FINAL/HG05_PASS_RECEIPT.json",
       "legacy_patterns": ["HG05*PASS*RECEIPT*.md", "HG05_FINAL_ACCEPTANCE_PASS_RECEIPT*.md"],
       "type": "human_gate_receipt",
       "checks": [{"type": "text_regex", "pattern": "(?i)(PASS|ACCEPTED|APPROVED|LOCKED)"}]
