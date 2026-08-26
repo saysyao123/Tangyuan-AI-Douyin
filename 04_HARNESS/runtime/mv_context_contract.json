@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "status": "P1_CANDIDATE",
+  "receipt_directory": "00_STATE/CONTEXT_EVENTS",
+  "immutable_keys": ["web", "program_30d60", "canonical_v2"],
+  "mutable_keys": {
+    "multi_shot": {
+      "allowed_changes": [{"from": false, "to": true}],
+      "allowed_current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+      "must_happen_before_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "required_evidence_artifacts": ["DYNAMIC_SOURCE_QA", "VISUAL_SOURCE_MAP"],
+      "reason_required": true,
+      "semantics": "Once hidden or explicit multi-shot complexity is proven in locked dynamic sources, source normalization becomes mandatory and cannot be disabled later."
+    }
+  },
+  "state_fields": ["context_revision", "last_context_receipt", "last_context_receipt_sha256"],
+  "principles": [
+    "Runtime context is derived from SLOT_MANIFEST plus an immutable ordered context-event chain.",
+    "Manual CURRENT_STATE context edits are invalid.",
+    "A context change cannot relax a previously required gate.",
+    "multi_shot is monotonic false-to-true because the purpose is to reveal extra normalization requirements, not remove them."
+  ]
+}
