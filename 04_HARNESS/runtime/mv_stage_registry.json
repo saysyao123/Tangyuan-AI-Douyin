@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0",
+  "status": "P0_CANDIDATE",
+  "authority": "Machine-readable companion to workflows/mv.md and rules/mv_golden_runtime.md",
+  "principles": [
+    "A later stage is invalid when any required upstream stage is invalid.",
+    "A declared CURRENT_STATE never substitutes for required durable artifacts.",
+    "Human Gate PASS requires a durable receipt before the next stage can validate.",
+    "Conditional technical stages do not increase the number of Human Gates.",
+    "Patch the nearest failed prerequisite; do not cascade into unrelated passed stages."
+  ],
+  "human_gates": ["HG01", "HG02", "HG03", "HG04", "HG05"],
+  "default_context": {
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true
+  },
+  "stages": [
+    {
+      "id": "S00_SLOT_CREATED",
+      "order": 0,
+      "label": "Slot initialized",
+      "kind": "runtime",
+      "state_token": "SLOT_CREATED",
+      "required_artifacts": ["STATE_LEDGER"]
+    },
+    {
+      "id": "S01_HG01_SONG_LOCKED",
+      "order": 10,
+      "label": "Song aesthetic locked",
+      "kind": "human_gate",
+      "human_gate": "HG01",
+      "state_token": "SONG_LOCKED",
+      "required_artifacts": ["HG01_SELECTION_RECEIPT"]
+    },
+    {
+      "id": "S02_HG02_BGM_LOCKED",
+      "order": 20,
+      "label": "Exact BGM excerpt locked",
+      "kind": "human_gate",
+      "human_gate": "HG02",
+      "state_token": "BGM_LOCKED",
+      "required_artifacts": ["HG02_BGM_LOCK_RECEIPT"]
+    },
+    {
+      "id": "S03_AUDIO_TIMELINE_LOCKED",
+      "order": 30,
+      "label": "Trusted Audio Timeline Package locked",
+      "kind": "technical_gate",
+      "state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+      "required_artifacts": ["AUDIO_TIMELINE_MANIFEST", "AUDIO_TIMELINE_QA"]
+    },
+    {
+      "id": "S04_NATURAL_BEAT_LOCKED",
+      "order": 40,
+      "label": "Natural Beat locked",
+      "kind": "creative_machine",
+      "state_token": "NATURAL_BEAT_LOCKED",
+      "required_artifacts": ["NATURAL_BEAT"]
+    },
+    {
+      "id": "S05_DIRECTOR_PLAN_LOCKED",
+      "order": 50,
+      "label": "Director allocation locked",
+      "kind": "creative_machine",
+      "state_token": "DIRECTOR_PLAN_LOCKED",
+      "required_artifacts": ["DIRECTOR_BEAT_MAP", "DIRECTOR_PLAN"]
+    },
+    {
+      "id": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "order": 60,
+      "label": "First-frame set accepted",
+      "kind": "human_gate",
+      "human_gate": "HG03",
+      "state_token": "FIRST_FRAME_SET_LOCKED",
+      "required_artifacts": ["FIRST_FRAME_SET_MANIFEST", "FIRST_FRAME_SET_QA", "HG03_FIRST_FRAME_RECEIPT"]
+    },
+    {
+      "id": "S07_DYNAMIC_PROMPT_SET_READY",
+      "order": 70,
+      "label": "Dynamic prompt set ready",
+      "kind": "production_machine",
+      "state_token": "DYNAMIC_PROMPT_SET_READY",
+      "required_artifacts": ["DYNAMIC_PROMPT_SET"]
+    },
+    {
+      "id": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+      "order": 80,
+      "label": "Generated dynamic source QA locked for edit",
+      "kind": "technical_gate",
+      "state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+      "required_artifacts": ["DYNAMIC_SOURCE_QA", "VISUAL_SOURCE_MAP"]
+    },
+    {
+      "id": "S09_SOURCE_NORMALIZATION_READY",
+      "order": 90,
+      "label": "Source normalization / WEB rough-cut ready",
+      "kind": "technical_gate",
+      "state_token": "SOURCE_NORMALIZATION_READY",
+      "required_artifacts": [],
+      "conditional_requirements": [
+        {
+          "when": {"multi_shot": true},
+          "required_artifacts": ["SHOT_LIBRARY_MAP", "SHOT_LIBRARY_QA"]
+        },
+        {
+          "when": {"web": true},
+          "required_artifacts": ["WEB_SOURCE_ROUGH_CUT_MAP", "WEB_SOURCE_ROUGH_CUT_QA"]
+        }
+      ]
+    },
+    {
+      "id": "S10_EDITOR_AUDIO_GATE_PASS",
+      "order": 100,
+      "label": "Editor audio gate passed",
+      "kind": "technical_gate",
+      "state_token": "EDITOR_AUDIO_GATE_PASS",
+      "required_artifacts": ["EDITOR_AUDIO_GATE_RECEIPT"]
+    },
+    {
+      "id": "S11_EDIT_MAP_LOCKED",
+      "order": 110,
+      "label": "Executable picture edit map locked",
+      "kind": "production_machine",
+      "state_token": "EDIT_MAP_LOCKED",
+      "required_artifacts": ["EDIT_MAP"]
+    },
+    {
+      "id": "S12_HG04_PICTURE_EDIT_PASS",
+      "order": 120,
+      "label": "Picture edit rhythm accepted",
+      "kind": "human_gate",
+      "human_gate": "HG04",
+      "state_token": "EDIT_PREVIEW_QA_PASS",
+      "required_artifacts": ["HG04_PICTURE_EDIT_RECEIPT"]
+    },
+    {
+      "id": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS",
+      "order": 130,
+      "label": "Subtitle implementation QA passed",
+      "kind": "technical_gate",
+      "state_token": "SUBTITLE_IMPLEMENTATION_QA_PASS",
+      "required_artifacts": ["SUBTITLE_IMPLEMENTATION", "SUBTITLE_IMPLEMENTATION_QA"]
+    },
+    {
+      "id": "S14_FINAL_TECH_QA_PASS",
+      "order": 140,
+      "label": "Final technical QA passed",
+      "kind": "technical_gate",
+      "state_token": "FINAL_TECH_QA_PASS",
+      "required_artifacts": ["FINAL_TECH_QA", "FINAL_RENDER_RECEIPT"]
+    },
+    {
+      "id": "S15_HG05_FINAL_ACCEPTANCE_PASS",
+      "order": 150,
+      "label": "Final human acceptance passed",
+      "kind": "human_gate",
+      "human_gate": "HG05",
+      "state_token": "HG05_PASS",
+      "required_artifacts": ["HG05_FINAL_ACCEPTANCE_RECEIPT"]
+    },
+    {
+      "id": "S16_RELEASE_PACKAGE_READY",
+      "order": 160,
+      "label": "Release package ready",
+      "kind": "release",
+      "state_token": "RELEASE_READY",
+      "required_artifacts": ["RELEASE_PACKAGE"]
+    },
+    {
+      "id": "S17_PUBLISHED_DATA_COLLECTION_ACTIVE",
+      "order": 170,
+      "label": "Published and durable state synchronized",
+      "kind": "real_world_transition",
+      "state_token": "PUBLISHED_DATA_COLLECTION_ACTIVE",
+      "required_artifacts": ["POST_PUBLISH_SYNC_RECEIPT"],
+      "conditional_requirements": [
+        {
+          "when": {"program_30d60": true},
+          "required_artifacts": ["TRACKER_SYNC_RECEIPT"]
+        }
+      ]
+    },
+    {
+      "id": "S18_POST_PUBLISH_REVIEWED",
+      "order": 180,
+      "label": "Post-publish metrics reviewed",
+      "kind": "learning_loop",
+      "state_token": "POST_PUBLISH_REVIEWED",
+      "required_artifacts": ["POST_PUBLISH_METRICS", "POST_PUBLISH_REVIEW"]
+    }
+  ]
+}
