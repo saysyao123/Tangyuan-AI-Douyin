@@ -8,8 +8,14 @@ on:
       - '04_HARNESS/runtime/**'
       - '04_HARNESS/tools/mv_runtime_gate.py'
       - '04_HARNESS/tools/mv_runtime_migrate.py'
+      - '04_HARNESS/tools/mv_runtime_legacy_import.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '04_HARNESS/tools/mv_runtime_resume.py'
       - '.github/workflows/r3-mv-runtime-p1-migration-tests.yml'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   legacy-migration:
@@ -78,3 +84,136 @@ jobs:
             exit 1
           fi
           echo 'PASS: migration preserves historical evidence and refuses unsafe conversion.'
+
+  legacy-slot-import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile slot import and canonical controllers
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            04_HARNESS/tools/mv_runtime_legacy_import.py \
+            04_HARNESS/tools/mv_runtime_state.py \
+            04_HARNESS/tools/mv_runtime_resume.py
+
+      - name: Import real D02-A evidence copy only through S04
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          SLOT="$TMP/program/D02-A"
+          mkdir -p "$TMP/program"
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-A "$SLOT"
+          LEGACY_STATE_SHA_BEFORE="$(sha256sum "$SLOT/CURRENT_STATE.json" | awk '{print $1}')"
+          SRC=(
+            --source LEGACY_STATE=CURRENT_STATE.json
+            --source HG01_CANDIDATE_EVIDENCE=HG01_CANDIDATE_EVIDENCE_PACK_v1.md
+            --source HG01_SELECTION_RECEIPT=HG01_SELECTION_RECEIPT_v1.md
+            --source HG02_LISTENING_PACK=HG02_LISTENING_PACK_v1.md
+            --source HG02_LOCK_RECEIPT=HG02_BGM_LOCK_RECEIPT_v1.md
+            --source AUDIO_TIMELINE_DIR=AUDIO_TIMELINE_PACKAGE
+            --source NATURAL_BEAT=NATURAL_BEAT_v1.md
+          )
+
+          python 04_HARNESS/tools/mv_runtime_legacy_import.py \
+            plan --slot-root "$SLOT" "${SRC[@]}" > "$TMP/plan.json"
+          PLAN_SHA="$(python - "$TMP/plan.json" <<'PY'
+          import json,sys
+          p=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert p['ok'] is True
+          assert p['plan']['target_stage']=='S04_NATURAL_BEAT_LOCKED'
+          assert p['plan']['downstream_not_proven_from_stage']=='S05_DIRECTOR_PLAN_LOCKED'
+          print(p['plan_sha256'])
+          PY
+          )"
+
+          python 04_HARNESS/tools/mv_runtime_legacy_import.py \
+            import --slot-root "$SLOT" "${SRC[@]}" \
+            --plan-sha256 "$PLAN_SHA" --selected-by ci_fixture \
+            --reason 'Regression import of real D02-A evidence copy; S05+ is intentionally unproven.' \
+            > "$TMP/import.json"
+          python 04_HARNESS/tools/mv_runtime_legacy_import.py verify \
+            --slot-root "$SLOT" > "$TMP/verify.json"
+
+          python - "$TMP/import.json" "$TMP/verify.json" "$SLOT" <<'PY'
+          import json,sys
+          from pathlib import Path
+          imp=json.load(open(sys.argv[1],encoding='utf-8'))
+          ver=json.load(open(sys.argv[2],encoding='utf-8'))
+          slot=Path(sys.argv[3])
+          assert imp['ok'] is True and ver['ok'] is True
+          assert ver['canonical_state']['current_stage']=='S04_NATURAL_BEAT_LOCKED'
+          receipt=json.load(open(slot/'00_STATE/LEGACY_IMPORT_RECEIPT.json',encoding='utf-8'))
+          assert receipt['safety_assertions']['S05_and_later_imported'] is False
+          assert receipt['safety_assertions']['S17_published_inferred'] is False
+          assert not (slot/'05_DIRECTOR/DIRECTOR_PLAN.md').exists()
+          assert not (slot/'12_RELEASE/POST_PUBLISH_SYNC_RECEIPT.md').exists()
+          PY
+
+          LEGACY_STATE_SHA_AFTER="$(sha256sum "$SLOT/CURRENT_STATE.json" | awk '{print $1}')"
+          test "$LEGACY_STATE_SHA_BEFORE" = "$LEGACY_STATE_SHA_AFTER"
+
+          if python 04_HARNESS/tools/mv_runtime_state.py \
+              advance --slot-root "$SLOT" --to S05_DIRECTOR_PLAN_LOCKED \
+              > "$TMP/illegal-s05.json" 2>&1; then
+            echo 'ERROR: S05 advanced without Director evidence.'
+            cat "$TMP/illegal-s05.json"
+            exit 1
+          fi
+
+          cat > "$TMP/tracker.csv" <<'CSV'
+          slot_id,day,slot,lane,status,song_family,audio_asset,packaging,publish_time
+          D02-A,2,A,P,PLANNED,做她的大地别做她的天,locked-d02a-test,,
+          CSV
+          python 04_HARNESS/tools/mv_runtime_resume.py \
+            --repo-root "$GITHUB_WORKSPACE" --program-root "$TMP/program" \
+            --tracker "$TMP/tracker.csv" --slot-id D02-A > "$TMP/resume.json"
+          python - "$TMP/resume.json" <<'PY'
+          import json,sys
+          p=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert p['ok'] is True
+          assert p['mode']=='RESUME_CANONICAL'
+          assert p['current_stage']=='S04_NATURAL_BEAT_LOCKED'
+          assert p['next_action']['action_id']=='BUILD_DIRECTOR_PLAN'
+          PY
+
+          printf '\nTAMPER\n' >> "$SLOT/NATURAL_BEAT_v1.md"
+          if python 04_HARNESS/tools/mv_runtime_legacy_import.py \
+              verify --slot-root "$SLOT" > "$TMP/tamper.json" 2>&1; then
+            echo 'ERROR: legacy provenance tamper was not detected.'
+            cat "$TMP/tamper.json"
+            exit 1
+          fi
+
+      - name: Reject stale import plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          SLOT="$TMP/D02-A"
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-A "$SLOT"
+          SRC=(
+            --source LEGACY_STATE=CURRENT_STATE.json
+            --source HG01_CANDIDATE_EVIDENCE=HG01_CANDIDATE_EVIDENCE_PACK_v1.md
+            --source HG01_SELECTION_RECEIPT=HG01_SELECTION_RECEIPT_v1.md
+            --source HG02_LISTENING_PACK=HG02_LISTENING_PACK_v1.md
+            --source HG02_LOCK_RECEIPT=HG02_BGM_LOCK_RECEIPT_v1.md
+            --source AUDIO_TIMELINE_DIR=AUDIO_TIMELINE_PACKAGE
+            --source NATURAL_BEAT=NATURAL_BEAT_v1.md
+          )
+          python 04_HARNESS/tools/mv_runtime_legacy_import.py plan \
+            --slot-root "$SLOT" "${SRC[@]}" > "$TMP/plan.json"
+          PLAN_SHA="$(python -c "import json; print(json.load(open('$TMP/plan.json'))['plan_sha256'])")"
+          printf '\n<!-- changed after plan -->\n' >> "$SLOT/HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
+          if python 04_HARNESS/tools/mv_runtime_legacy_import.py \
+              import --slot-root "$SLOT" "${SRC[@]}" \
+              --plan-sha256 "$PLAN_SHA" --selected-by ci_fixture --reason stale-plan-test \
+              > "$TMP/stale.json" 2>&1; then
+            echo 'ERROR: stale import plan was accepted.'
+            cat "$TMP/stale.json"
+            exit 1
+          fi
+          test ! -e "$SLOT/00_STATE/CURRENT_STATE.json"
