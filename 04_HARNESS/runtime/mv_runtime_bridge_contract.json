@@ -152,6 +152,7 @@
     "existing_runtime_controllers_remain_authoritative": true,
     "publish_sync_requires_real_world_confirmation_source": true,
     "workflow_processes_pending_requests_serially_per_branch": true,
-    "bot_writeback_must_not_modify_request_files": true
+    "bot_writeback_must_not_modify_request_files": true,
+    "stale_rejection_requires_new_resume_or_fresh_guard": true
   }
 }
