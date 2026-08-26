@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 """Machine-enforced MV Runtime stage/artifact validator.
 
-P0 scope is intentionally read-only:
-- registry-check
-- artifact-check
-- validate-stage (strict cumulative chain)
-- audit-slot
-- explain-stage
-
-It never advances CURRENT_STATE. A later P0/P1 transition tool may consume its PASS
-result, but state mutation must stay separate from evidence validation.
+P0 is deliberately read-only. It validates durable evidence; it never advances
+CURRENT_STATE. State mutation will be a separate operation after this validator
+is trusted.
 """
 
 from __future__ import annotations
@@ -18,7 +12,7 @@ import argparse
 import json
 import re
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -69,9 +63,10 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def load_registries(registry_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
-    stage = load_json(registry_dir / STAGE_REGISTRY_NAME)
-    artifact = load_json(registry_dir / ARTIFACT_REGISTRY_NAME)
-    return stage, artifact
+    return (
+        load_json(registry_dir / STAGE_REGISTRY_NAME),
+        load_json(registry_dir / ARTIFACT_REGISTRY_NAME),
+    )
 
 
 def index_by_id(items: Iterable[dict[str, Any]], label: str) -> dict[str, dict[str, Any]]:
@@ -86,17 +81,6 @@ def index_by_id(items: Iterable[dict[str, Any]], label: str) -> dict[str, dict[s
     return result
 
 
-def normalize_context(stage_registry: dict[str, Any], args: argparse.Namespace) -> dict[str, bool]:
-    defaults = stage_registry.get("default_context") or {}
-    context: dict[str, bool] = {}
-    for key in ("web", "multi_shot", "program_30d60"):
-        value = getattr(args, key, None)
-        if value is None:
-            value = bool(defaults.get(key, False))
-        context[key] = bool(value)
-    return context
-
-
 def bool_arg(value: str) -> bool:
     lowered = value.strip().lower()
     if lowered in {"1", "true", "yes", "y", "on"}:
@@ -106,11 +90,17 @@ def bool_arg(value: str) -> bool:
     raise argparse.ArgumentTypeError(f"expected true/false, got {value!r}")
 
 
+def normalize_context(stage_registry: dict[str, Any], args: argparse.Namespace) -> dict[str, bool]:
+    defaults = stage_registry.get("default_context") or {}
+    context: dict[str, bool] = {}
+    for key in ("web", "multi_shot", "program_30d60"):
+        value = getattr(args, key, None)
+        context[key] = bool(defaults.get(key, False) if value is None else value)
+    return context
+
+
 def condition_matches(condition: dict[str, Any], context: dict[str, bool]) -> bool:
-    for key, expected in condition.items():
-        if context.get(key) != expected:
-            return False
-    return True
+    return all(context.get(key) == expected for key, expected in condition.items())
 
 
 def effective_stage_artifacts(stage: dict[str, Any], context: dict[str, bool]) -> list[str]:
@@ -118,16 +108,15 @@ def effective_stage_artifacts(stage: dict[str, Any], context: dict[str, bool]) -
     for conditional in stage.get("conditional_requirements") or []:
         if condition_matches(conditional.get("when") or {}, context):
             artifacts.extend(conditional.get("required_artifacts") or [])
-    # Preserve declared order while deduplicating.
     return list(dict.fromkeys(str(item) for item in artifacts))
 
 
 def registry_check(stage_registry: dict[str, Any], artifact_registry: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
-
     stages = stage_registry.get("stages")
     artifacts = artifact_registry.get("artifacts")
+
     if not isinstance(stages, list) or not stages:
         errors.append("stage registry must contain non-empty stages[]")
         stages = []
@@ -135,15 +124,11 @@ def registry_check(stage_registry: dict[str, Any], artifact_registry: dict[str, 
         errors.append("artifact registry must contain non-empty artifacts[]")
         artifacts = []
 
-    try:
-        stage_by_id = index_by_id(stages, "stage")
-        artifact_by_id = index_by_id(artifacts, "artifact")
-    except SystemExit:
-        raise
+    stage_by_id = index_by_id(stages, "stage")
+    artifact_by_id = index_by_id(artifacts, "artifact")
 
     orders: dict[int, str] = {}
-    previous_order: int | None = None
-    for stage in sorted(stages, key=lambda item: item.get("order", -1)):
+    for stage in stages:
         stage_id = stage.get("id", "<missing>")
         order = stage.get("order")
         if not isinstance(order, int):
@@ -152,16 +137,16 @@ def registry_check(stage_registry: dict[str, Any], artifact_registry: dict[str, 
         if order in orders:
             errors.append(f"duplicate stage order {order}: {orders[order]} and {stage_id}")
         orders[order] = stage_id
-        if previous_order is not None and order <= previous_order:
-            errors.append(f"stage order not strictly increasing near {stage_id}")
-        previous_order = order
-
         refs = list(stage.get("required_artifacts") or [])
         for conditional in stage.get("conditional_requirements") or []:
             refs.extend(conditional.get("required_artifacts") or [])
         for artifact_id in refs:
             if artifact_id not in artifact_by_id:
                 errors.append(f"{stage_id}: unknown artifact id {artifact_id}")
+
+    ordered = sorted(orders)
+    if ordered != list(ordered) or any(b <= a for a, b in zip(ordered, ordered[1:])):
+        errors.append("stage order must be strictly increasing")
 
     canonical_paths: dict[str, str] = {}
     for artifact_id, artifact in artifact_by_id.items():
@@ -176,6 +161,12 @@ def registry_check(stage_registry: dict[str, Any], artifact_registry: dict[str, 
         canonical_paths[canonical] = artifact_id
         if canonical.startswith("/") or ".." in Path(canonical).parts:
             errors.append(f"{artifact_id}: unsafe canonical_path {canonical}")
+        for check in artifact.get("checks") or []:
+            if check.get("type") == "text_regex":
+                try:
+                    re.compile(str(check.get("pattern", "")))
+                except re.error as exc:
+                    errors.append(f"{artifact_id}: invalid regex: {exc}")
 
     if stage_registry.get("human_gates") != ["HG01", "HG02", "HG03", "HG04", "HG05"]:
         warnings.append("human_gates differs from current five-gate Golden Runtime")
@@ -189,34 +180,41 @@ def registry_check(stage_registry: dict[str, Any], artifact_registry: dict[str, 
     }
 
 
-def find_artifact_path(slot_root: Path, artifact: dict[str, Any]) -> tuple[Path | None, str | None, list[str]]:
+def find_artifact_path(
+    slot_root: Path, artifact: dict[str, Any]
+) -> tuple[Path | None, str | None, list[str]]:
     canonical = slot_root / artifact["canonical_path"]
     warnings: list[str] = []
     if canonical.is_file():
         return canonical, "canonical", warnings
 
-    matches: list[Path] = []
+    matches: set[Path] = set()
     for pattern in artifact.get("legacy_patterns") or []:
-        matches.extend(path for path in slot_root.glob(pattern) if path.is_file())
-    # De-duplicate paths and prefer newest lexical version (v2 > v1 in common names).
-    unique = sorted({path.resolve() for path in matches}, key=lambda p: str(p), reverse=True)
-    if unique:
+        for path in slot_root.glob(pattern):
+            if path.is_file():
+                matches.add(path.resolve())
+
+    unique = sorted(matches, key=lambda path: str(path))
+    if len(unique) == 1:
         chosen = unique[0]
         warnings.append(
-            f"legacy alias used: {chosen.relative_to(slot_root.resolve())}; canonical is {artifact['canonical_path']}"
+            f"legacy alias used: {chosen.relative_to(slot_root.resolve())}; "
+            f"canonical is {artifact['canonical_path']}"
         )
-        if len(unique) > 1:
-            warnings.append(
-                "multiple legacy candidates found: "
-                + ", ".join(str(path.relative_to(slot_root.resolve())) for path in unique)
-            )
         return chosen, "legacy", warnings
+
+    if len(unique) > 1:
+        warnings.append(
+            "ambiguous legacy aliases; canonical pointer required: "
+            + ", ".join(str(path.relative_to(slot_root.resolve())) for path in unique)
+        )
+        return None, "ambiguous", warnings
+
     return None, None, warnings
 
 
-def run_artifact_checks(path: Path, artifact: dict[str, Any]) -> tuple[list[str], list[str]]:
+def run_artifact_checks(path: Path, artifact: dict[str, Any]) -> list[str]:
     errors: list[str] = []
-    warnings: list[str] = []
     for check in artifact.get("checks") or []:
         check_type = check.get("type")
         if check_type == "min_size":
@@ -250,23 +248,28 @@ def run_artifact_checks(path: Path, artifact: dict[str, Any]) -> tuple[list[str]
                 errors.append(f"required text pattern not found: {pattern}")
         else:
             errors.append(f"unsupported artifact check type: {check_type}")
-    return errors, warnings
+    return errors
 
 
 def check_artifact(slot_root: Path, artifact: dict[str, Any]) -> ArtifactResult:
     path, source, warnings = find_artifact_path(slot_root, artifact)
     if path is None:
+        error = (
+            "ambiguous legacy aliases; canonical pointer required"
+            if source == "ambiguous"
+            else "artifact not found"
+        )
         return ArtifactResult(
             artifact_id=artifact["id"],
             ok=False,
             path=None,
-            source=None,
+            source=source,
             canonical_path=artifact["canonical_path"],
-            errors=["artifact not found"],
+            errors=[error],
             warnings=warnings,
         )
-    errors, check_warnings = run_artifact_checks(path, artifact)
-    warnings.extend(check_warnings)
+
+    errors = run_artifact_checks(path, artifact)
     return ArtifactResult(
         artifact_id=artifact["id"],
         ok=not errors,
@@ -334,10 +337,15 @@ def audit_slot(
         if stop_at is not None and stage["id"] == stop_at:
             break
 
-    legacy_count = sum(1 for item in artifact_cache.values() if item.source == "legacy")
-    failed_count = sum(1 for item in artifact_cache.values() if not item.ok)
-    target_result = stage_results[-1] if stage_results else None
+    path_to_ids: dict[str, list[str]] = {}
+    for artifact_id, result in artifact_cache.items():
+        if result.path:
+            path_to_ids.setdefault(result.path, []).append(artifact_id)
+    collisions = {
+        path: ids for path, ids in path_to_ids.items() if len(ids) > 1
+    }
 
+    target_result = stage_results[-1] if stage_results else None
     declared_state: Any = None
     state_result = artifact_cache.get("STATE_LEDGER")
     if state_result and state_result.path:
@@ -346,7 +354,7 @@ def audit_slot(
             try:
                 state_payload = json.loads(state_path.read_text(encoding="utf-8"))
                 declared_state = state_payload.get("status") or state_payload.get("state")
-            except Exception:
+            except (OSError, json.JSONDecodeError):
                 declared_state = None
 
     return {
@@ -358,9 +366,12 @@ def audit_slot(
         "declared_state": declared_state,
         "artifact_summary": {
             "checked": len(artifact_cache),
-            "failed": failed_count,
-            "legacy_aliases_used": legacy_count,
+            "failed": sum(1 for item in artifact_cache.values() if not item.ok),
+            "legacy_aliases_used": sum(1 for item in artifact_cache.values() if item.source == "legacy"),
+            "ambiguous_legacy_aliases": sum(1 for item in artifact_cache.values() if item.source == "ambiguous"),
+            "path_collisions": len(collisions),
         },
+        "artifact_path_collisions": collisions,
         "stages": [asdict(item) for item in stage_results],
         "artifacts": {key: asdict(value) for key, value in artifact_cache.items()},
     }
@@ -378,12 +389,8 @@ def explain_stage(stage_registry: dict[str, Any], context: dict[str, bool], stag
 
 def add_context_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--web", type=bool_arg, default=None, help="true/false; default from stage registry")
-    parser.add_argument(
-        "--multi-shot", dest="multi_shot", type=bool_arg, default=None, help="true/false; default from registry"
-    )
-    parser.add_argument(
-        "--program-30d60", dest="program_30d60", type=bool_arg, default=None, help="true/false; default from registry"
-    )
+    parser.add_argument("--multi-shot", dest="multi_shot", type=bool_arg, default=None)
+    parser.add_argument("--program-30d60", dest="program_30d60", type=bool_arg, default=None)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -415,9 +422,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
-    registry_dir = args.registry_dir.resolve()
-    stage_registry, artifact_registry = load_registries(registry_dir)
-
+    stage_registry, artifact_registry = load_registries(args.registry_dir.resolve())
     integrity = registry_check(stage_registry, artifact_registry)
     if not integrity["ok"]:
         print(json.dumps(integrity, ensure_ascii=False, indent=2))
@@ -449,15 +454,12 @@ def main() -> int:
         return 0 if report["ok"] else 1
 
     if args.command == "audit-slot":
-        report = audit_slot(
-            args.slot_root.resolve(), stage_registry, artifact_registry, context
-        )
+        report = audit_slot(args.slot_root.resolve(), stage_registry, artifact_registry, context)
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0 if report["ok"] else 1
 
     if args.command == "explain-stage":
-        report = explain_stage(stage_registry, context, args.stage)
-        print(json.dumps(report, ensure_ascii=False, indent=2))
+        print(json.dumps(explain_stage(stage_registry, context, args.stage), ensure_ascii=False, indent=2))
         return 0
 
     die(f"unsupported command: {args.command}")
