@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260826T180000Z-LIVE01",
+  "command": "RESUME",
+  "slot_id": "D02-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Read-only live bridge smoke test against the current repository truth; do not mutate the production slot."
+}
