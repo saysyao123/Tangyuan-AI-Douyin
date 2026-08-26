@@ -17,7 +17,6 @@ import argparse
 import hashlib
 import json
 import os
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -123,24 +122,9 @@ def load_canonical_state(slot_root: Path, runtime: dict[str, Any]) -> dict[str, 
     return state
 
 
-def canonical_audit(
-    slot_root: Path,
-    runtime: dict[str, Any],
-    context: dict[str, bool],
-    target_stage: str,
-) -> dict[str, Any]:
-    report = gate.audit_slot(
-        slot_root,
-        runtime["stage_registry"],
-        runtime["artifact_registry"],
-        context,
-        stop_at=target_stage,
-    )
-    legacy = {
-        artifact_id: item
-        for artifact_id, item in report.get("artifacts", {}).items()
-        if item.get("source") == "legacy"
-    }
+def canonical_audit(slot_root: Path, runtime: dict[str, Any], context: dict[str, bool], target_stage: str) -> dict[str, Any]:
+    report = gate.audit_slot(slot_root, runtime["stage_registry"], runtime["artifact_registry"], context, stop_at=target_stage)
+    legacy = {artifact_id: item for artifact_id, item in report.get("artifacts", {}).items() if item.get("source") == "legacy"}
     if legacy:
         report["ok"] = False
         report["canonical_v2_error"] = "legacy artifact aliases are not accepted in canonical_v2 state transitions"
@@ -151,16 +135,12 @@ def canonical_audit(
 def evidence_snapshot(slot_root: Path, report: dict[str, Any]) -> list[dict[str, str]]:
     snapshot: list[dict[str, str]] = []
     for artifact_id, item in sorted(report.get("artifacts", {}).items()):
+        if artifact_id == "STATE_LEDGER":
+            continue
         if not item.get("ok") or not item.get("path"):
             continue
         path = slot_root / item["path"]
-        snapshot.append(
-            {
-                "artifact_id": artifact_id,
-                "path": item["path"],
-                "sha256": sha256_file(path),
-            }
-        )
+        snapshot.append({"artifact_id": artifact_id, "path": item["path"], "sha256": sha256_file(path)})
     return snapshot
 
 
@@ -178,87 +158,25 @@ def init_slot(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
     slot_root.mkdir(parents=True, exist_ok=True)
     for rel in runtime["scaffold"]["directories"]:
         (slot_root / rel).mkdir(parents=True, exist_ok=True)
-
     context = dict(runtime["scaffold"]["defaults"])
-    context.update(
-        {
-            "web": args.web,
-            "multi_shot": args.multi_shot,
-            "program_30d60": args.program_30d60,
-            "canonical_v2": True,
-        }
-    )
+    context.update({"web": args.web, "multi_shot": args.multi_shot, "program_30d60": args.program_30d60, "canonical_v2": True})
     created = now_iso()
-    manifest = {
-        "schema_version": "1.0",
-        "runtime_schema_version": runtime["scaffold"]["runtime_schema_version"],
-        "runtime_mode": "canonical_v2",
-        "slot_id": args.slot_id,
-        "program": args.program,
-        "lane": args.lane,
-        "context": context,
-        "created_at": created,
-    }
+    manifest = {"schema_version": "1.0", "runtime_schema_version": runtime["scaffold"]["runtime_schema_version"], "runtime_mode": "canonical_v2", "slot_id": args.slot_id, "program": args.program, "lane": args.lane, "context": context, "created_at": created}
     mpath = manifest_path(slot_root, runtime)
     atomic_json(mpath, manifest)
-
     initial_stage = runtime["scaffold"]["initial_stage"]
     initial_token = runtime["scaffold"]["initial_state_token"]
     initial_rel = receipt_relpath(0, None, initial_stage, runtime)
     initial_path = slot_root / initial_rel
-    initial_receipt = {
-        "receipt_version": "1.0",
-        "sequence": 0,
-        "slot_id": args.slot_id,
-        "from_stage": None,
-        "to_stage": initial_stage,
-        "to_state_token": initial_token,
-        "previous_receipt_sha256": None,
-        "state_before_sha256": None,
-        "evidence_validation": {"ok": True, "mode": "slot_init"},
-        "evidence_snapshot": [
-            {
-                "artifact_id": "SLOT_MANIFEST",
-                "path": str(mpath.relative_to(slot_root)),
-                "sha256": sha256_file(mpath),
-            }
-        ],
-        "created_at": created,
-    }
+    initial_receipt = {"receipt_version": "1.0", "sequence": 0, "slot_id": args.slot_id, "from_stage": None, "to_stage": initial_stage, "to_state_token": initial_token, "previous_receipt_sha256": None, "state_before_sha256": None, "evidence_validation": {"ok": True, "mode": "slot_init"}, "evidence_snapshot": [{"artifact_id": "SLOT_MANIFEST", "path": str(mpath.relative_to(slot_root)), "sha256": sha256_file(mpath)}], "created_at": created}
     atomic_json(initial_path, initial_receipt)
     initial_hash = sha256_file(initial_path)
-
-    state = {
-        "runtime_schema_version": runtime["scaffold"]["runtime_schema_version"],
-        "runtime_mode": "canonical_v2",
-        "slot_id": args.slot_id,
-        "program": args.program,
-        "lane": args.lane,
-        "current_stage": initial_stage,
-        "current_state_token": initial_token,
-        "status": initial_token,
-        "transition_sequence": 0,
-        "last_transition_receipt": initial_rel,
-        "last_transition_receipt_sha256": initial_hash,
-        "context": context,
-        "created_at": created,
-        "updated_at": created,
-    }
+    state = {"runtime_schema_version": runtime["scaffold"]["runtime_schema_version"], "runtime_mode": "canonical_v2", "slot_id": args.slot_id, "program": args.program, "lane": args.lane, "current_stage": initial_stage, "current_state_token": initial_token, "status": initial_token, "transition_sequence": 0, "last_transition_receipt": initial_rel, "last_transition_receipt_sha256": initial_hash, "context": context, "created_at": created, "updated_at": created}
     atomic_json(state_path(slot_root, runtime), state)
-
     report = canonical_audit(slot_root, runtime, context, initial_stage)
     if not report.get("ok"):
         fail("initialized slot failed S00 validation", report)
-    out(
-        {
-            "ok": True,
-            "slot_root": str(slot_root),
-            "slot_id": args.slot_id,
-            "stage": initial_stage,
-            "state_token": initial_token,
-            "transition_receipt": initial_rel,
-        }
-    )
+    out({"ok": True, "slot_root": str(slot_root), "slot_id": args.slot_id, "stage": initial_stage, "state_token": initial_token, "transition_receipt": initial_rel})
 
 
 def verify_state_internal(slot_root: Path, runtime: dict[str, Any]) -> dict[str, Any]:
@@ -270,11 +188,7 @@ def verify_state_internal(slot_root: Path, runtime: dict[str, Any]) -> dict[str,
         fail("state references unknown current_stage", current_stage)
     expected_sequence = indexes[current_stage]
     if state.get("transition_sequence") != expected_sequence:
-        fail(
-            "transition_sequence does not match current stage index",
-            {"expected": expected_sequence, "actual": state.get("transition_sequence")},
-        )
-
+        fail("transition_sequence does not match current stage index", {"expected": expected_sequence, "actual": state.get("transition_sequence")})
     previous_hash: str | None = None
     last_rel: str | None = None
     checked_receipts: list[str] = []
@@ -301,7 +215,6 @@ def verify_state_internal(slot_root: Path, runtime: dict[str, Any]) -> dict[str,
         previous_hash = sha256_file(path)
         last_rel = rel
         checked_receipts.append(rel)
-
     if state.get("last_transition_receipt") != last_rel:
         fail("state last_transition_receipt mismatch")
     if state.get("last_transition_receipt_sha256") != previous_hash:
@@ -309,21 +222,11 @@ def verify_state_internal(slot_root: Path, runtime: dict[str, Any]) -> dict[str,
     expected_token = stage_list[expected_sequence]["state_token"]
     if state.get("current_state_token") != expected_token or state.get("status") != expected_token:
         fail("state token/status does not match canonical stage")
-
     context = dict(state["context"])
     report = canonical_audit(slot_root, runtime, context, current_stage)
     if not report.get("ok"):
         fail("current canonical evidence chain does not validate", report)
-
-    return {
-        "ok": True,
-        "slot_id": state["slot_id"],
-        "current_stage": current_stage,
-        "current_state_token": expected_token,
-        "transition_sequence": expected_sequence,
-        "checked_transition_receipts": checked_receipts,
-        "highest_contiguous_valid_stage": report.get("highest_contiguous_valid_stage"),
-    }
+    return {"ok": True, "slot_id": state["slot_id"], "current_stage": current_stage, "current_state_token": expected_token, "transition_sequence": expected_sequence, "checked_transition_receipts": checked_receipts, "highest_contiguous_valid_stage": report.get("highest_contiguous_valid_stage")}
 
 
 def verify_state(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
@@ -346,68 +249,37 @@ def record_human_gate(args: argparse.Namespace, runtime: dict[str, Any]) -> None
         fail("human gate cannot target S00", code=2)
     expected_from = stage_list[target_index - 1]["id"]
     if state["current_stage"] != expected_from:
-        fail(
-            "human gate can only be recorded when its immediate upstream stage is current",
-            {"current_stage": state["current_stage"], "expected": expected_from, "gate": args.gate},
-        )
+        fail("human gate can only be recorded when its immediate upstream stage is current", {"current_stage": state["current_stage"], "expected": expected_from, "gate": args.gate})
     if args.decision != "PASS":
         fail("only PASS receipts unlock a canonical stage; rejected options remain discussion evidence")
     if not args.user_decision_text.strip():
         fail("user_decision_text must be non-empty")
     if not args.approved_artifact:
         fail("at least one --approved-artifact is required")
-
     context = dict(state["context"])
     upstream = canonical_audit(slot_root, runtime, context, expected_from)
     if not upstream.get("ok"):
         fail("human gate upstream chain is not machine-valid", upstream)
-
     artifact_defs = artifacts(runtime)
     machine_evidence: list[dict[str, str]] = []
     for artifact_id in definition.get("machine_preflight_artifacts") or []:
         result = gate.check_artifact(slot_root, artifact_defs[artifact_id])
         if not result.ok or result.source != "canonical" or not result.path:
-            fail(
-                "human gate machine preflight artifact missing or non-canonical",
-                {"gate": args.gate, "artifact": artifact_id, "result": result.__dict__},
-            )
+            fail("human gate machine preflight artifact missing or non-canonical", {"gate": args.gate, "artifact": artifact_id, "result": result.__dict__})
         path = slot_root / result.path
-        machine_evidence.append(
-            {"artifact_id": artifact_id, "path": result.path, "sha256": sha256_file(path)}
-        )
-
+        machine_evidence.append({"artifact_id": artifact_id, "path": result.path, "sha256": sha256_file(path)})
     receipt_artifact_id = definition["receipt_artifact_id"]
     receipt_def = artifact_defs[receipt_artifact_id]
     receipt_path = slot_root / receipt_def["canonical_path"]
     if receipt_path.exists():
         fail("canonical human gate receipt already exists and is immutable", str(receipt_path))
-
-    payload = {
-        "receipt_version": "1.0",
-        "gate_id": args.gate,
-        "stage_id": target_stage,
-        "decision": "PASS",
-        "user_decision_text": args.user_decision_text,
-        "approved_artifacts": args.approved_artifact,
-        "machine_evidence": machine_evidence,
-        "state_stage_before": expected_from,
-        "created_at": now_iso(),
-    }
+    payload = {"receipt_version": "1.0", "gate_id": args.gate, "stage_id": target_stage, "decision": "PASS", "user_decision_text": args.user_decision_text, "approved_artifacts": args.approved_artifact, "machine_evidence": machine_evidence, "state_stage_before": expected_from, "created_at": now_iso()}
     atomic_json(receipt_path, payload)
     result = gate.check_artifact(slot_root, receipt_def)
     if not result.ok or result.source != "canonical":
         receipt_path.unlink(missing_ok=True)
         fail("generated human gate receipt failed artifact validation", result.__dict__)
-    out(
-        {
-            "ok": True,
-            "gate": args.gate,
-            "stage_id": target_stage,
-            "receipt": str(receipt_path.relative_to(slot_root)),
-            "state_advanced": False,
-            "next_action": f"advance --to {target_stage}",
-        }
-    )
+    out({"ok": True, "gate": args.gate, "stage_id": target_stage, "receipt": str(receipt_path.relative_to(slot_root)), "state_advanced": False, "next_action": f"advance --to {target_stage}"})
 
 
 def advance(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
@@ -424,16 +296,11 @@ def advance(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
         fail("slot is already at the final registered stage")
     target = stage_list[current_index + 1]
     if args.to is not None and args.to != target["id"]:
-        fail(
-            "stage skipping is forbidden; only the immediate next stage may advance",
-            {"current": state["current_stage"], "allowed_next": target["id"], "requested": args.to},
-        )
-
+        fail("stage skipping is forbidden; only the immediate next stage may advance", {"current": state["current_stage"], "allowed_next": target["id"], "requested": args.to})
     context = dict(state["context"])
     report = canonical_audit(slot_root, runtime, context, target["id"])
     if not report.get("ok"):
         fail("target stage evidence validation failed; state not advanced", report)
-
     sequence = current_index + 1
     previous_rel = state["last_transition_receipt"]
     previous_hash = state["last_transition_receipt_sha256"]
@@ -441,41 +308,11 @@ def advance(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
     receipt_path = slot_root / rel
     if receipt_path.exists():
         fail("transition receipt path already exists; revisions require a future controlled rollback/attempt flow", rel)
-
-    transition = {
-        "receipt_version": "1.0",
-        "sequence": sequence,
-        "slot_id": state["slot_id"],
-        "from_stage": state["current_stage"],
-        "to_stage": target["id"],
-        "to_state_token": target["state_token"],
-        "previous_receipt": previous_rel,
-        "previous_receipt_sha256": previous_hash,
-        "state_before_sha256": state_before_hash,
-        "evidence_validation": {
-            "ok": True,
-            "target_stage": target["id"],
-            "highest_contiguous_valid_stage": report.get("highest_contiguous_valid_stage"),
-            "canonical_v2": True,
-        },
-        "evidence_snapshot": evidence_snapshot(slot_root, report),
-        "created_at": now_iso(),
-    }
+    transition = {"receipt_version": "1.0", "sequence": sequence, "slot_id": state["slot_id"], "from_stage": state["current_stage"], "to_stage": target["id"], "to_state_token": target["state_token"], "previous_receipt": previous_rel, "previous_receipt_sha256": previous_hash, "state_before_sha256": state_before_hash, "evidence_validation": {"ok": True, "target_stage": target["id"], "highest_contiguous_valid_stage": report.get("highest_contiguous_valid_stage"), "canonical_v2": True}, "evidence_snapshot": evidence_snapshot(slot_root, report), "created_at": now_iso()}
     atomic_json(receipt_path, transition)
     transition_hash = sha256_file(receipt_path)
-
     new_state = dict(state)
-    new_state.update(
-        {
-            "current_stage": target["id"],
-            "current_state_token": target["state_token"],
-            "status": target["state_token"],
-            "transition_sequence": sequence,
-            "last_transition_receipt": rel,
-            "last_transition_receipt_sha256": transition_hash,
-            "updated_at": now_iso(),
-        }
-    )
+    new_state.update({"current_stage": target["id"], "current_state_token": target["state_token"], "status": target["state_token"], "transition_sequence": sequence, "last_transition_receipt": rel, "last_transition_receipt_sha256": transition_hash, "updated_at": now_iso()})
     atomic_json(state_file, new_state)
     try:
         verified = verify_state_internal(slot_root, runtime)
@@ -483,16 +320,7 @@ def advance(args: argparse.Namespace, runtime: dict[str, Any]) -> None:
         state_file.write_bytes(state_before_bytes)
         receipt_path.unlink(missing_ok=True)
         raise
-    out(
-        {
-            "ok": True,
-            "from_stage": state["current_stage"],
-            "to_stage": target["id"],
-            "state_token": target["state_token"],
-            "transition_receipt": rel,
-            "verified": verified,
-        }
-    )
+    out({"ok": True, "from_stage": state["current_stage"], "to_stage": target["id"], "state_token": target["state_token"], "transition_receipt": rel, "verified": verified})
 
 
 def bool_arg(value: str) -> bool:
@@ -508,7 +336,6 @@ def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Machine-controlled state transitions for canonical MV Runtime slots.")
     p.add_argument("--registry-dir", type=Path, default=RUNTIME_DIR)
     sub = p.add_subparsers(dest="command", required=True)
-
     init = sub.add_parser("init-slot")
     init.add_argument("--slot-root", required=True, type=Path)
     init.add_argument("--slot-id", required=True)
@@ -517,21 +344,17 @@ def parser() -> argparse.ArgumentParser:
     init.add_argument("--web", type=bool_arg, default=True)
     init.add_argument("--multi-shot", type=bool_arg, default=False)
     init.add_argument("--program-30d60", type=bool_arg, default=True)
-
     receipt = sub.add_parser("record-human-gate")
     receipt.add_argument("--slot-root", required=True, type=Path)
     receipt.add_argument("--gate", required=True)
     receipt.add_argument("--decision", default="PASS", choices=["PASS"])
     receipt.add_argument("--user-decision-text", required=True)
     receipt.add_argument("--approved-artifact", action="append", default=[])
-
     advance_parser = sub.add_parser("advance")
     advance_parser.add_argument("--slot-root", required=True, type=Path)
     advance_parser.add_argument("--to")
-
     verify = sub.add_parser("verify-state")
     verify.add_argument("--slot-root", required=True, type=Path)
-
     return p
 
 
