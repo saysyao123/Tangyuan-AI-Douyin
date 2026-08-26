@@ -135,9 +135,9 @@ def promote(args: argparse.Namespace, artifact_registry: dict[str, Any]) -> None
     if source.suffix.lower() != target.suffix.lower():
         fail("legacy source and canonical target use different formats; explicit conversion is required", {"source": source.suffix, "target": target.suffix})
 
-    errors, warnings = gate.run_artifact_checks(source, definition)
+    errors = gate.run_artifact_checks(source, definition)
     if errors:
-        fail("selected legacy source fails artifact validation", {"errors": errors, "warnings": warnings})
+        fail("selected legacy source fails artifact validation", {"errors": errors})
 
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(source.read_bytes())
