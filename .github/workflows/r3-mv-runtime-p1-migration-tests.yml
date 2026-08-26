@@ -1,0 +1,80 @@
+name: R3 MV Runtime P1 Migration Tests
+
+on:
+  push:
+    branches:
+      - refactor/mv-runtime-consolidation-v2
+    paths:
+      - '04_HARNESS/runtime/**'
+      - '04_HARNESS/tools/mv_runtime_gate.py'
+      - '04_HARNESS/tools/mv_runtime_migrate.py'
+      - '.github/workflows/r3-mv-runtime-p1-migration-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  legacy-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build disposable D01-B fixture
+        run: |
+          rm -rf /tmp/d01b-migrated
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D01-B /tmp/d01b-migrated
+
+      - name: Plan detects ambiguous Director authority
+        run: |
+          python 04_HARNESS/tools/mv_runtime_migrate.py plan \
+            --slot-root /tmp/d01b-migrated > /tmp/migration-plan.json
+          cat /tmp/migration-plan.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/migration-plan.json').read_text())
+          assert 'DIRECTOR_PLAN' in report['ambiguous_artifacts'], report['ambiguous_artifacts']
+          print('PASS: migration plan exposes Director v1/v2 ambiguity instead of guessing')
+          PY
+
+      - name: Explicitly materialize Director v2 as canonical
+        run: |
+          python 04_HARNESS/tools/mv_runtime_migrate.py promote \
+            --slot-root /tmp/d01b-migrated \
+            --artifact DIRECTOR_PLAN \
+            --source DIRECTOR_PLAN_v2.md \
+            --selected-by CI \
+            --reason 'fixture explicitly selects the user-reviewed v2 Director plan'
+          test -f /tmp/d01b-migrated/DIRECTOR_PLAN_v1.md
+          test -f /tmp/d01b-migrated/DIRECTOR_PLAN_v2.md
+          test -f /tmp/d01b-migrated/05_DIRECTOR/DIRECTOR_PLAN.md
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root /tmp/d01b-migrated --artifact DIRECTOR_PLAN
+          python 04_HARNESS/tools/mv_runtime_migrate.py verify \
+            --slot-root /tmp/d01b-migrated
+
+      - name: Reject overwrite and unsafe format conversion
+        shell: bash
+        run: |
+          set +e
+          python 04_HARNESS/tools/mv_runtime_migrate.py promote \
+            --slot-root /tmp/d01b-migrated \
+            --artifact DIRECTOR_PLAN \
+            --source DIRECTOR_PLAN_v1.md \
+            --selected-by CI \
+            --reason 'must not overwrite prior canonical selection' > /tmp/re-promote.json
+          code1=$?
+          python 04_HARNESS/tools/mv_runtime_migrate.py promote \
+            --slot-root /tmp/d01b-migrated \
+            --artifact HG05_FINAL_ACCEPTANCE_RECEIPT \
+            --source HG05_FINAL_ACCEPTANCE_PASS_RECEIPT_v1.md \
+            --selected-by CI \
+            --reason 'cross-format conversion must be explicit' > /tmp/cross-format.json
+          code2=$?
+          set -e
+          cat /tmp/re-promote.json
+          cat /tmp/cross-format.json
+          if [ "$code1" -ne 1 ] || [ "$code2" -ne 1 ]; then
+            echo 'Migration must reject canonical overwrite and implicit MD-to-JSON conversion.'
+            exit 1
+          fi
+          echo 'PASS: migration preserves historical evidence and refuses unsafe conversion.'
