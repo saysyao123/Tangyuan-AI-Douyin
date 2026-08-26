@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "status": "ENFORCEMENT_CANDIDATE",
+  "runtime_schema_version": "2.0-candidate",
+  "runtime_mode": "canonical_v2",
+  "directories": [
+    "00_STATE/TRANSITIONS",
+    "01_SONG",
+    "02_BGM",
+    "03_AUDIO_TIMELINE",
+    "04_BEATS",
+    "05_DIRECTOR",
+    "06_FIRST_FRAMES",
+    "07_DYNAMIC",
+    "08_NORMALIZATION",
+    "09_EDIT",
+    "10_SUBTITLE",
+    "11_FINAL",
+    "12_RELEASE",
+    "13_POST_PUBLISH"
+  ],
+  "initial_stage": "S00_SLOT_CREATED",
+  "initial_state_token": "SLOT_CREATED",
+  "slot_manifest_path": "00_STATE/SLOT_MANIFEST.json",
+  "state_path": "00_STATE/CURRENT_STATE.json",
+  "defaults": {
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true,
+    "canonical_v2": true
+  }
+}
