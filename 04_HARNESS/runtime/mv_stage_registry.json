@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.0",
-  "status": "P0_CANDIDATE",
+  "schema_version": "1.1",
+  "status": "P0_ENFORCEMENT_CANDIDATE",
   "authority": "Machine-readable companion to workflows/mv.md and rules/mv_golden_runtime.md",
   "principles": [
     "A later stage is invalid when any required upstream stage is invalid.",
     "A declared CURRENT_STATE never substitutes for required durable artifacts.",
-    "Human Gate PASS requires a durable receipt before the next stage can validate.",
+    "Human Gate PASS requires machine preflight evidence plus a durable receipt before the next stage can validate.",
     "Conditional technical stages do not increase the number of Human Gates.",
     "Patch the nearest failed prerequisite; do not cascade into unrelated passed stages."
   ],
@@ -13,7 +13,8 @@
   "default_context": {
     "web": true,
     "multi_shot": false,
-    "program_30d60": true
+    "program_30d60": true,
+    "canonical_v2": false
   },
   "stages": [
     {
@@ -22,7 +23,10 @@
       "label": "Slot initialized",
       "kind": "runtime",
       "state_token": "SLOT_CREATED",
-      "required_artifacts": ["STATE_LEDGER"]
+      "required_artifacts": ["STATE_LEDGER"],
+      "conditional_requirements": [
+        {"when": {"canonical_v2": true}, "required_artifacts": ["SLOT_MANIFEST"]}
+      ]
     },
     {
       "id": "S01_HG01_SONG_LOCKED",
@@ -31,7 +35,10 @@
       "kind": "human_gate",
       "human_gate": "HG01",
       "state_token": "SONG_LOCKED",
-      "required_artifacts": ["HG01_SELECTION_RECEIPT"]
+      "required_artifacts": ["HG01_SELECTION_RECEIPT"],
+      "conditional_requirements": [
+        {"when": {"canonical_v2": true}, "required_artifacts": ["SONG_CANDIDATE_SET"]}
+      ]
     },
     {
       "id": "S02_HG02_BGM_LOCKED",
@@ -40,7 +47,10 @@
       "kind": "human_gate",
       "human_gate": "HG02",
       "state_token": "BGM_LOCKED",
-      "required_artifacts": ["HG02_BGM_LOCK_RECEIPT"]
+      "required_artifacts": ["HG02_BGM_LOCK_RECEIPT"],
+      "conditional_requirements": [
+        {"when": {"canonical_v2": true}, "required_artifacts": ["BGM_CANDIDATE_PACKAGE"]}
+      ]
     },
     {
       "id": "S03_AUDIO_TIMELINE_LOCKED",
@@ -99,14 +109,8 @@
       "state_token": "SOURCE_NORMALIZATION_READY",
       "required_artifacts": [],
       "conditional_requirements": [
-        {
-          "when": {"multi_shot": true},
-          "required_artifacts": ["SHOT_LIBRARY_MAP", "SHOT_LIBRARY_QA"]
-        },
-        {
-          "when": {"web": true},
-          "required_artifacts": ["WEB_SOURCE_ROUGH_CUT_MAP", "WEB_SOURCE_ROUGH_CUT_QA"]
-        }
+        {"when": {"multi_shot": true}, "required_artifacts": ["SHOT_LIBRARY_MAP", "SHOT_LIBRARY_QA"]},
+        {"when": {"web": true}, "required_artifacts": ["WEB_SOURCE_ROUGH_CUT_MAP", "WEB_SOURCE_ROUGH_CUT_QA"]}
       ]
     },
     {
@@ -132,7 +136,10 @@
       "kind": "human_gate",
       "human_gate": "HG04",
       "state_token": "EDIT_PREVIEW_QA_PASS",
-      "required_artifacts": ["HG04_PICTURE_EDIT_RECEIPT"]
+      "required_artifacts": ["HG04_PICTURE_EDIT_RECEIPT"],
+      "conditional_requirements": [
+        {"when": {"canonical_v2": true}, "required_artifacts": ["EDIT_PREVIEW_QA"]}
+      ]
     },
     {
       "id": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS",
@@ -175,10 +182,7 @@
       "state_token": "PUBLISHED_DATA_COLLECTION_ACTIVE",
       "required_artifacts": ["POST_PUBLISH_SYNC_RECEIPT"],
       "conditional_requirements": [
-        {
-          "when": {"program_30d60": true},
-          "required_artifacts": ["TRACKER_SYNC_RECEIPT"]
-        }
+        {"when": {"program_30d60": true}, "required_artifacts": ["TRACKER_SYNC_RECEIPT"]}
       ]
     },
     {
