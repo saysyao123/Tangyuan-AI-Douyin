@@ -1,6 +1,6 @@
-# OSS MV Optimization Result Matrix v1.3
+# OSS MV Optimization Result Matrix v1.4
 
-Status: `IN_PROGRESS / EXECUTOR-FIRST REMEDIATION PASS`
+Status: `IN_PROGRESS / SIMPLE LYRIC TIMELINE CORRECTION ACTIVE`
 
 ## Test identity
 
@@ -37,8 +37,7 @@ Status: `IN_PROGRESS / EXECUTOR-FIRST REMEDIATION PASS`
 
 `PROCESS CORRECTION / VALIDATED IN EXPERIMENT`
 
-D02-B exposed a real link-integrity bug and an over-correction. The final accepted strategy is restored to:
-
+Accepted strategy:
 `CORE BENCHMARK ACCOUNTS -> DATA CENTER -> SONG_FAMILY REPEAT/VALUE RANKING -> SIMPLE DIRECT MV HANDOFF -> USER HG01`
 
 Retained hardening:
@@ -47,12 +46,7 @@ Retained hardening:
 Rejected behavior:
 `WEB-WIDE SEARCH -> CANDIDATES CHOSEN BY PUBLIC EVIDENCE AVAILABILITY -> HEAVY EVIDENCE TAXONOMY`.
 
-HG01 is now locked to `有几次想你了`.
-
-Classification:
-- `CORE-DATABASE-HG01-RESTORE` -> `PROMOTE_RULE` candidate
-- `DIRECT-LINK-IDENTITY-GUARD` -> `PROMOTE_RULE` candidate
-- `WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY` -> `REJECT`
+HG01 is locked to `有几次想你了`.
 
 ### HG02 / BGM
 
@@ -60,53 +54,92 @@ Classification:
 
 Two core works resolved to the same Douyin music object `7670104695834282815`. User accepted the B listening variant: same exact source, final `0.8s` soft fade-out.
 
-No Director work started before the BGM lock.
-
 ### Audio Timeline / Natural Beat
 
-`PROCESS DEFECT FOUND BEFORE S03 ADVANCE`
+`CORRECTION REQUIRED / S03 NOT ALLOWED YET`
 
-Failure observed:
-- Agent read the Audio Timeline Rule;
-- saw Xingyu as an allowed implementation;
-- started a slot-specific helper / Actions execution route;
-- only afterwards rediscovered that the repository already contained a canonical, pinned, regression-tested `tools/mv_audio_timeline/*` toolchain.
+Two separate process defects were exposed before S03 advance.
 
-This was an execution-routing failure, not a missing R3 implementation.
+#### Defect A｜Executor discovery gap
 
-Root cause:
-- `SKILL.md + MANIFEST.md` had executor detail;
-- the newer Canonical Runtime startup/JIT path did not make executor discovery first-class;
-- S02 RESUME previously surfaced only `rules/mv_audio_timeline.md`.
+The agent initially rebuilt tooling even though the repository already contained a canonical, pinned, regression-tested `tools/mv_audio_timeline/*` toolchain.
 
-Remediation:
-- added `runtime/mv_stage_executor_registry.json` with 19/19 stage coverage;
-- added hard `rules/mv_executor_first.md`;
-- upgraded SKILL/MANIFEST/Stage Entry Checklist/new-chat prompts;
-- upgraded `mv_resume_contract.json` so startup loads the executor layer and S02 JIT explicitly points to the existing Audio Timeline toolchain;
-- restored Runtime Web Bridge purity;
-- removed slot-specific helpers/workflow from core;
-- removed non-authoritative partial S03 files from current Canonical tree;
-- left Git history/audit receipt as durable evidence;
-- kept D02-B at S02.
-
-Post-remediation read-only RESUME confirms:
-- `current_stage = S02_HG02_BGM_LOCKED`;
-- `current_state_token = BGM_LOCKED`;
-- S02 JIT now includes package template, Audio Timeline README, runtime lock, `package_tool.py`, and `final_gate.py`;
-- startup now includes Executor Registry, Executor-First Rule and MANIFEST.
-
-CI:
-`R3 MV Executor-First Tests` -> PASS, validating 19/19 stage mappings and key S02/S16/Runtime-Bridge regressions.
+Remediation already completed:
+- `runtime/mv_stage_executor_registry.json` with 19/19 stage coverage;
+- `rules/mv_executor_first.md`;
+- startup/JIT now loads executor routing before new implementation;
+- per-slot model install and slot-specific core helpers are rejected by default.
 
 Classification:
 - `EXECUTOR-DISCOVERY-GAP` -> `PROMOTE_RUNTIME` candidate
 - `SLOT-SPECIFIC-CORE-HELPER` -> `REJECT`
 - `PER-SLOT-PRODUCTION-MODEL-INSTALL` -> `REJECT AS DEFAULT`
 
+#### Defect B｜Partial caption was mistaken for complete lyrics
+
+The first D02-B trusted lyric set contained only four lines because it was copied from a creator work caption. The locked BGM contains more sung lines; therefore the four-line transcript and all forced-alignment candidates derived from it are INVALID regardless of their timing accuracy.
+
+Key lesson:
+`creator caption / description / hashtag / lyric quote != complete lyric truth`.
+
+The full locked audio clip is the authority for completeness.
+
+#### Accepted simplified S02 path
+
+A new experiment rule is now active:
+`04_HARNESS/rules/mv_lyric_timeline_simple_path.md`
+
+Normal production Happy Path is fixed to:
+
+`HG02 exact BGM`
+→ `verify audio SHA`
+→ `ONE full-clip ASR transcript`
+→ `ONE lyric-text audit against the same audio`
+→ `trusted_lyrics locked`
+→ `ONE Xingyu forced alignment`
+→ `ONE automatic timing QA`
+→ `line_timeline.csv + lyrics_exact.srt`
+→ `S03`
+
+Normal PASS path explicitly forbids:
+- second-model cross-check by default;
+- Web-wide lyric evidence hunting;
+- using waveform/BPM as lyric truth;
+- per-song tooling branches;
+- repeating evidence collection after the single lyric-text audit passes.
+
+Only a concrete QA failure opens an exception path, and the same path is rerun after correcting that specific issue.
+
+#### Minimal lyric-timeline lock assets
+
+Required to lock:
+1. `audio_identity.json`
+2. `trusted_lyrics.txt`
+3. `raw_evidence/xingyu/alignment.json`
+4. `line_timeline.csv`
+5. `lyrics_exact.srt`
+6. `lyric_timeline_qa.json`
+7. `package_manifest.json`
+
+`anchor_words.csv` and `music_events.csv` move downstream to Natural Beat / Director enrichment and do not block lyric-timeline lock in this experiment.
+
+Current D02-B status:
+- HG01 PASS
+- HG02 PASS
+- previous 4-line lyric set = INVALID
+- previous 4-line timing candidates = INVALID
+- Canonical Runtime stays at `S02_HG02_BGM_LOCKED`
+- next action = rebuild complete lyric text from the full locked BGM using the single Simple Path
+
+Classification:
+- `PARTIAL-CAPTION-AS-LYRIC-TRUTH` -> `REJECT`
+- `SINGLE-PATH-LYRIC-TIMELINE` -> `PROMOTE_RULE` candidate pending D02-B validation
+- `MULTI-SOURCE-BY-DEFAULT-LYRIC-QA` -> `REJECT`
+- `ANCHOR-MUSIC-EVENTS-BLOCK-S03` -> `REJECT IN SIMPLE PATH`
+
 ### Director
 
-TBD. This is the first major stage where the locked `mvmaker-h3-skills` creative overlay is intentionally allowed.
+TBD. First major stage where `mvmaker-h3-skills` creative overlay is intentionally allowed.
 
 ### HG03 / First Frames
 TBD
@@ -126,52 +159,36 @@ TBD
 ### HG05 / Final Acceptance
 TBD
 
-## End-to-end executor audit summary
-
-All Canonical stages S00-S18 now have an explicit execution class. Important distinction:
-
-- some stages use a real canonical toolchain (`S02`, `S09`, `S16`);
-- some stages are deterministic media transforms (`S08`, `S11`, `S12`, `S13`);
-- some are creative synthesis (`S03`, `S04`, `S06`, `S10`, `S15`);
-- some are external product capability handoffs (`S05`, `S07`);
-- Human Gates remain Runtime-controlled (`S14` and earlier Gate stages);
-- missing repo-local code in a creative/capability stage is not an implementation gap.
-
-Full audit:
-`06_TESTS/MV/OSS_OPT_R1/PROCESS_AUDIT/END_TO_END_EXECUTION_AUDIT_v1.md`
-
 ## Complexity audit
 
-Executor-first remediation expected effect:
+Target behavior after current corrections:
 
-- unnecessary repository search: `DOWN`;
-- ad-hoc helper creation: `HARD-BLOCKED BEFORE EXECUTOR CHECK`;
-- repeated model download risk: `DOWN / DEFAULT FORBIDDEN`;
-- Runtime Bridge complexity: `RESTORED TO TRANSPORT-ONLY`;
-- context/token use: `MORE TARGETED` because the Stage executor points to the smallest known production path;
-- zero-context recovery: `IMPROVED`;
-- experimentation contamination risk: `REDUCED` through stage allowlist.
+- one normal lyric transcript path;
+- one text audit;
+- one forced alignment;
+- one automatic timing QA;
+- no default second source/model;
+- no caption-as-complete-lyrics shortcut;
+- no Anchor/Music Event work before lyric timing is locked;
+- no repeated production-model installation per song;
+- no slot-specific helper in core Runtime.
 
 ## Final decisions
 
 | Optimization ID | Decision | Reason | Promotion target / next action |
 |---|---|---|---|
-| CORE-DATABASE-HG01-RESTORE | `PROMOTE_RULE` candidate | Restores proven R3 candidate authority and reduces unnecessary search/context | retain through full experiment |
+| CORE-DATABASE-HG01-RESTORE | `PROMOTE_RULE` candidate | Restores proven R3 candidate authority and reduces unnecessary search/context | retain |
 | DIRECT-LINK-IDENTITY-GUARD | `PROMOTE_RULE` candidate | Prevents incorrect MV handoff without changing discovery authority | retain |
 | WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY | `REJECT` | Evidence availability started driving song choice | do not promote |
-| EXECUTOR-DISCOVERY-GAP | `PROMOTE_RUNTIME` candidate | Runtime previously defined WHAT but did not reliably route HOW, causing duplicated implementation | validate through remainder of D02-B before stable promotion |
-| SLOT-SPECIFIC-CORE-HELPER | `REJECT` | Pollutes core tools and duplicates canonical paths | keep experiment history only |
-| PER-SLOT-PRODUCTION-MODEL-INSTALL | `REJECT AS DEFAULT` | Production dependency is already pinned; normal behavior is doctor/cache/reuse | setup only as a separate controlled environment action when genuinely missing |
-| OSS-VISUAL-OVERLAY | `KEEP_EXPERIMENTAL` | Source locked; creative A/B not yet started | begin only after canonical Audio Timeline PASS |
-
-Allowed decisions:
-- `PROMOTE_RUNTIME`
-- `PROMOTE_RULE`
-- `PROMOTE_KNOWLEDGE`
-- `PROMOTE_TOOLING`
-- `KEEP_EXPERIMENTAL`
-- `REJECT`
+| EXECUTOR-DISCOVERY-GAP | `PROMOTE_RUNTIME` candidate | Runtime previously defined WHAT but did not reliably route HOW | validate through remainder of D02-B |
+| SLOT-SPECIFIC-CORE-HELPER | `REJECT` | Duplicates canonical paths and increases maintenance | keep history only |
+| PER-SLOT-PRODUCTION-MODEL-INSTALL | `REJECT AS DEFAULT` | Normal behavior is doctor/cache/reuse | environment setup only when genuinely missing |
+| PARTIAL-CAPTION-AS-LYRIC-TRUTH | `REJECT` | Caption can be a lyric excerpt rather than the complete locked clip | never use as completeness authority |
+| SINGLE-PATH-LYRIC-TIMELINE | `PROMOTE_RULE` candidate | Matches user goal: simple, stable, accurate lyric text + timing | validate on D02-B before stable promotion |
+| MULTI-SOURCE-BY-DEFAULT-LYRIC-QA | `REJECT` | Adds time/tokens without a concrete failure signal | exception only |
+| ANCHOR-MUSIC-EVENTS-BLOCK-S03 | `REJECT IN SIMPLE PATH` | These belong to downstream Director/Beat enrichment, not lyric truth | move downstream |
+| OSS-VISUAL-OVERLAY | `KEEP_EXPERIMENTAL` | Creative A/B not yet started | begin after lyric timeline PASS |
 
 ## Current experiment verdict
 
-Process architecture is now corrected and machine-tested on the experiment branch. D02-B remains safely at S02; the next valid action is to build Audio Timeline using the already-existing canonical toolchain. The actual `mvmaker-h3-skills` visual A/B has not started yet.
+The process is now deliberately simplified around the production goal: accurate complete lyrics and accurate timing from one locked audio. D02-B remains safely at S02. The previous four-line result is invalid and will not be promoted. The next valid action is one full-clip lyric transcript, one lyric-text audit, one Xingyu forced alignment, and one automatic QA.
