@@ -36,5 +36,7 @@ jobs:
             04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py
       - name: Run timing-core regression suite
         run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py
+      - name: Run aligner schema regression suite
+        run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_run_alignment.py
       - name: Run complete-package gate regression suite
         run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_final_gate.py
