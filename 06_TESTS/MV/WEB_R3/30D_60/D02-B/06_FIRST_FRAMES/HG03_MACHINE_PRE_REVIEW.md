@@ -1,59 +1,54 @@
-# D02-B｜HG03 First-frame Set Machine Pre-review
+# D02-B｜HG03 Machine Pre-Review — Revision R002
 
-Status: `PASS / USER ACCEPTED SET`
+Status: `PASS / USER ACCEPTED / PROCEED TO DYNAMIC PROMPTS`
 
-## Authority
+Authority: `ACCEPTED ACTUAL IMAGE PIXELS > PROMPT > DIRECTOR PROSE`.
 
-`ACCEPTED ACTUAL FIRST-FRAME PIXELS > prompt > older Director prose`.
+## Set-level result
 
-The four accepted images are identified by SHA-256 in `FIRST_FRAME_ACTUAL_SET_MANIFEST.json`. The black facial mesh is an input-adaptation layer for Face-Degrade -> Face-Completion, not a story VFX. When the face is too small to read, the grid is not required to remain visibly legible.
+The revised five-frame set PASSes the active First-Frame QA gate:
+
+- lyric-specific hit: PASS;
+- standalone beauty: PASS;
+- character/world continuity: PASS;
+- set differentiation: PASS;
+- dynamic performability: PASS;
+- no second person: PASS;
+- standard-square black face-grid policy: PASS;
+- image dimensions: all `941x1672` portrait.
 
 ## Per-frame review
 
-### B01｜Approach / 想你 -> 忍住
-- Beauty: PASS.
-- Lyric/relationship hit: PASS. Strongest intimacy frame of the set; subject is already entering the camera relationship.
-- K0 performability: PASS. Forward body phase + left hand on linen gives an immediate continuation path.
-- Face grid: PASS. Black curved mesh is clear and strong enough to survive I2V input adaptation.
-- Risk: do not increase seduction posing or reach farther toward lens; dynamic should convert approach into restraint.
-- Decision: KEEP.
+| ID | Lyric role | Actual shot / dominant event | Dynamic entrance | Decision |
+|---|---|---|---|---|
+| H-S01 | 有几次想你了 -> 有几次忍住了 | frontal walking approach with real column/linen boundary already present | face reconstruction -> controlled approach -> internal cut to physical restraint | KEEP |
+| H-S02 | 有几句想说的 -> 都变成算了 | medium-close threshold state; right hand already near/touching column, left hand in pocket | face reconstruction -> unfinished expression -> withdrawal -> YIELD/passage | KEEP |
+| H-S03 | 有几场雨停了 | frontal medium-wide travel over visibly wet limestone; residual water traces present; no active rain | face reconstruction -> simple travel -> cut to final rain-trace detail | KEEP |
+| H-S04 | 有几阵风过了 | rear three-quarter composition with large wind-displaced linen as dominant visual engine | face reconstruction if readable -> one gust peak -> fabric/hair/shirt response detail -> settle | KEEP |
+| H-S05 | 有多舍不得，也该放下了 | body already moving away while right hand still holds linen edge | preserve attachment -> cut to hand release -> wider stop-pursuing release | KEEP |
 
-### B02｜Boundary / 想说 -> 算了
-- Beauty: PASS.
-- Lyric/relationship hit: PASS. Limestone column creates a readable line the subject has not fully crossed.
-- K0 performability: PASS. Small inhale / eye intention can occur before body chooses passage.
-- Face grid: PASS.
-- Risk: keep the column and body topology stable; no dramatic facial acting or lip-sync.
-- Decision: KEEP.
+## Differentiation / visual rhythm
 
-### B03｜Passage / 雨停 -> 风过
-- Beauty: PASS.
-- Set differentiation: PASS. Rear three-quarter relation is clearly different from B01/B02.
-- K0 performability: PASS. The unfinished look-back can resolve into forward travel.
-- Face grid: PASS on visible face.
-- Lyric risk: accepted pixels do not strongly show literal rain aftermath. Do not invent active rain. Treat `雨停` as a post-weather/after-passage state, while one bounded wind pass provides the clearest literal `风过` hit.
-- Decision: KEEP WITH DYNAMIC CONSTRAINT.
+Thumbnail-level duties are distinguishable:
 
-### B04｜Distance Returned / 舍不得 -> 放下
-- Beauty: PASS.
-- Lyric/relationship hit: PASS. Subject is already small and receding; camera remains behind rather than pursuing intimacy.
-- K0 performability: PASS. Only a few calm steps are needed before a stable release hold.
-- Face grid: N/A at readable scale; do not force a visible mesh onto a tiny distant face.
-- Risk: existing ceramic vessel/branch is background-only. Freeze it; do not turn it into a story object.
-- Decision: KEEP.
+`approach -> boundary -> wet after-rain -> dominant wind -> attachment/release`.
 
-## Set-level gate
+H-S04 and H-S05 are both rear-oriented but remain materially distinct: H-S04 is environment-led with a large wind-driven linen shape; H-S05 is action-led with the hand/linen attachment contradiction.
 
-- Same character / world: PASS.
-- Wardrobe continuity: PASS.
-- No second person: PASS.
-- Shot-scale progression: PASS.
-- Composition repetition: PASS.
-- Relationship arc: PASS — `APPROACH -> BOUNDARY -> PASSAGE -> DISTANCE RETURNED`.
-- Beauty gate: PASS.
-- Performability gate: PASS.
-- Black-grid Face-Degrade input policy: PASS.
+## Actual-pixel correction
 
-`HG03_MACHINE_PRE_REVIEW = PASS`
+H-S03 accepted pixels are frontal/forward travel, not the older Director Plan side-rear angle. Downstream dynamic prompts MUST preserve the actual K0 and may change angle only through a motivated internal cut after the opening phase.
 
-User decision in current conversation: the four images are acceptable and the user instructed the workflow to proceed after machine review.
+## Dynamic-stage requirement
+
+The revised dynamic set should intentionally create an edit surplus:
+
+- H-S01: 2 visible atoms;
+- H-S02: 2 visible atoms;
+- H-S03: 2–3 visible atoms;
+- H-S04: 2 visible atoms;
+- H-S05: 2–3 visible atoms.
+
+Target: `>=9 usable normalized atoms` for a `15.386s` final picture edit.
+
+User decision: `HG03 PASS / ENTER DYNAMIC PROMPT STAGE`.
