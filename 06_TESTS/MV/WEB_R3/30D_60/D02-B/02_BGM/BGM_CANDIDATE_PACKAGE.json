@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "status": "HG02_MACHINE_PREFLIGHT_READY",
+  "slot_id": "D02-B",
+  "lane": "S",
+  "song_family": "有几次想你了",
+  "source_policy": "EXACT_DOUYIN_FIRST",
+  "douyin_music_asset": {
+    "object_id": "7670104695834282815",
+    "music_title": "@林叙（错位秋天已上线）创作的原声",
+    "music_author": "林叙（错位秋天已上线）",
+    "identity_evidence": {
+      "verified_core_work_count": 2,
+      "same_music_object_id": true,
+      "same_music_title": true,
+      "same_music_author": true
+    },
+    "listening_source_mode": "P1_EXACT_DOUYIN_MUSIC_ASSET",
+    "duration_seconds": 15.386083,
+    "sample_rate_hz": 44100,
+    "channels": 2
+  },
+  "candidates": [
+    {
+      "option": "A",
+      "file_name": "HG02_A_native.mp3",
+      "transform": "native listening source; no tail fade",
+      "sha256": "f3e3c53381f2504cf53727b7b8e0aa04b576595c2b6714ee991d39a454519007"
+    },
+    {
+      "option": "B",
+      "file_name": "HG02_B_soft_tail_0p8s.mp3",
+      "transform": "same exact Douyin asset; final 0.8s fade-out only",
+      "sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4"
+    }
+  ],
+  "listening_package": {
+    "workflow_run_id": 33040160960,
+    "artifact_id": 9633538568,
+    "artifact_name": "D02B-HG02-listening-package",
+    "artifact_archive_sha256": "50b1bcdf5bff133a07299bf4460ebe49dd9b7e5f473809166ec08902f7843e81"
+  },
+  "selected_option_by_user": "B",
+  "selected_audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "selected_transform": "same exact Douyin asset; final 0.8s fade-out only",
+  "machine_preflight_result": "PASS",
+  "source_reports": [
+    "02_BGM/BGM_DISCOVERY/asset_probe_report.json",
+    "02_BGM/BGM_DISCOVERY/audio_probe_report.json"
+  ]
+}
