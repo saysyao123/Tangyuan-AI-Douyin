@@ -1,0 +1,12 @@
+{
+  "package_version": "1.0",
+  "evidence_class": "ASR_FORCED_ALIGNMENT",
+  "tool": "xingyu-lyrics-aligner",
+  "tool_version": "xingyu-lyrics-aligner 0.7.0",
+  "raw_evidence_path": "raw_evidence/normalized_timeline.csv",
+  "raw_evidence_sha256": "a5020fb996e14d44c7b183493a6fe617a5dbd93953c9f5b366293d9119a5ca6f",
+  "ground_truth_qa": "PASS",
+  "qa_note": "PASS. The exact HG02-locked audio SHA was reverified. Xingyu aligned all four trusted lyric lines with explicit line starts and ends. The reviewed candidate preserves alignment.json boundaries exactly. The 0.8s render fade begins at 14.586083s, 7.603s after the final aligned vocal release at 6.983s, so the fade cannot alter lyric timing.",
+  "qa_report_path": "alignment_qa_report.md",
+  "qa_report_sha256": "fb021dffb5b9c2fd9eb92cd98c295ecede1f1c4c673dbca380cce5185939bd70"
+}
