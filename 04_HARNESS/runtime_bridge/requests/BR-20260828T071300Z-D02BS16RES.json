@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260828T071300Z-D02BS16RES",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh the canonical guard after building the D02-B Release Package, then validate readiness for S16 without marking the unpublished MV as published."
+}
