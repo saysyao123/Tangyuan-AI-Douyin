@@ -1,6 +1,7 @@
 {
-  "schema_version": "1.0",
-  "status": "LEGACY_IMPORT_RECONSTRUCTED_MACHINE_PREFLIGHT",
+  "schema_version": "1.1-compat",
+  "status": "HG01_EVIDENCE_DELIVERY_PASS",
+  "legacy_status": "LEGACY_IMPORT_RECONSTRUCTED_MACHINE_PREFLIGHT",
   "slot_id": "D02-A",
   "lane": "P",
   "formal_candidates": [
@@ -22,6 +23,18 @@
     }
   ],
   "selected_song_family": "做她的大地别做她的天",
+  "evidence_pack_path": "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+  "all_candidates_min_direct_works_2": true,
+  "all_candidates_independent_accounts_2plus": true,
+  "all_direct_links_landing_work_verified": true,
+  "core_account_coverage_reported": true,
+  "no_external_audio_substitution": true,
+  "user_gate_delivery_mode": "DIRECT_WORKS_FIRST",
+  "compatibility_materialization": {
+    "reason": "Preserve validation of an already-locked historical D02-A slot after experiment-branch HG01 registry hardening. No human decision or creative truth changed.",
+    "canonical_evidence_pack": "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+    "historical_pack": "HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
+  },
   "provenance": {
     "candidate_evidence_source": "HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
     "candidate_evidence_sha256": "ebd32a6428df2dfa3cefbe1b8a4fff2d7ecfc38373eec2defee097b012c35ca6",
