@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LYRIC_SIMPLE_TEST_01",
+  "slot_id": "D02-B",
+  "song_family": "有几次想你了",
+  "audio_workflow_run_id": 33040160960,
+  "audio_artifact_name": "D02B-HG02-listening-package",
+  "audio_file_name": "HG02_B_soft_tail_0p8s.mp3",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "mode": "XINGYU_CANDIDATE_EXTRACT_RECOMMENDED",
+  "expected_user_observed_line_count": 7
+}
