@@ -8,7 +8,6 @@ on:
       - test/mv-oss-optimization-r1
     paths:
       - '04_HARNESS/runtime_bridge/requests/*.json'
-      - '06_TESTS/MV/OSS_OPT_R1/requests/D02B_BGM_PROBE*.request'
   workflow_dispatch:
 
 permissions:
@@ -46,71 +45,22 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
           git add -A -- \
             04_HARNESS/runtime_bridge/responses \
             06_TESTS/MV/WEB_R3/30D_60 \
             05_IP_ASSETS/MV_30D_60_TRACKER.csv
+
           if ! git diff --cached --quiet -- 04_HARNESS/runtime_bridge/requests; then
             echo 'ERROR: bridge writeback attempted to modify immutable request files.'
             exit 1
           fi
+
           if git diff --cached --quiet; then
             echo 'No pending Runtime response or mutation to commit.'
             exit 0
           fi
-          git commit -m 'runtime: process MV web bridge request(s)'
-          git pull --rebase origin "$GITHUB_REF_NAME"
-          git push origin "HEAD:$GITHUB_REF_NAME"
 
-  d02b-bgm-listening-probe:
-    if: ${{ github.ref_name == 'test/mv-oss-optimization-r1' && startsWith(github.event.head_commit.message, 'test: trigger bounded D02-B HG02 listening probe') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Sync latest experiment branch
-        shell: bash
-        run: |
-          set -euo pipefail
-          git pull --rebase origin "$GITHUB_REF_NAME"
-
-      - name: Install ffmpeg
-        shell: bash
-        run: |
-          set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg >/dev/null
-
-      - name: Build bounded HG02 listening package
-        shell: bash
-        run: |
-          set -euo pipefail
-          bash 04_HARNESS/tools/d02b_hg02_audio_probe.sh
-
-      - name: Upload listening assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: D02B-HG02-listening-package
-          path: |
-            /tmp/hg02_audio/HG02_A_native.mp3
-            /tmp/hg02_audio/HG02_B_soft_tail_0p8s.mp3
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Commit metadata only
-        shell: bash
-        run: |
-          set -euo pipefail
-          OUT='06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY'
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$OUT/audio_probe_report.json"
-          if git diff --cached --quiet; then
-            echo 'No audio QA metadata change.'
-            exit 0
-          fi
-          git commit -m 'runtime: record D02-B HG02 listening QA'
+          git commit -m "runtime: process MV web bridge request(s)"
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
