@@ -1,0 +1,20 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG04",
+  "stage_id": "S12_HG04_PICTURE_EDIT_PASS",
+  "decision": "PASS",
+  "user_decision_text": "目前这个效果不错，你进入到下一步吧。",
+  "approved_artifacts": [
+    "09_EDIT/EDIT_PREVIEW_QA.md",
+    "09_EDIT/EDIT_MAP.csv"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "EDIT_PREVIEW_QA",
+      "path": "09_EDIT/EDIT_PREVIEW_QA.md",
+      "sha256": "6549bacbc3101d6a576c15a93476e7444e164b747ba3e6d531045c9c9ce0456f"
+    }
+  ],
+  "state_stage_before": "S11_EDIT_MAP_LOCKED",
+  "created_at": "2026-08-27T16:57:43Z"
+}

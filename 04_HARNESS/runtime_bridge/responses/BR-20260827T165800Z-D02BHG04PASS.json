@@ -1,0 +1,180 @@
+{
+  "command": "RECORD_HUMAN_GATE",
+  "completed_at": "2026-08-27T16:57:44Z",
+  "error": null,
+  "execution": {
+    "command": "RECORD_HUMAN_GATE",
+    "controller_payload": {
+      "gate": "HG04",
+      "next_action": "advance --to S12_HG04_PICTURE_EDIT_PASS",
+      "ok": true,
+      "receipt": "09_EDIT/HG04_PASS_RECEIPT.json",
+      "stage_id": "S12_HG04_PICTURE_EDIT_PASS",
+      "state_advanced": false
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 1,
+    "current_stage": "S11_EDIT_MAP_LOCKED",
+    "current_state_token": "EDIT_MAP_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "225d92baa9d0fdf19c7e8e1b65c65b40cbb02ba4abc0d824ffb159d9b1db0caf",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "93e2f5b78be496bbbb6b49995e1a6efed6b53f015652957b4c117c7b71d1a86b",
+    "state_sha256": "ba99b6e54869e6d6fa78dd67a61a68742bb2bc98a150eeed2c6dda30a85a74e9",
+    "transition_sequence": 11
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S11_EDIT_MAP_LOCKED",
+    "current_state_token": "EDIT_MAP_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_editing.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "RENDER_PREVIEW_AND_RUN_HG04",
+      "human_gate": "HG04",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S12_HG04_PICTURE_EDIT_PASS",
+      "summary": "Resolve the existing preview render capability, render and machine-QA the picture preview, then stop at HG04 for human rhythm acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S11_EDIT_MAP_LOCKED",
+    "current_state_token": "EDIT_MAP_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_editing.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "RENDER_PREVIEW_AND_RUN_HG04",
+      "human_gate": "HG04",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S12_HG04_PICTURE_EDIT_PASS",
+      "summary": "Resolve the existing preview render capability, render and machine-QA the picture preview, then stop at HG04 for human rhythm acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T165800Z-D02BHG04PASS",
+  "request_sha256": "9ea1b936b8b57b7d004243545161187df5bb05487dc00c891c1da7551aea7793",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33095916592",
+    "github_source_sha": "e9a64711d2e3850d6c508f5524d040cf7729e20b"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
