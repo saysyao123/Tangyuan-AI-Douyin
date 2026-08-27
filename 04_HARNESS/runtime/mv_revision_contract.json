@@ -37,3 +37,4 @@
     "release_package_revision": {"target_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS", "invalidates_from": "S16_RELEASE_PACKAGE_READY"}
   }
 }
+
