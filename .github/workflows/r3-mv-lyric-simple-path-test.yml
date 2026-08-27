@@ -5,7 +5,7 @@ on:
     branches:
       - test/mv-oss-optimization-r1
     paths:
-      - '06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_SIMPLE_TEST_*.json'
+      - '06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_LIGHTWEIGHT_TEST_*.json'
   workflow_dispatch:
 
 permissions:
@@ -19,13 +19,10 @@ concurrency:
 jobs:
   transcript:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     env:
-      VENV: ${{ github.workspace }}/.mv-audio-align-venv
-      HF_HOME: ${{ github.workspace }}/.cache/huggingface
-      HUGGINGFACE_HUB_CACHE: ${{ github.workspace }}/.cache/huggingface/hub
-      HF_HUB_DISABLE_TELEMETRY: '1'
       GH_TOKEN: ${{ github.token }}
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,37 +32,32 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Restore existing shared Xingyu runtime
-        id: cache
+      - name: Restore lightweight Faster-Whisper cache
         uses: actions/cache@v4
         with:
           path: |
-            .mv-audio-align-venv
+            ~/.cache/pip
             .cache/huggingface
-          key: mv-audio-align-${{ runner.os }}-py311-${{ hashFiles('04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json') }}
+          key: mv-lyric-fw-small-${{ runner.os }}-py311-v1
 
-      - name: Resolve request and verify existing runtime capability
+      - name: Install only lightweight lyric dependency
         shell: bash
         run: |
           set -euo pipefail
-          if [ "${{ steps.cache.outputs.cache-hit }}" != "true" ]; then
-            echo 'SIMPLE_PATH_BLOCKED: existing Xingyu runtime cache missing' >&2
-            exit 42
-          fi
-          mapfile -t REQS < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_SIMPLE_TEST_.*\.json$' || true)
+          python -m pip install -q faster-whisper==1.2.1
+
+      - name: Resolve immutable test request
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t REQS < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_LIGHTWEIGHT_TEST_.*\.json$' || true)
           if [ "${#REQS[@]}" -ne 1 ]; then
-            echo "Expected exactly one simple-path request, got ${#REQS[@]}" >&2
+            echo "Expected exactly one lightweight lyric request, got ${#REQS[@]}" >&2
             exit 2
           fi
           cp "${REQS[0]}" /tmp/request.json
-          export PATH="$VENV/bin:$PATH"
-          xingyu-align --version
-          python - <<'PY'
-          import faster_whisper
-          print('faster_whisper_import=PASS')
-          PY
 
-      - name: Download exact HG02 B audio and verify SHA
+      - name: Download exact HG02 audio and verify SHA
         shell: bash
         run: |
           set -euo pipefail
@@ -82,75 +74,90 @@ jobs:
           echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
           echo "audio_sha256=$GOT"
 
-      - name: One-pass full-clip candidate lyric transcription
+      - name: One-pass Faster-Whisper transcript with timestamps
         shell: bash
         run: |
           set -euo pipefail
-          export PATH="$VENV/bin:$PATH"
-          rm -rf /tmp/lyrics_candidate && mkdir -p /tmp/lyrics_candidate
-          START=$(date +%s)
-          xingyu-align candidate extract \
-            --audio "$AUDIO" \
-            --output-dir /tmp/lyrics_candidate \
-            --language zh \
-            --preset recommended \
-            --device cpu
-          END=$(date +%s)
-          ELAPSED=$((END-START))
-          echo "$ELAPSED" > /tmp/lyrics_candidate/asr_elapsed_seconds.txt
-          echo '=== candidate files ==='
-          find /tmp/lyrics_candidate -maxdepth 2 -type f -printf '%P\n' | sort
-          echo '=== text outputs ==='
-          find /tmp/lyrics_candidate -maxdepth 2 -type f \( -name '*.txt' -o -name '*.md' \) -print -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
-
-      - name: Build compact test report
-        shell: bash
-        run: |
-          set -euo pipefail
+          rm -rf /tmp/fw && mkdir -p /tmp/fw
           python - <<'PY'
+          from faster_whisper import WhisperModel
           from pathlib import Path
-          import json
-          root=Path('/tmp/lyrics_candidate')
-          txt=[]
-          for p in root.rglob('*'):
-              if p.is_file() and p.suffix.lower()=='.txt' and p.name!='asr_elapsed_seconds.txt':
-                  try:
-                      t=p.read_text(encoding='utf-8').strip()
-                  except Exception:
-                      continue
-                  if t:
-                      txt.append((p,t))
-          chosen=None
-          for p,t in txt:
-              if 'clean' in p.name.lower():
-                  chosen=(p,t); break
-          if chosen is None and txt:
-              chosen=max(txt, key=lambda x: len(x[1]))
-          transcript=chosen[1] if chosen else ''
-          nonempty=[x.strip() for x in transcript.splitlines() if x.strip()]
+          import json, os, re, time
+
           req=json.loads(Path('/tmp/request.json').read_text(encoding='utf-8'))
+          audio=os.environ['AUDIO']
+          t0=time.monotonic()
+          model=WhisperModel('small', device='cpu', compute_type='int8')
+          t1=time.monotonic()
+          segments_gen, info=model.transcribe(
+              audio,
+              language='zh',
+              beam_size=5,
+              temperature=0.0,
+              word_timestamps=True,
+              vad_filter=False,
+              condition_on_previous_text=False,
+              suppress_blank=False,
+          )
+          segments=list(segments_gen)
+          t2=time.monotonic()
+
+          def norm(s):
+              return ''.join(re.findall(r'[\u4e00-\u9fff]', s or ''))
+
+          out_segments=[]
+          chars=[]
+          recognized=[]
+          for seg in segments:
+              words=[]
+              for w in seg.words or []:
+                  token=norm(w.word)
+                  if not token:
+                      continue
+                  start=float(w.start if w.start is not None else seg.start)
+                  end=float(w.end if w.end is not None else seg.end)
+                  span=max(end-start,0.001)
+                  for i,ch in enumerate(token):
+                      cs=start+span*i/len(token)
+                      ce=start+span*(i+1)/len(token)
+                      chars.append({'char':ch,'start':round(cs,4),'end':round(ce,4)})
+                      recognized.append(ch)
+                  words.append({'token':token,'start':round(start,4),'end':round(end,4)})
+              out_segments.append({
+                  'start':round(float(seg.start),4),
+                  'end':round(float(seg.end),4),
+                  'text':(seg.text or '').strip(),
+                  'normalized':norm(seg.text),
+                  'words':words,
+              })
+
           report={
-            'schema_version':'1.0',
-            'test':'SIMPLE_LYRIC_TIMELINE_HAPPY_PATH_TRANSCRIPT',
-            'slot_id':req['slot_id'],
-            'song_family':req['song_family'],
-            'audio_sha256':req['audio_sha256'],
-            'preset':'recommended',
-            'model':'medium',
-            'skip_separation':True,
-            'elapsed_seconds':int((root/'asr_elapsed_seconds.txt').read_text().strip()),
-            'selected_transcript_file': chosen[0].relative_to(root).as_posix() if chosen else None,
-            'transcript_line_count':len(nonempty),
-            'transcript_lines':nonempty,
-            'status':'TRANSCRIPT_READY_FOR_ONE_AUDIT' if nonempty else 'BLOCKED_EMPTY_TRANSCRIPT'
+              'schema_version':'1.0',
+              'test':'D01B_LIGHTWEIGHT_FASTER_WHISPER_ONE_PASS',
+              'slot_id':req['slot_id'],
+              'song_family':req['song_family'],
+              'audio_sha256':req['audio_sha256'],
+              'tool':{'name':'faster-whisper','version':'1.2.1','model':'small','device':'cpu','compute_type':'int8'},
+              'language':info.language,
+              'language_probability':info.language_probability,
+              'model_init_seconds':round(t1-t0,3),
+              'transcribe_seconds':round(t2-t1,3),
+              'total_model_seconds':round(t2-t0,3),
+              'segment_count':len(out_segments),
+              'recognized_text':' '.join(s['text'] for s in out_segments if s['text']),
+              'recognized_normalized':' '.join(s['normalized'] for s in out_segments if s['normalized']),
+              'recognized_char_count':len(chars),
+              'segments':out_segments,
+              'character_timestamps':chars,
+              'status':'TRANSCRIPT_WITH_TIMESTAMPS_READY_FOR_ONE_HUMAN_AUDIT' if chars else 'BLOCKED_EMPTY_TRANSCRIPT'
           }
-          (root/'simple_path_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('/tmp/fw/lightweight_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
           PY
 
       - uses: actions/upload-artifact@v4
         with:
-          name: D02B-lyric-simple-path-test-${{ github.run_id }}
-          path: /tmp/lyrics_candidate
+          name: D02B-lyric-lightweight-test-${{ github.run_id }}
+          path: /tmp/fw/lightweight_report.json
           retention-days: 3
           if-no-files-found: error
