@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T170800Z-D02BS14RES",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh the canonical guard after writing real D02-B final technical QA and render-ready receipt artifacts, then validate readiness for S14."
+}
