@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T150000Z-S11ADV1",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S10_EDITOR_AUDIO_GATE_PASS",
+    "current_state_token": "EDITOR_AUDIO_GATE_PASS",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "79bda2ac9db5073aec64827d3ca2494799e4513f1d93fb1693138bb8260a7044",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "20d2e508b59d2018dd26a0bdfb884a9318e37c8abe30c84be7735ab49ef6bd20",
+    "state_sha256": "d00a2f9428e2f83b6df017068781c96e4fbb927c4120d72e183fad8405a48873",
+    "transition_sequence": 10
+  },
+  "payload": {"to": "S11_EDIT_MAP_LOCKED"},
+  "requested_by": "chatgpt_web",
+  "reason": "Executable D02-B EDIT_MAP is durably written from normalized sources against the locked BGM and seven-line lyric timeline. The no-subtitle picture preview has rendered and machine QA is PASS_FOR_HG04_REVIEW."
+}
