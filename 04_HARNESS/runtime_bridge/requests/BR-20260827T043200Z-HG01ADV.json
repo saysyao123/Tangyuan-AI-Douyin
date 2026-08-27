@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T043200Z-HG01ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "a76b2b1d76e0c4a374042fa5d92afd4e8b864874e28e1f753bdcee9d3845316f",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "c20cbaab84d6aa8d080a51f0123ad426b3869303483b95db8d243be0ce880fd1",
+    "state_sha256": "d852856a4ca3de1f11ed5196a5a6381046245f4fecc10094996114817a9e9473",
+    "transition_sequence": 0
+  },
+  "payload": {
+    "to": "S01_HG01_SONG_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B only after the user's HG01 selection 有几次想你了 was durably recorded."
+}
