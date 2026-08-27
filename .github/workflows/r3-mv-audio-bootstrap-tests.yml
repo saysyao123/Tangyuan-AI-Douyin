@@ -1,0 +1,43 @@
+name: R3 MV Audio Bootstrap Tests
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py'
+      - '04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json'
+      - '.github/workflows/r3-mv-audio-bootstrap-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate bootstrap syntax and pinned requirement builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile 04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py')
+          text=p.read_text(encoding='utf-8')
+          if '#egg=' in text:
+              raise SystemExit('legacy #egg= Git requirement syntax is forbidden')
+          spec=importlib.util.spec_from_file_location('boot', p)
+          mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+          req=mod.pinned_git_requirement('xingyu-lyrics-aligner','alignment','https://github.com/wangjiqing/xingyu-lyrics-aligner.git','abc123')
+          expected='xingyu-lyrics-aligner[alignment] @ git+https://github.com/wangjiqing/xingyu-lyrics-aligner.git@abc123'
+          if req != expected:
+              raise SystemExit(f'bad PEP508 requirement: {req!r}')
+          print('PASS:', req)
+          PY
