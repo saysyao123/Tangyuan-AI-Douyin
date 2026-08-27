@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T152300Z-DIRV2RS",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Hybrid Director v2 artifacts are now durably written after R002 rollback. Obtain a fresh guard before advancing S04 -> S05."
+}
