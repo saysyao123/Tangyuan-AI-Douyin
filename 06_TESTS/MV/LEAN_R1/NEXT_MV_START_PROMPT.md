@@ -1,6 +1,7 @@
-# D03-A｜Lean R1 新 MV 启动词 v1
+# D03-A｜Lean R1 新 MV 启动词 v1.1
 
 > 用途：下一首全新 MV 单独开新对话时，直接把下面代码块完整发给 ChatGPT。
+> 当前预期仓库真值：`D03-A / Lane P / S00_SLOT_CREATED`，已完成合法 INIT，尚未通过 HG01。
 
 ```text
 请使用已连接的 GitHub，进入仓库 `saysyao123/Tangyuan-AI-Douyin` 的 `test/mv-lean-r1` 分支。
@@ -11,6 +12,12 @@
 
 这是全新独立 MV：不要继承 D02-B《有几次想你了》的具体人物、海边建筑、浅色石材、白衣、纱帘、雨后世界、道具、构图或“握住→松手→世界打开”的视觉进程。只允许复用已经进入 Rule / Workflow / Knowledge 的通用能力。
 
+【当前已完成状态】
+D03-A 已经通过 Lean Bridge 合法完成 `INIT_SLOT`，当前预期状态为：
+`S00_SLOT_CREATED / SLOT_CREATED / Lane P`。
+此前 `RUN_UNTIL_GATE_OR_BLOCK` 安全测试已经证明会停在 HG01，不会越过 Human Gate。
+因此新对话不要重复 INIT；必须先用一次全新 RESUME 重新确认当前 GitHub 真值。
+
 【Lean 启动原则】
 不要像旧 Runtime 那样一开始读取一大堆 R1/R2/R3 历史文件。
 第一步只做：
@@ -18,19 +25,22 @@
 2. 在 `04_HARNESS/lean_runtime_bridge/requests/` 创建一个针对 `D03-A` 的全新 immutable `RESUME` request；
 3. 读取 matching response。
 
-Lean response 应直接提供：
-- Runtime mode / slot / lane / current stage；
-- next_action；
-- resolved_executor.executor_id；
-- resolved_executor.execution_class；
-- JIT reads；
-- fresh next_guard。
+正常预期 response：
+- `mode = RESUME_CANONICAL`；
+- `slot_id = D03-A`；
+- `lane = P`；
+- `current_stage = S00_SLOT_CREATED`；
+- `next_action = PREPARE_HG01_SONG_SELECTION`；
+- `resolved_executor.executor_id = HG01_CORE_DATABASE_ORCHESTRATION`；
+- Human Gate = HG01；
+- 返回 fresh next_guard。
 
-只有 response 明确为 `ALLOCATE_NEW_SLOT / D03-A / Lane P` 时才允许初始化；如果返回 Canonical、Migration、stale、BLOCK 或其他冲突，按仓库真值解决，不得从聊天记忆绕过。
+如果 response 与上述预期不一致，不得凭聊天记忆覆盖；以最新 response / canonical state 为准，说明唯一冲突并按最近根因处理。
 
-【初始化后】
-使用 fresh allocation guard 完成 `INIT_SLOT`，然后只执行 HG01 所需 machine preflight。
-HG01 默认仍采用 Core Benchmark Data Center 主驱动，不做全网漫游式选歌。
+【立即进入 HG01】
+RESUME 验证通过后，不再重复 INIT，也不要停下来让我确认 Runtime 技术状态。
+立即执行 HG01 所需 machine preflight。
+HG01 默认采用 Core Benchmark Data Center 主驱动，不做全网漫游式选歌。
 直接给我少量最值得听的歌曲候选 + 对应核心/补充 Benchmark 博主的实际 MV 直链，让我只做歌曲审美选择。
 
 【Lean Runtime｜核心测试】
@@ -58,7 +68,8 @@ Runtime 告诉 WHAT，resolved executor 告诉 HOW，Rule 只定义约束。
 【Audio Timeline】
 HG02 后固定优先级：
 P0 same-version timed lyric/LRC -> P1 lightweight ASR mapping -> P2 heavy forced alignment only on concrete failure。
-第一条 PASS 就停止，不做多模型互证。
+P1 可复用工具：`04_HARNESS/tools/mv_audio_timeline/lightweight_align.py`。
+第一条 PASS 就停止，不做多模型互证；P1 依赖环境应预先准备/缓存，不允许为单个 slot 临时安装生产模型。
 
 【Director】
 JIT 使用 `04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md`。
@@ -77,7 +88,7 @@ HG05 PASS 后自动做 Release Package 到 S16。
 未真实发布前禁止进入 S17、禁止写 PUBLISHED、禁止伪造发布时间。
 
 【效率记录】
-从第一条 RESUME 开始记录：
+从本轮新对话第一条 RESUME 开始记录：
 - startup calls；
 - Lean Runtime 外部命令次数；
 - Human Gate 次数；
@@ -89,5 +100,5 @@ HG05 PASS 后自动做 Release Package 到 S16。
 
 目标：5 个 Human Gate不变；到 S16 的外部 controller cycles <=12；质量不低于当前已验收标准。
 
-完成第一轮 RESUME 后，先简洁告诉我：branch/source SHA、request_id、mode、slot/lane、current stage、resolved executor、next action、当前第一个 Human Gate/唯一阻塞。若可分配，立即 INIT 并进入 HG01，不要让我重新解释项目。
+完成第一轮 RESUME 后，先简洁告诉我：branch/source SHA、request_id、mode、slot/lane、current stage、resolved executor、next action、当前 Human Gate/唯一阻塞。若状态仍为 S00/HG01，立即完成 HG01 machine preflight 并给我候选，不要让我重新解释项目背景。
 ```
