@@ -1,0 +1,14 @@
+{
+  "schema_version": "2.0",
+  "slot_id": "D02-B",
+  "status": "HG03_USER_ACCEPTED / MACHINE_QA_PASS",
+  "authority": "ACCEPTED_ACTUAL_FIRST_FRAME_PIXELS > PROMPT > DIRECTOR_PROSE",
+  "frames": [
+    {"id":"H-S01","file":"海边石廊中的夏日漫步.png","sha256":"1b12cadf7ad98c4a964fbe3bb9e09b329609741722d56fc007e4985d17df8b5e","size":"941x1672","lyric_role":"有几次想你了 -> 有几次忍住了","k0":"front approach in coastal colonnade; right hand in pocket; left hand free; limestone boundary and linen already present","dynamic_entrance":"approach -> touch boundary -> restraint","face_grid":"STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID","decision":"KEEP"},
+    {"id":"H-S02","file":"海边阳光下的亚麻男士.png","sha256":"ac94908a4e64b5385d2d5d23afb5809eee90a82c751db8432fcc6fae24066476","size":"941x1672","lyric_role":"有几句想说的 -> 都变成算了","k0":"held beside limestone column; one hand at column, one in pocket; frontal three-quarter relation","dynamic_entrance":"unfinished expression -> withdraw -> turn away","face_grid":"STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID","decision":"KEEP"},
+    {"id":"H-S03","file":"海边石廊漫步者.png","sha256":"4e84bce5227ddd351f1b187e807fbff1566b0846842d35c51fcb738c5305aece","size":"941x1672","lyric_role":"有几场雨停了","k0":"front-moving male in visibly wet post-rain limestone corridor; residual water evidence exists; no active rain","dynamic_entrance":"post-rain travel -> wet-stone detail -> return into warm light","face_grid":"STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID","decision":"KEEP"},
+    {"id":"H-S04","file":"海边长廊与飘动纱帘中的男子.png","sha256":"c476a9e22f132da0fb8d19c58c883aa90334a9ab0be69523cd9936fdc30eb629","size":"941x1672","lyric_role":"有几阵风过了","k0":"rear three-quarter travel with large linen already lifted by sea wind","dynamic_entrance":"gust crosses hair/shirt/linen -> linen residue","face_grid":"STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID_WHERE_FACE_READABLE","decision":"KEEP"},
+    {"id":"H-S05","file":"海边长廊的逐光漫步.png","sha256":"75a17e5d5aa21e59028bdd7e577b3dcccdd52cd8715e2792bf3066f651477176","size":"941x1672","lyric_role":"有多舍不得，也该放下了","k0":"body already leaving while right hand still holds warm-white linen edge","dynamic_entrance":"attachment -> fingers release -> world opens / camera stops pursuing","face_grid":"STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID_WHERE_FACE_READABLE","decision":"KEEP"}
+  ],
+  "set_result":"PASS"
+}
