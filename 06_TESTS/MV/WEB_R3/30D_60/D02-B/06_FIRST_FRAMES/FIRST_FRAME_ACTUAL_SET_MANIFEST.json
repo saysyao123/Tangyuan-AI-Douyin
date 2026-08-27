@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "HG03_MACHINE_QA_PASS_USER_ACCEPTED",
+  "authority_rule": "ACCEPTED_ACTUAL_FIRST_FRAME_PIXELS > PROMPT > DIRECTOR_PROSE",
+  "set": [
+    {
+      "id": "B01",
+      "role": "APPROACH / 想你 -> 忍住",
+      "source_filename": "海滨长廊里的白衣旅人.png",
+      "sha256": "5d87c951bca5ff3ca1253befa5cef3ece4877d6be4b7e7e78a5848150757a02a",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE",
+      "shot": "intimate medium-close moving entrance",
+      "k0_truth": "male protagonist is already leaning/walking toward camera; left hand holds the near linen edge; right arm hangs free; corridor and sea remain open behind him",
+      "dynamic_entrance": "continue controlled approach while camera yields/retreats, then reduce forward intention toward restraint",
+      "machine_decision": "KEEP"
+    },
+    {
+      "id": "B02",
+      "role": "BOUNDARY / 想说 -> 算了",
+      "source_filename": "海边建筑中的夏日男士.png",
+      "sha256": "17c57cf024229141466a566a78f81c523747d6cbcf81d52a1e00dbc062af417c",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE",
+      "shot": "medium boundary portrait",
+      "k0_truth": "male protagonist is held beside a limestone column; frontal relation remains but the column creates a clear spatial boundary; left hand is in trouser pocket; right hand relaxed",
+      "dynamic_entrance": "small inhale/eye intention without speech, then release the frontal relation and choose passage as camera gives way",
+      "machine_decision": "KEEP"
+    },
+    {
+      "id": "B03",
+      "role": "PASSAGE / 雨停 -> 风过",
+      "source_filename": "海滨长廊回眸青年.png",
+      "sha256": "11aa5714f109f7f8704c90c52e6d061966c429ef81002e74c31f364f64814edc",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE_ON_VISIBLE_FACE",
+      "shot": "rear three-quarter medium",
+      "k0_truth": "male protagonist has already turned away and is oriented down the corridor; head is still giving one restrained look back; linen and sea remain in the environment",
+      "dynamic_entrance": "finish the last look-back, return gaze forward, continue away; one restrained wind event crosses linen/hair/clothing",
+      "machine_decision": "KEEP",
+      "risk_note": "literal rain aftermath is weak in the accepted pixels; dynamic must not invent active rain. Treat the lyric as post-weather passage and use the single wind event for the strongest literal hit."
+    },
+    {
+      "id": "B04",
+      "role": "DISTANCE RETURNED / 舍不得 -> 放下",
+      "source_filename": "海畔金色长廊漫步者.png",
+      "sha256": "40a4197928ed5c75129a7f5686df98bc86f64183d6cf3e3d19119a479b9c632d",
+      "face_grid": "NOT_EXPECTED_AT_DISTANCE_FACE_NOT_READABLE",
+      "shot": "deep wide release",
+      "k0_truth": "male protagonist is already far down the corridor walking away; camera remains behind; sea and architecture dominate; a large ceramic vessel with a branch exists at the far right and must remain background-only",
+      "dynamic_entrance": "continue only a few calm steps away while camera does not chase; expand breathing room and settle into open distance",
+      "machine_decision": "KEEP"
+    }
+  ],
+  "set_qa": {
+    "same_character_world": "PASS",
+    "wardrobe_continuity": "PASS",
+    "no_second_person": "PASS",
+    "shot_scale_progression": "PASS / intimate -> boundary medium -> rear three-quarter -> deep wide",
+    "camera_subject_relationship_arc": "PASS / approach -> held boundary -> passage/look-back -> distance returned",
+    "black_face_grid_policy": "PASS / clearly visible when face is readable; not forced onto distant unreadable face",
+    "performability": "PASS",
+    "beauty_gate": "PASS",
+    "set_differentiation": "PASS",
+    "hg03_machine_result": "PASS"
+  }
+}
