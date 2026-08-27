@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T105700Z-S05ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "b9bcefd8911fdd4ab13c77778b371664cd31a1fbf13acf961f01651060159bad",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "c4f9ea361304475d8481de08427fdee4279c21d878dc2d449b4a14ec9f4de1da",
+    "state_sha256": "073eb59924975cd24fe5c28b29aee74a3e13a7dc1ddcf960886470e2ff7525aa",
+    "transition_sequence": 4
+  },
+  "payload": {
+    "to": "S05_DIRECTOR_PLAN_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "R3-vs-OSS Director A/B completed under fair constants; Candidate B selected because it improves whole-MV coherence, camera motivation, edit handoff and reproducibility without increasing four-source production count or model dependencies. Canonical DIRECTOR_BEAT_MAP.md and DIRECTOR_PLAN.md are written."
+}
