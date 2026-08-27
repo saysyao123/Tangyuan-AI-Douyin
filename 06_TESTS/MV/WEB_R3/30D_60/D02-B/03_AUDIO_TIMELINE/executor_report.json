@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "status": "ALIGNMENT_CANDIDATE_READY_NOT_LOCKED",
+  "request_id": "D02-B-S02-ALIGN-20260827-RETRY02",
+  "slot_id": "D02-B",
+  "workflow_run_id": "33054700945",
+  "workflow_source_sha": "c0436fd4b9e2b498a1aa555c7badd85a8661bd94",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "trusted_lyrics_source": "06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/SONG_CANDIDATE_SET.json formal candidate A core work aweme 7674136937083676665 caption; exact BGM family separately locked by HG02",
+  "files": [
+    {"path": "alignment_provenance.json", "size": 347, "sha256": "cb43d51d626344285994b18510ba9395b1ce9b1a1ed30481d2783a1fbaeb5593"},
+    {"path": "audio_identity.json", "size": 570, "sha256": "6af484d3ca2edcf2b24e59c421c72e70d7a5c91d8bb4ec80017f3663dde4c085"},
+    {"path": "executor_request.json", "size": 1158, "sha256": "048a63999993986abb08d019f664aa27045af2fbee9c2bc907858df71b4f00da"},
+    {"path": "line_timeline.candidate.csv", "size": 492, "sha256": "3c4a216924cbbcfdfd7bbc000cfa8ac2edb5a5cee5419715f7f14c5105a6a3ed"},
+    {"path": "raw_evidence/normalized_timeline.csv", "size": 180, "sha256": "a5020fb996e14d44c7b183493a6fe617a5dbd93953c9f5b366293d9119a5ca6f"},
+    {"path": "raw_evidence/xingyu/alignment.json", "size": 3394, "sha256": "217a157333497380bc7f5b3fc5258de9fa10797778d2751c075002b990f53f6e"},
+    {"path": "raw_evidence/xingyu/engine.stderr.txt", "size": 622, "sha256": "0bb05344db4b9ddd6d10e0a6f64024b8ed78e631f5907c991b1dcb127050eec5"},
+    {"path": "raw_evidence/xingyu/engine.stdout.txt", "size": 640, "sha256": "e3a42a0e71f8b44fbf662e2616b4741a3e38c1aa5460d9f46db8887e2194a43e"},
+    {"path": "raw_evidence/xingyu/lyrics.lrc", "size": 113, "sha256": "98734c93cdc38b17e3f5d8ab45639a24778dd199e644d44b9ce9b6f46a1bda0f"},
+    {"path": "raw_evidence/xingyu/lyrics.swlrc", "size": 718, "sha256": "a18a870d33e2b9c42b8a9cb9b4a4a5dfef89b18b3e82df8c77619e9ca4b1196a"},
+    {"path": "raw_evidence/xingyu/normalized_timeline.csv", "size": 180, "sha256": "a5020fb996e14d44c7b183493a6fe617a5dbd93953c9f5b366293d9119a5ca6f"},
+    {"path": "raw_evidence/xingyu/report.json", "size": 752, "sha256": "a8e5614ff93dd2b004d3b3aa85c223c35f0f23ae0cf2eef58708c14aa395247d"},
+    {"path": "trusted_lyrics.txt", "size": 73, "sha256": "11545d299a74128a1b0716983ba05a0759ff9f69da1ad1326a06075a686e15e9"}
+  ],
+  "next": "independent/ground-truth QA -> mark-qa -> complete package assets -> final_gate"
+}
