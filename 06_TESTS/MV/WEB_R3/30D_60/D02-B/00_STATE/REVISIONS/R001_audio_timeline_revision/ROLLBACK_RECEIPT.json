@@ -1,0 +1,54 @@
+{
+  "receipt_version": "1.0",
+  "revision_sequence": 1,
+  "slot_id": "D02-B",
+  "change_type": "audio_timeline_revision",
+  "reason": "The locked Audio Timeline and downstream Natural Beat were built from an incomplete four-line creator-caption lyric set. Exact HG02 full-clip Xingyu candidate transcription now shows the clip continues with additional sung lyrics and the user identified seven lyric lines. Invalidate S03+ downstream and rebuild from complete clip lyrics.",
+  "authority": "runtime_correctness_correction",
+  "from_stage": "S04_NATURAL_BEAT_LOCKED",
+  "to_stage": "S02_HG02_BGM_LOCKED",
+  "state_before_sha256": "5ff555a868cf287bffd90208e4e80fe6ad29b8d98b758883cb3fd5c027c8b8c4",
+  "previous_revision_receipt": null,
+  "previous_revision_receipt_sha256": null,
+  "archived_files": [
+    {
+      "kind": "artifact",
+      "artifact_id": "AUDIO_TIMELINE_MANIFEST",
+      "active_path": "03_AUDIO_TIMELINE/package_manifest.json",
+      "archive_path": "00_STATE/REVISIONS/R001_audio_timeline_revision/ARCHIVE/03_AUDIO_TIMELINE/package_manifest.json",
+      "sha256": "4c6566a51d19a52d6866997f623100ba41a27ff54b959b5cfb6232a4bb11ce32",
+      "bytes": 1405
+    },
+    {
+      "kind": "artifact",
+      "artifact_id": "AUDIO_TIMELINE_QA",
+      "active_path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+      "archive_path": "00_STATE/REVISIONS/R001_audio_timeline_revision/ARCHIVE/03_AUDIO_TIMELINE/alignment_qa_report.md",
+      "sha256": "fb021dffb5b9c2fd9eb92cd98c295ecede1f1c4c673dbca380cce5185939bd70",
+      "bytes": 2871
+    },
+    {
+      "kind": "artifact",
+      "artifact_id": "NATURAL_BEAT",
+      "active_path": "04_BEATS/NATURAL_BEAT.md",
+      "archive_path": "00_STATE/REVISIONS/R001_audio_timeline_revision/ARCHIVE/04_BEATS/NATURAL_BEAT.md",
+      "sha256": "2b6cb36537e0581b9880196d1ce7f9d97bbc8cf9a62c45e42da171e68ff373ca",
+      "bytes": 7053
+    },
+    {
+      "kind": "transition",
+      "active_path": "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+      "archive_path": "00_STATE/REVISIONS/R001_audio_timeline_revision/ARCHIVE/00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+      "sha256": "df7a247da909f7b8ebb92037ad67585bb64bc3aeb4d4607e7f239d01fe304d9f",
+      "bytes": 2123
+    },
+    {
+      "kind": "transition",
+      "active_path": "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+      "archive_path": "00_STATE/REVISIONS/R001_audio_timeline_revision/ARCHIVE/00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+      "sha256": "03bdcbd0920a29a43096c8a5be735396d6b5abfc5ccfc77d465f352572ecf76d",
+      "bytes": 2293
+    }
+  ],
+  "created_at": "2026-08-27T09:22:43Z"
+}
