@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T130300Z-HG03ADV2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "4a09ad5a1df25821bb05785ae9fb588c0bff9f2065ad44ba08925d757583001d",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "8ec73015be69dd53af059392310e4c668151cd3f6b8fb3504ffa84da2c1648b6",
+    "state_sha256": "ff29391a329a49d9cf94aa9ce9bb4a135c3958dbb3a0d37a2d42d9c6d3062d44",
+    "transition_sequence": 5
+  },
+  "payload": {
+    "to": "S06_HG03_FIRST_FRAMES_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "HG03 receipt is durable and accepted; advance to lock the four accepted black-grid first frames."
+}
