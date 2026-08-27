@@ -98,8 +98,28 @@ Each tested optimization receives one final decision:
 
 A promotion proposal must identify exactly what existing file/rule it would modify and what old behavior it supersedes. No silent overwrite.
 
-## 7. Current state
+## 7. Final state
 
-Status: `WAITING_FOR_SOURCE_PROJECT`
+Status: `COMPLETE / CLOSE PASS / NO STABLE DEPLOYMENT YET`
 
-Next action: receive the open-source MV project / optimization material from the user, perform source-level analysis, and fill `SOURCE_INTAKE.md` before modifying any Runtime or production rule.
+Completed experiment unit:
+- slot: `D02-B / Lane S`;
+- song: `《有几次想你了》`;
+- Canonical Runtime: `S16_RELEASE_PACKAGE_READY / RELEASE_READY`;
+- HG01-HG05: all PASS;
+- selected Director candidate: `R3 + bounded OSS overlay`;
+- final accepted render SHA-256: `7f77a41a68db47d4f7992cb77161c86414eeb0fd1cf8233322956b4025bf43d9`.
+
+Final evidence:
+- `RESULT_MATRIX.md`;
+- `PROCESS_AUDIT/OSS_OPT_R1_CLOSE_AUDIT_v1.md`;
+- `OSS_OPT_R1_CLOSE_RECEIPT.json`.
+
+Promotion boundary:
+- useful Director/Montage ideas are recorded as selective knowledge promotions / candidates;
+- Executor-First routing is a `PROMOTE_RUNTIME_CANDIDATE`;
+- Audio Timeline P0/P1/P2 priority is a `PROMOTE_RULE_CANDIDATE`;
+- H3-specific execution/container/input constraints remain rejected for R3;
+- `test/mv-web-r3` has not been silently modified or promoted.
+
+The next action is **not more experiment production**. Any move into stable Runtime/Rule/Knowledge must be a separate explicit promotion review with exact diff, regression validation and deployment receipt.
