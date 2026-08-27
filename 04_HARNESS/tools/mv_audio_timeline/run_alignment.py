@@ -54,6 +54,21 @@ def write_rows(path: Path, rows: list[dict[str, str]]) -> None:
         w = csv.DictWriter(f, fieldnames=['line_id', 'lyric', 'clip_start_s', 'clip_end_s']); w.writeheader(); w.writerows(rows)
 
 
+def timeline_duration(identity: dict) -> float:
+    """Resolve the canonical content timeline duration across schema generations.
+
+    Current package_tool writes timeline_duration_s/content_duration_s. Older
+    packages may still carry rendered_duration_s. Container duration is the
+    final compatibility fallback because encoded padding must not become the
+    preferred lyric clock when a content duration exists.
+    """
+    for key in ('timeline_duration_s', 'content_duration_s', 'rendered_duration_s', 'container_duration_s'):
+        value = identity.get(key)
+        if value is not None:
+            return float(value)
+    raise KeyError('audio identity contains no usable timeline duration field')
+
+
 def engine_xingyu(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     exe = shutil.which('xingyu-align')
     if not exe:
@@ -65,7 +80,8 @@ def engine_xingyu(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     if not lrc.exists():
         raise FileNotFoundError('xingyu did not produce lyrics.lrc')
     lrc_lines = pt.parse_lrc(lrc); trusted = pt.read_lyrics(lyrics); idx = pt.find_subsequence(lrc_lines, trusted, args.min_similarity)
-    duration = float(json.loads((pkg / 'audio_identity.json').read_text(encoding='utf-8'))['rendered_duration_s']); rows = []
+    identity = json.loads((pkg / 'audio_identity.json').read_text(encoding='utf-8'))
+    duration = timeline_duration(identity); rows = []
     for n, (lyric, i) in enumerate(zip(trusted, idx), 1):
         start = lrc_lines[i].time_s; end = lrc_lines[idx[n]].time_s if n < len(idx) else duration
         rows.append({'line_id': f'L{n:02d}', 'lyric': lyric, 'clip_start_s': f'{start:.3f}', 'clip_end_s': f'{end:.3f}'})
