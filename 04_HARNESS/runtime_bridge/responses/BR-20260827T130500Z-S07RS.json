@@ -1,0 +1,241 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T13:04:36Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "active_attempt": 2,
+      "asset_record_count": 0,
+      "context": {
+        "canonical_v2": true,
+        "multi_shot": false,
+        "program_30d60": true,
+        "web": true
+      },
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "current_state_token": "FIRST_FRAME_SET_LOCKED",
+      "jit_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+      ],
+      "lane": "S",
+      "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
+      "mode": "RESUME_CANONICAL",
+      "next_action": {
+        "action_id": "BUILD_DYNAMIC_PROMPT_SET",
+        "human_gate": null,
+        "jit_reads": [
+          "04_HARNESS/rules/ai_video.md",
+          "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+        ],
+        "next_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+        "summary": "Resolve the Dynamic Prompt creative-synthesis executor and translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "revision_sequence": 1,
+      "slot_id": "D02-B",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json",
+        "04_HARNESS/runtime/mv_stage_executor_registry.json",
+        "04_HARNESS/rules/mv_executor_first.md",
+        "04_HARNESS/MANIFEST.md"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "S",
+        "packaging": "TBD",
+        "publish_time": "",
+        "slot": "B",
+        "slot_id": "D02-B",
+        "song_family": "",
+        "status": "PLANNED"
+      },
+      "verification": {
+        "asset_identity": true,
+        "revision_history": true,
+        "state": true,
+        "tracker_consistency": true
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "e1a05ec143929ecfc46594f8a72aefe6662d2fbe6c52e5e56121e54c49960041",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "76fe4632696f8a3c5f4c0aeb6545e46d6cdfced61be85f9916fb6ab40fe1656e",
+    "state_sha256": "3bba255cd5f6aecf8e328fc44c5a9e94c4695d7ebcf1868c053593d736228b3b",
+    "transition_sequence": 6
+  },
+  "postflight": {
+    "active_attempt": 2,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DYNAMIC_PROMPT_SET",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+      ],
+      "next_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+      "summary": "Resolve the Dynamic Prompt creative-synthesis executor and translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 1,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 2,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DYNAMIC_PROMPT_SET",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+      ],
+      "next_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+      "summary": "Resolve the Dynamic Prompt creative-synthesis executor and translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 1,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T130500Z-S07RS",
+  "request_sha256": "523981dd957ff423dd150f48534d4048fddc0ae4dd511e7298c0db8aa3046ac1",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33074960913",
+    "github_source_sha": "dbbdee41014671f36a6e52d310fe354a503c9f39"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
