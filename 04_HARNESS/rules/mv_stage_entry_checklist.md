@@ -1,6 +1,6 @@
-# Rules｜MV Stage Entry Checklist v1.1
+# Rules｜MV Stage Entry Checklist v1.2
 
-> Status: `ACTIVE / HARD / HG01 DELIVERY HARDENED`
+> Status: `ACTIVE / HARD / HG01 CORE DATABASE RESTORED`
 > Role: 在关键 Stage 开始前执行机器前置条件检查，防止“规则已经存在但执行时被跳过”。
 > Principle: **Known gate must be machine-enforced before downstream work.**
 
@@ -22,24 +22,35 @@
 ## 2. Stage 1｜HG01 Song Aesthetic Gate entry
 
 Required before asking the user to choose a song:
-- `SONG_CANDIDATE_SET` exists as machine preflight;
-- `SONG_CANDIDATE_SET.status = HG01_EVIDENCE_DELIVERY_PASS`;
-- a persisted human-facing `HG01_CANDIDATE_EVIDENCE_PACK` exists and its path is recorded in `evidence_pack_path`;
-- every formal candidate has at least 2 recent direct Douyin works from at least 2 independent accounts;
-- every evidence item reports account / publish date / duration / evidence tier;
-- core benchmark coverage is explicitly `CONFIRMED / PARTIAL / UNCONFIRMED`;
-- external audio/search corroboration is not substituted for direct Douyin work evidence;
-- every direct URL has been landing-work verified: the URL target itself is the cited work, not an older work/profile-like page that merely lists a newer relevant post;
-- user handoff mode is `DIRECT_WORKS_FIRST`.
+- 当前 Core Benchmark Data Center / song repeat data 可用；
+- `SONG_CANDIDATE_SET` 已从核心 Benchmark 数据库构建，而不是从一次性全网搜索临时拼装；
+- candidate set 明确 `source_mode = CORE_BENCHMARK_DATABASE`；
+- 每个候选可以追溯到数据库中的对应账号 / work；
+- human-facing `HG01_CANDIDATE_EVIDENCE_PACK` 已持久化；
+- 用户交付内容保持简单：歌名 + 极短入选理由 + 对应博主的对应 Douyin MV 直链；
+- 所有真正交付给用户的 direct URL 已验证 landing work 本身就是被引用的作品；
+- `user_gate_delivery_mode = CORE_CREATOR_MV_DIRECT`。
+
+Default discovery rule:
+
+`CORE BENCHMARK ACCOUNTS -> DATA CENTER -> SONG_FAMILY RANKING -> HG01`
+
+Public Web / external Radar may only be used to:
+- locate a concrete work that belongs to an already tracked/selected account or song;
+- discover a genuinely useful supplemental benchmark account;
+- corroborate freshness when needed.
+
+They must not replace the core database as the default candidate source.
 
 Block if any of the following is true:
-- candidate set is only `HG01_PREFLIGHT_PREPARED` / `EVIDENCE_REPACK_REQUIRED`;
-- the assistant can only provide song names, rankings or machine recommendation;
-- any required evidence URL was inferred from an author page/recent-work listing rather than resolved to the concrete work;
-- machine recommendation is being used as a substitute for first-ear user judgement.
+- assistant is doing broad web-wide song search as the default HG01 discovery method;
+- formal candidates are primarily chosen because their public-search metadata is easier to retrieve;
+- candidate links point to an older landing work/profile-like page whose listing merely contains the desired new MV;
+- assistant asks the user to evaluate evidence taxonomy instead of simply watching/listening to the candidate MVs;
+- machine recommendation is being used as a substitute for user first-ear judgement.
 
 Failure action:
-`REPACK / REVERIFY DIRECT DOUYIN EVIDENCE -> SET HG01_EVIDENCE_DELIVERY_PASS -> THEN PRESENT HG01`.
+`REFRESH / READ CORE DATA CENTER -> REBUILD CANDIDATES -> VERIFY DELIVERY LINKS -> PRESENT SIMPLE HG01`.
 
 Do not create `HG01_SELECTION_RECEIPT` before this entry check can pass.
 
