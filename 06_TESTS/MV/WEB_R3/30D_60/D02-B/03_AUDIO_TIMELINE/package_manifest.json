@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "package_id": "D02-B_AUDIO_TIMELINE_P1_LOCK",
   "slot_id": "D02-B",
   "song_family": "有几次想你了",
@@ -15,7 +15,8 @@
     {"path": "raw_evidence/faster_whisper/lightweight_mapping_report.json", "sha256": "9182a3c39f6aaf26dd2d2d780e581faab5f2533b6f3e87bb36c1c18400b1dca4"},
     {"path": "line_timeline.csv", "sha256": "d8ff147585d456caaa11f0fabce684bfb1a6b95533be1da67abed780700e0c2f"},
     {"path": "lyrics_exact.srt", "sha256": "0a9910de12ff6b0955ed920403dc2c04fb6c6506a12edc00ed3a313f94d0ba5f"},
-    {"path": "lyric_timeline_qa.json", "sha256": "eecc5ce3863d0cc767fdb92f54f5c93bd58367b14ddeda19a51d8e0b5f74014a"}
+    {"path": "lyric_timeline_qa.json", "sha256": "eecc5ce3863d0cc767fdb92f54f5c93bd58367b14ddeda19a51d8e0b5f74014a"},
+    {"path": "alignment_qa_report.md", "sha256": "2a83413681d8fa06f72da1940d517516c9e91a4f846761fc368a74b2b38ef30a"}
   ],
   "qa_decision": "PASS",
   "fallback_status": "XINGYU_ARCHIVED_NOT_REQUIRED"
