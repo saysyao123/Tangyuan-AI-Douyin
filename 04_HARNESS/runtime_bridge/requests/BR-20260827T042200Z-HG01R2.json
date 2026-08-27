@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T042200Z-HG01R2",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh canonical guard for D02-B after compatibility-materializing D02-A under the experiment branch's hardened HG01 registry. User selected 有几次想你了 for D02-B HG01."
+}
