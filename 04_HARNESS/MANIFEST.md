@@ -1,11 +1,11 @@
-# Runtime Manifest v3.5
+# Runtime Manifest v3.6
 
 > 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
 
 ## Always Load
 
 - `04_HARNESS/SKILL.md`
-- `00_CONTROL/CURRENT_STATE.md`
+- current Canonical / project state
 
 项目级定位只有当前任务涉及定位/边界时才加载：
 - `00_CONTROL/MASTER_CONTROL.md`
@@ -13,14 +13,14 @@
 
 ## Task Load Matrix
 
-| 当前任务 | Workflow | Rules | Template / Data |
+| 当前任务 | Workflow | Rules | Template / Data / Executor |
 |---|---|---|---|
 | 选题 | `workflows/topic.md` | `rules/account_truth.md` | `01_TOPIC_SYSTEM/*` 按需 |
 | 口播稿 | `workflows/script.md` | `rules/account_truth.md` | `templates/script_contract.md` + 当前Source |
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
 | AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_audio_timeline.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md`；时间轴阶段加载 `templates/mv_audio_timeline_package_contract.md` + `tools/mv_audio_timeline/*`；Benchmark 按需 |
+| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_executor_first.md` + 当前阶段相关Rules | `runtime/mv_stage_executor_registry.json` + 当前 MV Canonical state；按 executor entry 加载 Template / Tool / prior PASS |
 | HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
 | 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
@@ -31,27 +31,53 @@
 MV任务默认先读：
 1. `workflows/mv.md`
 2. `rules/mv_golden_runtime.md`
-3. `rules/mv_audio_timeline.md`
-4. 当前 MV Round `CURRENT_STATE.md`
-5. 当前阶段 JIT 需要的 Rules / Template / Benchmark。
+3. `rules/mv_executor_first.md`
+4. `runtime/mv_stage_registry.json`
+5. `runtime/mv_stage_executor_registry.json`
+6. 当前 MV Canonical state
+7. 当前阶段 JIT 需要的 Rules / Template / Tool / Benchmark。
 
-这 4 个默认入口负责：
-- 权威流程；
-- 跨Round Golden正确性；
-- BGM之后第一个硬节点 `AUDIO_TIMELINE_PACKAGE`；
-- 当前项目状态。
+核心职责：
+- Stage Registry / Canonical State 决定 **WHAT**；
+- Executor Registry 决定 **HOW**；
+- Rule 决定质量/正确性约束；
+- Tool / deterministic recipe / capability handoff 执行；
+- Artifact Registry + Runtime Controller 决定是否允许前进。
 
-R1历史复盘、失败样本、旧Prompt只在排错/规则溯源/回归测试时加载。历史文件不负责正常Runtime继承；需要跨Round保留的经验必须晋升到 Rule / Workflow / Template / Gate。
+R1历史复盘、失败样本、旧Prompt只在排错/规则溯源/回归测试时加载。历史文件不负责正常Runtime继承；需要跨Round保留的经验必须晋升到 Rule / Workflow / Template / Executor / Gate。
+
+## MV Executor JIT Rule｜HARD
+
+进入任何 MV Stage 后：
+
+1. 从 `CURRENT_STATE.current_stage` 获取 Stage；
+2. 在 `runtime/mv_stage_executor_registry.json` 解析唯一 executor entry；
+3. 读取 entry 的 `canonical_reads`；
+4. 若 `canonical_tools` 非空，优先使用已有 toolchain；
+5. 若 execution class 是 `CREATIVE_SYNTHESIS`，直接按 Workflow/Rule/Template 合成，不得因为无脚本而造工具；
+6. 若 execution class 是 `CAPABILITY_HANDOFF`，使用当前已经可用的产品能力并持久化资产，不得默认开发 backend；
+7. 若声明 system/model dependency，先执行 doctor/check/cache；
+8. 缺依赖按 executor policy BLOCK，只有明确允许时才做独立 environment setup；
+9. 在 Executor Registry 未确认 implementation gap 前，禁止创建新 helper/workflow/model route。
+
+Rule 中引用的外部项目仅是 reference，除非 Executor Registry 明确锁定为生产依赖，否则不得自动安装。
+
+详细规则：`rules/mv_executor_first.md`。
 
 ## MV Audio Timeline JIT Rule
 
-BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
+BGM一旦 `BGM_LOCKED`，S02 executor 必须解析为：
+`CANONICAL_AUDIO_TIMELINE_TOOLCHAIN`。
+
+加载：
 - `rules/mv_audio_timeline.md`
 - `templates/mv_audio_timeline_package_contract.md`
+- `tools/mv_audio_timeline/README.md`
 - `tools/mv_audio_timeline/package_tool.py`
 - `tools/mv_audio_timeline/final_gate.py`
 - `tools/mv_audio_timeline/alignment_runtime.lock.json`
-- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`；需要准备环境时调用 `bootstrap_alignment_env.py`。
+- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`；
+- 需要准备环境时先调用 `bootstrap_alignment_env.py doctor`，只有明确批准的环境建立动作才可 `install`。
 
 时间轴模块分两层机器验证：
 
@@ -105,9 +131,9 @@ Agent不得自行创建/修改一个写着 locked=true 的manifest来绕过 Fina
 - faster-whisper model identity记录在lock文件。
 
 环境建立/检查：
-`python tools/mv_audio_timeline/bootstrap_alignment_env.py install|doctor ...`
+`python tools/mv_audio_timeline/bootstrap_alignment_env.py doctor|install ...`
 
-缺引擎/缺模型/doctor失败必须返回 `AUDIO_ALIGNMENT_RUNTIME_BLOCKED`，不得切回 waveform guess。
+正常生产先 `doctor`。缺引擎/缺模型/doctor失败必须返回 `AUDIO_ALIGNMENT_RUNTIME_BLOCKED`；不得切回 waveform guess，也不得默认每首歌重新下载安装。
 
 ## MV Audio Timeline Regression Rule
 
@@ -148,13 +174,14 @@ Agent不得自行创建/修改一个写着 locked=true 的manifest来绕过 Fina
 3. 做迁移/回归测试；
 才加载。
 
-若旧文件与 `rules/*` 冲突，以当前权威 Rule/Workflow 为准，并记录待清理项。
+若旧文件与 `rules/*` 冲突，以当前权威 Rule/Workflow/Executor Contract 为准，并记录待清理项。
 
 ## Context Budget
 
 默认目标：
-- 启动层：≤4个核心文件；
+- 启动层：≤9个薄核心文件；
 - 单模块执行：≤7个核心文件；
+- prior PASS 只读最相关1–2个；
 - 排错/迁移才扩大上下文。
 
-任何新增文件必须明确属于 Workflow、Rule、Template、Knowledge、State 或 Documentation；无法归类则不要新增。
+任何新增文件必须明确属于 Workflow、Rule、Template、Knowledge、State、Executor 或 Documentation；无法归类则不要新增。
