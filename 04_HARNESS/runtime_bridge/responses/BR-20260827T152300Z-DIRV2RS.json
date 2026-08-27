@@ -1,0 +1,253 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T15:17:03Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "active_attempt": 3,
+      "asset_record_count": 0,
+      "context": {
+        "canonical_v2": true,
+        "multi_shot": false,
+        "program_30d60": true,
+        "web": true
+      },
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "current_stage": "S04_NATURAL_BEAT_LOCKED",
+      "current_state_token": "NATURAL_BEAT_LOCKED",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "lane": "S",
+      "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+      "mode": "RESUME_CANONICAL",
+      "next_action": {
+        "action_id": "BUILD_DIRECTOR_PLAN",
+        "human_gate": null,
+        "jit_reads": [
+          "04_HARNESS/workflows/mv.md",
+          "04_HARNESS/rules/mv_golden_runtime.md",
+          "04_HARNESS/rules/mv_editing.md",
+          "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+        ],
+        "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+        "summary": "Resolve the S04 Director executor, allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "revision_sequence": 2,
+      "slot_id": "D02-B",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json",
+        "04_HARNESS/runtime/mv_stage_executor_registry.json",
+        "04_HARNESS/rules/mv_executor_first.md",
+        "04_HARNESS/MANIFEST.md"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "S",
+        "packaging": "TBD",
+        "publish_time": "",
+        "slot": "B",
+        "slot_id": "D02-B",
+        "song_family": "",
+        "status": "PLANNED"
+      },
+      "verification": {
+        "asset_identity": true,
+        "revision_history": true,
+        "state": true,
+        "tracker_consistency": true
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "b9bcefd8911fdd4ab13c77778b371664cd31a1fbf13acf961f01651060159bad",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "fa1547c2a3a813d48c97d8c6f10c14fa8046b10194df37893b5130e6ccd32a37",
+    "state_sha256": "67f8d01860f0b4fe72cf98ff8dcbc7a24ef522fda9d3675ff727197fe28561ba",
+    "transition_sequence": 4
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_editing.md",
+      "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DIRECTOR_PLAN",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "summary": "Resolve the S04 Director executor, allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_editing.md",
+      "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DIRECTOR_PLAN",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "summary": "Resolve the S04 Director executor, allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T152300Z-DIRV2RS",
+  "request_sha256": "ccf5074bc61735912eba6ed15888ff807d74d033d052513898746b8fb4ff23c8",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33086950991",
+    "github_source_sha": "b8b2db061fc5e39393af4ef44551886fa13fdcab"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
