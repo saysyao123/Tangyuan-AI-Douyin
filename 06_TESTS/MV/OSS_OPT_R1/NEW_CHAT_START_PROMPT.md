@@ -1,4 +1,4 @@
-# OSS MV Optimization Integration Test｜New Chat Start Prompt v1.1
+# OSS MV Optimization Integration Test｜New Chat Start Prompt v1.2
 
 ```text
 请使用已连接的 GitHub，读取 `saysyao123/Tangyuan-AI-Douyin` 仓库 `test/mv-oss-optimization-r1` 分支。
@@ -26,14 +26,16 @@
 - 单次视觉更漂亮不等于可晋升，必须同时检查稳定性、复现性、成本和维护复杂度；
 - 只有完成整轮对比后，才可以提出 PROMOTE_RUNTIME / RULE / KNOWLEDGE / TOOLING；正式生产分支的晋升另开明确变更，不在实验中静默合并。
 
-HG01 硬规则：
-- `SONG_CANDIDATE_SET` 只是机器候选预检，不等于用户选歌交付；
-- 禁止只给“歌名 + 排名 + 机器推荐”就让用户 A/B/C/D；
-- 在向用户提交 HG01 前，必须先有持久化 `HG01_CANDIDATE_EVIDENCE_PACK`；
-- 每个正式候选必须有 >=2 个近期 concrete direct Douyin works，来自 >=2 个独立账号；
-- 必须报告 account / publish date / duration / evidence tier / core benchmark coverage；
-- 必须验证 direct URL 的 landing work 本身就是被引用作品；旧作品页/作者页中列出的近期作品只能用于 discovery，不能作为 direct-work evidence；
-- 只有 `SONG_CANDIDATE_SET.status = HG01_EVIDENCE_DELIVERY_PASS` 且 evidence delivery assertions 全部 true，才允许把 HG01 呈现给用户；
+HG01 恢复原 R3 选歌策略：
+- 默认主源是用户已经锁定的核心 Benchmark / 对照账号数据库；
+- 路径固定为：`核心账号更新/读取 -> Data Center -> SONG_FAMILY repeat/value ranking -> HG01`；
+- 不把“全网搜索歌曲”作为每首 MV 的默认选歌方式；
+- 只有发现长期值得跟踪的新账号时，才作为 supplemental benchmark 加入数据库；
+- Web / Radar 只用于按需定位具体 work、补充新账号或做趋势 freshness 佐证，不能取代核心数据库成为正式候选池；
+- `SONG_CANDIDATE_SET` 仍是机器预检，不等于用户选择；
+- HG01 给用户的交付保持简单：歌名 + 一句入选原因 + 对应博主的对应歌曲 Douyin MV；
+- 不要求用户阅读 Tier A/B/C、Core coverage、Evidence taxonomy 或全网检索过程；
+- 保留唯一硬防错：交付的 direct URL 必须真正打开被引用的那条 MV；作者旧作品页里列出的近期作品只能用于定位，不能冒充正式交付链接；
 - 用户选择后才执行 `RECORD_HUMAN_GATE HG01`，随后单独 `ADVANCE` 到 S01。
 
 如果用户已经提供开源仓库 URL / 项目文件 / 优化说明：
