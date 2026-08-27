@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "package_id": "D02-B_AUDIO_TIMELINE_P1_LOCK",
+  "slot_id": "D02-B",
+  "song_family": "有几次想你了",
+  "status": "LOCKED",
+  "locked_at": "2026-08-27T18:30:00+08:00",
+  "selected_route": "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+  "route_policy": "../../../../OSS_OPT_R1/AUDIO_TIMELINE_ROUTE_POLICY_v1.md",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "human_lyric_audit": "PASS",
+  "assets": [
+    {"path": "audio_identity.json", "sha256": "2d0c2bbb0e595246574a20ffdac88c07a21f64fab48f9249e0f9dcccb9375295"},
+    {"path": "trusted_lyrics.txt", "sha256": "6edb9f2c14bcf782632c8ff533262272f2336363d8c3967c96002f6d802c72a8"},
+    {"path": "raw_evidence/faster_whisper/lightweight_mapping_report.json", "sha256": "9182a3c39f6aaf26dd2d2d780e581faab5f2533b6f3e87bb36c1c18400b1dca4"},
+    {"path": "line_timeline.csv", "sha256": "d8ff147585d456caaa11f0fabce684bfb1a6b95533be1da67abed780700e0c2f"},
+    {"path": "lyrics_exact.srt", "sha256": "0a9910de12ff6b0955ed920403dc2c04fb6c6506a12edc00ed3a313f94d0ba5f"},
+    {"path": "lyric_timeline_qa.json", "sha256": "eecc5ce3863d0cc767fdb92f54f5c93bd58367b14ddeda19a51d8e0b5f74014a"}
+  ],
+  "qa_decision": "PASS",
+  "fallback_status": "XINGYU_ARCHIVED_NOT_REQUIRED"
+}
