@@ -1,0 +1,6 @@
+source_id,input_format,normalization,output_format,audio_policy,watermark_policy,status
+H-S01,"720x1280 24fps","scale 900x1600 Lanczos then center crop 720x1280 x=90 y=160","720x1280 24fps","strip AI source audio","reuse validated 1.25x center safety crop",PASS
+H-S02,"720x1280 24fps","scale 900x1600 Lanczos then center crop 720x1280 x=90 y=160","720x1280 24fps","strip AI source audio","reuse validated 1.25x center safety crop",PASS
+H-S03,"720x1280 24fps","scale 900x1600 Lanczos then center crop 720x1280 x=90 y=160","720x1280 24fps","strip AI source audio","reuse validated 1.25x center safety crop",PASS
+H-S04,"720x1280 24fps","scale 900x1600 Lanczos then center crop 720x1280 x=90 y=160","720x1280 24fps","strip AI source audio","reuse validated 1.25x center safety crop",PASS
+H-S05,"720x1280 24fps","scale 900x1600 Lanczos then center crop 720x1280 x=90 y=160","720x1280 24fps","strip AI source audio","reuse validated 1.25x center safety crop",PASS
