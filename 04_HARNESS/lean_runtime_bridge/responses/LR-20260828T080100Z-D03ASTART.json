@@ -1,0 +1,172 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T17:41:01Z",
+  "error": null,
+  "execution": {
+    "ok": true,
+    "outcome": "RESUMED",
+    "transitions_advanced": 0
+  },
+  "next_guard": {
+    "kind": "ALLOCATION",
+    "lane": "P",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "slot_id": "D03-A",
+    "tracker_sha256": "cb5293f16d46ddb666d140de96f143422e171e8e0f690b97cf0d48e6a08c0e0a"
+  },
+  "postflight": {
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D03-A --slot-id D03-A --program 30D_60 --lane P",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "ALLOCATE_NEW_SLOT",
+    "next_action": {
+      "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_DEPENDENCY",
+      "execution_class": "DATA_ORCHESTRATION",
+      "executor_id": "HG01_CORE_DATABASE_ORCHESTRATION",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "preflight": {
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D03-A --slot-id D03-A --program 30D_60 --lane P",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "ALLOCATE_NEW_SLOT",
+    "next_action": {
+      "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_DEPENDENCY",
+      "execution_class": "DATA_ORCHESTRATION",
+      "executor_id": "HG01_CORE_DATABASE_ORCHESTRATION",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "request_id": "LR-20260828T080100Z-D03ASTART",
+  "request_sha256": "4edef32641f9ded41b77d85718436ed6b14743d3f8b0a1d3d1a80b973599ea60",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33099643259",
+    "github_source_sha": "a4251252e7862af5f111c13515be80c41261b51b"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}
