@@ -54,6 +54,52 @@ def write_rows(path: Path, rows: list[dict[str, str]]) -> None:
         w = csv.DictWriter(f, fieldnames=['line_id', 'lyric', 'clip_start_s', 'clip_end_s']); w.writeheader(); w.writerows(rows)
 
 
+def timeline_duration(identity: dict) -> float:
+    """Resolve the canonical content timeline duration across schema generations.
+
+    Current package_tool writes timeline_duration_s/content_duration_s. Older
+    packages may still carry rendered_duration_s. Container duration is the
+    final compatibility fallback because encoded padding must not become the
+    preferred lyric clock when a content duration exists.
+    """
+    for key in ('timeline_duration_s', 'content_duration_s', 'rendered_duration_s', 'container_duration_s'):
+        value = identity.get(key)
+        if value is not None:
+            return float(value)
+    raise KeyError('audio identity contains no usable timeline duration field')
+
+
+def xingyu_rows_from_alignment(path: Path, trusted: list[str]) -> list[dict[str, str]]:
+    """Normalize Xingyu JSON without discarding explicit line-end evidence.
+
+    Xingyu is run in trusted-lyrics forced-alignment mode, so output line text
+    must preserve the supplied lyric sequence. The JSON contains authoritative
+    per-line starts *and ends*; using only LRC starts would incorrectly stretch
+    the final lyric to the full audio duration.
+    """
+    payload = json.loads(path.read_text(encoding='utf-8'))
+    lines = payload.get('lines')
+    if not isinstance(lines, list) or len(lines) != len(trusted):
+        raise ValueError(f'Xingyu alignment line count mismatch: {0 if not isinstance(lines, list) else len(lines)} != {len(trusted)}')
+    rows = []
+    prev_start = -1.0
+    for n, (lyric, line) in enumerate(zip(trusted, lines), 1):
+        if not isinstance(line, dict):
+            raise ValueError(f'Xingyu alignment line {n} is not an object')
+        returned = str(line.get('text', ''))
+        if pt.normalize_lyric(returned) != pt.normalize_lyric(lyric):
+            raise ValueError(f'Xingyu changed/mismatched trusted lyric at line {n}: {returned!r} != {lyric!r}')
+        try:
+            start = float(line['start']); end = float(line['end'])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError(f'Xingyu missing/invalid line boundary at line {n}') from exc
+        if start < 0 or end <= start or start < prev_start:
+            raise ValueError(f'Xingyu invalid/non-monotonic boundary at line {n}: {start}-{end}')
+        rows.append({'line_id': f'L{n:02d}', 'lyric': lyric, 'clip_start_s': f'{start:.3f}', 'clip_end_s': f'{end:.3f}'})
+        prev_start = start
+    return rows
+
+
 def engine_xingyu(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     exe = shutil.which('xingyu-align')
     if not exe:
@@ -61,14 +107,11 @@ def engine_xingyu(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     out = pkg / 'raw_evidence' / 'xingyu'; out.mkdir(parents=True, exist_ok=True)
     cmd = [exe, 'align', '--audio', str(audio), '--lyrics', str(lyrics), '--output-dir', str(out), '--language', args.language, '--device', args.device, '--json-result']
     run_logged(cmd, pkg, out / 'engine')
-    lrc = out / 'lyrics.lrc'
-    if not lrc.exists():
-        raise FileNotFoundError('xingyu did not produce lyrics.lrc')
-    lrc_lines = pt.parse_lrc(lrc); trusted = pt.read_lyrics(lyrics); idx = pt.find_subsequence(lrc_lines, trusted, args.min_similarity)
-    duration = float(json.loads((pkg / 'audio_identity.json').read_text(encoding='utf-8'))['rendered_duration_s']); rows = []
-    for n, (lyric, i) in enumerate(zip(trusted, idx), 1):
-        start = lrc_lines[i].time_s; end = lrc_lines[idx[n]].time_s if n < len(idx) else duration
-        rows.append({'line_id': f'L{n:02d}', 'lyric': lyric, 'clip_start_s': f'{start:.3f}', 'clip_end_s': f'{end:.3f}'})
+    alignment = out / 'alignment.json'
+    if not alignment.exists():
+        raise FileNotFoundError('xingyu did not produce alignment.json')
+    trusted = pt.read_lyrics(lyrics)
+    rows = xingyu_rows_from_alignment(alignment, trusted)
     norm = out / 'normalized_timeline.csv'; write_rows(norm, rows); return norm
 
 
@@ -86,7 +129,7 @@ def engine_lyric_align(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     rows = parse_srt(srt); trusted = pt.read_lyrics(lyrics)
     if [pt.normalize_lyric(r['lyric']) for r in rows] != [pt.normalize_lyric(x) for x in trusted]:
         raise ValueError('lyric-align output has unmatched/missing/changed lines; keep BLOCKED and inspect raw output')
-    norm = out / 'normalized_timeline.csv'; write_rows(norm, rows); return norm
+    norm = out / 'raw_evidence' / 'lyric-align' / 'normalized_timeline.csv'; write_rows(norm, rows); return norm
 
 
 def main() -> int:
