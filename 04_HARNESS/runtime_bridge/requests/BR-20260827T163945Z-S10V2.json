@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163945Z-S10V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S09_SOURCE_NORMALIZATION_READY",
+    "current_state_token": "SOURCE_NORMALIZATION_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "8664bbd51caffc539f61a13cea34b294d27b522bec3726259df7224e51630867",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "7acd39c8f8cea63d1633adc0e20102bad0b953f864b54d4935be0c03ce903308",
+    "state_sha256": "11e859deb4e153a20aa621eb31c42196dc4d1a18d2670b69054ae3be6e582109",
+    "transition_sequence": 9
+  },
+  "payload": {"to": "S10_EDITOR_AUDIO_GATE_PASS"},
+  "requested_by": "chatgpt_web",
+  "reason": "Editor ingest reuses the locked HG02 BGM and seven-line authoritative timeline; AI source audio is stripped and EDITOR_AUDIO_GATE_RECEIPT is durably PASS."
+}
