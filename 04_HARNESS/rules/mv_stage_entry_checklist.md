@@ -1,21 +1,36 @@
-# Rules｜MV Stage Entry Checklist v1.2
+# Rules｜MV Stage Entry Checklist v1.3
 
-> Status: `ACTIVE / HARD / HG01 CORE DATABASE RESTORED`
-> Role: 在关键 Stage 开始前执行机器前置条件检查，防止“规则已经存在但执行时被跳过”。
-> Principle: **Known gate must be machine-enforced before downstream work.**
+> Status: `ACTIVE / HARD / EXECUTOR-FIRST + HG01 CORE DATABASE RESTORED`
+> Role: 在关键 Stage 开始前执行机器前置条件检查，防止“规则已经存在但执行时被跳过”以及“已有执行器未检查就重新造实现”。
+> Principle: **Known gate and known executor must be resolved before downstream work.**
 
 ---
 
 ## 1. General contract｜HARD
 
-每个关键 Stage 在执行前必须生成/记录 `ENTRY_CHECK = PASS`。
+每个 Stage 在真正开始执行前必须先完成两层检查：
 
-任一 required prerequisite 缺失：
-- 不得“先做一版看看”；
-- 不得把技术缺口交给下一个 Human Gate 发现；
-- 只能回到最近缺失的 Stage / Gate 补齐。
+### A. Evidence entry check
+- 当前 required upstream artifacts / Gate 必须满足；
+- 任一 prerequisite 缺失，不得“先做一版看看”；
+- Human Gate PASS 不能替代机器技术 Gate。
 
-`Human Gate PASS` 不能替代机器技术 Gate。
+### B. Executor entry check｜NEW HARD
+- 读取 `04_HARNESS/runtime/mv_stage_executor_registry.json`；
+- 当前 `CURRENT_STATE.current_stage` 必须存在唯一 executor entry；
+- 读取 entry 声明的 canonical Rules / Templates / Tools / prior PASS sample；
+- 如果声明了 canonical toolchain，必须先复用该 toolchain；
+- 如果 execution class 是 `CREATIVE_SYNTHESIS`，不得因为“没有脚本”而创建模型/工具；
+- 如果 execution class 是 `CAPABILITY_HANDOFF`，必须使用已有产品/生成能力边界，不得默认开发新 backend；
+- 如果存在依赖，先 doctor/check/cache；缺失时按 executor policy BLOCK 或进行明确允许的独立 environment setup；
+- Rule 中出现的外部实现名称，只是 reference，除非 executor registry 明确把它锁为当前生产依赖，否则不得自动安装。
+
+创建任何新 helper / workflow / model route 前必须满足 `rules/mv_executor_first.md` 的 New-tool admission gate。
+
+每个关键 Stage 在执行前必须生成/记录 `ENTRY_CHECK = PASS`（可以由 Runtime preflight/CI/明确的执行检查体现）。
+
+Failure action：
+`PATCH NEAREST MISSING PREREQUISITE / EXECUTOR ENVIRONMENT -> RE-RUN ENTRY CHECK -> CONTINUE`。
 
 ---
 
@@ -58,7 +73,29 @@ Do not create `HG01_SELECTION_RECEIPT` before this entry check can pass.
 
 ---
 
-## 3. Stage 5｜First Frames entry
+## 3. Stage 2A｜Audio Timeline entry｜HARD
+
+Required after HG02 and before Natural Beat:
+- `BGM_LOCKED = YES`;
+- resolve executor `CANONICAL_AUDIO_TIMELINE_TOOLCHAIN` from executor registry;
+- load `templates/mv_audio_timeline_package_contract.md` and `tools/mv_audio_timeline/*` required by the executor;
+- run alignment environment `doctor` before any installation;
+- reuse the pinned/preheated alignment environment when available;
+- only `final_gate.py validate ... --write-manifest` may create the locked package manifest.
+
+Block if:
+- Agent creates a song/slot-specific aligner before checking canonical tools;
+- Agent downloads a production model simply because the Rule mentions a reference implementation;
+- engine/model is missing and Agent silently substitutes another model;
+- any diagnostic/waveform estimate is promoted to exact timing;
+- partial S03 files exist but Final Gate has not produced a valid locked manifest.
+
+Failure action:
+`CANONICAL TOOLCHAIN DOCTOR -> BLOCK OR CONTROLLED ENV SETUP -> REBUILD PACKAGE -> FINAL GATE`.
+
+---
+
+## 4. Stage 5｜First Frames entry
 
 Required:
 - `BGM_LOCKED = YES`
@@ -70,14 +107,18 @@ Required:
 JIT:
 - `rules/mv_first_frame_qa.md`
 - `rules/ai_video.md`
+- `templates/ai_first_frame_prompt.md`
+
+Executor class is `CAPABILITY_HANDOFF`: use existing image-generation capability + machine QA. Lack of a repo-local image SDK is not an implementation gap.
 
 Block if:
 - Director only describes a functional action but cannot state the standalone beauty / visual memory point;
-- two or more adjacent first-frame plans are effectively the same scale/composition/action grammar without explicit reason.
+- two or more adjacent first-frame plans are effectively the same scale/composition/action grammar without explicit reason;
+- Agent starts building a new image backend instead of using the registered capability boundary.
 
 ---
 
-## 4. Stage 6｜Dynamic Prompt / I2V entry
+## 5. Stage 6｜Dynamic Prompt / I2V entry
 
 Required:
 - `FIRST_FRAME_SET_LOCKED = YES` / HG03 PASS
@@ -93,9 +134,11 @@ If accepted pixels contradict an older text plan, rewrite the dynamic prompt aro
 
 Block if a character-containing prompt does not include the required portrait-safe prefix or omits the full prompt-control skeleton in `rules/ai_video.md`.
 
+Dynamic generation executor is an existing capability handoff. Do not create a new generator backend unless generator integration itself is an explicitly approved experiment.
+
 ---
 
-## 5. Stage 8B｜Picture Edit entry｜WEB HARD
+## 6. Stage 8B｜Picture Edit entry｜WEB HARD
 
 Required:
 - `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
@@ -110,9 +153,11 @@ Formal HG04 preview MUST NOT render from raw WEB source with visible generator/p
 
 If a rhythm-only diagnostic preview is intentionally made earlier, label it `DIAGNOSTIC_ONLY / NOT_HG04` and do not submit it as Human Gate evidence.
 
+Media transform dependency preflight: check existing ffmpeg/ffprobe/render capability first; missing tool is not permission to introduce a new media framework ad hoc.
+
 ---
 
-## 6. Stage 9｜Subtitle entry
+## 7. Stage 9｜Subtitle entry
 
 Required:
 - `EDIT_MAP_LOCKED = YES`
@@ -123,9 +168,11 @@ Required:
 
 Block if subtitle timing is being derived from picture cuts or a new free ASR clock.
 
+Subtitle executor inherits the locked R2 baseline. Lack of a style exploration step is intentional; do not create a new subtitle model/style workflow unless user explicitly reopens style.
+
 ---
 
-## 7. Stage 10｜Final QA entry
+## 8. Stage 10｜Final QA entry
 
 Required:
 - `EDIT_PREVIEW_QA_PASS = YES`
@@ -135,10 +182,11 @@ Required:
 - source audio leakage check prepared
 
 Final render cannot be submitted to HG05 until all technical checks pass.
+No new AI model is part of Final Tech QA.
 
 ---
 
-## 8. Close / Publish handoff
+## 9. Close / Publish handoff
 
 Production close requires:
 - HG05 PASS
@@ -146,7 +194,7 @@ Production close requires:
 - final identity/hash saved
 - publish package generated when the 30D/60 system is active
 
-Actual publication is a separate real-world state transition. After the user confirms the post is live, execute `POST_PUBLISH_SYNC` rather than leaving the durable project at `READY_TO_PUBLISH`.
+Actual publication is a separate real-world state transition. After the user confirms the post is live, execute registered executor `TRANSACTIONAL_PUBLISH_SYNC` through `mv_runtime_publish.py` / Bridge `PUBLISH_SYNC` rather than manually editing Tracker/state.
 
 `POST_PUBLISH_SYNC` updates at minimum:
 1. per-slot `CURRENT_STATE` -> `PUBLISHED / DATA_COLLECTION_ACTIVE`;
@@ -157,11 +205,11 @@ If the exact timestamp is not known, store `timestamp_pending_backfill`; do not 
 
 ---
 
-## 9. Failure policy
+## 10. Failure policy
 
 Checklist failure is not a new Human Gate.
 
 Use:
-`PATCH THE MISSING TECHNICAL PREREQUISITE -> RE-RUN ENTRY CHECK -> CONTINUE`.
+`PATCH THE MISSING TECHNICAL PREREQUISITE / EXECUTOR ENVIRONMENT -> RE-RUN ENTRY CHECK -> CONTINUE`.
 
 Do not cascade into already-passed aesthetic Gates unless the patch materially changes what the user approved.
