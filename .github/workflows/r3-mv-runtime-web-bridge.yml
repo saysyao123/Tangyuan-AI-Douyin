@@ -5,6 +5,7 @@ on:
     branches:
       - refactor/mv-runtime-consolidation-v2
       - test/mv-web-r3
+      - test/mv-oss-optimization-r1
     paths:
       - '04_HARNESS/runtime_bridge/requests/*.json'
   workflow_dispatch:
