@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "request_id": "AUDIO_ALIGNMENT_ENV_V1_20260827",
+  "requested_by": "chatgpt_web",
+  "scope": "shared_runtime_environment_not_slot_specific",
+  "executor": "CANONICAL_AUDIO_TIMELINE_TOOLCHAIN",
+  "lock_path": "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json",
+  "action": "DOCTOR_THEN_PREPARE_IF_CACHE_MISSING",
+  "reason": "D02-B S02 executor preflight found no reusable Xingyu runtime in the active execution environment. Prepare the pinned shared environment once so later MV slots reuse cache instead of installing per song."
+}
