@@ -1,0 +1,5 @@
+source_id,source_file,input_geometry,normalization,proxy_file,source_audio_removed,status
+S1,AI动画人物克制靠近与停住.mp4,720x1280 9:16,"crop=576:1024:72:128 -> scale=720:1280",S1_clean.mp4,YES,PASS
+S2,AI动画人物克制靠近与停住 (4)(1).mp4,720x960 3:4,"non-stretched center 9:16 + prior 1.25x safe-crop equivalent; crop=432:768:144:96 -> scale=720:1280",S2_clean.mp4,YES,PASS_GEOMETRY_EXCEPTION_NORMALIZED
+S3,AI动画人物克制靠近与停住 (5).mp4,720x1280 9:16,"crop=576:1024:72:128 -> scale=720:1280",S3_clean.mp4,YES,PASS
+S4,AI动画人物克制靠近与停住 (1).mp4,720x1280 9:16,"crop=576:1024:72:128 -> scale=720:1280",S4_clean.mp4,YES,PASS
