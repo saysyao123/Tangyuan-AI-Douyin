@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0",
+  "status": "HG01_READY",
+  "created_at": "2026-08-27T03:25:00Z",
+  "slot_id": "D02-B",
+  "lane": "S",
+  "experiment": {
+    "branch": "test/mv-oss-optimization-r1",
+    "experiment_id": "OSS_OPT_R1",
+    "purpose": "Lock a common song/audio truth before later OSS director/generation optimization is introduced, so baseline and optimized paths remain comparable.",
+    "oss_source_integration_status": "PENDING_USER_SOURCE",
+    "visual_design_started": false
+  },
+  "selection_policy": {
+    "candidate_count": 4,
+    "direct_douyin_evidence_required": true,
+    "minimum_recent_independent_accounts_target": 2,
+    "trend_evidence_cutoff": "2026-08-27",
+    "selection_priorities": [
+      "current Douyin momentum",
+      "visual/lyric fit for MV",
+      "avoid already-used 30D60 songs",
+      "avoid excessive saturation",
+      "useful difficulty for OSS optimization comparison"
+    ]
+  },
+  "formal_candidates": [
+    {
+      "candidate_id": "A",
+      "song_family": "循迹",
+      "recommendation_rank": 1,
+      "signal_class": "EARLY_RISE_ACCELERATING",
+      "visual_fit_0_10": 8,
+      "saturation_risk": "MEDIUM_RISING",
+      "experiment_fit": "HIGH",
+      "why_now": "Fresh stage-driven spread is still accelerating. Li Jiawei is actively pushing a 15-second/70-character challenge, Wang Zhengliang has a recent cut, and independent music-analysis/instrument accounts are following within the same short window.",
+      "why_for_this_test": "Dense lyrics, emotional progression and rhythm pressure make this a useful stress test for director planning and dynamic-generation optimization; improvement should be easier to distinguish from merely choosing an easy scenic song.",
+      "risk": "High lyric density can tempt over-cutting and literal illustration; exact Douyin audio version must be locked at HG02.",
+      "direct_evidence": [
+        {
+          "account": "李佳薇",
+          "role": "artist",
+          "recency": "within 5 days",
+          "url": "https://jingxuan.douyin.com/m/video/7667143815573078649",
+          "note": "Profile shows recent 《循迹》15秒70字 challenge activity."
+        },
+        {
+          "account": "王铮亮",
+          "role": "artist",
+          "recency": "within 2 days",
+          "url": "https://jingxuan.douyin.com/m/video/7650739038203309898",
+          "note": "Profile shows recent 《循迹》 cut."
+        },
+        {
+          "account": "匡泓霖 琵琶",
+          "role": "independent_creator",
+          "recency": "within 2 days",
+          "url": "https://jingxuan.douyin.com/m/video/7671565226906815481",
+          "note": "Profile shows a fresh high-energy pipa adaptation of 《循迹》."
+        },
+        {
+          "account": "嗨椰教育-椰子老师",
+          "role": "music_analysis_creator",
+          "recency": "same day observation",
+          "url": "https://jingxuan.douyin.com/m/video/7647908439175318784",
+          "note": "Profile shows a fresh vocal-analysis post for Wang Zhengliang & Li Jiawei 《循迹》."
+        }
+      ]
+    },
+    {
+      "candidate_id": "B",
+      "song_family": "雨后轻风有香",
+      "recommendation_rank": 2,
+      "signal_class": "EARLY_RISE_STRATEGIC_VISUAL_FIT",
+      "visual_fit_0_10": 10,
+      "saturation_risk": "LOW_MEDIUM",
+      "experiment_fit": "MEDIUM_HIGH",
+      "why_now": "Multiple recent creator posts around the film 《牛来》 and the song continue to circulate, while saturation remains lower than the strongest variety-show trend songs.",
+      "why_for_this_test": "Extremely strong natural imagery and healing tone make it highly reliable for production, with room for environment-led directing rather than portrait-heavy visuals.",
+      "risk": "Because the song is naturally visual, a beautiful result may not prove that the OSS optimization itself caused the improvement. Title spelling and exact audio-version variants must be normalized at HG02.",
+      "direct_evidence": [
+        {
+          "account": "wuhu动画人空间",
+          "role": "creator",
+          "recency": "within 9 days",
+          "url": "https://jingxuan.douyin.com/m/video/7675036480951045427",
+          "note": "Direct recent feature on 《牛来》 ending song 《雨后轻风有香》."
+        },
+        {
+          "account": "立德读书",
+          "role": "independent_creator",
+          "recency": "within 8 days",
+          "url": "https://jingxuan.douyin.com/m/video/7675545599869029678",
+          "note": "Recent lyric-analysis content for the song."
+        },
+        {
+          "account": "魔都炒家",
+          "role": "independent_creator",
+          "recency": "within 10 days",
+          "url": "https://www.douyin.com/video/7674868005465013410",
+          "note": "Recent direct use of the song with meaningful engagement."
+        }
+      ]
+    },
+    {
+      "candidate_id": "C",
+      "song_family": "甲乙丙丁",
+      "recommendation_rank": 3,
+      "signal_class": "CONFIRMED_TREND",
+      "visual_fit_0_10": 8,
+      "saturation_risk": "HIGH_RISING",
+      "experiment_fit": "MEDIUM",
+      "why_now": "The Zhang Bichen / Hou Minghao stage has strong official exposure and current music-analysis follow-through, so trend certainty is high.",
+      "why_for_this_test": "Clear breakup-to-release emotional arc gives a strong narrative benchmark, but it is easier to fall into familiar relationship-MV imagery.",
+      "risk": "Higher saturation and visual homogenization risk; a strong result may compete in a crowded visual language.",
+      "direct_evidence": [
+        {
+          "account": "浙江卫视",
+          "role": "official",
+          "recency": "within 6 days",
+          "url": "https://jingxuan.douyin.com/m/video/7676330839743008054",
+          "note": "Official Zhang Bichen / Hou Minghao 《甲乙丙丁》 stage clip."
+        },
+        {
+          "account": "付飞翔",
+          "role": "music_analysis_creator",
+          "recency": "same-day recent follow-up visible",
+          "url": "https://jingxuan.douyin.com/m/video/7650881297182739763",
+          "note": "Profile shows a fresh analysis of the Zhang Bichen / Hou Minghao version."
+        },
+        {
+          "account": "嗨椰教育-椰子老师",
+          "role": "music_analysis_creator",
+          "recency": "within 2 days",
+          "url": "https://jingxuan.douyin.com/m/video/7647908439175318784",
+          "note": "Profile shows a recent vocal-analysis post for 《甲乙丙丁》."
+        }
+      ]
+    },
+    {
+      "candidate_id": "D",
+      "song_family": "我不难过",
+      "recommendation_rank": 4,
+      "signal_class": "CLASSIC_REVIVAL",
+      "visual_fit_0_10": 8,
+      "saturation_risk": "MEDIUM",
+      "experiment_fit": "MEDIUM",
+      "why_now": "Multiple independent Douyin accounts have posted or performed the song during the latest revival window, giving it a real current signal rather than only long-tail nostalgia.",
+      "why_for_this_test": "Emotion is legible and stable, making it a useful conservative benchmark for a Lane-S production path.",
+      "risk": "Classic-song visual language is familiar and the current novelty signal is weaker than 《循迹》; easy to become generic sad-person imagery if directing is not disciplined.",
+      "direct_evidence": [
+        {
+          "account": "难低音的许",
+          "role": "independent_creator",
+          "recency": "within 7 days",
+          "url": "https://www.douyin.com/video/7676084155951921334",
+          "note": "Recent guitar/vocal performance of 《我不难过》."
+        },
+        {
+          "account": "音乐内容账号",
+          "role": "independent_creator",
+          "recency": "within 7 days",
+          "url": "https://www.douyin.com/video/7675815953205091547",
+          "note": "Recent music recommendation/use of 《我不难过》."
+        },
+        {
+          "account": "Doris_Wu吴",
+          "role": "independent_creator",
+          "recency": "within 11 days",
+          "url": "https://www.douyin.com/video/7674494140943817145",
+          "note": "Recent cover of 《我不难过》."
+        }
+      ]
+    }
+  ],
+  "machine_recommendation": {
+    "candidate_id": "A",
+    "song_family": "循迹",
+    "reason": "Best combined score for current acceleration, adequate visual fit, and diagnostic difficulty for the upcoming OSS optimization comparison."
+  },
+  "human_gate": {
+    "gate": "HG01",
+    "status": "AWAITING_HUMAN_DECISION",
+    "selected_candidate_id": null,
+    "selected_song_family": null
+  },
+  "provenance": {
+    "repository_radar": "06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv",
+    "repository_shortlist": "06_TESTS/MV/WEB_R3/R3_MUSIC_SHORTLIST_v1.md",
+    "repository_data_center": "06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_STATUS.md",
+    "fresh_public_verification_date": "2026-08-27"
+  }
+}
