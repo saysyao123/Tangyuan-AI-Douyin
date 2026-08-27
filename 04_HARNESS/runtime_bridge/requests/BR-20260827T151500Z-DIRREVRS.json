@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T151500Z-DIRREVRS",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "User rejected HG04 picture direction because the four-source single-shot director structure under-covered the locked seven lyric lines. Resume D02-B to obtain a fresh canonical guard before an explicit director_revision rollback."
+}
