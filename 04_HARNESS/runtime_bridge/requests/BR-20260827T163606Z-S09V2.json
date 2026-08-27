@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163606Z-S09V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "5cbe2adc45ca27e98de201d590273c7938d529c318c7b751a2ec63580caa8390",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "3a215108f5b40d8987c1ff842b703363941d3d8a3aa851735be94704dac6000b",
+    "state_sha256": "3decf14e836b5ff55d359a5003743405ff7a41582ed8fda33347436b035b0d20",
+    "transition_sequence": 8
+  },
+  "payload": {"to": "S09_SOURCE_NORMALIZATION_READY"},
+  "requested_by": "chatgpt_web",
+  "reason": "Multi-shot context is now true; Shot Library map/QA and WEB watermark-safe rough-cut map/QA are durably written and PASS."
+}
