@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T031500Z-OSSINIT1",
+  "command": "INIT_SLOT",
+  "slot_id": "D02-B",
+  "payload": {
+    "program": "30D_60",
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Initialize D02-B as the first complete OSS optimization MV experiment after fresh allocation validation.",
+  "expected_guard": {
+    "kind": "ALLOCATION",
+    "tracker_sha256": "15909a4a3c0fbe881e869fa04a1f559cc723ee0b223e40f6ea691bbd7ae41b59",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "slot_id": "D02-B",
+    "lane": "S"
+  }
+}
