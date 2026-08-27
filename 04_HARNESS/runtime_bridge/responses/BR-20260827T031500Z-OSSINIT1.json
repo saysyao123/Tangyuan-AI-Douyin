@@ -1,0 +1,164 @@
+{
+  "command": "INIT_SLOT",
+  "completed_at": "2026-08-27T03:14:41Z",
+  "error": null,
+  "execution": {
+    "command": "INIT_SLOT",
+    "controller_payload": {
+      "ok": true,
+      "slot_id": "D02-B",
+      "slot_root": "/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "stage": "S00_SLOT_CREATED",
+      "state_token": "SLOT_CREATED",
+      "transition_receipt": "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json"
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "a76b2b1d76e0c4a374042fa5d92afd4e8b864874e28e1f753bdcee9d3845316f",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "36d36701d0d23b5ae36e5da95a0e4a50d22088dd9f7ddfb9735cba3b26f09557",
+    "state_sha256": "d852856a4ca3de1f11ed5196a5a6381046245f4fecc10094996114817a9e9473",
+    "transition_sequence": 0
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": null,
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "PREPARE_HG01_SONG_SELECTION",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S01_HG01_SONG_LOCKED",
+      "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 0,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B --slot-id D02-B --program 30D_60 --lane S",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "next_action": {
+      "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "request_id": "BR-20260827T031500Z-OSSINIT1",
+  "request_sha256": "65610e625086200adf3afa2f55e7d58f4c2ef43b79a98de599429d7767fe55cc",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33035771111",
+    "github_source_sha": "cc7fb5a60d9fea31d1b9862d9bc1d24d7a9a72a3"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}

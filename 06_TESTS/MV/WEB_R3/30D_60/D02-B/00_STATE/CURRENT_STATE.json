@@ -1,0 +1,24 @@
+{
+  "runtime_schema_version": "2.0-candidate",
+  "runtime_mode": "canonical_v2",
+  "slot_id": "D02-B",
+  "program": "30D_60",
+  "lane": "S",
+  "current_stage": "S00_SLOT_CREATED",
+  "current_state_token": "SLOT_CREATED",
+  "status": "SLOT_CREATED",
+  "transition_sequence": 0,
+  "last_transition_receipt": "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+  "last_transition_receipt_sha256": "a76b2b1d76e0c4a374042fa5d92afd4e8b864874e28e1f753bdcee9d3845316f",
+  "context": {
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true,
+    "canonical_v2": true
+  },
+  "context_revision": 0,
+  "last_context_receipt": null,
+  "last_context_receipt_sha256": null,
+  "created_at": "2026-08-27T03:14:41Z",
+  "updated_at": "2026-08-27T03:14:41Z"
+}
