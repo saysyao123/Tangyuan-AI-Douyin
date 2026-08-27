@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T045000Z-HG02RESUME2",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh canonical guard after the final HG02 listening metadata write and after isolating the probe from Runtime requests."
+}
