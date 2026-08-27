@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "status": "AUDIO_ALIGNMENT_ENV_READY",
+  "scope": "shared_runtime_environment_not_slot_specific",
+  "lock_path": "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json",
+  "lock_sha256": "67ba606f177871bb05dc2adbb23703ca1cfed45ff11c94dbe74cfb2e04414b72",
+  "cache_key": "mv-audio-align-Linux-py311-67ba606f177871bb05dc2adbb23703ca1cfed45ff11c94dbe74cfb2e04414b72",
+  "cache_hit_on_this_run": false,
+  "workflow_run_id": "33052935115",
+  "workflow_run_attempt": "1",
+  "workflow_source_sha": "2af2066e28bc00da558cb5a6f50750e0bb65e858",
+  "doctor": {
+    "pass": true,
+    "errors": [],
+    "notes": [
+      "primary=xingyu-lyrics-aligner 0.7.0",
+      "secondary not installed (allowed unless cross-check requested)"
+    ],
+    "venv": "/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/.mv-audio-align-venv"
+  }
+}
