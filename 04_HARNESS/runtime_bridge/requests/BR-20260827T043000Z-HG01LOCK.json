@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T043000Z-HG01LOCK",
+  "command": "RECORD_HUMAN_GATE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "a76b2b1d76e0c4a374042fa5d92afd4e8b864874e28e1f753bdcee9d3845316f",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "21ba6cbee11096118f538fe79a4a38ba848a0e822f4950f721956394bf1fad6e",
+    "state_sha256": "d852856a4ca3de1f11ed5196a5a6381046245f4fecc10094996114817a9e9473",
+    "transition_sequence": 0
+  },
+  "payload": {
+    "gate": "HG01",
+    "user_decision_text": "用户明确选择《有几次想你了》作为 D02-B 的 SONG_FAMILY。",
+    "approved_artifacts": [
+      "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
+    ]
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Record the user's actual HG01 song selection for D02-B after direct review of the core-benchmark MV candidates."
+}
