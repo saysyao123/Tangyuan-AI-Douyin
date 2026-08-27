@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T130600Z-S07ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "e1a05ec143929ecfc46594f8a72aefe6662d2fbe6c52e5e56121e54c49960041",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "76fe4632696f8a3c5f4c0aeb6545e46d6cdfced61be85f9916fb6ab40fe1656e",
+    "state_sha256": "3bba255cd5f6aecf8e328fc44c5a9e94c4695d7ebcf1868c053593d736228b3b",
+    "transition_sequence": 6
+  },
+  "payload": {
+    "to": "S07_DYNAMIC_PROMPT_SET_READY"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Dynamic prompt set is durably written from accepted K0 truth with bounded Face-Completion and camera-subject relationship controls."
+}
