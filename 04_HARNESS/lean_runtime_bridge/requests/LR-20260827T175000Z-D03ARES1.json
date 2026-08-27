@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260827T175000Z-D03ARES1",
+  "command": "RESUME",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Lean R1 pre-start read-only allocation probe for the next real MV. Do not initialize or mutate D03-A."
+}
