@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163510Z-MSHOTV2",
+  "command": "UPDATE_CONTEXT",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "5cbe2adc45ca27e98de201d590273c7938d529c318c7b751a2ec63580caa8390",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "20a6938bfa90fb3d1b5ab5e47256dab39471d124bba24e3dde1014b9b3645f3a",
+    "state_sha256": "ecc98dec3834eecb8e62d696faa583daf6df5da3de7f3fdcb987a28d2a55d5ef",
+    "transition_sequence": 8
+  },
+  "payload": {
+    "key": "multi_shot",
+    "value": true,
+    "reason": "Actual Dynamic Source QA detects approximately 13 visible atoms across five 5-second sources. Formal Shot Library normalization is therefore required for the revised dense lyric-first edit."
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Enable the registered multi-shot context only after S08 has confirmed actual multi-shot source structure."
+}
