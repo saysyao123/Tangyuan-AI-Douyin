@@ -1,0 +1,21 @@
+{
+  "receipt_version": "1.0",
+  "receipt_id": "D02-B_LYRIC_TIMELINE_LOCK",
+  "slot_id": "D02-B",
+  "song_family": "有几次想你了",
+  "decision": "PASS",
+  "selected_route": "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+  "user_decision_text": "歌词OK",
+  "user_decision_at": "2026-08-27T18:30:00+08:00",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "trusted_line_count": 7,
+  "aligned_line_count": 7,
+  "coverage": "7/7 lines at 100%",
+  "sequence_ratio": 1.0,
+  "line_starts_monotonic": true,
+  "qa_artifact": "lyric_timeline_qa.json",
+  "package_manifest": "package_manifest.json",
+  "package_manifest_sha256": "736b7b84a3b0d9b74b36341e24a0d49558546c3be13fdf482c3bac6f2f35bf41",
+  "fallback": "P2_XINGYU_ARCHIVED_NOT_REQUIRED",
+  "status": "LYRIC_TIMELINE_LOCKED"
+}
