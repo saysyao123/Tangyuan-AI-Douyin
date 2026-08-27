@@ -8,6 +8,7 @@ on:
       - test/mv-oss-optimization-r1
     paths:
       - '04_HARNESS/runtime_bridge/requests/*.json'
+      - '06_TESTS/MV/OSS_OPT_R1/requests/D02B_AUDIO_TIMELINE_BUILD*.request'
   workflow_dispatch:
 
 permissions:
@@ -39,7 +40,26 @@ jobs:
           set -euo pipefail
           python -B 04_HARNESS/tools/mv_runtime_bridge.py process-pending
 
-      - name: Commit Runtime responses and authoritative mutations
+      - name: Build D02-B trusted Audio Timeline only for explicit sentinel
+        shell: bash
+        run: |
+          set -euo pipefail
+          SUBJECT="$(git log -1 --pretty=%s)"
+          if [ "$SUBJECT" != 'test: trigger D02-B Audio Timeline build' ]; then
+            echo 'Not an Audio Timeline sentinel commit; skip builder.'
+            exit 0
+          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg >/dev/null
+          set +e
+          bash 04_HARNESS/tools/d02b_audio_timeline_build.sh
+          CODE=$?
+          set -e
+          mkdir -p 06_TESTS/MV/WEB_R3/30D_60/D02-B/03_AUDIO_TIMELINE
+          printf '%s\n' "$CODE" > 06_TESTS/MV/WEB_R3/30D_60/D02-B/03_AUDIO_TIMELINE/build_exit_code.txt
+          echo "Audio Timeline builder exit code: $CODE"
+
+      - name: Commit Runtime responses, authoritative mutations, and explicit Audio Timeline outputs
         shell: bash
         run: |
           set -euo pipefail
@@ -57,7 +77,7 @@ jobs:
           fi
 
           if git diff --cached --quiet; then
-            echo 'No pending Runtime response or mutation to commit.'
+            echo 'No pending Runtime response, mutation, or Audio Timeline output to commit.'
             exit 0
           fi
 
