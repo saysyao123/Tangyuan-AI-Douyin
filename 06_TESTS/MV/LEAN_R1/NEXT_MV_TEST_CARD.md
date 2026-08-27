@@ -1,9 +1,10 @@
 # LEAN_R1｜下一首真实 MV 测试卡
 
-Status: `READY_TO_START`
+Status: `INITIALIZED / READY_FOR_HG01`
 Branch: `test/mv-lean-r1`
-Planned slot: `D03-A`
+Slot: `D03-A`
 Lane: `P / Primary-Trend`
+Canonical start state: `S00_SLOT_CREATED / SLOT_CREATED`
 
 ## 1. Test purpose
 
@@ -90,6 +91,10 @@ By S16:
 - all canonical transition/Human Gate evidence valid;
 - HG04/HG05 quality no worse than D02-B/R3 baseline.
 
-## 7. Starting condition
+## 7. Verified starting condition
 
-D02-B is reserved in Lean Tracker as `RELEASE_READY` to prevent accidental reallocation. D03-A is the intended new slot. The first Lean RESUME must explicitly request D03-A and must return `ALLOCATE_NEW_SLOT` before initialization.
+- D02-B is reserved in Lean Tracker as `RELEASE_READY`, preventing accidental reallocation.
+- Lean RESUME independently selected D03-A / Lane P as `ALLOCATE_NEW_SLOT`.
+- Lean INIT_SLOT succeeded and created canonical S00 state + transition receipt.
+- A real `RUN_UNTIL_GATE_OR_BLOCK` safety check returned `HUMAN_GATE / HG01 / transitions_advanced=0`.
+- Therefore the next conversation must RESUME D03-A and start HG01; it must NOT initialize the slot again.
