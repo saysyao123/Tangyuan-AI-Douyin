@@ -29,7 +29,9 @@ Required before asking the user to choose a song:
 - human-facing `HG01_CANDIDATE_EVIDENCE_PACK` 已持久化；
 - 用户交付内容保持简单：歌名 + 极短入选理由 + 对应博主的对应 Douyin MV 直链；
 - 所有真正交付给用户的 direct URL 已验证 landing work 本身就是被引用的作品；
-- `user_gate_delivery_mode = CORE_CREATOR_MV_DIRECT`。
+- `delivery_strategy = CORE_CREATOR_MV_DIRECT`。
+
+Runtime compatibility: legacy validator may still require `user_gate_delivery_mode = DIRECT_WORKS_FIRST`; treat that as a compatibility marker only, not discovery/delivery business logic.
 
 Default discovery rule:
 
