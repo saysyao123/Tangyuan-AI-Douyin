@@ -129,7 +129,7 @@ def engine_lyric_align(args, pkg: Path, audio: Path, lyrics: Path) -> Path:
     rows = parse_srt(srt); trusted = pt.read_lyrics(lyrics)
     if [pt.normalize_lyric(r['lyric']) for r in rows] != [pt.normalize_lyric(x) for x in trusted]:
         raise ValueError('lyric-align output has unmatched/missing/changed lines; keep BLOCKED and inspect raw output')
-    norm = out / 'raw_evidence' / 'lyric-align' / 'normalized_timeline.csv'; write_rows(norm, rows); return norm
+    norm = out / 'normalized_timeline.csv'; write_rows(norm, rows); return norm
 
 
 def main() -> int:
