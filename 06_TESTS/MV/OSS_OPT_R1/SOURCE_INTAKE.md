@@ -1,6 +1,6 @@
 # OSS MV Optimization Source Intake v1.1
 
-Status: `SOURCE_LOCKED / UPSTREAM_SONG_AUDIO_PENDING`
+Status: `SOURCE_LOCKED / EXPERIMENT_COMPLETE / IMMUTABLE SOURCE REVISION`
 
 ## Source project
 
@@ -103,3 +103,13 @@ Locked source revision for this experiment:
 `penposs/mvmaker-h3-skills@796797030275fe57afaba736771e8510c848799d`
 
 Do not silently follow future upstream changes during this experiment. Any source update requires an explicit revision note before comparing results.
+
+## Final source-level verdict
+
+The locked source revision has completed its intended first R3 integration test. Final decisions are recorded in:
+
+- `RESULT_MATRIX.md`;
+- `PROCESS_AUDIT/OSS_OPT_R1_CLOSE_AUDIT_v1.md`;
+- `OSS_OPT_R1_CLOSE_RECEIPT.json`.
+
+Portable Director/Montage knowledge produced selective positive results. H3-specific container/input/orchestration constraints remain excluded from the current R3 Web/Seedance path. Any future upstream source revision must start a new explicit experiment revision rather than mutating this locked evidence set.
