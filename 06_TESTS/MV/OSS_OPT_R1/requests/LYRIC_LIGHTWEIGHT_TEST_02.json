@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.1",
+  "request_id": "LYRIC_LIGHTWEIGHT_TEST_02",
+  "slot_id": "D02-B",
+  "song_family": "有几次想你了",
+  "audio_workflow_run_id": 33040160960,
+  "audio_artifact_name": "D02B-HG02-listening-package",
+  "audio_file_name": "HG02_B_soft_tail_0p8s.mp3",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "mode": "D01B_FASTER_WHISPER_SMALL_TRUSTED_TEXT_MAPPING",
+  "trusted_lyrics": [
+    "有几次想你了",
+    "有几次忍住了",
+    "有几句想说的",
+    "都变成算了",
+    "有几场雨停了",
+    "有几阵风过了",
+    "有多舍不得也该放下了"
+  ]
+}
