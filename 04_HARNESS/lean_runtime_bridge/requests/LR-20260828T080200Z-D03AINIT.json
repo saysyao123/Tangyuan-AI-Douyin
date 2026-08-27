@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T080200Z-D03AINIT",
+  "command": "INIT_SLOT",
+  "slot_id": "D03-A",
+  "payload": {
+    "program": "30D_60",
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Initialize the first real Lean Runtime MV slot after validated D03-A allocation.",
+  "expected_guard": {
+    "kind": "ALLOCATION",
+    "tracker_sha256": "cb5293f16d46ddb666d140de96f143422e171e8e0f690b97cf0d48e6a08c0e0a",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "slot_id": "D03-A",
+    "lane": "P"
+  }
+}
