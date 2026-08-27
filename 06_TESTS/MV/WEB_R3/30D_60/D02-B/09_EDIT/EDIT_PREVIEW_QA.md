@@ -1,34 +1,40 @@
-# D02-B｜Edit Preview QA v1
+# D02-B｜Edit Preview QA v2 — Dense Lyric-First
 
 Status: `PASS_FOR_HG04_REVIEW`
 
-Preview: `D02-B_picture_preview_v1.mp4`
-Preview SHA256: `127fd8dc4928401d7d28b88caa0dba8feadeacc077af45793841a89227c1d8e2`
+Preview: `D02-B_picture_preview_v2_dense_lyric.mp4`
+Preview SHA256: `99cdff6fa8f8af17e0e935e8a9714cc33076bdce2ea4d96037afc4989297eee5`
+Duration: `15.375s` at 24fps. Locked audio target is ~15.386–15.412s depending container metadata; difference is frame-level rounding only.
 
 ## Technical
-- 720x1280, 24fps, SAR 1:1.
-- Duration ~15.39s against locked BGM target ~15.412s; frame/audio rounding only, no new lyric clock.
-- Locked HG02 BGM is the only production audio.
-- AI source audio removed before edit.
+- 720x1280 / 9:16 / 24fps.
+- Locked HG02 BGM only.
+- AI source audio removed.
 - No subtitles at HG04 picture-rhythm stage.
+- Previously validated 1.25x center safety crop reused for generator-corner-mark removal.
 
-## Picture / rhythm
-- External visible sequence: `S1 close approach -> S2 boundary/turn -> S3 rear-three-quarter continuation -> S4 long-axis release`.
-- Visual scale opens progressively instead of alternating randomly between close and wide.
-- S1 is deliberately trimmed before the generated smile dominates the performance.
-- S2 mild slowdown (~0.91x) is not visually disruptive in preview and preserves the complete HOLD -> YIELD arc.
-- S3 is used at native speed and carries the semantic handoff from `算了` into weather/time having passed.
-- S4 remains native-speed for 5s, then last-frame hold carries the post-vocal music tail without starting a new event.
-- No random internal cuts detected in chosen windows.
-- Perceptible shot count remains low and readable.
+## Picture design
+Visible sequence now follows lyric verbs/states rather than four long blocks:
+`approach -> hand/boundary -> restraint -> almost speak -> turn away -> wet post-rain world -> wet-stone foot detail -> light returns -> gust -> linen residue -> still holding -> release -> world open`.
 
-## WEB safety
-- Previous validated watermark-safe center-crop method used for native 9:16 sources.
-- Current uploaded S2 file reports 720x960; normalized without stretch and kept compositionally usable.
-- Representative clean-proxy frames show no visible generator corner mark.
+Approx visible shot/atom count: `13`, sourced from five raw 5s videos.
+The final edit deliberately selects/trims within the generated multi-shot material rather than stretching each source.
 
-## Known creative note / future improvement
-- Camera design can still be strengthened in later MVs; current source set is accepted as stable and usable.
-- S1 source did not fully perform `忍住`; edit patches this locally by handing restraint to S2 rather than regenerating S1.
+## Seven-line coverage
+- L01 想你: approach closes distance.
+- L02 忍住: boundary hand/detail + restrained relation.
+- L03 想说: held almost-speaking expression.
+- L04 算了: withdrawal/turn-away.
+- L05 雨停: wet stone + foot detail + returning warm light; no active rain invented.
+- L06 风过: gust through person/linen + delayed linen residue.
+- L07 舍不得/放下: body leaves while hand holds -> fingers release -> world opens and camera stops pursuing.
 
-Gate recommendation: present this preview to HG04 for picture-rhythm review.
+## Creative QA
+- Lyric visual hit: PASS.
+- Whole-world continuity: PASS.
+- Male attractiveness / cinematic beauty retained: PASS.
+- Material density / editor choice margin: PASS.
+- Camera motivation remains readable without turning into effects montage: PASS.
+- No regeneration recommended before HG04.
+
+Gate recommendation: `HG04 picture-rhythm review`.
