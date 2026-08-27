@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T145600Z-S09ADV1",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "690e75aa2aef933b6084736c2e7ed024646675a8122d11f43fe3560c0882b1f0",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "59aa469766795393e4b0648b3d43a7bfac7bf0fefa8d509d400746b54a1984d0",
+    "state_sha256": "3baf941b13f8e5206db31508fa9c4f0ffadb8f6b6cdfbc5f83b5ac4a0f3e104d",
+    "transition_sequence": 8
+  },
+  "payload": {"to": "S09_SOURCE_NORMALIZATION_READY"},
+  "requested_by": "chatgpt_web",
+  "reason": "WEB source rough-cut map and QA are durable. Raw sources are preserved, source audio removed, prior validated watermark-safe crop applied, and all edit proxies are normalized to 720x1280 / 24fps / SAR 1:1."
+}
