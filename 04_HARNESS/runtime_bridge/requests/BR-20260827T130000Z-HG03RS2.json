@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T130000Z-HG03RS2",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Fresh canonical guard after adding the required canonical FIRST_FRAME_SET_MANIFEST and FIRST_FRAME_SET_QA artifacts."
+}
