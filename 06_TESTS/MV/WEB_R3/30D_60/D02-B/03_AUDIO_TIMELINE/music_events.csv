@@ -1,0 +1,9 @@
+﻿event_id,time,event_type,evidence,purpose,confidence,qa_status
+M01,4.740,strong_energy_onset,20ms PCM RMS positive derivative,candidate edit accent / supporting only,SUPPORTING,PASS
+M02,6.520,strong_energy_onset,20ms PCM RMS positive derivative,candidate edit accent / supporting only,SUPPORTING,PASS
+M03,11.800,strong_energy_onset,20ms PCM RMS positive derivative,candidate edit accent / supporting only,SUPPORTING,PASS
+M04,2.061,phrase_release,Route B CTC line L01 end,phrase release / edit breathing point,STRONG_CTC,PASS
+M05,3.802,phrase_release,Route B CTC line L02 end,phrase release / edit breathing point,STRONG_CTC,PASS
+M06,5.602,phrase_release,Route B CTC line L03 end,phrase release / edit breathing point,STRONG_CTC,PASS
+M07,6.983,phrase_release,Route B CTC line L04 end,phrase release / edit breathing point,STRONG_CTC,PASS
+M08,14.612,tail_fade_start,HG02 locked transform: final 0.8s fade,outro/tail handling,LOCKED_TRANSFORM,PASS

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "title": "有几次想你了",
+  "artist_or_audio_author": "林叙（错位秋天已上线）",
+  "exact_version": "Douyin native original audio object 7670104695834282815 / Option B",
+  "douyin_music_asset_object_id": "7670104695834282815",
+  "locked_bgm_reference": "02_BGM/BGM_CANDIDATE_PACKAGE.json#selected_option_by_user=B",
+  "locked_bgm_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "rendered_duration_seconds": 15.412245,
+  "codec": "mp3",
+  "sample_rate_hz": 44100,
+  "channels": 2,
+  "source_clip_start_seconds": 0.0,
+  "source_clip_end_seconds": 15.412245,
+  "render_transform": {
+    "speed_change": false,
+    "time_stretch": false,
+    "lead_in_seconds": 0.0,
+    "tail_fade_seconds": 0.8
+  },
+  "AUDIO_IDENTITY_LOCKED": "YES"
+}

@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "language": "zh",
+  "source": {
+    "audio_name": "HG02_B_soft_tail_0p8s.mp3",
+    "alignment_engine": "whisperx_ctc",
+    "alignment_model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "requested_device": "cpu",
+    "actual_alignment_device": "cpu"
+  },
+  "lines": [
+    {
+      "index": 0,
+      "text": "有几次想你了",
+      "start": 0.3,
+      "end": 2.061,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {
+          "text": "有",
+          "start": 0.3,
+          "end": 0.54,
+          "estimated": false
+        },
+        {
+          "text": "几次",
+          "start": 0.54,
+          "end": 1.12,
+          "estimated": false
+        },
+        {
+          "text": "想",
+          "start": 1.12,
+          "end": 1.421,
+          "estimated": false
+        },
+        {
+          "text": "你",
+          "start": 1.421,
+          "end": 1.641,
+          "estimated": false
+        },
+        {
+          "text": "了",
+          "start": 1.641,
+          "end": 2.061,
+          "estimated": false
+        }
+      ],
+      "sourceLineIndex": 0
+    },
+    {
+      "index": 1,
+      "text": "有几次忍住了",
+      "start": 2.061,
+      "end": 3.802,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {
+          "text": "有",
+          "start": 2.061,
+          "end": 2.301,
+          "estimated": false
+        },
+        {
+          "text": "几次",
+          "start": 2.301,
+          "end": 2.921,
+          "estimated": false
+        },
+        {
+          "text": "忍住",
+          "start": 2.921,
+          "end": 3.561,
+          "estimated": false
+        },
+        {
+          "text": "了",
+          "start": 3.561,
+          "end": 3.802,
+          "estimated": false
+        }
+      ],
+      "sourceLineIndex": 1
+    },
+    {
+      "index": 2,
+      "text": "有几句想说的",
+      "start": 3.802,
+      "end": 5.602,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {
+          "text": "有",
+          "start": 3.802,
+          "end": 4.062,
+          "estimated": false
+        },
+        {
+          "text": "几句",
+          "start": 4.062,
+          "end": 4.642,
+          "estimated": false
+        },
+        {
+          "text": "想",
+          "start": 4.642,
+          "end": 4.902,
+          "estimated": false
+        },
+        {
+          "text": "说",
+          "start": 4.902,
+          "end": 5.182,
+          "estimated": false
+        },
+        {
+          "text": "的",
+          "start": 5.182,
+          "end": 5.602,
+          "estimated": false
+        }
+      ],
+      "sourceLineIndex": 2
+    },
+    {
+      "index": 3,
+      "text": "都变成算了",
+      "start": 5.602,
+      "end": 6.983,
+      "status": "aligned",
+      "warnings": [],
+      "tokens": [
+        {
+          "text": "都",
+          "start": 5.602,
+          "end": 5.822,
+          "estimated": false
+        },
+        {
+          "text": "变成",
+          "start": 5.822,
+          "end": 6.503,
+          "estimated": false
+        },
+        {
+          "text": "算了",
+          "start": 6.503,
+          "end": 6.983,
+          "estimated": false
+        }
+      ],
+      "sourceLineIndex": 3
+    }
+  ],
+  "warnings": [],
+  "firstAlignedLyricStartMs": 300,
+  "preservedHeaderLines": [],
+  "presentationHints": []
+}

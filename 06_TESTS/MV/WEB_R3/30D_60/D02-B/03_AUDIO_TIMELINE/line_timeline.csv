@@ -1,0 +1,5 @@
+﻿line_id,lyric,start,end,source_evidence,confidence,qa_status
+L01,有几次想你了,0.300,2.061,Route B / Xingyu CTC forced alignment v0.6.1,STRONG_CTC,PASS
+L02,有几次忍住了,2.061,3.802,Route B / Xingyu CTC forced alignment v0.6.1,STRONG_CTC,PASS
+L03,有几句想说的,3.802,5.602,Route B / Xingyu CTC forced alignment v0.6.1,STRONG_CTC,PASS
+L04,都变成算了,5.602,6.983,Route B / Xingyu CTC forced alignment v0.6.1,STRONG_CTC,PASS

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "language": "zh",
+  "source": {
+    "audio_name": "HG02_B_soft_tail_0p8s.mp3",
+    "alignment_engine": "whisperx_ctc",
+    "alignment_model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "requested_device": "cpu",
+    "actual_alignment_device": "cpu"
+  },
+  "line_count": 4,
+  "aligned_or_partial_lines": 4,
+  "input_alignment_characters": 23,
+  "timed_character_entries": 23,
+  "missing_character_timestamps": 0,
+  "character_count_matches": true,
+  "non_monotonic_line_count": 0,
+  "status_counts": {
+    "aligned": 4
+  },
+  "estimated_token_count": 12,
+  "skipped_line_count": 0,
+  "swlrc_warnings": [],
+  "warnings": [],
+  "firstAlignedLyricStartMs": 300,
+  "preservedHeaderLines": [],
+  "presentationHints": []
+}
