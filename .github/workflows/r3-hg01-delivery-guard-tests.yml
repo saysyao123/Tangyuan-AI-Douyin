@@ -6,6 +6,8 @@ on:
       - test/mv-oss-optimization-r1
     paths:
       - '04_HARNESS/runtime/mv_artifact_registry.json'
+      - '04_HARNESS/runtime/mv_human_gate_registry.json'
+      - '04_HARNESS/runtime/mv_stage_registry.json'
       - '04_HARNESS/rules/mv_human_gates.md'
       - '04_HARNESS/rules/mv_stage_entry_checklist.md'
       - '04_HARNESS/tools/mv_runtime_gate.py'
@@ -32,22 +34,32 @@ jobs:
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
             --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
             --artifact SONG_CANDIDATE_SET \
-            > /tmp/hg01-artifact.json
-          code=$?
+            > /tmp/hg01-candidate.json
+          candidate_code=$?
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --artifact HG01_CANDIDATE_EVIDENCE_PACK \
+            > /tmp/hg01-pack.json
+          pack_code=$?
           set -e
-          cat /tmp/hg01-artifact.json
-          if [ "$code" -ne 1 ]; then
-            echo "Expected SONG_CANDIDATE_SET to fail until HG01 evidence delivery assertions are all PASS; got $code"
+          cat /tmp/hg01-candidate.json
+          cat /tmp/hg01-pack.json
+          if [ "$candidate_code" -ne 1 ] || [ "$pack_code" -ne 1 ]; then
+            echo "Expected both current candidate set and evidence pack to fail before evidence delivery PASS"
             exit 1
           fi
           python - <<'PY'
           import json
           from pathlib import Path
-          report = json.loads(Path('/tmp/hg01-artifact.json').read_text(encoding='utf-8'))
-          assert report['ok'] is False, report
-          errors = '\n'.join(report.get('errors') or [])
-          assert 'HG01_EVIDENCE_DELIVERY_PASS' in errors, errors
-          assert 'all_direct_links_landing_work_verified' in errors, errors
+          candidate = json.loads(Path('/tmp/hg01-candidate.json').read_text(encoding='utf-8'))
+          pack = json.loads(Path('/tmp/hg01-pack.json').read_text(encoding='utf-8'))
+          assert candidate['ok'] is False, candidate
+          assert pack['ok'] is False, pack
+          candidate_errors = '\n'.join(candidate.get('errors') or [])
+          pack_errors = '\n'.join(pack.get('errors') or [])
+          assert 'HG01_EVIDENCE_DELIVERY_PASS' in candidate_errors, candidate_errors
+          assert 'all_direct_links_landing_work_verified' in candidate_errors, candidate_errors
+          assert 'HG01_EVIDENCE_DELIVERY_PASS' in pack_errors, pack_errors
           print('PASS: current D02-B cannot masquerade as HG01-ready')
           PY
 
@@ -75,19 +87,19 @@ jobs:
           assert report['ok'] is False, report
           assert 'machine preflight artifact missing or non-canonical' in report['error'], report
           details = report.get('details') or {}
-          assert details.get('artifact') == 'SONG_CANDIDATE_SET', details
+          assert details.get('artifact') in {'SONG_CANDIDATE_SET', 'HG01_CANDIDATE_EVIDENCE_PACK'}, details
           print('PASS: Runtime refuses HG01 receipt before evidence delivery PASS')
           PY
 
-      - name: Positive guard fixture can pass only when all assertions are true
+      - name: Positive fixture requires both candidate assertions and canonical evidence pack
         shell: bash
         run: |
           cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-positive
           python - <<'PY'
           import json
           from pathlib import Path
-          path = Path('/tmp/D02-B-positive/01_SONG/SONG_CANDIDATE_SET.json')
-          data = json.loads(path.read_text(encoding='utf-8'))
+          candidate_path = Path('/tmp/D02-B-positive/01_SONG/SONG_CANDIDATE_SET.json')
+          data = json.loads(candidate_path.read_text(encoding='utf-8'))
           data['status'] = 'HG01_EVIDENCE_DELIVERY_PASS'
           guard = data['evidence_delivery_guard']
           guard['all_candidates_min_direct_works_2'] = True
@@ -96,8 +108,49 @@ jobs:
           guard['core_account_coverage_reported'] = True
           guard['no_external_audio_substitution'] = True
           guard['user_gate_delivery_mode'] = 'DIRECT_WORKS_FIRST'
-          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          candidate_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          pack_path = Path('/tmp/D02-B-positive/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md')
+          with pack_path.open('a', encoding='utf-8') as handle:
+              handle.write('\n\n## SYNTHETIC POSITIVE FIXTURE ASSERTIONS\n')
+              handle.write('HG01_EVIDENCE_DELIVERY_PASS = YES\n')
+              handle.write('DIRECT_DOUYIN_EVIDENCE_PACK_READY = YES\n')
+              handle.write('CORE_ACCOUNT_COVERAGE_REPORTED = YES\n')
+              handle.write('ALL_DIRECT_LINKS_LANDING_WORK_VERIFIED = YES\n')
+              handle.write('NO_EXTERNAL_AUDIO_LINK_SUBSTITUTION = YES\n')
+              handle.write('USER_GATE_DELIVERY_MODE = DIRECT_WORKS_FIRST\n')
+              handle.write('EVIDENCE_LOCATION = LANDING_WORK\n')
           PY
+
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
             --slot-root /tmp/D02-B-positive \
             --artifact SONG_CANDIDATE_SET
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root /tmp/D02-B-positive \
+            --artifact HG01_CANDIDATE_EVIDENCE_PACK
+
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root /tmp/D02-B-positive \
+            --gate HG01 \
+            --user-decision-text 'SYNTHETIC_USER_SELECTED_A' \
+            --approved-artifact '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md' \
+            > /tmp/hg01-positive-record.json
+          cat /tmp/hg01-positive-record.json
+
+          python 04_HARNESS/tools/mv_runtime_gate.py validate-stage \
+            --slot-root /tmp/D02-B-positive \
+            --stage S01_HG01_SONG_LOCKED \
+            --web true --multi-shot false --program-30d60 true \
+            > /tmp/hg01-positive-stage.json
+          cat /tmp/hg01-positive-stage.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          record = json.loads(Path('/tmp/hg01-positive-record.json').read_text(encoding='utf-8'))
+          stage = json.loads(Path('/tmp/hg01-positive-stage.json').read_text(encoding='utf-8'))
+          assert record['ok'] is True, record
+          assert stage['ok'] is True, stage
+          required = stage['stages'][-1]['required_artifacts']
+          assert 'HG01_CANDIDATE_EVIDENCE_PACK' in required, required
+          print('PASS: HG01 becomes valid only when candidate set + canonical evidence pack + receipt all pass')
+          PY
