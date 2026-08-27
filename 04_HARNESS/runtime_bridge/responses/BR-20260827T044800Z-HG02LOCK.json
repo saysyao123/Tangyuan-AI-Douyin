@@ -1,0 +1,87 @@
+{
+  "command": "RECORD_HUMAN_GATE",
+  "completed_at": "2026-08-27T04:47:15Z",
+  "error": "stale optimistic-concurrency guard: {'slot_fingerprint_sha256': {'expected': '808e438967699adabf11d0bb0b27edd188876cf7424cc256ce1a0fdac28402c2', 'actual': 'fa57ed4e5c0dcc43edffe9c4331e337d7786c40608956ba08641ae4410ee6312'}}",
+  "execution": null,
+  "next_guard": null,
+  "postflight": null,
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_bgm_discovery.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": null,
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "DISCOVER_AND_LOCK_EXACT_BGM",
+      "human_gate": "HG02",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S02_HG02_BGM_LOCKED",
+      "summary": "Discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 0,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T044800Z-HG02LOCK",
+  "request_sha256": "860a249c764eb93b1a3b2688461176a143453ebb54879a8398565f350d5fca22",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33040459541",
+    "github_source_sha": "954b54ca7fe9c934b153c51ae53784c8da3e2ffc"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "REJECTED"
+}
