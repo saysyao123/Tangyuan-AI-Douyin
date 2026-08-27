@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T170900Z-D02BS14ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS",
+    "current_state_token": "SUBTITLE_IMPLEMENTATION_QA_PASS",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "baebd50de42ea1eb5879cb7e47f7d6760f7a385d5f48cb2079ae7e150e6e7f75",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "81b8d0662051fbff106a85da1fe773eba41b5e97ba2411723dca2b545effff68",
+    "state_sha256": "b377db78e121cd60d96b1f51a4c0d3baa510ddb60b3290b426c8db4b8a56257f",
+    "transition_sequence": 13
+  },
+  "payload": {"to": "S14_FINAL_TECH_QA_PASS"},
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B after the actual final subtitled render passed codec, duration, audio-stream identity, SAR, subtitle integration and sampled visual delivery QA."
+}
