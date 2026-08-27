@@ -91,7 +91,7 @@ jobs:
           print('PASS: Runtime refuses HG01 receipt before evidence delivery PASS')
           PY
 
-      - name: Positive fixture requires both candidate assertions and canonical evidence pack
+      - name: Positive fixture must pass real canonical RECORD ADVANCE VERIFY chain
         shell: bash
         run: |
           cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-positive
@@ -137,20 +137,33 @@ jobs:
             > /tmp/hg01-positive-record.json
           cat /tmp/hg01-positive-record.json
 
-          python 04_HARNESS/tools/mv_runtime_gate.py validate-stage \
+          python 04_HARNESS/tools/mv_runtime_state.py advance \
             --slot-root /tmp/D02-B-positive \
-            --stage S01_HG01_SONG_LOCKED \
-            --web true --multi-shot false --program-30d60 true \
-            > /tmp/hg01-positive-stage.json
-          cat /tmp/hg01-positive-stage.json
+            --to S01_HG01_SONG_LOCKED \
+            > /tmp/hg01-positive-advance.json
+          cat /tmp/hg01-positive-advance.json
+
+          python 04_HARNESS/tools/mv_runtime_state.py verify-state \
+            --slot-root /tmp/D02-B-positive \
+            > /tmp/hg01-positive-verify.json
+          cat /tmp/hg01-positive-verify.json
+
           python - <<'PY'
           import json
           from pathlib import Path
           record = json.loads(Path('/tmp/hg01-positive-record.json').read_text(encoding='utf-8'))
-          stage = json.loads(Path('/tmp/hg01-positive-stage.json').read_text(encoding='utf-8'))
+          advance = json.loads(Path('/tmp/hg01-positive-advance.json').read_text(encoding='utf-8'))
+          verify = json.loads(Path('/tmp/hg01-positive-verify.json').read_text(encoding='utf-8'))
           assert record['ok'] is True, record
-          assert stage['ok'] is True, stage
-          required = stage['stages'][-1]['required_artifacts']
-          assert 'HG01_CANDIDATE_EVIDENCE_PACK' in required, required
-          print('PASS: HG01 becomes valid only when candidate set + canonical evidence pack + receipt all pass')
+          assert advance['ok'] is True, advance
+          assert verify['ok'] is True, verify
+          assert verify['current_stage'] == 'S01_HG01_SONG_LOCKED', verify
+
+          receipt_path = Path('/tmp/D02-B-positive/00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json')
+          transition = json.loads(receipt_path.read_text(encoding='utf-8'))
+          evidence_ids = {item['artifact_id'] for item in transition['evidence_snapshot']}
+          assert 'SONG_CANDIDATE_SET' in evidence_ids, evidence_ids
+          assert 'HG01_CANDIDATE_EVIDENCE_PACK' in evidence_ids, evidence_ids
+          assert 'HG01_SELECTION_RECEIPT' in evidence_ids, evidence_ids
+          print('PASS: Canonical S01 transition snapshots candidate set + evidence pack + HG01 receipt')
           PY
