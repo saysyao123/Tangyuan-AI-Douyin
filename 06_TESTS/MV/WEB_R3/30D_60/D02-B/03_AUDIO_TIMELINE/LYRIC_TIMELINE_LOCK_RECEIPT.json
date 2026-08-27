@@ -1,5 +1,5 @@
 {
-  "receipt_version": "1.0",
+  "receipt_version": "1.1",
   "receipt_id": "D02-B_LYRIC_TIMELINE_LOCK",
   "slot_id": "D02-B",
   "song_family": "有几次想你了",
@@ -13,9 +13,10 @@
   "coverage": "7/7 lines at 100%",
   "sequence_ratio": 1.0,
   "line_starts_monotonic": true,
-  "qa_artifact": "lyric_timeline_qa.json",
+  "qa_artifact": "alignment_qa_report.md",
+  "machine_qa_artifact": "lyric_timeline_qa.json",
   "package_manifest": "package_manifest.json",
-  "package_manifest_sha256": "736b7b84a3b0d9b74b36341e24a0d49558546c3be13fdf482c3bac6f2f35bf41",
+  "package_manifest_sha256": "f519e966ed3be475129ce18c4a26b4931407bb0b320d2a014136ecbbd60737a5",
   "fallback": "P2_XINGYU_ARCHIVED_NOT_REQUIRED",
   "status": "LYRIC_TIMELINE_LOCKED"
 }
