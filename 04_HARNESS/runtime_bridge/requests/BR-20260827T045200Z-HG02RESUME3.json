@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T045200Z-HG02RESUME3",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh canonical guard after fixing the experiment workflow condition; no HG02 probe should run for this Runtime request."
+}
