@@ -1,0 +1,5 @@
+source_id,source_file,sha256,raw_duration_s,raw_geometry,face_reconstruction,qa_status,recommended_in_s,recommended_out_s,planned_role,note
+S1_B01,AI动画人物克制靠近与停住.mp4,693f2950fe280eb45f883162e69e3f69e478a28dd2f05dff24291d8c55ae8d92,5.056,720x1280,pass_by_~0.1s,TRIM_REQUIRED,0.10,1.80,HOOK_APPROACH,"Use for 有几次想你了; cut before smile/commercial feeling dominates; do not force restraint."
+S2_B02,AI动画人物克制靠近与停住 (4)(1).mp4,91835f8752879b02e928500481976baaff82ea50f4386137ade3cf6449be24ff,5.056,720x960,pass_by_~0.1s,PASS_FULL_AFTER_GRID_TRIM,0.10,5.00,HOLD_TURN_PASSAGE,"Strongest source; use early hold for 忍住, then turn/passage for 想说->算了; requires 9:16 normalization."
+S3_B03,AI动画人物克制靠近与停住 (5).mp4,9cf119dd0cebc6f61a795346b35aa679697f2eb743e666b776142e952070e440,5.056,720x1280,pass_by_~0.1s_cross_angle,PASS_FULL_AFTER_GRID_TRIM,0.10,4.20,LOOKBACK_CONTINUE,"Use as 算了 residue into 雨停/风过; stable identity through head turn."
+S4_B04,AI动画人物克制靠近与停住 (1).mp4,96ed21561555fc852208ee4a49ef1a001dedb9d95205e9d616cf6e34704b6e25,5.056,720x1280,not_applicable_distant,PASS_FULL,0.00,4.69,RELEASE,"Wide distance source for 舍不得->放下 and final tail."
