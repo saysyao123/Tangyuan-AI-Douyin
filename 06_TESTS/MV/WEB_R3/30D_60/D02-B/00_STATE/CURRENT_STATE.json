@@ -4,12 +4,12 @@
   "slot_id": "D02-B",
   "program": "30D_60",
   "lane": "S",
-  "current_stage": "S02_HG02_BGM_LOCKED",
-  "current_state_token": "BGM_LOCKED",
-  "status": "BGM_LOCKED",
-  "transition_sequence": 2,
-  "last_transition_receipt": "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
-  "last_transition_receipt_sha256": "085b48b76ca5211113caf6d84a17d66a5e9abdba2f6e7e4d81165a9e42685233",
+  "current_stage": "S03_AUDIO_TIMELINE_LOCKED",
+  "current_state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+  "status": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+  "transition_sequence": 3,
+  "last_transition_receipt": "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+  "last_transition_receipt_sha256": "df7a247da909f7b8ebb92037ad67585bb64bc3aeb4d4607e7f239d01fe304d9f",
   "context": {
     "web": true,
     "multi_shot": false,
@@ -20,5 +20,5 @@
   "last_context_receipt": null,
   "last_context_receipt_sha256": null,
   "created_at": "2026-08-27T03:14:41Z",
-  "updated_at": "2026-08-27T04:50:29Z"
+  "updated_at": "2026-08-27T08:48:34Z"
 }
