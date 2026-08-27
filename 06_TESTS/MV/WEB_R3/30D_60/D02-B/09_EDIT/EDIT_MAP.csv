@@ -1,0 +1,6 @@
+fragment_id,timeline_in,timeline_out,duration_s,source_id,source_in,source_out,speed,role,lyric_relation,why_cut_here
+F01,0.000,1.200,1.200,S1,0.800,2.000,1.000,HOOK_APPROACH,有几次想你了,"Use attraction/approach before the generated smile becomes too advertising-like"
+F02,1.200,5.600,4.400,S2,1.000,5.000,0.909,HOLD_TO_YIELD,想你尾部→忍住了→有几句想说的,"Move from approach into boundary restraint; mild 0.91x slowdown preserves complete action arc"
+F03,5.600,9.120,3.520,S3,1.000,4.520,1.000,TURN_AWAY_CONTINUE,都变成算了→有几场雨停了,"Cut on semantic surrender into a body orientation already turning away and continuing"
+F04,9.120,14.120,5.000,S4,0.000,5.000,1.000,RELEASE_WORLD_OPEN,有几阵风过了→有多舍不得也该放下了,"Open the world at the final emotional release instead of returning to another close performance shot"
+F05,14.120,15.412,1.292,S4_LAST_FRAME,5.000,5.000,0.000,CLEAN_TAIL,post-vocal music tail,"No new visual event; hold the released endpoint through the BGM tail"
