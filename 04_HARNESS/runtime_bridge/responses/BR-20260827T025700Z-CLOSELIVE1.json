@@ -1,0 +1,154 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T02:56:37Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "blocked_for_production": true,
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "mode": "MIGRATION_REQUIRED",
+      "next_action": {
+        "action_id": "PLAN_CONTROLLED_LEGACY_MIGRATION",
+        "human_gate": null,
+        "jit_reads": [
+          "04_HARNESS/tools/mv_runtime_migrate.py",
+          "04_HARNESS/runtime/mv_artifact_registry.json"
+        ],
+        "summary": "Audit legacy evidence with mv_runtime_migrate.py and migrate explicitly before canonical resume."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "reason": "A pre-publish legacy root-level CURRENT_STATE exists, but canonical_v2 nested state does not. Do not infer progress from chat memory and do not allocate over this directory.",
+      "slot_id": "D02-A",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-A",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "P",
+        "packaging": "MUSIC_FIRST",
+        "publish_time": "",
+        "slot": "A",
+        "slot_id": "D02-A",
+        "song_family": "",
+        "status": "PLANNED"
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": null,
+  "postflight": {
+    "blocked_for_production": true,
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "mode": "MIGRATION_REQUIRED",
+    "next_action": {
+      "action_id": "PLAN_CONTROLLED_LEGACY_MIGRATION",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/tools/mv_runtime_migrate.py",
+        "04_HARNESS/runtime/mv_artifact_registry.json"
+      ],
+      "summary": "Audit legacy evidence with mv_runtime_migrate.py and migrate explicitly before canonical resume."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "reason": "A pre-publish legacy root-level CURRENT_STATE exists, but canonical_v2 nested state does not. Do not infer progress from chat memory and do not allocate over this directory.",
+    "slot_id": "D02-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D02-A",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "preflight": {
+    "blocked_for_production": true,
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "mode": "MIGRATION_REQUIRED",
+    "next_action": {
+      "action_id": "PLAN_CONTROLLED_LEGACY_MIGRATION",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/tools/mv_runtime_migrate.py",
+        "04_HARNESS/runtime/mv_artifact_registry.json"
+      ],
+      "summary": "Audit legacy evidence with mv_runtime_migrate.py and migrate explicitly before canonical resume."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "reason": "A pre-publish legacy root-level CURRENT_STATE exists, but canonical_v2 nested state does not. Do not infer progress from chat memory and do not allocate over this directory.",
+    "slot_id": "D02-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D02-A",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "request_id": "BR-20260827T025700Z-CLOSELIVE1",
+  "request_sha256": "80a65a5c667fae779dd64b75827f4cd03ce1635be02eab8e1a1029d5a70796e4",
+  "runner": {
+    "github_ref_name": "refactor/mv-runtime-consolidation-v2",
+    "github_run_attempt": "1",
+    "github_run_id": "33034836610",
+    "github_source_sha": "98e097cad9799c1ef8dd2c001208e11698037cad"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-A",
+  "status": "EXECUTED"
+}
