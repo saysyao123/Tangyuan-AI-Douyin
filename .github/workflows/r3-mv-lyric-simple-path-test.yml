@@ -80,7 +80,7 @@ jobs:
           GOT="$(sha256sum "$AUDIO" | awk '{print $1}')"
           test "$GOT" = "$EXPECTED"
           echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
-          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$AUDIO"
+          echo "audio_sha256=$GOT"
 
       - name: One-pass full-clip candidate lyric transcription
         shell: bash
@@ -109,7 +109,7 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-          import json, hashlib
+          import json
           root=Path('/tmp/lyrics_candidate')
           txt=[]
           for p in root.rglob('*'):
