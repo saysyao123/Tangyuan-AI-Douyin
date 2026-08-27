@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "request_id": "D02-B-S02-FINALIZE-20260827",
+  "slot_id": "D02-B",
+  "stage": "S02_HG02_BGM_LOCKED",
+  "candidate_workflow_run_id": 33054700945,
+  "candidate_artifact_name": "mv-audio-timeline-candidate-33054700945",
+  "audio_workflow_run_id": 33040160960,
+  "audio_artifact_name": "D02B-HG02-listening-package",
+  "audio_file_name": "HG02_B_soft_tail_0p8s.mp3",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "expected_line_bounds": [
+    {"line_id": "L01", "lyric": "有几次想你了", "start_s": 0.300, "end_s": 2.061},
+    {"line_id": "L02", "lyric": "有几次忍住了", "start_s": 2.061, "end_s": 3.802},
+    {"line_id": "L03", "lyric": "有几句想说的", "start_s": 3.802, "end_s": 5.602},
+    {"line_id": "L04", "lyric": "都变成算了", "start_s": 5.602, "end_s": 6.983}
+  ],
+  "ground_truth_qa": {
+    "status": "PASS",
+    "primary_evidence": "ASR_FORCED_ALIGNMENT / trusted lyrics / Xingyu alignment.json + SWLRC",
+    "tool_model": "xingyu-lyrics-aligner 0.7.0 -> WhisperX CTC -> jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn, CPU",
+    "summary": "PASS. The exact HG02-locked audio SHA was reverified. Xingyu aligned all four trusted lyric lines with explicit line starts and ends. The reviewed candidate preserves alignment.json boundaries exactly. The 0.8s render fade begins at 14.586083s, 7.603s after the final aligned vocal release at 6.983s, so the fade cannot alter lyric timing.",
+    "checks": [
+      "Exact HG02 option-B SHA-256 equals 6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4.",
+      "Xingyu report: line_count=4, aligned_or_partial_lines=4, status aligned=4.",
+      "Xingyu report: input_alignment_characters=23, timed_character_entries=23, missing_character_timestamps=0.",
+      "Xingyu report: character_count_matches=true, non_monotonic_line_count=0, warnings=[], swlrc_warnings=[].",
+      "alignment.json and SWLRC agree on explicit line boundaries including final line end 6.983s.",
+      "Reviewed candidate line_timeline.candidate.csv matches all four reviewed start/end boundaries to <=0.005s.",
+      "No repeated lyric occurrence ambiguity exists in this four-line excerpt.",
+      "HG02 option-B fade starts at 14.586083s; final vocal release is 6.983s, therefore fade is downstream of all lyric timing truth."
+    ],
+    "warnings": [],
+    "music_event_note": "Music-event clock supporting analysis used the exact locked audio decoded mono at 22050 Hz with librosa 0.11.0 onset_strength/onset diagnostics (hop_length=256). Approximate beat-tracker tempo was 135.999 BPM. Selected acoustic accents are editor/director support only; they do not override forced-alignment lyric truth. Fade start and content end come from the locked render transform/audio identity, while VOCAL_RELEASE comes from forced alignment."
+  },
+  "anchors": [
+    {"anchor_id": "A01", "line_id": "L01", "phrase": "想你", "start_s": 1.120, "end_s": 1.641, "evidence": "Xingyu SWLRC character timing", "purpose": "core longing semantic hit"},
+    {"anchor_id": "A02", "line_id": "L02", "phrase": "忍住", "start_s": 2.921, "end_s": 3.561, "evidence": "Xingyu SWLRC character timing", "purpose": "suppressed-action / restraint hit"},
+    {"anchor_id": "A03", "line_id": "L03", "phrase": "想说", "start_s": 4.642, "end_s": 5.182, "evidence": "Xingyu SWLRC character timing", "purpose": "unsaid-speech semantic hit"},
+    {"anchor_id": "A04", "line_id": "L04", "phrase": "算了", "start_s": 6.503, "end_s": 6.983, "evidence": "Xingyu SWLRC character timing", "purpose": "release / resignation landing"}
+  ],
+  "music_events": [
+    {"event_id": "M01", "time_s": 0.163, "type": "STRONG_ONSET", "description": "opening acoustic accent immediately before first lyric entry", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "optional opening movement/pickup cue"},
+    {"event_id": "M02", "time_s": 3.170, "type": "STRONG_ONSET", "description": "mid-vocal acoustic accent", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "optional internal cut or gesture accent"},
+    {"event_id": "M03", "time_s": 5.619, "type": "STRONG_ONSET", "description": "strong accent aligned closely with final lyric-line entry", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "final-line visual emphasis"},
+    {"event_id": "M04", "time_s": 6.983, "type": "VOCAL_RELEASE", "description": "end of final aligned lyric token", "evidence": "Xingyu alignment.json/SWLRC forced-alignment truth", "purpose": "semantic release boundary before instrumental continuation"},
+    {"event_id": "M05", "time_s": 7.767, "type": "POST_VOCAL_ONSET", "description": "first selected post-vocal instrumental accent", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "begin post-lyric visual continuation"},
+    {"event_id": "M06", "time_s": 8.440, "type": "STRONG_ONSET", "description": "post-vocal instrumental accent", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "optional picture-edit cut point"},
+    {"event_id": "M07", "time_s": 11.122, "type": "STRONG_ONSET", "description": "late instrumental buildup accent", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "visual escalation cue"},
+    {"event_id": "M08", "time_s": 12.214, "type": "ENERGY_PEAK", "description": "strongest detected onset-strength peak in the locked excerpt", "evidence": "librosa 0.11.0 onset_strength maximum among selected peaks on locked SHA, sr=22050 hop=256", "purpose": "post-vocal visual peak candidate"},
+    {"event_id": "M09", "time_s": 13.398, "type": "STRONG_ONSET", "description": "late instrumental accent before fade zone", "evidence": "librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256", "purpose": "last optional accent before release"},
+    {"event_id": "M10", "time_s": 14.586, "type": "FADE_START", "description": "HG02 option-B 0.8-second soft tail fade begins", "evidence": "locked render transform: content_duration 15.386083s minus fade 0.8s", "purpose": "start visual release / avoid new semantic event after this point"},
+    {"event_id": "M11", "time_s": 15.386, "type": "CONTENT_END", "description": "locked content timeline end", "evidence": "audio_identity.timeline_duration_s=15.386083", "purpose": "hard editor timeline boundary"}
+  ]
+}
