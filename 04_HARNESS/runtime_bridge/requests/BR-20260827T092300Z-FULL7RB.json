@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T092300Z-FULL7RB",
+  "command": "ROLLBACK",
+  "slot_id": "D02-B",
+  "payload": {
+    "change_type": "audio_timeline_revision",
+    "reason": "The locked Audio Timeline and downstream Natural Beat were built from an incomplete four-line creator-caption lyric set. Exact HG02 full-clip Xingyu candidate transcription now shows the clip continues with additional sung lyrics and the user identified seven lyric lines. Invalidate S03+ downstream and rebuild from complete clip lyrics.",
+    "authority": "runtime_correctness_correction"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Controlled correctness rollback before locking the complete seven-line lyric timeline.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "5ff555a868cf287bffd90208e4e80fe6ad29b8d98b758883cb3fd5c027c8b8c4",
+    "slot_fingerprint_sha256": "7c7dbe42a36da1421d5ece6813a5ee4712a0011a591916fd0e31cb2293164246",
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "transition_sequence": 4,
+    "last_transition_receipt_sha256": "03bdcbd0920a29a43096c8a5be735396d6b5abfc5ccfc77d465f352572ecf76d",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
