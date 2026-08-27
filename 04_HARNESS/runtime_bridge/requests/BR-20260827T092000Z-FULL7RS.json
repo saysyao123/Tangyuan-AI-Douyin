@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T092000Z-FULL7RS",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh canonical truth before controlled audio_timeline_revision. The active S03/S04 downstream was built from an incomplete four-line caption-derived lyric set; full-clip ASR on exact HG02 audio now proves additional sung lyrics exist."
+}
