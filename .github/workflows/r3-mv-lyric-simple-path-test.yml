@@ -74,7 +74,7 @@ jobs:
           echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
           echo "audio_sha256=$GOT"
 
-      - name: One-pass Faster-Whisper transcript with timestamps
+      - name: One-pass Faster-Whisper transcript plus trusted-text mapping
         shell: bash
         run: |
           set -euo pipefail
@@ -82,10 +82,15 @@ jobs:
           python - <<'PY'
           from faster_whisper import WhisperModel
           from pathlib import Path
-          import json, os, re, time
+          import difflib, json, os, re, time
 
           req=json.loads(Path('/tmp/request.json').read_text(encoding='utf-8'))
+          trusted=req.get('trusted_lyrics') or []
           audio=os.environ['AUDIO']
+
+          def norm(s):
+              return ''.join(re.findall(r'[\u4e00-\u9fff]', s or ''))
+
           t0=time.monotonic()
           model=WhisperModel('small', device='cpu', compute_type='int8')
           t1=time.monotonic()
@@ -97,13 +102,11 @@ jobs:
               word_timestamps=True,
               vad_filter=False,
               condition_on_previous_text=False,
+              initial_prompt='，'.join(trusted) if trusted else None,
               suppress_blank=False,
           )
           segments=list(segments_gen)
           t2=time.monotonic()
-
-          def norm(s):
-              return ''.join(re.findall(r'[\u4e00-\u9fff]', s or ''))
 
           out_segments=[]
           chars=[]
@@ -118,22 +121,47 @@ jobs:
                   end=float(w.end if w.end is not None else seg.end)
                   span=max(end-start,0.001)
                   for i,ch in enumerate(token):
-                      cs=start+span*i/len(token)
-                      ce=start+span*(i+1)/len(token)
-                      chars.append({'char':ch,'start':round(cs,4),'end':round(ce,4)})
+                      chars.append({'char':ch,'start':round(start+span*i/len(token),4),'end':round(start+span*(i+1)/len(token),4)})
                       recognized.append(ch)
                   words.append({'token':token,'start':round(start,4),'end':round(end,4)})
-              out_segments.append({
-                  'start':round(float(seg.start),4),
-                  'end':round(float(seg.end),4),
-                  'text':(seg.text or '').strip(),
-                  'normalized':norm(seg.text),
-                  'words':words,
+              out_segments.append({'start':round(float(seg.start),4),'end':round(float(seg.end),4),'text':(seg.text or '').strip(),'normalized':norm(seg.text),'words':words})
+
+          recognized_text=''.join(recognized)
+          target=''.join(norm(x) for x in trusted)
+          mapping={}
+          if target:
+              sm=difflib.SequenceMatcher(a=target,b=recognized_text,autojunk=False)
+              for tag,i1,i2,j1,j2 in sm.get_opcodes():
+                  if tag=='equal':
+                      for k in range(i2-i1):
+                          mapping[i1+k]=j1+k
+          else:
+              sm=None
+
+          line_results=[]
+          cursor=0
+          for idx,line in enumerate(trusted,1):
+              n=norm(line)
+              idxs=[mapping[i] for i in range(cursor,cursor+len(n)) if i in mapping]
+              line_results.append({
+                  'line_no':idx,
+                  'text':line,
+                  'char_count':len(n),
+                  'matched_chars':len(idxs),
+                  'coverage':round(len(idxs)/len(n),4) if n else 0.0,
+                  'start':round(min((chars[j]['start'] for j in idxs),default=0.0),4) if idxs else None,
+                  'end':round(max((chars[j]['end'] for j in idxs),default=0.0),4) if idxs else None,
               })
+              cursor+=len(n)
+
+          starts=[x['start'] for x in line_results]
+          monotonic=bool(line_results) and all(starts[i] is not None and starts[i+1] is not None and starts[i] < starts[i+1] for i in range(len(starts)-1))
+          full_coverage=bool(line_results) and all(x['coverage']==1.0 for x in line_results)
+          decision='LIGHTWEIGHT_ALIGNMENT_PASS' if full_coverage and monotonic else 'LIGHTWEIGHT_ALIGNMENT_REVIEW_REQUIRED'
 
           report={
-              'schema_version':'1.0',
-              'test':'D01B_LIGHTWEIGHT_FASTER_WHISPER_ONE_PASS',
+              'schema_version':'1.1',
+              'test':'D01B_LIGHTWEIGHT_FASTER_WHISPER_TRUSTED_TEXT_MAPPING',
               'slot_id':req['slot_id'],
               'song_family':req['song_family'],
               'audio_sha256':req['audio_sha256'],
@@ -145,11 +173,15 @@ jobs:
               'total_model_seconds':round(t2-t0,3),
               'segment_count':len(out_segments),
               'recognized_text':' '.join(s['text'] for s in out_segments if s['text']),
-              'recognized_normalized':' '.join(s['normalized'] for s in out_segments if s['normalized']),
+              'recognized_normalized':recognized_text,
               'recognized_char_count':len(chars),
+              'sequence_ratio':round(sm.ratio(),4) if sm else None,
+              'line_results':line_results,
+              'all_lines_full_coverage':full_coverage,
+              'line_starts_monotonic':monotonic,
               'segments':out_segments,
               'character_timestamps':chars,
-              'status':'TRANSCRIPT_WITH_TIMESTAMPS_READY_FOR_ONE_HUMAN_AUDIT' if chars else 'BLOCKED_EMPTY_TRANSCRIPT'
+              'decision':decision
           }
           Path('/tmp/fw/lightweight_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
