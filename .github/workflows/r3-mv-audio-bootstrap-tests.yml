@@ -27,12 +27,15 @@ jobs:
           set -euo pipefail
           python -m py_compile 04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py
           python - <<'PY'
-          import importlib.util
+          import importlib.util, re
           from pathlib import Path
           p=Path('04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py')
           text=p.read_text(encoding='utf-8')
-          if '#egg=' in text:
-              raise SystemExit('legacy #egg= Git requirement syntax is forbidden')
+          # Reject executable legacy Git requirement construction, while allowing
+          # documentation to mention the retired #egg= syntax as regression context.
+          code_lines='\n'.join(line for line in text.splitlines() if not line.lstrip().startswith('#'))
+          if re.search(r'git\+[^\n]+#egg=', code_lines):
+              raise SystemExit('legacy executable #egg= Git requirement syntax is forbidden')
           spec=importlib.util.spec_from_file_location('boot', p)
           mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
           req=mod.pinned_git_requirement('xingyu-lyrics-aligner','alignment','https://github.com/wangjiqing/xingyu-lyrics-aligner.git','abc123')
