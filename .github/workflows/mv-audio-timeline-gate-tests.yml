@@ -7,12 +7,17 @@ on:
       - '04_HARNESS/rules/mv_audio_timeline.md'
       - '04_HARNESS/workflows/mv.md'
       - '04_HARNESS/MANIFEST.md'
+      - '04_HARNESS/tools/mv_runtime_*.py'
+      - '06_TESTS/MV/CODEX_R2/**'
+      - '.github/workflows/mv-audio-timeline-gate-tests.yml'
   pull_request:
     paths:
       - '04_HARNESS/tools/mv_audio_timeline/**'
       - '04_HARNESS/rules/mv_audio_timeline.md'
       - '04_HARNESS/workflows/mv.md'
       - '04_HARNESS/MANIFEST.md'
+      - '04_HARNESS/tools/mv_runtime_*.py'
+      - '06_TESTS/MV/CODEX_R2/**'
 
 jobs:
   regression:
@@ -27,14 +32,40 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-      - name: Syntax check timing tools
+      - name: Syntax check timing and Codex Runtime adapter tools
         run: |
           python -m py_compile \
             04_HARNESS/tools/mv_audio_timeline/package_tool.py \
             04_HARNESS/tools/mv_audio_timeline/final_gate.py \
             04_HARNESS/tools/mv_audio_timeline/run_alignment.py \
-            04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py
+            04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py \
+            04_HARNESS/tools/mv_audio_timeline/lightweight_align.py \
+            04_HARNESS/tools/mv_runtime_bridge.py \
+            04_HARNESS/tools/mv_runtime_lean_bridge.py \
+            04_HARNESS/tools/mv_runtime_state.py \
+            06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py
       - name: Run timing-core regression suite
         run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py
       - name: Run complete-package gate regression suite
         run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_final_gate.py
+      - name: Codex R2 read-only preflight and allocation smoke
+        if: github.ref_name == 'test/mv-codex-r2'
+        run: |
+          set -euo pipefail
+          python 06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py preflight | tee /tmp/codex_preflight.json
+          python 06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py resume --slot D03-B | tee /tmp/codex_resume.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('/tmp/codex_preflight.json').read_text())
+          r=json.loads(Path('/tmp/codex_resume.json').read_text())
+          assert p['status'] in {'PASS','PARTIAL'}, p
+          assert r['mode']=='ALLOCATE_NEW_SLOT', r
+          assert r['slot_id']=='D03-B', r
+          assert r['lane']=='S', r
+          assert r['resolved_executor']['executor_id']=='HG01_CORE_DATABASE_ORCHESTRATION', r
+          assert r['next_guard']['kind']=='ALLOCATION', r
+          assert not Path('06_TESTS/MV/WEB_R3/30D_60/D03-B/00_STATE/CURRENT_STATE.json').exists()
+          PY
+          git diff --exit-code
+          git diff --cached --exit-code
