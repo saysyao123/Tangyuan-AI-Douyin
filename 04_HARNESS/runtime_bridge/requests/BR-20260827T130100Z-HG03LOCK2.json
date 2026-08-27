@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T130100Z-HG03LOCK2",
+  "command": "RECORD_HUMAN_GATE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "4a09ad5a1df25821bb05785ae9fb588c0bff9f2065ad44ba08925d757583001d",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "ddc7e80f96617f7cc16e88f2124ce906e87af5884d935f688bacd95bb32f82c8",
+    "state_sha256": "ff29391a329a49d9cf94aa9ce9bb4a135c3958dbb3a0d37a2d42d9c6d3062d44",
+    "transition_sequence": 5
+  },
+  "payload": {
+    "gate": "HG03",
+    "user_decision_text": "用户确认最终四张 B 方案黑色面部网格首帧问题不大，并授权在机器审核通过后继续下一步。",
+    "approved_artifacts": [
+      "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+      "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md"
+    ]
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Record actual HG03 acceptance after canonical first-frame manifest and machine QA both PASS."
+}
