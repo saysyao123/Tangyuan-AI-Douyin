@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T165800Z-D02BHG04PASS",
+  "command": "RECORD_HUMAN_GATE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S11_EDIT_MAP_LOCKED",
+    "current_state_token": "EDIT_MAP_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "225d92baa9d0fdf19c7e8e1b65c65b40cbb02ba4abc0d824ffb159d9b1db0caf",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "baa59ed63a566d17ab377377811755cd7c69542447676a3824c2ccff3914d2cf",
+    "state_sha256": "ba99b6e54869e6d6fa78dd67a61a68742bb2bc98a150eeed2c6dda30a85a74e9",
+    "transition_sequence": 11
+  },
+  "payload": {
+    "gate": "HG04",
+    "user_decision_text": "目前这个效果不错，你进入到下一步吧。",
+    "approved_artifacts": [
+      "09_EDIT/EDIT_PREVIEW_QA.md",
+      "09_EDIT/EDIT_MAP.csv"
+    ]
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Record the user's actual HG04 picture-rhythm approval for the D02-B dense lyric-first preview on the optimization test chain."
+}
