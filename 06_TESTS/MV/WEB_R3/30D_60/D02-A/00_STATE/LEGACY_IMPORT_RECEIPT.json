@@ -1,0 +1,123 @@
+{
+  "receipt_version": "1.0",
+  "status": "PASS",
+  "profile": "LEGACY_PRE_DIRECTOR_S04",
+  "slot_id": "D02-A",
+  "imported_through_stage": "S04_NATURAL_BEAT_LOCKED",
+  "downstream_not_proven_from_stage": "S05_DIRECTOR_PLAN_LOCKED",
+  "plan_sha256": "35d7e33552ee8760b5e533522d7456ac6ef19f4204e0295cc176f93014dd46a7",
+  "selected_by": "runtime_consolidation_close",
+  "reason": "Controlled production import of D02-A legacy durable evidence. Import boundary is S04 only; S05+ remains unproven.",
+  "legacy_sources": [
+    {
+      "kind": "LEGACY_STATE",
+      "path": "CURRENT_STATE.json",
+      "type": "file",
+      "sha256": "ff37fce853368db56b987eeec27e6655e94e5b3d56bfe1fa624dae0c42c0e34e",
+      "bytes": 3220
+    },
+    {
+      "kind": "HG01_CANDIDATE_EVIDENCE",
+      "path": "HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+      "type": "file",
+      "sha256": "ebd32a6428df2dfa3cefbe1b8a4fff2d7ecfc38373eec2defee097b012c35ca6",
+      "bytes": 8727
+    },
+    {
+      "kind": "HG01_SELECTION_RECEIPT",
+      "path": "HG01_SELECTION_RECEIPT_v1.md",
+      "type": "file",
+      "sha256": "e24277f434c1a1ca3d26edcceefb0ab83cc0dcf16de9bb7d73936b793f4703ec",
+      "bytes": 1439
+    },
+    {
+      "kind": "HG02_LISTENING_PACK",
+      "path": "HG02_LISTENING_PACK_v1.md",
+      "type": "file",
+      "sha256": "2a78597f3d6a527a498f79ae80488572c0779a7a2aeb9c8c74c70a5a4254f2d7",
+      "bytes": 2337
+    },
+    {
+      "kind": "HG02_LOCK_RECEIPT",
+      "path": "HG02_BGM_LOCK_RECEIPT_v1.md",
+      "type": "file",
+      "sha256": "915e45b65b5c1815b9ae2ec95c1a92dbf3998947885339f9052e9b78719b59a4",
+      "bytes": 1634
+    },
+    {
+      "kind": "AUDIO_TIMELINE_DIR",
+      "path": "AUDIO_TIMELINE_PACKAGE",
+      "type": "directory",
+      "files": [
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/alignment_provenance.json",
+          "sha256": "be20421bf7891c3e58f4be0325b34e470b88ca3e42a4e02c9d9d64ba3fb3e12f",
+          "bytes": 2778
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/alignment_qa_report.md",
+          "sha256": "42634641a6f3e278ae42590be3af706d559fac8eb52a4066807d68111ae7672d",
+          "bytes": 2169
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/alignment_raw.json",
+          "sha256": "fe1b221889621114e6b04be4b88a4e46a959a6b4b5751dd9c37bdd330f587fd7",
+          "bytes": 4671
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/anchor_words.csv",
+          "sha256": "3b63f2c533e63519daa6b955ac8dd6a5cacb32af144571c7e62e4a767ea0df63",
+          "bytes": 887
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/audio_identity.json",
+          "sha256": "9b08c5770b4b83ea0fc94ced39426600037f17a658b39dc05b2d76e3cb22c452",
+          "bytes": 829
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/line_timeline.csv",
+          "sha256": "21ea44e6c5878c9bf65910779fed249064d9a5f5e8323d3ca0cea5870bb1bf14",
+          "bytes": 511
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/lyrics_exact.srt",
+          "sha256": "72a234e84919e7d4b91d8ddd78506d5bd15f5fe2397c5fda40407d3f6af90ee5",
+          "bytes": 281
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/music_events.csv",
+          "sha256": "18b04c26340b7f7c5b80d6a700a330893c94f0d734e899e24e364a540a50e149",
+          "bytes": 667
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/package_manifest.json",
+          "sha256": "88cda7b132155b3d05838cecd080bf5ec1d90e61d94c9de716a1af61b45653b0",
+          "bytes": 1875
+        },
+        {
+          "path": "AUDIO_TIMELINE_PACKAGE/trusted_lyrics.txt",
+          "sha256": "79eba764271a05518ded25a25289f02b41e57eec31749cf25d84943c05bdf907",
+          "bytes": 149
+        }
+      ],
+      "tree_fingerprint_sha256": "055a865f579ab842d050b26559bf6786b9c7552330c41722d4026a696da301e1"
+    },
+    {
+      "kind": "NATURAL_BEAT",
+      "path": "NATURAL_BEAT_v1.md",
+      "type": "file",
+      "sha256": "3a3337a460c9fa8c60477572a7996df6d6a1c842c192acf0aa776366c49d26a3",
+      "bytes": 3851
+    }
+  ],
+  "canonical_state": {
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "state_token": "NATURAL_BEAT_LOCKED"
+  },
+  "safety_assertions": {
+    "legacy_files_modified": false,
+    "S05_and_later_imported": false,
+    "S17_published_inferred": false
+  },
+  "created_at": "2026-08-27T02:58:10Z"
+}

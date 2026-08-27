@@ -1,0 +1,46 @@
+{
+  "receipt_version": "1.0",
+  "sequence": 2,
+  "slot_id": "D02-A",
+  "from_stage": "S01_HG01_SONG_LOCKED",
+  "to_stage": "S02_HG02_BGM_LOCKED",
+  "to_state_token": "BGM_LOCKED",
+  "previous_receipt": "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+  "previous_receipt_sha256": "0c7fe28fbcddf012f816c8bc3b5b6e2f48037887bf894746b03e41bfbb314336",
+  "state_before_sha256": "632413483d98f9426db1e1edb00c728c6659a7db8bb27f095f3ca8064e811cc1",
+  "evidence_validation": {
+    "ok": true,
+    "target_stage": "S02_HG02_BGM_LOCKED",
+    "highest_contiguous_valid_stage": "S02_HG02_BGM_LOCKED",
+    "canonical_v2": true,
+    "context_revision": 0
+  },
+  "evidence_snapshot": [
+    {
+      "artifact_id": "BGM_CANDIDATE_PACKAGE",
+      "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "sha256": "c18e011b3963424bab3da617e9ef288feda73028820cd35ba42e235427d73d99"
+    },
+    {
+      "artifact_id": "HG01_SELECTION_RECEIPT",
+      "path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+      "sha256": "db4ab52fb6a0251b2f60e867188fcd66befc74e1c1a26137c5b5fab83ac60026"
+    },
+    {
+      "artifact_id": "HG02_BGM_LOCK_RECEIPT",
+      "path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+      "sha256": "dbc81f7e51271def0954e9dc8b28b919279f24b83df8af80a480161966fb9c6f"
+    },
+    {
+      "artifact_id": "SLOT_MANIFEST",
+      "path": "00_STATE/SLOT_MANIFEST.json",
+      "sha256": "665a12274a500ab6e04c2da28c8d7803627d8cb40d301eb06ab826f5ed624979"
+    },
+    {
+      "artifact_id": "SONG_CANDIDATE_SET",
+      "path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "sha256": "b976cdb0de8c7a275f6a42ff3a96c0be78b257f12c38ba9e52cba81ad40907bc"
+    }
+  ],
+  "created_at": "2026-08-27T02:58:10Z"
+}

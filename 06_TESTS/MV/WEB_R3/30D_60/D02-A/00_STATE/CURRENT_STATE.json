@@ -1,0 +1,24 @@
+{
+  "runtime_schema_version": "2.0-candidate",
+  "runtime_mode": "canonical_v2",
+  "slot_id": "D02-A",
+  "program": "30D_60",
+  "lane": "P",
+  "current_stage": "S04_NATURAL_BEAT_LOCKED",
+  "current_state_token": "NATURAL_BEAT_LOCKED",
+  "status": "NATURAL_BEAT_LOCKED",
+  "transition_sequence": 4,
+  "last_transition_receipt": "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+  "last_transition_receipt_sha256": "762a9fc874e7ff9a65974a6ed1c4b4b2482f940e62479be565a575cd072c27a9",
+  "context": {
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true,
+    "canonical_v2": true
+  },
+  "context_revision": 0,
+  "last_context_receipt": null,
+  "last_context_receipt_sha256": null,
+  "created_at": "2026-08-27T02:58:09Z",
+  "updated_at": "2026-08-27T02:58:10Z"
+}

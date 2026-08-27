@@ -1,0 +1,19 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG02",
+  "stage_id": "S02_HG02_BGM_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "Legacy evidence import; original HG02 explicitly PASS selected Option B; audio_source_sha256=b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d; source=HG02_BGM_LOCK_RECEIPT_v1.md; sha256=915e45b65b5c1815b9ae2ec95c1a92dbf3998947885339f9052e9b78719b59a4",
+  "approved_artifacts": [
+    "HG02_BGM_LOCK_RECEIPT_v1.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "BGM_CANDIDATE_PACKAGE",
+      "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "sha256": "c18e011b3963424bab3da617e9ef288feda73028820cd35ba42e235427d73d99"
+    }
+  ],
+  "state_stage_before": "S01_HG01_SONG_LOCKED",
+  "created_at": "2026-08-27T02:58:10Z"
+}

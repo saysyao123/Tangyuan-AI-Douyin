@@ -1,0 +1,19 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG01",
+  "stage_id": "S01_HG01_SONG_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "Legacy evidence import; original HG01 explicitly PASS selected SONG_FAMILY=做她的大地别做她的天; source=HG01_SELECTION_RECEIPT_v1.md; sha256=e24277f434c1a1ca3d26edcceefb0ab83cc0dcf16de9bb7d73936b793f4703ec",
+  "approved_artifacts": [
+    "HG01_SELECTION_RECEIPT_v1.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "SONG_CANDIDATE_SET",
+      "path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "sha256": "b976cdb0de8c7a275f6a42ff3a96c0be78b257f12c38ba9e52cba81ad40907bc"
+    }
+  ],
+  "state_stage_before": "S00_SLOT_CREATED",
+  "created_at": "2026-08-27T02:58:09Z"
+}

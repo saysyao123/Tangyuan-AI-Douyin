@@ -1,0 +1,17 @@
+{
+  "slot_id": "D02-A",
+  "song_family": "做她的大地别做她的天",
+  "source_family": "DOUYIN_NATIVE / 做她的大地别做她的天（r&b）（氛围片段） / 大眼仔",
+  "source_asset_content_identity": "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED",
+  "source_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+  "source_duration_s": 26.423991,
+  "locked_hg02_option": "B",
+  "transform": {
+    "structural_trim": "NONE",
+    "tail_fade_start_source_s": 25.223991,
+    "tail_fade_duration_s": 1.2
+  },
+  "locked_rendered_file": "D02-A_HG02_B_尾部1.2s柔和淡出_26.424s.mp3",
+  "locked_rendered_sha256": "2e7d74c6abbee709bb94bf337684ee742c79c9532228b6b487e1facbb870446e",
+  "musical_timeline_basis": "exact source asset 0.000000-26.423991; MP3 encoder padding excluded from timing truth"
+}

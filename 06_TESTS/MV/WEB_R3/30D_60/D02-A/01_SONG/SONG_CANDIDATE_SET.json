@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "status": "LEGACY_IMPORT_RECONSTRUCTED_MACHINE_PREFLIGHT",
+  "slot_id": "D02-A",
+  "lane": "P",
+  "formal_candidates": [
+    {
+      "candidate_id": "A",
+      "song_family": "Summer Love 爱在盛夏"
+    },
+    {
+      "candidate_id": "B",
+      "song_family": "做她的大地别做她的天"
+    },
+    {
+      "candidate_id": "C",
+      "song_family": "有几次想你了"
+    },
+    {
+      "candidate_id": "D",
+      "song_family": "若爱有尽头"
+    }
+  ],
+  "selected_song_family": "做她的大地别做她的天",
+  "provenance": {
+    "candidate_evidence_source": "HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+    "candidate_evidence_sha256": "ebd32a6428df2dfa3cefbe1b8a4fff2d7ecfc38373eec2defee097b012c35ca6",
+    "legacy_selection_receipt": "HG01_SELECTION_RECEIPT_v1.md",
+    "legacy_selection_receipt_sha256": "e24277f434c1a1ca3d26edcceefb0ab83cc0dcf16de9bb7d73936b793f4703ec",
+    "import_plan_sha256": "35d7e33552ee8760b5e533522d7456ac6ef19f4204e0295cc176f93014dd46a7"
+  }
+}

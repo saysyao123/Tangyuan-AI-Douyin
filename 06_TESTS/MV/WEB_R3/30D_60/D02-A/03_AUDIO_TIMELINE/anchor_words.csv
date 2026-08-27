@@ -1,0 +1,9 @@
+anchor_id,line_id,semantic_id,anchor_text,start_s,end_s,role,meaning
+A01,L01,EARTH_SUPPORT,"大地",4.104,5.545,director_semantic_anchor,"support without domination"
+A02,L01,SKY_NOT_DOMINATE,"天",6.926,8.027,director_semantic_anchor,"negative boundary / no control"
+A03,L02,WEATHER_CHANGE,"刮风下雨",9.128,10.910,director_semantic_anchor,"external instability"
+A04,L02,SHOULDER_SUPPORT,"拖着你的肩",11.270,14.113,director_semantic_anchor,"physical support cue"
+A05,L03,MOONLIGHT,"月光",15.554,17.036,director_semantic_anchor,"gentle guiding light"
+A06,L03,ALONE_NEGATION,"孤单",18.137,19.518,director_semantic_anchor,"companionship / negative emotional state"
+A07,L04,WORLD_CHANGE,"万花千变",20.279,22.441,director_semantic_anchor,"world variation / motion escalation"
+A08,L04,STAY_NEAR,"一直在身边",22.801,25.704,director_semantic_anchor,"presence and proximity"

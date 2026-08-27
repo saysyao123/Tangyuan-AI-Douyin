@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "LEGACY_IMPORT_RECONSTRUCTED_MACHINE_PREFLIGHT",
+  "slot_id": "D02-A",
+  "song_family": "做她的大地别做她的天",
+  "selected_option": "B",
+  "audio_source_sha256": "b5c951cfd1a5d1ab8cf67c093ca0ab1242e9a9be116785588074d768eba9621d",
+  "locked_rendered_audio_sha256": "2e7d74c6abbee709bb94bf337684ee742c79c9532228b6b487e1facbb870446e",
+  "provenance": {
+    "listening_pack_source": "HG02_LISTENING_PACK_v1.md",
+    "listening_pack_sha256": "2a78597f3d6a527a498f79ae80488572c0779a7a2aeb9c8c74c70a5a4254f2d7",
+    "legacy_lock_receipt": "HG02_BGM_LOCK_RECEIPT_v1.md",
+    "legacy_lock_receipt_sha256": "915e45b65b5c1815b9ae2ec95c1a92dbf3998947885339f9052e9b78719b59a4",
+    "import_plan_sha256": "35d7e33552ee8760b5e533522d7456ac6ef19f4204e0295cc176f93014dd46a7"
+  }
+}
