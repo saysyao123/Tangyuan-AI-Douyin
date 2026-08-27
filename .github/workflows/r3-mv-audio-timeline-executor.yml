@@ -1,0 +1,158 @@
+name: R3 MV Audio Timeline Executor
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/runtime_executor/requests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: r3-mv-audio-timeline-executor-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  align-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VENV: ${{ github.workspace }}/.mv-audio-align-venv
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      HUGGINGFACE_HUB_CACHE: ${{ github.workspace }}/.cache/huggingface/hub
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ensure media dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg >/dev/null
+          fi
+
+      - name: Restore pinned shared alignment environment
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .mv-audio-align-venv
+            .cache/huggingface
+          key: mv-audio-align-${{ runner.os }}-py311-${{ hashFiles('04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json') }}
+
+      - name: Require reusable environment and run doctor
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.cache.outputs.cache-hit }}" != "true" ]; then
+            echo 'AUDIO_ALIGNMENT_RUNTIME_BLOCKED: shared alignment cache missing. Run environment preparation first.' >&2
+            exit 42
+          fi
+          python 04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py doctor --venv "$VENV"
+
+      - name: Resolve exactly one immutable executor request
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t REQS < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^04_HARNESS/runtime_executor/requests/.*\.json$' || true)
+          if [ "${#REQS[@]}" -ne 1 ]; then
+            echo "Expected exactly one executor request in triggering commit, got ${#REQS[@]}" >&2
+            printf '%s\n' "${REQS[@]:-}" >&2
+            exit 2
+          fi
+          echo "REQUEST_PATH=${REQS[0]}" >> "$GITHUB_ENV"
+
+      - name: Validate request against Canonical S02 truth
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          req_path = Path(os.environ['REQUEST_PATH'])
+          req = json.loads(req_path.read_text(encoding='utf-8'))
+          required = ['schema_version','request_id','slot_id','stage','audio_workflow_run_id','audio_artifact_name','audio_file_name','audio_sha256','title','artist','version','source_clip_start_s','source_clip_end_s','trusted_lyrics','trusted_lyrics_source']
+          missing = [k for k in required if k not in req]
+          if missing: raise SystemExit(f'missing request fields: {missing}')
+          slot = req['slot_id']
+          if not re.fullmatch(r'D\d{2}-[A-Z]', slot): raise SystemExit('invalid slot_id')
+          if req['stage'] != 'S02_HG02_BGM_LOCKED': raise SystemExit('executor request stage must be S02_HG02_BGM_LOCKED')
+          root = Path('06_TESTS/MV/WEB_R3/30D_60') / slot
+          state = json.loads((root/'00_STATE/CURRENT_STATE.json').read_text(encoding='utf-8'))
+          if state.get('current_stage') != 'S02_HG02_BGM_LOCKED': raise SystemExit(f"canonical state is {state.get('current_stage')}, not S02")
+          bgm = json.loads((root/'02_BGM/BGM_CANDIDATE_PACKAGE.json').read_text(encoding='utf-8'))
+          if bgm.get('selected_audio_sha256') != req['audio_sha256']: raise SystemExit('request audio SHA disagrees with BGM lock package')
+          if not isinstance(req['trusted_lyrics'], list) or not req['trusted_lyrics'] or not all(isinstance(x,str) and x.strip() for x in req['trusted_lyrics']): raise SystemExit('trusted_lyrics must be a non-empty string array')
+          Path('/tmp/request.json').write_text(json.dumps(req, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+          Path('/tmp/trusted_lyrics.txt').write_text('\n'.join(x.strip() for x in req['trusted_lyrics'])+'\n', encoding='utf-8')
+          print(json.dumps({'request_id':req['request_id'],'slot_id':slot,'trusted_line_count':len(req['trusted_lyrics']),'trusted_lyrics_source':req['trusted_lyrics_source']}, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Download exact HG02-selected audio artifact and verify SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          RUN_ID="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_workflow_run_id'])")"
+          ARTIFACT="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_artifact_name'])")"
+          FILE="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_file_name'])")"
+          EXPECTED="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_sha256'])")"
+          rm -rf /tmp/audio && mkdir -p /tmp/audio
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT" --dir /tmp/audio
+          AUDIO="/tmp/audio/$FILE"
+          test -f "$AUDIO"
+          GOT="$(sha256sum "$AUDIO" | awk '{print $1}')"
+          test "$GOT" = "$EXPECTED"
+          echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
+          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$AUDIO"
+
+      - name: Build canonical-toolchain alignment candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$VENV/bin:$PATH"
+          PKG=/tmp/audio_timeline_package
+          rm -rf "$PKG"
+          TITLE="$(python -c "import json;print(json.load(open('/tmp/request.json'))['title'])")"
+          ARTIST="$(python -c "import json;print(json.load(open('/tmp/request.json'))['artist'])")"
+          VERSION="$(python -c "import json;print(json.load(open('/tmp/request.json'))['version'])")"
+          START="$(python -c "import json;print(json.load(open('/tmp/request.json'))['source_clip_start_s'])")"
+          END="$(python -c "import json;print(json.load(open('/tmp/request.json'))['source_clip_end_s'])")"
+          python 04_HARNESS/tools/mv_audio_timeline/package_tool.py init \
+            --package "$PKG" --audio "$AUDIO" --lyrics /tmp/trusted_lyrics.txt \
+            --title "$TITLE" --artist "$ARTIST" --version "$VERSION" \
+            --source-clip-start "$START" --source-clip-end "$END"
+          python 04_HARNESS/tools/mv_audio_timeline/run_alignment.py \
+            --engine xingyu --package "$PKG" --audio "$AUDIO" --language zh --device cpu
+          cp /tmp/request.json "$PKG/executor_request.json"
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          pkg=Path('/tmp/audio_timeline_package')
+          req=json.loads(Path('/tmp/request.json').read_text(encoding='utf-8'))
+          files=[]
+          for p in sorted(x for x in pkg.rglob('*') if x.is_file()):
+              files.append({'path':p.relative_to(pkg).as_posix(),'size':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          report={'schema_version':'1.0','status':'ALIGNMENT_CANDIDATE_READY_NOT_LOCKED','request_id':req['request_id'],'slot_id':req['slot_id'],'workflow_run_id':os.environ['GITHUB_RUN_ID'],'workflow_source_sha':os.environ['GITHUB_SHA'],'audio_sha256':req['audio_sha256'],'trusted_lyrics_source':req['trusted_lyrics_source'],'files':files,'next':'independent/ground-truth QA -> mark-qa -> complete package assets -> final_gate'}
+          (pkg/'executor_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Upload alignment candidate for QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-audio-timeline-candidate-${{ github.run_id }}
+          path: /tmp/audio_timeline_package
+          retention-days: 3
+          if-no-files-found: error
