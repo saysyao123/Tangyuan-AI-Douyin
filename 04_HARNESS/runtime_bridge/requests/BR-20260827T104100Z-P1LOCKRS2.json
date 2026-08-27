@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T104100Z-P1LOCKRS2",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Fresh canonical guard after adding the required alignment_qa_report.md compatibility artifact and refreshing the locked P1 Audio Timeline manifest/receipt."
+}
