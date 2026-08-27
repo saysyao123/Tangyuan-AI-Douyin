@@ -86,7 +86,9 @@ HG01 machine-ready 最小条件：
 - 当前候选有数据库来源/对应 work 可追溯；
 - human-facing `HG01_CANDIDATE_EVIDENCE_PACK` 已持久化；
 - 所有实际交付给用户的 direct work 链接已做 landing-work identity 校验；
-- `user_gate_delivery_mode = CORE_CREATOR_MV_DIRECT`。
+- `delivery_strategy = CORE_CREATOR_MV_DIRECT`。
+
+兼容说明：当前 Runtime Registry 仍保留历史机器字段 `user_gate_delivery_mode = DIRECT_WORKS_FIRST`。该字段只作为旧 Validator 的兼容标记，不再定义选歌策略；真正的 HG01 业务语义由 `source_mode = CORE_BENCHMARK_DATABASE` 与 `delivery_strategy = CORE_CREATOR_MV_DIRECT` 决定。
 
 PASS：`SONG_FAMILY_LOCKED`。
 
