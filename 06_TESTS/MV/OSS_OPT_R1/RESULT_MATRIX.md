@@ -1,22 +1,24 @@
-# OSS MV Optimization Result Matrix v1.2
+# OSS MV Optimization Result Matrix v1.3
 
-Status: `IN_PROGRESS / HG01 CORE DATABASE STRATEGY RESTORED`
+Status: `IN_PROGRESS / EXECUTOR-FIRST REMEDIATION PASS`
 
 ## Test identity
 
 - Experiment branch: `test/mv-oss-optimization-r1`
 - Runtime baseline fork SHA: `89852ec5314e7579853683ef5eb40adb09f25753`
-- Test MV slot: `D02-B`
-- Song / audio identity: `NOT LOCKED — HG01 CORE DATABASE REBUILD REQUIRED`
-- External source commit: `TBD / PENDING USER SOURCE`
-- Optimization set: `TBD`
+- Test MV slot: `D02-B / Lane S`
+- HG01 song family: `有几次想你了 / LOCKED`
+- HG02 BGM: `B variant / exact Douyin music object 7670104695834282815 / 0.8s soft tail fade / LOCKED`
+- Canonical Runtime state: `S02_HG02_BGM_LOCKED / BGM_LOCKED`
+- External source: `penposs/mvmaker-h3-skills@796797030275fe57afaba736771e8510c848799d`
+- Optimization set: Director Thesis / Primary Visual Engine / audiovisual relationship / motive-first camera-subject-space / WHY CUT HERE / optional-element stop condition / Creative Drift QA
 
 ## A/B comparison
 
 | Dimension | Baseline Runtime | Runtime + OSS Overlay | Delta | Evidence |
 |---|---:|---:|---:|---|
-| Lyric visual hit | TBD | TBD | TBD | TBD |
-| Director / camera quality | TBD | TBD | TBD | TBD |
+| Lyric visual hit | TBD | TBD | TBD | Director A/B not started |
+| Director / camera quality | TBD | TBD | TBD | Director A/B not started |
 | Shot diversity | TBD | TBD | TBD | TBD |
 | Visual coherence | TBD | TBD | TBD | TBD |
 | First-frame performability | TBD | TBD | TBD | TBD |
@@ -26,8 +28,8 @@ Status: `IN_PROGRESS / HG01 CORE DATABASE STRATEGY RESTORED`
 | Regeneration count | TBD | TBD | TBD | TBD |
 | Manual intervention count | TBD | TBD | TBD | TBD |
 | Production time / burden | TBD | TBD | TBD | TBD |
-| Runtime compatibility | TBD | TBD | TBD | TBD |
-| Zero-context reproducibility | TBD | TBD | TBD | TBD |
+| Runtime compatibility | Baseline | TBD | TBD | Executor-first process audit added before creative A/B |
+| Zero-context reproducibility | Baseline | Improved process routing | Positive | 19/19 executor registry CI PASS |
 
 ## Gate-by-gate findings
 
@@ -35,62 +37,76 @@ Status: `IN_PROGRESS / HG01 CORE DATABASE STRATEGY RESTORED`
 
 `PROCESS CORRECTION / VALIDATED IN EXPERIMENT`
 
-D02-B revealed two different issues:
-
-1. a real link-integrity bug: some supposed direct evidence URLs opened an older creator work whose page merely listed the desired newer song MV;
-2. an over-correction: while fixing that bug, candidate discovery drifted from the original R3 core-benchmark Data Center strategy into broad public-Web song search.
-
-User decision on 2026-08-27:
-
-- restore the original simple R3 strategy;
-- update/read the previously supplied core comparison accounts into a database;
-- select songs from that database;
-- add useful supplemental accounts when appropriate;
-- deliver the selected songs directly as the corresponding bloggers' corresponding MV videos;
-- do not perform broad song search as the default path.
-
-Restored path:
+D02-B exposed a real link-integrity bug and an over-correction. The final accepted strategy is restored to:
 
 `CORE BENCHMARK ACCOUNTS -> DATA CENTER -> SONG_FAMILY REPEAT/VALUE RANKING -> SIMPLE DIRECT MV HANDOFF -> USER HG01`
 
 Retained hardening:
+`DELIVERED URL MUST OPEN THE CITED MV ITSELF`.
 
-`DELIVERED URL MUST OPEN THE CITED MV ITSELF`
+Rejected behavior:
+`WEB-WIDE SEARCH -> CANDIDATES CHOSEN BY PUBLIC EVIDENCE AVAILABILITY -> HEAVY EVIDENCE TAXONOMY`.
 
-Rejected experiment behavior:
-
-`WEB-WIDE SEARCH -> CANDIDATES CHOSEN BY PUBLIC EVIDENCE AVAILABILITY -> HEAVY EVIDENCE TAXONOMY`
-
-Current D02-B action:
-
-`HG01_CORE_DATABASE_REBUILD_REQUIRED`
-
-The temporary Web-driven formal candidate set (`雨后轻风有香 / 甲乙丙丁 / 差一步美满`) has been superseded as a Human Gate packet. No HG01 user receipt existed, so Canonical state remains S00 and no rollback was required.
-
-Files corrected:
-
-- `04_HARNESS/rules/mv_human_gates.md`
-- `04_HARNESS/rules/mv_stage_entry_checklist.md`
-- `06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md`
-- `06_TESTS/MV/OSS_OPT_R1/NEW_CHAT_START_PROMPT.md`
-- `06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/SONG_CANDIDATE_SET.json`
-- `06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md`
-- `.github/workflows/r3-hg01-delivery-guard-tests.yml`
+HG01 is now locked to `有几次想你了`.
 
 Classification:
-
 - `CORE-DATABASE-HG01-RESTORE` -> `PROMOTE_RULE` candidate
 - `DIRECT-LINK-IDENTITY-GUARD` -> `PROMOTE_RULE` candidate
 - `WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY` -> `REJECT`
 
 ### HG02 / BGM
-TBD
+
+`PASS / LOCKED`
+
+Two core works resolved to the same Douyin music object `7670104695834282815`. User accepted the B listening variant: same exact source, final `0.8s` soft fade-out.
+
+No Director work started before the BGM lock.
 
 ### Audio Timeline / Natural Beat
-TBD
+
+`PROCESS DEFECT FOUND BEFORE S03 ADVANCE`
+
+Failure observed:
+- Agent read the Audio Timeline Rule;
+- saw Xingyu as an allowed implementation;
+- started a slot-specific helper / Actions execution route;
+- only afterwards rediscovered that the repository already contained a canonical, pinned, regression-tested `tools/mv_audio_timeline/*` toolchain.
+
+This was an execution-routing failure, not a missing R3 implementation.
+
+Root cause:
+- `SKILL.md + MANIFEST.md` had executor detail;
+- the newer Canonical Runtime startup/JIT path did not make executor discovery first-class;
+- S02 RESUME previously surfaced only `rules/mv_audio_timeline.md`.
+
+Remediation:
+- added `runtime/mv_stage_executor_registry.json` with 19/19 stage coverage;
+- added hard `rules/mv_executor_first.md`;
+- upgraded SKILL/MANIFEST/Stage Entry Checklist/new-chat prompts;
+- upgraded `mv_resume_contract.json` so startup loads the executor layer and S02 JIT explicitly points to the existing Audio Timeline toolchain;
+- restored Runtime Web Bridge purity;
+- removed slot-specific helpers/workflow from core;
+- removed non-authoritative partial S03 files from current Canonical tree;
+- left Git history/audit receipt as durable evidence;
+- kept D02-B at S02.
+
+Post-remediation read-only RESUME confirms:
+- `current_stage = S02_HG02_BGM_LOCKED`;
+- `current_state_token = BGM_LOCKED`;
+- S02 JIT now includes package template, Audio Timeline README, runtime lock, `package_tool.py`, and `final_gate.py`;
+- startup now includes Executor Registry, Executor-First Rule and MANIFEST.
+
+CI:
+`R3 MV Executor-First Tests` -> PASS, validating 19/19 stage mappings and key S02/S16/Runtime-Bridge regressions.
+
+Classification:
+- `EXECUTOR-DISCOVERY-GAP` -> `PROMOTE_RUNTIME` candidate
+- `SLOT-SPECIFIC-CORE-HELPER` -> `REJECT`
+- `PER-SLOT-PRODUCTION-MODEL-INSTALL` -> `REJECT AS DEFAULT`
 
 ### Director
-TBD
+
+TBD. This is the first major stage where the locked `mvmaker-h3-skills` creative overlay is intentionally allowed.
 
 ### HG03 / First Frames
 TBD
@@ -110,31 +126,45 @@ TBD
 ### HG05 / Final Acceptance
 TBD
 
+## End-to-end executor audit summary
+
+All Canonical stages S00-S18 now have an explicit execution class. Important distinction:
+
+- some stages use a real canonical toolchain (`S02`, `S09`, `S16`);
+- some stages are deterministic media transforms (`S08`, `S11`, `S12`, `S13`);
+- some are creative synthesis (`S03`, `S04`, `S06`, `S10`, `S15`);
+- some are external product capability handoffs (`S05`, `S07`);
+- Human Gates remain Runtime-controlled (`S14` and earlier Gate stages);
+- missing repo-local code in a creative/capability stage is not an implementation gap.
+
+Full audit:
+`06_TESTS/MV/OSS_OPT_R1/PROCESS_AUDIT/END_TO_END_EXECUTION_AUDIT_v1.md`
+
 ## Complexity audit
 
-Current HG01 correction assessment:
+Executor-first remediation expected effect:
 
-- context volume: `REDUCED`;
-- prompt complexity: `REDUCED`;
-- code/config maintenance: `LOW`;
-- manual Gate work: `REDUCED TO ORIGINAL R3 BEHAVIOR`;
-- external dependency: `NO NEW DEPENDENCY`;
-- candidate quality authority: `IMPROVED — returns to monitored core accounts`;
-- link correctness: `RETAINED`;
-- broad web search burden: `REMOVED AS DEFAULT`;
-- reproducibility: `IMPROVED` because discovery authority is a durable database rather than ad-hoc search results.
+- unnecessary repository search: `DOWN`;
+- ad-hoc helper creation: `HARD-BLOCKED BEFORE EXECUTOR CHECK`;
+- repeated model download risk: `DOWN / DEFAULT FORBIDDEN`;
+- Runtime Bridge complexity: `RESTORED TO TRANSPORT-ONLY`;
+- context/token use: `MORE TARGETED` because the Stage executor points to the smallest known production path;
+- zero-context recovery: `IMPROVED`;
+- experimentation contamination risk: `REDUCED` through stage allowlist.
 
 ## Final decisions
 
 | Optimization ID | Decision | Reason | Promotion target / next action |
 |---|---|---|---|
-| CORE-DATABASE-HG01-RESTORE | `PROMOTE_RULE` candidate | Restores the proven R3 selection authority and reduces unnecessary search/context burden | Continue D02-B with core Data Center rebuild; stable promotion only after experiment review |
-| DIRECT-LINK-IDENTITY-GUARD | `PROMOTE_RULE` candidate | Prevents incorrect MV handoff without changing song-discovery authority | Keep as minimal HG01 delivery correctness check |
-| WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY | `REJECT` | Evidence availability started driving song selection and made HG01 heavier than the original R3 process | Do not promote |
-| OSS-VISUAL-OVERLAY | TBD | External source not yet locked | Continue after upstream song/audio truth is locked |
+| CORE-DATABASE-HG01-RESTORE | `PROMOTE_RULE` candidate | Restores proven R3 candidate authority and reduces unnecessary search/context | retain through full experiment |
+| DIRECT-LINK-IDENTITY-GUARD | `PROMOTE_RULE` candidate | Prevents incorrect MV handoff without changing discovery authority | retain |
+| WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY | `REJECT` | Evidence availability started driving song choice | do not promote |
+| EXECUTOR-DISCOVERY-GAP | `PROMOTE_RUNTIME` candidate | Runtime previously defined WHAT but did not reliably route HOW, causing duplicated implementation | validate through remainder of D02-B before stable promotion |
+| SLOT-SPECIFIC-CORE-HELPER | `REJECT` | Pollutes core tools and duplicates canonical paths | keep experiment history only |
+| PER-SLOT-PRODUCTION-MODEL-INSTALL | `REJECT AS DEFAULT` | Production dependency is already pinned; normal behavior is doctor/cache/reuse | setup only as a separate controlled environment action when genuinely missing |
+| OSS-VISUAL-OVERLAY | `KEEP_EXPERIMENTAL` | Source locked; creative A/B not yet started | begin only after canonical Audio Timeline PASS |
 
 Allowed decisions:
-
 - `PROMOTE_RUNTIME`
 - `PROMOTE_RULE`
 - `PROMOTE_KNOWLEDGE`
@@ -142,6 +172,6 @@ Allowed decisions:
 - `KEEP_EXPERIMENTAL`
 - `REJECT`
 
-## Final experiment verdict
+## Current experiment verdict
 
-Not yet available. HG01 has been corrected back to the original R3 core-database selection strategy with only the direct-link identity guard retained. OSS visual optimization comparison has not begun because source integration is still pending and D02-B has not yet passed HG01/HG02.
+Process architecture is now corrected and machine-tested on the experiment branch. D02-B remains safely at S02; the next valid action is to build Audio Timeline using the already-existing canonical toolchain. The actual `mvmaker-h3-skills` visual A/B has not started yet.
