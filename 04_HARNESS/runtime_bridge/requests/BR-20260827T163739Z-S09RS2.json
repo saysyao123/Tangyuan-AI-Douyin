@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163739Z-S09RS2",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Canonical NORMALIZED_SHOT_LIBRARY_MAP.csv is now durably present after the S09 evidence-name guard rejection. Obtain fresh guard and retry only the nearest failed prerequisite."
+}
