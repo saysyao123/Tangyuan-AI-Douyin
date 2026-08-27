@@ -1,0 +1,102 @@
+name: R3 HG01 Delivery Guard Tests
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/runtime/mv_artifact_registry.json'
+      - '04_HARNESS/rules/mv_human_gates.md'
+      - '04_HARNESS/rules/mv_stage_entry_checklist.md'
+      - '04_HARNESS/tools/mv_runtime_gate.py'
+      - '04_HARNESS/tools/mv_runtime_state.py'
+      - '06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/**'
+      - '06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md'
+      - '.github/workflows/r3-hg01-delivery-guard-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  hg01-delivery-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Registry integrity
+        run: python 04_HARNESS/tools/mv_runtime_gate.py registry-check
+
+      - name: D02-B candidate preflight must be blocked before evidence delivery
+        shell: bash
+        run: |
+          set +e
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --artifact SONG_CANDIDATE_SET \
+            > /tmp/hg01-artifact.json
+          code=$?
+          set -e
+          cat /tmp/hg01-artifact.json
+          if [ "$code" -ne 1 ]; then
+            echo "Expected SONG_CANDIDATE_SET to fail until HG01 evidence delivery assertions are all PASS; got $code"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/hg01-artifact.json').read_text(encoding='utf-8'))
+          assert report['ok'] is False, report
+          errors = '\n'.join(report.get('errors') or [])
+          assert 'HG01_EVIDENCE_DELIVERY_PASS' in errors, errors
+          assert 'all_direct_links_landing_work_verified' in errors, errors
+          print('PASS: current D02-B cannot masquerade as HG01-ready')
+          PY
+
+      - name: RECORD_HUMAN_GATE HG01 must be mechanically rejected
+        shell: bash
+        run: |
+          set +e
+          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --gate HG01 \
+            --user-decision-text 'SYNTHETIC_TEST_ONLY' \
+            > /tmp/hg01-record.json
+          code=$?
+          set -e
+          cat /tmp/hg01-record.json
+          if [ "$code" -ne 1 ]; then
+            echo "Expected record-human-gate HG01 to be blocked by machine preflight; got $code"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/hg01-record.json').read_text(encoding='utf-8'))
+          assert report['ok'] is False, report
+          assert 'machine preflight artifact missing or non-canonical' in report['error'], report
+          details = report.get('details') or {}
+          assert details.get('artifact') == 'SONG_CANDIDATE_SET', details
+          print('PASS: Runtime refuses HG01 receipt before evidence delivery PASS')
+          PY
+
+      - name: Positive guard fixture can pass only when all assertions are true
+        shell: bash
+        run: |
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-positive
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('/tmp/D02-B-positive/01_SONG/SONG_CANDIDATE_SET.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['status'] = 'HG01_EVIDENCE_DELIVERY_PASS'
+          guard = data['evidence_delivery_guard']
+          guard['all_candidates_min_direct_works_2'] = True
+          guard['all_candidates_independent_accounts_2plus'] = True
+          guard['all_direct_links_landing_work_verified'] = True
+          guard['core_account_coverage_reported'] = True
+          guard['no_external_audio_substitution'] = True
+          guard['user_gate_delivery_mode'] = 'DIRECT_WORKS_FIRST'
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root /tmp/D02-B-positive \
+            --artifact SONG_CANDIDATE_SET
