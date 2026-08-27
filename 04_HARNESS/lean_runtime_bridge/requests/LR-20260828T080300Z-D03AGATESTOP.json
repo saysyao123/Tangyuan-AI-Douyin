@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T080300Z-D03AGATESTOP",
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Verify Lean macro respects the first Human Gate and does not advance S00 without HG01 approval.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "ca2d483061e4225580c1ac2daa27281a646660cf3ac9c1d75d1891bccb1d9c14",
+    "slot_fingerprint_sha256": "ee3d5f75675ef9ea36f3d2e05f930b6e4d39bd471855ba5383f28ef6254f35db",
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "transition_sequence": 0,
+    "last_transition_receipt_sha256": "44d2fdb8c5ace05904004e2029d043724b18ecc6c8e5f592b0611debec3576cb",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
