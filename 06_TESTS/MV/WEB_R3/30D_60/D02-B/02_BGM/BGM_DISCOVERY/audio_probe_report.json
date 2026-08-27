@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.1",
+  "song_family": "有几次想你了",
+  "checked_at": "2026-08-27T04:41:47.828696+00:00",
+  "douyin_music_asset_object_id": "7670104695834282815",
+  "version_identity_evidence": {
+    "core_work_count": 2,
+    "same_music_object_id": true,
+    "same_music_title": true,
+    "same_music_author": true,
+    "music_title": "@林叙（错位秋天已上线）创作的原声",
+    "music_author": "林叙（错位秋天已上线）"
+  },
+  "listening_source_mode": "P1_EXACT_DOUYIN_MUSIC_ASSET",
+  "listening_source_note": "Direct download of exact Douyin ies-music object 7670104695834282815.",
+  "master_ffprobe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ],
+    "format": {
+      "duration": "15.386083"
+    }
+  },
+  "candidate_A": {
+    "name": "HG02_A_native.mp3",
+    "transform": "native listening source; no tail fade",
+    "sha256": "f3e3c53381f2504cf53727b7b8e0aa04b576595c2b6714ee991d39a454519007"
+  },
+  "candidate_B": {
+    "name": "HG02_B_soft_tail_0p8s.mp3",
+    "transform": "same listening source; final 0.8s fade-out only",
+    "sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4"
+  },
+  "decision": "HG02_LISTENING_ASSETS_READY"
+}
