@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163223Z-S06V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "bc2f69c0a80f7bb8f20e65b37f2e509e362f14afc4f1b118dd054efd043316fb",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "321cc06aa61773321c8b1a282f187d3418e24352d7172cb354e0c115d427284b",
+    "state_sha256": "d9185e79e750e341b61adeb43bde9921f3acdf697b3ade7f178c1109a3724604",
+    "transition_sequence": 5
+  },
+  "payload": {"to": "S06_HG03_FIRST_FRAMES_LOCKED"},
+  "requested_by": "chatgpt_web",
+  "reason": "HG03 was actually accepted and durably recorded for the revised five-frame set. Advance separately to S06."
+}
