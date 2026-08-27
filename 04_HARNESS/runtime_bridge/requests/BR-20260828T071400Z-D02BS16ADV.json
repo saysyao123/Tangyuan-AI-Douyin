@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260828T071400Z-D02BS16ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS",
+    "current_state_token": "HG05_PASS",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "7633551e89dd3d35909bae7f335436a97bf1b3104584112feb58232f25ac2923",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "7cc908523d6353bd724b569512d27664cb274514dbdecb32a94ff49eea8a6968",
+    "state_sha256": "292cac18df6eb7f4a2015cafa5ce77b0c704705accc4b591cbfa33ec740f30a9",
+    "transition_sequence": 15
+  },
+  "payload": {"to": "S16_RELEASE_PACKAGE_READY"},
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B after the publish-ready Release Package was built under the locked MUSIC_FIRST packaging contract; do not perform post-publish sync because the MV has not been confirmed live."
+}
