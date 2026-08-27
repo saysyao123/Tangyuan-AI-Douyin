@@ -1,6 +1,6 @@
-# Rules｜MV Stage Entry Checklist v1.0
+# Rules｜MV Stage Entry Checklist v1.1
 
-> Status: `ACTIVE / HARD / D01-B HARDENING`
+> Status: `ACTIVE / HARD / HG01 DELIVERY HARDENED`
 > Role: 在关键 Stage 开始前执行机器前置条件检查，防止“规则已经存在但执行时被跳过”。
 > Principle: **Known gate must be machine-enforced before downstream work.**
 
@@ -19,7 +19,33 @@
 
 ---
 
-## 2. Stage 5｜First Frames entry
+## 2. Stage 1｜HG01 Song Aesthetic Gate entry
+
+Required before asking the user to choose a song:
+- `SONG_CANDIDATE_SET` exists as machine preflight;
+- `SONG_CANDIDATE_SET.status = HG01_EVIDENCE_DELIVERY_PASS`;
+- a persisted human-facing `HG01_CANDIDATE_EVIDENCE_PACK` exists and its path is recorded in `evidence_pack_path`;
+- every formal candidate has at least 2 recent direct Douyin works from at least 2 independent accounts;
+- every evidence item reports account / publish date / duration / evidence tier;
+- core benchmark coverage is explicitly `CONFIRMED / PARTIAL / UNCONFIRMED`;
+- external audio/search corroboration is not substituted for direct Douyin work evidence;
+- every direct URL has been landing-work verified: the URL target itself is the cited work, not an older work/profile-like page that merely lists a newer relevant post;
+- user handoff mode is `DIRECT_WORKS_FIRST`.
+
+Block if any of the following is true:
+- candidate set is only `HG01_PREFLIGHT_PREPARED` / `EVIDENCE_REPACK_REQUIRED`;
+- the assistant can only provide song names, rankings or machine recommendation;
+- any required evidence URL was inferred from an author page/recent-work listing rather than resolved to the concrete work;
+- machine recommendation is being used as a substitute for first-ear user judgement.
+
+Failure action:
+`REPACK / REVERIFY DIRECT DOUYIN EVIDENCE -> SET HG01_EVIDENCE_DELIVERY_PASS -> THEN PRESENT HG01`.
+
+Do not create `HG01_SELECTION_RECEIPT` before this entry check can pass.
+
+---
+
+## 3. Stage 5｜First Frames entry
 
 Required:
 - `BGM_LOCKED = YES`
@@ -38,7 +64,7 @@ Block if:
 
 ---
 
-## 3. Stage 6｜Dynamic Prompt / I2V entry
+## 4. Stage 6｜Dynamic Prompt / I2V entry
 
 Required:
 - `FIRST_FRAME_SET_LOCKED = YES` / HG03 PASS
@@ -56,7 +82,7 @@ Block if a character-containing prompt does not include the required portrait-sa
 
 ---
 
-## 4. Stage 8B｜Picture Edit entry｜WEB HARD
+## 5. Stage 8B｜Picture Edit entry｜WEB HARD
 
 Required:
 - `AUDIO_TIMELINE_PACKAGE_LOCKED = YES`
@@ -73,7 +99,7 @@ If a rhythm-only diagnostic preview is intentionally made earlier, label it `DIA
 
 ---
 
-## 5. Stage 9｜Subtitle entry
+## 6. Stage 9｜Subtitle entry
 
 Required:
 - `EDIT_MAP_LOCKED = YES`
@@ -86,7 +112,7 @@ Block if subtitle timing is being derived from picture cuts or a new free ASR cl
 
 ---
 
-## 6. Stage 10｜Final QA entry
+## 7. Stage 10｜Final QA entry
 
 Required:
 - `EDIT_PREVIEW_QA_PASS = YES`
@@ -99,7 +125,7 @@ Final render cannot be submitted to HG05 until all technical checks pass.
 
 ---
 
-## 7. Close / Publish handoff
+## 8. Close / Publish handoff
 
 Production close requires:
 - HG05 PASS
@@ -118,7 +144,7 @@ If the exact timestamp is not known, store `timestamp_pending_backfill`; do not 
 
 ---
 
-## 8. Failure policy
+## 9. Failure policy
 
 Checklist failure is not a new Human Gate.
 
