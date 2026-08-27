@@ -1,0 +1,309 @@
+{
+  "schema_version": "1.0",
+  "status": "EXPERIMENT_ENFORCEMENT_CANDIDATE",
+  "authority": "Execution companion to mv_stage_registry.json and mv_resume_contract.json. It defines HOW the current stage is executed after Runtime has defined WHAT stage is current.",
+  "policy": {
+    "canonical_executor_first": true,
+    "rule_reference_is_not_executor": true,
+    "existing_implementation_check_required_before_new_tool": true,
+    "dependency_doctor_before_install": true,
+    "per_slot_model_install_default_forbidden": true,
+    "slot_specific_helpers_in_core_tools_forbidden": true,
+    "active_runtime_bridge_stage_specific_jobs_forbidden": true,
+    "missing_registered_capability_blocks_instead_of_silent_fallback": true,
+    "external_oss_overlay_requires_stage_allowlist": true,
+    "stable_runtime_truth_outranks_experiment_implementation": true
+  },
+  "stage_executors": {
+    "S00_SLOT_CREATED": {
+      "executor_id": "HG01_CORE_DATABASE_ORCHESTRATION",
+      "execution_class": "DATA_ORCHESTRATION",
+      "implementation_status": "VALIDATED_PROCESS_NO_SINGLE_EXECUTABLE",
+      "canonical_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_STATUS.md",
+        "06_TESTS/MV/WEB_R3/database/data_center/song_repeat_candidates.csv",
+        "06_TESTS/MV/WEB_R3/database/data_center/observed_works.csv",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/mv_stage_entry_checklist.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "NO_NEW_DEPENDENCY. Read/refresh the existing Core Benchmark Data Center. Public search is supplemental only.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/D02_HG01_CANDIDATE_EVIDENCE_PACK_v1.md"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "BLOCK if Core Data Center truth is unavailable; do not replace it with broad web-wide song discovery."
+    },
+    "S01_HG01_SONG_LOCKED": {
+      "executor_id": "DOUYIN_FIRST_BGM_DISCOVERY",
+      "execution_class": "EVIDENCE_ORCHESTRATION",
+      "implementation_status": "VALIDATED_PROCESS_CAPABILITY_ORCHESTRATED",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "Reuse verified Douyin resolver/download/fingerprint paths already available in the environment or historical validated workflows. Do not add a song-specific workflow to core Runtime merely to probe one asset.",
+      "prior_pass_examples": [
+        "06_TESTS/MV/WEB_R3/B0_AUDIO_VERSION_DISCOVERY_v1.md",
+        "06_TESTS/MV/WEB_R3/30D_60/D01-B/B0_AUDIO_VERSION_DISCOVERY_v1.md"
+      ],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Follow mv_bgm_discovery.md priority ladder; insufficient version evidence = BGM_VERSION_DISCOVERY_BLOCKED."
+    },
+    "S02_HG02_BGM_LOCKED": {
+      "executor_id": "CANONICAL_AUDIO_TIMELINE_TOOLCHAIN",
+      "execution_class": "CANONICAL_TOOLCHAIN",
+      "implementation_status": "EXECUTABLE_AND_REGRESSION_TESTED",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/templates/mv_audio_timeline_package_contract.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md",
+        "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json"
+      ],
+      "canonical_tools": [
+        "04_HARNESS/tools/mv_audio_timeline/package_tool.py",
+        "04_HARNESS/tools/mv_audio_timeline/final_gate.py",
+        "04_HARNESS/tools/mv_audio_timeline/run_alignment.py",
+        "04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py"
+      ],
+      "dependency_policy": "Run bootstrap_alignment_env.py doctor first. Reuse locked/preheated environment. Missing engine/model = AUDIO_ALIGNMENT_RUNTIME_BLOCKED. install/preheat is a separate explicit environment action, never a per-slot default.",
+      "prior_pass_examples": [
+        "06_TESTS/MV/WEB_R3/30D_60/D01-B/AUDIO_TIMELINE_PACKAGE"
+      ],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "No waveform/BPM guessing and no ad-hoc per-song aligner. Final authority is final_gate.py validate --write-manifest."
+    },
+    "S03_AUDIO_TIMELINE_LOCKED": {
+      "executor_id": "NATURAL_BEAT_SYNTHESIS",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "implementation_status": "RULE_DRIVEN_NO_NEW_MODEL",
+      "canonical_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "NO_MODEL_INSTALL. Consume canonical line_timeline, anchor_words and music_events only.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "If Audio Timeline is incomplete, return to S02/S03 prerequisite; do not infer a second lyric clock."
+    },
+    "S04_NATURAL_BEAT_LOCKED": {
+      "executor_id": "DIRECTOR_PLAN_SYNTHESIS",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "implementation_status": "RULE_AND_KNOWLEDGE_DRIVEN",
+      "canonical_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "NO_NEW_MODEL. Director reasoning is performed from locked audio/beat truth and current creative brief.",
+      "prior_pass_examples": [
+        "06_TESTS/MV/WEB_R3/30D_60/D01-B/DIRECTOR_BEAT_MAP_v1.md",
+        "06_TESTS/MV/WEB_R3/30D_60/D01-B/DIRECTOR_PLAN_v2.md"
+      ],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "Director Thesis, Primary Visual Engine, audiovisual relationship, motive-first camera-subject-space, WHY CUT HERE, optional-element stop conditions.",
+      "fallback_policy": "If an OSS suggestion conflicts with lyric-hit priority or Runtime truth, keep R3."
+    },
+    "S05_DIRECTOR_PLAN_LOCKED": {
+      "executor_id": "FIRST_FRAME_CAPABILITY_AND_QA",
+      "execution_class": "CAPABILITY_HANDOFF",
+      "implementation_status": "PRODUCT_CAPABILITY_PLUS_MACHINE_QA",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "Use the already available image-generation capability. Do not build or install a new image backend inside Runtime for a normal MV.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "Creative Drift QA from Director to K0 and first-frame performability; do not replace HG03.",
+      "fallback_policy": "Missing generation capability blocks asset production; it does not authorize a new backend implementation."
+    },
+    "S06_HG03_FIRST_FRAMES_LOCKED": {
+      "executor_id": "DYNAMIC_PROMPT_SYNTHESIS",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "implementation_status": "RULE_DRIVEN",
+      "canonical_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "NO_MODEL_INSTALL. Accepted K0 pixels are authority; create bounded prompts for the already selected external generator.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "Motive-first camera grammar, montage reason, stop conditions, Creative Drift QA.",
+      "fallback_policy": "If prompt conflicts with K0, rewrite prompt around K0; do not reconstruct abandoned prose."
+    },
+    "S07_DYNAMIC_PROMPT_SET_READY": {
+      "executor_id": "DYNAMIC_GENERATION_HANDOFF_AND_QA",
+      "execution_class": "CAPABILITY_HANDOFF",
+      "implementation_status": "EXTERNAL_GENERATION_PLUS_R3_QA",
+      "canonical_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md",
+        "04_HARNESS/workflows/mv.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "Use the already chosen Seedance/Doubao generation capability. Do not add a new generator SDK/backend during a normal slot unless generator integration itself is the approved experiment.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "Director/montage prompt grammar only; H3/RunningHub orchestration remains out of scope.",
+      "fallback_policy": "TRIM BEFORE REGENERATE; local source failure stays local."
+    },
+    "S08_DYNAMIC_SOURCE_QA_LOCKED": {
+      "executor_id": "SOURCE_NORMALIZATION_AND_WEB_ROUGHCUT",
+      "execution_class": "DETERMINISTIC_MEDIA_TRANSFORM",
+      "implementation_status": "VALIDATED_RULE_RECIPE",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "canonical_tools": [],
+      "system_dependencies": ["ffmpeg", "ffprobe"],
+      "dependency_policy": "Check ffmpeg/ffprobe availability first. Missing media tooling = BLOCK or use an already available equivalent rendering capability; do not introduce a new media library ad hoc.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Preserve raw source; derive clean proxies. WEB watermark-safe geometry is a Gate, not optional polish."
+    },
+    "S09_SOURCE_NORMALIZATION_READY": {
+      "executor_id": "EDITOR_AUDIO_REVALIDATION",
+      "execution_class": "TECHNICAL_VALIDATION",
+      "implementation_status": "REUSE_AUDIO_TIMELINE_FINAL_GATE",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md"
+      ],
+      "canonical_tools": ["04_HARNESS/tools/mv_audio_timeline/final_gate.py"],
+      "dependency_policy": "Revalidate current BGM/package identity; never realign or create a new lyric clock here.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Mismatch returns to Audio Timeline prerequisite."
+    },
+    "S10_EDITOR_AUDIO_GATE_PASS": {
+      "executor_id": "EDIT_MAP_SYNTHESIS",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "implementation_status": "RULE_DRIVEN_EXECUTABLE_MAP",
+      "canonical_reads": ["04_HARNESS/rules/mv_editing.md"],
+      "canonical_tools": [],
+      "dependency_policy": "NO_NEW_MODEL. Build the edit map from the three locked clocks and normalized sources.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "WHY CUT HERE / montage quality can be evaluated without changing audio truth or source eligibility.",
+      "fallback_policy": "Fragmentation failure patches Edit Map first, not upstream generation."
+    },
+    "S11_EDIT_MAP_LOCKED": {
+      "executor_id": "PICTURE_PREVIEW_RENDER_AND_HG04",
+      "execution_class": "DETERMINISTIC_MEDIA_TRANSFORM",
+      "implementation_status": "RENDER_CAPABILITY_PLUS_HUMAN_GATE",
+      "canonical_reads": [
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "canonical_tools": [],
+      "system_dependencies": ["ffmpeg", "ffprobe"],
+      "dependency_policy": "Use existing render capability/tooling. Do not redesign the edit engine at HG04 preparation.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": true,
+      "allowed_experiment_scope": "Evaluate montage/edit flow, not renderer implementation.",
+      "fallback_policy": "Technical render failure patches renderer/transform only; rhythm failure patches S11 Edit Map."
+    },
+    "S12_HG04_PICTURE_EDIT_PASS": {
+      "executor_id": "LOCKED_SUBTITLE_IMPLEMENTATION",
+      "execution_class": "DETERMINISTIC_MEDIA_TRANSFORM",
+      "implementation_status": "LOCKED_BASELINE_RULE",
+      "canonical_reads": ["04_HARNESS/rules/mv_subtitle.md"],
+      "canonical_tools": [],
+      "system_dependencies": ["subtitle renderer or existing media render capability"],
+      "dependency_policy": "Reuse the accepted subtitle baseline. Missing renderer capability blocks implementation; it does not reopen style exploration or authorize a new model.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R2/W09_SUBTITLE_STYLE_LOCK_RECEIPT.json"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Geometry/timing implementation bugs remain S13-local."
+    },
+    "S13_SUBTITLE_IMPLEMENTATION_QA_PASS": {
+      "executor_id": "FINAL_RENDER_TECH_QA",
+      "execution_class": "TECHNICAL_VALIDATION",
+      "implementation_status": "DETERMINISTIC_MEDIA_QA",
+      "canonical_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_stage_entry_checklist.md"
+      ],
+      "canonical_tools": [],
+      "system_dependencies": ["ffmpeg", "ffprobe", "existing render capability"],
+      "dependency_policy": "No new AI model. Validate final codec/duration/audio/SAR/watermark/subtitle/delivery truth with existing media tooling.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B/FINAL_TECH_QA_v1.md"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Technical defect patches nearest implementation layer; do not reopen accepted aesthetic Gates unless pixels/timing materially change."
+    },
+    "S14_FINAL_TECH_QA_PASS": {
+      "executor_id": "HG05_RUNTIME_GATE",
+      "execution_class": "HUMAN_GATE",
+      "implementation_status": "RUNTIME_CONTROLLER",
+      "canonical_reads": ["04_HARNESS/rules/mv_human_gates.md"],
+      "canonical_tools": ["04_HARNESS/tools/mv_runtime_bridge.py"],
+      "dependency_policy": "Use RECORD_HUMAN_GATE with fresh Canonical guard, then separate ADVANCE after user acceptance.",
+      "prior_pass_examples": [],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "No chat-only PASS and no direct state edit."
+    },
+    "S15_HG05_FINAL_ACCEPTANCE_PASS": {
+      "executor_id": "RELEASE_PACKAGE_ASSEMBLY",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "implementation_status": "RULE_DRIVEN_PACKAGING",
+      "canonical_reads": ["05_IP_ASSETS/PUBLISH_SYSTEM.md"],
+      "canonical_tools": [],
+      "dependency_policy": "NO_NEW_MODEL. Build release metadata from accepted render and locked account packaging rules.",
+      "prior_pass_examples": ["06_TESTS/MV/WEB_R3/30D_60/D01-B"],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Packaging issue patches release package only."
+    },
+    "S16_RELEASE_PACKAGE_READY": {
+      "executor_id": "TRANSACTIONAL_PUBLISH_SYNC",
+      "execution_class": "TRANSACTIONAL_PUBLISH",
+      "implementation_status": "EXECUTABLE_AND_RUNTIME_AUTHORIZED",
+      "canonical_reads": [
+        "05_IP_ASSETS/PUBLISH_SYSTEM.md",
+        "04_HARNESS/runtime/mv_runtime_bridge_contract.json"
+      ],
+      "canonical_tools": [
+        "04_HARNESS/tools/mv_runtime_publish.py",
+        "04_HARNESS/tools/mv_runtime_bridge.py"
+      ],
+      "dependency_policy": "Requires explicit real-world publication confirmation. PUBLISH_SYNC is transactional; do not emulate with manual tracker/state edits.",
+      "prior_pass_examples": [],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Sync failure rolls back/blocks; never leave half-updated tracker/state."
+    },
+    "S17_PUBLISHED_DATA_COLLECTION_ACTIVE": {
+      "executor_id": "POST_PUBLISH_DATA_REVIEW",
+      "execution_class": "DATA_REVIEW",
+      "implementation_status": "OBSERVED_DATA_ONLY",
+      "canonical_reads": [
+        "05_IP_ASSETS/PUBLISH_SYSTEM.md",
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md"
+      ],
+      "canonical_tools": [],
+      "dependency_policy": "NO_NEW_MODEL. Use actual observed metrics/checkpoint timestamps only; unknown remains unknown.",
+      "prior_pass_examples": [],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "Missing metrics do not get invented; keep collection active until a valid review can be written."
+    },
+    "S18_POST_PUBLISH_REVIEWED": {
+      "executor_id": "TERMINAL_PRESERVATION",
+      "execution_class": "DATA_REVIEW",
+      "implementation_status": "TERMINAL",
+      "canonical_reads": [],
+      "canonical_tools": [],
+      "dependency_policy": "No execution. Preserve durable evidence and resume/allocate another slot.",
+      "prior_pass_examples": [],
+      "experiment_overlay_allowed": false,
+      "fallback_policy": "None; terminal stage."
+    }
+  }
+}
