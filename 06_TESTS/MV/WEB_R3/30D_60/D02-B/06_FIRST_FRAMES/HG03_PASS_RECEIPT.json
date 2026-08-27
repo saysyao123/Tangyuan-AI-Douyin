@@ -1,0 +1,25 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG03",
+  "stage_id": "S06_HG03_FIRST_FRAMES_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "用户确认最终四张 B 方案黑色面部网格首帧问题不大，并授权在机器审核通过后继续下一步。",
+  "approved_artifacts": [
+    "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+    "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "FIRST_FRAME_SET_MANIFEST",
+      "path": "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+      "sha256": "cd0c40f262d0151d9637824b001596ae96ac428acaaab7a56f5cfc8a63d9e187"
+    },
+    {
+      "artifact_id": "FIRST_FRAME_SET_QA",
+      "path": "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md",
+      "sha256": "87bba684bd4dfb73a1ac8ef0085048600905106f4709de934cb24544aae1276e"
+    }
+  ],
+  "state_stage_before": "S05_DIRECTOR_PLAN_LOCKED",
+  "created_at": "2026-08-27T12:58:58Z"
+}
