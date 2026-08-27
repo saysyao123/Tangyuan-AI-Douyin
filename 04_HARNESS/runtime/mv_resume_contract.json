@@ -1,9 +1,10 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "CANDIDATE",
   "program_root": "06_TESTS/MV/WEB_R3/30D_60",
   "tracker_path": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
   "canonical_state_relative_path": "00_STATE/CURRENT_STATE.json",
+  "executor_registry_path": "04_HARNESS/runtime/mv_stage_executor_registry.json",
   "selection_policy": {
     "canonical_slots_are_discovered_only_by_nested_state_path": true,
     "legacy_root_level_current_state_is_not_resume_authority": true,
@@ -15,7 +16,8 @@
     "invalid_canonical_slot_blocks_startup": true,
     "tracker_slot_id_must_be_unique": true,
     "tracker_lane_must_match_slot_manifest": true,
-    "tracker_published_status_must_match_real_world_stage": true
+    "tracker_published_status_must_match_real_world_stage": true,
+    "executor_first_required_before_stage_execution": true
   },
   "tracker_required_columns": ["slot_id", "day", "slot", "lane", "status", "song_family", "audio_asset"],
   "tracker_allocation_statuses": ["PLANNED"],
@@ -27,11 +29,14 @@
     "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
     "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
     "04_HARNESS/runtime/mv_resume_contract.json",
-    "04_HARNESS/runtime/mv_stage_registry.json"
+    "04_HARNESS/runtime/mv_stage_registry.json",
+    "04_HARNESS/runtime/mv_stage_executor_registry.json",
+    "04_HARNESS/rules/mv_executor_first.md",
+    "04_HARNESS/MANIFEST.md"
   ],
   "allocation": {
     "action_id": "INIT_SLOT_AND_PREPARE_HG01",
-    "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision.",
+    "summary": "Initialize the selected tracker slot as canonical_v2, resolve the S00 registered executor, build the song candidate set from the Core Benchmark Data Center, then stop at HG01 for the human song-aesthetic decision.",
     "human_gate": "HG01",
     "jit_reads": [
       "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
@@ -45,126 +50,133 @@
       "action_id": "PREPARE_HG01_SONG_SELECTION",
       "next_stage": "S01_HG01_SONG_LOCKED",
       "human_gate": "HG01",
-      "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS.",
+      "summary": "Resolve the S00 executor, build or refresh the Core-Database song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS.",
       "jit_reads": ["05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md", "04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_golden_runtime.md", "04_HARNESS/rules/mv_human_gates.md"]
     },
     "S01_HG01_SONG_LOCKED": {
       "action_id": "DISCOVER_AND_LOCK_EXACT_BGM",
       "next_stage": "S02_HG02_BGM_LOCKED",
       "human_gate": "HG02",
-      "summary": "Discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock.",
+      "summary": "Resolve the S01 executor, discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock.",
       "jit_reads": ["04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_bgm_discovery.md", "04_HARNESS/rules/mv_human_gates.md"]
     },
     "S02_HG02_BGM_LOCKED": {
       "action_id": "BUILD_AUDIO_TIMELINE_PACKAGE",
       "next_stage": "S03_AUDIO_TIMELINE_LOCKED",
       "human_gate": null,
-      "summary": "Build and machine-validate the trusted Audio Timeline Package from the locked BGM before any timing-dependent director work.",
-      "jit_reads": ["04_HARNESS/rules/mv_audio_timeline.md"]
+      "summary": "Use the registered CANONICAL_AUDIO_TIMELINE_TOOLCHAIN to build and machine-validate the trusted Audio Timeline Package from the locked BGM before any timing-dependent director work.",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/templates/mv_audio_timeline_package_contract.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md",
+        "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json",
+        "04_HARNESS/tools/mv_audio_timeline/package_tool.py",
+        "04_HARNESS/tools/mv_audio_timeline/final_gate.py"
+      ]
     },
     "S03_AUDIO_TIMELINE_LOCKED": {
       "action_id": "BUILD_NATURAL_BEAT",
       "next_stage": "S04_NATURAL_BEAT_LOCKED",
       "human_gate": null,
-      "summary": "Convert the locked audio truth into semantic Natural Beats without introducing visual design yet.",
+      "summary": "Resolve the S03 creative-synthesis executor and convert locked audio truth into semantic Natural Beats without introducing visual design yet.",
       "jit_reads": ["04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_golden_runtime.md"]
     },
     "S04_NATURAL_BEAT_LOCKED": {
       "action_id": "BUILD_DIRECTOR_PLAN",
       "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
       "human_gate": null,
-      "summary": "Allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan.",
-      "jit_reads": ["04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_golden_runtime.md", "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"]
+      "summary": "Resolve the S04 Director executor, allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan.",
+      "jit_reads": ["04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_golden_runtime.md", "04_HARNESS/rules/mv_editing.md", "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"]
     },
     "S05_DIRECTOR_PLAN_LOCKED": {
       "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
       "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
       "human_gate": "HG03",
-      "summary": "Generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance.",
-      "jit_reads": ["04_HARNESS/rules/mv_first_frame_qa.md", "04_HARNESS/rules/mv_human_gates.md", "04_HARNESS/rules/ai_video.md"]
+      "summary": "Resolve the First Frame capability-handoff executor, generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance.",
+      "jit_reads": ["04_HARNESS/rules/mv_first_frame_qa.md", "04_HARNESS/rules/mv_human_gates.md", "04_HARNESS/rules/ai_video.md", "04_HARNESS/templates/ai_first_frame_prompt.md"]
     },
     "S06_HG03_FIRST_FRAMES_LOCKED": {
       "action_id": "BUILD_DYNAMIC_PROMPT_SET",
       "next_stage": "S07_DYNAMIC_PROMPT_SET_READY",
       "human_gate": null,
-      "summary": "Translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose.",
+      "summary": "Resolve the Dynamic Prompt creative-synthesis executor and translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose.",
       "jit_reads": ["04_HARNESS/rules/ai_video.md", "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"]
     },
     "S07_DYNAMIC_PROMPT_SET_READY": {
       "action_id": "GENERATE_AND_QA_DYNAMIC_SOURCES",
       "next_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
       "human_gate": null,
-      "summary": "Generate RAW dynamic sources, classify PASS/TRIM/REGEN status and produce the Visual Source Map; trim before regenerating.",
-      "jit_reads": ["04_HARNESS/rules/ai_video.md", "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"]
+      "summary": "Resolve the existing dynamic-generation capability handoff, generate RAW sources, classify PASS/TRIM/REGEN status and produce the Visual Source Map; trim before regenerating.",
+      "jit_reads": ["04_HARNESS/rules/ai_video.md", "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md", "04_HARNESS/workflows/mv.md"]
     },
     "S08_DYNAMIC_SOURCE_QA_LOCKED": {
       "action_id": "NORMALIZE_EDIT_SOURCES",
       "next_stage": "S09_SOURCE_NORMALIZATION_READY",
       "human_gate": null,
-      "summary": "Apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit.",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit.",
       "jit_reads": ["04_HARNESS/rules/mv_source_normalization.md", "04_HARNESS/rules/mv_web_source_roughcut.md"]
     },
     "S09_SOURCE_NORMALIZATION_READY": {
       "action_id": "REVALIDATE_EDITOR_AUDIO",
       "next_stage": "S10_EDITOR_AUDIO_GATE_PASS",
       "human_gate": null,
-      "summary": "Revalidate locked audio identity and duration at editor ingest before building the picture edit.",
-      "jit_reads": ["04_HARNESS/rules/mv_editing.md", "04_HARNESS/rules/mv_audio_timeline.md"]
+      "summary": "Reuse the registered Audio Timeline Final Gate to revalidate locked audio identity and duration at editor ingest before building the picture edit.",
+      "jit_reads": ["04_HARNESS/rules/mv_editing.md", "04_HARNESS/rules/mv_audio_timeline.md", "04_HARNESS/tools/mv_audio_timeline/README.md", "04_HARNESS/tools/mv_audio_timeline/final_gate.py"]
     },
     "S10_EDITOR_AUDIO_GATE_PASS": {
       "action_id": "BUILD_EXECUTABLE_EDIT_MAP",
       "next_stage": "S11_EDIT_MAP_LOCKED",
       "human_gate": null,
-      "summary": "Build the executable picture Edit Map from normalized source atoms against canonical audio truth.",
+      "summary": "Resolve the Edit Map creative-synthesis executor and build the executable picture Edit Map from normalized source atoms against canonical audio truth.",
       "jit_reads": ["04_HARNESS/rules/mv_editing.md"]
     },
     "S11_EDIT_MAP_LOCKED": {
       "action_id": "RENDER_PREVIEW_AND_RUN_HG04",
       "next_stage": "S12_HG04_PICTURE_EDIT_PASS",
       "human_gate": "HG04",
-      "summary": "Render and machine-QA the picture preview, then stop at HG04 for human rhythm acceptance.",
+      "summary": "Resolve the existing preview render capability, render and machine-QA the picture preview, then stop at HG04 for human rhythm acceptance.",
       "jit_reads": ["04_HARNESS/rules/mv_editing.md", "04_HARNESS/rules/mv_human_gates.md"]
     },
     "S12_HG04_PICTURE_EDIT_PASS": {
       "action_id": "IMPLEMENT_AND_QA_SUBTITLES",
       "next_stage": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS",
       "human_gate": null,
-      "summary": "Apply the locked subtitle baseline and machine-check geometry, padding, bounding boxes and safe placement.",
+      "summary": "Resolve the locked subtitle implementation executor, apply the accepted baseline and machine-check geometry, padding, bounding boxes and safe placement.",
       "jit_reads": ["04_HARNESS/rules/mv_subtitle.md"]
     },
     "S13_SUBTITLE_IMPLEMENTATION_QA_PASS": {
       "action_id": "FINAL_RENDER_AND_TECH_QA",
       "next_stage": "S14_FINAL_TECH_QA_PASS",
       "human_gate": null,
-      "summary": "Render the final candidate and validate codec, duration, audio, watermark safety, aspect ratio and delivery readiness.",
-      "jit_reads": ["04_HARNESS/rules/mv_editing.md"]
+      "summary": "Resolve the existing final-render/technical-QA executor, render the candidate and validate codec, duration, audio, watermark safety, aspect ratio and delivery readiness.",
+      "jit_reads": ["04_HARNESS/workflows/mv.md", "04_HARNESS/rules/mv_editing.md", "04_HARNESS/rules/mv_stage_entry_checklist.md"]
     },
     "S14_FINAL_TECH_QA_PASS": {
       "action_id": "RUN_HG05_FINAL_ACCEPTANCE",
       "next_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS",
       "human_gate": "HG05",
-      "summary": "Present the final technically valid candidate for human acceptance; do not build the release package before HG05 PASS.",
+      "summary": "Use the registered Runtime Human Gate path to present the final technically valid candidate for acceptance; do not build the release package before HG05 PASS.",
       "jit_reads": ["04_HARNESS/rules/mv_human_gates.md"]
     },
     "S15_HG05_FINAL_ACCEPTANCE_PASS": {
       "action_id": "BUILD_RELEASE_PACKAGE",
       "next_stage": "S16_RELEASE_PACKAGE_READY",
       "human_gate": null,
-      "summary": "Build the publish-ready release package from the accepted final render and account packaging rules.",
+      "summary": "Resolve the rule-driven Release Package executor and build publish-ready metadata from the accepted final render and account packaging rules.",
       "jit_reads": ["05_IP_ASSETS/PUBLISH_SYSTEM.md"]
     },
     "S16_RELEASE_PACKAGE_READY": {
       "action_id": "PUBLISH_AND_TRANSACTIONALLY_SYNC",
       "next_stage": "S17_PUBLISHED_DATA_COLLECTION_ACTIVE",
       "human_gate": null,
-      "summary": "After real-world publish confirmation, run transactional publish/tracker sync; S17 must never be advanced by hand.",
-      "jit_reads": ["05_IP_ASSETS/PUBLISH_SYSTEM.md"]
+      "summary": "Use the registered transactional publish executor after real-world confirmation; S17 must never be advanced by hand.",
+      "jit_reads": ["05_IP_ASSETS/PUBLISH_SYSTEM.md", "04_HARNESS/tools/mv_runtime_publish.py", "04_HARNESS/runtime/mv_runtime_bridge_contract.json"]
     },
     "S17_PUBLISHED_DATA_COLLECTION_ACTIVE": {
       "action_id": "COLLECT_POST_PUBLISH_METRICS_AND_REVIEW",
       "next_stage": "S18_POST_PUBLISH_REVIEWED",
       "human_gate": null,
-      "summary": "Collect real metrics without inventing missing checkpoints, write the post-publish review and only then close S18.",
+      "summary": "Use the observed-data review executor to collect real metrics without inventing missing checkpoints, write the post-publish review and only then close S18.",
       "jit_reads": ["05_IP_ASSETS/PUBLISH_SYSTEM.md", "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md"]
     },
     "S18_POST_PUBLISH_REVIEWED": {
