@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T030200Z-NEWALLOC",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Runtime consolidation closure proof for explicit brand-new MV allocation intent: validate the first unused eligible tracker slot without mutating it."
+}
