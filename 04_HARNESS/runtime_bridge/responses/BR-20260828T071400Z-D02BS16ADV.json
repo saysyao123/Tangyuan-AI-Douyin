@@ -1,0 +1,216 @@
+{
+  "command": "ADVANCE",
+  "completed_at": "2026-08-27T17:14:26Z",
+  "error": null,
+  "execution": {
+    "command": "ADVANCE",
+    "controller_payload": {
+      "from_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS",
+      "ok": true,
+      "state_token": "RELEASE_READY",
+      "to_stage": "S16_RELEASE_PACKAGE_READY",
+      "transition_receipt": "00_STATE/TRANSITIONS/016_S15_HG05_FINAL_ACCEPTANCE_PASS__S16_RELEASE_PACKAGE_READY.json",
+      "verified": {
+        "checked_context_receipts": [
+          "00_STATE/CONTEXT_EVENTS/001_multi_shot_false_to_true.json"
+        ],
+        "checked_transition_receipts": [
+          "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+          "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+          "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+          "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+          "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+          "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+          "00_STATE/TRANSITIONS/006_S05_DIRECTOR_PLAN_LOCKED__S06_HG03_FIRST_FRAMES_LOCKED.json",
+          "00_STATE/TRANSITIONS/007_S06_HG03_FIRST_FRAMES_LOCKED__S07_DYNAMIC_PROMPT_SET_READY.json",
+          "00_STATE/TRANSITIONS/008_S07_DYNAMIC_PROMPT_SET_READY__S08_DYNAMIC_SOURCE_QA_LOCKED.json",
+          "00_STATE/TRANSITIONS/009_S08_DYNAMIC_SOURCE_QA_LOCKED__S09_SOURCE_NORMALIZATION_READY.json",
+          "00_STATE/TRANSITIONS/010_S09_SOURCE_NORMALIZATION_READY__S10_EDITOR_AUDIO_GATE_PASS.json",
+          "00_STATE/TRANSITIONS/011_S10_EDITOR_AUDIO_GATE_PASS__S11_EDIT_MAP_LOCKED.json",
+          "00_STATE/TRANSITIONS/012_S11_EDIT_MAP_LOCKED__S12_HG04_PICTURE_EDIT_PASS.json",
+          "00_STATE/TRANSITIONS/013_S12_HG04_PICTURE_EDIT_PASS__S13_SUBTITLE_IMPLEMENTATION_QA_PASS.json",
+          "00_STATE/TRANSITIONS/014_S13_SUBTITLE_IMPLEMENTATION_QA_PASS__S14_FINAL_TECH_QA_PASS.json",
+          "00_STATE/TRANSITIONS/015_S14_FINAL_TECH_QA_PASS__S15_HG05_FINAL_ACCEPTANCE_PASS.json",
+          "00_STATE/TRANSITIONS/016_S15_HG05_FINAL_ACCEPTANCE_PASS__S16_RELEASE_PACKAGE_READY.json"
+        ],
+        "context": {
+          "canonical_v2": true,
+          "multi_shot": true,
+          "program_30d60": true,
+          "web": true
+        },
+        "context_revision": 1,
+        "current_stage": "S16_RELEASE_PACKAGE_READY",
+        "current_state_token": "RELEASE_READY",
+        "highest_contiguous_valid_stage": "S16_RELEASE_PACKAGE_READY",
+        "ok": true,
+        "slot_id": "D02-B",
+        "transition_sequence": 16
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 1,
+    "current_stage": "S16_RELEASE_PACKAGE_READY",
+    "current_state_token": "RELEASE_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "8bfdb944da71b2f2d888a088a958031438ecbb14066382415b50f1484e6e3808",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "8a0f3b9876e5d868efc6941511238a64894041efd836afbf8cc71a160965959d",
+    "state_sha256": "d27f5c27e592fe10fdecf322497164fdab3cab89b8af572fbe06827ca8f569c6",
+    "transition_sequence": 16
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S16_RELEASE_PACKAGE_READY",
+    "current_state_token": "RELEASE_READY",
+    "jit_reads": [
+      "05_IP_ASSETS/PUBLISH_SYSTEM.md",
+      "04_HARNESS/tools/mv_runtime_publish.py",
+      "04_HARNESS/runtime/mv_runtime_bridge_contract.json"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "PUBLISH_AND_TRANSACTIONALLY_SYNC",
+      "human_gate": null,
+      "jit_reads": [
+        "05_IP_ASSETS/PUBLISH_SYSTEM.md",
+        "04_HARNESS/tools/mv_runtime_publish.py",
+        "04_HARNESS/runtime/mv_runtime_bridge_contract.json"
+      ],
+      "next_stage": "S17_PUBLISHED_DATA_COLLECTION_ACTIVE",
+      "summary": "Use the registered transactional publish executor after real-world confirmation; S17 must never be advanced by hand."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S15_HG05_FINAL_ACCEPTANCE_PASS",
+    "current_state_token": "HG05_PASS",
+    "jit_reads": [
+      "05_IP_ASSETS/PUBLISH_SYSTEM.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_RELEASE_PACKAGE",
+      "human_gate": null,
+      "jit_reads": [
+        "05_IP_ASSETS/PUBLISH_SYSTEM.md"
+      ],
+      "next_stage": "S16_RELEASE_PACKAGE_READY",
+      "summary": "Resolve the rule-driven Release Package executor and build publish-ready metadata from the accepted final render and account packaging rules."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260828T071400Z-D02BS16ADV",
+  "request_sha256": "8684bdcba5ca0371073647fabbda916f887057b866933e9bc93227aef574758e",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33097369084",
+    "github_source_sha": "1658ed6b1953fa47355bb8ecc8359df5def2976b"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
