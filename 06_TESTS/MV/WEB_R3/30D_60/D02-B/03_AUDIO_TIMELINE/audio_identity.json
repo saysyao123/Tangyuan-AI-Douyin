@@ -1,0 +1,15 @@
+{
+  "package_version": "1.0",
+  "title": "有几次想你了",
+  "artist": "林叙（错位秋天已上线）",
+  "version": "Douyin music asset 7670104695834282815 / HG02 option B / soft tail fade 0.8s",
+  "audio_path": "/tmp/audio/HG02_B_soft_tail_0p8s.mp3",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "content_duration_s": 15.386083,
+  "container_duration_s": 15.412245,
+  "timeline_duration_s": 15.386083,
+  "source_clip_start_s": 0.0,
+  "source_clip_end_s": 15.386083,
+  "speed_factor": 1.0,
+  "time_stretched": false
+}
