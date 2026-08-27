@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.1",
   "status": "P0_ENFORCEMENT_CANDIDATE",
   "authority": "Machine-readable companion to workflows/mv.md and rules/mv_golden_runtime.md",
   "principles": [
@@ -37,7 +37,7 @@
       "state_token": "SONG_LOCKED",
       "required_artifacts": ["HG01_SELECTION_RECEIPT"],
       "conditional_requirements": [
-        {"when": {"canonical_v2": true}, "required_artifacts": ["SONG_CANDIDATE_SET", "HG01_CANDIDATE_EVIDENCE_PACK"]}
+        {"when": {"canonical_v2": true}, "required_artifacts": ["SONG_CANDIDATE_SET"]}
       ]
     },
     {
