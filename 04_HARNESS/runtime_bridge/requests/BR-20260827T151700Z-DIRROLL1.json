@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T151700Z-DIRROLL1",
+  "command": "ROLLBACK",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S11_EDIT_MAP_LOCKED",
+    "current_state_token": "EDIT_MAP_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "a34d3ab43463b7f9add98717de80012017809e445f47a5750c83370cd1c9e75f",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "baea63cddb0f114ce748809b6063311584bb2ac5148420eb6f51269bfc6bc420",
+    "state_sha256": "7cde41bad61c7fde76cd4e3ef758ba831909b47743f3ded726f9085e61bddd63",
+    "transition_sequence": 11
+  },
+  "payload": {
+    "change_type": "director_revision",
+    "reason": "HG04 review showed the selected four-source mostly single-shot director structure was visually attractive but materially under-covered the locked seven lyric lines. The edit felt disconnected from lyrics and lacked enough source atoms. Revise S05 using a hybrid R3 lyric-hit + OSS camera-relation design, preserve upstream audio/Natural Beat truth, and intentionally enable multi-shot source normalization for denser edit coverage.",
+    "authority": "human_hg04_rejection_and_director_revision"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Explicit minimal rollback to the Director stage after user rejected the picture direction at HG04."
+}
