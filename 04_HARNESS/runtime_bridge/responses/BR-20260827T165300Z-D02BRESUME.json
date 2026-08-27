@@ -1,0 +1,184 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T16:53:22Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B --slot-id D02-B --program 30D_60 --lane S",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "lane": "S",
+      "mode": "ALLOCATE_NEW_SLOT",
+      "next_action": {
+        "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+        "human_gate": "HG01",
+        "jit_reads": [
+          "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+          "04_HARNESS/workflows/mv.md",
+          "04_HARNESS/rules/mv_golden_runtime.md",
+          "04_HARNESS/rules/mv_human_gates.md"
+        ],
+        "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "slot_id": "D02-B",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "S",
+        "packaging": "TBD",
+        "publish_time": "",
+        "slot": "B",
+        "slot_id": "D02-B",
+        "song_family": "",
+        "status": "PLANNED"
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "kind": "ALLOCATION",
+    "lane": "S",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "slot_id": "D02-B",
+    "tracker_sha256": "15909a4a3c0fbe881e869fa04a1f559cc723ee0b223e40f6ea691bbd7ae41b59"
+  },
+  "postflight": {
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B --slot-id D02-B --program 30D_60 --lane S",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "next_action": {
+      "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "preflight": {
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "init_command": "python 04_HARNESS/tools/mv_runtime_state.py init-slot --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B --slot-id D02-B --program 30D_60 --lane S",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "mode": "ALLOCATE_NEW_SLOT",
+    "next_action": {
+      "action_id": "INIT_SLOT_AND_PREPARE_HG01",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "summary": "Initialize the selected tracker slot as canonical_v2, build the song candidate set, then stop at HG01 for the human song-aesthetic decision."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    }
+  },
+  "request_id": "BR-20260827T165300Z-D02BRESUME",
+  "request_sha256": "129fd2e0a1a6c85f1c2d2fa66a75b140d34999556ab26222d87d2e966494c0fb",
+  "runner": {
+    "github_ref_name": "test/mv-web-r3",
+    "github_run_attempt": "1",
+    "github_run_id": "33095541420",
+    "github_source_sha": "2056a988a48f70a67bf4df7435bd34695a4e5d9c"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
