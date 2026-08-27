@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T164040Z-S11V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S10_EDITOR_AUDIO_GATE_PASS",
+    "current_state_token": "EDITOR_AUDIO_GATE_PASS",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "f6060ea2a9b1e43a53a4f6d13e9ab7674c3a70e58eb69aec53311cfb356cf9ea",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "32f46187a8c2168e8ab30861e22c701f6703b6b8e37ade602d006663e09f9c95",
+    "state_sha256": "97e52cfc5dc1ca9b8a4e693527f63dd7608c85169a65700312bcd7d6f72dfbfc",
+    "transition_sequence": 10
+  },
+  "payload": {"to": "S11_EDIT_MAP_LOCKED"},
+  "requested_by": "chatgpt_web",
+  "reason": "Dense lyric-first executable EDIT_MAP is durably written from normalized multi-shot atoms against the locked seven-line audio timeline; v2 preview QA is PASS_FOR_HG04_REVIEW."
+}
