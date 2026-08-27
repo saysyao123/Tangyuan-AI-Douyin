@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T165700Z-D02BHG04",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Resume the actual D02-B Candidate Runtime on test/mv-oss-optimization-r1 after locating the correct test branch, before recording the user's HG04 picture-edit approval and completing the remaining closure stages."
+}
