@@ -4,12 +4,12 @@
   "slot_id": "D02-B",
   "program": "30D_60",
   "lane": "S",
-  "current_stage": "S11_EDIT_MAP_LOCKED",
-  "current_state_token": "EDIT_MAP_LOCKED",
-  "status": "EDIT_MAP_LOCKED",
-  "transition_sequence": 11,
-  "last_transition_receipt": "00_STATE/TRANSITIONS/011_S10_EDITOR_AUDIO_GATE_PASS__S11_EDIT_MAP_LOCKED.json",
-  "last_transition_receipt_sha256": "a34d3ab43463b7f9add98717de80012017809e445f47a5750c83370cd1c9e75f",
+  "current_stage": "S04_NATURAL_BEAT_LOCKED",
+  "current_state_token": "NATURAL_BEAT_LOCKED",
+  "status": "NATURAL_BEAT_LOCKED",
+  "transition_sequence": 4,
+  "last_transition_receipt": "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+  "last_transition_receipt_sha256": "b9bcefd8911fdd4ab13c77778b371664cd31a1fbf13acf961f01651060159bad",
   "context": {
     "web": true,
     "multi_shot": false,
@@ -20,8 +20,8 @@
   "last_context_receipt": null,
   "last_context_receipt_sha256": null,
   "created_at": "2026-08-27T03:14:41Z",
-  "updated_at": "2026-08-27T14:57:43Z",
-  "revision_sequence": 1,
-  "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
-  "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51"
+  "updated_at": "2026-08-27T15:12:56Z",
+  "revision_sequence": 2,
+  "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+  "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784"
 }
