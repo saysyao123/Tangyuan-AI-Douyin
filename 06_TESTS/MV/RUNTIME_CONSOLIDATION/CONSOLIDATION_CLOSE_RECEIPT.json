@@ -1,8 +1,9 @@
 {
   "receipt_version": "1.0",
   "project": "MV_RUNTIME_CONSOLIDATION",
-  "status": "READY_TO_DEPLOY",
+  "status": "PASS",
   "created_at": "2026-08-27T03:05:00Z",
+  "closed_at": "2026-08-27T03:06:00Z",
   "closure_branch": "refactor/mv-runtime-consolidation-v2",
   "deployment_branch": "test/mv-web-r3",
   "audit_path": "06_TESTS/MV/RUNTIME_CONSOLIDATION/MV_RUNTIME_CONSOLIDATION_AUDIT_v2.md",
@@ -69,10 +70,19 @@
   },
   "deployment_precondition": {
     "status": "PASS",
-    "comparison": "refactor branch ahead of test/mv-web-r3 with behind_by=0",
+    "comparison": "refactor branch ahead of test/mv-web-r3 with behind_by=0 before deployment",
     "deployment_mode": "FAST_FORWARD_ONLY",
     "original_test_branch_sha": "a8581e67ec299fcd6f5185ec6b32cf4129b25fc5"
   },
-  "deployment_verification": null,
-  "close_rule": "Receipt becomes PASS only after test/mv-web-r3 is fast-forwarded and verified against the closure branch."
+  "deployment_verification": {
+    "status": "PASS",
+    "verified_at": "2026-08-27T03:06:00Z",
+    "verified_shared_sha_before_final_receipt_commit": "219eda55311687d522dd7a541ed900a6764ab1f5",
+    "closure_branch_observed_sha": "219eda55311687d522dd7a541ed900a6764ab1f5",
+    "deployment_branch_observed_sha": "219eda55311687d522dd7a541ed900a6764ab1f5",
+    "refs_equal": true,
+    "force_update_used": false,
+    "note": "The final PASS receipt update is committed after this equality check; test/mv-web-r3 must then be fast-forwarded once more to carry this final receipt commit."
+  },
+  "close_rule": "PASS means all required technical gates, live bridge proof, bounded D02-A import, new-MV allocation proof, startup switch and fast-forward deployment verification succeeded without fabricating unsupported history."
 }
