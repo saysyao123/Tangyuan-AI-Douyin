@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "D02-B-S02-ALIGN-20260827-RETRY01",
+  "slot_id": "D02-B",
+  "stage": "S02_HG02_BGM_LOCKED",
+  "requested_by": "chatgpt_web",
+  "reason": "Retry after generic run_alignment duration-schema compatibility fix and full Audio Timeline regression PASS; no audio, lyric, model or Gate change.",
+  "audio_workflow_run_id": 33040160960,
+  "audio_artifact_name": "D02B-HG02-listening-package",
+  "audio_file_name": "HG02_B_soft_tail_0p8s.mp3",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "title": "有几次想你了",
+  "artist": "林叙（错位秋天已上线）",
+  "version": "Douyin music asset 7670104695834282815 / HG02 option B / soft tail fade 0.8s",
+  "source_clip_start_s": 0.0,
+  "source_clip_end_s": 15.386083,
+  "trusted_lyrics": [
+    "有几次想你了",
+    "有几次忍住了",
+    "有几句想说的",
+    "都变成算了"
+  ],
+  "trusted_lyrics_source": "06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/SONG_CANDIDATE_SET.json formal candidate A core work aweme 7674136937083676665 caption; exact BGM family separately locked by HG02"
+}
