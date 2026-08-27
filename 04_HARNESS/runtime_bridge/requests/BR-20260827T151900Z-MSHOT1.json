@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T151900Z-MSHOT1",
+  "command": "UPDATE_CONTEXT",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "b9bcefd8911fdd4ab13c77778b371664cd31a1fbf13acf961f01651060159bad",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "1cba5e1ca39e79f86cf0e40363b45f4590a69e6953f0fdd487935ad28ff0fdae",
+    "state_sha256": "67f8d01860f0b4fe72cf98ff8dcbc7a24ef522fda9d3675ff727197fe28561ba",
+    "transition_sequence": 4
+  },
+  "payload": {
+    "key": "multi_shot",
+    "value": true,
+    "reason": "HG04 review established that four mostly single-shot sources under-covered seven lyric lines. Revised Director design intentionally uses 1–2 shots per 5s source, with a task-specific 3-shot weather source, so downstream Shot Library/ATOM normalization must be mandatory."
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Enable formal multi-shot source normalization for the hybrid lyric-hit Director revision."
+}
