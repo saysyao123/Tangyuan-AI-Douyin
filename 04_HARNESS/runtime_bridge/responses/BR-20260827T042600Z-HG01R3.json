@@ -1,0 +1,244 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T04:23:36Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "active_attempt": 1,
+      "asset_record_count": 0,
+      "context": {
+        "canonical_v2": true,
+        "multi_shot": false,
+        "program_30d60": true,
+        "web": true
+      },
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "current_stage": "S00_SLOT_CREATED",
+      "current_state_token": "SLOT_CREATED",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "lane": "S",
+      "last_revision_receipt": null,
+      "mode": "RESUME_CANONICAL",
+      "next_action": {
+        "action_id": "PREPARE_HG01_SONG_SELECTION",
+        "human_gate": "HG01",
+        "jit_reads": [
+          "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+          "04_HARNESS/workflows/mv.md",
+          "04_HARNESS/rules/mv_golden_runtime.md",
+          "04_HARNESS/rules/mv_human_gates.md"
+        ],
+        "next_stage": "S01_HG01_SONG_LOCKED",
+        "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "revision_sequence": 0,
+      "slot_id": "D02-B",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "S",
+        "packaging": "TBD",
+        "publish_time": "",
+        "slot": "B",
+        "slot_id": "D02-B",
+        "song_family": "",
+        "status": "PLANNED"
+      },
+      "verification": {
+        "asset_identity": true,
+        "revision_history": true,
+        "state": true,
+        "tracker_consistency": true
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "a76b2b1d76e0c4a374042fa5d92afd4e8b864874e28e1f753bdcee9d3845316f",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "21ba6cbee11096118f538fe79a4a38ba848a0e822f4950f721956394bf1fad6e",
+    "state_sha256": "d852856a4ca3de1f11ed5196a5a6381046245f4fecc10094996114817a9e9473",
+    "transition_sequence": 0
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": null,
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "PREPARE_HG01_SONG_SELECTION",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S01_HG01_SONG_LOCKED",
+      "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 0,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": null,
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "PREPARE_HG01_SONG_SELECTION",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S01_HG01_SONG_LOCKED",
+      "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 0,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T042600Z-HG01R3",
+  "request_sha256": "0c54126c26e3c95dc06c04e273a95ad91f7f61c52d8e306b13cfcc7666391968",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33039267558",
+    "github_source_sha": "edd08546e69055f2b89d573cef80e59842767cdd"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
