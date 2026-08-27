@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T145800Z-S10ADV1",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S09_SOURCE_NORMALIZATION_READY",
+    "current_state_token": "SOURCE_NORMALIZATION_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "f8bdd8b0a902f26a33f2826520fa357586825f1aefa28b6468eb248b7eb89d41",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "5641f69675cf92b28f3f0b1a151d62a6a08cf2a05f2171ad02722ecb2fc30015",
+    "state_sha256": "a803fd7285d16b4b746916a8573f0842dbb326d8aa30534a51aeb4a9f3821a34",
+    "transition_sequence": 9
+  },
+  "payload": {"to": "S10_EDITOR_AUDIO_GATE_PASS"},
+  "requested_by": "chatgpt_web",
+  "reason": "Editor ingest keeps the exact HG02 BGM identity and locked seven-line Audio Timeline; AI source audio is removed and no new lyric clock or alignment is introduced. EDITOR_AUDIO_GATE_RECEIPT is durable."
+}
