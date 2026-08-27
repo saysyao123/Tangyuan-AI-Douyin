@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "package": "D02-B_AUDIO_TIMELINE",
+  "route": "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+  "decision": "PASS",
+  "checked_at": "2026-08-27T18:30:00+08:00",
+  "checks": {
+    "hg02_audio_sha_match": true,
+    "human_lyric_audit_pass": true,
+    "trusted_line_count": 7,
+    "aligned_line_count": 7,
+    "all_lines_100pct_coverage": true,
+    "normalized_character_count": 45,
+    "sequence_ratio": 1.0,
+    "line_starts_strictly_monotonic": true,
+    "line_bounds_inside_audio": true,
+    "unresolved_occurrence_ambiguity": false,
+    "srt_matches_timeline": true,
+    "xingyu_fallback_required": false
+  },
+  "audio_duration_s": 15.386083,
+  "last_lyric_end_s": 14.26,
+  "post_lyric_tail_s": 1.126083,
+  "evidence": {
+    "workflow_run_id": 33060055071,
+    "workflow_artifact_id": 9641307843,
+    "raw_evidence": "raw_evidence/faster_whisper/lightweight_mapping_report.json"
+  },
+  "note": "User approved the seven-line lyric text. P1 passed full coverage and monotonic timing; stop at P1. Xingyu remains archived as P2 fallback."
+}
