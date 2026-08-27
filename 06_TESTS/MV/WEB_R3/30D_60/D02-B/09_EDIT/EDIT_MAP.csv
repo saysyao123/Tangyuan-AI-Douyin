@@ -1,0 +1,12 @@
+edit_id,timeline_start,timeline_end,duration,source_id,source_start,source_end,visual_role,lyric_alignment,cut_reason
+E01,0.00,1.95,1.95,H-S01,0.00,1.95,controlled approach,"L01 有几次想你了 0.00-1.88","open on longing / distance closes"
+E02,1.95,2.60,0.65,H-S01,2.63,3.28,hand-linen boundary detail,"L02 begins 2.02","action-state change: approach -> restraint"
+E03,2.60,3.64,1.04,H-S01,3.38,4.42,restrained side relation,"L02 有几次忍住了 2.02-3.64","hold consequence of restraint"
+E04,3.64,5.50,1.86,H-S02,0.80,2.66,held almost-speaking relation,"L03 3.78-5.40","expression impulse forms"
+E05,5.50,7.32,1.82,H-S02,3.04,4.86,turn-away withdrawal,"L04 5.60-7.18","intention-state change: say -> abandon"
+E06,7.32,8.00,0.68,H-S03,0.90,1.58,post-rain wet-world travel,"L05 7.32-8.94","establish rain-after state"
+E07,8.00,8.72,0.72,H-S03,2.33,3.05,foot / wet-stone detail,"L05","information detail: rain is over but remains physically"
+E08,8.72,9.12,0.40,H-S03,3.42,3.82,return into warm light,"L05 tail / handoff","time/weather passage bridge"
+E09,9.12,10.20,1.08,H-S04,1.20,2.28,gust crosses person and linen,"L06 9.12-10.70","literal wind event"
+E10,10.20,10.86,0.66,H-S04,3.38,4.04,linen wind residue,"L06 tail","wind has passed; residue remains"
+E11,10.86,15.412,4.552,H-S05,0.20,4.752,hold -> release -> world open,"L07 10.86-14.26 + audio tail","preserve complete attachment/release arc and final breathing tail"
