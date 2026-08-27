@@ -59,6 +59,7 @@ jobs:
             --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
             --gate HG01 \
             --user-decision-text 'SYNTHETIC_TEST_ONLY' \
+            --approved-artifact '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md' \
             > /tmp/hg01-record.json
           code=$?
           set -e
