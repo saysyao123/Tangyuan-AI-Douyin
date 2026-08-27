@@ -1,0 +1,19 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG01",
+  "stage_id": "S01_HG01_SONG_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "用户明确选择《有几次想你了》作为 D02-B 的 SONG_FAMILY。",
+  "approved_artifacts": [
+    "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "SONG_CANDIDATE_SET",
+      "path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "sha256": "4c2caa5d2ba28465c33f742c0311bd452b5f4ce98579d69480b04f348b8ee51b"
+    }
+  ],
+  "state_stage_before": "S00_SLOT_CREATED",
+  "created_at": "2026-08-27T04:24:07Z"
+}
