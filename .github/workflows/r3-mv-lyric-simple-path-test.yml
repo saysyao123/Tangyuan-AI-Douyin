@@ -1,0 +1,156 @@
+name: R3 MV Lyric Simple Path Test
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_SIMPLE_TEST_*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: r3-mv-lyric-simple-path-test-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  transcript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VENV: ${{ github.workspace }}/.mv-audio-align-venv
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      HUGGINGFACE_HUB_CACHE: ${{ github.workspace }}/.cache/huggingface/hub
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore existing shared Xingyu runtime
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .mv-audio-align-venv
+            .cache/huggingface
+          key: mv-audio-align-${{ runner.os }}-py311-${{ hashFiles('04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json') }}
+
+      - name: Resolve request and verify existing runtime capability
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.cache.outputs.cache-hit }}" != "true" ]; then
+            echo 'SIMPLE_PATH_BLOCKED: existing Xingyu runtime cache missing' >&2
+            exit 42
+          fi
+          mapfile -t REQS < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^06_TESTS/MV/OSS_OPT_R1/requests/LYRIC_SIMPLE_TEST_.*\.json$' || true)
+          if [ "${#REQS[@]}" -ne 1 ]; then
+            echo "Expected exactly one simple-path request, got ${#REQS[@]}" >&2
+            exit 2
+          fi
+          cp "${REQS[0]}" /tmp/request.json
+          export PATH="$VENV/bin:$PATH"
+          xingyu-align --version
+          python - <<'PY'
+          import faster_whisper
+          print('faster_whisper_import=PASS')
+          PY
+
+      - name: Download exact HG02 B audio and verify SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          RUN_ID="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_workflow_run_id'])")"
+          ARTIFACT="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_artifact_name'])")"
+          FILE="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_file_name'])")"
+          EXPECTED="$(python -c "import json;print(json.load(open('/tmp/request.json'))['audio_sha256'])")"
+          rm -rf /tmp/audio && mkdir -p /tmp/audio
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT" --dir /tmp/audio
+          AUDIO="/tmp/audio/$FILE"
+          test -f "$AUDIO"
+          GOT="$(sha256sum "$AUDIO" | awk '{print $1}')"
+          test "$GOT" = "$EXPECTED"
+          echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
+          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$AUDIO"
+
+      - name: One-pass full-clip candidate lyric transcription
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$VENV/bin:$PATH"
+          rm -rf /tmp/lyrics_candidate && mkdir -p /tmp/lyrics_candidate
+          START=$(date +%s)
+          xingyu-align candidate extract \
+            --audio "$AUDIO" \
+            --output-dir /tmp/lyrics_candidate \
+            --language zh \
+            --preset recommended \
+            --device cpu
+          END=$(date +%s)
+          ELAPSED=$((END-START))
+          echo "$ELAPSED" > /tmp/lyrics_candidate/asr_elapsed_seconds.txt
+          echo '=== candidate files ==='
+          find /tmp/lyrics_candidate -maxdepth 2 -type f -printf '%P\n' | sort
+          echo '=== text outputs ==='
+          find /tmp/lyrics_candidate -maxdepth 2 -type f \( -name '*.txt' -o -name '*.md' \) -print -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
+
+      - name: Build compact test report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          root=Path('/tmp/lyrics_candidate')
+          txt=[]
+          for p in root.rglob('*'):
+              if p.is_file() and p.suffix.lower()=='.txt' and p.name!='asr_elapsed_seconds.txt':
+                  try:
+                      t=p.read_text(encoding='utf-8').strip()
+                  except Exception:
+                      continue
+                  if t:
+                      txt.append((p,t))
+          chosen=None
+          for p,t in txt:
+              if 'clean' in p.name.lower():
+                  chosen=(p,t); break
+          if chosen is None and txt:
+              chosen=max(txt, key=lambda x: len(x[1]))
+          transcript=chosen[1] if chosen else ''
+          nonempty=[x.strip() for x in transcript.splitlines() if x.strip()]
+          req=json.loads(Path('/tmp/request.json').read_text(encoding='utf-8'))
+          report={
+            'schema_version':'1.0',
+            'test':'SIMPLE_LYRIC_TIMELINE_HAPPY_PATH_TRANSCRIPT',
+            'slot_id':req['slot_id'],
+            'song_family':req['song_family'],
+            'audio_sha256':req['audio_sha256'],
+            'preset':'recommended',
+            'model':'medium',
+            'skip_separation':True,
+            'elapsed_seconds':int((root/'asr_elapsed_seconds.txt').read_text().strip()),
+            'selected_transcript_file': chosen[0].relative_to(root).as_posix() if chosen else None,
+            'transcript_line_count':len(nonempty),
+            'transcript_lines':nonempty,
+            'status':'TRANSCRIPT_READY_FOR_ONE_AUDIT' if nonempty else 'BLOCKED_EMPTY_TRANSCRIPT'
+          }
+          (root/'simple_path_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: D02B-lyric-simple-path-test-${{ github.run_id }}
+          path: /tmp/lyrics_candidate
+          retention-days: 3
+          if-no-files-found: error
