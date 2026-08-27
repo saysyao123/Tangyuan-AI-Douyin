@@ -92,7 +92,7 @@ jobs:
             exit 0
           fi
           if [ -f "$REPORT" ]; then
-            echo 'D02-B BGM probe report already exists; skip.'
+            echo 'D02-B work/asset probe report already exists; reuse.'
             exit 0
           fi
           mkdir -p "$OUT"
@@ -112,7 +112,7 @@ jobs:
           probe xiang 'https://www.douyin.com/video/7674136937083676665'
 
           python - <<'PY'
-          import json, hashlib
+          import json, hashlib, re
           from pathlib import Path
           from datetime import datetime, timezone
 
@@ -129,38 +129,43 @@ jobs:
               music = data.get('music') or {}
               author = data.get('author') or {}
               returned_id = str(data.get('video_id') or '')
+              music_url = music.get('url')
+              m = re.search(r'/ies-music/(\d+)\.mp3', music_url or '')
               samples.append({
                   'label': label,
                   'expected_aweme_id': expected_id,
                   'returned_video_id': returned_id,
-                  'work_identity_pass': returned_id == expected_id,
+                  'returned_video_id_is_internal_codec_id': returned_id.startswith('v1'),
                   'expected_account': expected_name,
                   'returned_account': author.get('name'),
+                  'account_identity_pass': (label == 'fire' and author.get('name') == '火乐烁') or (label == 'xiang' and '𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰' == author.get('name')),
                   'title': data.get('title'),
                   'duration_ms': data.get('duration'),
                   'music_title': music.get('title'),
                   'music_author': music.get('author'),
-                  'music_url': music.get('url'),
+                  'music_url': music_url,
+                  'music_asset_object_id': m.group(1) if m else None,
                   'music_cover': music.get('cover'),
                   'parser_code': payload.get('code'),
                   'parser_msg': payload.get('msg'),
                   'raw_response_sha256': hashlib.sha256(raw).hexdigest(),
               })
 
-          urls = [s.get('music_url') for s in samples if s.get('music_url')]
+          asset_ids = [s.get('music_asset_object_id') for s in samples]
           titles = [s.get('music_title') for s in samples]
           authors = [s.get('music_author') for s in samples]
           report = {
-              'schema_version': '1.0',
+              'schema_version': '1.1',
               'song_family': '有几次想你了',
               'discovery_priority_used': 'P1_VERIFIED_DOUYIN_WORK_ASSET_PROBE',
               'probed_at': datetime.now(timezone.utc).isoformat(),
               'samples': samples,
-              'all_work_identity_pass': all(s['work_identity_pass'] for s in samples),
-              'same_music_url': len(urls) == 2 and urls[0] == urls[1],
+              'all_account_identity_pass': all(s['account_identity_pass'] for s in samples),
+              'same_music_asset_object_id': len(asset_ids) == 2 and None not in asset_ids and asset_ids[0] == asset_ids[1],
               'same_music_title': len(set(titles)) == 1,
               'same_music_author': len(set(authors)) == 1,
-              'decision': 'PENDING_AUDIO_DOWNLOAD_AND_FINGERPRINT'
+              'music_asset_object_id': asset_ids[0] if len(asset_ids) == 2 and asset_ids[0] == asset_ids[1] else None,
+              'decision': 'PENDING_AUDIO_BINARY_QA'
           }
           (out / 'asset_probe_report.json').write_text(
               json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
@@ -168,22 +173,97 @@ jobs:
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
+      - name: Download both CDN asset mirrors and run binary audio QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT='06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY'
+          REPORT="$OUT/asset_probe_report.json"
+          AUDIO_REPORT="$OUT/audio_probe_report.json"
+          mkdir -p /tmp/hg02_audio
+
+          python - <<'PY' > /tmp/music_urls.txt
+          import json
+          from pathlib import Path
+          data=json.loads(Path('06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY/asset_probe_report.json').read_text(encoding='utf-8'))
+          for s in data['samples']:
+              print(s['music_url'])
+          PY
+          mapfile -t URLS < /tmp/music_urls.txt
+          test "${#URLS[@]}" -eq 2
+          curl -fsSL --retry 2 --retry-delay 2 "${URLS[0]}" -o /tmp/hg02_audio/asset_mirror_1.mp3
+          curl -fsSL --retry 2 --retry-delay 2 "${URLS[1]}" -o /tmp/hg02_audio/asset_mirror_2.mp3
+
+          sha256sum /tmp/hg02_audio/asset_mirror_1.mp3 /tmp/hg02_audio/asset_mirror_2.mp3 > /tmp/sha.txt
+          ffprobe -v error -show_entries format=duration:stream=codec_name,sample_rate,channels -of json /tmp/hg02_audio/asset_mirror_1.mp3 > /tmp/probe1.json
+          ffprobe -v error -show_entries format=duration:stream=codec_name,sample_rate,channels -of json /tmp/hg02_audio/asset_mirror_2.mp3 > /tmp/probe2.json
+
+          cp /tmp/hg02_audio/asset_mirror_1.mp3 /tmp/hg02_audio/HG02_A_trend_native_exact.mp3
+          DURATION=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 /tmp/hg02_audio/asset_mirror_1.mp3)
+          FADE_START=$(python -c "print(max(0.0, float('$DURATION') - 0.8))")
+          ffmpeg -hide_banner -loglevel error -y -i /tmp/hg02_audio/asset_mirror_1.mp3 \
+            -af "afade=t=out:st=${FADE_START}:d=0.8" \
+            -codec:a libmp3lame -q:a 2 /tmp/hg02_audio/HG02_B_soft_tail_0p8s.mp3
+
+          python - <<'PY'
+          import json, hashlib
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          p1=json.loads(Path('/tmp/probe1.json').read_text())
+          p2=json.loads(Path('/tmp/probe2.json').read_text())
+          a1='/tmp/hg02_audio/asset_mirror_1.mp3'
+          a2='/tmp/hg02_audio/asset_mirror_2.mp3'
+          same=sha(a1)==sha(a2)
+          report={
+            'schema_version':'1.0',
+            'song_family':'有几次想你了',
+            'checked_at':datetime.now(timezone.utc).isoformat(),
+            'asset_object_id':'7670104695834282815',
+            'mirror_1_sha256':sha(a1),
+            'mirror_2_sha256':sha(a2),
+            'binary_identical':same,
+            'mirror_1_ffprobe':p1,
+            'mirror_2_ffprobe':p2,
+            'candidate_A':{
+              'name':'HG02_A_trend_native_exact.mp3',
+              'transform':'NONE / EXACT DOWNLOADED DOUYIN MUSIC ASSET',
+              'sha256':sha('/tmp/hg02_audio/HG02_A_trend_native_exact.mp3')
+            },
+            'candidate_B':{
+              'name':'HG02_B_soft_tail_0p8s.mp3',
+              'transform':'same exact asset; final 0.8s audio fade-out only',
+              'sha256':sha('/tmp/hg02_audio/HG02_B_soft_tail_0p8s.mp3')
+            },
+            'decision':'HG02_LISTENING_ASSETS_READY' if same else 'BLOCKED_MIRROR_MISMATCH'
+          }
+          Path('06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY/audio_probe_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+
+      - name: Upload private listening package as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: D02B-HG02-listening-package
+          path: |
+            /tmp/hg02_audio/HG02_A_trend_native_exact.mp3
+            /tmp/hg02_audio/HG02_B_soft_tail_0p8s.mp3
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Commit probe metadata only
         shell: bash
         run: |
           set -euo pipefail
-          REPORT='06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY/asset_probe_report.json'
-          if [ ! -f "$REPORT" ]; then
-            echo 'No report produced.'
-            exit 0
-          fi
+          OUT='06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY'
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$REPORT"
+          git add "$OUT/asset_probe_report.json" "$OUT/audio_probe_report.json"
           if git diff --cached --quiet; then
             echo 'No probe metadata change.'
             exit 0
           fi
-          git commit -m 'runtime: record D02-B exact Douyin BGM asset probe'
+          git commit -m 'runtime: record D02-B exact Douyin BGM audio QA'
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
