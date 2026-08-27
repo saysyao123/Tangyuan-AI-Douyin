@@ -1,13 +1,13 @@
-# OSS MV Optimization Result Matrix v1.1
+# OSS MV Optimization Result Matrix v1.2
 
-Status: `IN_PROGRESS / UPSTREAM_RUNTIME_CORRECTNESS_HARDENED`
+Status: `IN_PROGRESS / HG01 CORE DATABASE STRATEGY RESTORED`
 
 ## Test identity
 
 - Experiment branch: `test/mv-oss-optimization-r1`
 - Runtime baseline fork SHA: `89852ec5314e7579853683ef5eb40adb09f25753`
 - Test MV slot: `D02-B`
-- Song / audio identity: `NOT LOCKED — HG01 EVIDENCE REPACK IN PROGRESS`
+- Song / audio identity: `NOT LOCKED — HG01 CORE DATABASE REBUILD REQUIRED`
 - External source commit: `TBD / PENDING USER SOURCE`
 - Optimization set: `TBD`
 
@@ -33,35 +33,55 @@ Status: `IN_PROGRESS / UPSTREAM_RUNTIME_CORRECTNESS_HARDENED`
 
 ### HG01 / Song
 
-`RUNTIME CORRECTNESS FINDING / VALIDATED`
+`PROCESS CORRECTION / VALIDATED IN EXPERIMENT`
 
-Before visual OSS testing began, D02-B exposed a pre-existing Runtime delivery weakness: machine `SONG_CANDIDATE_SET` could be mistaken for user-facing HG01 evidence delivery. The initial D02-B assistant handoff therefore prematurely asked for A/B/C/D selection without first providing a valid Direct Douyin Evidence Pack.
+D02-B revealed two different issues:
 
-A second evidence-quality defect was also found: some URLs described as direct evidence were actually older landing works whose pages listed a newer relevant post. These are now classified as `DISCOVERY_ONLY`, not Direct Work Evidence.
+1. a real link-integrity bug: some supposed direct evidence URLs opened an older creator work whose page merely listed the desired newer song MV;
+2. an over-correction: while fixing that bug, candidate discovery drifted from the original R3 core-benchmark Data Center strategy into broad public-Web song search.
 
-Hardening result:
+User decision on 2026-08-27:
 
-- current D02-B demoted to `HG01_PREFLIGHT_PREPARED / AWAITING_EVIDENCE_REPACK`;
-- `HG01_CANDIDATE_EVIDENCE_PACK` registered as an independent Canonical artifact;
-- HG01 `RECORD_HUMAN_GATE` requires both candidate set + evidence pack;
-- canonical S01 transition also requires both artifacts plus user receipt;
-- landing-work identity rule added;
-- new-chat startup guard added;
-- dedicated CI completed real negative + positive Runtime path.
+- restore the original simple R3 strategy;
+- update/read the previously supplied core comparison accounts into a database;
+- select songs from that database;
+- add useful supplemental accounts when appropriate;
+- deliver the selected songs directly as the corresponding bloggers' corresponding MV videos;
+- do not perform broad song search as the default path.
 
-Validation:
+Restored path:
 
-- Workflow: `R3 HG01 Delivery Guard Tests`
-- Run: `33036864308`
-- Head: `233f7df2dd2a272b2bb390ff116d4f4d0ffa2721`
-- Result: `PASS`
-- Real positive fixture path: `RECORD_HUMAN_GATE -> ADVANCE -> VERIFY_STATE`
+`CORE BENCHMARK ACCOUNTS -> DATA CENTER -> SONG_FAMILY REPEAT/VALUE RANKING -> SIMPLE DIRECT MV HANDOFF -> USER HG01`
+
+Retained hardening:
+
+`DELIVERED URL MUST OPEN THE CITED MV ITSELF`
+
+Rejected experiment behavior:
+
+`WEB-WIDE SEARCH -> CANDIDATES CHOSEN BY PUBLIC EVIDENCE AVAILABILITY -> HEAVY EVIDENCE TAXONOMY`
+
+Current D02-B action:
+
+`HG01_CORE_DATABASE_REBUILD_REQUIRED`
+
+The temporary Web-driven formal candidate set (`雨后轻风有香 / 甲乙丙丁 / 差一步美满`) has been superseded as a Human Gate packet. No HG01 user receipt existed, so Canonical state remains S00 and no rollback was required.
+
+Files corrected:
+
+- `04_HARNESS/rules/mv_human_gates.md`
+- `04_HARNESS/rules/mv_stage_entry_checklist.md`
+- `06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md`
+- `06_TESTS/MV/OSS_OPT_R1/NEW_CHAT_START_PROMPT.md`
+- `06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/SONG_CANDIDATE_SET.json`
+- `06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md`
+- `.github/workflows/r3-hg01-delivery-guard-tests.yml`
 
 Classification:
 
-`PROMOTE_RUNTIME_CANDIDATE / HG01 DELIVERY GUARD`
-
-This is Runtime correctness, not evidence of OSS visual improvement.
+- `CORE-DATABASE-HG01-RESTORE` -> `PROMOTE_RULE` candidate
+- `DIRECT-LINK-IDENTITY-GUARD` -> `PROMOTE_RULE` candidate
+- `WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY` -> `REJECT`
 
 ### HG02 / BGM
 TBD
@@ -92,33 +112,25 @@ TBD
 
 ## Complexity audit
 
-Record whether each benefit required extra:
+Current HG01 correction assessment:
 
-- context volume;
-- prompt complexity;
-- code/config maintenance;
-- manual Gate work;
-- regeneration cycles;
-- model-specific assumptions;
-- external dependencies.
-
-An optimization that improves one visual sample but substantially harms reproducibility or maintenance is not automatically a net improvement.
-
-Current HG01 hardening complexity assessment:
-
-- context volume: `LOW` — short JIT rule addition;
-- prompt complexity: `LOW`;
-- code/config maintenance: `LOW-MEDIUM` — 1 new canonical artifact and one dedicated CI workflow;
-- manual Gate work: `NO INCREASE` — still one HG01 user decision;
-- external dependency: `NONE ADDED`;
-- reproducibility: `IMPROVED`;
-- failure containment: `IMPROVED`.
+- context volume: `REDUCED`;
+- prompt complexity: `REDUCED`;
+- code/config maintenance: `LOW`;
+- manual Gate work: `REDUCED TO ORIGINAL R3 BEHAVIOR`;
+- external dependency: `NO NEW DEPENDENCY`;
+- candidate quality authority: `IMPROVED — returns to monitored core accounts`;
+- link correctness: `RETAINED`;
+- broad web search burden: `REMOVED AS DEFAULT`;
+- reproducibility: `IMPROVED` because discovery authority is a durable database rather than ad-hoc search results.
 
 ## Final decisions
 
 | Optimization ID | Decision | Reason | Promotion target / next action |
 |---|---|---|---|
-| HG01-DELIVERY-GUARD | `PROMOTE_RUNTIME` candidate | Prevents machine preflight from masquerading as user evidence delivery; CI validated negative and positive canonical paths | Separate explicit audited promotion to stable Runtime after experiment-line review |
+| CORE-DATABASE-HG01-RESTORE | `PROMOTE_RULE` candidate | Restores the proven R3 selection authority and reduces unnecessary search/context burden | Continue D02-B with core Data Center rebuild; stable promotion only after experiment review |
+| DIRECT-LINK-IDENTITY-GUARD | `PROMOTE_RULE` candidate | Prevents incorrect MV handoff without changing song-discovery authority | Keep as minimal HG01 delivery correctness check |
+| WEB-WIDE-EVIDENCE-DRIVEN-DISCOVERY | `REJECT` | Evidence availability started driving song selection and made HG01 heavier than the original R3 process | Do not promote |
 | OSS-VISUAL-OVERLAY | TBD | External source not yet locked | Continue after upstream song/audio truth is locked |
 
 Allowed decisions:
@@ -132,4 +144,4 @@ Allowed decisions:
 
 ## Final experiment verdict
 
-Not yet available. HG01 Runtime correctness hardening is independently validated; OSS visual optimization comparison has not begun because source integration is still pending and D02-B has not yet passed HG01/HG02.
+Not yet available. HG01 has been corrected back to the original R3 core-database selection strategy with only the direct-link identity guard retained. OSS visual optimization comparison has not begun because source integration is still pending and D02-B has not yet passed HG01/HG02.
