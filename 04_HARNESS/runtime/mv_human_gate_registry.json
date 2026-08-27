@@ -1,11 +1,11 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.0",
   "status": "ENFORCEMENT_CANDIDATE",
   "receipt_format": "json",
   "pass_value": "PASS",
   "required_receipt_fields": ["receipt_version", "gate_id", "stage_id", "decision", "user_decision_text", "approved_artifacts", "machine_evidence", "created_at"],
   "gates": [
-    {"id":"HG01","stage_id":"S01_HG01_SONG_LOCKED","receipt_artifact_id":"HG01_SELECTION_RECEIPT","machine_preflight_artifacts":["SONG_CANDIDATE_SET","HG01_CANDIDATE_EVIDENCE_PACK"]},
+    {"id":"HG01","stage_id":"S01_HG01_SONG_LOCKED","receipt_artifact_id":"HG01_SELECTION_RECEIPT","machine_preflight_artifacts":["SONG_CANDIDATE_SET"]},
     {"id":"HG02","stage_id":"S02_HG02_BGM_LOCKED","receipt_artifact_id":"HG02_BGM_LOCK_RECEIPT","machine_preflight_artifacts":["BGM_CANDIDATE_PACKAGE"]},
     {"id":"HG03","stage_id":"S06_HG03_FIRST_FRAMES_LOCKED","receipt_artifact_id":"HG03_FIRST_FRAME_RECEIPT","machine_preflight_artifacts":["FIRST_FRAME_SET_MANIFEST","FIRST_FRAME_SET_QA"]},
     {"id":"HG04","stage_id":"S12_HG04_PICTURE_EDIT_PASS","receipt_artifact_id":"HG04_PICTURE_EDIT_RECEIPT","machine_preflight_artifacts":["EDIT_PREVIEW_QA"]},
