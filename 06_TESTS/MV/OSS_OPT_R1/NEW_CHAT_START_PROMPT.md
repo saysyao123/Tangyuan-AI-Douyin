@@ -1,4 +1,4 @@
-# OSS MV Optimization Integration Test｜New Chat Start Prompt v1.3
+# OSS MV Optimization Integration Test｜New Chat Start Prompt v1.4
 
 ```text
 请使用已连接的 GitHub，读取 `saysyao123/Tangyuan-AI-Douyin` 仓库 `test/mv-oss-optimization-r1` 分支。
@@ -14,7 +14,8 @@
 6. `05_IP_ASSETS/MV_30D_60_NEW_CHAT_START_PROMPT.md`
 7. `04_HARNESS/runtime/mv_stage_executor_registry.json`
 8. `04_HARNESS/rules/mv_executor_first.md`
-9. 当前 Canonical Runtime / Web Bridge 最小启动文件。
+9. `04_HARNESS/rules/mv_lyric_timeline_simple_path.md`
+10. 当前 Canonical Runtime / Web Bridge 最小启动文件。
 
 实验基线固定来自正式 Runtime fork SHA：
 `89852ec5314e7579853683ef5eb40adb09f25753`
@@ -50,6 +51,15 @@ HG01 恢复原 R3 选歌策略：
 - 保留唯一硬防错：交付的 direct URL 必须真正打开被引用的那条 MV；
 - 用户选择后才执行 `RECORD_HUMAN_GATE HG01`，随后单独 `ADVANCE` 到 S01。
 
+S02 歌词时间线采用唯一 Simple Path：
+- 目标只回答两件事：完整歌词是什么、每句什么时候开始/结束；
+- 唯一路径：`HG02 exact BGM -> verify audio SHA -> full-clip ASR transcript -> ONE lyric-text audit -> trusted_lyrics locked -> Xingyu forced alignment -> ONE automatic QA -> line_timeline.csv + lyrics_exact.srt -> S03`；
+- Douyin work caption / description / hashtag / partial lyric quote 永远不能单独作为完整歌词真值；
+- 正常 PASS 路径不跑第二模型、不做 Web 歌词证据扫、不做 waveform/BPM 猜测、不建立每首歌专用工具；
+- 只有具体 QA FAIL 才允许修正该问题并重跑同一路径一次；
+- `anchor_words.csv` 与 `music_events.csv` 移到 Natural Beat / Director enrichment，不再阻塞歌词时间线锁定；
+- D02-B 之前基于 4 句 creator caption 的 trusted lyrics / timeline 全部视为 INVALID，不得封包或推进 S03，必须从锁定 BGM 全段重建完整歌词。
+
 当前 OSS source 已锁定：
 `penposs/mvmaker-h3-skills@796797030275fe57afaba736771e8510c848799d`
 
@@ -66,8 +76,8 @@ HG01 恢复原 R3 选歌策略：
 - H3 10–15s integer production containers；
 - H3 16:9 four-panel storyboard input；
 - RunningHub/H3 orchestration；
-- 替换 R3 HG01/HG02/Audio Timeline/Runtime/Publish truth。
+- 替换 R3 HG01/HG02/Runtime/Publish truth。
 
-共同上游允许先锁：slot / HG01 song / HG02 BGM / Audio Timeline。
-只有 Audio Timeline 正式通过 registered canonical toolchain 后，才进入 OSS Director A/B。
+共同上游允许先锁：slot / HG01 song / HG02 BGM / Lyric Timeline。
+只有 Lyric Timeline 按 Simple Path 通过后，才进入 OSS Director A/B。
 ```
