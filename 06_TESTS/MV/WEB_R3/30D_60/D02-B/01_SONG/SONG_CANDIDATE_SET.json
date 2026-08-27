@@ -1,172 +1,70 @@
 {
-  "schema_version": "1.2",
-  "status": "HG01_EVIDENCE_DELIVERY_PASS",
+  "schema_version": "1.3",
+  "status": "HG01_CORE_DATABASE_REBUILD_REQUIRED",
   "created_at": "2026-08-27T03:25:00Z",
-  "updated_at": "2026-08-27T04:45:00Z",
+  "updated_at": "2026-08-27T11:55:00+08:00",
   "slot_id": "D02-B",
   "lane": "S",
   "experiment": {
     "branch": "test/mv-oss-optimization-r1",
     "experiment_id": "OSS_OPT_R1",
-    "purpose": "Lock common song/audio truth before later OSS director/generation optimization so baseline and optimized paths remain comparable.",
+    "purpose": "Lock a common song/audio truth before later OSS director/generation optimization while preserving the original R3 song-selection strategy.",
     "oss_source_integration_status": "PENDING_USER_SOURCE",
     "visual_design_started": false
   },
   "selection_policy": {
-    "formal_candidate_count": 3,
-    "direct_douyin_evidence_required": true,
-    "minimum_recent_independent_accounts_target": 2,
-    "trend_evidence_cutoff": "2026-08-27",
-    "user_decision_priority": "FIRST_EAR_AESTHETIC_JUDGEMENT",
-    "selection_priorities": [
+    "source_mode": "CORE_BENCHMARK_DATABASE",
+    "default_path": "CORE_BENCHMARK_ACCOUNTS -> DATA_CENTER -> SONG_FAMILY_RANKING -> HG01",
+    "broad_web_song_search": false,
+    "supplemental_accounts_allowed": true,
+    "supplemental_rule": "Add a useful account to the monitored database when warranted; do not rebuild each candidate by web-wide search.",
+    "candidate_selection_priorities": [
+      "cross-account repeat or strong value signal inside monitored benchmark database",
       "song itself is compelling",
-      "current Douyin momentum or active spread",
+      "freshness inside observed database window",
+      "audio-family consistency when observable",
       "visual/lyric fit for MV",
       "avoid already-used 30D60 songs",
-      "avoid excessive saturation",
-      "stable production fit for Lane S"
-    ]
+      "avoid excessive saturation"
+    ],
+    "user_delivery": "song + short database reason + corresponding creator MV links"
   },
-  "formal_candidates": [
+  "formal_candidates": [],
+  "superseded_test_candidates": [
     {
-      "candidate_id": "A",
       "song_family": "雨后轻风有香",
-      "signal_class": "EARLY_RISE_HEALING_FIT",
-      "visual_fit_0_10": 10,
-      "saturation_risk": "LOW_MEDIUM",
-      "lane_s_fit": "VERY_HIGH",
-      "core_benchmark_coverage": "UNCONFIRMED",
-      "core_account_index_status": "UNKNOWN_INDEX_PENDING",
-      "evidence_classification": "EXTERNAL_RADAR_CANDIDATE_CORE_ACCOUNT_UNCONFIRMED",
-      "evidence_state": "LANDING_WORK_VERIFIED",
-      "direct_work_count": 2,
-      "independent_account_count": 2,
-      "direct_evidence": [
-        {
-          "account": "乐活花道",
-          "publish_date": "2026-08-17",
-          "duration": "03:21",
-          "tier": "B_SUPPLEMENTAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7675000680965207461"
-        },
-        {
-          "account": "回龙山下的刚刚",
-          "publish_date": "2026-08-20",
-          "duration": "00:45",
-          "tier": "B_SUPPLEMENTAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7675937634266415722"
-        }
-      ],
-      "risk": "Naturally visual/healing song may make later optimization gains harder to attribute."
+      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
+      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
     },
     {
-      "candidate_id": "B",
       "song_family": "甲乙丙丁",
-      "signal_class": "CONFIRMED_TREND",
-      "visual_fit_0_10": 8,
-      "saturation_risk": "HIGH_RISING",
-      "lane_s_fit": "HIGH",
-      "core_benchmark_coverage": "UNCONFIRMED",
-      "core_account_index_status": "UNKNOWN_INDEX_PENDING",
-      "evidence_classification": "EXTERNAL_RADAR_CANDIDATE_CORE_ACCOUNT_UNCONFIRMED",
-      "evidence_state": "LANDING_WORK_VERIFIED",
-      "direct_work_count": 2,
-      "independent_account_count": 2,
-      "direct_evidence": [
-        {
-          "account": "浙江卫视",
-          "publish_date": "2026-08-21",
-          "duration": "00:40",
-          "tier": "B_OFFICIAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7676330839743008054"
-        },
-        {
-          "account": "牢观",
-          "publish_date": "2026-08-02",
-          "duration": "00:18",
-          "tier": "B_SUPPLEMENTAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7669340030594272558"
-        }
-      ],
-      "risk": "Strong current stage revival but rapidly rising saturation and breakup-visual homogenization risk."
+      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
+      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
     },
     {
-      "candidate_id": "C",
       "song_family": "差一步美满",
-      "signal_class": "ACTIVE_CURRENT_CREATOR_SPREAD",
-      "visual_fit_0_10": 8,
-      "saturation_risk": "MEDIUM_HIGH_RISING",
-      "lane_s_fit": "HIGH",
-      "core_benchmark_coverage": "UNCONFIRMED",
-      "core_account_index_status": "UNKNOWN_INDEX_PENDING",
-      "evidence_classification": "EXTERNAL_RADAR_CANDIDATE_CORE_ACCOUNT_UNCONFIRMED",
-      "evidence_state": "LANDING_WORK_VERIFIED",
-      "direct_work_count": 2,
-      "independent_account_count": 2,
-      "direct_evidence": [
-        {
-          "account": "是宫宫",
-          "publish_date": "2026-08-23",
-          "duration": "00:10",
-          "tier": "B_SUPPLEMENTAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7677212501402263759"
-        },
-        {
-          "account": "东山玉",
-          "publish_date": "2026-08-08",
-          "duration": "00:19",
-          "tier": "B_SUPPLEMENTAL",
-          "evidence_location": "LANDING_WORK",
-          "url": "https://jingxuan.douyin.com/m/video/7671648254271462053"
-        }
-      ],
-      "risk": "Hook is fast and editable, but the missed-romance/transition visual lane is becoming crowded."
+      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
+      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
     }
   ],
-  "radar_watch": [
-    {
-      "song_family": "循迹",
-      "signal_class": "EARLY_RISE_ACCELERATING",
-      "reason_not_formal": "Current trend is stronger than much of the formal set, but multiple discoverable target posts are still exposed through older author landing pages/profile listings rather than resolved target landing-work URLs. Under the HG01 identity rule these remain DISCOVERY_ONLY.",
-      "status": "DIRECT_WORK_ID_PENDING"
-    },
-    {
-      "song_family": "我不难过",
-      "signal_class": "CLASSIC_REVIVAL",
-      "reason_not_formal": "Multiple recent concrete works exist, but a second independent work does not currently expose complete duration metadata through the public index.",
-      "status": "METADATA_INCOMPLETE"
-    }
-  ],
-  "machine_recommendation": {
-    "status": "INTERNAL_ONLY_NOT_USER_GATE_SUBSTITUTE",
-    "note": "Do not ask the user to follow machine ranking. HG01 is first-ear/aesthetic judgement using the Direct Work Evidence Pack."
-  },
-  "evidence_delivery_guard": {
+  "delivery_integrity": {
     "evidence_pack_path": "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
-    "all_candidates_min_direct_works_2": true,
-    "all_candidates_independent_accounts_2plus": true,
-    "all_direct_links_landing_work_verified": true,
-    "core_account_coverage_reported": true,
-    "no_external_audio_substitution": true,
-    "user_gate_delivery_mode": "DIRECT_WORKS_FIRST"
+    "delivery_strategy": "CORE_CREATOR_MV_DIRECT",
+    "landing_work_identity_check_required": true,
+    "all_delivery_links_landing_work_verified": false,
+    "legacy_runtime_user_gate_delivery_mode": "DIRECT_WORKS_FIRST",
+    "note": "Landing-work verification is retained only as a link-integrity guard; it must not drive song discovery or ranking."
   },
   "human_gate": {
     "gate": "HG01",
-    "status": "AWAITING_HUMAN_DECISION_AFTER_DIRECT_WORK_REVIEW",
+    "status": "AWAITING_CORE_DATABASE_CANDIDATE_REBUILD",
     "selected_candidate_id": null,
     "selected_song_family": null
   },
   "provenance": {
-    "repository_radar": "06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv",
-    "repository_shortlist": "06_TESTS/MV/WEB_R3/R3_MUSIC_SHORTLIST_v1.md",
-    "repository_data_center": "06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_STATUS.md",
-    "fresh_public_verification_date": "2026-08-27",
-    "hg01_delivery_contract": "06_TESTS/MV/WEB_R3/R3_HG01_EVIDENCE_DELIVERY_CONTRACT_v1.md",
-    "hardening_note": "06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md"
+    "primary_data_center": "06_TESTS/MV/WEB_R3/database/data_center/",
+    "prior_r3_reference": "06_TESTS/MV/WEB_R3/D02_HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+    "hg01_rule": "04_HARNESS/rules/mv_human_gates.md",
+    "strategy_correction": "06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md"
   }
 }
