@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260828T071200Z-D02BHG05ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 1,
+    "current_stage": "S14_FINAL_TECH_QA_PASS",
+    "current_state_token": "FINAL_TECH_QA_PASS",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "93476057ccb38295ace83fbce629b5c884d945984aba33a2f41ed754c1ef5844",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "930c2b686b3a97a7411b27cd8572e4c06805269f0bc8ffcfb9d3876ebdc77954",
+    "state_sha256": "e8413eee24a7c434f2bf13b663b9c5378d2934e989346272f47c6c91d8204db4",
+    "transition_sequence": 14
+  },
+  "payload": {"to": "S15_HG05_FINAL_ACCEPTANCE_PASS"},
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B after the durable HG05 final acceptance receipt was successfully recorded from the user's approval."
+}
