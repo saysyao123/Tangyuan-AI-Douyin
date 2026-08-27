@@ -1,9 +1,9 @@
-# 汤圆音乐映像｜30D/60 下一首 MV 新对话启动词 v2.0
+# 汤圆音乐映像｜30D/60 下一首 MV 新对话启动词 v2.1
 
-> 用途：每一首“全新 MV”单独开新 ChatGPT 对话。正式入口已切换到 Canonical Runtime + Web Bridge；新对话不再靠聊天记忆或旧 Markdown CURRENT_STATE 自行判断项目状态。
+> 用途：每一首“全新 MV”单独开新 ChatGPT 对话。正式入口使用 Canonical Runtime + Web Bridge；新对话不靠聊天记忆或旧 Markdown CURRENT_STATE 自行判断项目状态。
 
 ```text
-请使用已连接的 GitHub，读取 `saysyao123/Tangyuan-AI-Douyin` 仓库 `test/mv-web-r3` 分支。
+请使用已连接的 GitHub，读取 `saysyao123/Tangyuan-AI-Douyin` 仓库当前指定的 MV Runtime 分支。
 
 这是「汤圆音乐映像｜30天60条音乐MV」的一首全新、独立 MV。
 不要让我重新解释 R1 / R2 / R3，也不要自动继承上一首 MV 的具体人物、场景、道具、色调、构图、故事或已经失效的聊天状态。
@@ -17,10 +17,31 @@ Runtime Controller / Web Bridge response > Canonical durable state + receipts > 
 2. `05_IP_ASSETS/MV_30D_60_TRACKER.csv`
 3. `04_HARNESS/runtime/mv_resume_contract.json`
 4. `04_HARNESS/runtime/mv_stage_registry.json`
-5. `04_HARNESS/runtime/mv_runtime_bridge_contract.json`
-6. `04_HARNESS/runtime_bridge/README.md`
+5. `04_HARNESS/runtime/mv_stage_executor_registry.json`
+6. `04_HARNESS/runtime/mv_runtime_bridge_contract.json`
+7. `04_HARNESS/rules/mv_executor_first.md`
+8. `04_HARNESS/MANIFEST.md`
+9. `04_HARNESS/runtime_bridge/README.md`
 
-不要一开始把所有 R1 / R2 / R3 历史文档全部读入上下文。只有 Runtime response 指定某个 Stage 后，再按 `jit_reads` 读取该 Stage 所需 Workflow / Rule / Knowledge。
+不要一开始把所有 R1 / R2 / R3 历史文档全部读入上下文。只有 Runtime response 指定某个 Stage 后，再按 `jit_reads` + 当前 `current_stage` 在 `mv_stage_executor_registry.json` 中对应的 executor entry 读取该 Stage 所需 Workflow / Rule / Template / Tool / prior PASS sample。
+
+【EXECUTOR-FIRST｜HARD】
+每个 Stage 真正执行前，固定顺序：
+`RESUME/CURRENT_STATE -> Stage Registry -> Stage Executor Registry -> Stage Rule/Template -> Existing Tool/Recipe/Capability -> Dependency Doctor -> Execute`。
+
+禁止从一篇 Rule 直接跳到“创建新 helper / 新 Workflow / 新模型 / 新服务”。
+Rule 只定义约束，不等于 Executor；Rule 中提到某个开源实现，也不等于当前需要安装它。
+
+在创建任何新工具前必须先证明：
+- 当前 stage 的 executor entry 已读取；
+- 仓库没有现成 canonical toolchain；
+- 没有可复用 prior PASS / existing workflow；
+- 缺口是明确 implementation gap，而不是 CREATIVE_SYNTHESIS / CAPABILITY_HANDOFF；
+- dependency doctor/cache 已检查；
+- 当前实验 scope 明确允许新增实现。
+否则：禁止造新轮子。
+
+缺执行依赖时默认 `BLOCK_AT_CURRENT_STAGE`；只有 executor contract 明确允许时，才单独执行受控环境 setup。禁止每首 MV 重复下载生产模型。
 
 【这是“新 MV”，不要误续旧 slot】
 因为本次明确要求新建一首 MV，所以不要先发无 slot 的 RESUME 去自动继续某个仍处于 pre-publish 的 Canonical 历史项目。
@@ -56,7 +77,7 @@ Runtime Controller / Web Bridge response > Canonical durable state + receipts > 
 Request / response 都是 durable evidence；已处理 request 不得修改。
 
 【正常生产 Runtime】
-固定 Stage 主线由 `mv_stage_registry.json` / `mv_resume_contract.json` 决定，不靠聊天自行跳步。
+固定 Stage 主线由 `mv_stage_registry.json` / `mv_resume_contract.json` 决定，执行方式由 `mv_stage_executor_registry.json` 决定，不靠聊天自行跳步或临时发明实现。
 正常人工 Gate 只有：
 - HG01：选歌审美；
 - HG02：BGM 试听锁定；
@@ -68,6 +89,7 @@ Request / response 都是 durable evidence；已处理 request 不得修改。
 
 每完成一个 machine Stage：
 - 先生成该 Stage 所需 durable artifact；
+- 使用 executor entry 指定的已有验证路径/工具/能力；
 - 由 Runtime Validator / State Controller 验证；
 - 只有 transition receipt 真正落盘，才算 Stage 前进。
 
@@ -77,6 +99,7 @@ Request / response 都是 durable evidence；已处理 request 不得修改。
 - 不允许每条都复制 R&D 的研发成本；稳定生产优先复用已验证 correctness；
 - BGM 默认 Douyin-native exact asset first；
 - HG02 锁定后必须先完成并 PASS `AUDIO_TIMELINE_PACKAGE`，才能进入任何 time-dependent Director 工作；
+- Audio Timeline 必须优先复用 `tools/mv_audio_timeline/*` canonical toolchain；环境先 doctor/cache，缺失则 BLOCK，不得每首歌临时新建 aligner；
 - 每句歌词先找不可替代的视觉答案：歌词视觉命中 > 轻叙事连续 > 炫技镜头；
 - 环境必须参与叙事，避免整组退化为近景人物写真；
 - Dynamic 是 RAW SOURCE，不等于最终5秒成片；TRIM BEFORE REGENERATE；
@@ -98,15 +121,13 @@ R3 Camera / Dynamic 经验只在相关 Stage JIT 读取，不得在 HG01 前预�
 3. Runtime mode；
 4. 本条新 MV 被验证的 slot / lane；
 5. 当前 Stage / state token；
-6. 当前 next_action 与第一个 Human Gate；
-7. 如果 BLOCKED，唯一具体阻塞是什么。
+6. 当前 next_action 与 registered executor_id / execution_class；
+7. 当前第一个 Human Gate；
+8. 如果 BLOCKED，唯一具体阻塞是什么。
 
 如果 response 已允许 `ALLOCATE_NEW_SLOT`，立即完成 INIT_SLOT 和 HG01 machine preflight，然后直接进入 HG01，不要让我重新解释项目背景。
 ```
 
-## 当前 Runtime 切换说明
+## v2.1 change
 
-- 本文件 v2.0 取代 v1 的“聊天自行建立 slot / 更新 CURRENT_STATE”方式。
-- 新 MV 入口必须先经过 Web Bridge 的 read-only RESUME 校验，再通过 guard 驱动 INIT_SLOT。
-- 通用“继续现有项目”仍可使用无 slot RESUME；本文件专门用于“全新 MV”，因此采用显式空槽候选 + Runtime 最终校验，避免误续历史 Canonical slot。
-- Legacy 项目只能按其 durable evidence 边界受控迁移，不允许从成片或旧聊天反向补造缺失 Stage。
+v2.1 adds the missing Executor-First layer discovered during OSS_OPT_R1 D02-B process audit. Canonical Runtime state routing remains unchanged; the new requirement prevents an Agent from treating a Rule/reference implementation as permission to invent or reinstall an executor.
