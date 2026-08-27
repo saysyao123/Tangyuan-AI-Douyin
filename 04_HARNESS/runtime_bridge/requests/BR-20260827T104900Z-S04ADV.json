@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T104900Z-S04ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S03_AUDIO_TIMELINE_LOCKED",
+    "current_state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "3226911b18a61a9af7270529fd649ee7afbafdb0dab523d0c163dfc8cdc9bf1b",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "28f21254dfd887f267586a841de4a90aab1aa9145d79fb6f0e0638b18617fbd2",
+    "state_sha256": "e68e8997c2a480977d5ec59e591a31a007c6ad95a7e5928a3dc304fc55b8df60",
+    "transition_sequence": 3
+  },
+  "payload": {
+    "to": "S04_NATURAL_BEAT_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Natural Beat was derived only from the locked seven-line Audio Timeline and preserves semantic groupings without introducing visual design or production segmentation."
+}
