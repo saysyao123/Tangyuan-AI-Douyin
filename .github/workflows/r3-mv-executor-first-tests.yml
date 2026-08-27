@@ -1,0 +1,145 @@
+name: R3 MV Executor-First Tests
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/runtime/mv_stage_registry.json'
+      - '04_HARNESS/runtime/mv_stage_executor_registry.json'
+      - '04_HARNESS/runtime/mv_resume_contract.json'
+      - '04_HARNESS/rules/mv_executor_first.md'
+      - '04_HARNESS/rules/mv_stage_entry_checklist.md'
+      - '04_HARNESS/SKILL.md'
+      - '04_HARNESS/MANIFEST.md'
+      - '05_IP_ASSETS/MV_30D_60_NEW_CHAT_START_PROMPT.md'
+      - '06_TESTS/MV/OSS_OPT_R1/NEW_CHAT_START_PROMPT.md'
+      - '.github/workflows/r3-mv-runtime-web-bridge.yml'
+      - '.github/workflows/r3-mv-executor-first-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  executor-first-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate stage-to-executor coverage and paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+
+          root = Path('.')
+          stages_doc = json.loads((root/'04_HARNESS/runtime/mv_stage_registry.json').read_text(encoding='utf-8'))
+          exec_doc = json.loads((root/'04_HARNESS/runtime/mv_stage_executor_registry.json').read_text(encoding='utf-8'))
+          resume = json.loads((root/'04_HARNESS/runtime/mv_resume_contract.json').read_text(encoding='utf-8'))
+
+          stage_ids = [s['id'] for s in stages_doc['stages']]
+          execs = exec_doc['stage_executors']
+          errors = []
+
+          if set(stage_ids) != set(execs):
+              errors.append(f'executor coverage mismatch missing={sorted(set(stage_ids)-set(execs))} extra={sorted(set(execs)-set(stage_ids))}')
+          if len(stage_ids) != 19:
+              errors.append(f'expected 19 canonical stages, got {len(stage_ids)}')
+
+          allowed_classes = {
+              'RUNTIME_CONTROLLER','DATA_ORCHESTRATION','EVIDENCE_ORCHESTRATION',
+              'CANONICAL_TOOLCHAIN','CREATIVE_SYNTHESIS','CAPABILITY_HANDOFF',
+              'DETERMINISTIC_MEDIA_TRANSFORM','TECHNICAL_VALIDATION','HUMAN_GATE',
+              'TRANSACTIONAL_PUBLISH','DATA_REVIEW'
+          }
+          for sid in stage_ids:
+              e = execs.get(sid, {})
+              if not e.get('executor_id'):
+                  errors.append(f'{sid}: executor_id missing')
+              if e.get('execution_class') not in allowed_classes:
+                  errors.append(f"{sid}: invalid execution_class={e.get('execution_class')!r}")
+              for field in ('canonical_reads','canonical_tools'):
+                  if not isinstance(e.get(field), list):
+                      errors.append(f'{sid}: {field} must be a list')
+                      continue
+                  for rel in e[field]:
+                      if not (root/rel).exists():
+                          errors.append(f'{sid}: registered path missing: {rel}')
+              if not e.get('dependency_policy'):
+                  errors.append(f'{sid}: dependency_policy missing')
+              if 'experiment_overlay_allowed' not in e:
+                  errors.append(f'{sid}: experiment_overlay_allowed missing')
+
+          # Root-failure regression: S02 must resolve to the existing canonical toolchain.
+          s02 = execs['S02_HG02_BGM_LOCKED']
+          required_s02_tools = {
+              '04_HARNESS/tools/mv_audio_timeline/package_tool.py',
+              '04_HARNESS/tools/mv_audio_timeline/final_gate.py',
+              '04_HARNESS/tools/mv_audio_timeline/run_alignment.py',
+              '04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py',
+          }
+          if s02.get('executor_id') != 'CANONICAL_AUDIO_TIMELINE_TOOLCHAIN':
+              errors.append('S02 executor_id drift')
+          if not required_s02_tools.issubset(set(s02.get('canonical_tools', []))):
+              errors.append('S02 canonical toolchain incomplete')
+          dep = s02.get('dependency_policy','').lower()
+          if 'doctor' not in dep or 'blocked' not in dep:
+              errors.append('S02 dependency policy must require doctor and BLOCK behavior')
+
+          # Publish must remain transactional and use the existing controller.
+          s16 = execs['S16_RELEASE_PACKAGE_READY']
+          if s16.get('execution_class') != 'TRANSACTIONAL_PUBLISH':
+              errors.append('S16 is not transactional publish')
+          if '04_HARNESS/tools/mv_runtime_publish.py' not in s16.get('canonical_tools', []):
+              errors.append('S16 missing mv_runtime_publish.py')
+
+          # Resume startup must carry the executor layer.
+          startup = set(resume.get('startup_required_reads', []))
+          for rel in (
+              '04_HARNESS/runtime/mv_stage_executor_registry.json',
+              '04_HARNESS/rules/mv_executor_first.md',
+              '04_HARNESS/MANIFEST.md',
+          ):
+              if rel not in startup:
+                  errors.append(f'resume startup missing executor-first read: {rel}')
+          s02jit = set(resume['stage_actions']['S02_HG02_BGM_LOCKED'].get('jit_reads', []))
+          for rel in (
+              '04_HARNESS/templates/mv_audio_timeline_package_contract.md',
+              '04_HARNESS/tools/mv_audio_timeline/package_tool.py',
+              '04_HARNESS/tools/mv_audio_timeline/final_gate.py',
+          ):
+              if rel not in s02jit:
+                  errors.append(f'S02 Runtime JIT missing canonical executor path: {rel}')
+
+          # One-off slot helpers must not live in core tools.
+          core_tools = root/'04_HARNESS/tools'
+          for p in core_tools.iterdir():
+              if p.is_file() and re.match(r'd\d{2}[a-z]?_', p.name.lower()):
+                  errors.append(f'slot-specific helper found in core tools: {p}')
+
+          # Authoritative Runtime Bridge must stay stage-agnostic.
+          bridge = (root/'.github/workflows/r3-mv-runtime-web-bridge.yml').read_text(encoding='utf-8')
+          forbidden = ['D02B_', 'D02-B trusted Audio Timeline', 'OSS_OPT_R1/requests/', 'd02b_audio_timeline_build']
+          for token in forbidden:
+              if token in bridge:
+                  errors.append(f'Runtime Bridge contains stage/slot-specific logic: {token}')
+          if 'mv_runtime_bridge.py process-pending' not in bridge:
+              errors.append('Runtime Bridge no longer invokes canonical process-pending')
+
+          # Both startup prompts must teach Executor-First.
+          for rel in (
+              '05_IP_ASSETS/MV_30D_60_NEW_CHAT_START_PROMPT.md',
+              '06_TESTS/MV/OSS_OPT_R1/NEW_CHAT_START_PROMPT.md',
+          ):
+              text = (root/rel).read_text(encoding='utf-8')
+              if 'mv_stage_executor_registry.json' not in text or 'EXECUTOR-FIRST' not in text.upper():
+                  errors.append(f'{rel}: executor-first startup contract missing')
+
+          if errors:
+              print('\n'.join('ERROR: '+x for x in errors))
+              raise SystemExit(1)
+          print(f'PASS: {len(stage_ids)}/19 stages have registered executor contracts; S02/S16/root bridge regressions pass.')
+          PY
