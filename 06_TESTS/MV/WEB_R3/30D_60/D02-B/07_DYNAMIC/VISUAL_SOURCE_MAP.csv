@@ -1,0 +1,6 @@
+source_id,upload_file,format,detected_cuts,usable_atoms,primary_lyric_role,decision
+H-S01,"AI动画人物克制靠近与停住 (6).mp4","720x1280/24fps/5.04s","2.63;3.38",3,"L01想你;L02忍住",KEEP_TRIM
+H-S02,"AI动画人物克制靠近与停住 (7).mp4","720x1280/24fps/5.04s","3.04",2,"L03想说;L04算了",KEEP_TRIM
+H-S03,"AI动画人物克制靠近与停住 (8).mp4","720x1280/24fps/5.04s","2.33;3.42",3,"L05雨停",KEEP_TRIM
+H-S04,"AI动画人物克制靠近与停住 (9).mp4","720x1280/24fps/5.04s","3.38",2,"L06风过",KEEP_TRIM
+H-S05,"AI动画人物克制靠近与停住 (10).mp4","720x1280/24fps/5.04s","1.46;3.38",3,"L07舍不得->放下",KEEP_TRIM
