@@ -1,0 +1,213 @@
+{
+  "command": "ADVANCE",
+  "completed_at": "2026-08-27T16:39:27Z",
+  "error": null,
+  "execution": {
+    "command": "ADVANCE",
+    "controller_payload": {
+      "from_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+      "ok": true,
+      "state_token": "SOURCE_NORMALIZATION_READY",
+      "to_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "transition_receipt": "00_STATE/TRANSITIONS/009_S08_DYNAMIC_SOURCE_QA_LOCKED__S09_SOURCE_NORMALIZATION_READY.json",
+      "verified": {
+        "checked_context_receipts": [
+          "00_STATE/CONTEXT_EVENTS/001_multi_shot_false_to_true.json"
+        ],
+        "checked_transition_receipts": [
+          "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+          "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+          "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+          "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+          "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+          "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+          "00_STATE/TRANSITIONS/006_S05_DIRECTOR_PLAN_LOCKED__S06_HG03_FIRST_FRAMES_LOCKED.json",
+          "00_STATE/TRANSITIONS/007_S06_HG03_FIRST_FRAMES_LOCKED__S07_DYNAMIC_PROMPT_SET_READY.json",
+          "00_STATE/TRANSITIONS/008_S07_DYNAMIC_PROMPT_SET_READY__S08_DYNAMIC_SOURCE_QA_LOCKED.json",
+          "00_STATE/TRANSITIONS/009_S08_DYNAMIC_SOURCE_QA_LOCKED__S09_SOURCE_NORMALIZATION_READY.json"
+        ],
+        "context": {
+          "canonical_v2": true,
+          "multi_shot": true,
+          "program_30d60": true,
+          "web": true
+        },
+        "context_revision": 1,
+        "current_stage": "S09_SOURCE_NORMALIZATION_READY",
+        "current_state_token": "SOURCE_NORMALIZATION_READY",
+        "highest_contiguous_valid_stage": "S09_SOURCE_NORMALIZATION_READY",
+        "ok": true,
+        "slot_id": "D02-B",
+        "transition_sequence": 9
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 1,
+    "current_stage": "S09_SOURCE_NORMALIZATION_READY",
+    "current_state_token": "SOURCE_NORMALIZATION_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "8664bbd51caffc539f61a13cea34b294d27b522bec3726259df7224e51630867",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "7acd39c8f8cea63d1633adc0e20102bad0b953f864b54d4935be0c03ce903308",
+    "state_sha256": "11e859deb4e153a20aa621eb31c42196dc4d1a18d2670b69054ae3be6e582109",
+    "transition_sequence": 9
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S09_SOURCE_NORMALIZATION_READY",
+    "current_state_token": "SOURCE_NORMALIZATION_READY",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_editing.md",
+      "04_HARNESS/rules/mv_audio_timeline.md",
+      "04_HARNESS/tools/mv_audio_timeline/README.md",
+      "04_HARNESS/tools/mv_audio_timeline/final_gate.py"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "REVALIDATE_EDITOR_AUDIO",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_editing.md",
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md",
+        "04_HARNESS/tools/mv_audio_timeline/final_gate.py"
+      ],
+      "next_stage": "S10_EDITOR_AUDIO_GATE_PASS",
+      "summary": "Reuse the registered Audio Timeline Final Gate to revalidate locked audio identity and duration at editor ingest before building the picture edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_source_normalization.md",
+      "04_HARNESS/rules/mv_web_source_roughcut.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "NORMALIZE_EDIT_SOURCES",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "next_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T163900Z-S09V2B",
+  "request_sha256": "2edc48aae1c5c7d1eb22710f8b0e22bfd8a969912256478d7079953412f27be0",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33094337131",
+    "github_source_sha": "d70cddab46258f0bb8e126c980b75937ed425498"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
