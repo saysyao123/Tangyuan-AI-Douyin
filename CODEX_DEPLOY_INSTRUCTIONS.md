@@ -1,38 +1,49 @@
-# CODEX / Agent Runtime Instructions v3.0
+# CODEX / Agent Runtime Instructions v4.0 — Codex R2 Branch
 
-目标仓库：`saysyao123/Tangyuan-AI-Douyin`
+Target branch: `test/mv-codex-r2`
 
-## 不要这样启动
-不要一上来全文读取整个Repo、全部Harness、全部Daily、全部IP Visual文档。这样会造成上下文膨胀和规则冲突。
+This file is a compatibility pointer for older repository instructions. For Codex R2, persistent repository instructions now live in `AGENTS.md` and the MV-specific `06_TESTS/MV/AGENTS.md`, matching Codex's native instruction model.
 
-## 正确启动
-```text
-1. 读取 04_HARNESS/SKILL.md
-2. 读取 04_HARNESS/MANIFEST.md
-3. 读取 00_CONTROL/CURRENT_STATE.md
-4. 判断当前任务
-5. 按 MANIFEST 只读取对应 workflow + rules + template
-6. 完成当前模块并通过Gate后，再加载下一模块
-```
+## MV startup
 
-## Change Discipline
-- Workflow只写流程和Input/Output Contract。
-- Rule只写长期可验收约束。
-- Template只写复用骨架，不保存项目状态。
-- 单次经验进入Daily Lessons / Experiments，不直接塞进Skill。
-- 修改局部模块时，不重写无关模块。
-- Contract改变时同步更新MANIFEST与Tests。
+Do NOT use the old generic startup chain `SKILL -> MANIFEST -> 00_CONTROL/CURRENT_STATE` as MV project-state authority.
 
-## Git Safety
-- 不自行修改账号定位、第一季目标、已锁定规则。
-- 不提交Key/Token/Cookie/密码/私密账号信息。
-- 不上传未脱敏隐私素材。
-- 大型视频/音频/图片不要批量推入Git。
-- 提交前检查diff，只提交本任务相关路径。
+For a Codex R2 MV task:
 
-## Architecture References
-- `docs/ARCHITECTURE_V3.md`
-- `docs/MIGRATION_V3.md`
+1. Let Codex load root `AGENTS.md` automatically.
+2. Read `06_TESTS/MV/CODEX_R2/CODEX_EXECUTION_CONTRACT.md`.
+3. Read `06_TESTS/MV/CODEX_R2/CODEX_TEST_MATRIX.md`.
+4. Run:
+   `python 06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py preflight`
+5. Run an explicit slot resume, normally:
+   `python 06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py resume --slot D03-B`
+6. From then on, load only `resolved_executor` / JIT files for the current phase.
 
-## Legacy
-旧 `04_HARNESS/*_HARNESS.md` 是迁移期参考，不属于默认运行上下文。只有缺少细节、追溯来源或回归测试时按需读取。
+Canonical MV state comes from:
+`06_TESTS/MV/WEB_R3/30D_60/<slot>/00_STATE/`
+plus the Runtime registry/receipts, never from chat memory or a Codex-only CURRENT_STATE file.
+
+## Transport
+
+Codex has a local shell. Its default Runtime transport is the local CODEX_R2 operator over existing Canonical/Lean controllers.
+
+The immutable GitHub request -> Actions -> response bridge remains the ChatGPT Web transport and should not be used by Codex by default.
+
+## Human Gates
+
+HG01 / HG02 / HG03 / HG04 / HG05 remain mandatory. Machine QA never substitutes for user approval.
+
+## External generation
+
+If image generation, Seedance/video generation, authenticated browser access or another external capability is unavailable, use `06_TESTS/MV/CODEX_R2/CODEX_HANDOFF_PROTOCOL.md`. Do not fabricate success.
+
+## Git safety
+
+- no new branches during the test;
+- no force/amend/history rewrite;
+- no secrets/auth state;
+- no large media commits;
+- no manual Canonical state/receipt edits;
+- commit coherent phase-level changes and inspect final diff/status.
+
+Historical `06_TESTS/MV/CODEX_R1` is reference-only. It is not the active Codex workflow.

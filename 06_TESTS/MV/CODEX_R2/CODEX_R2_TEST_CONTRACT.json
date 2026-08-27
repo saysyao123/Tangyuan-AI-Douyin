@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE_TEST",
+  "branch": "test/mv-codex-r2",
+  "baseline_branch": "test/mv-lean-r1",
+  "baseline_commit": "6a02cff5be943488800f0d63bb2f91ef4f3cbd32",
+  "target_slot": "D03-B",
+  "target_lane": "S",
+  "program": "30D_60",
+  "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+  "tracker_path": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+  "runtime_dir": "04_HARNESS/runtime",
+  "operator": "06_TESTS/MV/CODEX_R2/scripts/codex_mv_operator.py",
+  "finish_stage": "S16_RELEASE_PACKAGE_READY",
+  "human_gates": ["HG01", "HG02", "HG03", "HG04", "HG05"],
+  "transport": {
+    "default": "CODEX_LOCAL_CONTROLLER",
+    "web_bridge_requests_default": false,
+    "canonical_controllers_remain_authoritative": true
+  },
+  "initial_context": {
+    "web": true,
+    "multi_shot": false,
+    "program_30d60": true
+  },
+  "hard_constraints": {
+    "no_second_state_machine": true,
+    "no_manual_state_or_receipt_edit": true,
+    "no_human_gate_bypass": true,
+    "no_per_slot_model_install": true,
+    "no_slot_specific_core_helper": true,
+    "no_fake_external_generation": true,
+    "no_publish_without_real_confirmation": true,
+    "large_media_must_remain_uncommitted": true
+  }
+}

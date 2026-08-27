@@ -1,0 +1,5 @@
+workspace/
+reports/tmp/
+__pycache__/
+*.pyc
+*.pyo
