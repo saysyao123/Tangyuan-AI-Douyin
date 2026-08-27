@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "status": "EXPERIMENT_CANDIDATE",
+  "request_directory": "04_HARNESS/lean_runtime_bridge/requests",
+  "response_directory": "04_HARNESS/lean_runtime_bridge/responses",
+  "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+  "tracker_path": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+  "executor_registry_path": "04_HARNESS/runtime/mv_stage_executor_registry.json",
+  "request_id_pattern": "^LR-[0-9]{8}T[0-9]{6}Z-[A-Z0-9]{4,24}$",
+  "request_filename_template": "{request_id}.json",
+  "response_filename_template": "{request_id}.json",
+  "required_request_fields": ["schema_version", "request_id", "command", "payload", "requested_by", "reason"],
+  "allowed_requested_by": ["chatgpt_web", "codex", "human_operator", "ci_fixture"],
+  "canonical_guard_fields": [
+    "kind", "state_sha256", "slot_fingerprint_sha256", "current_stage", "current_state_token",
+    "transition_sequence", "last_transition_receipt_sha256", "context_revision",
+    "last_context_receipt_sha256", "revision_sequence", "last_revision_receipt_sha256"
+  ],
+  "allocation_guard_fields": ["kind", "tracker_sha256", "mode", "slot_id", "lane"],
+  "commands": {
+    "RESUME": {
+      "mutation": false,
+      "slot_id_required": false,
+      "expected_guard_required": false,
+      "payload_required": [],
+      "payload_allowed": []
+    },
+    "INIT_SLOT": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "ALLOCATION",
+      "payload_required": [],
+      "payload_allowed": ["program", "web", "multi_shot", "program_30d60"]
+    },
+    "ACCEPT_GATE": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": ["gate", "user_decision_text", "approved_artifacts"],
+      "payload_allowed": ["gate", "user_decision_text", "approved_artifacts"]
+    },
+    "RUN_UNTIL_GATE_OR_BLOCK": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": [],
+      "payload_allowed": ["max_steps"]
+    },
+    "ADVANCE": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": ["to"],
+      "payload_allowed": ["to"]
+    },
+    "UPDATE_CONTEXT": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": ["key", "value", "reason"],
+      "payload_allowed": ["key", "value", "reason"]
+    },
+    "ROLLBACK": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": ["change_type", "reason"],
+      "payload_allowed": ["change_type", "reason", "authority"]
+    },
+    "PUBLISH_SYNC": {
+      "mutation": true,
+      "slot_id_required": true,
+      "expected_guard_required": true,
+      "expected_guard_kind": "CANONICAL",
+      "payload_required": ["song_family", "audio_asset", "confirmation_source"],
+      "payload_allowed": ["song_family", "audio_asset", "confirmation_source", "packaging", "publish_time"]
+    }
+  },
+  "lean_policy": {
+    "human_gate_semantics_remain_durable": true,
+    "accept_gate_records_then_advances_in_one_external_transaction": true,
+    "machine_stage_receipts_are_not_skipped": true,
+    "run_until_stops_before_human_gate": true,
+    "run_until_stops_after_external_handoff_stage": true,
+    "external_handoff_stop_after_stages": ["S07_DYNAMIC_PROMPT_SET_READY"],
+    "release_stop_after_stages": ["S16_RELEASE_PACKAGE_READY"],
+    "default_max_steps": 8,
+    "max_max_steps": 16,
+    "no_new_stage_executor_is_created_by_macro": true
+  }
+}
