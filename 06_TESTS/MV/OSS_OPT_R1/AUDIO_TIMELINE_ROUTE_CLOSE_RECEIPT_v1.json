@@ -1,0 +1,60 @@
+{
+  "receipt_version": "1.0",
+  "experiment": "OSS_OPT_R1",
+  "scope": "LYRIC_TIMELINE_ROUTE",
+  "validated_slot": "D02-B",
+  "song_family": "有几次想你了",
+  "decision": "PROMOTE_RULE_CANDIDATE",
+  "route_priority": [
+    "P0_SAME_VERSION_LRC",
+    "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+    "P2_XINGYU_CTC_FALLBACK"
+  ],
+  "default_ai_route": "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+  "human_lyric_audit": {
+    "status": "PASS",
+    "decision_text": "歌词OK",
+    "decision_at": "2026-08-27T18:30:00+08:00"
+  },
+  "p1_validation": {
+    "tool": "faster-whisper 1.2.1",
+    "model": "small",
+    "device": "cpu",
+    "compute_type": "int8",
+    "trusted_lines": 7,
+    "aligned_lines": 7,
+    "normalized_characters": 45,
+    "all_lines_100pct_coverage": true,
+    "sequence_ratio": 1.0,
+    "line_starts_monotonic": true,
+    "cached_model_work_seconds": 6.002,
+    "cache_size_bytes": 573157329,
+    "workflow_run_id": 33060055071
+  },
+  "p2_fallback": {
+    "engine": "xingyu-lyrics-aligner 0.7.0 / CTC",
+    "status": "ARCHIVED_VALIDATED_FALLBACK",
+    "default": false,
+    "activation": "ONLY_ON_CONCRETE_P1_FAILURE_OR_EXPLICIT_HIGH_PRECISION_NEED"
+  },
+  "canonical_result": {
+    "slot_stage": "S03_AUDIO_TIMELINE_LOCKED",
+    "state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+    "transition_sequence": 3,
+    "audio_timeline_package": "../WEB_R3/30D_60/D02-B/03_AUDIO_TIMELINE/package_manifest.json",
+    "qa": "../WEB_R3/30D_60/D02-B/03_AUDIO_TIMELINE/alignment_qa_report.md",
+    "lock_receipt": "../WEB_R3/30D_60/D02-B/03_AUDIO_TIMELINE/LYRIC_TIMELINE_LOCK_RECEIPT.json"
+  },
+  "hard_rules": [
+    "LOCKED_HG02_AUDIO_IS_LYRIC_COMPLETENESS_AUTHORITY",
+    "CREATOR_CAPTION_IS_NOT_COMPLETE_LYRIC_TRUTH",
+    "ONE_HUMAN_LYRIC_TEXT_AUDIT_ON_NORMAL_P1_PATH",
+    "STOP_AT_FIRST_ROUTE_THAT_PASSES_QA",
+    "NO_DEFAULT_SECOND_MODEL_VERIFICATION",
+    "XINGYU_IS_FALLBACK_NOT_DEFAULT",
+    "ANCHOR_WORDS_AND_MUSIC_EVENTS_DO_NOT_BLOCK_LYRIC_TIMELINE_LOCK"
+  ],
+  "stable_branch_promotion": "DEFER_TO_OSS_OPT_R1_CLOSE_AUDIT",
+  "stable_branch_changed": false,
+  "status": "VALIDATED_AND_DURABLY_ARCHIVED"
+}
