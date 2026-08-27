@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163415Z-S08V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+    "current_state_token": "DYNAMIC_PROMPT_SET_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "e043f1e98dddb400e5cc40436071dd15bd812967c0beb6fd52f6ac5be61c5af4",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "38d79a060c4739960098c27ce8bb869ea6d807f58759270892cc4082f30b84c0",
+    "state_sha256": "e1e5707d2a037d8e0c290206f7d2805a184fcf10605e7bf687a63528d6a65b21",
+    "transition_sequence": 7
+  },
+  "payload": {"to": "S08_DYNAMIC_SOURCE_QA_LOCKED"},
+  "requested_by": "chatgpt_web",
+  "reason": "Five revised raw sources are generated, deep-QA reviewed, mapped to seven lyric lines, and provide approximately 13 visible atoms with no regeneration required."
+}
