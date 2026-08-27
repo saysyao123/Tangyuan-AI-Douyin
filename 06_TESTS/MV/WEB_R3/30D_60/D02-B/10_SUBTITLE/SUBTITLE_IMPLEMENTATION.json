@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "source_preview": "D02-B_picture_preview_v2_dense_lyric.mp4",
+  "source_preview_sha256": "99cdff6fa8f8af17e0e935e8a9714cc33076bdce2ea4d96037afc4989297eee5",
+  "timing_source": "03_AUDIO_TIMELINE/lyrics_exact.srt",
+  "style": "LOCKED_BASELINE_R1_WEB_R2",
+  "canvas": {"width": 720, "height": 1280, "fps": 24},
+  "font": {"family": "Noto Sans CJK SC", "style": "Bold", "size_px": 46},
+  "text_color": "#F8F8F8",
+  "stroke_px": 1,
+  "background": {"color": "#383838", "opacity": 0.666667, "radius_px": 8},
+  "padding_px": {"top": 10, "bottom": 10, "left": 10, "right": 10},
+  "center_px": {"x": 360, "y": 1009},
+  "max_lines": 2,
+  "karaoke": false,
+  "fade_in_ms": 100,
+  "fade_out_ms": 180,
+  "events": [
+    {"index":1,"text":"有几次想你了","start":0.0,"end":1.88,"text_bbox_w":278,"text_bbox_h":48,"box_left":211,"box_top":975,"box_right":509,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.0,"end_delta":-0.005},
+    {"index":2,"text":"有几次忍住了","start":2.02,"end":3.64,"text_bbox_w":278,"text_bbox_h":48,"box_left":211,"box_top":975,"box_right":509,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.021667,"end_delta":-0.015},
+    {"index":3,"text":"有几句想说的","start":3.78,"end":5.4,"text_bbox_w":278,"text_bbox_h":48,"box_left":211,"box_top":975,"box_right":509,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.011667,"end_delta":-0.025},
+    {"index":4,"text":"都变成算了","start":5.6,"end":7.18,"text_bbox_w":232,"text_bbox_h":48,"box_left":234,"box_top":975,"box_right":486,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.025,"end_delta":-0.013333},
+    {"index":5,"text":"有几场雨停了","start":7.32,"end":8.94,"text_bbox_w":278,"text_bbox_h":48,"box_left":211,"box_top":975,"box_right":509,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.013333,"end_delta":-0.023333},
+    {"index":6,"text":"有几阵风过了","start":9.12,"end":10.7,"text_bbox_w":278,"text_bbox_h":48,"box_left":211,"box_top":975,"box_right":509,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.005,"end_delta":-0.033333},
+    {"index":7,"text":"有多舍不得也该放下了","start":10.86,"end":14.26,"text_bbox_w":462,"text_bbox_h":48,"box_left":119,"box_top":975,"box_right":601,"box_bottom":1043,"pad_left":10,"pad_right":10,"pad_top":10,"pad_bottom":10,"center_x":360.0,"center_y":1009.0,"start_delta":0.015,"end_delta":-0.01}
+  ],
+  "renderer": "Pillow RGBA subtitle plates + ffmpeg overlay; no timing re-alignment",
+  "rendered_candidate": "D02-B_有几次想你了_最终候选_字幕版_v1.mp4",
+  "rendered_candidate_sha256": "7f77a41a68db47d4f7992cb77161c86414eeb0fd1cf8233322956b4025bf43d9"
+}
