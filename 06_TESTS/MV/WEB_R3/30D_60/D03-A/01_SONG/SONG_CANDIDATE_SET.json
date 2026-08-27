@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0-lean-r1",
+  "status": "READY_FOR_HG01",
+  "slot_id": "D03-A",
+  "lane": "P",
+  "source_mode": "CORE_BENCHMARK_DATABASE",
+  "delivery_strategy": "CORE_CREATOR_MV_DIRECT",
+  "data_center": {
+    "status_path": "06_TESTS/MV/WEB_R3/database/data_center/DATA_CENTER_STATUS.md",
+    "repeat_ranking_path": "06_TESTS/MV/WEB_R3/database/data_center/song_repeat_candidates.csv",
+    "direct_evidence_path": "06_TESTS/MV/WEB_R3/database/data_center/direct_douyin_evidence.json",
+    "snapshot_anchor": "2026-08-17 22:41:09",
+    "refresh_cadence_days": 15
+  },
+  "exclusions": [
+    {"song_family": "如果风会替我说话", "reason": "already used by D01-A"},
+    {"song_family": "我救自己于人间水火", "reason": "already used by D01-B"},
+    {"song_family": "做她的大地别做她的天", "reason": "already locked by D02-A HG01"},
+    {"song_family": "有几次想你了", "reason": "completed by D02-B OSS_OPT_R1"}
+  ],
+  "formal_candidates": [
+    {
+      "candidate_id": "A",
+      "song_family": "爱让人脑袋空空",
+      "observed_repeat_weight_15d": 1.65,
+      "distinct_core_accounts_15d": 2,
+      "audio_version_count": 2,
+      "machine_note": "highest unused observed repeat; emotionally direct and visually flexible; exact audio version must be resolved at HG02",
+      "direct_works": [
+        {"nickname": "火乐烁", "aweme_id": "7673830659274810033", "work_url": "https://www.douyin.com/video/7673830659274810033"},
+        {"nickname": "乐 ♩青春", "aweme_id": "7672476381650263962", "work_url": "https://www.douyin.com/video/7672476381650263962"}
+      ]
+    },
+    {
+      "candidate_id": "B",
+      "song_family": "若爱有尽头",
+      "observed_repeat_weight_15d": 1.10,
+      "distinct_core_accounts_15d": 2,
+      "audio_version_count": 1,
+      "machine_note": "cleaner observed audio-family consistency and strong lyric-to-image space; suitable for a fresh visual world",
+      "direct_works": [
+        {"nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰", "aweme_id": "7673820758652768945", "work_url": "https://www.douyin.com/video/7673820758652768945"},
+        {"nickname": "乐 ♩青春", "aweme_id": "7672790854586937178", "work_url": "https://www.douyin.com/video/7672790854586937178"}
+      ]
+    },
+    {
+      "candidate_id": "C",
+      "song_family": "杀破狼",
+      "observed_repeat_weight_15d": 1.10,
+      "distinct_core_accounts_15d": 2,
+      "audio_version_count": 2,
+      "machine_note": "strong emotional scale and high visual ceiling; version spread is larger so HG02 exact-asset work may be slightly heavier",
+      "direct_works": [
+        {"nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰", "aweme_id": "7673856812899138149", "work_url": "https://www.douyin.com/video/7673856812899138149"},
+        {"nickname": "乐 ♩青春", "aweme_id": "7673547221526478026", "work_url": "https://www.douyin.com/video/7673547221526478026"}
+      ]
+    },
+    {
+      "candidate_id": "D",
+      "song_family": "Summer Love 爱在盛夏",
+      "observed_repeat_weight_15d": 0.80,
+      "distinct_core_accounts_15d": 2,
+      "audio_version_count": 1,
+      "machine_note": "seasonally timely and easy to separate aesthetically from recent melancholic MVs; observed repeat is lower than A/B/C",
+      "direct_works": [
+        {"nickname": "Aura", "aweme_id": "7673385877871136042", "work_url": "https://www.douyin.com/video/7673385877871136042"},
+        {"nickname": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰", "aweme_id": "7673068083896814202", "work_url": "https://www.douyin.com/video/7673068083896814202"}
+      ]
+    }
+  ],
+  "selected_song_family": null,
+  "machine_preflight": {
+    "candidate_source_is_core_database": true,
+    "used_or_locked_song_families_excluded": true,
+    "direct_work_ids_are_from_canonical_direct_evidence": true,
+    "selection_requires_human_hg01": true
+  }
+}
