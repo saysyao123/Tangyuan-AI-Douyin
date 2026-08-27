@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0-lean-r1",
+  "status": "EXPERIMENT_CANDIDATE",
+  "authority": "HOW each canonical stage is executed. Runtime stage truth still comes from mv_stage_registry.json.",
+  "policy": {
+    "executor_first": true,
+    "rule_is_not_executor": true,
+    "reuse_before_create": true,
+    "dependency_doctor_before_install": true,
+    "per_slot_model_install_forbidden": true,
+    "creative_synthesis_does_not_require_new_backend": true
+  },
+  "stage_executors": {
+    "S00_SLOT_CREATED": {"executor_id":"HG01_CORE_DATABASE_ORCHESTRATION","execution_class":"DATA_ORCHESTRATION","jit_reads":["05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md","04_HARNESS/rules/mv_human_gates.md"],"dependency_policy":"NO_NEW_DEPENDENCY"},
+    "S01_HG01_SONG_LOCKED": {"executor_id":"DOUYIN_FIRST_BGM_DISCOVERY","execution_class":"EVIDENCE_ORCHESTRATION","jit_reads":["04_HARNESS/rules/mv_bgm_discovery.md","04_HARNESS/rules/mv_human_gates.md"],"dependency_policy":"REUSE_EXISTING_RESOLVER_AND_FINGERPRINT_PATH"},
+    "S02_HG02_BGM_LOCKED": {"executor_id":"AUDIO_TIMELINE_PRIORITY_ROUTER","execution_class":"CANONICAL_TOOLCHAIN","jit_reads":["04_HARNESS/rules/mv_audio_timeline.md","04_HARNESS/rules/mv_audio_timeline_route.md","04_HARNESS/tools/mv_audio_timeline/README.md"],"canonical_tools":["04_HARNESS/tools/mv_audio_timeline/package_tool.py","04_HARNESS/tools/mv_audio_timeline/final_gate.py","04_HARNESS/tools/mv_audio_timeline/run_alignment.py"],"dependency_policy":"P0_SAME_VERSION_TIMED_LYRIC_THEN_P1_LIGHTWEIGHT_ASR_THEN_P2_HEAVY_ALIGNMENT_ONLY_ON_FAILURE"},
+    "S03_AUDIO_TIMELINE_LOCKED": {"executor_id":"NATURAL_BEAT_SYNTHESIS","execution_class":"CREATIVE_SYNTHESIS","jit_reads":["04_HARNESS/workflows/mv.md","04_HARNESS/rules/mv_golden_runtime.md"],"dependency_policy":"NO_NEW_MODEL"},
+    "S04_NATURAL_BEAT_LOCKED": {"executor_id":"DIRECTOR_PLAN_SYNTHESIS","execution_class":"CREATIVE_SYNTHESIS","jit_reads":["04_HARNESS/workflows/mv.md","04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md","04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"],"dependency_policy":"NO_NEW_MODEL"},
+    "S05_DIRECTOR_PLAN_LOCKED": {"executor_id":"FIRST_FRAME_CAPABILITY_AND_QA","execution_class":"CAPABILITY_HANDOFF","jit_reads":["04_HARNESS/rules/mv_first_frame_qa.md","04_HARNESS/rules/ai_video.md","04_HARNESS/templates/ai_first_frame_prompt.md"],"dependency_policy":"USE_EXISTING_IMAGE_GENERATION_CAPABILITY"},
+    "S06_HG03_FIRST_FRAMES_LOCKED": {"executor_id":"DYNAMIC_PROMPT_SYNTHESIS","execution_class":"CREATIVE_SYNTHESIS","jit_reads":["04_HARNESS/rules/ai_video.md","04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md","04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md"],"dependency_policy":"NO_NEW_MODEL"},
+    "S07_DYNAMIC_PROMPT_SET_READY": {"executor_id":"DYNAMIC_GENERATION_HANDOFF_AND_QA","execution_class":"CAPABILITY_HANDOFF","jit_reads":["04_HARNESS/rules/ai_video.md","04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"],"dependency_policy":"USE_CURRENT_WEB_SEEDANCE_CLASS_PATH"},
+    "S08_DYNAMIC_SOURCE_QA_LOCKED": {"executor_id":"CONDITIONAL_SOURCE_NORMALIZATION","execution_class":"DETERMINISTIC_MEDIA_TRANSFORM","jit_reads":["04_HARNESS/rules/mv_source_normalization.md","04_HARNESS/rules/mv_web_source_roughcut.md"],"dependency_policy":"NORMALIZE_ONLY_IF_MULTISHOT_OR_WEB_CLEANING_OR_PROXY_REQUIRED"},
+    "S09_SOURCE_NORMALIZATION_READY": {"executor_id":"EDIT_ENTRY_AUDIO_INVARIANT","execution_class":"TECHNICAL_VALIDATION","jit_reads":["04_HARNESS/rules/mv_editing.md","04_HARNESS/rules/mv_audio_timeline.md"],"dependency_policy":"HASH_DURATION_IDENTITY_CHECK_ONLY_NO_REALIGN"},
+    "S10_EDITOR_AUDIO_GATE_PASS": {"executor_id":"EDIT_MAP_SYNTHESIS","execution_class":"CREATIVE_SYNTHESIS","jit_reads":["04_HARNESS/rules/mv_editing.md","04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md"],"dependency_policy":"NO_NEW_MODEL"},
+    "S11_EDIT_MAP_LOCKED": {"executor_id":"PICTURE_PREVIEW_RENDER_AND_HG04","execution_class":"DETERMINISTIC_MEDIA_TRANSFORM","jit_reads":["04_HARNESS/rules/mv_editing.md","04_HARNESS/rules/mv_human_gates.md"],"dependency_policy":"USE_EXISTING_FFMPEG_FFPROBE_RENDER_PATH"},
+    "S12_HG04_PICTURE_EDIT_PASS": {"executor_id":"LOCKED_SUBTITLE_IMPLEMENTATION","execution_class":"DETERMINISTIC_MEDIA_TRANSFORM","jit_reads":["04_HARNESS/rules/mv_subtitle.md"],"dependency_policy":"REUSE_LOCKED_SUBTITLE_BASELINE"},
+    "S13_SUBTITLE_IMPLEMENTATION_QA_PASS": {"executor_id":"FINAL_RENDER_TECH_QA","execution_class":"TECHNICAL_VALIDATION","jit_reads":["04_HARNESS/workflows/mv.md","04_HARNESS/rules/mv_editing.md"],"dependency_policy":"NO_NEW_AI_MODEL"},
+    "S14_FINAL_TECH_QA_PASS": {"executor_id":"HG05_RUNTIME_GATE","execution_class":"HUMAN_GATE","jit_reads":["04_HARNESS/rules/mv_human_gates.md"],"dependency_policy":"LEAN_ACCEPT_GATE_TRANSACTION"},
+    "S15_HG05_FINAL_ACCEPTANCE_PASS": {"executor_id":"RELEASE_PACKAGE_ASSEMBLY","execution_class":"CREATIVE_SYNTHESIS","jit_reads":["05_IP_ASSETS/PUBLISH_SYSTEM.md"],"dependency_policy":"NO_NEW_MODEL"},
+    "S16_RELEASE_PACKAGE_READY": {"executor_id":"TRANSACTIONAL_PUBLISH_SYNC","execution_class":"TRANSACTIONAL_PUBLISH","jit_reads":["05_IP_ASSETS/PUBLISH_SYSTEM.md","04_HARNESS/tools/mv_runtime_publish.py"],"dependency_policy":"REQUIRES_REAL_WORLD_CONFIRMATION"},
+    "S17_PUBLISHED_DATA_COLLECTION_ACTIVE": {"executor_id":"POST_PUBLISH_DATA_REVIEW","execution_class":"DATA_REVIEW","jit_reads":["05_IP_ASSETS/PUBLISH_SYSTEM.md","05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md"],"dependency_policy":"OBSERVED_DATA_ONLY"},
+    "S18_POST_PUBLISH_REVIEWED": {"executor_id":"TERMINAL_REVIEWED","execution_class":"DATA_REVIEW","jit_reads":[],"dependency_policy":"NONE"}
+  }
+}
