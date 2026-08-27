@@ -42,6 +42,17 @@ def ensure_python(lock: dict) -> None:
         raise RuntimeError(f"Primary aligner requires Python >=3.11,<3.14; current={platform.python_version()}")
 
 
+def pinned_git_requirement(name: str, extras: str, repository: str, commit: str) -> str:
+    """Return a modern PEP 508 direct-URL requirement.
+
+    pip 26 rejects the legacy ``#egg=name[extra]`` fragment form. Keep the
+    package/extras on the requirement side and the immutable Git revision on
+    the URL side so current and future pip versions parse the lock correctly.
+    """
+    suffix = f"[{extras}]" if extras else ""
+    return f"{name}{suffix} @ git+{repository}@{commit}"
+
+
 def cmd_install(args) -> int:
     lock = load_lock(); ensure_python(lock)
     venv = Path(args.venv).resolve()
@@ -49,12 +60,12 @@ def cmd_install(args) -> int:
     py = venv_python(venv)
     run([str(py), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"])
     p = lock["primary"]
-    primary_url = f"git+{p['repository']}@{p['git_commit']}#egg={p['name']}[{p['install_extra']}]"
-    run([str(py), "-m", "pip", "install", primary_url])
+    primary_req = pinned_git_requirement(p["name"], p["install_extra"], p["repository"], p["git_commit"])
+    run([str(py), "-m", "pip", "install", primary_req])
     if args.with_secondary:
         s = lock["secondary"]; extras = ",".join(s["install_extras"])
-        secondary_url = f"git+{s['repository']}@{s['git_commit']}#egg={s['name']}[{extras}]"
-        run([str(py), "-m", "pip", "install", secondary_url])
+        secondary_req = pinned_git_requirement(s["name"], extras, s["repository"], s["git_commit"])
+        run([str(py), "-m", "pip", "install", secondary_req])
     env = os.environ.copy()
     if args.hf_home:
         hf = str(Path(args.hf_home).resolve()); Path(hf).mkdir(parents=True, exist_ok=True)
