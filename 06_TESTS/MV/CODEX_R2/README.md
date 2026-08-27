@@ -60,6 +60,12 @@ Raw media belongs in ignored local workspace:
 
 Do not commit large media. Canonical text manifests/receipts/QA evidence remain in the slot tree as defined by the existing Runtime.
 
+## Smoke check
+
+`.github/workflows/codex-r2-smoke.yml` is a read-only adapter check. It compiles the local operator plus reused Runtime modules, runs Codex preflight and a D03-B resume, verifies that the result is an allocation for `D03-B / Lane S`, and asserts that read-only commands did not create Canonical D03-B state or modify the worktree.
+
+This smoke check never initializes the slot. D03-B initialization is deliberately reserved for the real Codex run so the automation test starts from a genuine clean allocation.
+
 ## Start
 
 Use the content of `CODEX_START_PROMPT.md` in a Codex task configured on branch `test/mv-codex-r2`.
