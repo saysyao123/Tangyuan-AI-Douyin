@@ -1,0 +1,61 @@
+{
+  "receipt_version": "1.0",
+  "sequence": 4,
+  "slot_id": "D02-B",
+  "from_stage": "S03_AUDIO_TIMELINE_LOCKED",
+  "to_stage": "S04_NATURAL_BEAT_LOCKED",
+  "to_state_token": "NATURAL_BEAT_LOCKED",
+  "previous_receipt": "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+  "previous_receipt_sha256": "3226911b18a61a9af7270529fd649ee7afbafdb0dab523d0c163dfc8cdc9bf1b",
+  "state_before_sha256": "e68e8997c2a480977d5ec59e591a31a007c6ad95a7e5928a3dc304fc55b8df60",
+  "evidence_validation": {
+    "ok": true,
+    "target_stage": "S04_NATURAL_BEAT_LOCKED",
+    "highest_contiguous_valid_stage": "S04_NATURAL_BEAT_LOCKED",
+    "canonical_v2": true,
+    "context_revision": 0
+  },
+  "evidence_snapshot": [
+    {
+      "artifact_id": "AUDIO_TIMELINE_MANIFEST",
+      "path": "03_AUDIO_TIMELINE/package_manifest.json",
+      "sha256": "9c712497b42e41f79364556d64101984a6f983da8649e507ecb80cb92ccc889e"
+    },
+    {
+      "artifact_id": "AUDIO_TIMELINE_QA",
+      "path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+      "sha256": "2a83413681d8fa06f72da1940d517516c9e91a4f846761fc368a74b2b38ef30a"
+    },
+    {
+      "artifact_id": "BGM_CANDIDATE_PACKAGE",
+      "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "sha256": "c424dd7c58346182da78f374ba667138e6c860640cf964e9d9d5505c151b4485"
+    },
+    {
+      "artifact_id": "HG01_SELECTION_RECEIPT",
+      "path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+      "sha256": "f1952a72b11189043678865920bb4d4d61c79c37f44a3fd403931501bc15fc24"
+    },
+    {
+      "artifact_id": "HG02_BGM_LOCK_RECEIPT",
+      "path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+      "sha256": "1f3b04cbf287576289153595ffda32e9310d909c0e66f19b5b604ff48ad2bf6d"
+    },
+    {
+      "artifact_id": "NATURAL_BEAT",
+      "path": "04_BEATS/NATURAL_BEAT.md",
+      "sha256": "b4e30b5a319ce2a9e0919688a16f38e02e8e827927ed0844c67f4fc86470d251"
+    },
+    {
+      "artifact_id": "SLOT_MANIFEST",
+      "path": "00_STATE/SLOT_MANIFEST.json",
+      "sha256": "e11370057b9627d24ea60d603f5a69c90cdd2ad1f3b4c96ea5bacbbd218db7ed"
+    },
+    {
+      "artifact_id": "SONG_CANDIDATE_SET",
+      "path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "sha256": "4c2caa5d2ba28465c33f742c0311bd452b5f4ce98579d69480b04f348b8ee51b"
+    }
+  ],
+  "created_at": "2026-08-27T10:48:59Z"
+}
