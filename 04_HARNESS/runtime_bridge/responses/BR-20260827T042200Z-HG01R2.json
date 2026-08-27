@@ -1,0 +1,20 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T04:21:10Z",
+  "error": "resume controller rejected repository truth: code=1 payload={'ok': False, 'error': 'locked evidence hash changed', 'details': {'receipt': '00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json', 'path': '01_SONG/SONG_CANDIDATE_SET.json'}} stderr=",
+  "execution": null,
+  "next_guard": null,
+  "postflight": null,
+  "preflight": null,
+  "request_id": "BR-20260827T042200Z-HG01R2",
+  "request_sha256": "65a92e7e45342e6ceccd3c564e3f4f1cdbab27ba849024d45f4b6412d7aff882",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33039145434",
+    "github_source_sha": "a0ea558a9474a441298ff64957d76d8d37705bf3"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "REJECTED"
+}
