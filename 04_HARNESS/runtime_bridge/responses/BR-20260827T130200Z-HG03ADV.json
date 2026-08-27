@@ -1,0 +1,20 @@
+{
+  "command": "ADVANCE",
+  "completed_at": "2026-08-27T12:59:40Z",
+  "error": "ADVANCE: payload contains forbidden keys: ['to_stage']",
+  "execution": null,
+  "next_guard": null,
+  "postflight": null,
+  "preflight": null,
+  "request_id": "BR-20260827T130200Z-HG03ADV",
+  "request_sha256": "a4a3f0453502d254b9971d4f581ad37fe7034d57945652118df8a8262a08cb19",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33074542405",
+    "github_source_sha": "a2009813058b9e7e5dfc7541feb1a8f98f33cff7"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "REJECTED"
+}
