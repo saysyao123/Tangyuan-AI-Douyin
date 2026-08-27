@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T045800Z-HG02ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "a5c5efab6699c2569ba321c08677175d7c93813a4d76a540121b33296541a38b",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "6172a9e567ed28210e028985f3695cdaa8783051a012d7aa51bbf033b41c2458",
+    "state_sha256": "b16d1a7f1de1e5c00cf840ae1b05f6df8e2fd810b77eb44be5e6d0516fd82a99",
+    "transition_sequence": 1
+  },
+  "payload": {
+    "to": "S02_HG02_BGM_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B only after the user's HG02 Option B decision was durably recorded."
+}
