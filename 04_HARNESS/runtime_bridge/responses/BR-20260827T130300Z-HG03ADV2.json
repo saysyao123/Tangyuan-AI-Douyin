@@ -1,0 +1,208 @@
+{
+  "command": "ADVANCE",
+  "completed_at": "2026-08-27T13:00:39Z",
+  "error": null,
+  "execution": {
+    "command": "ADVANCE",
+    "controller_payload": {
+      "from_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "ok": true,
+      "state_token": "FIRST_FRAME_SET_LOCKED",
+      "to_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "transition_receipt": "00_STATE/TRANSITIONS/006_S05_DIRECTOR_PLAN_LOCKED__S06_HG03_FIRST_FRAMES_LOCKED.json",
+      "verified": {
+        "checked_context_receipts": [],
+        "checked_transition_receipts": [
+          "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+          "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+          "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+          "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+          "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+          "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+          "00_STATE/TRANSITIONS/006_S05_DIRECTOR_PLAN_LOCKED__S06_HG03_FIRST_FRAMES_LOCKED.json"
+        ],
+        "context": {
+          "canonical_v2": true,
+          "multi_shot": false,
+          "program_30d60": true,
+          "web": true
+        },
+        "context_revision": 0,
+        "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+        "current_state_token": "FIRST_FRAME_SET_LOCKED",
+        "highest_contiguous_valid_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+        "ok": true,
+        "slot_id": "D02-B",
+        "transition_sequence": 6
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "e1a05ec143929ecfc46594f8a72aefe6662d2fbe6c52e5e56121e54c49960041",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "0b6946fbc2d41e2dbad1549f940029dfe565cbdf5fa8bb1d0e48df1f654542f6",
+    "state_sha256": "3bba255cd5f6aecf8e328fc44c5a9e94c4695d7ebcf1868c053593d736228b3b",
+    "transition_sequence": 6
+  },
+  "postflight": {
+    "active_attempt": 2,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DYNAMIC_PROMPT_SET",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/knowledge/MV_DYNAMIC_GENERATION_R3_LESSONS.md"
+      ],
+      "next_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+      "summary": "Resolve the Dynamic Prompt creative-synthesis executor and translate accepted K0 truth into bounded I2V dynamic prompts; K0 pixels outrank superseded prose."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 1,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 2,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_first_frame_qa.md",
+      "04_HARNESS/rules/mv_human_gates.md",
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/templates/ai_first_frame_prompt.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R001_audio_timeline_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
+      "human_gate": "HG03",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md"
+      ],
+      "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "summary": "Resolve the First Frame capability-handoff executor, generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 1,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T130300Z-HG03ADV2",
+  "request_sha256": "c6d6f69dc8f993427eecb5d12199cc1be135fedd11198b48acf9f7c759cdef0f",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33074626536",
+    "github_source_sha": "209b0e20e90f8beb3f3ea28309a6eea19cee1878"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
