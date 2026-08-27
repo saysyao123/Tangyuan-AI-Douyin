@@ -1,110 +1,105 @@
-# D02-B｜Director Candidate A — R3 Baseline
+# D02-B｜Director Candidate A — R3 Baseline v2
 
 > Candidate: `A / R3_BASELINE`
-> Status: `DIRECTOR_AB_CANDIDATE`
-> Inputs: locked Audio Timeline + `04_BEATS/NATURAL_BEAT.md` + shared `CREATIVE_BRIEF.md`
-> External OSS knowledge: **not required as authority for this candidate**.
+> Status: `DIRECTOR_AB_CANDIDATE / SEVEN-LINE REBUILD`
+> Inputs: locked Audio Timeline + locked `04_BEATS/NATURAL_BEAT.md` + shared `CREATIVE_BRIEF.md` v2.
+> External OSS director knowledge: not used as authority for this candidate.
 
 ## 1. R3 Director read
 
-The song is not “a sad man misses someone.” Its active verbs form the visual task:
+The active emotional verbs are:
 
-`想 -> 忍住 -> 想说 -> 算了`
+`想 -> 忍住 -> 想说 -> 算了 -> 雨停/风过 -> 舍不得 -> 放下`.
 
-The male protagonist should therefore remain attractive and readable while his actions repeatedly approach completion and then stop. The visual structure should compress during the vocal lines, then open after the final word so the long instrumental tail becomes meaningful release rather than filler.
+The visual task is a restrained transition from private attraction/attachment toward acceptance. The male protagonist remains attractive because the camera gives him readable movement, posture, eye-line and distance changes rather than beauty-ad posing.
 
-Performance mode: **non-lip-sync emotional performance**. The man carries the vocal through gaze, breath, gait, hand restraint and body-distance changes. This avoids making mouth-sync the dominant technical burden during Face-Completion.
+Performance mode: **non-lip-sync emotional performance**. Gaze, breath, gait, posture and body-distance carry the lyric while keeping Face-Completion load manageable.
 
 ## 2. Beat-to-visual allocation
 
-| Natural Beat | Sound/lyric truth | Baseline visual task | Camera relationship / move | Edit role |
+| Natural Beat | Lyric truth | R3 baseline visual task | Camera relationship | Edit role |
 |---|---|---|---|---|
-| NB01 `0.163–2.061` | `想你`, anchor 1.120–1.641 | In the sunlit coastal colonnade, the man walks toward camera from medium distance; wind moves hair/overshirt; his attention gradually settles on the lens. | LEAD / backward tracking, mild distance close | HOOK |
-| NB02 `2.061–3.802` | `忍住`, anchor 2.921–3.561 | He reaches a limestone threshold with one translucent linen edge moving beside him; his forward motion stops just before fully passing through. | HOLD after lead; subject stops, linen continues | HIT / restraint |
-| NB03 `3.802–5.602` | `想说`, anchor 4.642–5.182 | Nearer portrait/medium-close setup at the open threshold: a small inhale, eyes lift as if words might come; no exaggerated mouth acting. | mild portrait dolly-in or stable observe | HIT / near-action |
-| NB04 `5.602–6.983` | `算了`, anchor 6.503–6.983 | His gaze breaks, shoulders release, and he turns/passes out of the intimate frontal relation rather than performing a dramatic rejection. | short YIELD / diagonal retreat to give him passage | LYRIC PEAK |
-| NB05 `6.983–12.214` | vocal release -> post-vocal build | On the open terrace beside shallow reflective water, he keeps walking toward the sea-facing side; scale and air increase. | FOLLOW -> OVERTAKE -> mild LEAD | BRIDGE / BUILD |
-| NB06 `12.214–15.386` | energy peak -> fade | At the open coastal edge, the frame gives more space to sea/grass/sky; the man remains present but no longer trapped in an intimate close distance. | World-opening retreat / mild crane | MUSIC PEAK -> RELEASE |
+| NB01 `0.000–1.880` | `有几次想你了` | In the bright coastal colonnade, the man walks toward camera from medium distance; his attention gradually settles toward the viewer without a direct seduction pose. | LEAD / backward tracking | HOOK |
+| NB02 `2.020–3.640` | `有几次忍住了` | He reaches a limestone threshold and stops just before fully crossing; body motion stops while wind/fabric residue continues. | LEAD -> HOLD | TENSION / HOLD |
+| NB03 `3.780–7.180` | `想说 -> 算了` | At the threshold, a restrained inhale/eye-line lift suggests an unfinished outward impulse; on `算了` he disengages and begins to pass away from the intimate frontal relation. | HOLD -> short YIELD | TURN |
+| NB04 `7.320–10.700` | `雨停 -> 风过` | The environment opens to a post-rain terrace: wet limestone sheen and residual water establish rain having passed; wind moves dune grass/garment as he continues across the terrace. | FOLLOW / side-rear travel | BRIDGE / EXPANSION |
+| NB05 `10.860–15.386` | `舍不得 -> 放下` + tail | He reaches the sea-facing edge, briefly holds the emotional relation, then continues forward as the camera opens the frame and gives increasing space to horizon. | front-three-quarter HOLD -> world-opening retreat | PEAK + RELEASE |
 
 ## 3. Production-source allocation
 
-Natural Beats are not forced into one-video-per-beat. Baseline uses **4 raw dynamic sources**, each designed for ~5s external generation headroom and later trimming.
+Natural Beats do not force one source per beat. Baseline uses **4 raw dynamic sources**, each approximately 5s for Seedance-class generation headroom and later trimming.
 
 ### A-S01｜Approach -> Restraint
-Covers final-edit needs across NB01 + NB02.
+Covers NB01 + NB02.
 
-- K0 role: full-quality bright medium shot; man already in a natural walking phase; Face-Degrade L3 only affects facial feature information.
-- Primary subject action: walk toward camera -> naturally stop at threshold.
-- Primary camera: backward LEAD tracking; camera does not collide with subject.
-- Secondary motion: wind in hair/overshirt + one linen edge.
-- Required internal hits:
-  - face completes/stabilizes early enough for `想你` eye-line;
-  - body stop / held distance supports `忍住`.
-- Source portfolio: 1-shot preferred.
-- Clean end: man stopped; fabric still moving slightly.
+- K0: bright medium shot; man already in a natural walking phase; Face-Degrade L3 only affects facial feature information.
+- Primary subject action: walk toward camera -> stop at threshold.
+- Primary camera: backward LEAD tracking.
+- Secondary motion: hair/overshirt + a limited architectural linen edge.
+- Internal hit: approach carries `想你`; physical stop carries `忍住`.
+- Source grammar: 1-shot preferred.
+- Clean end: stable stopped body, residual fabric/wind motion.
 
 ### A-S02｜Almost Speak -> Let It Go
-Covers NB03 + NB04.
+Covers NB03.
 
-- K0 role: closer threshold portrait with torso/body posture visible; no beauty-ad close-up.
-- Primary subject action: inhale / eye-line lift -> tiny aborted forward intention -> gaze disengages -> starts to pass.
-- Primary camera: controlled short YIELD / diagonal retreat; if YIELD reduces expression clarity, HOLD is acceptable baseline fallback.
-- Secondary motion: linen/overshirt settles behind him.
-- Required internal hits:
-  - `想说` is an unfinished outward impulse;
-  - `算了` resolves via release/withdrawal, not melodramatic sadness.
-- Source portfolio: 1-shot preferred, 2-shot only if one motivated passage cut is needed.
-- Clean end: he has crossed the intimate threshold and established a stable travel direction.
+- K0: closer medium/medium-close threshold relation, torso visible.
+- Primary subject action: inhale / eye-line lift -> aborted intention -> gaze disengages -> begins passing.
+- Primary camera: HOLD first; short YIELD only after he commits to passage.
+- Secondary motion: restrained linen/garment motion.
+- `想说` must read as incomplete intent; `算了` resolves by release/withdrawal, not melodramatic sadness.
+- Source grammar: 1-shot; a 2-shot source is permitted only if one motivated occlusion cut improves editability.
 
-### A-S03｜Post-vocal Travel
-Covers NB05.
+### A-S03｜Weather Has Passed
+Covers NB04.
 
-- K0 role: rear-three-quarter walking phase on open terrace; no face-demanding close K0.
-- Primary subject action: sustained stable walk.
-- Primary camera: FOLLOW -> OVERTAKE -> LEAD translational path; never orbit in place.
-- Secondary motion: wind / water reflection / overshirt movement.
-- Required internal development: the camera gradually reaches a front-three-quarter relation without forcing a large head turn.
-- Source portfolio: 1-shot.
-- Clean end: camera slightly ahead, man still moving, open world visible.
+- K0: rear/side medium-wide man already walking on an open terrace with post-rain surface evidence.
+- Primary subject action: stable continued walking.
+- Primary camera: FOLLOW or side-rear tracking.
+- Secondary physical system: residual water movement + dune grass/garment wind response, kept low-load.
+- Lyric hit: `雨停` is represented by the after-state of rain; `风过` becomes visible in one clean passing gust.
+- Source grammar: 1-shot.
+- Clean end: terrace opens toward the sea, travel direction stable.
 
-### A-S04｜World-opening Release
-Covers NB06.
+### A-S04｜Attachment -> Release
+Covers NB05 and final audio tail.
 
-- K0 role: medium-wide man near the open coastal edge, already oriented toward space rather than posing at camera.
-- Primary subject action: slow final steps -> settle.
-- Primary camera: retreat and/or mild rise to open horizon.
-- Secondary motion: dune grass + garment edge in wind.
-- Required hit: strongest visual expansion available around the music peak role; after fade start only residue/release.
-- Source portfolio: 1-shot.
-- Clean end: stable breathing room; man remains in frame, no disappearance gimmick.
+- K0: medium-wide/front-three-quarter relation near open coastal edge.
+- Primary subject action: slow final steps -> brief hold -> continue/settle toward open space.
+- Primary camera: begin restrained HOLD or slight relational drift, then retreat/rise mildly to open horizon.
+- Secondary motion: dune grass + garment edge.
+- `舍不得` must preserve visible attachment/tension; `放下` must reduce resistance rather than erase emotion.
+- Tail `14.260–15.386`: no new event; preserve breathing room.
+- Source grammar: 1-shot.
+- Clean end: man remains present in frame; no disappearance gimmick.
 
 ## 4. R3 differentiation check
 
-- Shot scale path: medium moving -> medium-close/near threshold -> rear/side travel medium-wide -> final wide.
-- Camera relationship path: LEAD -> YIELD/HOLD -> FOLLOW/OVERTAKE/LEAD -> WORLD-OPENING RETREAT.
-- Dominant action path: approach -> stop -> almost express/withdraw -> continue walking -> settle.
-- Environment progression: colonnade/threshold -> open terrace -> coastal edge.
+- Shot-scale path: moving medium -> threshold medium-close -> travel medium-wide -> open wide.
+- Camera relationship path: LEAD -> HOLD/YIELD -> FOLLOW -> WORLD-OPENING RETREAT.
+- Dominant action path: approach -> stop -> almost express/withdraw -> continue across after-weather world -> release.
+- Environment progression: colonnade -> threshold -> post-rain terrace -> coastal edge.
+- Anchor hits land primarily inside motion/performance rather than forcing cuts.
 - No dense 3–5-shot micro-montage.
-- Anchor words land primarily inside ongoing motion/performance rather than forcing external cuts.
 
-## 5. Baseline continuity
+## 5. Continuity
 
 - Same single fictional East Asian male in all sources.
-- Same warm-white/pale-stone wardrobe structure; no outfit changes.
-- Spatial direction should generally progress from architecture toward open coast.
-- Light stays bright and natural, moving only mildly warmer toward the release.
-- Linen belongs only to architecture/threshold area; it should not inexplicably follow the character to the open coast.
+- Same warm-white/pale-stone wardrobe structure.
+- Spatial progression remains architecture -> threshold -> open terrace -> coast.
+- Light stays bright/natural and only becomes mildly warmer toward release.
+- Linen is limited to threshold architecture and does not follow him into the open coast.
 - No second person.
 
 ## 6. Baseline risks
 
-1. **Semantic correctness may still feel episodic.** Each section makes sense, but the relationship among camera moves may read as a set of good R3 shots rather than one authored visual law.
-2. Linen can become a generic “poetic MV” prop if its function is not explicitly limited.
-3. The transition from `算了` to long instrumental travel may be emotionally clear but not conceptually distinctive.
-4. FOLLOW -> OVERTAKE -> LEAD is production-ready experimental and must still prove identity/gait/editability on this song.
+1. All beats are individually readable, but the set may still feel like several well-designed R3 lyric illustrations rather than one authored visual law.
+2. `雨停 / 风过` can become straightforward illustrative atmosphere unless downstream staging creates a stronger relation to the protagonist.
+3. The camera relationships are differentiated, but their progression is not explicitly governed by a single thesis.
+4. Final release is attractive/stable but risks becoming a familiar “man + horizon” emotional ending.
 
-## 7. Baseline stage result
+## 7. Candidate result
 
 `R3_BASELINE_DIRECTOR_CANDIDATE = READY`
 
-This candidate is intentionally strong enough to be a fair baseline; it uses current R3 rules and validated camera knowledge without weakening the experiment by creating a straw-man comparison.
+This remains a deliberately strong baseline; it uses only current R3 workflow/rules and validated camera knowledge.
