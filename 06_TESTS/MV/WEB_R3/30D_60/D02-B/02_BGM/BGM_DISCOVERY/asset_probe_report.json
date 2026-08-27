@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "song_family": "有几次想你了",
+  "discovery_priority_used": "P1_VERIFIED_DOUYIN_WORK_ASSET_PROBE",
+  "probed_at": "2026-08-27T04:29:53.940956+00:00",
+  "samples": [
+    {
+      "label": "fire",
+      "expected_aweme_id": "7674212223707078833",
+      "returned_video_id": "v1e00fgi0000da04dtfog65rhjaf767g",
+      "work_identity_pass": false,
+      "expected_account": "火乐烁",
+      "returned_account": "火乐烁",
+      "title": "#有几次想你了林叙#歌曲有几次想你了 是找ta还是算了？#emo #破碎感",
+      "duration_ms": 15434,
+      "music_title": "@林叙（错位秋天已上线）创作的原声",
+      "music_author": "林叙（错位秋天已上线）",
+      "music_url": "https://sf11-cdn-tos.douyinstatic.com/obj/ies-music/7670104695834282815.mp3",
+      "music_cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_940a9c721a7e690e781d966fc32605d7.jpeg?from=327834062",
+      "parser_code": 200,
+      "parser_msg": "解析成功-esa",
+      "raw_response_sha256": "43264dbe91a7a7e852f437f4bc2c93d04193e9925f99270586e2a099648fb1fe"
+    },
+    {
+      "label": "xiang",
+      "expected_aweme_id": "7674136937083676665",
+      "returned_video_id": "v1e00fgi0000da002mfog65n446vc8pg",
+      "work_identity_pass": false,
+      "expected_account": "XIANGJISHI",
+      "returned_account": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+      "title": "有几次想你了 有几次忍住了 有几句想说的 都变成算了 #歌曲有几次想你了  #有几次想你了林叙  #星空  #星轨  #银河",
+      "duration_ms": 15467,
+      "music_title": "@林叙（错位秋天已上线）创作的原声",
+      "music_author": "林叙（错位秋天已上线）",
+      "music_url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7670104695834282815.mp3",
+      "music_cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_940a9c721a7e690e781d966fc32605d7.jpeg?from=327834062",
+      "parser_code": 200,
+      "parser_msg": "解析成功-esa",
+      "raw_response_sha256": "b5dcff13a2ca1315734857cd5860db005de23a1aa231903a814dfed7aae5877e"
+    }
+  ],
+  "all_work_identity_pass": false,
+  "same_music_url": false,
+  "same_music_title": true,
+  "same_music_author": true,
+  "decision": "PENDING_AUDIO_DOWNLOAD_AND_FINGERPRINT"
+}
