@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163141Z-HG03V2",
+  "command": "RECORD_HUMAN_GATE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "bc2f69c0a80f7bb8f20e65b37f2e509e362f14afc4f1b118dd054efd043316fb",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "bc5445f7f2e57ccb15123c60df13f283bf1f87b1086358c68f443ec533dea2bb",
+    "state_sha256": "d9185e79e750e341b61adeb43bde9921f3acdf697b3ade7f178c1109a3724604",
+    "transition_sequence": 5
+  },
+  "payload": {
+    "gate": "HG03",
+    "user_decision_text": "用户确认目前五张首帧图方案没问题，并明确要求进入下一步动态提示词阶段。",
+    "approved_artifacts": [
+      "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+      "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md"
+    ]
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Record the actual HG03 acceptance for the revised five-frame set after machine QA PASS."
+}
