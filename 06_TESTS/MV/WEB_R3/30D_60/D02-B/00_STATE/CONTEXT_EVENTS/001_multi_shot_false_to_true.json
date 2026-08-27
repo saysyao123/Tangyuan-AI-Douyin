@@ -1,0 +1,26 @@
+{
+  "receipt_version": "1.0",
+  "revision": 1,
+  "slot_id": "D02-B",
+  "key": "multi_shot",
+  "from": false,
+  "to": true,
+  "reason": "Actual Dynamic Source QA detects approximately 13 visible atoms across five 5-second sources. Formal Shot Library normalization is therefore required for the revised dense lyric-first edit.",
+  "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+  "previous_context_receipt": null,
+  "previous_context_receipt_sha256": null,
+  "state_before_sha256": "ecc98dec3834eecb8e62d696faa583daf6df5da3de7f3fdcb987a28d2a55d5ef",
+  "evidence_snapshot": [
+    {
+      "artifact_id": "DYNAMIC_SOURCE_QA",
+      "path": "07_DYNAMIC/DYNAMIC_SOURCE_QA.md",
+      "sha256": "1c27f039ce6aea912dd5c7ebf6392d28b361b1ae58ba62781b153c8be36f051d"
+    },
+    {
+      "artifact_id": "VISUAL_SOURCE_MAP",
+      "path": "07_DYNAMIC/VISUAL_SOURCE_MAP.csv",
+      "sha256": "59bf11d8e82f9b7256fbf3e4c77866fc0d302eeb1e35e9e9ab4fa18d8c581c48"
+    }
+  ],
+  "created_at": "2026-08-27T16:35:40Z"
+}

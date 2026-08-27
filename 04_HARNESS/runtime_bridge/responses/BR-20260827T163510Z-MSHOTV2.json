@@ -1,0 +1,208 @@
+{
+  "command": "UPDATE_CONTEXT",
+  "completed_at": "2026-08-27T16:35:40Z",
+  "error": null,
+  "execution": {
+    "command": "UPDATE_CONTEXT",
+    "controller_payload": {
+      "context_receipt": "00_STATE/CONTEXT_EVENTS/001_multi_shot_false_to_true.json",
+      "from": false,
+      "key": "multi_shot",
+      "ok": true,
+      "to": true,
+      "verified": {
+        "checked_context_receipts": [
+          "00_STATE/CONTEXT_EVENTS/001_multi_shot_false_to_true.json"
+        ],
+        "checked_transition_receipts": [
+          "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+          "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+          "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+          "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+          "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+          "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+          "00_STATE/TRANSITIONS/006_S05_DIRECTOR_PLAN_LOCKED__S06_HG03_FIRST_FRAMES_LOCKED.json",
+          "00_STATE/TRANSITIONS/007_S06_HG03_FIRST_FRAMES_LOCKED__S07_DYNAMIC_PROMPT_SET_READY.json",
+          "00_STATE/TRANSITIONS/008_S07_DYNAMIC_PROMPT_SET_READY__S08_DYNAMIC_SOURCE_QA_LOCKED.json"
+        ],
+        "context": {
+          "canonical_v2": true,
+          "multi_shot": true,
+          "program_30d60": true,
+          "web": true
+        },
+        "context_revision": 1,
+        "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+        "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+        "highest_contiguous_valid_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+        "ok": true,
+        "slot_id": "D02-B",
+        "transition_sequence": 8
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 1,
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "5cbe2adc45ca27e98de201d590273c7938d529c318c7b751a2ec63580caa8390",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "3a215108f5b40d8987c1ff842b703363941d3d8a3aa851735be94704dac6000b",
+    "state_sha256": "3decf14e836b5ff55d359a5003743405ff7a41582ed8fda33347436b035b0d20",
+    "transition_sequence": 8
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_source_normalization.md",
+      "04_HARNESS/rules/mv_web_source_roughcut.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "NORMALIZE_EDIT_SOURCES",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "next_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_source_normalization.md",
+      "04_HARNESS/rules/mv_web_source_roughcut.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "NORMALIZE_EDIT_SOURCES",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "next_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T163510Z-MSHOTV2",
+  "request_sha256": "c462e43ef8fd4a790cf9d3c261ab082e05d7c0053cc67fa2ce32120b89af1a99",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33094016400",
+    "github_source_sha": "35071962529a9649ba26883609986be8dc8b1e6b"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
