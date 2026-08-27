@@ -1,0 +1,14 @@
+atom_id,source_id,source_start,source_end,visual_role,lyric_target,edit_value
+A01,H-S01,0.00,2.63,approach toward camera,L01 有几次想你了,HIGH
+A02,H-S01,2.63,3.38,hand/linen boundary detail,L02 有几次忍住了,HIGH
+A03,H-S01,3.38,5.04,restrained side relation,L02 有几次忍住了,HIGH
+A04,H-S02,0.00,3.04,held almost-speaking relation,L03 有几句想说的,HIGH
+A05,H-S02,3.04,5.04,turn-away withdrawal,L04 都变成算了,HIGH
+A06,H-S03,0.00,2.33,post-rain wet-world travel,L05 有几场雨停了,HIGH
+A07,H-S03,2.33,3.42,foot/wet-stone detail,L05 有几场雨停了,HIGH
+A08,H-S03,3.42,5.04,warmer-light continuation,L05 transition / time passes,MEDIUM_HIGH
+A09,H-S04,0.00,3.38,gust crosses person and linen,L06 有几阵风过了,HIGH
+A10,H-S04,3.38,5.04,linen wind residue / person recedes,L06 有几阵风过了,HIGH
+A11,H-S05,0.00,1.46,body leaves while hand still holds,L07 有多舍不得,HIGH
+A12,H-S05,1.46,3.38,fingers release linen,L07 也该放下了,VERY_HIGH
+A13,H-S05,3.38,5.04,world opens / camera stops pursuing,L07 release + audio tail,VERY_HIGH
