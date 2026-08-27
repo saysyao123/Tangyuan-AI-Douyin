@@ -1,0 +1,229 @@
+name: R3 MV Audio Timeline Finalizer
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/runtime_executor/finalize_requests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: r3-mv-audio-timeline-finalizer-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  finalize-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ensure media dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg >/dev/null
+          fi
+
+      - name: Resolve exactly one immutable finalize request
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t REQS < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^04_HARNESS/runtime_executor/finalize_requests/.*\.json$' || true)
+          if [ "${#REQS[@]}" -ne 1 ]; then
+            echo "Expected exactly one finalize request in triggering commit, got ${#REQS[@]}" >&2
+            printf '%s\n' "${REQS[@]:-}" >&2
+            exit 2
+          fi
+          echo "REQUEST_PATH=${REQS[0]}" >> "$GITHUB_ENV"
+
+      - name: Validate finalize request against Canonical S02 truth
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          req = json.loads(Path(os.environ['REQUEST_PATH']).read_text(encoding='utf-8'))
+          required = [
+              'schema_version','request_id','slot_id','stage',
+              'candidate_workflow_run_id','candidate_artifact_name',
+              'audio_workflow_run_id','audio_artifact_name','audio_file_name','audio_sha256',
+              'expected_line_bounds','ground_truth_qa','anchors','music_events'
+          ]
+          missing=[k for k in required if k not in req]
+          if missing: raise SystemExit(f'missing finalize request fields: {missing}')
+          slot=req['slot_id']
+          if not re.fullmatch(r'D\d{2}-[A-Z]', slot): raise SystemExit('invalid slot_id')
+          if req['stage']!='S02_HG02_BGM_LOCKED': raise SystemExit('finalizer request stage must be S02_HG02_BGM_LOCKED')
+          root=Path('06_TESTS/MV/WEB_R3/30D_60')/slot
+          state=json.loads((root/'00_STATE/CURRENT_STATE.json').read_text(encoding='utf-8'))
+          if state.get('current_stage')!='S02_HG02_BGM_LOCKED': raise SystemExit(f"canonical state is {state.get('current_stage')}, not S02")
+          bgm=json.loads((root/'02_BGM/BGM_CANDIDATE_PACKAGE.json').read_text(encoding='utf-8'))
+          if bgm.get('selected_audio_sha256')!=req['audio_sha256']: raise SystemExit('finalize request audio SHA disagrees with BGM lock package')
+          qa=req['ground_truth_qa']
+          if not isinstance(qa,dict) or qa.get('status')!='PASS': raise SystemExit('ground_truth_qa.status must be PASS before finalization')
+          if not isinstance(req['expected_line_bounds'],list) or not req['expected_line_bounds']: raise SystemExit('expected_line_bounds must be non-empty')
+          if not isinstance(req['anchors'],list) or not req['anchors']: raise SystemExit('anchors must be non-empty')
+          if not isinstance(req['music_events'],list) or not req['music_events']: raise SystemExit('music_events must be non-empty')
+          Path('/tmp/finalize_request.json').write_text(json.dumps(req,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({'request_id':req['request_id'],'slot_id':slot,'qa_status':qa['status'],'anchors':len(req['anchors']),'music_events':len(req['music_events'])},ensure_ascii=False,indent=2))
+          PY
+
+      - name: Download reviewed alignment candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          RUN_ID="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['candidate_workflow_run_id'])")"
+          ARTIFACT="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['candidate_artifact_name'])")"
+          rm -rf /tmp/pkg && mkdir -p /tmp/pkg
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT" --dir /tmp/pkg
+          test -f /tmp/pkg/line_timeline.candidate.csv
+          test -f /tmp/pkg/alignment_provenance.json
+          test -f /tmp/pkg/executor_report.json
+
+      - name: Download exact HG02-selected audio and verify SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          RUN_ID="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['audio_workflow_run_id'])")"
+          ARTIFACT="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['audio_artifact_name'])")"
+          FILE="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['audio_file_name'])")"
+          EXPECTED="$(python -c "import json;print(json.load(open('/tmp/finalize_request.json'))['audio_sha256'])")"
+          rm -rf /tmp/audio && mkdir -p /tmp/audio
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name "$ARTIFACT" --dir /tmp/audio
+          AUDIO="/tmp/audio/$FILE"
+          test -f "$AUDIO"
+          GOT="$(sha256sum "$AUDIO" | awk '{print $1}')"
+          test "$GOT" = "$EXPECTED"
+          echo "AUDIO=$AUDIO" >> "$GITHUB_ENV"
+
+      - name: Verify reviewed bounds and build editor-facing QA assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import csv, json, subprocess, sys
+          from pathlib import Path
+
+          pkg=Path('/tmp/pkg')
+          req=json.loads(Path('/tmp/finalize_request.json').read_text(encoding='utf-8'))
+          report=json.loads((pkg/'executor_report.json').read_text(encoding='utf-8'))
+          if report.get('slot_id')!=req['slot_id']: raise SystemExit('candidate slot_id mismatch')
+          if report.get('audio_sha256')!=req['audio_sha256']: raise SystemExit('candidate audio SHA mismatch')
+
+          with (pkg/'line_timeline.candidate.csv').open('r',encoding='utf-8-sig',newline='') as f:
+              rows=list(csv.DictReader(f))
+          exp=req['expected_line_bounds']
+          if len(rows)!=len(exp): raise SystemExit(f'candidate/review line count mismatch {len(rows)} != {len(exp)}')
+          for got,want in zip(rows,exp):
+              if got['line_id']!=want['line_id'] or got['lyric'].strip()!=want['lyric'].strip():
+                  raise SystemExit(f"candidate/review identity mismatch at {want['line_id']}")
+              for key,csvkey in [('start_s','clip_start_s'),('end_s','clip_end_s')]:
+                  if abs(float(got[csvkey])-float(want[key]))>0.005:
+                      raise SystemExit(f"candidate/review {key} mismatch {want['line_id']}: {got[csvkey]} != {want[key]}")
+
+          qa=req['ground_truth_qa']
+          note=qa.get('summary','Ground-truth QA PASS')
+          subprocess.run([sys.executable,'04_HARNESS/tools/mv_audio_timeline/package_tool.py','mark-qa','--package',str(pkg),'--pass-qa','--note',note],check=True)
+          subprocess.run([sys.executable,'04_HARNESS/tools/mv_audio_timeline/package_tool.py','export-srt','--package',str(pkg)],check=True)
+
+          anchor_fields=['anchor_id','line_id','phrase','start_s','end_s','qa_status','evidence','purpose']
+          with (pkg/'anchor_words.csv').open('w',encoding='utf-8',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=anchor_fields); w.writeheader()
+              for a in req['anchors']:
+                  row={k:a.get(k,'') for k in anchor_fields}; row['qa_status']='PASS'; w.writerow(row)
+
+          event_fields=['event_id','time_s','type','description','qa_status','evidence','purpose']
+          with (pkg/'music_events.csv').open('w',encoding='utf-8',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=event_fields); w.writeheader()
+              for e in req['music_events']:
+                  row={k:e.get(k,'') for k in event_fields}; row['qa_status']='PASS'; w.writerow(row)
+
+          lines=[]
+          lines.append('# D02-B Audio Timeline Alignment QA Report')
+          lines.append('')
+          lines.append(f"- Status: **{qa['status']}**")
+          lines.append(f"- Slot: `{req['slot_id']}`")
+          lines.append(f"- Locked audio SHA-256: `{req['audio_sha256']}`")
+          lines.append(f"- Candidate workflow run: `{req['candidate_workflow_run_id']}`")
+          lines.append(f"- Primary evidence: `{qa.get('primary_evidence','ASR_FORCED_ALIGNMENT')}`")
+          lines.append(f"- Tool/model: {qa.get('tool_model','')}")
+          lines.append('')
+          lines.append('## Ground-truth audit')
+          lines.append('')
+          lines.append(qa.get('summary',''))
+          lines.append('')
+          lines.append('| Line | Lyric | Start | End | QA |')
+          lines.append('|---|---|---:|---:|---|')
+          for x in exp:
+              lines.append(f"| {x['line_id']} | {x['lyric']} | {float(x['start_s']):.3f}s | {float(x['end_s']):.3f}s | PASS |")
+          lines.append('')
+          lines.append('## Raw-evidence checks')
+          lines.append('')
+          for item in qa.get('checks',[]): lines.append(f'- PASS — {item}')
+          lines.append('')
+          lines.append('## Warnings / unmatched / repeated occurrence')
+          lines.append('')
+          for item in qa.get('warnings',[]) or ['No alignment warnings; no unmatched lyric lines; no repeated-occurrence ambiguity in this four-line excerpt.']:
+              lines.append(f'- {item}')
+          lines.append('')
+          lines.append('## Music-event analysis note')
+          lines.append('')
+          lines.append(qa.get('music_event_note',''))
+          lines.append('')
+          lines.append('## Gate conclusion')
+          lines.append('')
+          lines.append('`ALIGNMENT_GROUND_TRUTH_QA_PASS = YES`')
+          lines.append('')
+          lines.append('This report validates timing truth against the exact HG02-locked audio identity. Acoustic onset analysis is supporting evidence for the music-event clock only and does not override lyric forced-alignment truth.')
+          (pkg/'alignment_qa_report.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+          (pkg/'finalize_request.json').write_text(json.dumps(req,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Seal QA provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python 04_HARNESS/tools/mv_audio_timeline/final_gate.py seal-qa --package /tmp/pkg
+
+      - name: Run Canonical timing core and complete-package Final Gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python 04_HARNESS/tools/mv_audio_timeline/final_gate.py validate \
+            --package /tmp/pkg --audio "$AUDIO" --write-manifest | tee /tmp/final_gate_result.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result=json.loads(Path('/tmp/final_gate_result.json').read_text(encoding='utf-8'))
+          if result.get('pass') is not True or result.get('manifest')!='package_manifest.json':
+              raise SystemExit('Final Gate did not PASS+write manifest')
+          manifest=json.loads(Path('/tmp/pkg/package_manifest.json').read_text(encoding='utf-8'))
+          if manifest.get('AUDIO_TIMELINE_PACKAGE_LOCKED') is not True:
+              raise SystemExit('package manifest is not LOCKED')
+          Path('/tmp/pkg/final_gate_result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Upload locked Audio Timeline Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: mv-audio-timeline-final-${{ github.run_id }}
+          path: /tmp/pkg
+          retention-days: 7
+          if-no-files-found: error
