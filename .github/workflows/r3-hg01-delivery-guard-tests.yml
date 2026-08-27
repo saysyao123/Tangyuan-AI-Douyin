@@ -27,27 +27,57 @@ jobs:
       - name: Registry integrity
         run: python 04_HARNESS/tools/mv_runtime_gate.py registry-check
 
-      - name: Live D02-B reset must remain blocked before database rebuild
+      - name: Synthetic unreconstructed HG01 must remain blocked
         shell: bash
         run: |
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-core-negative
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          candidate_path = Path('/tmp/D02-B-core-negative/01_SONG/SONG_CANDIDATE_SET.json')
+          data = json.loads(candidate_path.read_text(encoding='utf-8'))
+          data['status'] = 'HG01_CORE_DATABASE_REBUILD_REQUIRED'
+          data['formal_candidates'] = []
+          guard = data['evidence_delivery_guard']
+          guard['all_candidates_min_direct_works_2'] = False
+          guard['all_candidates_independent_accounts_2plus'] = False
+          guard['all_direct_links_landing_work_verified'] = False
+          guard['core_account_coverage_reported'] = False
+          data['delivery_integrity']['all_delivery_links_landing_work_verified'] = False
+          candidate_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          pack_path = Path('/tmp/D02-B-core-negative/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md')
+          text = pack_path.read_text(encoding='utf-8')
+          for marker in [
+              'HG01_EVIDENCE_DELIVERY_PASS = YES',
+              'DIRECT_DOUYIN_EVIDENCE_PACK_READY = YES',
+              'CORE_ACCOUNT_COVERAGE_REPORTED = YES',
+              'ALL_DIRECT_LINKS_LANDING_WORK_VERIFIED = YES',
+          ]:
+              text = text.replace(marker, marker.replace('YES', 'NO'))
+          pack_path.write_text(text, encoding='utf-8')
+          PY
+
           set +e
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --slot-root /tmp/D02-B-core-negative \
             --artifact SONG_CANDIDATE_SET \
-            > /tmp/hg01-live-candidate.json
+            > /tmp/hg01-core-negative-candidate.json
           candidate_code=$?
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --slot-root /tmp/D02-B-core-negative \
             --artifact HG01_CANDIDATE_EVIDENCE_PACK \
-            > /tmp/hg01-live-pack.json
+            > /tmp/hg01-core-negative-pack.json
           pack_code=$?
           set -e
-          cat /tmp/hg01-live-candidate.json
-          cat /tmp/hg01-live-pack.json
+          cat /tmp/hg01-core-negative-candidate.json
+          cat /tmp/hg01-core-negative-pack.json
           if [ "$candidate_code" -ne 1 ] || [ "$pack_code" -ne 1 ]; then
-            echo "Expected reset D02-B HG01 artifacts to remain blocked until core database candidate rebuild"
+            echo "Expected synthetic unreconstructed HG01 artifacts to be rejected"
             exit 1
           fi
+          echo 'PASS: unreconstructed core-database HG01 cannot masquerade as ready'
 
       - name: Core database policy must be explicit
         shell: bash
@@ -58,51 +88,34 @@ jobs:
           grep -q 'broad web-wide song search' 04_HARNESS/rules/mv_stage_entry_checklist.md
           echo 'PASS: HG01 discovery strategy is core-database-first and broad web song search is blocked as default'
 
-      - name: Synthetic core-database HG01 must pass canonical RECORD ADVANCE VERIFY chain
+      - name: Live D02-B rebuilt HG01 must pass canonical validation path
         shell: bash
         run: |
-          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-core-positive
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --artifact SONG_CANDIDATE_SET
+          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --artifact HG01_CANDIDATE_EVIDENCE_PACK
+
           python - <<'PY'
           import json
           from pathlib import Path
-
-          candidate_path = Path('/tmp/D02-B-core-positive/01_SONG/SONG_CANDIDATE_SET.json')
-          data = json.loads(candidate_path.read_text(encoding='utf-8'))
-          data['status'] = 'HG01_EVIDENCE_DELIVERY_PASS'
+          data = json.loads(Path('06_TESTS/MV/WEB_R3/30D_60/D02-B/01_SONG/SONG_CANDIDATE_SET.json').read_text(encoding='utf-8'))
+          assert data['status'] == 'HG01_EVIDENCE_DELIVERY_PASS'
           assert data['selection_policy']['source_mode'] == 'CORE_BENCHMARK_DATABASE'
           assert data['selection_policy']['broad_web_song_search'] is False
-          data['formal_candidates'] = [
-              {
-                  'candidate_id': 'A',
-                  'song_family': 'SYNTHETIC_CORE_REPEAT',
-                  'database_sources': [
-                      {'account': 'CORE_ACCOUNT_1', 'work_url': 'https://www.douyin.com/video/111'},
-                      {'account': 'CORE_ACCOUNT_2', 'work_url': 'https://www.douyin.com/video/222'}
-                  ]
-              }
-          ]
-          data['evidence_delivery_guard'] = {
-              'evidence_pack_path': '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md',
-              'all_candidates_min_direct_works_2': True,
-              'all_candidates_independent_accounts_2plus': True,
-              'all_direct_links_landing_work_verified': True,
-              'core_account_coverage_reported': True,
-              'no_external_audio_substitution': True,
-              'user_gate_delivery_mode': 'DIRECT_WORKS_FIRST'
-          }
-          data['delivery_integrity']['all_delivery_links_landing_work_verified'] = True
-          candidate_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-
-          pack_path = Path('/tmp/D02-B-core-positive/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md')
-          pack_path.write_text('''# SYNTHETIC CORE DATABASE HG01 PACK\n\nSOURCE_MODE = CORE_BENCHMARK_DATABASE\nDELIVERY_MODE = CORE_CREATOR_MV_DIRECT\n\nCandidate A: SYNTHETIC_CORE_REPEAT\n- CORE_ACCOUNT_1 corresponding MV: https://www.douyin.com/video/111\n- CORE_ACCOUNT_2 corresponding MV: https://www.douyin.com/video/222\n\nLANDING_WORK identity verified for delivered links.\n\nHG01_EVIDENCE_DELIVERY_PASS = YES\nDIRECT_DOUYIN_EVIDENCE_PACK_READY = YES\nCORE_ACCOUNT_COVERAGE_REPORTED = YES\nALL_DIRECT_LINKS_LANDING_WORK_VERIFIED = YES\nNO_EXTERNAL_AUDIO_LINK_SUBSTITUTION = YES\nUSER_GATE_DELIVERY_MODE = DIRECT_WORKS_FIRST\nEVIDENCE_LOCATION = LANDING_WORK\n''', encoding='utf-8')
+          assert len(data['formal_candidates']) >= 1
+          assert data['delivery_integrity']['all_delivery_links_landing_work_verified'] is True
+          for candidate in data['formal_candidates']:
+              assert len(candidate['works']) >= 1
+              for work in candidate['works']:
+                  assert work['aweme_id'] in work['work_url'], work
+                  assert work['identity_check'].startswith('PASS_'), work
+          print('PASS: live D02-B candidate set is core-database-driven and link-mapped')
           PY
 
-          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root /tmp/D02-B-core-positive \
-            --artifact SONG_CANDIDATE_SET
-          python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root /tmp/D02-B-core-positive \
-            --artifact HG01_CANDIDATE_EVIDENCE_PACK
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-core-positive
 
           python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
             --slot-root /tmp/D02-B-core-positive \
@@ -133,5 +146,5 @@ jobs:
           assert advance['ok'] is True, advance
           assert verify['ok'] is True, verify
           assert verify['current_stage'] == 'S01_HG01_SONG_LOCKED', verify
-          print('PASS: core-database HG01 can complete canonical RECORD -> ADVANCE -> VERIFY')
+          print('PASS: rebuilt core-database HG01 supports canonical RECORD -> ADVANCE -> VERIFY without mutating live slot')
           PY
