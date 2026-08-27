@@ -1,70 +1,175 @@
 {
-  "schema_version": "1.3",
-  "status": "HG01_CORE_DATABASE_REBUILD_REQUIRED",
+  "schema_version": "1.4",
+  "status": "HG01_EVIDENCE_DELIVERY_PASS",
   "created_at": "2026-08-27T03:25:00Z",
-  "updated_at": "2026-08-27T11:55:00+08:00",
+  "updated_at": "2026-08-27T12:10:00+08:00",
   "slot_id": "D02-B",
   "lane": "S",
   "experiment": {
     "branch": "test/mv-oss-optimization-r1",
     "experiment_id": "OSS_OPT_R1",
-    "purpose": "Lock a common song/audio truth before later OSS director/generation optimization while preserving the original R3 song-selection strategy.",
-    "oss_source_integration_status": "PENDING_USER_SOURCE",
-    "visual_design_started": false
+    "source_project": "penposs/mvmaker-h3-skills@796797030275fe57afaba736771e8510c848799d",
+    "visual_design_started": false,
+    "note": "OSS source is locked for later Director-stage A/B only; it does not influence HG01 song discovery."
   },
   "selection_policy": {
     "source_mode": "CORE_BENCHMARK_DATABASE",
     "default_path": "CORE_BENCHMARK_ACCOUNTS -> DATA_CENTER -> SONG_FAMILY_RANKING -> HG01",
     "broad_web_song_search": false,
-    "supplemental_accounts_allowed": true,
-    "supplemental_rule": "Add a useful account to the monitored database when warranted; do not rebuild each candidate by web-wide search.",
+    "database_path": "06_TESTS/MV/WEB_R3/database/data_center/",
+    "database_refresh_cadence_days": 15,
     "candidate_selection_priorities": [
-      "cross-account repeat or strong value signal inside monitored benchmark database",
+      "core-account repeat/value signal",
       "song itself is compelling",
-      "freshness inside observed database window",
       "audio-family consistency when observable",
       "visual/lyric fit for MV",
       "avoid already-used 30D60 songs",
       "avoid excessive saturation"
     ],
-    "user_delivery": "song + short database reason + corresponding creator MV links"
+    "excluded_already_used_song_family": "如果风会替我说话",
+    "user_delivery": "song + short database reason + corresponding core creator MV links"
   },
-  "formal_candidates": [],
-  "superseded_test_candidates": [
+  "formal_candidates": [
     {
-      "song_family": "雨后轻风有香",
-      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
-      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
+      "candidate_id": "A",
+      "song_family": "有几次想你了",
+      "database_grade": "CONFIRMED_REPEAT",
+      "distinct_core_accounts": 2,
+      "best_72h_distinct_accounts": 2,
+      "audio_version_consistency": "HIGH",
+      "short_reason": "核心账号火乐烁与XIANGJISHI在同一时间窗口重复使用，且观察到同一林叙原声 family；Hook 清楚，适合短情绪 MV。",
+      "works": [
+        {
+          "account": "火乐烁",
+          "aweme_id": "7674212223707078833",
+          "work_url": "https://www.douyin.com/video/7674212223707078833",
+          "create_time": "2026-08-15 19:02:51",
+          "caption": "#有几次想你了林叙#歌曲有几次想你了 是找ta还是算了？#emo #破碎感",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        },
+        {
+          "account": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+          "aweme_id": "7674136937083676665",
+          "work_url": "https://www.douyin.com/video/7674136937083676665",
+          "create_time": "2026-08-15 14:10:43",
+          "caption": "有几次想你了 有几次忍住了 有几句想说的 都变成算了 #歌曲有几次想你了 #有几次想你了林叙",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        }
+      ]
     },
     {
-      "song_family": "甲乙丙丁",
-      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
-      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
+      "candidate_id": "B",
+      "song_family": "若爱有尽头",
+      "database_grade": "CONFIRMED_REPEAT",
+      "distinct_core_accounts": 2,
+      "best_72h_distinct_accounts": 2,
+      "visual_overlap_accounts": 2,
+      "audio_version_consistency": "MEDIUM_HIGH",
+      "short_reason": "XIANGJISHI与乐青春重复使用，两个视觉型核心账号同时收录；歌词 Hook 强，视觉空间明确。",
+      "works": [
+        {
+          "account": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+          "aweme_id": "7673820758652768945",
+          "work_url": "https://www.douyin.com/video/7673820758652768945",
+          "create_time": "2026-08-14 17:43:48",
+          "caption": "如果爱有尽头 怎么想念没有 #歌曲若爱有尽头 #星空 #星轨 #银河",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        },
+        {
+          "account": "乐 ♩青春",
+          "aweme_id": "7672790854586937178",
+          "work_url": "https://www.douyin.com/video/7672790854586937178",
+          "create_time": "2026-08-11 23:07:14",
+          "caption": "若爱有尽头 如果爱有尽头！怎么想念没有！#音乐推荐 #歌曲若爱有尽头",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        }
+      ]
     },
     {
-      "song_family": "差一步美满",
-      "previous_role": "EXTERNAL_RADAR_TEST_CANDIDATE",
-      "reason_superseded": "Candidate was promoted primarily through public web evidence rather than the restored core benchmark database strategy."
+      "candidate_id": "C",
+      "song_family": "我救自己于人间水火",
+      "database_grade": "CONFIRMED_REPEAT",
+      "distinct_core_accounts": 2,
+      "best_72h_distinct_accounts": 2,
+      "visual_overlap_accounts": 2,
+      "audio_version_consistency": "LOW_MEDIUM",
+      "short_reason": "Aura与XIANGJISHI两个视觉型核心账号都使用，歌词与治愈/自救方向高度匹配；后续 exact audio 版本需要在 HG02 前重锁。",
+      "works": [
+        {
+          "account": "Aura",
+          "aweme_id": "7673460363010018611",
+          "work_url": "https://www.douyin.com/video/7673460363010018611",
+          "create_time": "2026-08-13 18:25:19",
+          "caption": "你是我花开那的一朵 祝你永远会记得我.#冰岛 #歌曲我救自己于人间水火 #inmyfeeling",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        },
+        {
+          "account": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+          "aweme_id": "7673442358406957285",
+          "work_url": "https://www.douyin.com/video/7673442358406957285",
+          "create_time": "2026-08-13 17:15:23",
+          "caption": "我救自己于人间水火 我爱自己于苦难生活 #歌曲我救自己于人间水火 #治愈 #氛围感",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        }
+      ]
+    },
+    {
+      "candidate_id": "D",
+      "song_family": "Summer Love 爱在盛夏",
+      "database_grade": "CONFIRMED_REPEAT",
+      "distinct_core_accounts": 2,
+      "best_72h_distinct_accounts": 2,
+      "visual_overlap_accounts": 2,
+      "audio_version_consistency": "HIGH",
+      "short_reason": "Aura与XIANGJISHI重复使用且为同一三棱镜原声 family；画面适配稳定，但当前已接近夏季尾声。",
+      "works": [
+        {
+          "account": "Aura",
+          "aweme_id": "7673385877871136042",
+          "work_url": "https://www.douyin.com/video/7673385877871136042",
+          "create_time": "2026-08-13 17:00:00",
+          "caption": "与我坠入爱河吧 在这个盛夏.#海 #夏日 #歌曲summerlove爱在盛夏 #三棱镜 #inmyfeeling",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        },
+        {
+          "account": "𝑿𝑰𝑨𝑵𝑮𝑱𝑰𝑺𝑯𝑰",
+          "aweme_id": "7673068083896814202",
+          "work_url": "https://www.douyin.com/video/7673068083896814202",
+          "create_time": "2026-08-12 17:03:01",
+          "caption": "与我坠入爱河吧 在这个盛夏 #歌曲summerlove爱在盛夏 #三棱镜 #自由 #夏天",
+          "identity_check": "PASS_DB_AWEME_URL_CAPTION_MATCH"
+        }
+      ]
     }
   ],
   "delivery_integrity": {
     "evidence_pack_path": "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
     "delivery_strategy": "CORE_CREATOR_MV_DIRECT",
     "landing_work_identity_check_required": true,
-    "all_delivery_links_landing_work_verified": false,
-    "legacy_runtime_user_gate_delivery_mode": "DIRECT_WORKS_FIRST",
-    "note": "Landing-work verification is retained only as a link-integrity guard; it must not drive song discovery or ranking."
+    "all_delivery_links_landing_work_verified": true,
+    "verification_method": "DATA_CENTER_AWEME_ID_EQUALS_WORK_URL_ID_AND_CAPTION_SUPPORTS_SONG_FAMILY",
+    "note": "Link integrity only; it does not drive discovery or ranking."
+  },
+  "evidence_delivery_guard": {
+    "evidence_pack_path": "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
+    "all_candidates_min_direct_works_2": true,
+    "all_candidates_independent_accounts_2plus": true,
+    "all_direct_links_landing_work_verified": true,
+    "core_account_coverage_reported": true,
+    "no_external_audio_substitution": true,
+    "user_gate_delivery_mode": "DIRECT_WORKS_FIRST",
+    "compatibility_note": "Legacy Runtime field retained; user-facing strategy is CORE_CREATOR_MV_DIRECT."
   },
   "human_gate": {
     "gate": "HG01",
-    "status": "AWAITING_CORE_DATABASE_CANDIDATE_REBUILD",
+    "status": "AWAITING_HUMAN_DECISION_AFTER_CORE_CREATOR_MV_REVIEW",
     "selected_candidate_id": null,
     "selected_song_family": null
   },
   "provenance": {
-    "primary_data_center": "06_TESTS/MV/WEB_R3/database/data_center/",
-    "prior_r3_reference": "06_TESTS/MV/WEB_R3/D02_HG01_CANDIDATE_EVIDENCE_PACK_v1.md",
-    "hg01_rule": "04_HARNESS/rules/mv_human_gates.md",
-    "strategy_correction": "06_TESTS/MV/OSS_OPT_R1/HG01_GATE_HARDENING_v1.md"
+    "song_repeat_ranking": "06_TESTS/MV/WEB_R3/database/data_center/song_repeat_candidates.csv",
+    "direct_work_database": "06_TESTS/MV/WEB_R3/database/data_center/direct_douyin_evidence.json",
+    "core_coverage": "06_TESTS/MV/WEB_R3/database/data_center/coverage_latest.csv",
+    "prior_r3_reference": "06_TESTS/MV/WEB_R3/D02_HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
   }
 }
