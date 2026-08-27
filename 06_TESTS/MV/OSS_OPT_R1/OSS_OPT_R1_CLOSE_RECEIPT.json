@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "experiment": "OSS_OPT_R1",
+  "status": "PASS",
+  "closed_at_project_date": "2026-08-28",
+  "experiment_branch": "test/mv-oss-optimization-r1",
+  "stable_baseline_branch": "test/mv-web-r3",
+  "stable_branch_modified_by_closeout": false,
+  "source": {
+    "repository": "penposs/mvmaker-h3-skills",
+    "commit": "796797030275fe57afaba736771e8510c848799d"
+  },
+  "test_slot": {
+    "slot_id": "D02-B",
+    "lane": "S",
+    "song": "有几次想你了",
+    "runtime_stage": "S16_RELEASE_PACKAGE_READY",
+    "runtime_state_token": "RELEASE_READY",
+    "transition_sequence": 16,
+    "final_render": "D02-B_有几次想你了_最终候选_字幕版_v1.mp4",
+    "final_render_sha256": "7f77a41a68db47d4f7992cb77161c86414eeb0fd1cf8233322956b4025bf43d9",
+    "human_gates": {
+      "HG01": "PASS",
+      "HG02": "PASS",
+      "HG03": "PASS",
+      "HG04": "PASS",
+      "HG05": "PASS"
+    }
+  },
+  "evidence": [
+    "RESULT_MATRIX.md",
+    "SOURCE_INTAKE.md",
+    "05_DIRECTOR/AB/AB_EVALUATION.md via D02-B canonical slot",
+    "PROCESS_AUDIT/END_TO_END_EXECUTION_AUDIT_v1.md",
+    "PROCESS_AUDIT/OSS_OPT_R1_CLOSE_AUDIT_v1.md",
+    "D02-B/06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md",
+    "D02-B/07_DYNAMIC/DYNAMIC_SOURCE_QA.md",
+    "D02-B/08_NORMALIZATION/SHOT_LIBRARY_QA.md",
+    "D02-B/09_EDIT/EDIT_PREVIEW_QA.md",
+    "D02-B/10_SUBTITLE/SUBTITLE_IMPLEMENTATION_QA.md",
+    "D02-B/11_FINAL/FINAL_TECH_QA.md",
+    "D02-B/11_FINAL/HG05_PASS_RECEIPT.json",
+    "D02-B/12_RELEASE/RELEASE_PACKAGE.md",
+    "D02-B/00_STATE/TRANSITIONS/016_S15_HG05_FINAL_ACCEPTANCE_PASS__S16_RELEASE_PACKAGE_READY.json"
+  ],
+  "decisions": {
+    "oss_director_layer": "PASS_WITH_SELECTIVE_PROMOTE_KNOWLEDGE",
+    "executor_first_routing": "PROMOTE_RUNTIME_CANDIDATE",
+    "audio_timeline_p0_p1_p2_route": "PROMOTE_RULE_CANDIDATE",
+    "why_cut_here_hard_rule": "KEEP_AS_KNOWLEDGE_PENDING_ANOTHER_REAL_MV",
+    "h3_10_15s_container": "REJECT_FOR_R3",
+    "h3_four_panel_picture1": "REJECT_FOR_R3",
+    "runninghub_h3_orchestration": "REJECT_FOR_CURRENT_WEB_SEEDANCE_PATH"
+  },
+  "publish_boundary": {
+    "published": false,
+    "tracker_publish_sync_performed": false,
+    "s17_advanced": false,
+    "reason": "No real-world publish confirmation yet."
+  },
+  "stable_promotion": {
+    "performed": false,
+    "requires_separate_explicit_review": true,
+    "requires_regression_and_deployment_receipt": true
+  },
+  "verdict": "CLOSE_PASS_SELECTIVE_VALUE_PROVEN_NO_STABLE_DEPLOYMENT_YET"
+}
