@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T145400Z-S08ADV1",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S07_DYNAMIC_PROMPT_SET_READY",
+    "current_state_token": "DYNAMIC_PROMPT_SET_READY",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "0010098de8719a860b21990aead7400e4cddc91e9d644e2ac20d39c7144e88fd",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "955d7bb6bcc17d85169fd77a4aa05309fe06668fb85cf648f536253303ccbd2f",
+    "state_sha256": "810b1fe2df0041d16e42140db5aaff6f0bfdc1f2836fa7f7b77d5eafc7785b01",
+    "transition_sequence": 7
+  },
+  "payload": {"to": "S08_DYNAMIC_SOURCE_QA_LOCKED"},
+  "requested_by": "chatgpt_web",
+  "reason": "Four generated dynamic sources have been deeply reviewed; DYNAMIC_SOURCE_QA and VISUAL_SOURCE_MAP are durable. All sources are usable with trim/normalization and no regeneration is required."
+}
