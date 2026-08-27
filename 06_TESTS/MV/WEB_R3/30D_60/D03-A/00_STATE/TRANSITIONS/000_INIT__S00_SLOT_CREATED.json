@@ -1,0 +1,22 @@
+{
+  "receipt_version": "1.0",
+  "sequence": 0,
+  "slot_id": "D03-A",
+  "from_stage": null,
+  "to_stage": "S00_SLOT_CREATED",
+  "to_state_token": "SLOT_CREATED",
+  "previous_receipt_sha256": null,
+  "state_before_sha256": null,
+  "evidence_validation": {
+    "ok": true,
+    "mode": "slot_init"
+  },
+  "evidence_snapshot": [
+    {
+      "artifact_id": "SLOT_MANIFEST",
+      "path": "00_STATE/SLOT_MANIFEST.json",
+      "sha256": "92b9f7b11cceed36c2e69e2bf8c75947341a71b1f4c8df694b1e562839c34b12"
+    }
+  ],
+  "created_at": "2026-08-27T17:41:39Z"
+}
