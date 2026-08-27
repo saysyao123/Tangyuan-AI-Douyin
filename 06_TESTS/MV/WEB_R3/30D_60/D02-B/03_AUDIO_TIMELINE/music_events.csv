@@ -1,0 +1,12 @@
+event_id,time_s,type,description,qa_status,evidence,purpose
+M01,0.163,STRONG_ONSET,opening acoustic accent immediately before first lyric entry,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",optional opening movement/pickup cue
+M02,3.17,STRONG_ONSET,mid-vocal acoustic accent,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",optional internal cut or gesture accent
+M03,5.619,STRONG_ONSET,strong accent aligned closely with final lyric-line entry,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",final-line visual emphasis
+M04,6.983,VOCAL_RELEASE,end of final aligned lyric token,PASS,Xingyu alignment.json/SWLRC forced-alignment truth,semantic release boundary before instrumental continuation
+M05,7.767,POST_VOCAL_ONSET,first selected post-vocal instrumental accent,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",begin post-lyric visual continuation
+M06,8.44,STRONG_ONSET,post-vocal instrumental accent,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",optional picture-edit cut point
+M07,11.122,STRONG_ONSET,late instrumental buildup accent,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",visual escalation cue
+M08,12.214,ENERGY_PEAK,strongest detected onset-strength peak in the locked excerpt,PASS,"librosa 0.11.0 onset_strength maximum among selected peaks on locked SHA, sr=22050 hop=256",post-vocal visual peak candidate
+M09,13.398,STRONG_ONSET,late instrumental accent before fade zone,PASS,"librosa 0.11.0 onset_strength peak on locked SHA, sr=22050 hop=256",last optional accent before release
+M10,14.586,FADE_START,HG02 option-B 0.8-second soft tail fade begins,PASS,locked render transform: content_duration 15.386083s minus fade 0.8s,start visual release / avoid new semantic event after this point
+M11,15.386,CONTENT_END,locked content timeline end,PASS,audio_identity.timeline_duration_s=15.386083,hard editor timeline boundary
