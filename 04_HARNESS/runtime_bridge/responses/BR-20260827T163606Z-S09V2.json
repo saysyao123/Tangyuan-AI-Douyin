@@ -1,0 +1,516 @@
+{
+  "command": "ADVANCE",
+  "completed_at": "2026-08-27T16:36:31Z",
+  "error": "authoritative Runtime controller rejected the request",
+  "execution": {
+    "command": "ADVANCE",
+    "controller_payload": {
+      "details": {
+        "artifact_path_collisions": {},
+        "artifact_summary": {
+          "ambiguous_legacy_aliases": 0,
+          "checked": 21,
+          "failed": 1,
+          "legacy_aliases_used": 0,
+          "path_collisions": 0
+        },
+        "artifacts": {
+          "AUDIO_TIMELINE_MANIFEST": {
+            "artifact_id": "AUDIO_TIMELINE_MANIFEST",
+            "canonical_path": "03_AUDIO_TIMELINE/package_manifest.json",
+            "errors": [],
+            "ok": true,
+            "path": "03_AUDIO_TIMELINE/package_manifest.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "AUDIO_TIMELINE_QA": {
+            "artifact_id": "AUDIO_TIMELINE_QA",
+            "canonical_path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+            "errors": [],
+            "ok": true,
+            "path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "BGM_CANDIDATE_PACKAGE": {
+            "artifact_id": "BGM_CANDIDATE_PACKAGE",
+            "canonical_path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+            "errors": [],
+            "ok": true,
+            "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "DIRECTOR_BEAT_MAP": {
+            "artifact_id": "DIRECTOR_BEAT_MAP",
+            "canonical_path": "05_DIRECTOR/DIRECTOR_BEAT_MAP.md",
+            "errors": [],
+            "ok": true,
+            "path": "05_DIRECTOR/DIRECTOR_BEAT_MAP.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "DIRECTOR_PLAN": {
+            "artifact_id": "DIRECTOR_PLAN",
+            "canonical_path": "05_DIRECTOR/DIRECTOR_PLAN.md",
+            "errors": [],
+            "ok": true,
+            "path": "05_DIRECTOR/DIRECTOR_PLAN.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "DYNAMIC_PROMPT_SET": {
+            "artifact_id": "DYNAMIC_PROMPT_SET",
+            "canonical_path": "07_DYNAMIC/DYNAMIC_PROMPT_SET.md",
+            "errors": [],
+            "ok": true,
+            "path": "07_DYNAMIC/DYNAMIC_PROMPT_SET.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "DYNAMIC_SOURCE_QA": {
+            "artifact_id": "DYNAMIC_SOURCE_QA",
+            "canonical_path": "07_DYNAMIC/DYNAMIC_SOURCE_QA.md",
+            "errors": [],
+            "ok": true,
+            "path": "07_DYNAMIC/DYNAMIC_SOURCE_QA.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "FIRST_FRAME_SET_MANIFEST": {
+            "artifact_id": "FIRST_FRAME_SET_MANIFEST",
+            "canonical_path": "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+            "errors": [],
+            "ok": true,
+            "path": "06_FIRST_FRAMES/FIRST_FRAME_SET_MANIFEST.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "FIRST_FRAME_SET_QA": {
+            "artifact_id": "FIRST_FRAME_SET_QA",
+            "canonical_path": "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md",
+            "errors": [],
+            "ok": true,
+            "path": "06_FIRST_FRAMES/FIRST_FRAME_SET_QA.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "HG01_SELECTION_RECEIPT": {
+            "artifact_id": "HG01_SELECTION_RECEIPT",
+            "canonical_path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+            "errors": [],
+            "ok": true,
+            "path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "HG02_BGM_LOCK_RECEIPT": {
+            "artifact_id": "HG02_BGM_LOCK_RECEIPT",
+            "canonical_path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+            "errors": [],
+            "ok": true,
+            "path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "HG03_FIRST_FRAME_RECEIPT": {
+            "artifact_id": "HG03_FIRST_FRAME_RECEIPT",
+            "canonical_path": "06_FIRST_FRAMES/HG03_PASS_RECEIPT.json",
+            "errors": [],
+            "ok": true,
+            "path": "06_FIRST_FRAMES/HG03_PASS_RECEIPT.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "NATURAL_BEAT": {
+            "artifact_id": "NATURAL_BEAT",
+            "canonical_path": "04_BEATS/NATURAL_BEAT.md",
+            "errors": [],
+            "ok": true,
+            "path": "04_BEATS/NATURAL_BEAT.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "SHOT_LIBRARY_MAP": {
+            "artifact_id": "SHOT_LIBRARY_MAP",
+            "canonical_path": "08_NORMALIZATION/NORMALIZED_SHOT_LIBRARY_MAP.csv",
+            "errors": [
+              "artifact not found"
+            ],
+            "ok": false,
+            "path": null,
+            "source": null,
+            "warnings": []
+          },
+          "SHOT_LIBRARY_QA": {
+            "artifact_id": "SHOT_LIBRARY_QA",
+            "canonical_path": "08_NORMALIZATION/SHOT_LIBRARY_QA.md",
+            "errors": [],
+            "ok": true,
+            "path": "08_NORMALIZATION/SHOT_LIBRARY_QA.md",
+            "source": "canonical",
+            "warnings": []
+          },
+          "SLOT_MANIFEST": {
+            "artifact_id": "SLOT_MANIFEST",
+            "canonical_path": "00_STATE/SLOT_MANIFEST.json",
+            "errors": [],
+            "ok": true,
+            "path": "00_STATE/SLOT_MANIFEST.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "SONG_CANDIDATE_SET": {
+            "artifact_id": "SONG_CANDIDATE_SET",
+            "canonical_path": "01_SONG/SONG_CANDIDATE_SET.json",
+            "errors": [],
+            "ok": true,
+            "path": "01_SONG/SONG_CANDIDATE_SET.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "STATE_LEDGER": {
+            "artifact_id": "STATE_LEDGER",
+            "canonical_path": "00_STATE/CURRENT_STATE.json",
+            "errors": [],
+            "ok": true,
+            "path": "00_STATE/CURRENT_STATE.json",
+            "source": "canonical",
+            "warnings": []
+          },
+          "VISUAL_SOURCE_MAP": {
+            "artifact_id": "VISUAL_SOURCE_MAP",
+            "canonical_path": "07_DYNAMIC/VISUAL_SOURCE_MAP.csv",
+            "errors": [],
+            "ok": true,
+            "path": "07_DYNAMIC/VISUAL_SOURCE_MAP.csv",
+            "source": "canonical",
+            "warnings": []
+          },
+          "WEB_SOURCE_ROUGH_CUT_MAP": {
+            "artifact_id": "WEB_SOURCE_ROUGH_CUT_MAP",
+            "canonical_path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_MAP.csv",
+            "errors": [],
+            "ok": true,
+            "path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_MAP.csv",
+            "source": "canonical",
+            "warnings": []
+          },
+          "WEB_SOURCE_ROUGH_CUT_QA": {
+            "artifact_id": "WEB_SOURCE_ROUGH_CUT_QA",
+            "canonical_path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_QA.md",
+            "errors": [],
+            "ok": true,
+            "path": "08_NORMALIZATION/WEB_SOURCE_ROUGH_CUT_QA.md",
+            "source": "canonical",
+            "warnings": []
+          }
+        },
+        "context": {
+          "canonical_v2": true,
+          "multi_shot": true,
+          "program_30d60": true,
+          "web": true
+        },
+        "declared_state": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+        "highest_contiguous_valid_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+        "ok": false,
+        "slot_root": "/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/06_TESTS/MV/WEB_R3/30D_60/D02-B",
+        "stages": [
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Slot initialized",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "STATE_LEDGER",
+              "SLOT_MANIFEST"
+            ],
+            "stage_id": "S00_SLOT_CREATED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Song aesthetic locked",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "HG01_SELECTION_RECEIPT",
+              "SONG_CANDIDATE_SET"
+            ],
+            "stage_id": "S01_HG01_SONG_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Exact BGM excerpt locked",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "HG02_BGM_LOCK_RECEIPT",
+              "BGM_CANDIDATE_PACKAGE"
+            ],
+            "stage_id": "S02_HG02_BGM_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Trusted Audio Timeline Package locked",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "AUDIO_TIMELINE_MANIFEST",
+              "AUDIO_TIMELINE_QA"
+            ],
+            "stage_id": "S03_AUDIO_TIMELINE_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Natural Beat locked",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "NATURAL_BEAT"
+            ],
+            "stage_id": "S04_NATURAL_BEAT_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Director allocation locked",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "DIRECTOR_BEAT_MAP",
+              "DIRECTOR_PLAN"
+            ],
+            "stage_id": "S05_DIRECTOR_PLAN_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "First-frame set accepted",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "FIRST_FRAME_SET_MANIFEST",
+              "FIRST_FRAME_SET_QA",
+              "HG03_FIRST_FRAME_RECEIPT"
+            ],
+            "stage_id": "S06_HG03_FIRST_FRAMES_LOCKED"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Dynamic prompt set ready",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "DYNAMIC_PROMPT_SET"
+            ],
+            "stage_id": "S07_DYNAMIC_PROMPT_SET_READY"
+          },
+          {
+            "chain_ok": true,
+            "failed_artifacts": [],
+            "label": "Generated dynamic source QA locked for edit",
+            "legacy_artifacts": [],
+            "own_ok": true,
+            "required_artifacts": [
+              "DYNAMIC_SOURCE_QA",
+              "VISUAL_SOURCE_MAP"
+            ],
+            "stage_id": "S08_DYNAMIC_SOURCE_QA_LOCKED"
+          },
+          {
+            "chain_ok": false,
+            "failed_artifacts": [
+              "SHOT_LIBRARY_MAP"
+            ],
+            "label": "Source normalization / WEB rough-cut ready",
+            "legacy_artifacts": [],
+            "own_ok": false,
+            "required_artifacts": [
+              "SHOT_LIBRARY_MAP",
+              "SHOT_LIBRARY_QA",
+              "WEB_SOURCE_ROUGH_CUT_MAP",
+              "WEB_SOURCE_ROUGH_CUT_QA"
+            ],
+            "stage_id": "S09_SOURCE_NORMALIZATION_READY"
+          }
+        ],
+        "target_stage": "S09_SOURCE_NORMALIZATION_READY"
+      },
+      "error": "target stage evidence validation failed; state not advanced",
+      "ok": false
+    },
+    "ok": false,
+    "returncode": 1,
+    "stderr": ""
+  },
+  "next_guard": {
+    "context_revision": 1,
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": "fb4e7e001fed832d8a90f03915ddfc384f4517708469c9cb930b3b7d1b635c66",
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "5cbe2adc45ca27e98de201d590273c7938d529c318c7b751a2ec63580caa8390",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "3a215108f5b40d8987c1ff842b703363941d3d8a3aa851735be94704dac6000b",
+    "state_sha256": "3decf14e836b5ff55d359a5003743405ff7a41582ed8fda33347436b035b0d20",
+    "transition_sequence": 8
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_source_normalization.md",
+      "04_HARNESS/rules/mv_web_source_roughcut.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "NORMALIZE_EDIT_SOURCES",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "next_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": true,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S08_DYNAMIC_SOURCE_QA_LOCKED",
+    "current_state_token": "DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_source_normalization.md",
+      "04_HARNESS/rules/mv_web_source_roughcut.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "NORMALIZE_EDIT_SOURCES",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_source_normalization.md",
+        "04_HARNESS/rules/mv_web_source_roughcut.md"
+      ],
+      "next_stage": "S09_SOURCE_NORMALIZATION_READY",
+      "summary": "Resolve the deterministic source-normalization executor and apply required multi-shot atomization and/or WEB source rough-cut normalization according to active context before edit."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T163606Z-S09V2",
+  "request_sha256": "329df5afe282b233ed68038d5ea3da528a33ca83e475c4a15f5bf6d4253a147a",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33094087501",
+    "github_source_sha": "08a60bdef4616271abe20ee7e125ec9029d05142"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "REJECTED"
+}
