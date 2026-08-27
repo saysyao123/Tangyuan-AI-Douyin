@@ -22,6 +22,11 @@ def test_content_duration_is_current_schema_fallback():
     assert mod.timeline_duration(identity) == 12.25
 
 
+def test_string_encoded_duration_is_accepted():
+    identity = {'timeline_duration_s': '15.386083', 'container_duration_s': '15.412245'}
+    assert mod.timeline_duration(identity) == 15.386083
+
+
 def test_legacy_rendered_duration_remains_supported():
     assert mod.timeline_duration({'rendered_duration_s': 8.5}) == 8.5
 
