@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "status": "P0_ENFORCEMENT_CANDIDATE",
   "path_scope": "All artifact paths are relative to one MV slot root unless global_scope=true.",
   "policy": {
@@ -30,7 +30,18 @@
       "canonical_path": "01_SONG/SONG_CANDIDATE_SET.json",
       "legacy_patterns": [],
       "type": "human_gate_preflight",
-      "checks": [{"type": "json_object"}, {"type": "min_size", "bytes": 40}]
+      "checks": [
+        {"type": "json_object"},
+        {"type": "min_size", "bytes": 200},
+        {"type": "text_regex", "pattern": "\\\"status\\\"\\s*:\\s*\\\"HG01_EVIDENCE_DELIVERY_PASS\\\""},
+        {"type": "text_regex", "pattern": "\\\"evidence_pack_path\\\"\\s*:\\s*\\\"[^\\\"]+HG01_CANDIDATE_EVIDENCE_PACK[^\\\"]*\\\""},
+        {"type": "text_regex", "pattern": "\\\"all_candidates_min_direct_works_2\\\"\\s*:\\s*true"},
+        {"type": "text_regex", "pattern": "\\\"all_candidates_independent_accounts_2plus\\\"\\s*:\\s*true"},
+        {"type": "text_regex", "pattern": "\\\"all_direct_links_landing_work_verified\\\"\\s*:\\s*true"},
+        {"type": "text_regex", "pattern": "\\\"core_account_coverage_reported\\\"\\s*:\\s*true"},
+        {"type": "text_regex", "pattern": "\\\"no_external_audio_substitution\\\"\\s*:\\s*true"},
+        {"type": "text_regex", "pattern": "\\\"user_gate_delivery_mode\\\"\\s*:\\s*\\\"DIRECT_WORKS_FIRST\\\""}
+      ]
     },
     {
       "id": "HG01_SELECTION_RECEIPT",
