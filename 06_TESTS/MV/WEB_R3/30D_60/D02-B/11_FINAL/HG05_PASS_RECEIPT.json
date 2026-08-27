@@ -1,0 +1,25 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG05",
+  "stage_id": "S15_HG05_FINAL_ACCEPTANCE_PASS",
+  "decision": "PASS",
+  "user_decision_text": "可以，我觉得目前这个效果是不错的。我希望你首先把目前这个项目的最后部分进行收尾。",
+  "approved_artifacts": [
+    "11_FINAL/FINAL_TECH_QA.md",
+    "11_FINAL/FINAL_RENDER_READY_RECEIPT.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "FINAL_TECH_QA",
+      "path": "11_FINAL/FINAL_TECH_QA.md",
+      "sha256": "7e5b3d3711d6ed380e871b001442379f57df463539f57ebd224a34abaeed5ec6"
+    },
+    {
+      "artifact_id": "FINAL_RENDER_RECEIPT",
+      "path": "11_FINAL/FINAL_RENDER_READY_RECEIPT.md",
+      "sha256": "58228cb0104d91705a13bc48a142a6cab8591d56fec62f13510f43e0b226f00d"
+    }
+  ],
+  "state_stage_before": "S14_FINAL_TECH_QA_PASS",
+  "created_at": "2026-08-27T17:12:07Z"
+}
