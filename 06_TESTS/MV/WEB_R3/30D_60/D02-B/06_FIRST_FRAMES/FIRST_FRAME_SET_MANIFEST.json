@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "HG03_MACHINE_QA_PASS_USER_ACCEPTED",
+  "authority_rule": "ACCEPTED_ACTUAL_FIRST_FRAME_PIXELS > PROMPT > DIRECTOR_PROSE",
+  "frames": [
+    {
+      "id": "B01",
+      "role": "APPROACH / 想你 -> 忍住",
+      "source_filename": "海滨长廊里的白衣旅人.png",
+      "sha256": "5d87c951bca5ff3ca1253befa5cef3ece4877d6be4b7e7e78a5848150757a02a",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE",
+      "machine_decision": "KEEP"
+    },
+    {
+      "id": "B02",
+      "role": "BOUNDARY / 想说 -> 算了",
+      "source_filename": "海边建筑中的夏日男士.png",
+      "sha256": "17c57cf024229141466a566a78f81c523747d6cbcf81d52a1e00dbc062af417c",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE",
+      "machine_decision": "KEEP"
+    },
+    {
+      "id": "B03",
+      "role": "PASSAGE / 雨停 -> 风过",
+      "source_filename": "海滨长廊回眸青年.png",
+      "sha256": "11aa5714f109f7f8704c90c52e6d061966c429ef81002e74c31f364f64814edc",
+      "face_grid": "BLACK_CURVED_MESH_VISIBLE_ON_VISIBLE_FACE",
+      "machine_decision": "KEEP"
+    },
+    {
+      "id": "B04",
+      "role": "DISTANCE RETURNED / 舍不得 -> 放下",
+      "source_filename": "海畔金色长廊漫步者.png",
+      "sha256": "40a4197928ed5c75129a7f5686df98bc86f64183d6cf3e3d19119a479b9c632d",
+      "face_grid": "NOT_EXPECTED_AT_DISTANCE_FACE_NOT_READABLE",
+      "machine_decision": "KEEP"
+    }
+  ],
+  "set_qa": {
+    "same_character_world": "PASS",
+    "wardrobe_continuity": "PASS",
+    "no_second_person": "PASS",
+    "shot_scale_progression": "PASS",
+    "camera_subject_relationship_arc": "PASS",
+    "black_face_grid_policy": "PASS",
+    "performability": "PASS",
+    "beauty_gate": "PASS",
+    "set_differentiation": "PASS",
+    "hg03_machine_result": "PASS"
+  }
+}
