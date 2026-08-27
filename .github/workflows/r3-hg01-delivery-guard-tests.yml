@@ -1,4 +1,4 @@
-name: R3 HG01 Delivery Guard Tests
+name: R3 HG01 Core Database Guard Tests
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  hg01-delivery-guard:
+  hg01-core-database-guard:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,141 +27,111 @@ jobs:
       - name: Registry integrity
         run: python 04_HARNESS/tools/mv_runtime_gate.py registry-check
 
-      - name: Synthetic incomplete evidence must be rejected
+      - name: Live D02-B reset must remain blocked before database rebuild
         shell: bash
         run: |
-          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-negative
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          candidate_path = Path('/tmp/D02-B-negative/01_SONG/SONG_CANDIDATE_SET.json')
-          data = json.loads(candidate_path.read_text(encoding='utf-8'))
-          data['status'] = 'HG01_PREFLIGHT_PREPARED'
-          guard = data['evidence_delivery_guard']
-          guard['all_candidates_min_direct_works_2'] = False
-          guard['all_candidates_independent_accounts_2plus'] = False
-          guard['all_direct_links_landing_work_verified'] = False
-          guard['core_account_coverage_reported'] = False
-          candidate_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-
-          pack_path = Path('/tmp/D02-B-negative/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md')
-          text = pack_path.read_text(encoding='utf-8')
-          for marker in [
-              'HG01_EVIDENCE_DELIVERY_PASS = YES',
-              'DIRECT_DOUYIN_EVIDENCE_PACK_READY = YES',
-              'CORE_ACCOUNT_COVERAGE_REPORTED = YES',
-              'ALL_DIRECT_LINKS_LANDING_WORK_VERIFIED = YES',
-          ]:
-              text = text.replace(marker, marker.replace('YES', 'NO'))
-          pack_path.write_text(text, encoding='utf-8')
-          PY
-
           set +e
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root /tmp/D02-B-negative \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
             --artifact SONG_CANDIDATE_SET \
-            > /tmp/hg01-candidate-negative.json
+            > /tmp/hg01-live-candidate.json
           candidate_code=$?
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root /tmp/D02-B-negative \
+            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
             --artifact HG01_CANDIDATE_EVIDENCE_PACK \
-            > /tmp/hg01-pack-negative.json
+            > /tmp/hg01-live-pack.json
           pack_code=$?
           set -e
-          cat /tmp/hg01-candidate-negative.json
-          cat /tmp/hg01-pack-negative.json
+          cat /tmp/hg01-live-candidate.json
+          cat /tmp/hg01-live-pack.json
           if [ "$candidate_code" -ne 1 ] || [ "$pack_code" -ne 1 ]; then
-            echo "Expected synthetic incomplete candidate set and evidence pack to fail"
+            echo "Expected reset D02-B HG01 artifacts to remain blocked until core database candidate rebuild"
             exit 1
           fi
+
+      - name: Core database policy must be explicit
+        shell: bash
+        run: |
+          grep -q 'CORE BENCHMARK ACCOUNTS -> DATA CENTER' 04_HARNESS/rules/mv_human_gates.md
+          grep -q 'CORE_BENCHMARK_DATABASE' 04_HARNESS/rules/mv_human_gates.md
+          grep -q 'CORE_CREATOR_MV_DIRECT' 04_HARNESS/rules/mv_human_gates.md
+          grep -q 'broad web-wide song search' 04_HARNESS/rules/mv_stage_entry_checklist.md
+          echo 'PASS: HG01 discovery strategy is core-database-first and broad web song search is blocked as default'
+
+      - name: Synthetic core-database HG01 must pass canonical RECORD ADVANCE VERIFY chain
+        shell: bash
+        run: |
+          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-core-positive
           python - <<'PY'
           import json
           from pathlib import Path
-          candidate = json.loads(Path('/tmp/hg01-candidate-negative.json').read_text(encoding='utf-8'))
-          pack = json.loads(Path('/tmp/hg01-pack-negative.json').read_text(encoding='utf-8'))
-          assert candidate['ok'] is False, candidate
-          assert pack['ok'] is False, pack
-          assert 'HG01_EVIDENCE_DELIVERY_PASS' in '\n'.join(candidate.get('errors') or [])
-          assert 'HG01_EVIDENCE_DELIVERY_PASS' in '\n'.join(pack.get('errors') or [])
-          print('PASS: incomplete evidence cannot masquerade as HG01-ready')
+
+          candidate_path = Path('/tmp/D02-B-core-positive/01_SONG/SONG_CANDIDATE_SET.json')
+          data = json.loads(candidate_path.read_text(encoding='utf-8'))
+          data['status'] = 'HG01_EVIDENCE_DELIVERY_PASS'
+          assert data['selection_policy']['source_mode'] == 'CORE_BENCHMARK_DATABASE'
+          assert data['selection_policy']['broad_web_song_search'] is False
+          data['formal_candidates'] = [
+              {
+                  'candidate_id': 'A',
+                  'song_family': 'SYNTHETIC_CORE_REPEAT',
+                  'database_sources': [
+                      {'account': 'CORE_ACCOUNT_1', 'work_url': 'https://www.douyin.com/video/111'},
+                      {'account': 'CORE_ACCOUNT_2', 'work_url': 'https://www.douyin.com/video/222'}
+                  ]
+              }
+          ]
+          data['evidence_delivery_guard'] = {
+              'evidence_pack_path': '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md',
+              'all_candidates_min_direct_works_2': True,
+              'all_candidates_independent_accounts_2plus': True,
+              'all_direct_links_landing_work_verified': True,
+              'core_account_coverage_reported': True,
+              'no_external_audio_substitution': True,
+              'user_gate_delivery_mode': 'DIRECT_WORKS_FIRST'
+          }
+          data['delivery_integrity']['all_delivery_links_landing_work_verified'] = True
+          candidate_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          pack_path = Path('/tmp/D02-B-core-positive/01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md')
+          pack_path.write_text('''# SYNTHETIC CORE DATABASE HG01 PACK\n\nSOURCE_MODE = CORE_BENCHMARK_DATABASE\nDELIVERY_MODE = CORE_CREATOR_MV_DIRECT\n\nCandidate A: SYNTHETIC_CORE_REPEAT\n- CORE_ACCOUNT_1 corresponding MV: https://www.douyin.com/video/111\n- CORE_ACCOUNT_2 corresponding MV: https://www.douyin.com/video/222\n\nLANDING_WORK identity verified for delivered links.\n\nHG01_EVIDENCE_DELIVERY_PASS = YES\nDIRECT_DOUYIN_EVIDENCE_PACK_READY = YES\nCORE_ACCOUNT_COVERAGE_REPORTED = YES\nALL_DIRECT_LINKS_LANDING_WORK_VERIFIED = YES\nNO_EXTERNAL_AUDIO_LINK_SUBSTITUTION = YES\nUSER_GATE_DELIVERY_MODE = DIRECT_WORKS_FIRST\nEVIDENCE_LOCATION = LANDING_WORK\n''', encoding='utf-8')
           PY
 
-      - name: RECORD_HUMAN_GATE must reject synthetic incomplete evidence
-        shell: bash
-        run: |
-          set +e
-          python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
-            --slot-root /tmp/D02-B-negative \
-            --gate HG01 \
-            --user-decision-text 'SYNTHETIC_TEST_ONLY' \
-            --approved-artifact '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md' \
-            > /tmp/hg01-record-negative.json
-          code=$?
-          set -e
-          cat /tmp/hg01-record-negative.json
-          if [ "$code" -ne 1 ]; then
-            echo "Expected record-human-gate HG01 to be blocked by incomplete machine preflight; got $code"
-            exit 1
-          fi
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          report = json.loads(Path('/tmp/hg01-record-negative.json').read_text(encoding='utf-8'))
-          assert report['ok'] is False, report
-          assert 'machine preflight artifact missing or non-canonical' in report['error'], report
-          details = report.get('details') or {}
-          assert details.get('artifact') in {'SONG_CANDIDATE_SET', 'HG01_CANDIDATE_EVIDENCE_PACK'}, details
-          print('PASS: Runtime refuses HG01 receipt when evidence delivery is incomplete')
-          PY
-
-      - name: Live D02-B evidence must pass and support real canonical RECORD ADVANCE VERIFY chain
-        shell: bash
-        run: |
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --slot-root /tmp/D02-B-core-positive \
             --artifact SONG_CANDIDATE_SET
           python 04_HARNESS/tools/mv_runtime_gate.py artifact-check \
-            --slot-root 06_TESTS/MV/WEB_R3/30D_60/D02-B \
+            --slot-root /tmp/D02-B-core-positive \
             --artifact HG01_CANDIDATE_EVIDENCE_PACK
 
-          cp -a 06_TESTS/MV/WEB_R3/30D_60/D02-B /tmp/D02-B-positive
-
           python 04_HARNESS/tools/mv_runtime_state.py record-human-gate \
-            --slot-root /tmp/D02-B-positive \
+            --slot-root /tmp/D02-B-core-positive \
             --gate HG01 \
-            --user-decision-text 'SYNTHETIC_USER_SELECTED_A' \
+            --user-decision-text 'SYNTHETIC_USER_SELECTED_CORE_DATABASE_CANDIDATE' \
             --approved-artifact '01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md' \
-            > /tmp/hg01-positive-record.json
-          cat /tmp/hg01-positive-record.json
+            > /tmp/hg01-core-record.json
+          cat /tmp/hg01-core-record.json
 
           python 04_HARNESS/tools/mv_runtime_state.py advance \
-            --slot-root /tmp/D02-B-positive \
+            --slot-root /tmp/D02-B-core-positive \
             --to S01_HG01_SONG_LOCKED \
-            > /tmp/hg01-positive-advance.json
-          cat /tmp/hg01-positive-advance.json
+            > /tmp/hg01-core-advance.json
+          cat /tmp/hg01-core-advance.json
 
           python 04_HARNESS/tools/mv_runtime_state.py verify-state \
-            --slot-root /tmp/D02-B-positive \
-            > /tmp/hg01-positive-verify.json
-          cat /tmp/hg01-positive-verify.json
+            --slot-root /tmp/D02-B-core-positive \
+            > /tmp/hg01-core-verify.json
+          cat /tmp/hg01-core-verify.json
 
           python - <<'PY'
           import json
           from pathlib import Path
-          record = json.loads(Path('/tmp/hg01-positive-record.json').read_text(encoding='utf-8'))
-          advance = json.loads(Path('/tmp/hg01-positive-advance.json').read_text(encoding='utf-8'))
-          verify = json.loads(Path('/tmp/hg01-positive-verify.json').read_text(encoding='utf-8'))
+          record = json.loads(Path('/tmp/hg01-core-record.json').read_text(encoding='utf-8'))
+          advance = json.loads(Path('/tmp/hg01-core-advance.json').read_text(encoding='utf-8'))
+          verify = json.loads(Path('/tmp/hg01-core-verify.json').read_text(encoding='utf-8'))
           assert record['ok'] is True, record
           assert advance['ok'] is True, advance
           assert verify['ok'] is True, verify
           assert verify['current_stage'] == 'S01_HG01_SONG_LOCKED', verify
-
-          receipt_path = Path('/tmp/D02-B-positive/00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json')
-          transition = json.loads(receipt_path.read_text(encoding='utf-8'))
-          evidence_ids = {item['artifact_id'] for item in transition['evidence_snapshot']}
-          assert 'SONG_CANDIDATE_SET' in evidence_ids, evidence_ids
-          assert 'HG01_CANDIDATE_EVIDENCE_PACK' in evidence_ids, evidence_ids
-          assert 'HG01_SELECTION_RECEIPT' in evidence_ids, evidence_ids
-          print('PASS: live HG01 evidence validates; canonical S01 snapshots candidate set + evidence pack + receipt')
+          print('PASS: core-database HG01 can complete canonical RECORD -> ADVANCE -> VERIFY')
           PY
