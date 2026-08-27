@@ -1,6 +1,6 @@
-# OSS MV Optimization Result Matrix v1.5
+# OSS MV Optimization Result Matrix v1.6
 
-Status: `IN_PROGRESS / P1 LIGHTWEIGHT LYRIC TIMELINE VALIDATED`
+Status: `IN_PROGRESS / P1 AUDIO TIMELINE LOCKED / S03`
 
 ## Test identity
 
@@ -10,7 +10,7 @@ Status: `IN_PROGRESS / P1 LIGHTWEIGHT LYRIC TIMELINE VALIDATED`
 - HG01 song family: `有几次想你了 / LOCKED`
 - HG02 BGM: `B variant / exact Douyin music object 7670104695834282815 / 0.8s soft tail fade / LOCKED`
 - Locked BGM SHA-256: `6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4`
-- Canonical Runtime state: `S02_HG02_BGM_LOCKED / BGM_LOCKED`
+- Canonical Runtime state: `S03_AUDIO_TIMELINE_LOCKED / AUDIO_TIMELINE_PACKAGE_LOCKED`
 - External OSS source: `penposs/mvmaker-h3-skills@796797030275fe57afaba736771e8510c848799d`
 
 ## A/B creative comparison
@@ -28,8 +28,8 @@ Status: `IN_PROGRESS / P1 LIGHTWEIGHT LYRIC TIMELINE VALIDATED`
 | Regeneration count | TBD | TBD | TBD | TBD |
 | Manual intervention count | TBD | TBD | TBD | TBD |
 | Production time / burden | TBD | TBD | TBD | TBD |
-| Runtime compatibility | Baseline | TBD | TBD | Executor-first audit completed |
-| Zero-context reproducibility | Baseline | Improved | Positive | 19/19 executor registry CI PASS |
+| Runtime compatibility | Baseline | TBD | TBD | Audio Timeline route now Canonical S03 PASS |
+| Zero-context reproducibility | Baseline | Improved | Positive | 19/19 executor registry CI + durable Audio Timeline package |
 
 ## Gate-by-gate findings
 
@@ -56,7 +56,7 @@ Two core works resolved to the same Douyin music object `7670104695834282815`. U
 
 ### Audio Timeline
 
-`P1 LIGHTWEIGHT ROUTE VALIDATED / ONE HUMAN LYRIC AUDIT STILL REQUIRED BEFORE CANONICAL S03 LOCK`
+`PASS / P1 LIGHTWEIGHT ROUTE LOCKED / CANONICAL S03`
 
 #### Defect A｜Executor discovery gap
 
@@ -76,14 +76,15 @@ The locked BGM actually contains seven sung lines.
 Hard rule:
 `creator caption / description / hashtag / lyric quote != complete lyric truth`.
 
-The incorrect four-line downstream Audio Timeline/Natural Beat state was formally rolled back and archived via the Runtime revision mechanism. Canonical D02-B remains at S02.
+The incorrect four-line downstream Audio Timeline/Natural Beat state was formally rolled back. The stale four-line `trusted_lyrics.txt`, `line_timeline.csv`, and `lyrics_exact.srt` have now been replaced by the audited seven-line P1 truth.
 
-#### Re-audit of proven D01 production paths
+#### Proven route priority
 
-D01-A used `SAME_VERSION_LRC`, not Xingyu.
-D01-B used `faster-whisper==1.2.1 / small / CPU int8 / zh word timestamps + trusted-text character mapping`, not Xingyu.
+D01-A used `SAME_VERSION_LRC`.
+D01-B used `faster-whisper==1.2.1 / small / CPU int8 / zh word timestamps + trusted-text character mapping`.
+D02-B independently revalidated the D01-B lightweight path.
 
-This changed the experimental route priority to:
+Locked experiment priority:
 
 `P0 SAME_VERSION_LRC`
 -> `P1 D01B_LIGHTWEIGHT_FASTER_WHISPER`
@@ -91,6 +92,9 @@ This changed the experimental route priority to:
 
 Policy:
 `06_TESTS/MV/OSS_OPT_R1/AUDIO_TIMELINE_ROUTE_POLICY_v1.md`
+
+Close receipt:
+`06_TESTS/MV/OSS_OPT_R1/AUDIO_TIMELINE_ROUTE_CLOSE_RECEIPT_v1.json`
 
 #### P1 D02-B validation
 
@@ -102,6 +106,11 @@ Workflow run `33059906090` — unprompted full-clip Faster-Whisper small:
 - transcript `4.426s`;
 - total model work `7.523s`;
 - lightweight cache created: `573,157,329 bytes` (~547 MB).
+
+User lyric audit:
+- decision: `歌词OK / PASS`;
+- audited trusted lyric lines: `7`;
+- normalized characters: `45`.
 
 Workflow run `33060055071` — audited trusted text + D01-B mapping:
 - cache hit;
@@ -115,7 +124,7 @@ Workflow run `33060055071` — audited trusted text + D01-B mapping:
 - line starts strictly monotonic;
 - decision `LIGHTWEIGHT_ALIGNMENT_PASS`.
 
-Validated P1 line timing candidate:
+Locked P1 line timing:
 
 | Line | Lyric | Start | End | Coverage |
 |---|---|---:|---:|---:|
@@ -127,26 +136,45 @@ Validated P1 line timing candidate:
 | 6 | 有几阵风过了 | 9.120 | 10.700 | 100% |
 | 7 | 有多舍不得也该放下了 | 10.860 | 14.260 | 100% |
 
+Durable Canonical package:
+- `03_AUDIO_TIMELINE/audio_identity.json`
+- `03_AUDIO_TIMELINE/trusted_lyrics.txt`
+- `03_AUDIO_TIMELINE/raw_evidence/faster_whisper/lightweight_mapping_report.json`
+- `03_AUDIO_TIMELINE/line_timeline.csv`
+- `03_AUDIO_TIMELINE/lyrics_exact.srt`
+- `03_AUDIO_TIMELINE/lyric_timeline_qa.json`
+- `03_AUDIO_TIMELINE/alignment_qa_report.md`
+- `03_AUDIO_TIMELINE/package_manifest.json`
+- `03_AUDIO_TIMELINE/LYRIC_TIMELINE_LOCK_RECEIPT.json`
+
+Canonical Runtime advancement:
+- Runtime Web Bridge run: `33064102251`;
+- transition: `S02_HG02_BGM_LOCKED -> S03_AUDIO_TIMELINE_LOCKED`;
+- state token: `AUDIO_TIMELINE_PACKAGE_LOCKED`;
+- transition sequence: `3`;
+- highest contiguous valid stage: `S03_AUDIO_TIMELINE_LOCKED`.
+
 Conclusion:
-`D01B_LIGHTWEIGHT_FASTER_WHISPER = P1 PASS / DEFAULT AI ROUTE CANDIDATE`.
+`P1-D01B-LIGHTWEIGHT-FW = VALIDATED / PROMOTE_RULE_CANDIDATE / DEFAULT AI ROUTE`.
 
 #### P2 Xingyu archive
 
-Xingyu remains validated but is now fallback-only.
+Xingyu remains validated but fallback-only.
 Archive:
 `06_TESTS/MV/OSS_OPT_R1/XINGYU_FALLBACK_ARCHIVE_v1.md`
 
-Validated Xingyu capabilities on corrected D02-B:
+Validated capabilities on corrected D02-B:
 - 7/7 lines aligned;
 - 45/45 normalized characters timed;
 - no missing character timestamps;
 - monotonic line timing;
 - high precision.
 
-Reason for fallback classification:
+Why fallback-only:
 - shared Xingyu/WhisperX environment cache roughly `5.8 GB`;
 - substantially heavier startup/restore burden than P1;
-- no demonstrated production benefit on this D02-B case once P1 reached 100% coverage.
+- no material normal-MV benefit demonstrated once P1 reached 100% coverage;
+- existing P1-vs-P2 line-start comparison remains within the review threshold.
 
 P2 triggers only on concrete P1 failure or explicit high-precision word/character timing need.
 
@@ -166,9 +194,16 @@ No waveform/BPM lyric guessing.
 No per-song helper/toolchain.
 No Anchor/Music Events before lyric timeline lock.
 
+### Natural Beat
+
+`NEXT / S04`
+
+Runtime next action after S03 is `BUILD_NATURAL_BEAT`.
+Natural Beat must consume the locked seven-line Audio Timeline truth and must not redesign the lyric text/timing.
+
 ### Director
 
-TBD. First major stage where `mvmaker-h3-skills` creative overlay is intentionally allowed.
+TBD. First major stage where `mvmaker-h3-skills` creative overlay is intentionally allowed, after Natural Beat is locked.
 
 ### HG03 / First Frames
 TBD
@@ -200,16 +235,18 @@ TBD
 | PER-SLOT-PRODUCTION-MODEL-INSTALL | `REJECT AS DEFAULT` | Production should reuse established route/runtime | environment setup only |
 | PARTIAL-CAPTION-AS-LYRIC-TRUTH | `REJECT` | Caption may be only an excerpt | hard reject |
 | P0-SAME-VERSION-LRC | `PROMOTE_RULE` candidate | Proven D01-A fastest path | first priority when reliable |
-| P1-D01B-LIGHTWEIGHT-FW | `PROMOTE_RULE` candidate | Proven D01-B and validated D02-B; fast + 100% coverage | default AI route |
+| P1-D01B-LIGHTWEIGHT-FW | `PROMOTE_RULE` candidate / VALIDATED | Proven D01-B + D02-B; fast, stable, 7/7 and 100% | default AI route |
 | P2-XINGYU-CTC-FALLBACK | `KEEP AS FALLBACK` | High precision but heavy runtime; valuable for exceptions | archived and retained |
 | MULTI-SOURCE-BY-DEFAULT-LYRIC-QA | `REJECT` | Adds cost without failure signal | exception only |
 | ANCHOR-MUSIC-EVENTS-BLOCK-S03 | `REJECT IN SIMPLE PATH` | These are downstream director enrichment | move downstream |
-| OSS-VISUAL-OVERLAY | `KEEP_EXPERIMENTAL` | Creative A/B not started | begin after S03 lock |
+| OSS-VISUAL-OVERLAY | `KEEP_EXPERIMENTAL` | Creative A/B not yet started | test after S04 Natural Beat lock |
 
 ## Current experiment verdict
 
-The lyric timing experiment now has a much simpler validated production policy:
+The lyric timing route has completed validation and is durably locked in the experiment branch:
 
 `P0 same-version timed lyric -> P1 D01-B lightweight Faster-Whisper -> P2 Xingyu fallback`.
 
-For D02-B, P1 has passed technically. The only remaining normal human action before locking the final Audio Timeline is the single lyric-text audit of the seven-line trusted text. After that, build line timeline/SRT from the validated P1 evidence and advance S03; do not invoke Xingyu unless a new concrete P1 failure appears.
+For D02-B, P1 passed both human lyric audit and machine timing QA, and Canonical Runtime has advanced to `S03_AUDIO_TIMELINE_LOCKED`. The route is now a `PROMOTE_RULE_CANDIDATE`, while stable `test/mv-web-r3` remains unchanged until the full OSS_OPT_R1 close audit.
+
+Next valid action is `BUILD_NATURAL_BEAT -> S04_NATURAL_BEAT_LOCKED`; only after that should the Director baseline vs OSS overlay A/B begin.
