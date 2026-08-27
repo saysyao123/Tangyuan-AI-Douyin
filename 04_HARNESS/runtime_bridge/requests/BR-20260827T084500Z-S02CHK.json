@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T084500Z-S02CHK",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Fresh canonical guard after durable D02-B 03_AUDIO_TIMELINE package was Final-Gate locked and persisted; preflight S03 advancement without trusting stale chat state."
+}
