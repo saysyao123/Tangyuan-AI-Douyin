@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T085400Z-S04ADV",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S03_AUDIO_TIMELINE_LOCKED",
+    "current_state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "df7a247da909f7b8ebb92037ad67585bb64bc3aeb4d4607e7f239d01fe304d9f",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "047b75450d64aed1319347ec119a385a3151968573a7a88b3410a287e9da659a",
+    "state_sha256": "a436e35cd209b00d49c42da8ec408203c5bd4416921c13fb35bbe8ddfaf0c1dc",
+    "transition_sequence": 3
+  },
+  "payload": {
+    "to": "S04_NATURAL_BEAT_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B after Natural Beat synthesis consumed only the locked Audio Timeline lyric/music clocks and produced canonical 04_BEATS/NATURAL_BEAT.md without visual design or a second timing system."
+}
