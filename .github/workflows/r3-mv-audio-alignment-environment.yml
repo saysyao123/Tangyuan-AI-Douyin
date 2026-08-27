@@ -1,0 +1,112 @@
+name: R3 MV Audio Alignment Environment
+
+on:
+  push:
+    branches:
+      - test/mv-oss-optimization-r1
+    paths:
+      - '04_HARNESS/runtime_executor/environment_requests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: r3-mv-audio-alignment-env-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare-and-doctor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VENV: ${{ github.workspace }}/.mv-audio-align-venv
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      HUGGINGFACE_HUB_CACHE: ${{ github.workspace }}/.cache/huggingface/hub
+      HF_HUB_DISABLE_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync branch truth
+        run: git pull --rebase origin "$GITHUB_REF_NAME"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ensure media dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg >/dev/null
+          fi
+
+      - name: Restore pinned alignment environment cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .mv-audio-align-venv
+            .cache/huggingface
+          key: mv-audio-align-${{ runner.os }}-py311-${{ hashFiles('04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json') }}
+
+      - name: Install and preheat only on cache miss
+        if: steps.cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python 04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py install \
+            --venv "$VENV" \
+            --hf-home "$HF_HOME" \
+            --device cpu \
+            --preheat
+
+      - name: Canonical doctor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python 04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py doctor --venv "$VENV" | tee /tmp/audio_alignment_doctor.json
+
+      - name: Write durable environment receipt
+        shell: bash
+        env:
+          CACHE_HIT: ${{ steps.cache.outputs.cache-hit }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          lock = Path('04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json')
+          doctor = json.loads(Path('/tmp/audio_alignment_doctor.json').read_text(encoding='utf-8'))
+          receipt = {
+              'schema_version': '1.0',
+              'status': 'AUDIO_ALIGNMENT_ENV_READY' if doctor.get('pass') else 'AUDIO_ALIGNMENT_RUNTIME_BLOCKED',
+              'scope': 'shared_runtime_environment_not_slot_specific',
+              'lock_path': str(lock),
+              'lock_sha256': hashlib.sha256(lock.read_bytes()).hexdigest(),
+              'cache_key': f"mv-audio-align-Linux-py311-{hashlib.sha256(lock.read_bytes()).hexdigest()}",
+              'cache_hit_on_this_run': os.environ.get('CACHE_HIT') == 'true',
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'workflow_run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'workflow_source_sha': os.environ['GITHUB_SHA'],
+              'doctor': doctor,
+          }
+          out = Path('04_HARNESS/runtime_executor/environment_receipts/audio_alignment_env_v1.json')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 04_HARNESS/runtime_executor/environment_receipts/audio_alignment_env_v1.json
+          if git diff --cached --quiet; then
+            echo 'Environment receipt unchanged.'
+            exit 0
+          fi
+          git commit -m 'runtime: record shared audio alignment environment receipt'
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
