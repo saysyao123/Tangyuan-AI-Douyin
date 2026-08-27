@@ -1,0 +1,61 @@
+name: R3 MV Lean Regression
+
+on:
+  push:
+    branches:
+      - test/mv-lean-r1
+    paths:
+      - '.github/workflows/r3-mv-lean-regression.yml'
+      - '04_HARNESS/tools/mv_runtime_lean_bridge.py'
+      - '04_HARNESS/runtime/mv_lean_runtime_contract.json'
+      - '04_HARNESS/runtime/mv_stage_executor_registry.json'
+      - '04_HARNESS/tools/mv_audio_timeline/run_alignment.py'
+      - '04_HARNESS/tools/mv_audio_timeline/bootstrap_alignment_env.py'
+      - '04_HARNESS/tools/mv_audio_timeline/tests/test_run_alignment.py'
+      - '04_HARNESS/rules/mv_executor_first.md'
+      - '04_HARNESS/rules/mv_audio_timeline_route.md'
+      - '04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile Lean bridge
+        run: python -m py_compile 04_HARNESS/tools/mv_runtime_lean_bridge.py
+
+      - name: Audio alignment boundary regressions
+        run: python 04_HARNESS/tools/mv_audio_timeline/tests/test_run_alignment.py
+
+      - name: Validate executor coverage and Lean contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('.')
+          stage = json.loads((root/'04_HARNESS/runtime/mv_stage_registry.json').read_text())
+          executors = json.loads((root/'04_HARNESS/runtime/mv_stage_executor_registry.json').read_text())
+          lean = json.loads((root/'04_HARNESS/runtime/mv_lean_runtime_contract.json').read_text())
+          stage_ids = [x['id'] for x in stage['stages']]
+          executor_ids = list(executors['stage_executors'])
+          assert set(stage_ids) == set(executor_ids), (set(stage_ids)-set(executor_ids), set(executor_ids)-set(stage_ids))
+          for command in ('RESUME','INIT_SLOT','ACCEPT_GATE','RUN_UNTIL_GATE_OR_BLOCK'):
+              assert command in lean['commands'], command
+          assert lean['lean_policy']['human_gate_semantics_remain_durable'] is True
+          assert 'S07_DYNAMIC_PROMPT_SET_READY' in lean['lean_policy']['external_handoff_stop_after_stages']
+          print('PASS stage executor coverage:', len(stage_ids))
+          print('PASS lean macro contract')
+          PY
+
+      - name: Verify D03-A canonical state if present
+        run: |
+          if [ -f '06_TESTS/MV/WEB_R3/30D_60/D03-A/00_STATE/CURRENT_STATE.json' ]; then
+            python 04_HARNESS/tools/mv_runtime_state.py verify-state --slot-root 06_TESTS/MV/WEB_R3/30D_60/D03-A
+          else
+            echo 'D03-A not initialized in this checkout; skip state verification.'
+          fi
