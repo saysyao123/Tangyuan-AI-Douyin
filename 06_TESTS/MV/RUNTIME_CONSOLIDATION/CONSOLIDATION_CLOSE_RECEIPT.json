@@ -1,0 +1,78 @@
+{
+  "receipt_version": "1.0",
+  "project": "MV_RUNTIME_CONSOLIDATION",
+  "status": "READY_TO_DEPLOY",
+  "created_at": "2026-08-27T03:05:00Z",
+  "closure_branch": "refactor/mv-runtime-consolidation-v2",
+  "deployment_branch": "test/mv-web-r3",
+  "audit_path": "06_TESTS/MV/RUNTIME_CONSOLIDATION/MV_RUNTIME_CONSOLIDATION_AUDIT_v2.md",
+  "audit_basis_sha": "2c555749d188973640108355e1fb0f95d4c200ca",
+  "technical_gates": {
+    "revision_rollback": {
+      "status": "PASS",
+      "run_id": 33034755788,
+      "source_sha": "cc4a0ccbc131d01c3eef2a8a229aedc77a350b97"
+    },
+    "zero_context_resume": {
+      "status": "PASS",
+      "run_id": 33034755682,
+      "source_sha": "cc4a0ccbc131d01c3eef2a8a229aedc77a350b97"
+    },
+    "web_bridge_synthetic": {
+      "status": "PASS",
+      "run_id": 33034814123,
+      "source_sha": "75bb0d287ae3689f30ca4c6633433be90ea80e40"
+    },
+    "web_bridge_live": {
+      "status": "PASS",
+      "run_id": 33034836610,
+      "request_id": "BR-20260827T025700Z-CLOSELIVE1",
+      "source_sha": "98e097cad9799c1ef8dd2c001208e11698037cad"
+    },
+    "d02a_canonical_import": {
+      "status": "PASS",
+      "run_id": 33034910249,
+      "import_commit": "f9c22b875bdded6fb4b3ee3ce775634925617cf7",
+      "canonical_stage": "S04_NATURAL_BEAT_LOCKED",
+      "downstream_not_proven_from_stage": "S05_DIRECTOR_PLAN_LOCKED"
+    },
+    "new_mv_live_allocation": {
+      "status": "PASS",
+      "run_id": 33035111650,
+      "request_id": "BR-20260827T030200Z-NEWALLOC",
+      "validated_slot_id": "D02-B",
+      "validated_lane": "S",
+      "mode": "ALLOCATE_NEW_SLOT",
+      "mutation_performed": false
+    }
+  },
+  "safety_assertions": {
+    "synthetic_pass_used_as_live_substitute": false,
+    "legacy_d02a_s05_or_later_fabricated": false,
+    "legacy_d02a_publish_inferred": false,
+    "legacy_source_files_overwritten": false,
+    "permanent_bridge_legacy_import_command_added": false,
+    "mvmaker_h3_director_scope_added": false,
+    "one_shot_import_workflow_present_in_final_tree": false
+  },
+  "startup_switch": {
+    "zero_context_template": {
+      "path": "04_HARNESS/templates/mv_zero_context_start_prompt.md",
+      "version": "2.0",
+      "commit": "b6fb1bc00617463643f723db273f65e90fceb842"
+    },
+    "new_mv_prompt": {
+      "path": "05_IP_ASSETS/MV_30D_60_NEW_CHAT_START_PROMPT.md",
+      "version": "2.0",
+      "commit": "2c555749d188973640108355e1fb0f95d4c200ca"
+    }
+  },
+  "deployment_precondition": {
+    "status": "PASS",
+    "comparison": "refactor branch ahead of test/mv-web-r3 with behind_by=0",
+    "deployment_mode": "FAST_FORWARD_ONLY",
+    "original_test_branch_sha": "a8581e67ec299fcd6f5185ec6b32cf4129b25fc5"
+  },
+  "deployment_verification": null,
+  "close_rule": "Receipt becomes PASS only after test/mv-web-r3 is fast-forwarded and verified against the closure branch."
+}
