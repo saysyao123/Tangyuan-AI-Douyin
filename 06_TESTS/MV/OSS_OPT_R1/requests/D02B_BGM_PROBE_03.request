@@ -1,0 +1,4 @@
+trigger=3
+slot=D02-B
+song_family=有几次想你了
+action=download_compare_and_export_hg02_listening_assets
