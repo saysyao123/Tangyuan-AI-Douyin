@@ -1,0 +1,253 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-27T16:31:07Z",
+  "error": null,
+  "execution": {
+    "command": "RESUME",
+    "controller_payload": {
+      "active_attempt": 3,
+      "asset_record_count": 0,
+      "context": {
+        "canonical_v2": true,
+        "multi_shot": false,
+        "program_30d60": true,
+        "web": true
+      },
+      "contract_validation": {
+        "errors": [],
+        "ok": true,
+        "stage_count": 19,
+        "warnings": []
+      },
+      "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "current_state_token": "DIRECTOR_PLAN_LOCKED",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md"
+      ],
+      "lane": "S",
+      "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+      "mode": "RESUME_CANONICAL",
+      "next_action": {
+        "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
+        "human_gate": "HG03",
+        "jit_reads": [
+          "04_HARNESS/rules/mv_first_frame_qa.md",
+          "04_HARNESS/rules/mv_human_gates.md",
+          "04_HARNESS/rules/ai_video.md",
+          "04_HARNESS/templates/ai_first_frame_prompt.md"
+        ],
+        "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+        "summary": "Resolve the First Frame capability-handoff executor, generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance."
+      },
+      "ok": true,
+      "post_publish_slots": [],
+      "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+      "revision_sequence": 2,
+      "slot_id": "D02-B",
+      "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+      "startup_required_reads": [
+        "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+        "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+        "04_HARNESS/runtime/mv_resume_contract.json",
+        "04_HARNESS/runtime/mv_stage_registry.json",
+        "04_HARNESS/runtime/mv_stage_executor_registry.json",
+        "04_HARNESS/rules/mv_executor_first.md",
+        "04_HARNESS/MANIFEST.md"
+      ],
+      "terminal_slots": [],
+      "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "tracker_row": {
+        "audio_asset": "",
+        "day": "2",
+        "lane": "S",
+        "packaging": "TBD",
+        "publish_time": "",
+        "slot": "B",
+        "slot_id": "D02-B",
+        "song_family": "",
+        "status": "PLANNED"
+      },
+      "verification": {
+        "asset_identity": true,
+        "revision_history": true,
+        "state": true,
+        "tracker_consistency": true
+      }
+    },
+    "ok": true,
+    "returncode": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "bc2f69c0a80f7bb8f20e65b37f2e509e362f14afc4f1b118dd054efd043316fb",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "bc5445f7f2e57ccb15123c60df13f283bf1f87b1086358c68f443ec533dea2bb",
+    "state_sha256": "d9185e79e750e341b61adeb43bde9921f3acdf697b3ade7f178c1109a3724604",
+    "transition_sequence": 5
+  },
+  "postflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_first_frame_qa.md",
+      "04_HARNESS/rules/mv_human_gates.md",
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/templates/ai_first_frame_prompt.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
+      "human_gate": "HG03",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md"
+      ],
+      "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "summary": "Resolve the First Frame capability-handoff executor, generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 3,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_first_frame_qa.md",
+      "04_HARNESS/rules/mv_human_gates.md",
+      "04_HARNESS/rules/ai_video.md",
+      "04_HARNESS/templates/ai_first_frame_prompt.md"
+    ],
+    "lane": "S",
+    "last_revision_receipt": "00_STATE/REVISIONS/R002_director_revision/ROLLBACK_RECEIPT.json",
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
+      "human_gate": "HG03",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md"
+      ],
+      "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "summary": "Resolve the First Frame capability-handoff executor, generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "revision_sequence": 2,
+    "slot_id": "D02-B",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D02-B",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json",
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "2",
+      "lane": "S",
+      "packaging": "TBD",
+      "publish_time": "",
+      "slot": "B",
+      "slot_id": "D02-B",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "BR-20260827T163041Z-V2RS01",
+  "request_sha256": "e97d30a27641a334b2abbba2478c5a05199f0833292c2b9e2db66a8d9d943571",
+  "runner": {
+    "github_ref_name": "test/mv-oss-optimization-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33093609723",
+    "github_source_sha": "b9e24982ce5a9e4c84468499aa3f4b171882b191"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D02-B",
+  "status": "EXECUTED"
+}
