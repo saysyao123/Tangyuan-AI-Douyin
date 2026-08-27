@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163041Z-V2RS01",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Revised five-frame set, dense dynamic source QA, multi-shot normalization artifacts and v2 picture preview are durably written. Obtain fresh canonical guard before recording the actual HG03 acceptance and advancing Runtime."
+}
