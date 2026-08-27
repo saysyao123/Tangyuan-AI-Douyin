@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T170600Z-D02BS13RES",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh the canonical guard after writing the real D02-B subtitle implementation and QA artifacts, then validate readiness for S13."
+}
