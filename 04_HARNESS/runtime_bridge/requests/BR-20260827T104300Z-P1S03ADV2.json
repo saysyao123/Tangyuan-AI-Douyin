@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T104300Z-P1S03ADV2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "8651c8b725d64e2fef6af8846493edef3b7adfbae0d86a19cb98bab2fb0c6e51",
+    "last_transition_receipt_sha256": "085b48b76ca5211113caf6d84a17d66a5e9abdba2f6e7e4d81165a9e42685233",
+    "revision_sequence": 1,
+    "slot_fingerprint_sha256": "4218173946a9637e50d810da110efda82c9e45a09ff76c16803b86e8fde4c313",
+    "state_sha256": "2d9e23f75d9b2a675e0f493010cc0223d775433a917dfc0371a1ac9c8099ae64",
+    "transition_sequence": 2
+  },
+  "payload": {
+    "to": "S03_AUDIO_TIMELINE_LOCKED"
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Advance D02-B after user-approved seven-line lyrics and P1 Faster-Whisper Audio Timeline Package lock. Canonical AUDIO_TIMELINE_MANIFEST and AUDIO_TIMELINE_QA now both exist; package has 7/7 100% mapping, monotonic timing, durable raw evidence, SRT, QA PASS, and lock receipt."
+}
