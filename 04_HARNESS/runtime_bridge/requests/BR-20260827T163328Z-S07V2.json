@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T163328Z-S07V2",
+  "command": "ADVANCE",
+  "slot_id": "D02-B",
+  "expected_guard": {
+    "context_revision": 0,
+    "current_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "current_state_token": "FIRST_FRAME_SET_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": "d173a9160555dc31f2cb8a74aba28d1cabff0b02ffdf0ffd1ed301af55b2c784",
+    "last_transition_receipt_sha256": "a2d1f76a3be4da250c8b582c02ec07777cbad46b61b0a1e6e771e53e7fa5c10b",
+    "revision_sequence": 2,
+    "slot_fingerprint_sha256": "aac2dbee54a8a33e3a653e954b5423f619f8bfbe17fb316f5de7f6486b38dbbb",
+    "state_sha256": "df1e7c0439354f5a94b5c6481b7ddfdd1d177b8c0b2b66d6a29e1225e072f8d2",
+    "transition_sequence": 6
+  },
+  "payload": {"to": "S07_DYNAMIC_PROMPT_SET_READY"},
+  "requested_by": "chatgpt_web",
+  "reason": "The revised dense lyric-first DYNAMIC_PROMPT_SET is durably written and was used to generate the accepted five raw sources."
+}
