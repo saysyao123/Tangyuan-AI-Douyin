@@ -1,5 +1,0 @@
-﻿anchor_id,line_id,anchor,start,end,evidence,purpose,qa_status
-A01,L01,想你,1.120,1.641,SWLRC character token timestamps,director semantic anchor,PASS
-A02,L02,忍住,2.921,3.561,SWLRC character token timestamps,director semantic anchor,PASS
-A03,L03,想说,4.642,5.182,SWLRC character token timestamps,director semantic anchor,PASS
-A04,L04,算了,6.503,6.983,SWLRC character token timestamps,director semantic anchor,PASS
