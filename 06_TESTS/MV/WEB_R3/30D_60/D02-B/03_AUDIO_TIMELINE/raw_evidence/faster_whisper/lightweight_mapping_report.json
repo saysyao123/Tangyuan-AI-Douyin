@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "route": "P1_D01B_LIGHTWEIGHT_FASTER_WHISPER",
+  "slot_id": "D02-B",
+  "song_family": "有几次想你了",
+  "audio_sha256": "6a4ada560d9f7e08fe945a57dbbc574f3f802737ae102cbc3922871cea2a4bd4",
+  "workflow_run_id": 33060055071,
+  "workflow_artifact_id": 9641307843,
+  "workflow_artifact_name": "D02B-lyric-lightweight-test-33060055071",
+  "tool": {
+    "name": "faster-whisper",
+    "version": "1.2.1",
+    "model": "small",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "zh",
+    "word_timestamps": true
+  },
+  "human_audit": {
+    "status": "PASS",
+    "decision_text": "歌词OK",
+    "decision_at": "2026-08-27T18:30:00+08:00"
+  },
+  "recognized_text": "有几次想你了，有几次忍住了，有几句想说的，都变成算了，有几场雨停了，有几阵风过了，有多舍不得也该放下了",
+  "recognized_char_count": 45,
+  "sequence_ratio": 1.0,
+  "all_lines_full_coverage": true,
+  "line_starts_monotonic": true,
+  "model_init_seconds": 1.227,
+  "transcribe_seconds": 4.775,
+  "total_model_seconds": 6.002,
+  "line_results": [
+    {"line_no": 1, "text": "有几次想你了", "char_count": 6, "matched_chars": 6, "coverage": 1.0, "start": 0.0, "end": 1.88},
+    {"line_no": 2, "text": "有几次忍住了", "char_count": 6, "matched_chars": 6, "coverage": 1.0, "start": 2.02, "end": 3.64},
+    {"line_no": 3, "text": "有几句想说的", "char_count": 6, "matched_chars": 6, "coverage": 1.0, "start": 3.78, "end": 5.4},
+    {"line_no": 4, "text": "都变成算了", "char_count": 5, "matched_chars": 5, "coverage": 1.0, "start": 5.6, "end": 7.18},
+    {"line_no": 5, "text": "有几场雨停了", "char_count": 6, "matched_chars": 6, "coverage": 1.0, "start": 7.32, "end": 8.94},
+    {"line_no": 6, "text": "有几阵风过了", "char_count": 6, "matched_chars": 6, "coverage": 1.0, "start": 9.12, "end": 10.7},
+    {"line_no": 7, "text": "有多舍不得也该放下了", "char_count": 10, "matched_chars": 10, "coverage": 1.0, "start": 10.86, "end": 14.26}
+  ],
+  "decision": "LIGHTWEIGHT_ALIGNMENT_PASS"
+}
