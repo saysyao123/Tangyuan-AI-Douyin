@@ -1,6 +1,6 @@
-# Rules｜MV Human Gate Contract v1.1
+# Rules｜MV Human Gate Contract v1.2
 
-> Status: `ACTIVE / WEB_R3_HARDENED`
+> Status: `ACTIVE / WEB_R3_CORE_DATABASE_RESTORED`
 > Role: 只定义“什么时候必须停下来让用户做主观/授权判断”。技术正确性应在到达人类 Gate 前由机器 QA 完成。
 > Core: **Human reviews taste and final authority; machines review implementation correctness.**
 
@@ -22,41 +22,73 @@ WEB R2 证明两个极端都不好：
 
 位置：Stage 1 Song Discovery。
 
+#### HG01 default discovery strategy｜CORE DATABASE FIRST
+
+默认选歌主源恢复为 R3 原始策略：
+
+`CORE BENCHMARK ACCOUNTS -> DATA CENTER UPDATE -> SONG_FAMILY REPEAT / VALUE RANKING -> USER HG01`
+
 系统先完成：
-- 候选筛选；
-- 版本/热度/可执行性基本核验；
-- 3–5 个有明确差异的候选；
-- 为每个正式候选完成 `DIRECT DOUYIN EVIDENCE PACK`；
-- 每首至少 2 个近期 direct Douyin works，来自至少 2 个独立账号；
-- 报告 core benchmark coverage；
-- 对每条 direct work 验证 URL 的 landing work 本身，而不是依赖旧作品页/作者列表中的“相关推荐/近期作品”文本。
+- 从用户已经锁定的核心 Benchmark / 对照账号更新或读取当前 Data Center；
+- 将新观察作品增量写入数据库并保持 `SONG_FAMILY / account / work / audio family` 可追溯；
+- 从数据库中的跨账号重复、近期活跃、歌曲本身吸引力、歌词视觉空间与当前账号适配度筛选候选；
+- 默认给出少量最值得试听的候选，而不是对全抖音做全面歌曲搜索；
+- 如发现长期值得跟踪的新账号，可以作为 supplemental benchmark 加入数据库，但“补充账号”不是每首歌重新全网搜证据；
+- 对准备交付给用户的作品直链做最小真实性校验：链接必须打开被引用的对应博主/对应歌曲 MV 本身。
+
+公开 Web / 热榜 / 外部 Radar 的角色仅是：
+- 数据库刷新困难时辅助定位具体 work；
+- 发现值得加入长期观察池的新账号；
+- 对明显新趋势做 freshness corroboration。
+
+禁止让公开搜索结果反向成为正式候选池的主要来源，也禁止因为某首歌“更容易搜到两个完整链接”就优先于数据库中的真实核心重复信号。
+
+#### HG01 user delivery｜SIMPLE DIRECT MV HANDOFF
+
+用户看到的 HG01 应尽量简单：
+- SONG_FAMILY / 歌名；
+- 为什么从核心数据库进入候选的一句短说明；
+- 直接交付数据库中对应博主的对应歌曲 MV 视频链接；
+- 必要时只补一句版本/饱和风险提醒。
+
+不要求用户阅读：
+- Tier A/B/C；
+- Core coverage 报告；
+- 全网搜索过程；
+- 复杂 Evidence taxonomy；
+- 机器技术验证细节。
 
 用户只决定：
-- 这首歌是否值得做；
-- 哪个候选审美最对。
+- 这首歌本身是否抓人；
+- 哪个候选值得做。
 
 ### HG01 delivery separation｜HARD
 
-`SONG_CANDIDATE_SET` 是机器内部候选预检工件，不等于用户可决策的 HG01 交付。
+`SONG_CANDIDATE_SET` 是机器内部候选预检工件，不等于用户最终选择。
+
+保留的防错规则只有：
+- 候选来源必须声明为核心 Benchmark Data Center 主驱动；
+- 用户交付中引用的 Douyin work URL 必须落在被引用的对应作品本身；
+- 旧作品页/作者页中列出的“近期作品”只能用于定位，不可冒充该候选的实际交付链接；
+- 用户选择前不锁 exact BGM，不提前做 Director / First Frame；
+- 机器推荐只能辅助，不能替代用户第一耳判断。
 
 禁止：
-- 只给“歌名 + 排名 + 机器推荐”就要求用户 A/B/C/D；
-- 把 `HG01_PREFLIGHT_PREPARED` 表述为 `HG01_READY`；
-- 用搜索结果中的作者旧作品页面、作者列表页面或 profile-like listing 代替具体候选歌作品直链；
-- 用外部音乐平台试听链接替代 Direct Douyin Evidence；
-- 因为某首歌“更适合测试技术”而覆盖用户对歌曲本身第一耳审美的 Human Gate 权限。
+- 全网扫描后临时拼 3–5 首歌作为默认 HG01；
+- 为满足 Evidence 格式而淘汰数据库中真实高价值候选；
+- 把“每首重新搜 >=2 外部独立账号”当作正式生产硬要求；
+- 用外部音乐平台试听链接替代对应博主的 Douyin MV 交付；
+- 因为某首歌更适合技术实验而覆盖用户的选歌审美权限。
 
-只有同时满足以下条件，才允许向用户提交 HG01 决策：
-- `status = HG01_EVIDENCE_DELIVERY_PASS`；
-- `evidence_pack_path` 已持久化；
-- `all_candidates_min_direct_works_2 = true`；
-- `all_candidates_independent_accounts_2plus = true`；
-- `all_direct_links_landing_work_verified = true`；
-- `core_account_coverage_reported = true`；
-- `no_external_audio_substitution = true`；
-- `user_gate_delivery_mode = DIRECT_WORKS_FIRST`。
+HG01 machine-ready 最小条件：
+- `SONG_CANDIDATE_SET` 已持久化；
+- `source_mode = CORE_BENCHMARK_DATABASE`；
+- 当前候选有数据库来源/对应 work 可追溯；
+- human-facing `HG01_CANDIDATE_EVIDENCE_PACK` 已持久化；
+- 所有实际交付给用户的 direct work 链接已做 landing-work identity 校验；
+- `user_gate_delivery_mode = CORE_CREATOR_MV_DIRECT`。
 
-PASS：`REFERENCE_BGM_LOCKED`。
+PASS：`SONG_FAMILY_LOCKED`。
 
 不要让用户做人肉资料检索或版本技术校验。
 
@@ -196,7 +228,7 @@ PASS 后：`COMPLETE_LOCKED`。
 4. 明确 PASS 标准；
 5. 用户 PASS 后要锁定的 state/artifact。
 
-HG01 额外要求：**先给 direct Douyin works，再给机器判断；机器推荐只能是辅助信息。**
+HG01 额外要求：**直接给候选歌曲及其核心/补充 Benchmark 博主的对应 Douyin MV；机器判断保持简短。**
 HG02 额外要求：**必须给实际可试听的剪辑音频文件，不能只给时间码或文字方案。**
 
 禁止：
