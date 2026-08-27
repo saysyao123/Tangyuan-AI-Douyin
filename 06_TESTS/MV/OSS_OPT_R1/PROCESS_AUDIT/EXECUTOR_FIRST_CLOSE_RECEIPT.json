@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "OSS_OPT_R1_EXECUTOR_FIRST_20260827",
+  "status": "PASS",
+  "scope": "test/mv-oss-optimization-r1 only",
+  "stable_branch": "test/mv-web-r3",
+  "stable_branch_sha_verified_unchanged": "89852ec5314e7579853683ef5eb40adb09f25753",
+  "root_cause": "Canonical Runtime routed WHAT/next stage but did not make the repository's existing HOW/executor layer first-class in startup/JIT, allowing a Rule reference implementation to be mistaken for permission to build/install a new executor.",
+  "remediation": {
+    "executor_rule": "04_HARNESS/rules/mv_executor_first.md",
+    "executor_registry": "04_HARNESS/runtime/mv_stage_executor_registry.json",
+    "stage_coverage": "19/19",
+    "startup_prompt_updated": true,
+    "experiment_prompt_updated": true,
+    "skill_manifest_updated": true,
+    "stage_entry_checklist_updated": true,
+    "resume_contract_updated": true,
+    "runtime_bridge_restored_transport_only": true,
+    "slot_specific_core_helpers_removed": true,
+    "non_authoritative_d02b_s03_partial_outputs_removed": true,
+    "immutable_runtime_request_response_history_preserved": true
+  },
+  "ci": {
+    "workflow": "R3 MV Executor-First Tests",
+    "run_id": 33042064687,
+    "job_id": 98417659325,
+    "conclusion": "success",
+    "checks": [
+      "19/19 stage executor coverage",
+      "registered canonical paths exist",
+      "S02 resolves to canonical Audio Timeline toolchain",
+      "S16 resolves to transactional publish tool",
+      "no slot-specific helper in core tools",
+      "Runtime Bridge contains no D02-B/experiment stage job",
+      "startup prompts require Executor-First"
+    ]
+  },
+  "post_remediation_resume": {
+    "request_id": "BR-20260827T052000Z-EXECAUDIT",
+    "status": "EXECUTED",
+    "slot_id": "D02-B",
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "state_token": "BGM_LOCKED",
+    "transition_sequence": 2,
+    "s02_jit_now_contains": [
+      "04_HARNESS/rules/mv_audio_timeline.md",
+      "04_HARNESS/templates/mv_audio_timeline_package_contract.md",
+      "04_HARNESS/tools/mv_audio_timeline/README.md",
+      "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json",
+      "04_HARNESS/tools/mv_audio_timeline/package_tool.py",
+      "04_HARNESS/tools/mv_audio_timeline/final_gate.py"
+    ],
+    "startup_now_contains": [
+      "04_HARNESS/runtime/mv_stage_executor_registry.json",
+      "04_HARNESS/rules/mv_executor_first.md",
+      "04_HARNESS/MANIFEST.md"
+    ]
+  },
+  "d02b_next_valid_action": "Run canonical S02 Audio Timeline toolchain beginning with executor/dependency preflight; do not advance S03 until Final Gate writes a valid locked package manifest.",
+  "promotion_status": "PROMOTE_RUNTIME_CANDIDATE_AFTER_FULL_D02B_EXPERIMENT"
+}
