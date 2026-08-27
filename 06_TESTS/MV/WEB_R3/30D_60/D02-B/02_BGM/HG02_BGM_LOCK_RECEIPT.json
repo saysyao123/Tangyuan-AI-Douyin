@@ -1,0 +1,20 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG02",
+  "stage_id": "S02_HG02_BGM_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "用户明确选择 B 版：歌曲《有几次想你了》，使用抖音 exact music asset 7670104695834282815，同一原声，仅在结尾 0.8 秒做柔和淡出。",
+  "approved_artifacts": [
+    "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+    "02_BGM/BGM_DISCOVERY/audio_probe_report.json"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "BGM_CANDIDATE_PACKAGE",
+      "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "sha256": "c424dd7c58346182da78f374ba667138e6c860640cf964e9d9d5505c151b4485"
+    }
+  ],
+  "state_stage_before": "S01_HG01_SONG_LOCKED",
+  "created_at": "2026-08-27T04:50:02Z"
+}
