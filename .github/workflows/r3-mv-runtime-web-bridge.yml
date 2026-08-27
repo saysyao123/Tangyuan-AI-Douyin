@@ -173,13 +173,19 @@ jobs:
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
+      - name: Install ffmpeg for audio QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg >/dev/null
+          ffprobe -version | head -n 1
+
       - name: Download both CDN asset mirrors and run binary audio QA
         shell: bash
         run: |
           set -euo pipefail
           OUT='06_TESTS/MV/WEB_R3/30D_60/D02-B/02_BGM/BGM_DISCOVERY'
-          REPORT="$OUT/asset_probe_report.json"
-          AUDIO_REPORT="$OUT/audio_probe_report.json"
           mkdir -p /tmp/hg02_audio
 
           python - <<'PY' > /tmp/music_urls.txt
@@ -194,7 +200,6 @@ jobs:
           curl -fsSL --retry 2 --retry-delay 2 "${URLS[0]}" -o /tmp/hg02_audio/asset_mirror_1.mp3
           curl -fsSL --retry 2 --retry-delay 2 "${URLS[1]}" -o /tmp/hg02_audio/asset_mirror_2.mp3
 
-          sha256sum /tmp/hg02_audio/asset_mirror_1.mp3 /tmp/hg02_audio/asset_mirror_2.mp3 > /tmp/sha.txt
           ffprobe -v error -show_entries format=duration:stream=codec_name,sample_rate,channels -of json /tmp/hg02_audio/asset_mirror_1.mp3 > /tmp/probe1.json
           ffprobe -v error -show_entries format=duration:stream=codec_name,sample_rate,channels -of json /tmp/hg02_audio/asset_mirror_2.mp3 > /tmp/probe2.json
 
