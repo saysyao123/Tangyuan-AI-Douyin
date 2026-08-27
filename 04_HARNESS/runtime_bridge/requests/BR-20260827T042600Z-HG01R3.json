@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "BR-20260827T042600Z-HG01R3",
+  "command": "RESUME",
+  "slot_id": "D02-B",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh D02-B canonical guard after restoring backward-compatible Runtime registries. User selected 有几次想你了 at HG01."
+}
