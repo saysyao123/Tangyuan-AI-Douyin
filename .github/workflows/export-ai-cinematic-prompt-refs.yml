@@ -1,0 +1,46 @@
+name: Export AI cinematic prompt reference pack
+
+on:
+  push:
+    branches:
+      - test/mv-lean-r1
+    paths:
+      - '.github/workflows/export-ai-cinematic-prompt-refs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download selected cinematic reference images
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p refs
+          base='https://raw.githubusercontent.com/Leo414x/AI_Cinematic_Prompt/main/demo/images'
+          for f in \
+            rain-umbrella-portrait.png \
+            neon-laundromat-window.png \
+            neon-store-window-portrait.png \
+            astronaut-frosted-helmet-closeup.png \
+            cockpit-crew-earth-view.png \
+            capsule-drifting-below-earth.png; do
+            curl -L --fail --retry 3 "$base/$f" -o "refs/$f"
+            file "refs/$f"
+          done
+          cat > refs/README.txt <<'EOF'
+Source repository: Leo414x/AI_Cinematic_Prompt
+Purpose: MV first-frame CINEMATIC LANGUAGE benchmarking only.
+The selected images are NOT target color/style copies. Use them to study motivated lighting, lens/composition, tonal separation, practical light, negative space, depth, and photographed-not-generated feeling.
+EOF
+
+      - name: Upload reference pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-cinematic-prompt-selected-refs
+          path: refs
+          if-no-files-found: error
+          retention-days: 7
