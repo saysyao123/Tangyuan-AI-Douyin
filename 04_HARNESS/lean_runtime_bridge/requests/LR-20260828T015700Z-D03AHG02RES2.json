@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T015700Z-D03AHG02RES2",
+  "command": "RESUME",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh guard after adding the canonical BGM_CANDIDATE_PACKAGE required by HG02 machine preflight."
+}
