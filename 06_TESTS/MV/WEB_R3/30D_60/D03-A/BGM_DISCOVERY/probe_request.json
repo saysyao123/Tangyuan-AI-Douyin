@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "status": "REQUESTED",
+  "slot_id": "D03-A",
+  "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+  "song_family": "爱让人脑袋空空",
+  "requested_stage": "S01_HG01_SONG_LOCKED",
+  "targets": [
+    {
+      "account": "火乐烁",
+      "aweme_id": "7673830659274810033",
+      "work_url": "https://www.douyin.com/video/7673830659274810033",
+      "observed_audio_version": "ELECTRONIC+DOUYIN_ORIGINAL_SOUND:火乐烁"
+    },
+    {
+      "account": "乐青春",
+      "aweme_id": "7672476381650263962",
+      "work_url": "https://www.douyin.com/video/7672476381650263962",
+      "observed_audio_version": "DOUYIN_ORIGINAL_SOUND:乐乐动画"
+    }
+  ],
+  "decision_policy": "DOUYIN_FIRST; preserve distinct direct assets as separate HG02 options; do not substitute a generic full-track before user listening.",
+  "created_from_hg01": "A / 爱让人脑袋空空"
+}
