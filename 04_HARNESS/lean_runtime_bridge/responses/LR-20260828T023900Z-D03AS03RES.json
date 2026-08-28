@@ -1,0 +1,216 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-28T02:39:22Z",
+  "error": null,
+  "execution": {
+    "ok": true,
+    "outcome": "RESUMED",
+    "transitions_advanced": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "720e1ea9842fb3ebf9e513e8d1848b7eef38c62babaa37031c6143377d3a0a25",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "b33fa974a94e1db03658a6091b927261c08162a684d5bc33da01fd366a43b0e0",
+    "state_sha256": "cbead01c0176d65715dfd2d6b881933861d1693de7dcaf0358f796a9b32e56ee",
+    "transition_sequence": 2
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_audio_timeline.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_AUDIO_TIMELINE_PACKAGE",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md"
+      ],
+      "next_stage": "S03_AUDIO_TIMELINE_LOCKED",
+      "summary": "Build and machine-validate the trusted Audio Timeline Package from the locked BGM before any timing-dependent director work."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "canonical_tools": [
+        "04_HARNESS/tools/mv_audio_timeline/package_tool.py",
+        "04_HARNESS/tools/mv_audio_timeline/final_gate.py",
+        "04_HARNESS/tools/mv_audio_timeline/lightweight_align.py",
+        "04_HARNESS/tools/mv_audio_timeline/run_alignment.py"
+      ],
+      "dependency_policy": "P0_SAME_VERSION_TIMED_LYRIC_THEN_P1_LIGHTWEIGHT_ASR_THEN_P2_HEAVY_ALIGNMENT_ONLY_ON_FAILURE",
+      "execution_class": "CANONICAL_TOOLCHAIN",
+      "executor_id": "AUDIO_TIMELINE_PRIORITY_ROUTER",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/rules/mv_audio_timeline_route.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_audio_timeline.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_AUDIO_TIMELINE_PACKAGE",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md"
+      ],
+      "next_stage": "S03_AUDIO_TIMELINE_LOCKED",
+      "summary": "Build and machine-validate the trusted Audio Timeline Package from the locked BGM before any timing-dependent director work."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "canonical_tools": [
+        "04_HARNESS/tools/mv_audio_timeline/package_tool.py",
+        "04_HARNESS/tools/mv_audio_timeline/final_gate.py",
+        "04_HARNESS/tools/mv_audio_timeline/lightweight_align.py",
+        "04_HARNESS/tools/mv_audio_timeline/run_alignment.py"
+      ],
+      "dependency_policy": "P0_SAME_VERSION_TIMED_LYRIC_THEN_P1_LIGHTWEIGHT_ASR_THEN_P2_HEAVY_ALIGNMENT_ONLY_ON_FAILURE",
+      "execution_class": "CANONICAL_TOOLCHAIN",
+      "executor_id": "AUDIO_TIMELINE_PRIORITY_ROUTER",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_audio_timeline.md",
+        "04_HARNESS/rules/mv_audio_timeline_route.md",
+        "04_HARNESS/tools/mv_audio_timeline/README.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "LR-20260828T023900Z-D03AS03RES",
+  "request_sha256": "0ad9d40738286a6ba7cd1acbd43fa547ad7f3c21b495d46a7e50ce0c1167c0e9",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33136557152",
+    "github_source_sha": "14195d8a1282a8eb40519920f4f993ad785f6ebf"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}
