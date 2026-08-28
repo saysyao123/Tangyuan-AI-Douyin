@@ -40,6 +40,14 @@ jobs:
           sudo apt-get install -y ffmpeg
           python -m pip install --disable-pip-version-check 'faster-whisper==1.2.1'
 
+      - name: Compile reusable Audio Timeline executor
+        run: |
+          python -m py_compile \
+            04_HARNESS/tools/mv_audio_timeline/execute_request.py \
+            04_HARNESS/tools/mv_audio_timeline/lightweight_align.py \
+            04_HARNESS/tools/mv_audio_timeline/package_tool.py \
+            04_HARNESS/tools/mv_audio_timeline/final_gate.py
+
       - name: Execute pending Audio Timeline requests
         id: execute
         shell: bash
@@ -53,191 +61,7 @@ jobs:
             fi
             found=1
             echo "Processing $req"
-            REQ="$req" python - <<'PY'
-          import csv, hashlib, json, os, re, statistics, subprocess, sys, urllib.parse, urllib.request
-          from pathlib import Path
-
-          REPO = Path.cwd()
-          req_path = REPO / os.environ['REQ']
-          req = json.loads(req_path.read_text(encoding='utf-8'))
-          pkg = req_path.parent
-          tools = REPO / '04_HARNESS/tools/mv_audio_timeline'
-          package_tool = tools / 'package_tool.py'
-          lightweight = tools / 'lightweight_align.py'
-          final_gate = tools / 'final_gate.py'
-          tmp = Path('/tmp') / f"mv_timeline_{req['slot_id']}"
-          if tmp.exists():
-              import shutil; shutil.rmtree(tmp)
-          tmp.mkdir(parents=True)
-          audio = tmp / 'locked_bgm.mp3'
-          lrc = tmp / 'source.lrc'
-          lyrics = tmp / 'trusted_lyrics.txt'
-          asr_pkg = tmp / 'asr_pkg'
-          cross = tmp / 'asr_crosscheck.csv'
-
-          def sha256(path):
-              h=hashlib.sha256()
-              with path.open('rb') as f:
-                  for b in iter(lambda:f.read(1024*1024),b''): h.update(b)
-              return h.hexdigest()
-
-          def get_text(url, headers=None):
-              h={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/139 Safari/537.36'}
-              if headers: h.update(headers)
-              r=urllib.request.Request(url,headers=h)
-              with urllib.request.urlopen(r,timeout=30) as resp:
-                  return resp.read().decode('utf-8','replace')
-
-          def download(url, path):
-              h={'User-Agent':'Mozilla/5.0','Referer':'https://www.douyin.com/'}
-              r=urllib.request.Request(url,headers=h)
-              with urllib.request.urlopen(r,timeout=120) as resp, path.open('wb') as f:
-                  while True:
-                      b=resp.read(1024*1024)
-                      if not b: break
-                      f.write(b)
-
-          def run(cmd, check=True):
-              print('+', ' '.join(map(str,cmd)))
-              p=subprocess.run([str(x) for x in cmd],text=True,capture_output=True)
-              if p.stdout: print(p.stdout)
-              if p.stderr: print(p.stderr,file=sys.stderr)
-              if check and p.returncode!=0: raise RuntimeError(f'command failed rc={p.returncode}: {cmd}')
-              return p
-
-          def artist_name(value):
-              if isinstance(value, dict):
-                  return str(value.get('name') or value.get('artistName') or value.get('artist') or '')
-              return str(value or '')
-
-          def song_artists(song):
-              values = song.get('artists') or song.get('ar') or []
-              if isinstance(values, (str, dict)):
-                  values = [values]
-              return [artist_name(x) for x in values if artist_name(x)]
-
-          # 1) Exact locked audio identity.
-          download(req['selected_direct_music_url'], audio)
-          got=sha256(audio)
-          if got != req['selected_audio_sha256']:
-              raise RuntimeError(f"locked audio SHA mismatch expected={req['selected_audio_sha256']} got={got}")
-
-          # 2) P0 evidence discovery: timed LRC from public music metadata.
-          title=req['lyric_query_title']; artist=req.get('lyric_query_artist','')
-          search=urllib.parse.quote(f'{title} {artist}'.strip())
-          raw=get_text(f'https://music.163.com/api/search/get/web?csrf_token=&s={search}&type=1&offset=0&total=true&limit=20', {'Referer':'https://music.163.com/'})
-          data=json.loads(raw); songs=((data.get('result') or {}).get('songs') or [])
-          chosen=None
-          for s in songs:
-              if not isinstance(s, dict):
-                  continue
-              arts=' / '.join(song_artists(s))
-              name=str(s.get('name') or '')
-              if title in name and (not artist or artist in arts): chosen=s; break
-          if chosen is None:
-              for s in songs:
-                  if isinstance(s, dict) and title in str(s.get('name') or ''): chosen=s; break
-          if chosen is None: raise RuntimeError('P0 timed lyric discovery found no plausible NetEase candidate')
-          sid=chosen['id']
-          lj=json.loads(get_text(f'https://music.163.com/api/song/lyric?id={sid}&lv=1&kv=1&tv=-1', {'Referer':'https://music.163.com/'}))
-          lrc_text=(lj.get('lrc') or {}).get('lyric') or ''
-          if not lrc_text: raise RuntimeError('P0 candidate has no LRC')
-          lrc.write_text(lrc_text,encoding='utf-8')
-
-          lrc_re=re.compile(r'\[(\d+):(\d+(?:\.\d+)?)\](.*)$')
-          rows=[]
-          for rawline in lrc_text.splitlines():
-              m=lrc_re.search(rawline)
-              if not m: continue
-              t=int(m.group(1))*60+float(m.group(2)); text=m.group(3).strip()
-              if not text: continue
-              rows.append((t,text))
-          lo=float(req.get('lyric_start_min_s',0.0)); dur=float(req['selected_duration_s'])
-          ignore_prefixes=('词：','曲：','制作人','监制','统筹','企划','出品人','未经著作权人')
-          sung=[(t,text) for t,text in rows if lo <= t <= dur+0.05 and not text.startswith(ignore_prefixes)]
-          if len(sung) < 2: raise RuntimeError(f'P0 LRC produced too few sung lines: {len(sung)}')
-          lyrics.write_text('\n'.join(text for _,text in sung)+'\n',encoding='utf-8')
-
-          # 3) One P1 ASR pass against the exact locked audio. No P2 unless this fails.
-          run([sys.executable,package_tool,'init','--package',asr_pkg,'--audio',audio,'--lyrics',lyrics,
-               '--title',title,'--artist',artist or 'unknown','--version',req.get('version_label','Douyin exact asset'),
-               '--source-clip-start','0','--source-clip-end',str(dur)])
-          p=run([sys.executable,lightweight,'--package',asr_pkg,'--audio',audio,'--model','small','--device','cpu','--compute-type','int8','--language','zh'],check=False)
-          if p.returncode != 0:
-              raise RuntimeError('P1 lightweight ASR did not pass; P2 escalation required, not attempted automatically in this executor')
-          asr_candidate=asr_pkg/'line_timeline.candidate.csv'
-          if not asr_candidate.exists(): raise RuntimeError('P1 candidate timeline missing')
-
-          # 4) Build canonical package from LRC, then use P1 as independent timing identity check.
-          run([sys.executable,package_tool,'init','--package',pkg,'--audio',audio,'--lyrics',lyrics,
-               '--title',title,'--artist',artist or 'unknown','--version',req.get('version_label','Douyin exact asset'),
-               '--source-clip-start','0','--source-clip-end',str(dur)])
-          source_identity=f"NetEase timed lyric song_id={sid}; title={chosen.get('name')}; artist={' / '.join(song_artists(chosen))}; independently checked against exact Douyin asset by P1 Faster-Whisper"
-          run([sys.executable,package_tool,'from-lrc','--package',pkg,'--lrc',lrc,'--source-identity',source_identity,'--platform-song-id',str(sid)])
-
-          def read_csv(path):
-              with path.open('r',encoding='utf-8-sig',newline='') as f: return list(csv.DictReader(f))
-          lrc_rows=read_csv(pkg/'line_timeline.candidate.csv'); asr_rows=read_csv(asr_candidate)
-          if len(lrc_rows)!=len(asr_rows): raise RuntimeError(f'P0/P1 line count mismatch {len(lrc_rows)} != {len(asr_rows)}')
-          deltas=[]
-          with cross.open('w',encoding='utf-8',newline='') as f:
-              w=csv.DictWriter(f,fieldnames=['line_id','lyric','clip_start_s','clip_end_s']); w.writeheader()
-              for a in asr_rows:
-                  w.writerow({k:a[k] for k in ['line_id','lyric','clip_start_s','clip_end_s']})
-          for l,a in zip(lrc_rows,asr_rows):
-              if re.sub(r'\W','',l['lyric']) != re.sub(r'\W','',a['lyric']): raise RuntimeError('P0/P1 lyric sequence mismatch')
-              deltas.append(abs(float(l['clip_start_s'])-float(a['clip_start_s'])))
-          median=statistics.median(deltas); max_delta=max(deltas)
-          if median > float(req.get('max_median_start_delta_s',0.25)) or max_delta > float(req.get('max_line_start_delta_s',0.50)):
-              raise RuntimeError(f'P0/P1 timing conflict median={median:.3f}s max={max_delta:.3f}s')
-
-          note=f'P0 timed LRC independently verified by one P1 Faster-Whisper pass; full lyric mapping passed; median start delta={median:.3f}s; max={max_delta:.3f}s; exact audio SHA verified.'
-          run([sys.executable,package_tool,'mark-qa','--package',pkg,'--pass-qa','--note',note])
-          run([sys.executable,package_tool,'export-srt','--package',pkg])
-
-          # 5) Minimal editor-facing anchors and music events derived from verified line boundaries.
-          final_rows=read_csv(pkg/'line_timeline.csv')
-          with (pkg/'anchor_words.csv').open('w',encoding='utf-8',newline='') as f:
-              fields=['anchor_id','line_id','phrase','start_s','end_s','qa_status']; w=csv.DictWriter(f,fieldnames=fields); w.writeheader()
-              for i,r in enumerate(final_rows,1):
-                  st=float(r['clip_start_s']); en=float(r['clip_end_s']); phrase=r['lyric'][:2]
-                  w.writerow({'anchor_id':f'A{i:02d}','line_id':r['line_id'],'phrase':phrase,'start_s':f'{st:.3f}','end_s':f'{min(en,st+0.45):.3f}','qa_status':'PASS'})
-          with (pkg/'music_events.csv').open('w',encoding='utf-8',newline='') as f:
-              fields=['event_id','time_s','type','description','qa_status']; w=csv.DictWriter(f,fieldnames=fields); w.writeheader()
-              for i,r in enumerate(final_rows,1):
-                  w.writerow({'event_id':f'E{i:02d}','time_s':r['clip_start_s'],'type':'LYRIC_ENTRY','description':f"verified lyric entry {r['line_id']}",'qa_status':'PASS'})
-              w.writerow({'event_id':f'E{len(final_rows)+1:02d}','time_s':f'{dur:.3f}','type':'TAIL_END','description':'locked asset tail end','qa_status':'PASS'})
-
-          report=(
-              '# Audio Timeline Alignment QA\n\n'
-              'Status: `PASS`\n\n'
-              f'- Slot: `{req["slot_id"]}`\n'
-              '- Final timing truth: `SAME_VERSION_LRC`, verified against exact locked Douyin asset by one P1 Faster-Whisper pass.\n'
-              f'- Exact audio SHA-256: `{got}`\n'
-              f'- Timed lyric source: NetEase song id `{sid}`.\n'
-              f'- Line count: `{len(final_rows)}`.\n'
-              f'- P0/P1 median line-start delta: `{median:.3f}s`.\n'
-              f'- P0/P1 maximum line-start delta: `{max_delta:.3f}s`.\n'
-              '- P1 mapping: full coverage and monotonic starts required by executor.\n'
-              '- P2 heavy alignment: `NOT RUN` because P1 verification passed.\n'
-              '- Decision: `PASS / LOCK AUDIO TIMELINE`.\n'
-          )
-          (pkg/'alignment_qa_report.md').write_text(report,encoding='utf-8')
-          run([sys.executable,final_gate,'seal-qa','--package',pkg])
-          run([sys.executable,final_gate,'validate','--package',pkg,'--audio',audio,'--crosscheck',cross,'--write-manifest'])
-
-          # Persist the P1 report as evidence but do not persist models/audio.
-          p1_report=asr_pkg/'raw_evidence/faster_whisper/lightweight_mapping_report.json'
-          if p1_report.exists():
-              (pkg/'p1_lightweight_mapping_report.json').write_bytes(p1_report.read_bytes())
-          route={
-              'schema_version':'1.0-lean-r1','slot_id':req['slot_id'],'route':'P0_LRC_VERIFIED_BY_P1_LIGHTWEIGHT_ASR',
-              'p0_song_id':sid,'p1_model':'faster-whisper-small','median_start_delta_s':round(median,4),
-              'max_start_delta_s':round(max_delta,4),'p2_run':False,'decision':'PASS'
-          }
-          (pkg/'route_receipt.json').write_text(json.dumps(route,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          print(json.dumps(route,ensure_ascii=False))
-          PY
+            python 04_HARNESS/tools/mv_audio_timeline/execute_request.py --request "$req"
           done < <(find 06_TESTS/MV/WEB_R3/30D_60 -path '*/03_AUDIO_TIMELINE/timeline_request.json' -type f | sort)
           echo "found=$found" >> "$GITHUB_OUTPUT"
 
@@ -249,8 +73,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           find 06_TESTS/MV/WEB_R3/30D_60 -path '*/03_AUDIO_TIMELINE/package_manifest.json' -type f -print0 | while IFS= read -r -d '' manifest; do
-            dir="$(dirname "$manifest")"
-            git add "$dir"
+            git add "$(dirname "$manifest")"
           done
           if git diff --cached --quiet; then
             echo 'No Audio Timeline changes to commit.'
