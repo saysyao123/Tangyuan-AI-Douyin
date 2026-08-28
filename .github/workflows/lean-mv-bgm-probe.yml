@@ -1,0 +1,85 @@
+name: Lean MV Douyin BGM Probe
+
+on:
+  push:
+    branches:
+      - test/mv-lean-r1
+    paths:
+      - '04_HARNESS/tools/mv_bgm_discovery/probe_douyin_assets.py'
+      - '06_TESTS/MV/WEB_R3/30D_60/**/BGM_DISCOVERY/probe_request.json'
+      - '.github/workflows/lean-mv-bgm-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deterministic media probe dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libchromaprint-tools
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Compile generic probe executor
+        run: python -m py_compile 04_HARNESS/tools/mv_bgm_discovery/probe_douyin_assets.py
+
+      - name: Process pending BGM probe requests
+        id: probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/hg02_artifacts
+          found=0
+          while IFS= read -r req; do
+            slot_root="${req%/BGM_DISCOVERY/probe_request.json}"
+            report="$slot_root/BGM_DISCOVERY/asset_probe_report.json"
+            if [[ -f "$report" ]]; then
+              continue
+            fi
+            found=1
+            echo "Processing $req"
+            python 04_HARNESS/tools/mv_bgm_discovery/probe_douyin_assets.py --request "$req"
+            slot_id="$(basename "$slot_root")"
+            if [[ -d "$slot_root/_hg02_audio_artifact" ]]; then
+              mkdir -p "/tmp/hg02_artifacts/$slot_id"
+              cp -a "$slot_root/_hg02_audio_artifact/." "/tmp/hg02_artifacts/$slot_id/"
+            fi
+          done < <(find 06_TESTS/MV/WEB_R3/30D_60 -path '*/BGM_DISCOVERY/probe_request.json' -type f | sort)
+          echo "found=$found" >> "$GITHUB_OUTPUT"
+
+      - name: Persist provenance reports only
+        if: steps.probe.outputs.found == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          find 06_TESTS/MV/WEB_R3/30D_60 -path '*/BGM_DISCOVERY/asset_probe_report.json' -type f -print0 | xargs -0 -r git add
+          if git diff --cached --quiet; then
+            echo 'No provenance report changes to commit.'
+          else
+            git commit -m 'lean-r1: persist generic Douyin BGM probe report'
+            git push
+          fi
+
+      - name: Upload HG02 listening artifacts
+        if: steps.probe.outputs.found == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-hg02-bgm-probe
+          path: /tmp/hg02_artifacts
+          if-no-files-found: error
+          retention-days: 7
