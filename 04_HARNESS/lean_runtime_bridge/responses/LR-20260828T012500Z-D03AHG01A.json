@@ -1,0 +1,260 @@
+{
+  "command": "ACCEPT_GATE",
+  "completed_at": "2026-08-28T01:41:35Z",
+  "error": null,
+  "execution": {
+    "advance": {
+      "command": "ADVANCE",
+      "controller_payload": {
+        "from_stage": "S00_SLOT_CREATED",
+        "ok": true,
+        "state_token": "SONG_LOCKED",
+        "to_stage": "S01_HG01_SONG_LOCKED",
+        "transition_receipt": "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+        "verified": {
+          "checked_context_receipts": [],
+          "checked_transition_receipts": [
+            "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+            "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json"
+          ],
+          "context": {
+            "canonical_v2": true,
+            "multi_shot": false,
+            "program_30d60": true,
+            "web": true
+          },
+          "context_revision": 0,
+          "current_stage": "S01_HG01_SONG_LOCKED",
+          "current_state_token": "SONG_LOCKED",
+          "highest_contiguous_valid_stage": "S01_HG01_SONG_LOCKED",
+          "ok": true,
+          "slot_id": "D03-A",
+          "transition_sequence": 1
+        }
+      },
+      "ok": true,
+      "returncode": 0
+    },
+    "from_stage": "S00_SLOT_CREATED",
+    "gate": "HG01",
+    "ok": true,
+    "outcome": "GATE_ACCEPTED_AND_ADVANCED",
+    "record": {
+      "command": "RECORD_HUMAN_GATE",
+      "controller_payload": {
+        "gate": "HG01",
+        "next_action": "advance --to S01_HG01_SONG_LOCKED",
+        "ok": true,
+        "receipt": "01_SONG/HG01_SELECTION_RECEIPT.json",
+        "stage_id": "S01_HG01_SONG_LOCKED",
+        "state_advanced": false
+      },
+      "ok": true,
+      "returncode": 0
+    },
+    "to_stage": "S01_HG01_SONG_LOCKED",
+    "transitions_advanced": 1
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "99e27abb0d398daa89b5a7993e5d5f3f0e081d93e29cb04987629d34089bb539",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "929554ee944885f4eaac29efa05a27b331fbd4d658d51635c90a15b9381e1963",
+    "state_sha256": "665abee36c89f96247c79d5d25737f133caadf2bc88b2249237f9eba7cc68ccc",
+    "transition_sequence": 1
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_bgm_discovery.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "DISCOVER_AND_LOCK_EXACT_BGM",
+      "human_gate": "HG02",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S02_HG02_BGM_LOCKED",
+      "summary": "Discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "REUSE_EXISTING_RESOLVER_AND_FINGERPRINT_PATH",
+      "execution_class": "EVIDENCE_ORCHESTRATION",
+      "executor_id": "DOUYIN_FIRST_BGM_DISCOVERY",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S00_SLOT_CREATED",
+    "current_state_token": "SLOT_CREATED",
+    "jit_reads": [
+      "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "PREPARE_HG01_SONG_SELECTION",
+      "human_gate": "HG01",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S01_HG01_SONG_LOCKED",
+      "summary": "Build or refresh the machine-screened song candidate set and immediately run HG01; do not start BGM or visual work before HG01 PASS."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_DEPENDENCY",
+      "execution_class": "DATA_ORCHESTRATION",
+      "executor_id": "HG01_CORE_DATABASE_ORCHESTRATION",
+      "jit_reads": [
+        "05_IP_ASSETS/MV_30D_60_OPERATING_SYSTEM.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "LR-20260828T012500Z-D03AHG01A",
+  "request_sha256": "07db40f505e4fcf829257bde5001e26008ff7e42b6f361e90a0b203306888306",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33133624235",
+    "github_source_sha": "a9d51b658e05dcd8ccedf89d17d804fc6d95fff1"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}

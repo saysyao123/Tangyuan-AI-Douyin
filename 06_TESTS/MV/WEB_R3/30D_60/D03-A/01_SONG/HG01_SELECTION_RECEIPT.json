@@ -1,0 +1,20 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG01",
+  "stage_id": "S01_HG01_SONG_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "A吧。我觉得A还挺好的。 Selected SONG_FAMILY=爱让人脑袋空空.",
+  "approved_artifacts": [
+    "01_SONG/SONG_CANDIDATE_SET.json",
+    "01_SONG/HG01_CANDIDATE_EVIDENCE_PACK_v1.md"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "SONG_CANDIDATE_SET",
+      "path": "01_SONG/SONG_CANDIDATE_SET.json",
+      "sha256": "1faad672c40554597414e5d00e0375dd2fdc2e7d9c8a29bcbad0311a841d6018"
+    }
+  ],
+  "state_stage_before": "S00_SLOT_CREATED",
+  "created_at": "2026-08-28T01:41:34Z"
+}
