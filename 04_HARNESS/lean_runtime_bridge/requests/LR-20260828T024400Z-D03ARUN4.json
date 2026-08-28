@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T024400Z-D03ARUN4",
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Director Beat Map and Director Plan are now canonical; advance S05 and stop at the nearest first-frame capability/HG03 prerequisite.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "2a2eebb56963029770106b3f9577e2d40e2f68a87e395afea8f78d4936c2d589",
+    "slot_fingerprint_sha256": "ada0d45725862b53b2f4fba85b82ea66c851e072c44a0945d633d4240643f3c1",
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "transition_sequence": 4,
+    "last_transition_receipt_sha256": "d9ab91f343e514b5b96586ce6477e2b728b2ee651845fa0a358a2add64755759",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
