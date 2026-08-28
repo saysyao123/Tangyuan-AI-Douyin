@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.1-generic",
+  "slot_id": "D03-A",
+  "song_family": "爱让人脑袋空空",
+  "discovery_priority_used": "P1_VERIFIED_DOUYIN_WORKS",
+  "resolver": "BugPk /api/douyin",
+  "probe_priority": "DIRECT_MUSIC_ASSET_FIRST_VIDEO_FALLBACK",
+  "sampled_aweme_ids": [
+    "7673830659274810033",
+    "7672476381650263962"
+  ],
+  "works": [
+    {
+      "account": "火乐烁",
+      "aweme_id": "7673830659274810033",
+      "work_url": "https://www.douyin.com/video/7673830659274810033",
+      "observed_audio_version": "ELECTRONIC+DOUYIN_ORIGINAL_SOUND:火乐烁",
+      "detail_msg": "解析成功-esa",
+      "detail_title": "#爱让人脑袋空空电音版 爱总是 好了疤 忘了痛 让人脑袋空空#音乐分享 #火乐烁",
+      "author": {
+        "name": "火乐烁",
+        "id": "4065329307451802",
+        "avatar": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_a1ca954bff3c0006a6034da2df0bee8b.jpeg?from=327834062"
+      },
+      "music": {
+        "title": "@火乐烁创作的原声",
+        "author": "火乐烁",
+        "url": "https://lf3-music-east.douyinstatic.com/obj/ies-music-hj/7673830691573893946.mp3",
+        "cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_a1ca954bff3c0006a6034da2df0bee8b.jpeg?from=327834062"
+      },
+      "music_asset_id_from_url": null,
+      "direct_music_asset": {
+        "path": "1_火乐烁_direct_music_asset.mp3",
+        "sha256": "06002970e402cf2b7d0e200fc026e5c2b54b771441f8186dfed190ea7a154917",
+        "ffprobe": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "mp3",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2,
+              "bit_rate": "192000"
+            }
+          ],
+          "format": {
+            "duration": "31.477542"
+          }
+        },
+        "fp_duration": 31.0,
+        "fingerprint_length": 233
+      },
+      "video_fallback": {
+        "skipped_reason": "DIRECT_MUSIC_ASSET_AVAILABLE"
+      }
+    },
+    {
+      "account": "乐青春",
+      "aweme_id": "7672476381650263962",
+      "work_url": "https://www.douyin.com/video/7672476381650263962",
+      "observed_audio_version": "DOUYIN_ORIGINAL_SOUND:乐乐动画",
+      "detail_msg": "解析成功-esa",
+      "detail_title": "爱让人脑袋空空  受过的伤记不住，才会一再奔赴同一份汹涌。#音乐推荐 #爱让人脑袋空空 #旷野自由感 #当山川不只是出现在教科书上 #旅行推荐官",
+      "author": {
+        "name": "乐 ♩青春",
+        "id": "1029578227458845",
+        "avatar": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813_oA85zNHNAh5CIhHZWAygfCGMEYegAA0GDAqARB.jpeg?from=327834062"
+      },
+      "music": {
+        "title": "@乐乐动画创作的原声",
+        "author": "乐乐动画",
+        "url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7671249164676008750.mp3",
+        "cover": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813_oQi2EKClAgAICC9UAhb1NAhAZobzmfPeVD4XTA.jpeg?from=327834062"
+      },
+      "music_asset_id_from_url": "7671249164676008750",
+      "direct_music_asset": {
+        "path": "2_乐青春_direct_music_asset.mp3",
+        "sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+        "ffprobe": {
+          "programs": [],
+          "streams": [
+            {
+              "codec_name": "mp3",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2,
+              "bit_rate": "192000"
+            }
+          ],
+          "format": {
+            "duration": "31.921625"
+          }
+        },
+        "fp_duration": 31.0,
+        "fingerprint_length": 236
+      },
+      "video_fallback": {
+        "skipped_reason": "DIRECT_MUSIC_ASSET_AVAILABLE"
+      }
+    }
+  ],
+  "pairwise_fingerprint": [
+    {
+      "a": "7673830659274810033",
+      "b": "7672476381650263962",
+      "basis": "direct_music_asset",
+      "score": 0.992623,
+      "shift": 0,
+      "overlap": 233
+    }
+  ],
+  "direct_music_asset_hashes": [
+    "06002970e402cf2b7d0e200fc026e5c2b54b771441f8186dfed190ea7a154917",
+    "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769"
+  ],
+  "listening_options": [
+    {
+      "option": "A",
+      "file": "HG02_option_A_火乐烁.mp3",
+      "sha256": "06002970e402cf2b7d0e200fc026e5c2b54b771441f8186dfed190ea7a154917",
+      "source_aweme_id": "7673830659274810033",
+      "source_account": "火乐烁",
+      "music_title": "@火乐烁创作的原声",
+      "music_author": "火乐烁",
+      "duration_s": 31.477542,
+      "source_kind": "direct_douyin_music_asset"
+    },
+    {
+      "option": "B",
+      "file": "HG02_option_B_乐青春.mp3",
+      "sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+      "source_aweme_id": "7672476381650263962",
+      "source_account": "乐青春",
+      "music_title": "@乐乐动画创作的原声",
+      "music_author": "乐乐动画",
+      "duration_s": 31.921625,
+      "source_kind": "direct_douyin_music_asset"
+    }
+  ],
+  "decision": "MULTIPLE_DOUYIN_AUDIO_VARIANTS_FOR_HG02",
+  "hg02_ready": true
+}
