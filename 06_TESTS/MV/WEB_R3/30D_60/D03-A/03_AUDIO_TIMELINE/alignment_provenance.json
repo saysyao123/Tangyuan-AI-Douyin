@@ -1,0 +1,12 @@
+{
+  "package_version": "1.0",
+  "evidence_class": "ASR_FORCED_ALIGNMENT",
+  "tool": "xingyu-lyrics-aligner",
+  "tool_version": "xingyu-lyrics-aligner 0.7.0",
+  "raw_evidence_path": "raw_evidence/normalized_timeline.csv",
+  "raw_evidence_sha256": "1d4dd513af1357d030aa070d256745b94c7184406fdcf2128e9ef07acfbc858a",
+  "ground_truth_qa": "PASS",
+  "qa_note": "P2 trusted-lyrics CTC ran on exact locked audio SHA f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769. P0 same-version LRC retained as supporting evidence. P0/P2 line-start median delta=0.200s max=0.367s. 0 >0.50s conflicts were resolved in favor of direct exact-audio CTC because P2 preserves trusted lyric order and explicit line boundaries; P0 is not promoted over direct alignment.",
+  "qa_report_path": "alignment_qa_report.md",
+  "qa_report_sha256": "2fa83773adced3cf1064ec87f21000dcd8b36e56faed2d5753f475cd00b00464"
+}

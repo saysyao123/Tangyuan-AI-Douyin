@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "language": "zh",
+  "source": {
+    "audio_name": "locked_bgm.mp3",
+    "alignment_engine": "whisperx_ctc",
+    "alignment_model": "jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn",
+    "requested_device": "cpu",
+    "actual_alignment_device": "cpu"
+  },
+  "line_count": 14,
+  "aligned_or_partial_lines": 14,
+  "input_alignment_characters": 110,
+  "timed_character_entries": 110,
+  "missing_character_timestamps": 0,
+  "character_count_matches": true,
+  "non_monotonic_line_count": 0,
+  "status_counts": {
+    "aligned": 14
+  },
+  "estimated_token_count": 67,
+  "skipped_line_count": 0,
+  "swlrc_warnings": [],
+  "warnings": [],
+  "firstAlignedLyricStartMs": 841,
+  "preservedHeaderLines": [],
+  "presentationHints": []
+}

@@ -1,0 +1,15 @@
+{
+  "package_version": "1.0",
+  "title": "爱让人脑袋空空",
+  "artist": "隆德齐",
+  "version": "电音版 / Douyin exact asset B",
+  "audio_path": "/tmp/mv_p2_D03-A_qk9b_88c/locked_bgm.mp3",
+  "audio_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "content_duration_s": 31.921625,
+  "container_duration_s": 31.921625,
+  "timeline_duration_s": 31.921625,
+  "source_clip_start_s": 0.0,
+  "source_clip_end_s": 31.921625,
+  "speed_factor": 1.0,
+  "time_stretched": false
+}

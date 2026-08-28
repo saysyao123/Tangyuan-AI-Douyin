@@ -1,0 +1,16 @@
+event_id,time_s,type,description,qa_status
+E01,0.841,LYRIC_ENTRY,verified lyric entry L01,PASS
+E02,3.362,LYRIC_ENTRY,verified lyric entry L02,PASS
+E03,4.983,LYRIC_ENTRY,verified lyric entry L03,PASS
+E04,7.305,LYRIC_ENTRY,verified lyric entry L04,PASS
+E05,8.686,LYRIC_ENTRY,verified lyric entry L05,PASS
+E06,10.547,LYRIC_ENTRY,verified lyric entry L06,PASS
+E07,12.348,LYRIC_ENTRY,verified lyric entry L07,PASS
+E08,15.631,LYRIC_ENTRY,verified lyric entry L08,PASS
+E09,18.152,LYRIC_ENTRY,verified lyric entry L09,PASS
+E10,19.753,LYRIC_ENTRY,verified lyric entry L10,PASS
+E11,21.955,LYRIC_ENTRY,verified lyric entry L11,PASS
+E12,23.436,LYRIC_ENTRY,verified lyric entry L12,PASS
+E13,25.237,LYRIC_ENTRY,verified lyric entry L13,PASS
+E14,27.078,LYRIC_ENTRY,verified lyric entry L14,PASS
+E15,31.922,TAIL_END,locked asset tail end,PASS

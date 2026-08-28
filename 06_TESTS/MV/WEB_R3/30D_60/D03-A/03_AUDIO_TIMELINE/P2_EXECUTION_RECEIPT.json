@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "status": "PASS",
+  "slot_id": "D03-A",
+  "route": "P2_XINGYU_TRUSTED_LYRICS_CTC",
+  "audio_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "p0_song_id": 3419913748,
+  "line_count": 14,
+  "p0_p2_median_delta_s": 0.2,
+  "p0_p2_max_delta_s": 0.367,
+  "conflicts_over_0_50s": []
+}

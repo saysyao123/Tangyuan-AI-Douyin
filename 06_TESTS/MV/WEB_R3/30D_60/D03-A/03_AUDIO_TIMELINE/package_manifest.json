@@ -1,0 +1,21 @@
+{
+  "package_version": "1.0",
+  "AUDIO_TIMELINE_PACKAGE_LOCKED": true,
+  "audio_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "timeline_duration_s": 31.921625,
+  "evidence_class": "ASR_FORCED_ALIGNMENT",
+  "files": {
+    "P2_REQUEST.json": "722fb3d5ff7e657758dce678a3922bccb538fd9ce30cf5e85495b13e03b20051",
+    "alignment_provenance.json": "00ecdd98b70be26b0bd8d60f856b6a62222eb945fce16e5998e02316eeaabcb1",
+    "alignment_qa_report.md": "2fa83773adced3cf1064ec87f21000dcd8b36e56faed2d5753f475cd00b00464",
+    "anchor_words.csv": "676492c0385cfb18958fc987be6f489dd8a1fafdac08a640e9241b287334fa73",
+    "audio_identity.json": "45c538aaa2f5950818a3f9700cd19b27954254766c0be6954bb09a1b99ffe131",
+    "line_timeline.candidate.csv": "626fb56a0c77e990de7fe8a77255cf26fd908da4708ea20b526cb0133bfb0d96",
+    "line_timeline.csv": "df4d8582b7a498293ecc896875966fc937b2a26ec4b38bd9f050bcaac54fd7ae",
+    "lyrics_exact.srt": "d23520c3e3da036d71c04545cae8b67bcaf30e0d11679805df63cf93b0e8dd7d",
+    "music_events.csv": "cefaa9a777d54b077dc8ea608b39414bea8fdd883fee0ad5ba6ad6a7e7cce47e",
+    "p0_lrc_crosscheck.csv": "fc35c94b63ec0d405874ea02eefe28346abe28c0b1fbc8d30557ef1c9244ab30",
+    "timeline_request.json": "7fcd065184ef70eed264e993b83edfd21b2807712ea28faa9a2c86d64ab7fbb6",
+    "trusted_lyrics.txt": "76ffec90417090f7cf1b2b0d30ad8872c295113f1c848c6d5b508503564096a9"
+  }
+}
