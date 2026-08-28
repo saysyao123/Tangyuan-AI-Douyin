@@ -49,7 +49,9 @@ def popcount32(x: int) -> int:
 def parse_fpcalc(path: Path) -> tuple[float, list[int]]:
     proc = subprocess.run(
         ["fpcalc", "-raw", "-length", "120", str(path)],
-        check=True, capture_output=True, text=True,
+        check=True,
+        capture_output=True,
+        text=True,
     )
     duration = 0.0
     fp: list[int] = []
@@ -74,11 +76,12 @@ def best_similarity(a: list[int], b: list[int]) -> dict[str, Any]:
         overlap = min(len(a) - a0, len(b) - b0)
         if overlap < min_overlap:
             continue
-        dist = sum(popcount32(a[a0+i] ^ b[b0+i]) for i in range(overlap))
+        dist = sum(popcount32(a[a0 + i] ^ b[b0 + i]) for i in range(overlap))
         score = 1.0 - dist / (32.0 * overlap)
         candidate = {"score": round(score, 6), "shift": shift, "overlap": overlap}
         if candidate["score"] > best["score"] + 1e-9 or (
-            abs(candidate["score"] - best["score"]) <= 1e-9 and overlap > best["overlap"]
+            abs(candidate["score"] - best["score"]) <= 1e-9
+            and overlap > best["overlap"]
         ):
             best = candidate
     return best
@@ -117,28 +120,98 @@ def media_url(detail: dict[str, Any]) -> str:
 
 
 def download(session: requests.Session, url: str, path: Path) -> None:
-    with session.get(url, stream=True, timeout=120) as r:
-        r.raise_for_status()
-        with path.open("wb") as f:
-            for chunk in r.iter_content(chunk_size=1024 * 1024):
-                if chunk:
-                    f.write(chunk)
+    last: Exception | None = None
+    for headers in [
+        None,
+        {"Referer": "https://www.douyin.com/"},
+        {"Referer": "https://api.bugpk.com/"},
+    ]:
+        try:
+            with session.get(url, headers=headers, stream=True, timeout=120) as r:
+                r.raise_for_status()
+                with path.open("wb") as f:
+                    for chunk in r.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            f.write(chunk)
+            return
+        except Exception as exc:
+            last = exc
+            path.unlink(missing_ok=True)
+    raise RuntimeError(f"download failed: {last}")
 
 
 def ffprobe(path: Path) -> dict[str, Any]:
-    p = subprocess.run([
-        "ffprobe", "-v", "error",
-        "-show_entries", "format=duration:stream=codec_type,codec_name,sample_rate,channels,bit_rate",
-        "-of", "json", str(path)
-    ], check=True, capture_output=True, text=True)
+    p = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration:stream=codec_type,codec_name,sample_rate,channels,bit_rate",
+            "-of",
+            "json",
+            str(path),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     return json.loads(p.stdout)
 
 
 def extract_mp3(src: Path, dst: Path) -> None:
-    subprocess.run([
-        "ffmpeg", "-y", "-i", str(src), "-vn",
-        "-codec:a", "libmp3lame", "-q:a", "2", str(dst)
-    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-i",
+            str(src),
+            "-vn",
+            "-codec:a",
+            "libmp3lame",
+            "-q:a",
+            "2",
+            str(dst),
+        ],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
+def add_option(
+    option_files: list[dict[str, Any]],
+    seen_hashes: dict[str, str],
+    source_path: Path,
+    artifact_dir: Path,
+    target: dict[str, Any],
+    music: dict[str, Any],
+    source_kind: str,
+) -> None:
+    digest = sha256(source_path)
+    if digest in seen_hashes:
+        return
+    option_letter = chr(ord("A") + len(seen_hashes))
+    suffix = "" if source_kind == "direct_douyin_music_asset" else "_video_derived"
+    option_name = (
+        f"HG02_option_{option_letter}_{safe_name(str(target.get('account', 'source')))}{suffix}.mp3"
+    )
+    option_path = artifact_dir / option_name
+    option_path.write_bytes(source_path.read_bytes())
+    seen_hashes[digest] = option_name
+    option_files.append(
+        {
+            "option": option_letter,
+            "file": option_name,
+            "sha256": digest,
+            "source_aweme_id": str(target["aweme_id"]),
+            "source_account": target.get("account"),
+            "music_title": music.get("title"),
+            "music_author": music.get("author"),
+            "duration_s": float((ffprobe(option_path).get("format") or {}).get("duration") or 0),
+            "source_kind": source_kind,
+        }
+    )
 
 
 def main() -> int:
@@ -154,15 +227,17 @@ def main() -> int:
     report_dir.mkdir(parents=True, exist_ok=True)
     artifact_dir.mkdir(parents=True, exist_ok=True)
     targets = req.get("targets") or []
-    if len(targets) < 1:
+    if not targets:
         raise RuntimeError("at least one target is required")
 
     session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/139 Safari/537.36",
-        "Referer": "https://api.bugpk.com/doc-douyin.html",
-        "X-Requested-With": "XMLHttpRequest",
-    })
+    session.headers.update(
+        {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/139 Safari/537.36",
+            "Referer": "https://api.bugpk.com/doc-douyin.html",
+            "X-Requested-With": "XMLHttpRequest",
+        }
+    )
 
     reports: list[dict[str, Any]] = []
     direct_fps: dict[str, list[int]] = {}
@@ -173,6 +248,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="mv_bgm_probe_") as td:
         tmp = Path(td)
         for idx, target in enumerate(targets, 1):
+            aweme_id = str(target["aweme_id"])
             detail = fetch_detail(session, str(target["work_url"]))
             data = detail.get("data") or {}
             music = data.get("music") if isinstance(data, dict) else None
@@ -180,127 +256,191 @@ def main() -> int:
             murl = str(music.get("url") or "")
             aid = asset_id_from_url(murl)
 
-            vurl = media_url(detail)
-            if not vurl:
-                raise RuntimeError(f"no media URL for {target.get('account')}")
-            mp4 = tmp / f"{target['aweme_id']}.mp4"
-            download(session, vurl, mp4)
-            vdur, vfp = parse_fpcalc(mp4)
-            video_fps[str(target["aweme_id"])] = vfp
-
-            video_ref = artifact_dir / f"{idx}_{safe_name(str(target.get('account','source')))}_video_derived.mp3"
-            extract_mp3(mp4, video_ref)
-
             direct_info: dict[str, Any] | None = None
-            direct_path: Path | None = None
+            direct_ok = False
+            direct_error: str | None = None
+            video_info: dict[str, Any] | None = None
+            video_error: str | None = None
+
+            # Correct priority for BGM discovery: direct Douyin music asset first.
+            # Video-derived audio is only a fallback when the music asset is absent
+            # or its signed URL cannot be downloaded.
             if murl:
-                direct_path = artifact_dir / f"{idx}_{safe_name(str(target.get('account','source')))}_direct_music_asset.mp3"
+                direct_path = artifact_dir / (
+                    f"{idx}_{safe_name(str(target.get('account', 'source')))}_direct_music_asset.mp3"
+                )
                 try:
                     download(session, murl, direct_path)
                     ddur, dfp = parse_fpcalc(direct_path)
-                    direct_fps[str(target["aweme_id"])] = dfp
-                    dsha = sha256(direct_path)
+                    direct_fps[aweme_id] = dfp
                     direct_info = {
                         "path": direct_path.name,
-                        "sha256": dsha,
+                        "sha256": sha256(direct_path),
                         "ffprobe": ffprobe(direct_path),
                         "fp_duration": ddur,
                         "fingerprint_length": len(dfp),
                     }
-                    if dsha not in seen_hashes:
-                        option_letter = chr(ord('A') + len(seen_hashes))
-                        option_name = f"HG02_option_{option_letter}_{safe_name(str(target.get('account','source')))}.mp3"
-                        option_path = artifact_dir / option_name
-                        option_path.write_bytes(direct_path.read_bytes())
-                        seen_hashes[dsha] = option_name
-                        option_files.append({
-                            "option": option_letter,
-                            "file": option_name,
-                            "sha256": dsha,
-                            "source_aweme_id": str(target["aweme_id"]),
-                            "source_account": target.get("account"),
-                            "music_title": music.get("title"),
-                            "music_author": music.get("author"),
-                            "duration_s": float((direct_info["ffprobe"].get("format") or {}).get("duration") or 0),
-                            "source_kind": "direct_douyin_music_asset",
-                        })
+                    add_option(
+                        option_files,
+                        seen_hashes,
+                        direct_path,
+                        artifact_dir,
+                        target,
+                        music,
+                        "direct_douyin_music_asset",
+                    )
+                    direct_ok = True
                 except Exception as exc:
-                    direct_info = {"download_error": repr(exc)}
+                    direct_error = repr(exc)
+                    direct_info = {"download_error": direct_error}
 
-            if direct_path is None or not direct_path.exists():
-                vsha = sha256(video_ref)
-                if vsha not in seen_hashes:
-                    option_letter = chr(ord('A') + len(seen_hashes))
-                    option_name = f"HG02_option_{option_letter}_{safe_name(str(target.get('account','source')))}_video_derived.mp3"
-                    option_path = artifact_dir / option_name
-                    option_path.write_bytes(video_ref.read_bytes())
-                    seen_hashes[vsha] = option_name
-                    option_files.append({
-                        "option": option_letter,
-                        "file": option_name,
-                        "sha256": vsha,
-                        "source_aweme_id": str(target["aweme_id"]),
-                        "source_account": target.get("account"),
-                        "music_title": music.get("title"),
-                        "music_author": music.get("author"),
-                        "duration_s": float((ffprobe(video_ref).get("format") or {}).get("duration") or 0),
-                        "source_kind": "video_derived_listening_reference",
-                    })
+            if not direct_ok:
+                try:
+                    vurl = media_url(detail)
+                    if not vurl:
+                        raise RuntimeError("no media URL in resolver response")
+                    mp4 = tmp / f"{aweme_id}.mp4"
+                    download(session, vurl, mp4)
+                    vdur, vfp = parse_fpcalc(mp4)
+                    video_fps[aweme_id] = vfp
+                    video_ref = artifact_dir / (
+                        f"{idx}_{safe_name(str(target.get('account', 'source')))}_video_derived.mp3"
+                    )
+                    extract_mp3(mp4, video_ref)
+                    video_info = {
+                        "path": video_ref.name,
+                        "sha256": sha256(video_ref),
+                        "ffprobe": ffprobe(video_ref),
+                        "video_ffprobe": ffprobe(mp4),
+                        "fp_duration": vdur,
+                        "fingerprint_length": len(vfp),
+                    }
+                    add_option(
+                        option_files,
+                        seen_hashes,
+                        video_ref,
+                        artifact_dir,
+                        target,
+                        music,
+                        "video_derived_listening_reference",
+                    )
+                except Exception as exc:
+                    video_error = repr(exc)
+            else:
+                video_info = {"skipped_reason": "DIRECT_MUSIC_ASSET_AVAILABLE"}
 
-            reports.append({
-                **target,
-                "detail_msg": detail.get("msg", ""),
-                "detail_title": data.get("title") if isinstance(data, dict) else "",
-                "author": data.get("author") if isinstance(data, dict) else None,
-                "music": music,
-                "music_asset_id_from_url": aid,
-                "video_ffprobe": ffprobe(mp4),
-                "video_fp_duration": vdur,
-                "video_fingerprint_length": len(vfp),
-                "video_reference": {"path": video_ref.name, "sha256": sha256(video_ref), "ffprobe": ffprobe(video_ref)},
-                "direct_music_asset": direct_info,
-            })
+            if not direct_ok and video_info is None:
+                raise RuntimeError(
+                    f"no usable audio for {target.get('account')}: direct={direct_error}; video={video_error}"
+                )
+
+            reports.append(
+                {
+                    **target,
+                    "detail_msg": detail.get("msg", ""),
+                    "detail_title": data.get("title") if isinstance(data, dict) else "",
+                    "author": data.get("author") if isinstance(data, dict) else None,
+                    "music": music,
+                    "music_asset_id_from_url": aid,
+                    "direct_music_asset": direct_info,
+                    "video_fallback": video_info,
+                }
+            )
             if idx < len(targets):
                 time.sleep(3)
 
-    pairwise: list[dict[str, Any]] = []
     ids = [str(t["aweme_id"]) for t in targets]
+    pairwise: list[dict[str, Any]] = []
     for i in range(len(ids)):
         for j in range(i + 1, len(ids)):
-            basis = "direct_music_asset" if ids[i] in direct_fps and ids[j] in direct_fps else "video_audio"
-            source = direct_fps if basis == "direct_music_asset" else video_fps
-            pairwise.append({"a": ids[i], "b": ids[j], "basis": basis, **best_similarity(source[ids[i]], source[ids[j]])})
+            if ids[i] in direct_fps and ids[j] in direct_fps:
+                pairwise.append(
+                    {
+                        "a": ids[i],
+                        "b": ids[j],
+                        "basis": "direct_music_asset",
+                        **best_similarity(direct_fps[ids[i]], direct_fps[ids[j]]),
+                    }
+                )
+            elif ids[i] in video_fps and ids[j] in video_fps:
+                pairwise.append(
+                    {
+                        "a": ids[i],
+                        "b": ids[j],
+                        "basis": "video_audio",
+                        **best_similarity(video_fps[ids[i]], video_fps[ids[j]]),
+                    }
+                )
+            else:
+                pairwise.append(
+                    {
+                        "a": ids[i],
+                        "b": ids[j],
+                        "basis": "MIXED_OR_UNAVAILABLE",
+                        "score": None,
+                        "shift": None,
+                        "overlap": 0,
+                    }
+                )
 
-    unique_hashes = sorted({str((r.get("direct_music_asset") or {}).get("sha256")) for r in reports if (r.get("direct_music_asset") or {}).get("sha256")})
-    if len(unique_hashes) == 1 and len(reports) >= 2:
+    direct_hashes = [
+        str((r.get("direct_music_asset") or {}).get("sha256"))
+        for r in reports
+        if (r.get("direct_music_asset") or {}).get("sha256")
+    ]
+    unique_direct_hashes = sorted(set(direct_hashes))
+    if len(unique_direct_hashes) == 1 and len(direct_hashes) >= 2:
         decision = "EXACT_ASSET_CONTENT_IDENTITY_CONFIRMED"
     elif len(option_files) > 1:
         decision = "MULTIPLE_DOUYIN_AUDIO_VARIANTS_FOR_HG02"
-    else:
+    elif option_files:
         decision = "SINGLE_HIGH_CONFIDENCE_LISTENING_VARIANT"
+    else:
+        decision = "BGM_VERSION_DISCOVERY_BLOCKED"
 
     payload = {
-        "schema_version": "1.0-generic",
+        "schema_version": "1.1-generic",
         "slot_id": req["slot_id"],
         "song_family": req["song_family"],
         "discovery_priority_used": "P1_VERIFIED_DOUYIN_WORKS",
         "resolver": "BugPk /api/douyin",
+        "probe_priority": "DIRECT_MUSIC_ASSET_FIRST_VIDEO_FALLBACK",
         "sampled_aweme_ids": ids,
         "works": reports,
         "pairwise_fingerprint": pairwise,
-        "direct_music_asset_hashes": unique_hashes,
+        "direct_music_asset_hashes": unique_direct_hashes,
         "listening_options": option_files,
         "decision": decision,
         "hg02_ready": bool(option_files),
     }
-    (report_dir / "asset_probe_report.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (artifact_dir / "manifest.json").write_text(json.dumps({
-        "slot_id": req["slot_id"],
-        "song_family": req["song_family"],
-        "decision": decision,
-        "options": option_files,
-    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"ok": True, "slot_id": req["slot_id"], "decision": decision, "options": option_files}, ensure_ascii=False))
+    (report_dir / "asset_probe_report.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    (artifact_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "slot_id": req["slot_id"],
+                "song_family": req["song_family"],
+                "decision": decision,
+                "options": option_files,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "slot_id": req["slot_id"],
+                "decision": decision,
+                "options": option_files,
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 
