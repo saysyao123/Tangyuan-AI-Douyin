@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0-lean-r1",
+  "status": "REQUESTED",
+  "slot_id": "D03-A",
+  "song_family": "爱让人脑袋空空",
+  "selected_audio_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "selected_duration_s": 31.921625,
+  "selected_direct_music_url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7671249164676008750.mp3",
+  "selected_music_asset_id": "7671249164676008750",
+  "lyric_query_title": "爱让人脑袋空空",
+  "lyric_query_artist": "隆德齐",
+  "version_label": "电音版 / Douyin exact asset B",
+  "lyric_start_min_s": 0.7,
+  "max_median_start_delta_s": 0.25,
+  "max_line_start_delta_s": 0.50,
+  "route_policy": "P0 same-version timed lyric candidate; if identity is not independently sufficient, run exactly one P1 Faster-Whisper pass as crosscheck; stop on PASS; do not run P2 unless P1 fails."
+}
