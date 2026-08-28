@@ -1,0 +1,40 @@
+name: Export awesome-gpt-image reference pack
+
+on:
+  push:
+    branches:
+      - test/mv-lean-r1
+    paths:
+      - '.github/workflows/export-awesome-gpt-image-refs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download selected original JPG references
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p refs
+          base='https://raw.githubusercontent.com/freestylefly/awesome-gpt-image-2/main/data/images'
+          for id in 414 472 501 518; do
+            curl -L --fail --retry 3 "$base/case${id}.jpg" -o "refs/case${id}.jpg"
+            file "refs/case${id}.jpg"
+          done
+          cat > refs/README.txt <<'EOF'
+          Source repository: freestylefly/awesome-gpt-image-2
+          Selected original references: case414.jpg, case472.jpg, case501.jpg, case518.jpg
+          Purpose: MV first-frame visual quality benchmarking only.
+          EOF
+
+      - name: Upload reference pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: awesome-gpt-image-2-selected-refs
+          path: refs
+          if-no-files-found: error
+          retention-days: 7
