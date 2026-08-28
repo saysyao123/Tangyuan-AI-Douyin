@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T020100Z-D03ARUN1",
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "After HG02 PASS, exercise Lean macro from S02 and continue automatically until the next Human Gate or the nearest real prerequisite block.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "cbead01c0176d65715dfd2d6b881933861d1693de7dcaf0358f796a9b32e56ee",
+    "slot_fingerprint_sha256": "2e11a610f491c51dc79c245235860ddb9aa60e22fd64231ee904edbd50a6a87f",
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "transition_sequence": 2,
+    "last_transition_receipt_sha256": "720e1ea9842fb3ebf9e513e8d1848b7eef38c62babaa37031c6143377d3a0a25",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
