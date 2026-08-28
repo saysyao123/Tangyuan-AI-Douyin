@@ -1,0 +1,252 @@
+{
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "completed_at": "2026-08-28T02:47:17Z",
+  "error": null,
+  "execution": {
+    "human_gate": "HG03",
+    "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+    "ok": true,
+    "outcome": "HUMAN_GATE",
+    "steps": [
+      {
+        "controller_payload": {
+          "from_stage": "S04_NATURAL_BEAT_LOCKED",
+          "ok": true,
+          "state_token": "DIRECTOR_PLAN_LOCKED",
+          "to_stage": "S05_DIRECTOR_PLAN_LOCKED",
+          "transition_receipt": "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+          "verified": {
+            "checked_context_receipts": [],
+            "checked_transition_receipts": [
+              "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+              "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+              "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+              "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+              "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+              "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json"
+            ],
+            "context": {
+              "canonical_v2": true,
+              "multi_shot": false,
+              "program_30d60": true,
+              "web": true
+            },
+            "context_revision": 0,
+            "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+            "current_state_token": "DIRECTOR_PLAN_LOCKED",
+            "highest_contiguous_valid_stage": "S05_DIRECTOR_PLAN_LOCKED",
+            "ok": true,
+            "slot_id": "D03-A",
+            "transition_sequence": 5
+          }
+        },
+        "from_stage": "S04_NATURAL_BEAT_LOCKED",
+        "to_stage": "S05_DIRECTOR_PLAN_LOCKED"
+      }
+    ],
+    "stop_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "transitions_advanced": 1
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "5e56ac522478a88f836adc1b12a66055fd65720c0165aefe7c51165703675468",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "8877908a32eb61ed288ef572bee7ab8e4f64aadd2784bb10dc25a0f2d1d0a22b",
+    "state_sha256": "43bb1fa896e2bf990fa3502b5a9774b89fd1f0a60f8494c706f1f6c5ba942475",
+    "transition_sequence": 5
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "current_state_token": "DIRECTOR_PLAN_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/rules/mv_first_frame_qa.md",
+      "04_HARNESS/rules/mv_human_gates.md",
+      "04_HARNESS/rules/ai_video.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "GENERATE_FIRST_FRAME_SET_AND_RUN_HG03",
+      "human_gate": "HG03",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/mv_human_gates.md",
+        "04_HARNESS/rules/ai_video.md"
+      ],
+      "next_stage": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "summary": "Generate separate 9:16 K0 first frames from the locked Director Plan, run machine first-frame QA, then stop at HG03 for set acceptance."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "USE_EXISTING_IMAGE_GENERATION_CAPABILITY",
+      "execution_class": "CAPABILITY_HANDOFF",
+      "executor_id": "FIRST_FRAME_CAPABILITY_AND_QA",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_first_frame_qa.md",
+        "04_HARNESS/rules/ai_video.md",
+        "04_HARNESS/templates/ai_first_frame_prompt.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DIRECTOR_PLAN",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "summary": "Allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_MODEL",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "executor_id": "DIRECTOR_PLAN_SYNTHESIS",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "LR-20260828T024800Z-D03ARUN5",
+  "request_sha256": "119024f150f303f492f4a1a2e3b5ce983e10b82b76c26ff43b5a25478e4e0acc",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33136955269",
+    "github_source_sha": "582f54b0fb5bb79bc18a2b81796a3c26f6d10c7a"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}

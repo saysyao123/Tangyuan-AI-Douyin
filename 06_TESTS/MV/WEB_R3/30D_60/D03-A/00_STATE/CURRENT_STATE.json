@@ -4,12 +4,12 @@
   "slot_id": "D03-A",
   "program": "30D_60",
   "lane": "P",
-  "current_stage": "S04_NATURAL_BEAT_LOCKED",
-  "current_state_token": "NATURAL_BEAT_LOCKED",
-  "status": "NATURAL_BEAT_LOCKED",
-  "transition_sequence": 4,
-  "last_transition_receipt": "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
-  "last_transition_receipt_sha256": "d9ab91f343e514b5b96586ce6477e2b728b2ee651845fa0a358a2add64755759",
+  "current_stage": "S05_DIRECTOR_PLAN_LOCKED",
+  "current_state_token": "DIRECTOR_PLAN_LOCKED",
+  "status": "DIRECTOR_PLAN_LOCKED",
+  "transition_sequence": 5,
+  "last_transition_receipt": "00_STATE/TRANSITIONS/005_S04_NATURAL_BEAT_LOCKED__S05_DIRECTOR_PLAN_LOCKED.json",
+  "last_transition_receipt_sha256": "5e56ac522478a88f836adc1b12a66055fd65720c0165aefe7c51165703675468",
   "context": {
     "web": true,
     "multi_shot": false,
@@ -20,5 +20,5 @@
   "last_context_receipt": null,
   "last_context_receipt_sha256": null,
   "created_at": "2026-08-27T17:41:39Z",
-  "updated_at": "2026-08-28T02:42:47Z"
+  "updated_at": "2026-08-28T02:47:17Z"
 }
