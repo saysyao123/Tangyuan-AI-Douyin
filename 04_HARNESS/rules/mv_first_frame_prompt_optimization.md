@@ -1,156 +1,202 @@
-# Rules｜MV First-Frame Prompt Precision Optimization v1.1
+# Rules｜MV First-Frame Prompt Precision Optimization v1.2
 
-Status: `ACTIVE / HARD BEFORE FIRST-FRAME GENERATION / PROMOTED_FROM_OSS_OPT_R1`
+Status: `ACTIVE / HARD BEFORE FIRST-FRAME GENERATION / LEAN_R1`
 
 ## Purpose
 
-After `DIRECTOR_PLAN_LOCKED` and before any formal first-frame generation, every production prompt MUST pass this precision-optimization layer. Raw Director prose or the lightweight structural template alone is not sufficient.
+After `DIRECTOR_PLAN_LOCKED` and before any formal first-frame generation, every production prompt MUST pass this precision-optimization layer. Raw Director prose, a lightweight template, or chat-memory-only knowledge is not sufficient.
 
-This rule exists to preserve the visual quality already validated in D02-B while keeping the first frame performable as a 0-second video anchor.
+This rule preserves the visual-generation quality validated in previous MV rounds while keeping every first frame usable as a performable 0-second video anchor.
 
-## Authority
+## Authority stack
 
-Creative authority order:
+Before generation:
 
-`LOCKED DIRECTOR PLAN / LYRIC HIT -> THIS PROMPT OPTIMIZATION RULE -> GENERATED K0 PIXELS -> HG03 QA`
+`LOCKED LYRIC + DIRECTOR PLAN -> PROMPT PRECISION RULE -> REQUIRED REFERENCE STACK -> FORMAL GENERATION PROMPT`
 
 After HG03 acceptance:
 
 `ACCEPTED K0 PIXELS > old prompt > old Director prose`
 
-## Mandatory prompt references
+The required reference stack is:
+`04_HARNESS/knowledge/MV_FIRST_FRAME_REFERENCE_STACK.md`
 
-1. Use `freestylefly/awesome-gpt-image-2` only as a structural/high-quality image-prompt reference library: photography, character, architecture and scene prompt construction. Do not copy a specific copyrighted style or scene.
-2. Use the previously validated deep-character-detail method as a granularity reference: age band, skull/face proportion, eyes/brows/nose/lips when visible, hair construction, skin micro-texture, body proportion, wardrobe fiber/cut/fold behavior and lighting-volume continuity. Adapt to the current character; never copy the old identity.
-3. The locked Director Plan remains the lyric/world authority.
-4. `mv_first_frame_qa.md` remains the post-generation HG03 machine QA authority.
+## Mandatory references｜HARD
+
+Every formal first-frame prompt must use all applicable inputs below:
+
+1. Current locked Director Plan / lyric-hit responsibility — creative truth.
+2. `MV_FIRST_FRAME_REFERENCE_STACK.md` — mandatory reference stack containing:
+   - open-source image-prompt construction reference (`freestylefly/awesome-gpt-image-2`);
+   - the user's previously validated deep-character-detail granularity method;
+   - the current Face-Completion grid policy.
+3. `mv_first_frame_qa.md` — post-generation HG03 machine QA authority.
+4. `ai_first_frame_prompt.md` — authoring structure only; it may not lower the quality requirements in this rule.
+
+No reference above may be replaced by generic model knowledge or remembered prose when the repository version is available.
 
 ## Required optimization modules｜HARD
 
-Every formal first-frame prompt MUST resolve all applicable modules below in generation-ready natural language. Section labels may be used for authoring, but the final prompt must read as a complete visual instruction rather than a checklist.
+Every formal first-frame prompt MUST resolve all applicable modules below in generation-ready natural language. Labels may be used while authoring, but the final prompt must read as one coherent visual instruction rather than a checklist.
 
-1. `OUTPUT CONTRACT`
-   - exactly one independent 9:16 cinematic still;
-   - single complete composition;
-   - no collage, storyboard, poster, text, logo or watermark.
+### 1. OUTPUT CONTRACT
+- exactly one independent 9:16 cinematic still;
+- one complete composition;
+- no collage, storyboard, poster, typography, logo or watermark.
 
-2. `LYRIC VISUAL HIT`
-   - state the lyric-specific, non-generic visual answer;
-   - pretty-but-generic is a failure.
+### 2. LYRIC VISUAL HIT
+- define the lyric-specific visual answer that cannot be replaced by a generic beauty shot;
+- `pretty but generic = FAIL`.
 
-3. `K0 PERFORMANCE STATE`
-   - body orientation;
-   - weight distribution / gait phase;
-   - both hands and what each hand is doing;
-   - gaze/head direction when visible;
-   - precise phase of the current action at frame 0.
+### 3. K0 PERFORMANCE STATE
+Specify the exact physical phase at frame 0:
+- body orientation;
+- weight distribution / gait phase;
+- both hands and their contact state when visible;
+- gaze/head direction when visible;
+- what action has already started but is not yet completed.
 
-4. `CHARACTER PHYSIOLOGY / IDENTITY`
-   - age band, build and body proportion;
-   - stable head/face silhouette and jaw/cheek structure when visible;
-   - hair length, texture, parting/wetness and silhouette;
-   - identity cues that must remain stable across the set;
-   - no celebrity likeness.
+### 4. CHARACTER PHYSIOLOGY / IDENTITY
+Use the reference-stack granularity:
+- explicit adult age band;
+- believable body/head proportion;
+- shoulder-neck-waist-hip relationship;
+- stable head silhouette, jaw/cheek structure where visible;
+- hair construction, wetness and silhouette;
+- stable identity cues across the set;
+- no celebrity likeness.
 
-5. `SKIN / HUMAN REALISM`
-   - realistic pore-scale variation and natural tonal irregularity where visible;
-   - physically plausible moisture/specular response;
-   - avoid plastic CGI skin or over-smoothed beauty retouching.
+Do not mechanically copy old character anatomy. The old user prompt defines descriptive depth, not the identity of the new protagonist.
 
-6. `WARDROBE MATERIAL`
-   - garment cut, fiber, weight, seams/folds and drape;
-   - how humidity/wind/body motion affects the fabric;
-   - continuity with previous frames.
+### 5. SKIN / HUMAN REALISM
+Where visible and applicable:
+- pore-scale variation;
+- fine tonal irregularity and vellus hair;
+- realistic moisture/specular behavior;
+- local translucency where physically plausible;
+- face/ear/neck/arm tonal continuity;
+- avoid plastic CGI smoothness and beauty-retouch skin.
 
-7. `CAMERA OPTICS`
-   - shot scale;
-   - approximate focal-length language;
-   - camera height/angle;
-   - perspective purpose;
-   - depth-of-field behavior and what must remain readable.
+### 6. WARDROBE MATERIAL
+Specify:
+- garment cut and silhouette;
+- fiber/material;
+- weight and drape;
+- seams/folds/cuffs/collar behavior;
+- humidity/wind/body-motion response;
+- continuity across the set.
 
-8. `LIGHTING PHYSICS`
-   - actual light source and direction;
-   - softness/hardness;
-   - highlight/shadow logic;
-   - exposure protection;
-   - reflections from water/glass/stone/metal when relevant.
+### 7. CAMERA OPTICS
+Specify:
+- shot scale;
+- approximate focal-length language;
+- camera height / angle;
+- perspective purpose;
+- depth-of-field behavior;
+- which critical objects must remain readable.
 
-9. `ENVIRONMENT & DEPTH`
-   - foreground / midground / background hierarchy;
-   - major materials and their physical state;
-   - negative space for the next action;
-   - continuity with the same world.
+### 8. LIGHTING PHYSICS
+Specify:
+- actual source;
+- direction;
+- hardness / softness;
+- shadow logic;
+- exposure protection;
+- physically coherent reflected light from water/glass/stone/metal where relevant.
 
-10. `ACTION ENTRANCE & RESIDUE`
-    - what moves next;
-    - available motion space;
-    - static base that must not move;
-    - physical remainder that can continue after the main action;
-    - plausible settled end state.
+### 9. ENVIRONMENT & DEPTH
+Specify:
+- foreground / midground / background hierarchy;
+- dominant materials and physical state;
+- negative space / available action space;
+- same-world continuity;
+- no impossible perspective unless explicitly conceptual.
 
-11. `QUALITY + NEGATIVE GUARD`
-    - anatomy, hands, reflections and geometry must be coherent;
-    - no duplicate person/reflection-person;
-    - no random prop drift;
-    - no commercial model-pose default;
-    - no text/UI/brand contamination;
-    - no excessive adjective stacking as a substitute for optical/material detail.
+### 10. ACTION ENTRANCE & RESIDUE
+Specify:
+- what moves next;
+- available motion direction/space;
+- static base that remains stable;
+- physical remainder that continues after the main action;
+- plausible settled end state.
 
-12. `FACE PRIVACY / COMPLETION GRID`｜HARD FOR CURRENT WEB/SEEDANCE FACE-COMPLETION PATH
-    - use a **standard 2D orthogonal black square grid** over the visible facial-feature region;
-    - straight horizontal and vertical black lines forming regular square cells;
-    - high-contrast, dense and clearly readable as a flat square grid;
-    - preserve head silhouette, hair, ears/jawline when visible, body, wardrobe, lighting and composition at full detail;
-    - the grid is NOT a contour-following 3D face mesh;
-    - NOT pixel mosaic, blur, censor bar, black solid mask, helmet, veil or random scribble;
-    - do not degrade the whole image;
-    - for rear/side frames, apply the same orthogonal grid only to the visible facial-feature area if a face is readable;
-    - if no face is readable because the accepted camera angle naturally hides it, do not invent a frontal face solely to show the grid.
+### 11. QUALITY + NEGATIVE GUARD
+Hard checks:
+- anatomy/hands/reflections/geometry coherent;
+- no duplicate person or reflection-person;
+- no random prop drift;
+- no staged commercial model pose unless Director explicitly requires it;
+- no text/UI/brand contamination;
+- no adjective stacking as a substitute for optical/material detail.
+
+### 12. FACE PRIVACY / COMPLETION GRID｜HARD FOR CURRENT WEB/SEEDANCE FACE-COMPLETION PATH
+Whenever a readable facial-feature region exists:
+- apply `STANDARD_2D_ORTHOGONAL_BLACK_SQUARE_GRID`;
+- straight horizontal and vertical black lines forming regular square cells;
+- flat, high-contrast and clearly 2D;
+- dense enough to remove specific facial-feature identity information while preserving the head/scene at full quality;
+- preserve hair, head silhouette, ear/jaw edges when visible, neck, body, wardrobe, lighting, hands and environment at full detail;
+- mirror reflection of the same readable face uses the same grid treatment;
+- NOT contour-following 3D face mesh;
+- NOT pixel mosaic, blur, censor bar, random scribble, solid black mask, helmet or veil;
+- rear/wide frames do not invent a frontal face merely to display the grid.
+
+## Open-source reference usage rule
+
+`freestylefly/awesome-gpt-image-2` is used only for transferable prompt-construction patterns such as:
+- exact moment;
+- camera height / lens / perspective;
+- materials;
+- light direction and shadow behavior;
+- spatial hierarchy;
+- physically grounded pose;
+- explicit exclusions.
+
+It must never override the current lyric/Director or cause direct copying of a specific protected image, character or visual scene.
 
 ## Prompt-writing principle
 
-Do not reduce the production prompt to abstract labels such as “sad”, “cinematic”, “high-end”, “beautiful”. Convert intent into visible physical facts:
-
-- exact body phase;
-- exact hand position;
-- exact dominant visual event;
+Convert emotion and Director intent into visible facts. Prefer:
+- exact hand contact;
+- exact gait/weight phase;
+- exact dominant event;
 - exact lens/camera relation;
-- material response;
-- light direction;
-- depth hierarchy;
-- motion entrance and residue.
+- exact material response;
+- exact light source/direction;
+- exact motion space and residue.
 
-The final production prompt should resemble a detailed cinematography/production instruction that an image model can render directly.
+Do not rely on vague words such as `beautiful / cinematic / premium / emotional / masterpiece` as the primary quality mechanism.
 
-## Set-level continuity lock
+## Hard production sequence
 
-Before writing K01...Kn, define once and preserve:
+`DIRECTOR PLAN LOCK -> LOAD PROMPT PRECISION RULE -> LOAD REFERENCE STACK -> SYNTHESIZE FORMAL PROMPT -> PRE-GENERATION PRECISION CHECK -> SINGLE-IMAGE GENERATION -> ACTUAL-PIXEL MACHINE QA -> HG03`
 
-- same protagonist physiology/hair/body proportion;
-- same wardrobe construction/material/colors;
-- same face-grid policy;
-- same world/architecture/material language;
-- same time-of-day and controlled light progression;
-- permitted accent colors/props;
-- forbidden people/brands/text/world drift.
+Batch generation is not the default when character/world drift risk is material. Generate/review sequentially when needed.
 
-Each individual prompt must still repeat enough of the identity/world lock to be self-contained when generated separately.
+## Pre-generation precision gate
 
-## Hard sequence
+A prompt is `PROMPT_PRECISION_READY` only if all are true:
+- lyric-specific visual answer is explicit;
+- K0 body/action phase is executable;
+- character anatomy/detail reaches the required reference granularity;
+- hair/skin/wardrobe are physically specified;
+- lens/camera/depth are purposeful;
+- source/direction/behavior of light are specified;
+- environment has depth/material hierarchy;
+- next-action space and residue exist;
+- Face Grid is exactly the validated orthogonal 2D treatment when required;
+- negative guards cover duplicate-person, hands/reflection/geometry, poster/text and style drift failures.
 
-`DIRECTOR PLAN LOCK -> PROMPT PRECISION OPTIMIZATION -> SINGLE-IMAGE GENERATION -> ACTUAL-PIXEL MACHINE QA -> HG03`
-
-Sequential generation/review is preferred when identity drift, hand/reflection geometry or image-generator reliability is material. A collage/grid is never a valid substitute for independent first-frame files.
+Any failure means: `PROMPT_PRECISION_NOT_READY` and generation must not begin.
 
 ## Acceptance
 
-Every formal first frame must simultaneously pass:
+A formal first frame must simultaneously pass:
 
-`LYRIC HIT + STANDALONE BEAUTY + CHARACTER/WORLD QUALITY + K0 PERFORMABILITY + FACE-GRID POLICY (when active)`
+`LYRIC HIT + STANDALONE BEAUTY + CHARACTER/WORLD QUALITY + DYNAMIC PERFORMABILITY`
 
 - Pretty but generic = FAIL.
-- Semantically correct but visually weak = FAIL.
+- Correct but visually weak = FAIL.
 - Beautiful but static/non-performable = FAIL.
-- Correct action but low-detail/plastic character or weak lighting/materials = FAIL.
-- Wrong face treatment (mosaic / 3D mesh / solid mask / blur) = FAIL on the current Face-Completion path.
+- Detailed but physically incoherent = FAIL.
+- Correct prompt but failed actual pixels = REGEN/PATCH BEFORE HG03.
