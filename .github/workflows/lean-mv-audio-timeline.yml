@@ -105,6 +105,17 @@ jobs:
               if check and p.returncode!=0: raise RuntimeError(f'command failed rc={p.returncode}: {cmd}')
               return p
 
+          def artist_name(value):
+              if isinstance(value, dict):
+                  return str(value.get('name') or value.get('artistName') or value.get('artist') or '')
+              return str(value or '')
+
+          def song_artists(song):
+              values = song.get('artists') or song.get('ar') or []
+              if isinstance(values, (str, dict)):
+                  values = [values]
+              return [artist_name(x) for x in values if artist_name(x)]
+
           # 1) Exact locked audio identity.
           download(req['selected_direct_music_url'], audio)
           got=sha256(audio)
@@ -118,12 +129,14 @@ jobs:
           data=json.loads(raw); songs=((data.get('result') or {}).get('songs') or [])
           chosen=None
           for s in songs:
-              arts=' / '.join(a.get('name','') for a in s.get('artists',[]))
-              name=s.get('name','')
+              if not isinstance(s, dict):
+                  continue
+              arts=' / '.join(song_artists(s))
+              name=str(s.get('name') or '')
               if title in name and (not artist or artist in arts): chosen=s; break
           if chosen is None:
               for s in songs:
-                  if title in s.get('name',''): chosen=s; break
+                  if isinstance(s, dict) and title in str(s.get('name') or ''): chosen=s; break
           if chosen is None: raise RuntimeError('P0 timed lyric discovery found no plausible NetEase candidate')
           sid=chosen['id']
           lj=json.loads(get_text(f'https://music.163.com/api/song/lyric?id={sid}&lv=1&kv=1&tv=-1', {'Referer':'https://music.163.com/'}))
@@ -159,7 +172,7 @@ jobs:
           run([sys.executable,package_tool,'init','--package',pkg,'--audio',audio,'--lyrics',lyrics,
                '--title',title,'--artist',artist or 'unknown','--version',req.get('version_label','Douyin exact asset'),
                '--source-clip-start','0','--source-clip-end',str(dur)])
-          source_identity=f"NetEase timed lyric song_id={sid}; title={chosen.get('name')}; artist={' / '.join(a.get('name','') for a in chosen.get('artists',[]))}; independently checked against exact Douyin asset by P1 Faster-Whisper"
+          source_identity=f"NetEase timed lyric song_id={sid}; title={chosen.get('name')}; artist={' / '.join(song_artists(chosen))}; independently checked against exact Douyin asset by P1 Faster-Whisper"
           run([sys.executable,package_tool,'from-lrc','--package',pkg,'--lrc',lrc,'--source-identity',source_identity,'--platform-song-id',str(sid)])
 
           def read_csv(path):
