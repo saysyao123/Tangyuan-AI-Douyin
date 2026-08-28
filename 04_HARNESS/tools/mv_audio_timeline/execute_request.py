@@ -90,7 +90,6 @@ def song_artists(song: dict[str, Any]) -> list[str]:
 
 
 def object_or_empty(value: Any) -> dict[str, Any]:
-    """Normalize API fields that alternate between object and JSON-string schemas."""
     if isinstance(value, dict):
         return value
     if isinstance(value, str):
@@ -121,18 +120,15 @@ def list_or_empty(value: Any) -> list[Any]:
 
 
 def extract_lrc_text(payload: dict[str, Any]) -> str:
-    """Accept historical NetEase object wrappers and current string wrappers."""
     value = payload.get("lrc")
     if isinstance(value, dict):
         text = value.get("lyric")
         if isinstance(text, str):
             return text
     elif isinstance(value, str):
-        # A string may be raw LRC or a JSON-serialized {lyric: ...} object.
         candidate = value.strip()
         if candidate.startswith("{"):
-            parsed = object_or_empty(candidate)
-            nested = parsed.get("lyric")
+            nested = object_or_empty(candidate).get("lyric")
             if isinstance(nested, str):
                 return nested
         return value
@@ -158,65 +154,113 @@ def search_songs(title: str, artist: str) -> list[dict[str, Any]]:
         f"https://music.163.com/api/search/get/web?csrf_token=&s={query}&type=1&offset=0&total=true&limit=20",
         f"https://music.163.com/api/cloudsearch/pc?s={query}&type=1&offset=0&limit=20",
     ]
-    last_schema: dict[str, str] = {}
+    diagnostics: dict[str, str] = {}
     for endpoint in endpoints:
         try:
             raw = get_text(endpoint, {"Referer": "https://music.163.com/"})
             data_raw = json.loads(raw)
         except Exception as exc:
-            last_schema[endpoint] = f"request_or_json_error={exc!r}"
+            diagnostics[endpoint] = f"request_or_json_error={exc!r}"
             continue
         data = object_or_empty(data_raw)
         result = object_or_empty(data.get("result"))
-        candidates = list_or_empty(result.get("songs"))
-        if not candidates:
-            candidates = list_or_empty(data.get("songs"))
+        candidates = list_or_empty(result.get("songs")) or list_or_empty(data.get("songs"))
         songs = [x for x in candidates if isinstance(x, dict)]
         if songs:
-            print(json.dumps({"p0_search_endpoint": endpoint, "candidate_count": len(songs)}, ensure_ascii=False))
+            print(
+                json.dumps(
+                    {"p0_search_endpoint": endpoint, "candidate_count": len(songs)},
+                    ensure_ascii=False,
+                )
+            )
             return songs
-        last_schema[endpoint] = (
+        diagnostics[endpoint] = (
             f"root={type(data_raw).__name__}; result={type(data.get('result')).__name__}; "
             f"result_keys={sorted(result.keys())[:12]}"
         )
-    raise RuntimeError(f"P0 NetEase search returned no song list; schemas={last_schema}")
+    raise RuntimeError(f"P0 NetEase search returned no song list; schemas={diagnostics}")
+
+
+def ranked_song_candidates(songs: list[dict[str, Any]], title: str, artist: str) -> list[dict[str, Any]]:
+    ranked: list[tuple[int, int, dict[str, Any]]] = []
+    for index, song in enumerate(songs):
+        name = str(song.get("name") or "")
+        if title not in name:
+            continue
+        artists = " / ".join(song_artists(song))
+        exact_title = name.strip() == title.strip()
+        artist_match = bool(artist and artist in artists)
+        score = (4 if exact_title else 2) + (4 if artist_match else 0)
+        ranked.append((-score, index, song))
+    ranked.sort(key=lambda x: (x[0], x[1]))
+    return [song for _, _, song in ranked]
+
+
+def fetch_song_lrc(song_id: int) -> tuple[str, str, dict[str, Any]]:
+    endpoints = [
+        f"https://music.163.com/api/song/lyric?id={song_id}&lv=-1&kv=-1&tv=-1",
+        f"https://music.163.com/api/song/lyric?os=pc&id={song_id}&lv=-1&kv=-1&tv=-1",
+        f"https://music.163.com/api/song/lyric?id={song_id}&lv=1&kv=1&tv=-1",
+    ]
+    last_payload: dict[str, Any] = {}
+    for endpoint in endpoints:
+        try:
+            raw = get_text(endpoint, {"Referer": "https://music.163.com/"})
+            root = json.loads(raw)
+        except Exception:
+            continue
+        payload = object_or_empty(root)
+        last_payload = payload
+        text = extract_lrc_text(payload)
+        if text and re.search(r"\[\d{1,2}:\d{1,2}(?:\.\d+)?\]", text):
+            return text, endpoint, payload
+    return "", "", last_payload
 
 
 def discover_netease_lrc(req: dict[str, Any], lrc_path: Path) -> tuple[int, dict[str, Any], str]:
     title = str(req["lyric_query_title"])
     artist = str(req.get("lyric_query_artist") or "")
     songs = search_songs(title, artist)
+    candidates = ranked_song_candidates(songs, title, artist)
+    if not candidates:
+        raise RuntimeError("P0 timed lyric discovery found no title-matching NetEase candidate")
 
-    chosen: dict[str, Any] | None = None
-    for song in songs:
-        name = str(song.get("name") or "")
-        artists = " / ".join(song_artists(song))
-        if title in name and (not artist or artist in artists):
-            chosen = song
-            break
-    if chosen is None:
-        for song in songs:
-            if title in str(song.get("name") or ""):
-                chosen = song
-                break
-    if chosen is None:
-        raise RuntimeError("P0 timed lyric discovery found no plausible NetEase candidate")
-
-    song_id = int(chosen["id"])
-    lyric_raw = json.loads(
-        get_text(
-            f"https://music.163.com/api/song/lyric?id={song_id}&lv=1&kv=1&tv=-1",
-            {"Referer": "https://music.163.com/"},
+    diagnostics: list[dict[str, Any]] = []
+    for song in candidates[:10]:
+        try:
+            song_id = int(song["id"])
+        except Exception:
+            continue
+        lrc_text, endpoint, payload = fetch_song_lrc(song_id)
+        diagnostics.append(
+            {
+                "song_id": song_id,
+                "name": song.get("name"),
+                "artists": song_artists(song),
+                "has_timed_lrc": bool(lrc_text),
+                "payload_keys": sorted(payload.keys())[:12],
+            }
         )
+        if not lrc_text:
+            continue
+        lrc_path.write_text(lrc_text, encoding="utf-8")
+        print(
+            json.dumps(
+                {
+                    "p0_selected_song_id": song_id,
+                    "p0_selected_title": song.get("name"),
+                    "p0_selected_artists": song_artists(song),
+                    "p0_lyric_endpoint": endpoint,
+                },
+                ensure_ascii=False,
+            )
+        )
+        return song_id, song, lrc_text
+
+    raise RuntimeError(
+        "P0 title candidates exist but none returned usable timed LRC; "
+        f"candidates={diagnostics}"
     )
-    lyric_payload = object_or_empty(lyric_raw)
-    if not lyric_payload:
-        raise RuntimeError(f"P0 lyric response root unusable: {type(lyric_raw).__name__}")
-    lrc_text = extract_lrc_text(lyric_payload)
-    if not lrc_text:
-        raise RuntimeError("P0 candidate has no usable LRC text")
-    lrc_path.write_text(lrc_text, encoding="utf-8")
-    return song_id, chosen, lrc_text
 
 
 def select_clip_lyrics(req: dict[str, Any], lrc_text: str, lyrics_path: Path) -> list[tuple[float, str]]:
@@ -270,14 +314,12 @@ def main() -> int:
         asr_pkg = tmp / "asr_pkg"
         cross = tmp / "asr_crosscheck.csv"
 
-        # 1. Exact BGM identity remains the upstream truth.
         download(str(req["selected_direct_music_url"]), audio)
         got_sha = sha256(audio)
         expected_sha = str(req["selected_audio_sha256"])
         if got_sha != expected_sha:
             raise RuntimeError(f"locked audio SHA mismatch expected={expected_sha} got={got_sha}")
 
-        # 2. P0: same-version timed lyric candidate.
         song_id, chosen, lrc_text = discover_netease_lrc(req, lrc)
         sung = select_clip_lyrics(req, lrc_text, lyrics)
         print(json.dumps({"p0_song_id": song_id, "clip_lyric_lines": len(sung)}, ensure_ascii=False))
@@ -287,47 +329,19 @@ def main() -> int:
         duration = float(req["selected_duration_s"])
         version = str(req.get("version_label") or "Douyin exact asset")
 
-        # 3. P1: exactly one lightweight ASR pass. It is an independent check,
-        # not a second final lyric truth source.
         run(
             [
-                sys.executable,
-                PACKAGE_TOOL,
-                "init",
-                "--package",
-                asr_pkg,
-                "--audio",
-                audio,
-                "--lyrics",
-                lyrics,
-                "--title",
-                title,
-                "--artist",
-                artist,
-                "--version",
-                version,
-                "--source-clip-start",
-                "0",
-                "--source-clip-end",
-                str(duration),
+                sys.executable, PACKAGE_TOOL, "init", "--package", asr_pkg,
+                "--audio", audio, "--lyrics", lyrics, "--title", title,
+                "--artist", artist, "--version", version,
+                "--source-clip-start", "0", "--source-clip-end", str(duration),
             ]
         )
         p1 = run(
             [
-                sys.executable,
-                LIGHTWEIGHT_ALIGN,
-                "--package",
-                asr_pkg,
-                "--audio",
-                audio,
-                "--model",
-                "small",
-                "--device",
-                "cpu",
-                "--compute-type",
-                "int8",
-                "--language",
-                "zh",
+                sys.executable, LIGHTWEIGHT_ALIGN, "--package", asr_pkg,
+                "--audio", audio, "--model", "small", "--device", "cpu",
+                "--compute-type", "int8", "--language", "zh",
             ],
             check=False,
         )
@@ -337,28 +351,12 @@ def main() -> int:
         if not asr_candidate.exists():
             raise RuntimeError("P1 candidate timeline missing")
 
-        # 4. Canonical timing package remains P0 LRC, independently checked by P1.
         run(
             [
-                sys.executable,
-                PACKAGE_TOOL,
-                "init",
-                "--package",
-                pkg,
-                "--audio",
-                audio,
-                "--lyrics",
-                lyrics,
-                "--title",
-                title,
-                "--artist",
-                artist,
-                "--version",
-                version,
-                "--source-clip-start",
-                "0",
-                "--source-clip-end",
-                str(duration),
+                sys.executable, PACKAGE_TOOL, "init", "--package", pkg,
+                "--audio", audio, "--lyrics", lyrics, "--title", title,
+                "--artist", artist, "--version", version,
+                "--source-clip-start", "0", "--source-clip-end", str(duration),
             ]
         )
         source_identity = (
@@ -368,17 +366,9 @@ def main() -> int:
         )
         run(
             [
-                sys.executable,
-                PACKAGE_TOOL,
-                "from-lrc",
-                "--package",
-                pkg,
-                "--lrc",
-                lrc,
-                "--source-identity",
-                source_identity,
-                "--platform-song-id",
-                str(song_id),
+                sys.executable, PACKAGE_TOOL, "from-lrc", "--package", pkg,
+                "--lrc", lrc, "--source-identity", source_identity,
+                "--platform-song-id", str(song_id),
             ]
         )
 
@@ -389,9 +379,7 @@ def main() -> int:
 
         deltas: list[float] = []
         with cross.open("w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(
-                f, fieldnames=["line_id", "lyric", "clip_start_s", "clip_end_s"]
-            )
+            writer = csv.DictWriter(f, fieldnames=["line_id", "lyric", "clip_start_s", "clip_end_s"])
             writer.writeheader()
             for row in asr_rows:
                 writer.writerow({k: row[k] for k in writer.fieldnames})
@@ -399,9 +387,7 @@ def main() -> int:
         for lrc_row, asr_row in zip(lrc_rows, asr_rows):
             if normalize_lyric(lrc_row["lyric"]) != normalize_lyric(asr_row["lyric"]):
                 raise RuntimeError("P0/P1 lyric sequence mismatch")
-            deltas.append(
-                abs(float(lrc_row["clip_start_s"]) - float(asr_row["clip_start_s"]))
-            )
+            deltas.append(abs(float(lrc_row["clip_start_s"]) - float(asr_row["clip_start_s"])))
 
         median_delta = statistics.median(deltas)
         max_delta = max(deltas)
@@ -409,8 +395,7 @@ def main() -> int:
         max_line = float(req.get("max_line_start_delta_s", 0.50))
         if median_delta > max_median or max_delta > max_line:
             raise RuntimeError(
-                f"P0/P1 timing conflict median={median_delta:.3f}s max={max_delta:.3f}s; "
-                "P2 escalation required"
+                f"P0/P1 timing conflict median={median_delta:.3f}s max={max_delta:.3f}s; P2 escalation required"
             )
 
         note = (
@@ -429,44 +414,29 @@ def main() -> int:
             for i, row in enumerate(final_rows, 1):
                 start = float(row["clip_start_s"])
                 end = float(row["clip_end_s"])
-                writer.writerow(
-                    {
-                        "anchor_id": f"A{i:02d}",
-                        "line_id": row["line_id"],
-                        "phrase": row["lyric"][:2],
-                        "start_s": f"{start:.3f}",
-                        "end_s": f"{min(end, start + 0.45):.3f}",
-                        "qa_status": "PASS",
-                    }
-                )
+                writer.writerow({
+                    "anchor_id": f"A{i:02d}", "line_id": row["line_id"],
+                    "phrase": row["lyric"][:2], "start_s": f"{start:.3f}",
+                    "end_s": f"{min(end, start + 0.45):.3f}", "qa_status": "PASS",
+                })
 
         with (pkg / "music_events.csv").open("w", encoding="utf-8", newline="") as f:
             fields = ["event_id", "time_s", "type", "description", "qa_status"]
             writer = csv.DictWriter(f, fieldnames=fields)
             writer.writeheader()
             for i, row in enumerate(final_rows, 1):
-                writer.writerow(
-                    {
-                        "event_id": f"E{i:02d}",
-                        "time_s": row["clip_start_s"],
-                        "type": "LYRIC_ENTRY",
-                        "description": f"verified lyric entry {row['line_id']}",
-                        "qa_status": "PASS",
-                    }
-                )
-            writer.writerow(
-                {
-                    "event_id": f"E{len(final_rows)+1:02d}",
-                    "time_s": f"{duration:.3f}",
-                    "type": "TAIL_END",
-                    "description": "locked asset tail end",
+                writer.writerow({
+                    "event_id": f"E{i:02d}", "time_s": row["clip_start_s"],
+                    "type": "LYRIC_ENTRY", "description": f"verified lyric entry {row['line_id']}",
                     "qa_status": "PASS",
-                }
-            )
+                })
+            writer.writerow({
+                "event_id": f"E{len(final_rows)+1:02d}", "time_s": f"{duration:.3f}",
+                "type": "TAIL_END", "description": "locked asset tail end", "qa_status": "PASS",
+            })
 
         report = (
-            "# Audio Timeline Alignment QA\n\n"
-            "Status: `PASS`\n\n"
+            "# Audio Timeline Alignment QA\n\nStatus: `PASS`\n\n"
             f"- Slot: `{req['slot_id']}`\n"
             "- Final timing truth: `SAME_VERSION_LRC`, verified against exact locked Douyin asset by one P1 Faster-Whisper pass.\n"
             f"- Exact audio SHA-256: `{got_sha}`\n"
@@ -480,20 +450,10 @@ def main() -> int:
         )
         (pkg / "alignment_qa_report.md").write_text(report, encoding="utf-8")
         run([sys.executable, FINAL_GATE, "seal-qa", "--package", pkg])
-        run(
-            [
-                sys.executable,
-                FINAL_GATE,
-                "validate",
-                "--package",
-                pkg,
-                "--audio",
-                audio,
-                "--crosscheck",
-                cross,
-                "--write-manifest",
-            ]
-        )
+        run([
+            sys.executable, FINAL_GATE, "validate", "--package", pkg,
+            "--audio", audio, "--crosscheck", cross, "--write-manifest",
+        ])
 
         p1_report = asr_pkg / "raw_evidence/faster_whisper/lightweight_mapping_report.json"
         if p1_report.exists():
