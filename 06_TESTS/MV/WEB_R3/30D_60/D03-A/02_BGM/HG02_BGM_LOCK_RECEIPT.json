@@ -1,0 +1,21 @@
+{
+  "receipt_version": "1.0",
+  "gate_id": "HG02",
+  "stage_id": "S02_HG02_BGM_LOCKED",
+  "decision": "PASS",
+  "user_decision_text": "B，按这个走。 Selected exact BGM option B from 乐青春 / 乐乐动画 direct Douyin music asset. SHA-256=f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769; duration=31.921625s; aweme_id=7672476381650263962; music asset id=7671249164676008750.",
+  "approved_artifacts": [
+    "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+    "02_BGM/HG02_LISTENING_PACK_v1.md",
+    "BGM_DISCOVERY/asset_probe_report.json"
+  ],
+  "machine_evidence": [
+    {
+      "artifact_id": "BGM_CANDIDATE_PACKAGE",
+      "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+      "sha256": "5a5d4c08c5c7620f2e474460992747156c809fafc57caca890be057899c8f793"
+    }
+  ],
+  "state_stage_before": "S01_HG01_SONG_LOCKED",
+  "created_at": "2026-08-28T01:57:04Z"
+}
