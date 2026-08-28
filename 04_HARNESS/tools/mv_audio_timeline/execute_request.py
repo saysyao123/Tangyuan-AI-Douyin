@@ -89,14 +89,52 @@ def song_artists(song: dict[str, Any]) -> list[str]:
     return [name for x in values if (name := artist_name(x))]
 
 
+def object_or_empty(value: Any) -> dict[str, Any]:
+    """Normalize API fields that alternate between object and JSON-string schemas."""
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return {}
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            return {}
+        return parsed if isinstance(parsed, dict) else {}
+    return {}
+
+
+def list_or_empty(value: Any) -> list[Any]:
+    if isinstance(value, list):
+        return value
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return []
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            return []
+        return parsed if isinstance(parsed, list) else []
+    return []
+
+
 def extract_lrc_text(payload: dict[str, Any]) -> str:
-    """Accept both historical NetEase {lrc:{lyric:...}} and string schemas."""
+    """Accept historical NetEase object wrappers and current string wrappers."""
     value = payload.get("lrc")
     if isinstance(value, dict):
         text = value.get("lyric")
         if isinstance(text, str):
             return text
     elif isinstance(value, str):
+        # A string may be raw LRC or a JSON-serialized {lyric: ...} object.
+        candidate = value.strip()
+        if candidate.startswith("{"):
+            parsed = object_or_empty(candidate)
+            nested = parsed.get("lyric")
+            if isinstance(nested, str):
+                return nested
         return value
     for key in ("lyric", "lyrics"):
         text = payload.get(key)
@@ -114,20 +152,43 @@ def normalize_lyric(text: str) -> str:
     return re.sub(r"\W", "", text, flags=re.UNICODE)
 
 
+def search_songs(title: str, artist: str) -> list[dict[str, Any]]:
+    query = urllib.parse.quote(f"{title} {artist}".strip())
+    endpoints = [
+        f"https://music.163.com/api/search/get/web?csrf_token=&s={query}&type=1&offset=0&total=true&limit=20",
+        f"https://music.163.com/api/cloudsearch/pc?s={query}&type=1&offset=0&limit=20",
+    ]
+    last_schema: dict[str, str] = {}
+    for endpoint in endpoints:
+        try:
+            raw = get_text(endpoint, {"Referer": "https://music.163.com/"})
+            data_raw = json.loads(raw)
+        except Exception as exc:
+            last_schema[endpoint] = f"request_or_json_error={exc!r}"
+            continue
+        data = object_or_empty(data_raw)
+        result = object_or_empty(data.get("result"))
+        candidates = list_or_empty(result.get("songs"))
+        if not candidates:
+            candidates = list_or_empty(data.get("songs"))
+        songs = [x for x in candidates if isinstance(x, dict)]
+        if songs:
+            print(json.dumps({"p0_search_endpoint": endpoint, "candidate_count": len(songs)}, ensure_ascii=False))
+            return songs
+        last_schema[endpoint] = (
+            f"root={type(data_raw).__name__}; result={type(data.get('result')).__name__}; "
+            f"result_keys={sorted(result.keys())[:12]}"
+        )
+    raise RuntimeError(f"P0 NetEase search returned no song list; schemas={last_schema}")
+
+
 def discover_netease_lrc(req: dict[str, Any], lrc_path: Path) -> tuple[int, dict[str, Any], str]:
     title = str(req["lyric_query_title"])
     artist = str(req.get("lyric_query_artist") or "")
-    query = urllib.parse.quote(f"{title} {artist}".strip())
-    raw = get_text(
-        f"https://music.163.com/api/search/get/web?csrf_token=&s={query}&type=1&offset=0&total=true&limit=20",
-        {"Referer": "https://music.163.com/"},
-    )
-    data = json.loads(raw)
-    songs = ((data.get("result") or {}).get("songs") or []) if isinstance(data, dict) else []
+    songs = search_songs(title, artist)
+
     chosen: dict[str, Any] | None = None
     for song in songs:
-        if not isinstance(song, dict):
-            continue
         name = str(song.get("name") or "")
         artists = " / ".join(song_artists(song))
         if title in name and (not artist or artist in artists):
@@ -135,21 +196,22 @@ def discover_netease_lrc(req: dict[str, Any], lrc_path: Path) -> tuple[int, dict
             break
     if chosen is None:
         for song in songs:
-            if isinstance(song, dict) and title in str(song.get("name") or ""):
+            if title in str(song.get("name") or ""):
                 chosen = song
                 break
     if chosen is None:
         raise RuntimeError("P0 timed lyric discovery found no plausible NetEase candidate")
 
     song_id = int(chosen["id"])
-    lyric_payload = json.loads(
+    lyric_raw = json.loads(
         get_text(
             f"https://music.163.com/api/song/lyric?id={song_id}&lv=1&kv=1&tv=-1",
             {"Referer": "https://music.163.com/"},
         )
     )
-    if not isinstance(lyric_payload, dict):
-        raise RuntimeError("P0 lyric response root is not an object")
+    lyric_payload = object_or_empty(lyric_raw)
+    if not lyric_payload:
+        raise RuntimeError(f"P0 lyric response root unusable: {type(lyric_raw).__name__}")
     lrc_text = extract_lrc_text(lyric_payload)
     if not lrc_text:
         raise RuntimeError("P0 candidate has no usable LRC text")
