@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T024100Z-D03AS04RES",
+  "command": "RESUME",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Refresh guard after creating canonical NATURAL_BEAT.md from the locked S03 timing truth."
+}
