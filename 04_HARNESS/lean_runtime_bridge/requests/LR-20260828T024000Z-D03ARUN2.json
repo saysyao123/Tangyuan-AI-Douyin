@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T024000Z-D03ARUN2",
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "P2 exact-audio CTC has produced a locked canonical Audio Timeline Package; advance S03 and continue only until the nearest missing machine artifact or Human Gate.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "cbead01c0176d65715dfd2d6b881933861d1693de7dcaf0358f796a9b32e56ee",
+    "slot_fingerprint_sha256": "b33fa974a94e1db03658a6091b927261c08162a684d5bc33da01fd366a43b0e0",
+    "current_stage": "S02_HG02_BGM_LOCKED",
+    "current_state_token": "BGM_LOCKED",
+    "transition_sequence": 2,
+    "last_transition_receipt_sha256": "720e1ea9842fb3ebf9e513e8d1848b7eef38c62babaa37031c6143377d3a0a25",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
