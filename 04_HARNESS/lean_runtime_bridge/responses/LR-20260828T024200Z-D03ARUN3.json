@@ -1,0 +1,459 @@
+{
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "completed_at": "2026-08-28T02:42:48Z",
+  "error": null,
+  "execution": {
+    "attempted_next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+    "block": {
+      "command": "ADVANCE",
+      "controller_payload": {
+        "details": {
+          "artifact_path_collisions": {},
+          "artifact_summary": {
+            "ambiguous_legacy_aliases": 0,
+            "checked": 11,
+            "failed": 2,
+            "legacy_aliases_used": 0,
+            "path_collisions": 0
+          },
+          "artifacts": {
+            "AUDIO_TIMELINE_MANIFEST": {
+              "artifact_id": "AUDIO_TIMELINE_MANIFEST",
+              "canonical_path": "03_AUDIO_TIMELINE/package_manifest.json",
+              "errors": [],
+              "ok": true,
+              "path": "03_AUDIO_TIMELINE/package_manifest.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "AUDIO_TIMELINE_QA": {
+              "artifact_id": "AUDIO_TIMELINE_QA",
+              "canonical_path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+              "errors": [],
+              "ok": true,
+              "path": "03_AUDIO_TIMELINE/alignment_qa_report.md",
+              "source": "canonical",
+              "warnings": []
+            },
+            "BGM_CANDIDATE_PACKAGE": {
+              "artifact_id": "BGM_CANDIDATE_PACKAGE",
+              "canonical_path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+              "errors": [],
+              "ok": true,
+              "path": "02_BGM/BGM_CANDIDATE_PACKAGE.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "DIRECTOR_BEAT_MAP": {
+              "artifact_id": "DIRECTOR_BEAT_MAP",
+              "canonical_path": "05_DIRECTOR/DIRECTOR_BEAT_MAP.md",
+              "errors": [
+                "artifact not found"
+              ],
+              "ok": false,
+              "path": null,
+              "source": null,
+              "warnings": []
+            },
+            "DIRECTOR_PLAN": {
+              "artifact_id": "DIRECTOR_PLAN",
+              "canonical_path": "05_DIRECTOR/DIRECTOR_PLAN.md",
+              "errors": [
+                "artifact not found"
+              ],
+              "ok": false,
+              "path": null,
+              "source": null,
+              "warnings": []
+            },
+            "HG01_SELECTION_RECEIPT": {
+              "artifact_id": "HG01_SELECTION_RECEIPT",
+              "canonical_path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+              "errors": [],
+              "ok": true,
+              "path": "01_SONG/HG01_SELECTION_RECEIPT.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "HG02_BGM_LOCK_RECEIPT": {
+              "artifact_id": "HG02_BGM_LOCK_RECEIPT",
+              "canonical_path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+              "errors": [],
+              "ok": true,
+              "path": "02_BGM/HG02_BGM_LOCK_RECEIPT.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "NATURAL_BEAT": {
+              "artifact_id": "NATURAL_BEAT",
+              "canonical_path": "04_BEATS/NATURAL_BEAT.md",
+              "errors": [],
+              "ok": true,
+              "path": "04_BEATS/NATURAL_BEAT.md",
+              "source": "canonical",
+              "warnings": []
+            },
+            "SLOT_MANIFEST": {
+              "artifact_id": "SLOT_MANIFEST",
+              "canonical_path": "00_STATE/SLOT_MANIFEST.json",
+              "errors": [],
+              "ok": true,
+              "path": "00_STATE/SLOT_MANIFEST.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "SONG_CANDIDATE_SET": {
+              "artifact_id": "SONG_CANDIDATE_SET",
+              "canonical_path": "01_SONG/SONG_CANDIDATE_SET.json",
+              "errors": [],
+              "ok": true,
+              "path": "01_SONG/SONG_CANDIDATE_SET.json",
+              "source": "canonical",
+              "warnings": []
+            },
+            "STATE_LEDGER": {
+              "artifact_id": "STATE_LEDGER",
+              "canonical_path": "00_STATE/CURRENT_STATE.json",
+              "errors": [],
+              "ok": true,
+              "path": "00_STATE/CURRENT_STATE.json",
+              "source": "canonical",
+              "warnings": []
+            }
+          },
+          "context": {
+            "canonical_v2": true,
+            "multi_shot": false,
+            "program_30d60": true,
+            "web": true
+          },
+          "declared_state": "NATURAL_BEAT_LOCKED",
+          "highest_contiguous_valid_stage": "S04_NATURAL_BEAT_LOCKED",
+          "ok": false,
+          "slot_root": "/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/06_TESTS/MV/WEB_R3/30D_60/D03-A",
+          "stages": [
+            {
+              "chain_ok": true,
+              "failed_artifacts": [],
+              "label": "Slot initialized",
+              "legacy_artifacts": [],
+              "own_ok": true,
+              "required_artifacts": [
+                "STATE_LEDGER",
+                "SLOT_MANIFEST"
+              ],
+              "stage_id": "S00_SLOT_CREATED"
+            },
+            {
+              "chain_ok": true,
+              "failed_artifacts": [],
+              "label": "Song aesthetic locked",
+              "legacy_artifacts": [],
+              "own_ok": true,
+              "required_artifacts": [
+                "HG01_SELECTION_RECEIPT",
+                "SONG_CANDIDATE_SET"
+              ],
+              "stage_id": "S01_HG01_SONG_LOCKED"
+            },
+            {
+              "chain_ok": true,
+              "failed_artifacts": [],
+              "label": "Exact BGM excerpt locked",
+              "legacy_artifacts": [],
+              "own_ok": true,
+              "required_artifacts": [
+                "HG02_BGM_LOCK_RECEIPT",
+                "BGM_CANDIDATE_PACKAGE"
+              ],
+              "stage_id": "S02_HG02_BGM_LOCKED"
+            },
+            {
+              "chain_ok": true,
+              "failed_artifacts": [],
+              "label": "Trusted Audio Timeline Package locked",
+              "legacy_artifacts": [],
+              "own_ok": true,
+              "required_artifacts": [
+                "AUDIO_TIMELINE_MANIFEST",
+                "AUDIO_TIMELINE_QA"
+              ],
+              "stage_id": "S03_AUDIO_TIMELINE_LOCKED"
+            },
+            {
+              "chain_ok": true,
+              "failed_artifacts": [],
+              "label": "Natural Beat locked",
+              "legacy_artifacts": [],
+              "own_ok": true,
+              "required_artifacts": [
+                "NATURAL_BEAT"
+              ],
+              "stage_id": "S04_NATURAL_BEAT_LOCKED"
+            },
+            {
+              "chain_ok": false,
+              "failed_artifacts": [
+                "DIRECTOR_BEAT_MAP",
+                "DIRECTOR_PLAN"
+              ],
+              "label": "Director allocation locked",
+              "legacy_artifacts": [],
+              "own_ok": false,
+              "required_artifacts": [
+                "DIRECTOR_BEAT_MAP",
+                "DIRECTOR_PLAN"
+              ],
+              "stage_id": "S05_DIRECTOR_PLAN_LOCKED"
+            }
+          ],
+          "target_stage": "S05_DIRECTOR_PLAN_LOCKED"
+        },
+        "error": "target stage evidence validation failed; state not advanced",
+        "ok": false
+      },
+      "ok": false,
+      "returncode": 1,
+      "stderr": ""
+    },
+    "ok": true,
+    "outcome": "BLOCKED",
+    "steps": [
+      {
+        "controller_payload": {
+          "from_stage": "S03_AUDIO_TIMELINE_LOCKED",
+          "ok": true,
+          "state_token": "NATURAL_BEAT_LOCKED",
+          "to_stage": "S04_NATURAL_BEAT_LOCKED",
+          "transition_receipt": "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json",
+          "verified": {
+            "checked_context_receipts": [],
+            "checked_transition_receipts": [
+              "00_STATE/TRANSITIONS/000_INIT__S00_SLOT_CREATED.json",
+              "00_STATE/TRANSITIONS/001_S00_SLOT_CREATED__S01_HG01_SONG_LOCKED.json",
+              "00_STATE/TRANSITIONS/002_S01_HG01_SONG_LOCKED__S02_HG02_BGM_LOCKED.json",
+              "00_STATE/TRANSITIONS/003_S02_HG02_BGM_LOCKED__S03_AUDIO_TIMELINE_LOCKED.json",
+              "00_STATE/TRANSITIONS/004_S03_AUDIO_TIMELINE_LOCKED__S04_NATURAL_BEAT_LOCKED.json"
+            ],
+            "context": {
+              "canonical_v2": true,
+              "multi_shot": false,
+              "program_30d60": true,
+              "web": true
+            },
+            "context_revision": 0,
+            "current_stage": "S04_NATURAL_BEAT_LOCKED",
+            "current_state_token": "NATURAL_BEAT_LOCKED",
+            "highest_contiguous_valid_stage": "S04_NATURAL_BEAT_LOCKED",
+            "ok": true,
+            "slot_id": "D03-A",
+            "transition_sequence": 4
+          }
+        },
+        "from_stage": "S03_AUDIO_TIMELINE_LOCKED",
+        "to_stage": "S04_NATURAL_BEAT_LOCKED"
+      }
+    ],
+    "stop_stage": "S04_NATURAL_BEAT_LOCKED",
+    "transitions_advanced": 1
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "d9ab91f343e514b5b96586ce6477e2b728b2ee651845fa0a358a2add64755759",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "ada0d45725862b53b2f4fba85b82ea66c851e072c44a0945d633d4240643f3c1",
+    "state_sha256": "2a2eebb56963029770106b3f9577e2d40e2f68a87e395afea8f78d4936c2d589",
+    "transition_sequence": 4
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S04_NATURAL_BEAT_LOCKED",
+    "current_state_token": "NATURAL_BEAT_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md",
+      "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_DIRECTOR_PLAN",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ],
+      "next_stage": "S05_DIRECTOR_PLAN_LOCKED",
+      "summary": "Allocate lyric-hit visuals, camera-subject relationships, environment events and source roles into the Director Beat Map and Director Plan."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_MODEL",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "executor_id": "DIRECTOR_PLAN_SYNTHESIS",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/knowledge/MV_DIRECTOR_LEAN_OVERLAY.md",
+        "04_HARNESS/knowledge/MV_CAMERA_LIBRARY_CANDIDATES.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S03_AUDIO_TIMELINE_LOCKED",
+    "current_state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_golden_runtime.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "BUILD_NATURAL_BEAT",
+      "human_gate": null,
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md"
+      ],
+      "next_stage": "S04_NATURAL_BEAT_LOCKED",
+      "summary": "Convert the locked audio truth into semantic Natural Beats without introducing visual design yet."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "NO_NEW_MODEL",
+      "execution_class": "CREATIVE_SYNTHESIS",
+      "executor_id": "NATURAL_BEAT_SYNTHESIS",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_golden_runtime.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "LR-20260828T024200Z-D03ARUN3",
+  "request_sha256": "40d8a6dd63657abc6356800f50271631554b85058f0785d7a43faad75e6e8c1b",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33136727713",
+    "github_source_sha": "2f0af1f373dc869ebafe64a005296d244d86335c"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}
