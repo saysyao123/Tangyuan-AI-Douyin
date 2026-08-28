@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "status": "HG02_MACHINE_PREFLIGHT_READY",
+  "slot_id": "D03-A",
+  "song_family": "爱让人脑袋空空",
+  "selected_option": "B",
+  "options": [
+    {
+      "option": "A",
+      "source_account": "火乐烁",
+      "aweme_id": "7673830659274810033",
+      "music_title": "@火乐烁创作的原声",
+      "music_author": "火乐烁",
+      "direct_music_url": "https://lf3-music-east.douyinstatic.com/obj/ies-music-hj/7673830691573893946.mp3",
+      "duration_s": 31.477542,
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "bitrate_bps": 192000,
+      "audio_source_sha256": "06002970e402cf2b7d0e200fc026e5c2b54b771441f8186dfed190ea7a154917"
+    },
+    {
+      "option": "B",
+      "source_account": "乐青春 / 乐乐动画",
+      "aweme_id": "7672476381650263962",
+      "music_asset_id": "7671249164676008750",
+      "music_title": "@乐乐动画创作的原声",
+      "music_author": "乐乐动画",
+      "direct_music_url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7671249164676008750.mp3",
+      "duration_s": 31.921625,
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "bitrate_bps": 192000,
+      "audio_source_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769"
+    }
+  ],
+  "selected_audio_source_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "selected_duration_s": 31.921625,
+  "selected_music_asset_id": "7671249164676008750",
+  "selected_direct_music_url": "https://sf6-cdn-tos.douyinstatic.com/obj/ies-music/7671249164676008750.mp3",
+  "acoustic_comparison": {
+    "basis": "direct_music_asset",
+    "similarity": 0.992623,
+    "shift": 0,
+    "overlap": 233
+  },
+  "provenance": {
+    "discovery_report": "../BGM_DISCOVERY/asset_probe_report.json",
+    "listening_pack": "HG02_LISTENING_PACK_v1.md",
+    "discovery_route": "P1_VERIFIED_DOUYIN_WORKS / DIRECT_MUSIC_ASSET_FIRST"
+  }
+}
