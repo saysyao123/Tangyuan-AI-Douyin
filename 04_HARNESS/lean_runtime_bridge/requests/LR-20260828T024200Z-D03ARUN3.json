@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T024200Z-D03ARUN3",
+  "command": "RUN_UNTIL_GATE_OR_BLOCK",
+  "slot_id": "D03-A",
+  "payload": {},
+  "requested_by": "chatgpt_web",
+  "reason": "Canonical NATURAL_BEAT.md now exists from locked timing truth; advance S04 and continue only to the nearest missing Director artifact or Human Gate.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "ff2f48e80eeb33b603c1e3d9432e3797961dd1fcf6cb6dbf8198e418cc81dd71",
+    "slot_fingerprint_sha256": "98d9e9180d2dedb9742c6b9eea3b682b242622c80a889de4a1d37b9af69ea999",
+    "current_stage": "S03_AUDIO_TIMELINE_LOCKED",
+    "current_state_token": "AUDIO_TIMELINE_PACKAGE_LOCKED",
+    "transition_sequence": 3,
+    "last_transition_receipt_sha256": "c88f4043b2d4a15155681fe1b513db0f09269272e7cc044ac71aceec588cd176",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
