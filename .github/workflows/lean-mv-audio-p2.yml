@@ -1,0 +1,93 @@
+name: Lean MV Audio Timeline P2 CTC
+
+on:
+  push:
+    branches:
+      - test/mv-lean-r1
+    paths:
+      - '06_TESTS/MV/WEB_R3/30D_60/**/03_AUDIO_TIMELINE/P2_REQUEST.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  p2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Cache pinned Chinese CTC model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: mv-xingyu-zh-ctc-d2af85f-v1
+
+      - name: Prepare conditional P2 runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          git clone https://github.com/wangjiqing/xingyu-lyrics-aligner.git /tmp/xingyu-lyrics-aligner
+          git -C /tmp/xingyu-lyrics-aligner checkout ef5ad02a0059ab07f4cc92f608d373447c89b007
+          python -m pip install --disable-pip-version-check -e '/tmp/xingyu-lyrics-aligner[alignment]'
+          xingyu-align models pull --language zh --device cpu
+
+      - name: Compile canonical P2 executor
+        run: |
+          python -m py_compile \
+            04_HARNESS/tools/mv_audio_timeline/p2_execute_request.py \
+            04_HARNESS/tools/mv_audio_timeline/execute_request.py \
+            04_HARNESS/tools/mv_audio_timeline/run_alignment.py \
+            04_HARNESS/tools/mv_audio_timeline/package_tool.py \
+            04_HARNESS/tools/mv_audio_timeline/final_gate.py
+
+      - name: Execute only requested P2 fallbacks
+        shell: bash
+        run: |
+          set -euo pipefail
+          found=0
+          while IFS= read -r req; do
+            pkg_dir="${req%/P2_REQUEST.json}"
+            if [[ -f "$pkg_dir/package_manifest.json" ]]; then
+              echo "Skip already locked package: $pkg_dir"
+              continue
+            fi
+            timeline_req="$pkg_dir/timeline_request.json"
+            if [[ ! -f "$timeline_req" ]]; then
+              echo "Missing timeline_request.json beside $req" >&2
+              exit 4
+            fi
+            found=1
+            echo "P2 processing $timeline_req"
+            python 04_HARNESS/tools/mv_audio_timeline/p2_execute_request.py --request "$timeline_req"
+          done < <(find 06_TESTS/MV/WEB_R3/30D_60 -path '*/03_AUDIO_TIMELINE/P2_REQUEST.json' -type f | sort)
+          if [[ "$found" != 1 ]]; then
+            echo 'No pending P2 request found.'
+          fi
+
+      - name: Persist canonical P2 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet && [[ -z "$(git status --porcelain)" ]]; then
+            echo 'No new P2 evidence to persist.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 06_TESTS/MV/WEB_R3/30D_60/*/03_AUDIO_TIMELINE
+          git commit -m 'lean-r1: persist conditional P2 audio timeline evidence'
+          git pull --rebase origin test/mv-lean-r1
+          git push origin HEAD:test/mv-lean-r1
