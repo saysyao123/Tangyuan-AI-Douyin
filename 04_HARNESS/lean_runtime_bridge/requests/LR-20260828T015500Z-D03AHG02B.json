@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "request_id": "LR-20260828T015500Z-D03AHG02B",
+  "command": "ACCEPT_GATE",
+  "slot_id": "D03-A",
+  "payload": {
+    "gate": "HG02",
+    "user_decision_text": "B，按这个走。 Selected exact BGM option B from 乐青春 / 乐乐动画 direct Douyin music asset. SHA-256=f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769; duration=31.921625s; aweme_id=7672476381650263962; music asset id=7671249164676008750.",
+    "approved_artifacts": [
+      "02_BGM/HG02_LISTENING_PACK_v1.md",
+      "BGM_DISCOVERY/asset_probe_report.json"
+    ]
+  },
+  "requested_by": "chatgpt_web",
+  "reason": "Record the user's explicit HG02 option B selection and transactionally advance D03-A to S02 on Lean R1.",
+  "expected_guard": {
+    "kind": "CANONICAL",
+    "state_sha256": "665abee36c89f96247c79d5d25737f133caadf2bc88b2249237f9eba7cc68ccc",
+    "slot_fingerprint_sha256": "b9aee8d71543ebd93a07025f49b70898195ff3d59868645d1e8a2af7ed74915d",
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "transition_sequence": 1,
+    "last_transition_receipt_sha256": "99e27abb0d398daa89b5a7993e5d5f3f0e081d93e29cb04987629d34089bb539",
+    "context_revision": 0,
+    "last_context_receipt_sha256": null,
+    "revision_sequence": 0,
+    "last_revision_receipt_sha256": null
+  }
+}
