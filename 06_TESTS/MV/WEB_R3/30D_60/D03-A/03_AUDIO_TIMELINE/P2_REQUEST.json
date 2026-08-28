@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0-lean-r1",
+  "status": "REQUESTED",
+  "slot_id": "D03-A",
+  "reason": "P0/P1 cross-source timing conflict exceeded the locked single-line threshold; do not relax thresholds.",
+  "prior_p1_run_id": 33135393370,
+  "p0_p1_median_start_delta_s": 0.240,
+  "p0_p1_max_start_delta_s": 0.740,
+  "max_median_start_delta_s": 0.25,
+  "max_line_start_delta_s": 0.50,
+  "required_route": "P2_XINGYU_TRUSTED_LYRICS_CTC",
+  "runtime_lock": "04_HARNESS/tools/mv_audio_timeline/alignment_runtime.lock.json",
+  "audio_sha256": "f298e1c7d99fe3cba9a2beed2fc6ecab406f946a3427895e5aad1aa4dfdf4769",
+  "decision_boundary": "P2 is permitted only because the real P0/P1 conflict exists; if P2 passes exact-audio QA, lock S03 without rerunning HG02."
+}
