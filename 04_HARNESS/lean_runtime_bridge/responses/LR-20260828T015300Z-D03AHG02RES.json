@@ -1,0 +1,210 @@
+{
+  "command": "RESUME",
+  "completed_at": "2026-08-28T01:54:45Z",
+  "error": null,
+  "execution": {
+    "ok": true,
+    "outcome": "RESUMED",
+    "transitions_advanced": 0
+  },
+  "next_guard": {
+    "context_revision": 0,
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "kind": "CANONICAL",
+    "last_context_receipt_sha256": null,
+    "last_revision_receipt_sha256": null,
+    "last_transition_receipt_sha256": "99e27abb0d398daa89b5a7993e5d5f3f0e081d93e29cb04987629d34089bb539",
+    "revision_sequence": 0,
+    "slot_fingerprint_sha256": "b9aee8d71543ebd93a07025f49b70898195ff3d59868645d1e8a2af7ed74915d",
+    "state_sha256": "665abee36c89f96247c79d5d25737f133caadf2bc88b2249237f9eba7cc68ccc",
+    "transition_sequence": 1
+  },
+  "postflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_bgm_discovery.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "DISCOVER_AND_LOCK_EXACT_BGM",
+      "human_gate": "HG02",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S02_HG02_BGM_LOCKED",
+      "summary": "Discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "REUSE_EXISTING_RESOLVER_AND_FINGERPRINT_PATH",
+      "execution_class": "EVIDENCE_ORCHESTRATION",
+      "executor_id": "DOUYIN_FIRST_BGM_DISCOVERY",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "preflight": {
+    "active_attempt": 1,
+    "asset_record_count": 0,
+    "context": {
+      "canonical_v2": true,
+      "multi_shot": false,
+      "program_30d60": true,
+      "web": true
+    },
+    "contract_validation": {
+      "errors": [],
+      "ok": true,
+      "stage_count": 19,
+      "warnings": []
+    },
+    "current_stage": "S01_HG01_SONG_LOCKED",
+    "current_state_token": "SONG_LOCKED",
+    "jit_reads": [
+      "04_HARNESS/workflows/mv.md",
+      "04_HARNESS/rules/mv_bgm_discovery.md",
+      "04_HARNESS/rules/mv_human_gates.md"
+    ],
+    "lane": "P",
+    "last_revision_receipt": null,
+    "lean_runtime": {
+      "enabled": true,
+      "external_handoff_stop_after_stages": [
+        "S07_DYNAMIC_PROMPT_SET_READY"
+      ],
+      "macro_commands": [
+        "ACCEPT_GATE",
+        "RUN_UNTIL_GATE_OR_BLOCK"
+      ],
+      "principle": "fine-grained canonical evidence, coarse-grained external execution"
+    },
+    "mode": "RESUME_CANONICAL",
+    "next_action": {
+      "action_id": "DISCOVER_AND_LOCK_EXACT_BGM",
+      "human_gate": "HG02",
+      "jit_reads": [
+        "04_HARNESS/workflows/mv.md",
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ],
+      "next_stage": "S02_HG02_BGM_LOCKED",
+      "summary": "Discover the exact Douyin-native audio asset and listening variants, then stop at HG02 for BGM lock."
+    },
+    "ok": true,
+    "post_publish_slots": [],
+    "program_root": "06_TESTS/MV/WEB_R3/30D_60",
+    "resolved_executor": {
+      "dependency_policy": "REUSE_EXISTING_RESOLVER_AND_FINGERPRINT_PATH",
+      "execution_class": "EVIDENCE_ORCHESTRATION",
+      "executor_id": "DOUYIN_FIRST_BGM_DISCOVERY",
+      "jit_reads": [
+        "04_HARNESS/rules/mv_bgm_discovery.md",
+        "04_HARNESS/rules/mv_human_gates.md"
+      ]
+    },
+    "revision_sequence": 0,
+    "slot_id": "D03-A",
+    "slot_root": "06_TESTS/MV/WEB_R3/30D_60/D03-A",
+    "startup_required_reads": [
+      "05_IP_ASSETS/ACCOUNT_POSITIONING.md",
+      "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+      "04_HARNESS/runtime/mv_resume_contract.json",
+      "04_HARNESS/runtime/mv_stage_registry.json"
+    ],
+    "terminal_slots": [],
+    "tracker": "05_IP_ASSETS/MV_30D_60_TRACKER.csv",
+    "tracker_row": {
+      "audio_asset": "",
+      "day": "3",
+      "lane": "P",
+      "packaging": "MUSIC_FIRST",
+      "publish_time": "",
+      "slot": "A",
+      "slot_id": "D03-A",
+      "song_family": "",
+      "status": "PLANNED"
+    },
+    "verification": {
+      "asset_identity": true,
+      "revision_history": true,
+      "state": true,
+      "tracker_consistency": true
+    }
+  },
+  "request_id": "LR-20260828T015300Z-D03AHG02RES",
+  "request_sha256": "9b13391caee54c7e79bb10555877d1240d76e3680220ca3d701eb538de5e336f",
+  "runner": {
+    "github_ref_name": "test/mv-lean-r1",
+    "github_run_attempt": "1",
+    "github_run_id": "33134289711",
+    "github_source_sha": "c554376faf69037d948d12f8369da1021784fc8e"
+  },
+  "schema_version": "1.0",
+  "slot_id": "D03-A",
+  "status": "EXECUTED"
+}
