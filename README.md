@@ -125,6 +125,16 @@ The goal is not to claim 60 viral videos. The goal is to create enough controlle
 
 Experimental branches may additionally contain test receipts and regression artifacts under `06_TESTS/`.
 
+## Dola Seedance 2.5 experimental workbench
+
+The repository also contains a separately scoped Dola Seedance 2.5 workbench under
+[`06_PRODUCTION/dola-seedance25-workbench/`](06_PRODUCTION/dola-seedance25-workbench/).
+It includes the Windows multi-account control plane, the media-identity resolver,
+sanitized test evidence, and an external-AI analysis brief. It is experimental:
+real Dola generation, clean-source delivery, native 5-second output, and real
+multi-account capacity remain evidence-gated and must not be inferred from
+configuration or assistant acknowledgement alone.
+
 ## Quick start for an agent-assisted MV run
 
 1. Clone the repository.

@@ -1,0 +1,15 @@
+{
+  "name": "seedance-desktop-studio",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Clean-room multi-account desktop shell for Dola sessions with a local Codex control plane.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "studio": "node bin/seedance-studio.mjs",
+    "check": "node --check src/main.js && node --check src/control-server.js && node --check src/preload.js && node --check src/renderer/app.js && node --check src/background-dola.js && node --check bin/seedance-studio.mjs"
+  },
+  "devDependencies": {
+    "electron": "44.0.0"
+  }
+}

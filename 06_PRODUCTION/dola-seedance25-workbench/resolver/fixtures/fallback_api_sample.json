@@ -1,0 +1,48 @@
+{
+  "vid": "v186a3gm000cda9gbpfog65jfpbu9q50",
+  "video_model": "seedance-2.5",
+  "key_seed": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+  "fallback_api": "https://api.example.test/samantha/media/get_play_info?vid=v186a3gm000cda9gbpfog65jfpbu9q50&channel=yes",
+  "data": {
+    "video_list": [
+      {
+        "main_url": "qAABADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwfyFiknNYCJB13FyCi+EkOyQsE4Z5SJk2dqiMsVb1rO/42bXae6Dvmuas/xWznc6IC0K+hwXKhx/V0qjt83uB0A==",
+        "logo_type": "unwatermarked",
+        "original": true,
+        "vwidth": 1920,
+        "vheight": 1080,
+        "real_bitrate": 12000000,
+        "codec_type": 1,
+        "definition": "1080p",
+        "gear_name": "original"
+      },
+      {
+        "play_url": "aHR0cHM6Ly9jZG4uZXhhbXBsZS50ZXN0L2NsZWFuLTcyMC5tcDQ_bHI9dmlkZW9fZ2VuX25vX3dhdGVybWFyaw",
+        "logo_type": "unwatermarked",
+        "vwidth": 1280,
+        "vheight": 720,
+        "bitrate": 5000000,
+        "codec_type": 2,
+        "definition": "720p",
+        "gear_name": "standard"
+      },
+      {
+        "download_url": "https://cdn.example.test/preview.mp4?lr=video_gen_watermark_dyn",
+        "logo_type": "watermarked",
+        "vwidth": 1920,
+        "vheight": 1080,
+        "real_bitrate": 20000000,
+        "codec_type": 1,
+        "definition": "1080p",
+        "gear_name": "preview"
+      },
+      {
+        "url": "https://cdn.example.test/legacy.mp4?logo_type=cici_ai",
+        "vwidth": 640,
+        "vheight": 360,
+        "bitrate": 1000000,
+        "codec_type": 1
+      }
+    ]
+  }
+}

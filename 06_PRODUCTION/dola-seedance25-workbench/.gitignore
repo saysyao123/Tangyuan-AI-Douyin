@@ -1,0 +1,25 @@
+# Local runtime and credentials must never enter the public export
+runtime/
+captures/
+output/
+outputs/
+downloads/
+user-data/
+profiles/
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+node_modules/
+*.har
+*.har.zip
+*.mp4
+*.mov
+*.webm
+*.cookie
+*.cookies
+*.token
+*.session
+.env
+.env.*
+!.env.example

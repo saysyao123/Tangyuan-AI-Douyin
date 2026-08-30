@@ -1,0 +1,13 @@
+{
+  "result": {
+    "vid": "v186a3gm000cda9ge4vog65h37bs1nug",
+    "video_model": "seedance-2.5",
+    "main_url": "https://cdn.example.test/direct.mp4?lr=video_gen_no_watermark",
+    "vwidth": 1280,
+    "vheight": 720,
+    "bitrate": 6000000,
+    "codec_type": "h264",
+    "definition": "720p",
+    "gear_name": "clean"
+  }
+}

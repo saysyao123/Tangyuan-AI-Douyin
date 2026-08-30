@@ -1,0 +1,59 @@
+{
+  "date": "2026-08-30",
+  "account_alias": "DOLA_A",
+  "task_alias": "LATEST_I2V_5S_STAR_REFLECTION",
+  "mode": "i2v",
+  "model": "seedance-v2.5",
+  "duration_requested_seconds": 5,
+  "ratio": "9:16",
+  "capture_armed_before_generation": true,
+  "generation_submitted": true,
+  "final_task_state": "failed_local_timeout",
+  "timeout_seconds": 180,
+  "error": "background generation timed out before media identity was captured",
+  "response_count": 16,
+  "response_paths": [
+    "/im/conversation/batch_get",
+    "/im/conversation/info",
+    "/im/chain/single",
+    "/chat/completion",
+    "/im/message/mark_conv_read"
+  ],
+  "sse_events": [
+    "SSE_ACK",
+    "FULL_MSG_NOTIFY",
+    "STREAM_CHUNK",
+    "SSE_HEARTBEAT",
+    "SSE_REPLY_END"
+  ],
+  "assistant_acknowledged_generation": true,
+  "assistant_reported_credit_cost": 2,
+  "assistant_reported_remaining_daily_credits": 2,
+  "task_id_value": "",
+  "identity": {
+    "conversation_id": "FOUND_REDACTED",
+    "message_id": "FOUND_REDACTED",
+    "generation_id": "NOT_FOUND",
+    "vid": "NOT_FOUND",
+    "node_id": "NOT_FOUND",
+    "media_key": "NOT_FOUND",
+    "fallback_api": "NOT_FOUND",
+    "key_seed": "NOT_FOUND",
+    "video_list": "NOT_FOUND",
+    "original_media_info": "NOT_FOUND",
+    "media_info": "NOT_FOUND",
+    "main_url": "NOT_FOUND",
+    "identity_pass": false
+  },
+  "media": {
+    "mp4_count": 0,
+    "download_run": false,
+    "ffprobe_run": false,
+    "visual_watermark_check": "UNVERIFIED"
+  },
+  "security": {
+    "cookies_emitted": false,
+    "authorization_emitted": false,
+    "raw_shared_ledger": false
+  }
+}

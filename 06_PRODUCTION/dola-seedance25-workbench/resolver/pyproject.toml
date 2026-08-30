@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dola-original-resolver"
+version = "0.1.0"
+description = "Offline-first resolver and direct downloader for user-owned Dola video metadata"
+requires-python = ">=3.11"
+dependencies = [
+  "cryptography>=42",
+  "requests>=2.31",
+  "playwright>=1.50",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+dola-resolver = "app.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+where = ["."]
