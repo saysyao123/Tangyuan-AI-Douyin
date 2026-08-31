@@ -27,34 +27,41 @@
   <aside class="sidebar">
     <div class="brand">
       <strong>DolaWorkbench</strong>
-      <span>Seedance · Multi-account · Codex</span>
+      <span>Seedance 2.5 · Multi-account · Codex</span>
     </div>
     <div id="defaultPasswordNotice" class="security-notice" hidden>
-      当前仍使用首次预设保险库密码。完成首次登录测试后，建议点右上角“修改保险库密码”。
+      当前仍使用首次预设保险库密码。建议在正式保存账号前修改成你自己的密码。
     </div>
-    <button id="addAccount" class="primary">+ 添加 Dola 账号</button>
+    <button id="addAccount" class="primary account-add">+ 添加 Dola 账号</button>
+    <div class="sidebar-section-title"><span>账号</span><span id="accountCount">0</span></div>
     <div id="accounts" class="accounts"></div>
     <div class="notice">
-      每个账号使用独立 Chromium persistent partition。首次登录请直接在中间 Dola 页面完成；本软件不保存 Google 密码或 TOTP。
+      每个账号使用独立 Chromium persistent partition。首次登录直接在中间 Dola 页面人工完成；本软件不保存 Google 密码、TOTP，也不绕过登录或平台限制。
     </div>
   </aside>
 
   <main class="workspace">
     <header>
-      <div>
-        <div id="activeName" class="active-name">尚未选择账号</div>
+      <div class="account-heading">
+        <div class="heading-line">
+          <div id="activeName" class="active-name">尚未选择账号</div>
+          <span id="activeHealth" class="health-pill neutral">未检查</span>
+        </div>
         <div id="status" class="status">正在检查本地保险库…</div>
       </div>
       <div class="header-actions">
-        <button id="changeVaultPassword">修改保险库密码</button>
-        <button id="lockVault">锁定保险库</button>
+        <button id="checkHealth" disabled>检查登录</button>
         <button id="reload" disabled>刷新 Dola</button>
-        <button id="clearSession" disabled>清除本账号会话</button>
+        <button id="clearSession" disabled>清除会话</button>
+        <button id="changeVaultPassword">修改保险库密码</button>
+        <button id="lockVault">锁定</button>
       </div>
     </header>
     <section id="empty" class="empty">
-      <h1>多账号会话容器</h1>
-      <p>解锁保险库后再打开账号。桌面只保留一个可见调试 WebView；后台任务由独立 Worker 管理。</p>
+      <div class="empty-icon">D</div>
+      <h1>先添加一个 Dola 账号</h1>
+      <p>账号建立后，中间区域会直接打开独立 Dola 会话。先完成 1 个账号的登录和 5 秒生成闭环，再逐步扩展多账号。</p>
+      <button id="emptyAddAccount" class="primary" type="button">添加第一个账号</button>
     </section>
     <section id="webviews" class="webviews"></section>
   </main>
@@ -63,24 +70,24 @@
     <div class="panel-title">
       <div>
         <strong>Seedance Studio</strong>
-        <span>Codex 与桌面 UI 共用同一任务系统</span>
+        <span>桌面 UI 与 Codex 共用同一任务系统</span>
       </div>
       <button id="refreshTasks">刷新</button>
     </div>
+
     <form id="taskForm" class="task-form">
-      <label>Provider
-        <select id="provider">
-          <option value="dola-web">Dola Web · Portable</option>
-          <option value="dola-web-background">Dola Web · Background</option>
-          <option value="byteplus-seedance">BytePlus · PLANNED</option>
-        </select>
-      </label>
-      <div class="form-row">
+      <div class="form-row three">
+        <label>模式
+          <select id="mode">
+            <option value="t2v">文生视频</option>
+            <option value="i2v">图生视频</option>
+          </select>
+        </label>
         <label>时长
           <select id="duration">
             <option value="5">5s</option>
             <option value="10">10s</option>
-            <option value="30">30s · EXPERIMENTAL</option>
+            <option value="30">30s · 实验</option>
           </select>
         </label>
         <label>比例
@@ -91,21 +98,86 @@
           </select>
         </label>
       </div>
+
+      <div id="imageInputRow" class="image-input-row" hidden>
+        <button id="pickImage" type="button">选择首帧图片</button>
+        <div id="imagePath" class="file-path">尚未选择图片</div>
+      </div>
+
       <label>Prompt
-        <textarea id="prompt" rows="8" placeholder="输入 Seedance 提示词…"></textarea>
+        <textarea id="prompt" rows="9" placeholder="输入 Seedance 2.5 提示词…"></textarea>
       </label>
-      <button id="queueTask" class="primary" type="submit" disabled>加入任务队列</button>
+
+      <div class="submit-actions">
+        <button id="createAndRun" class="primary" type="submit" disabled>创建并开始</button>
+        <button id="queueOnly" type="button" disabled>仅加入队列</button>
+      </div>
+
       <div class="portable-actions">
         <button id="dispatchNext" type="button">开始下一个排队任务</button>
         <button id="recoverWaiting" type="button">恢复等待中的任务</button>
       </div>
-      <div class="gate-note">30 秒仍是独立实验 Gate。遇到登录、MFA、CAPTCHA、quota、permission 或 entitlement 限制时停止并要求人工处理，不自动换号规避限制。</div>
+      <div class="gate-note">5s / 10s 为当前主验证能力；30s 保留为 entitlement-gated 实验入口。遇到登录、MFA、CAPTCHA、quota、permission 或 entitlement 限制时停止并要求人工处理。</div>
     </form>
+
     <div class="task-list-header"><strong>任务</strong><span id="taskCount">0</span></div>
     <div id="tasks" class="tasks"></div>
   </aside>
+
+  <div id="addAccountModal" class="modal-backdrop" hidden>
+    <form id="addAccountForm" class="modal-card small">
+      <div class="modal-head">
+        <div><strong>添加 Dola 账号</strong><span>建立一个独立 Chromium 登录会话</span></div>
+        <button type="button" class="icon-button" data-close-modal="addAccountModal">×</button>
+      </div>
+      <label>账号名称
+        <input id="accountNameInput" maxlength="80" autocomplete="off" placeholder="例如：Dola 01" required />
+      </label>
+      <div id="addAccountError" class="modal-error"></div>
+      <div class="modal-actions">
+        <button type="button" data-close-modal="addAccountModal">取消</button>
+        <button id="addAccountSubmit" class="primary" type="submit">创建并打开登录页</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="passwordModal" class="modal-backdrop" hidden>
+    <form id="passwordForm" class="modal-card small">
+      <div class="modal-head">
+        <div><strong>修改保险库密码</strong><span>只修改本机 Profile Vault 的主密码</span></div>
+        <button type="button" class="icon-button" data-close-modal="passwordModal">×</button>
+      </div>
+      <div id="passwordDefaultHint" class="security-notice" hidden>当前使用首次预设密码。你只需要输入新的密码即可。</div>
+      <label id="currentPasswordRow">当前密码
+        <input id="currentVaultPassword" type="password" autocomplete="current-password" minlength="8" />
+      </label>
+      <label>新密码
+        <input id="newVaultPassword" type="password" autocomplete="new-password" minlength="8" required />
+      </label>
+      <label>再次输入新密码
+        <input id="confirmNewVaultPassword" type="password" autocomplete="new-password" minlength="8" required />
+      </label>
+      <div id="passwordError" class="modal-error"></div>
+      <div class="modal-actions">
+        <button type="button" data-close-modal="passwordModal">取消</button>
+        <button id="passwordSubmit" class="primary" type="submit">确认修改</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="confirmModal" class="modal-backdrop" hidden>
+    <div class="modal-card small">
+      <div class="modal-head"><div><strong id="confirmTitle">确认操作</strong><span id="confirmMessage"></span></div></div>
+      <div class="modal-actions">
+        <button id="confirmCancel" type="button">取消</button>
+        <button id="confirmOk" class="danger" type="button">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
   <script src="./app.js"></script>
-  <script src="./vault-settings.js"></script>
   <script src="./portable-actions.js"></script>
 </body>
 </html>
