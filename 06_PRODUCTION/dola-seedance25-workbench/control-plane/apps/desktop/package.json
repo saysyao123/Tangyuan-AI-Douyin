@@ -1,6 +1,6 @@
 {
   "name": "dola-seedance-portable-workbench",
-  "version": "0.3.1-portable-v1-rc2",
+  "version": "0.3.2-portable-v1-rc3",
   "private": true,
   "description": "Portable Windows Dola/Seedance workbench with encrypted local account profiles, durable projects/jobs and Codex control plane.",
   "main": "src/portable-main.js",
