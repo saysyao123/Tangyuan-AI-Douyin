@@ -39,11 +39,8 @@ function readJson(req, limit = 1024 * 1024) {
     });
     req.on('end', () => {
       if (chunks.length === 0) return resolve({});
-      try {
-        resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')));
-      } catch (_) {
-        reject(Object.assign(new Error('Invalid JSON body'), { statusCode: 400 }));
-      }
+      try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8'))); }
+      catch (_) { reject(Object.assign(new Error('Invalid JSON body'), { statusCode: 400 })); }
     });
     req.on('error', reject);
   });
@@ -67,14 +64,10 @@ async function startControlServer(handlers) {
 
   const server = http.createServer(async (req, res) => {
     const pathname = new URL(req.url || '/', 'http://127.0.0.1').pathname;
-    if (pathname === '/health') {
-      return writeJson(res, 200, await handlers.health());
-    }
+    if (pathname === '/health') return writeJson(res, 200, await handlers.health());
 
     const auth = String(req.headers.authorization || '');
-    if (auth !== `Bearer ${token}`) {
-      return writeJson(res, 401, { error: 'unauthorized' });
-    }
+    if (auth !== `Bearer ${token}`) return writeJson(res, 401, { error: 'unauthorized' });
 
     try {
       const parts = routeParts(req.url || '/');
@@ -118,8 +111,6 @@ async function startControlServer(handlers) {
         return writeJson(res, 200, { providers: await handlers.listProviders() });
       }
 
-      // Legacy task routes stay stable while Portable V1 introduces the
-      // project/job model next to them.
       if (req.method === 'GET' && parts.join('/') === 'v1/tasks') {
         return writeJson(res, 200, { tasks: await handlers.listTasks() });
       }
@@ -141,10 +132,11 @@ async function startControlServer(handlers) {
         const result = await handlers.dispatchTask(parts[2]);
         return writeJson(res, result.ok ? 200 : (result.statusCode || 409), result);
       }
+      if (parts.length === 4 && parts[0] === 'v1' && parts[1] === 'tasks' && parts[3] === 'recover' && req.method === 'POST') {
+        const result = await requireHandler(handlers, 'recoverTask')(parts[2]);
+        return writeJson(res, result.ok ? 200 : (result.statusCode || (result.recoverable ? 202 : 409)), result);
+      }
 
-      // Portable V1 durable project/job routes. These do not dispatch Dola by
-      // themselves; they provide the idempotent control/data foundation used
-      // by the scheduler/provider in later Gates.
       if (req.method === 'GET' && parts.join('/') === 'v1/projects') {
         return writeJson(res, 200, { projects: await requireHandler(handlers, 'listProjects')() });
       }
@@ -202,15 +194,7 @@ async function startControlServer(handlers) {
   });
 
   const address = server.address();
-  const info = {
-    host: '127.0.0.1',
-    port: address.port,
-    token,
-    pid: process.pid,
-    version: 1,
-    startedAt: Date.now()
-  };
-
+  const info = { host: '127.0.0.1', port: address.port, token, pid: process.pid, version: 1, startedAt: Date.now() };
   fs.mkdirSync(path.dirname(discoveryFile), { recursive: true });
   fs.writeFileSync(discoveryFile, JSON.stringify(info, null, 2), { encoding: 'utf8', mode: 0o600 });
 
