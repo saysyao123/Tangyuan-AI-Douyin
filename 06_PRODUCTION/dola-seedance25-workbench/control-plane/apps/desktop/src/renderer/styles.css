@@ -25,10 +25,12 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .account-copy { display: grid; min-width: 0; }
 .account-copy strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .notice { margin-top: auto; line-height: 1.6; padding: 12px; background: #0d1426; border-radius: 10px; }
+.security-notice { line-height: 1.55; padding: 10px 11px; border: 1px solid #725a2c; border-radius: 10px; background: #2a210f; color: #f2d48c; font-size: 12px; }
+.security-notice[hidden] { display: none; }
 .workspace { min-width: 0; height: 100vh; display: grid; grid-template-rows: 66px 1fr; background: #080d19; }
 header { padding: 10px 16px; border-bottom: 1px solid #26304a; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .active-name { font-weight: 700; margin-bottom: 4px; }
-.header-actions { display: flex; gap: 8px; }
+.header-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .empty { align-self: center; justify-self: center; max-width: 620px; text-align: center; color: #c9d2e7; padding: 30px; }
 .webviews { min-height: 0; position: relative; }
 .webview-wrapper { position: absolute; inset: 0; display: none; }
