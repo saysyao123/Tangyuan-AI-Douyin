@@ -70,8 +70,8 @@
     <form id="taskForm" class="task-form">
       <label>Provider
         <select id="provider">
-          <option value="dola-web">Dola Web · EXPERIMENTAL</option>
-          <option value="dola-web-background">Dola Web · HIDDEN BACKGROUND (EXPERIMENTAL)</option>
+          <option value="dola-web">Dola Web · Portable</option>
+          <option value="dola-web-background">Dola Web · Background</option>
           <option value="byteplus-seedance">BytePlus · PLANNED</option>
         </select>
       </label>
@@ -95,6 +95,10 @@
         <textarea id="prompt" rows="8" placeholder="输入 Seedance 提示词…"></textarea>
       </label>
       <button id="queueTask" class="primary" type="submit" disabled>加入任务队列</button>
+      <div class="portable-actions">
+        <button id="dispatchNext" type="button">开始下一个排队任务</button>
+        <button id="recoverWaiting" type="button">恢复等待中的任务</button>
+      </div>
       <div class="gate-note">30 秒仍是独立实验 Gate。遇到登录、MFA、CAPTCHA、quota、permission 或 entitlement 限制时停止并要求人工处理，不自动换号规避限制。</div>
     </form>
     <div class="task-list-header"><strong>任务</strong><span id="taskCount">0</span></div>
@@ -102,5 +106,6 @@
   </aside>
   <script src="./app.js"></script>
   <script src="./vault-settings.js"></script>
+  <script src="./portable-actions.js"></script>
 </body>
 </html>
