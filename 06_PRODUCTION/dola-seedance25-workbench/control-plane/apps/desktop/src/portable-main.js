@@ -24,11 +24,12 @@ const root = resolvePortableRoot({
 const layout = buildPortableLayout(root);
 ensurePortableLayout(layout);
 
-// Durable application metadata remains in userData during migration. F3 has
-// reserved a separate ephemeral sessionData root, but it is intentionally NOT
-// switched on until the desktop unlock Gate prevents Chromium partitions from
-// opening before the vault is unlocked.
+// Keep durable metadata separate from browser credentials. Electron userData
+// remains the migration-compatible home for accounts/tasks/UI metadata, while
+// Chromium session storage (cookies/localStorage/partition databases/cache) is
+// redirected to the ephemeral vault-controlled runtime root before app ready.
 app.setPath('userData', layout.electronUserData);
+app.setPath('sessionData', layout.sessionDataDir);
 
 process.env.DOLA_WORKBENCH_ROOT = layout.root;
 process.env.DOLA_WORKBENCH_DATA_ROOT = layout.dataDir;
@@ -54,6 +55,17 @@ installPortableRuntime({
   profileBridge
 });
 
+function vaultUnlocked() {
+  return ['UNLOCKED', 'RESEAL_REQUIRED'].includes(vault.status().state);
+}
+
+function vaultLockedError() {
+  const error = new Error('Dola profile vault is locked. Unlock it once in the desktop UI before opening or dispatching account sessions.');
+  error.code = 'VAULT_LOCKED';
+  error.statusCode = 423;
+  return error;
+}
+
 const controlServer = require('./control-server');
 const originalStartControlServer = controlServer.startControlServer;
 controlServer.startControlServer = async function startPortableControlServer(legacyHandlers) {
@@ -62,6 +74,20 @@ controlServer.startControlServer = async function startPortableControlServer(leg
       ? await legacyHandlers.listAccounts()
       : [];
     return accountRegistry.syncLegacy(legacy);
+  }
+
+  async function prepareAccount(id) {
+    if (!vaultUnlocked()) throw vaultLockedError();
+    await syncAccounts();
+    const account = accountRegistry.get(id);
+    if (!account) {
+      const error = new Error('Account not found');
+      error.code = 'ACCOUNT_NOT_FOUND';
+      error.statusCode = 404;
+      throw error;
+    }
+    profileBridge.prepare(account);
+    return account;
   }
 
   const handlers = {
@@ -82,30 +108,28 @@ controlServer.startControlServer = async function startPortableControlServer(leg
           vault: vault.status(),
           profileRuntime: {
             sessionDataRootReserved: true,
-            electronSessionDataRedirected: false,
+            electronSessionDataRedirected: true,
             bridgeReady: true,
-            runtimeBinding: 'F3-foundation-only'
+            runtimeBinding: 'F3-experimental-live'
           },
           f2RuntimeBinding: 'foundation-only'
         }
       };
     },
 
-    // Account metadata is mirrored from the existing Electron session owner.
-    // This avoids moving/deleting live Chromium profile data during F2/F3
-    // foundation work while giving Codex a durable dynamic registry.
     listAccounts: async () => syncAccounts(),
     createAccount: async (name) => {
       const legacy = await legacyHandlers.createAccount(name);
       return accountRegistry.upsert({ ...legacy, source: 'legacy-poc' });
     },
     activateAccount: async (id) => {
+      await prepareAccount(id);
       const activated = await legacyHandlers.activateAccount(id);
       accountRegistry.upsert({ ...activated, source: accountRegistry.get(id)?.source || 'legacy-poc' });
       return accountRegistry.get(id) || activated;
     },
     getAccountSession: async (id) => {
-      await syncAccounts();
+      await prepareAccount(id);
       const session = await legacyHandlers.getAccountSession(id);
       if (accountRegistry.get(id)) {
         accountRegistry.recordHealth(id, {
@@ -131,23 +155,31 @@ controlServer.startControlServer = async function startPortableControlServer(leg
       return accountRegistry.resume(id);
     },
     debugAccount: async (id) => {
-      await syncAccounts();
-      const account = accountRegistry.get(id);
-      if (!account) {
-        const error = new Error('Account not found');
-        error.code = 'ACCOUNT_NOT_FOUND';
-        error.statusCode = 404;
-        throw error;
-      }
+      const account = await prepareAccount(id);
       const worker = workerScheduler.promoteDebug(id);
       await legacyHandlers.activateAccount(id);
       return { account, debug: worker, workers: workerScheduler.status() };
+    },
+    dispatchTask: async (id) => {
+      try {
+        const task = await legacyHandlers.getTask(id);
+        if (!task) return { ok: false, statusCode: 404, error: 'task_not_found' };
+        await prepareAccount(task.accountId);
+        return legacyHandlers.dispatchTask(id);
+      } catch (error) {
+        return {
+          ok: false,
+          statusCode: Number(error.statusCode) || 409,
+          error: error.code || 'dispatch_blocked',
+          message: error.message || String(error)
+        };
+      }
     },
 
     workerStatus: async () => ({
       ...workerScheduler.status(),
       runtimeBinding: 'foundation-only',
-      note: 'F2 lease/worker policy is active as a control foundation. Real Dola BrowserWindow wake/sleep binding lands in F4/F5.'
+      note: 'F2 lease/worker policy is active as a control foundation. Real multi-worker Dola runtime binding lands in F4/F5.'
     }),
     configureWorkers: async (input) => {
       const saved = workerConfig.save(input || {});
@@ -168,4 +200,8 @@ controlServer.startControlServer = async function startPortableControlServer(leg
   return originalStartControlServer(handlers);
 };
 
+// Vault credentials are accepted only over Electron IPC from the trusted local
+// desktop preload. The loopback Codex Control Plane intentionally has no unlock
+// endpoint and receives status only.
+require('./portable-ipc').registerPortableIpc();
 require('./main');
