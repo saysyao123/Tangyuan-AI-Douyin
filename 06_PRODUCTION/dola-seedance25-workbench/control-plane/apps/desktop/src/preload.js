@@ -9,6 +9,12 @@ function subscribe(channel, callback) {
 }
 
 contextBridge.exposeInMainWorld('seedanceDesktop', {
+  getVaultStatus: () => ipcRenderer.invoke('vault:status'),
+  initializeVault: (password) => ipcRenderer.invoke('vault:initialize', String(password || '')),
+  unlockVault: (password) => ipcRenderer.invoke('vault:unlock', String(password || '')),
+  lockVault: () => ipcRenderer.invoke('vault:lock'),
+  prepareAccountSession: (id) => ipcRenderer.invoke('profiles:prepare-account', String(id || '')),
+
   listAccounts: () => ipcRenderer.invoke('accounts:list'),
   addAccount: (name) => ipcRenderer.invoke('accounts:add', String(name || '')),
   removeAccount: (id, clearSession = false) => ipcRenderer.invoke('accounts:remove', String(id || ''), clearSession === true),
