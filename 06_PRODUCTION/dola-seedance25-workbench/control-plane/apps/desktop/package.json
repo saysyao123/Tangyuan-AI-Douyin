@@ -7,8 +7,8 @@
   "scripts": {
     "start": "electron .",
     "studio": "node bin/seedance-studio.mjs",
-    "test": "node --test test/portable-paths.test.js test/project-store.test.js test/control-server-projects.test.js",
-    "check": "node --check src/portable-main.js && node --check src/core/portable-paths.js && node --check src/core/atomic-json.js && node --check src/core/project-store.js && node --check src/main.js && node --check src/control-server.js && node --check src/preload.js && node --check src/renderer/app.js && node --check src/background-dola.js && node --check bin/seedance-studio.mjs && node --test test/portable-paths.test.js test/project-store.test.js test/control-server-projects.test.js"
+    "test": "node --test test/portable-paths.test.js test/project-store.test.js test/account-registry.test.js test/worker-scheduler.test.js test/control-server-projects.test.js",
+    "check": "node --check src/portable-main.js && node --check src/core/portable-paths.js && node --check src/core/atomic-json.js && node --check src/core/project-store.js && node --check src/core/account-registry.js && node --check src/core/worker-scheduler.js && node --check src/core/worker-config.js && node --check src/main.js && node --check src/control-server.js && node --check src/preload.js && node --check src/renderer/app.js && node --check src/background-dola.js && node --check bin/seedance-studio.mjs && node --test test/portable-paths.test.js test/project-store.test.js test/account-registry.test.js test/worker-scheduler.test.js test/control-server-projects.test.js"
   },
   "devDependencies": {
     "electron": "44.0.0"
