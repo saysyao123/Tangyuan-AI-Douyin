@@ -98,6 +98,24 @@ test('i2v absolute source is staged inside project inputs', () => {
   } finally { cleanup(root); }
 });
 
+test('i2v rejects relative local source paths', () => {
+  const { root, store } = fixture();
+  try {
+    const project = store.createProject({ name: 'Relative Path Rejection' }).project;
+    assert.throws(
+      () => store.createJob({
+        projectId: project.id,
+        shotId: 'S01',
+        mode: 'i2v',
+        prompt: 'Animate this still.',
+        duration: 5,
+        sourceImagePath: 'relative\\source.png'
+      }),
+      (error) => error && error.code === 'BAD_SOURCE_IMAGE'
+    );
+  } finally { cleanup(root); }
+});
+
 test('project emits PROJECT_COMPLETE only after every created job succeeds', () => {
   const { root, store } = fixture();
   try {
