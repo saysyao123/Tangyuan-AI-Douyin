@@ -14,6 +14,7 @@ const { WorkerConfigStore } = require('./core/worker-config');
 const { ProfileVault } = require('./core/vault');
 const { ElectronProfileBridge } = require('./core/electron-profile-bridge');
 const { installPortableRuntime } = require('./core/portable-runtime');
+const { DEFAULT_INITIAL_VAULT_PASSWORD } = require('./core/defaults');
 
 const root = resolvePortableRoot({
   env: process.env,
@@ -26,8 +27,9 @@ ensurePortableLayout(layout);
 
 // Keep durable metadata separate from browser credentials. Electron userData
 // remains the migration-compatible home for accounts/tasks/UI metadata, while
-// Chromium session storage (cookies/localStorage/partition databases/cache) is
-// redirected to the ephemeral vault-controlled runtime root before app ready.
+// Chromium session storage is redirected to the ephemeral vault-controlled
+// runtime root before app ready. No Dola partition is opened until renderer or
+// worker code explicitly prepares an account after vault unlock.
 app.setPath('userData', layout.electronUserData);
 app.setPath('sessionData', layout.sessionDataDir);
 
@@ -45,18 +47,42 @@ const workerScheduler = new WorkerScheduler(workerSettings);
 const vault = new ProfileVault(layout);
 const profileBridge = new ElectronProfileBridge(layout, vault);
 
-installPortableRuntime({
+// User-requested first-run convenience: initialize/unlock with the public
+// bootstrap password. This is not treated as a security boundary; the desktop
+// UI prominently recommends replacing it after first successful login.
+let defaultPasswordActive = false;
+try {
+  if (!vault.isInitialized()) {
+    vault.initialize(DEFAULT_INITIAL_VAULT_PASSWORD);
+    defaultPasswordActive = true;
+  } else if (!['UNLOCKED', 'RESEAL_REQUIRED'].includes(vault.status().state)) {
+    try {
+      vault.unlock(DEFAULT_INITIAL_VAULT_PASSWORD);
+      defaultPasswordActive = true;
+    } catch (_) {
+      // A private replacement password has already been configured. Stay
+      // locked and let the local desktop unlock Gate request it.
+    }
+  }
+} catch (_) {
+  // Fail closed. The renderer can still show the normal unlock/recovery Gate.
+}
+
+const portableRuntime = installPortableRuntime({
   layout,
   projectStore,
   accountRegistry,
   workerConfig,
   workerScheduler,
   vault,
-  profileBridge
+  profileBridge,
+  defaultPasswordActive
 });
 
+function activeVault() { return portableRuntime.vault; }
+function activeBridge() { return portableRuntime.profileBridge; }
 function vaultUnlocked() {
-  return ['UNLOCKED', 'RESEAL_REQUIRED'].includes(vault.status().state);
+  return ['UNLOCKED', 'RESEAL_REQUIRED'].includes(activeVault().status().state);
 }
 
 function vaultLockedError() {
@@ -86,7 +112,7 @@ controlServer.startControlServer = async function startPortableControlServer(leg
       error.statusCode = 404;
       throw error;
     }
-    profileBridge.prepare(account);
+    activeBridge().prepare(account);
     return account;
   }
 
@@ -105,7 +131,8 @@ controlServer.startControlServer = async function startPortableControlServer(leg
           accounts: accountHealth.total,
           schedulableAccounts: accountHealth.schedulable,
           workers: workerScheduler.status(),
-          vault: vault.status(),
+          vault: activeVault().status(),
+          defaultPasswordActive: portableRuntime.defaultPasswordActive === true,
           profileRuntime: {
             sessionDataRootReserved: true,
             electronSessionDataRedirected: true,
@@ -130,17 +157,17 @@ controlServer.startControlServer = async function startPortableControlServer(leg
     },
     getAccountSession: async (id) => {
       await prepareAccount(id);
-      const session = await legacyHandlers.getAccountSession(id);
+      const sessionState = await legacyHandlers.getAccountSession(id);
       if (accountRegistry.get(id)) {
         accountRegistry.recordHealth(id, {
-          loginStatus: session.loginStatus,
-          pageLoaded: session.pageLoaded,
-          evidence: session.evidence,
-          pagePath: session.pagePath,
-          checkedAt: session.checkedAt || Date.now()
+          loginStatus: sessionState.loginStatus,
+          pageLoaded: sessionState.pageLoaded,
+          evidence: sessionState.evidence,
+          pagePath: sessionState.pagePath,
+          checkedAt: sessionState.checkedAt || Date.now()
         });
       }
-      return session;
+      return sessionState;
     },
     accountHealthSummary: async () => {
       await syncAccounts();
