@@ -5,74 +5,68 @@ Branch: `work/dola-portable-v1`
 
 ## Current phase
 
-`RC2 — WINDOWS PORTABLE UI FIX READY / REAL DOLA G1 RETEST NEXT`
+`RC3 — VISIBLE-WEBVIEW DESKTOP DISPATCH READY / REAL DOLA G1 RETEST NEXT`
 
 ## Product execution rule
 
 Continue independently unless a user decision or real Windows/Dola evidence Gate is required. Do not claim a real Dola capability merely because code, CI, packaging or simulation exists. No account-creation automation, CAPTCHA/MFA bypass, login bypass, entitlement/quota bypass, rate-limit evasion, 403 bypass, or provider restriction circumvention is part of Portable V1.
 
-## RC1 Windows feedback
+## Latest real Windows evidence
 
-User-side RC1 test did **not** pass the first interaction Gate:
+RC2 user-side test produced a materially better diagnosis:
 
-- `+ 添加 Dola 账号` appeared to do nothing;
-- `修改保险库密码` appeared to do nothing.
+- the center embedded Dola page can generate successfully when operated directly by the user;
+- the right Seedance Studio `创建并开始` task path failed;
+- when I2V is selected, the extra image controls could push the lower task area below the fixed-height right panel.
 
-Code review found that RC1 depended on browser-native `window.prompt / window.alert / window.confirm` dialogs for these primary actions. This is not accepted as a reliable packaged-Electron product interaction contract. RC1 is therefore recorded as **FAIL at UI interaction Gate**, before real Dola G1 could start.
+This means the selected account/session/visible Dola page is usable for generation. The current G1 problem is the workbench dispatch/UI layer, not a generic assumption that Dola generation itself is unavailable.
 
-Detailed redesign record: `RC2_UI_AND_INTERACTION_REDESIGN_2026-08-31.md`.
+## RC3 changes completed
 
-## RC2 changes completed
+- [x] Desktop `创建并开始` now prefers the exact currently visible center Dola WebView for the selected account.
+- [x] The visible WebView is matched to the account by its Electron persistent partition; no password/Cookie/Token is read.
+- [x] Visible-WebView dispatch still uses the existing WorkerScheduler lease, account binding, capture lifecycle, resolver and task state machinery.
+- [x] Codex / loopback API dispatch remains the background-worker path; the foreground change is for the desktop interactive path.
+- [x] If no matching visible WebView exists, desktop IPC can fall back to the existing local Control Plane dispatch path.
+- [x] The entire right Seedance Studio now has an explicit vertical scrollbar, so T2V/I2V controls cannot permanently hide the task list.
+- [x] Task cards now expose the persisted failure reason instead of showing only a generic `failed` badge.
+- [x] Task cards show when execution used the center visible Dola page.
+- [x] Renderer/IPC regression tests cover visible-WebView dispatch, background fallback, vertical scrolling and failure-detail rendering.
+- [x] Windows build bumped to `0.3.2-portable-v1-rc3`.
 
-- [x] Added real in-app account-creation modal; no browser prompt dependency.
-- [x] Added real in-app vault-password-change form; no browser prompt/alert dependency.
-- [x] Added in-app confirmation modal and visible toast/status feedback.
-- [x] Retained mature three-pane workbench structure: left account pool / center current Dola page / right Seedance tasks.
-- [x] Account list now shows account count and login/session state.
-- [x] Added explicit `检查登录` action and current-account health badge.
-- [x] Kept only one visible manual-login/debug WebView at a time while preserving independent per-account partitions.
-- [x] Simplified V1 primary provider UI to Dola Web / Seedance 2.5.
-- [x] Added T2V / I2V selector.
-- [x] Added native Windows image picker for I2V first-frame selection.
-- [x] Changed primary task action to `创建并开始`; retained `仅加入队列` for batch/Codex use.
-- [x] Retained recover-without-resubmit behavior for observation timeout.
-- [x] Added packaged-renderer regression tests covering account/password/image-picker wiring.
-- [x] Bumped Windows build to `0.3.1-portable-v1-rc2`.
-
-## RC2 automated validation
+## RC3 automated validation
 
 Foundation workflow:
 
 - `Dola Portable V1`
-- run `#114`
-- source revision `8ae18c12b090056803305064d94ad136bcbd39bc`
+- run `#122`
+- run id `33370534500`
+- source revision `053d6756cb1ee58a77bf9fefe97cffe73d4ec1a9`
 - result: PASS
 
-This run includes the new renderer interaction regression tests.
-
-RC2 release workflow:
+RC3 release workflow:
 
 - `Dola Portable Release ZIP`
-- run `#12`
-- run id `33366897316`
-- source revision `cd70c83e7f7b4e4757ead177796cfc61a4b7c8af`
+- run `#16`
+- run id `33370534517`
+- source revision `053d6756cb1ee58a77bf9fefe97cffe73d4ec1a9`
 - result: PASS
-- artifact id: `9748651669`
-- artifact digest: `sha256:5881ad5cfb4ad4de13e405127cf100353551e715d24ddc8cadcfad25cbef7075`
+- artifact id: `9749952407`
+- artifact digest: `sha256:6e160efaefca8bf025619d5e03a55412539f44e9d5f9f04bd43e2af3add35544`
 
-End-user RC2 ZIP:
+End-user RC3 ZIP:
 
-`Dola-Seedance-Workbench-Portable-v1-RC2.zip`
+`Dola-Seedance-Workbench-Portable-v1-RC3.zip`
 
 Verified SHA-256:
 
-`d7820460870dc8a662ffc8cf13d339b242c47afe903e261e2e9fafc020326ecc`
+`e59d4fca2817e68bd5fc1e730804870b624b193712a17632effe769ddc9330a1`
 
 Executable inside ZIP:
 
-`Dola-Seedance-Workbench-Portable-0.3.1-portable-v1-rc2-x64.exe`
+`Dola-Seedance-Workbench-Portable-0.3.2-portable-v1-rc3-x64.exe`
 
-ZIP integrity test passed and the executable was checked for Windows PE container signatures (`MZ` and `PE\0\0`).
+Detailed receipt: `DELIVERY_RC3_2026-08-31.md`.
 
 ## Engineering foundation retained
 
@@ -91,10 +85,10 @@ ZIP integrity test passed and the executable was checked for Windows PE containe
 
 These remain intentionally **not PASS** until the user's Windows/Dola evidence exists:
 
-- G1A account UI: RC2 READY_FOR_USER_RETEST / NOT_PASSED_YET.
-- G1B one-account manual login: BLOCKED_BY_G1A.
-- G1C 5s generation -> result observation -> highest-quality accessible download: BLOCKED_BY_G1B.
-- real Windows clean shutdown -> restart -> vault unlock -> Dola login session persistence: BLOCKED_BY_G1B.
+- center visible Dola manual generation: OBSERVED SUCCESS on RC2.
+- RC3 right-panel automatic visible-WebView submit: READY_FOR_USER_RETEST / NOT_PASSED_YET.
+- G1 result observation -> highest-quality accessible MP4 download: NOT_PASSED_YET.
+- real Windows clean shutdown -> restart -> vault unlock -> Dola login session persistence: requires explicit user evidence.
 - G2 two-account isolation/parallel: BLOCKED_BY_G1.
 - G5 scheduler/batch: BLOCKED_BY_G2.
 - G20 pooled operation: BLOCKED_BY_G5.
@@ -102,8 +96,8 @@ These remain intentionally **not PASS** until the user's Windows/Dola evidence e
 
 ## Highest current technical risk
 
-`P0: real packaged Electron + Dola page behavior` — RC2 fixes the first confirmed UI interaction defect and adds regression coverage. The next evidence must come from an actual Windows launch: account modal -> independent Dola page -> manual login. Only after that should provider lifecycle/result-resolution issues be debugged.
+`P0: visible Dola UI automation selectors and provider-result lifecycle variability` — the center page is now known to work manually. RC3 must prove that the automated model/duration/ratio/image/prompt/submit sequence can operate that same visible page and that the final media identity can be observed and downloaded.
 
 ## Next action
 
-Run RC2 from a fresh writable folder. First verify that `+ 添加 Dola 账号` opens the in-app modal and `创建并打开登录页` opens Dola. Then complete one normal user-owned login and run a 5-second T2V job. Do not expand to multiple accounts until this G1 chain is closed.
+Run RC3 with the same authorized account selected and logged in in the center WebView. Start one simple 5-second T2V or I2V task from the right panel. The center page should visibly perform the automated setup and submit. If it fails, use the new task-card `失败原因` text as the next exact engineering input rather than repeating blind submissions.
