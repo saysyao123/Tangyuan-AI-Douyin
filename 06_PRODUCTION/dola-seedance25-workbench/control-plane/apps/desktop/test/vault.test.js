@@ -41,6 +41,17 @@ test('vault initializes locked storage and rejects a wrong password', () => {
   } finally { cleanup(root); }
 });
 
+test('failed re-unlock clears the previously resident master key', () => {
+  const { root, vault } = fixture();
+  try {
+    vault.initialize(PASSWORD);
+    assert.equal(Buffer.isBuffer(vault._masterKey), true);
+    assert.throws(() => vault.unlock('definitely-wrong'), (error) => error.code === 'VAULT_UNLOCK_FAILED');
+    assert.equal(vault.status().state, 'LOCKED');
+    assert.equal(vault._masterKey, null);
+  } finally { cleanup(root); }
+});
+
 test('profile files round-trip through per-account authenticated encryption', () => {
   const { root, layout, vault } = fixture();
   try {
@@ -60,6 +71,7 @@ test('profile files round-trip through per-account authenticated encryption', ()
 
     removeSource(source);
     const unsealed = vault.unsealProfile('acct_001');
+    assert.equal(unsealed.workingDir.startsWith(layout.vaultWorkingDir), true);
     assert.equal(unsealed.createdEmpty, false);
     assert.equal(fs.readFileSync(path.join(unsealed.workingDir, 'Default', 'Preferences'), 'utf8').includes('example-only'), true);
     assert.deepEqual([...fs.readFileSync(path.join(unsealed.workingDir, 'Default', 'Network', 'Cookies'))], [0, 1, 2, 3, 254, 255]);
