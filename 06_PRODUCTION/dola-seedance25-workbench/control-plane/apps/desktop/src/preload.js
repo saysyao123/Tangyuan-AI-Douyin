@@ -12,6 +12,10 @@ contextBridge.exposeInMainWorld('seedanceDesktop', {
   getVaultStatus: () => ipcRenderer.invoke('vault:status'),
   initializeVault: (password) => ipcRenderer.invoke('vault:initialize', String(password || '')),
   unlockVault: (password) => ipcRenderer.invoke('vault:unlock', String(password || '')),
+  changeVaultPassword: (currentPassword, newPassword) => ipcRenderer.invoke('vault:change-password', {
+    currentPassword: String(currentPassword || ''),
+    newPassword: String(newPassword || '')
+  }),
   lockVault: () => ipcRenderer.invoke('vault:lock'),
   prepareAccountSession: (id) => ipcRenderer.invoke('profiles:prepare-account', String(id || '')),
 
