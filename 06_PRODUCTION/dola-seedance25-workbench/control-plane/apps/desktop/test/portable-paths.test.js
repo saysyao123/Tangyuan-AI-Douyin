@@ -39,13 +39,16 @@ test('development root stays under apps/desktop/.portable-dev', () => {
   assert.equal(root, path.resolve(fakeModuleDir, '..', '..', '.portable-dev'));
 });
 
-test('layout separates runtime and durable data roots', () => {
+test('layout separates runtime, browser sessionData and durable data roots', () => {
   const layout = buildPortableLayout(path.join(os.tmpdir(), 'dola-layout-example'));
   assert.equal(path.dirname(layout.controlDir), layout.runtimeDir);
   assert.equal(path.dirname(layout.vaultDir), layout.dataDir);
   assert.equal(path.dirname(layout.projectsDir), layout.dataDir);
   assert.equal(path.dirname(layout.outputsDir), layout.dataDir);
   assert.notEqual(layout.runtimeDir, layout.dataDir);
+  assert.equal(layout.sessionDataDir.startsWith(layout.runtimeDir), true);
+  assert.equal(layout.electronUserData.startsWith(layout.dataDir), true);
+  assert.equal(layout.sessionDataDir.startsWith(layout.electronUserData), false);
 });
 
 test('ensurePortableLayout creates versioned marker and required directories', () => {
@@ -54,7 +57,17 @@ test('ensurePortableLayout creates versioned marker and required directories', (
     const layout = buildPortableLayout(root);
     const marker = ensurePortableLayout(layout);
     assert.equal(marker.version, LAYOUT_VERSION);
-    for (const dir of [layout.controlDir, layout.electronUserData, layout.vaultDir, layout.projectsDir, layout.outputsDir, layout.stateDir, layout.backupsDir]) {
+    for (const dir of [
+      layout.controlDir,
+      layout.sessionDataDir,
+      layout.vaultWorkingDir,
+      layout.electronUserData,
+      layout.vaultDir,
+      layout.projectsDir,
+      layout.outputsDir,
+      layout.stateDir,
+      layout.backupsDir
+    ]) {
       assert.equal(fs.statSync(dir).isDirectory(), true, dir);
     }
     const persisted = JSON.parse(fs.readFileSync(layout.layoutMarker, 'utf8'));
