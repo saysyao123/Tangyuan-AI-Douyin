@@ -1,0 +1,17 @@
+Dola Seedance Workbench Portable V1
+===================================
+
+1) 解压整个 ZIP 到可写目录，例如 D:\AI\DolaWorkbench
+2) 双击 Dola-Seedance-Workbench-Portable-*.exe
+3) 首次保险库预设密码：Tangyuan-Portable-2026!
+   首次启动会自动使用它建立/解锁保险库；完成登录测试后请在右上角修改成你自己的密码。
+4) 添加 Dola 账号 -> 在中间 Dola 页面手动登录
+5) 右侧输入 Prompt / 选择时长比例 -> 加入任务队列 -> 开始下一个排队任务
+6) 成功下载的视频在 data\outputs\
+7) observation_wait 可点击“恢复等待中的任务”；恢复不会重新提交生成。
+
+安全边界：不自动注册账号、不处理/绕过 CAPTCHA 或短信验证、不绕过 quota/entitlement/地区/权限限制。30s 仅在当前账号页面正常提供时使用。
+
+详细说明：USER_QUICKSTART.md
+异常退出恢复：RECOVERY.md
+已知限制：KNOWN_LIMITATIONS.md
