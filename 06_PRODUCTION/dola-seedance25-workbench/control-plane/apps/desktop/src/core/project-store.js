@@ -37,6 +37,17 @@ function normalizeProjectId(value, name) {
   return `${base}_${sha(String(name || base), 8)}`;
 }
 
+function normalizeSourceImagePath(value) {
+  if (!value) return null;
+  const raw = String(value).trim();
+  if (!path.isAbsolute(raw)) {
+    const error = new Error('sourceImagePath must be an absolute local path');
+    error.code = 'BAD_SOURCE_IMAGE';
+    throw error;
+  }
+  return path.normalize(raw);
+}
+
 function stableJobFingerprint(input) {
   const normalized = {
     projectId: String(input.projectId),
@@ -48,7 +59,7 @@ function stableJobFingerprint(input) {
     duration: Number(input.duration || 10),
     ratio: String(input.ratio || '9:16'),
     prompt: String(input.prompt || ''),
-    sourceImagePath: input.sourceImagePath ? path.resolve(String(input.sourceImagePath)) : null,
+    sourceImagePath: input.sourceImagePath ? path.normalize(String(input.sourceImagePath)) : null,
     requestedAccountId: input.requestedAccountId ? String(input.requestedAccountId) : null
   };
   return crypto.createHash('sha256').update(JSON.stringify(normalized)).digest('hex');
@@ -122,8 +133,8 @@ class ProjectStore {
 
   stageSourceImage(projectId, shotId, revision, sourceImagePath) {
     if (!sourceImagePath) return null;
-    const absolute = path.resolve(String(sourceImagePath));
-    if (!path.isAbsolute(absolute) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) {
+    const absolute = normalizeSourceImagePath(sourceImagePath);
+    if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) {
       const error = new Error('sourceImagePath must reference an existing absolute local file');
       error.code = 'BAD_SOURCE_IMAGE';
       throw error;
@@ -165,7 +176,7 @@ class ProjectStore {
       duration: Number(input.duration || 10),
       ratio: String(input.ratio || '9:16'),
       prompt: String(input.prompt || '').trim(),
-      sourceImagePath: input.sourceImagePath ? path.resolve(String(input.sourceImagePath)) : null,
+      sourceImagePath: normalizeSourceImagePath(input.sourceImagePath),
       requestedAccountId: input.requestedAccountId ? String(input.requestedAccountId) : null
     };
     if (!normalized.prompt) {
@@ -329,5 +340,6 @@ module.exports = {
   TERMINAL_STATES,
   stableJobFingerprint,
   normalizeRevision,
-  normalizeShotId
+  normalizeShotId,
+  normalizeSourceImagePath
 };
