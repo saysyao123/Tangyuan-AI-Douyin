@@ -102,11 +102,56 @@ CI:
 
 This is an F1 foundation PASS at the platform-independent/control-contract level. It is not a real Dola generation Gate.
 
-No existing real Dola Gate is reclassified by T-000 through T-004.
+### T-005 F2 dynamic account registry + worker scheduler Windows CI
+
+Code under test includes:
+
+- `src/core/account-registry.js`;
+- `src/core/worker-scheduler.js`;
+- `src/core/worker-config.js`;
+- account/worker integration in `portable-main.js`;
+- account health/pause/resume/debug and worker status/settings/sweep routes in `control-server.js`;
+- matching JSON CLI commands;
+- `test/account-registry.test.js`;
+- `test/worker-scheduler.test.js`;
+- `test/control-server-workers.test.js`.
+
+Behavior covered:
+
+- dynamic import/registration of 20 accounts without A/B/C hard-coding;
+- manual PAUSED state remains preserved when legacy READY metadata refreshes;
+- login health can transition READY ↔ NEEDS_LOGIN;
+- quota/entitlement restrictions surface as explicit non-schedulable reasons;
+- one account cannot hold two simultaneous generation leases;
+- global active lease count never exceeds configured max workers;
+- max workers defaults to 3 and is persistently configurable;
+- a forced unavailable/busy account fails instead of silently switching to another account;
+- automatic selection ignores login-required, paused and restricted accounts;
+- released accounts become reusable;
+- idle worker state can be lazily evicted;
+- debug-promoted account stays awake at the scheduler-policy level;
+- repeated acquire of the same job is idempotent;
+- account/worker Control Plane endpoints return machine-readable JSON.
+
+CI:
+
+- Workflow: `Dola Portable V1`
+- Platform: `windows-latest`
+- Node: 22
+- Run: `#30`
+- Head: `f1f6c0f205afcb687cd05f840fd81767d2d99569`
+- Job: `foundation-check`
+- Result: PASS / `conclusion=success`.
+
+Boundary:
+
+This is the F2 **unit/simulation/control-contract Gate**. The scheduler is not yet bound to actual hidden Dola BrowserWindow wake/sleep or real concurrent generation. Those behaviors remain for F4/F5 and real G2 validation.
+
+No existing real Dola Gate is reclassified by T-000 through T-005.
 
 ## Next test targets
 
-1. Finish compatibility/import behavior for existing AppData-based account/task data.
-2. Begin F2 account registry + per-account lease/global worker-pool tests.
-3. Prepare F5 recoverable lifecycle changes before real Windows G1.
+1. F3 vault state/KDF/authenticated-encryption/profile-seal tests.
+2. F4 split Dola session/UI/lifecycle/capability responsibilities out of the monolithic runner.
+3. F5 recoverable post-submit lifecycle before real Windows G1.
 4. Real Windows G1 only after lifecycle + resolver/download integration is ready.
