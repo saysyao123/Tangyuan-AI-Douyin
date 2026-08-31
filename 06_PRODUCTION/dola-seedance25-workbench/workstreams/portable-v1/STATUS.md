@@ -5,7 +5,7 @@ Branch: `work/dola-portable-v1`
 
 ## Current phase
 
-`F0 — ISOLATED WORKSTREAM + PORTABLE FOUNDATION`
+`F1 — DURABLE PROJECT/JOB/IDEMPOTENCY FOUNDATION` (first slice PASS)
 
 ## Completed
 
@@ -21,20 +21,27 @@ Branch: `work/dola-portable-v1`
 - [x] Durable `data/` and ephemeral `runtime/` roots reserved with a versioned layout marker.
 - [x] Dev portable runtime is Git-ignored.
 - [x] Isolated Windows GitHub Actions check added.
-- [x] Windows CI run #2 passed on the current foundation.
+- [x] Windows CI portable foundation PASS.
+- [x] Durable `ProjectStore` added.
+- [x] project + shot + revision deterministic job identity added.
+- [x] Strong create idempotency and explicit new-revision flow added.
+- [x] I2V absolute local input staging added.
+- [x] Project output path reservation and `PROJECT_COMPLETE` calculation added.
+- [x] Portable project/job HTTP routes added alongside legacy `/v1/tasks` routes.
+- [x] Portable CLI discovery fixed for portable/dev roots.
+- [x] CLI `projects` / `jobs` commands added.
+- [x] Windows CI run #15 passed project-store + project Control Plane integration checks.
 
-## In progress
+## In progress / next engineering slice
 
-- [ ] Define/import compatibility for existing AppData-based account/task data when a user upgrades from the old POC.
+- [ ] Compatibility/import behavior for existing AppData-based account/task data when upgrading from the old POC.
 - [ ] Move account/task metadata out of the compatibility Electron `userData` root into dedicated durable stores.
-
-## Next after F0
-
-`F1 — project/job/revision/idempotency foundation`.
+- [ ] F2: dynamic account registry + per-account generation lease + global configurable worker semaphore (default 3).
+- [ ] F2: lazy account runtime wake/sleep/idle eviction.
 
 ## Highest current technical risk
 
-`P0: recoverable Dola result lifecycle` — current background runner can submit successfully but may fail after a fixed observation window when final media identity is delivered later or through a different conversation/result path.
+`P0: recoverable Dola result lifecycle` — current background runner can submit successfully but may fail after a fixed observation window when final media identity is delivered later or through a different conversation/result path. This remains the highest real-generation risk and must be solved before G1 can pass.
 
 ## Real-world Gates
 
