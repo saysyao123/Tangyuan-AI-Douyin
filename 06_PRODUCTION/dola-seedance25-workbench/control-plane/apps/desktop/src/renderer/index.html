@@ -3,19 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Seedance Desktop Studio</title>
+  <title>DolaWorkbench · Seedance Desktop Studio</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <div id="vaultGate" class="vault-gate" hidden>
+    <form id="vaultForm" class="vault-card">
+      <div class="vault-badge">LOCAL PROFILE VAULT</div>
+      <h1 id="vaultTitle">解锁 DolaWorkbench</h1>
+      <p id="vaultDescription">输入本机保险库主密码后，才会解密并打开 Dola 账号会话。密码只在本次桌面进程内用于派生密钥，不提供给 Codex。</p>
+      <label>保险库主密码
+        <input id="vaultPassword" type="password" autocomplete="current-password" minlength="8" required />
+      </label>
+      <label id="vaultConfirmRow" hidden>再次输入主密码
+        <input id="vaultConfirm" type="password" autocomplete="new-password" minlength="8" />
+      </label>
+      <button id="vaultSubmit" class="primary" type="submit">解锁</button>
+      <div id="vaultError" class="vault-error" role="alert"></div>
+      <div id="vaultRecovery" class="vault-recovery" hidden></div>
+    </form>
+  </div>
+
   <aside class="sidebar">
     <div class="brand">
-      <strong>Seedance Desktop Studio</strong>
-      <span>Multi-account + Codex Control Plane</span>
+      <strong>DolaWorkbench</strong>
+      <span>Seedance · Multi-account · Codex</span>
     </div>
     <button id="addAccount" class="primary">+ 添加 Dola 账号</button>
     <div id="accounts" class="accounts"></div>
     <div class="notice">
-      每个账号使用独立 Chromium Session。首次登录请直接在中间 Dola 页面完成；本软件不收集 Google 密码或 TOTP。
+      每个账号使用独立 Chromium persistent partition。首次登录请直接在中间 Dola 页面完成；本软件不保存 Google 密码或 TOTP。
     </div>
   </aside>
 
@@ -23,16 +40,17 @@
     <header>
       <div>
         <div id="activeName" class="active-name">尚未选择账号</div>
-        <div id="status" class="status">添加账号后即可在独立 Dola 会话中登录</div>
+        <div id="status" class="status">正在检查本地保险库…</div>
       </div>
       <div class="header-actions">
+        <button id="lockVault">锁定保险库</button>
         <button id="reload" disabled>刷新 Dola</button>
         <button id="clearSession" disabled>清除本账号会话</button>
       </div>
     </header>
     <section id="empty" class="empty">
-      <h1>多账号会话容器已就绪</h1>
-      <p>先添加一个账号。每个账号都有独立 persistent partition，切换账号不会串 Cookie。</p>
+      <h1>多账号会话容器</h1>
+      <p>解锁保险库后再打开账号。桌面只保留一个可见调试 WebView；后台任务由独立 Worker 管理。</p>
     </section>
     <section id="webviews" class="webviews"></section>
   </main>
@@ -41,7 +59,7 @@
     <div class="panel-title">
       <div>
         <strong>Seedance Studio</strong>
-        <span>Codex 与桌面 UI 共用同一任务队列</span>
+        <span>Codex 与桌面 UI 共用同一任务系统</span>
       </div>
       <button id="refreshTasks">刷新</button>
     </div>
@@ -58,7 +76,7 @@
           <select id="duration">
             <option value="5">5s</option>
             <option value="10">10s</option>
-            <option value="30">30s</option>
+            <option value="30">30s · EXPERIMENTAL</option>
           </select>
         </label>
         <label>比例
@@ -73,7 +91,7 @@
         <textarea id="prompt" rows="8" placeholder="输入 Seedance 提示词…"></textarea>
       </label>
       <button id="queueTask" class="primary" type="submit" disabled>加入任务队列</button>
-      <div class="gate-note">当前控制层已可被 Codex 调用。Dola 自动提交仍受 D2 Gate 保护；在真实 10s 请求生命周期验证前不会伪造 30s 请求。</div>
+      <div class="gate-note">30 秒仍是独立实验 Gate。遇到登录、MFA、CAPTCHA、quota、permission 或 entitlement 限制时停止并要求人工处理，不自动换号规避限制。</div>
     </form>
     <div class="task-list-header"><strong>任务</strong><span id="taskCount">0</span></div>
     <div id="tasks" class="tasks"></div>
