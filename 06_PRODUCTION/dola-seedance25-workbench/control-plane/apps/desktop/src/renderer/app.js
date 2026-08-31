@@ -18,12 +18,28 @@ const tasksEl = document.getElementById('tasks');
 const taskCountEl = document.getElementById('taskCount');
 const refreshTasksButton = document.getElementById('refreshTasks');
 
+// The visible desktop UI is a debug/manual-login surface, not the worker pool.
+// Keep at most one Dola renderer alive here. Persistent partition storage is
+// owned by Electron and survives destruction/recreation of the webview.
 const views = new Map();
 let accounts = [];
 let tasks = [];
 let activeId = '';
 
 function accountById(id) { return accounts.find(item => item.id === id) || null; }
+
+function destroyView(accountId) {
+  const view = views.get(accountId);
+  if (!view) return;
+  try { view.wrapper.remove(); } catch (_) {}
+  views.delete(accountId);
+}
+
+function destroyInactiveViews(keepId) {
+  for (const accountId of [...views.keys()]) {
+    if (accountId !== keepId) destroyView(accountId);
+  }
+}
 
 function ensureWebview(account) {
   if (views.has(account.id)) return views.get(account.id);
@@ -58,8 +74,8 @@ function ensureWebview(account) {
 function setActiveAccount(id) {
   activeId = id;
   const account = accountById(id);
+  destroyInactiveViews(account ? id : '');
   document.querySelectorAll('.account-card').forEach(el => el.classList.toggle('active', el.dataset.accountId === id));
-  for (const [accountId, view] of views.entries()) view.wrapper.classList.toggle('active', accountId === id);
   if (!account) {
     emptyEl.hidden = false;
     activeNameEl.textContent = '尚未选择账号';
@@ -73,7 +89,7 @@ function setActiveAccount(id) {
   const view = ensureWebview(account);
   view.wrapper.classList.add('active');
   activeNameEl.textContent = account.name;
-  statusEl.textContent = '独立 Dola 会话已打开；登录状态由 Chromium partition 持久保存。';
+  statusEl.textContent = '独立 Dola 会话已打开；当前仅保留这一个可见调试 WebView。';
   reloadButton.disabled = false;
   clearButton.disabled = false;
   queueTaskButton.disabled = false;
@@ -90,7 +106,6 @@ function renderAccounts() {
     card.querySelector('strong').textContent = account.name;
     card.addEventListener('click', () => setActiveAccount(account.id));
     accountsEl.appendChild(card);
-    ensureWebview(account);
   }
   if (activeId && accountById(activeId)) setActiveAccount(activeId);
   else if (accounts[0]) setActiveAccount(accounts[0].id);
