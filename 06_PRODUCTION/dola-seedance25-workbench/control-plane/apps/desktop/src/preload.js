@@ -31,8 +31,8 @@ contextBridge.exposeInMainWorld('seedanceDesktop', {
   createTask: (input) => ipcRenderer.invoke('tasks:create', input || {}),
   getTask: (id) => ipcRenderer.invoke('tasks:get', String(id || '')),
   cancelTask: (id) => ipcRenderer.invoke('tasks:cancel', String(id || '')),
-  dispatchTask: (id) => ipcRenderer.invoke('tasks:dispatch', String(id || '')),
-  recoverTask: (id) => ipcRenderer.invoke('tasks:recover', String(id || '')),
+  dispatchTask: (id) => ipcRenderer.invoke('portable:dispatch-task', String(id || '')),
+  recoverTask: (id) => ipcRenderer.invoke('portable:recover-task', String(id || '')),
   onActivateAccount: (callback) => subscribe('control:activate-account', callback),
   onAccountsChanged: (callback) => subscribe('accounts:changed', callback),
   onTasksChanged: (callback) => subscribe('tasks:changed', callback)
