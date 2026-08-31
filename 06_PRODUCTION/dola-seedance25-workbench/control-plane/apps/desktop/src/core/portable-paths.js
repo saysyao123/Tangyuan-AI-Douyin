@@ -11,24 +11,9 @@ function resolvePortableRoot(options = {}) {
   const execPath = path.resolve(options.execPath || process.execPath);
   const isPackaged = options.isPackaged === true;
 
-  if (env.DOLA_WORKBENCH_ROOT) {
-    return path.resolve(String(env.DOLA_WORKBENCH_ROOT));
-  }
-
-  // electron-builder portable targets expose the directory containing the
-  // original portable executable even when the running image is unpacked to a
-  // temporary directory.
-  if (env.PORTABLE_EXECUTABLE_DIR) {
-    return path.resolve(String(env.PORTABLE_EXECUTABLE_DIR));
-  }
-
-  if (isPackaged) {
-    return path.dirname(execPath);
-  }
-
-  // Development must not pollute Electron's normal AppData profile or the
-  // repository's historical runtime/evidence directories. `moduleDir` is
-  // apps/desktop/src/core, so this resolves to apps/desktop/.portable-dev.
+  if (env.DOLA_WORKBENCH_ROOT) return path.resolve(String(env.DOLA_WORKBENCH_ROOT));
+  if (env.PORTABLE_EXECUTABLE_DIR) return path.resolve(String(env.PORTABLE_EXECUTABLE_DIR));
+  if (isPackaged) return path.dirname(execPath);
   return path.resolve(moduleDir, '..', '..', '.portable-dev');
 }
 
@@ -48,18 +33,15 @@ function buildPortableLayout(rootValue) {
     controlDir: path.join(runtimeDir, 'control'),
     tempDir: path.join(runtimeDir, 'tmp'),
     unlockedProfilesDir,
-    // Chromium cookies/storage are eventually redirected here while the vault
-    // is unlocked. The whole directory is ephemeral and must be resealed or
-    // discarded on a clean shutdown. Durable encrypted packages live in
-    // data/vault, never here.
-    sessionDataDir: path.join(unlockedProfilesDir, 'electron-session-data'),
+    // Electron's live browser-session root is runtime-only but deliberately
+    // separate from vault scratch space. Manual vault lock can wipe scratch
+    // keys/workdirs without deleting the main window's default session while
+    // the process is still alive. Per-account Partitions are resealed/deleted
+    // by ElectronProfileBridge.
+    sessionDataDir: path.join(runtimeDir, 'session-data'),
     vaultWorkingDir: path.join(unlockedProfilesDir, 'vault-work'),
     vaultDir: path.join(dataDir, 'vault'),
     profilesDir: path.join(dataDir, 'profiles'),
-    // Compatibility location for the existing POC. It remains durable during
-    // migration because legacy accounts/tasks still live beside userData.
-    // The new Electron `sessionData` root is separate so browser credentials
-    // can move to the encrypted vault without moving project/account metadata.
     electronUserData: path.join(dataDir, 'profiles', 'electron-user-data'),
     accountsDir: path.join(dataDir, 'accounts'),
     projectsDir: path.join(dataDir, 'projects'),
@@ -97,14 +79,10 @@ function directoryList(layout) {
 }
 
 function ensurePortableLayout(layout) {
-  for (const dir of directoryList(layout)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  for (const dir of directoryList(layout)) fs.mkdirSync(dir, { recursive: true });
 
   let current = null;
-  try {
-    current = JSON.parse(fs.readFileSync(layout.layoutMarker, 'utf8'));
-  } catch (_) {}
+  try { current = JSON.parse(fs.readFileSync(layout.layoutMarker, 'utf8')); } catch (_) {}
 
   if (current && Number(current.version) > LAYOUT_VERSION) {
     const error = new Error(`Portable data layout v${current.version} is newer than this app supports (v${LAYOUT_VERSION}).`);
