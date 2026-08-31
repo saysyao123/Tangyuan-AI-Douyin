@@ -2,6 +2,7 @@
 
 const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const path = require('node:path');
+const fs = require('node:fs');
 const { readJson } = require('./core/atomic-json');
 const { requirePortableRuntime } = require('./core/portable-runtime');
 const { rekeyVaultPassword } = require('./core/vault-rekey');
@@ -58,14 +59,12 @@ async function resealForShutdown(runtime) {
   const status = runtime.vault.status();
   if (!['UNLOCKED', 'RESEAL_REQUIRED'].includes(status.state)) return { skipped: true, reason: 'vault-not-unlocked' };
   const accounts = syncAccountRegistry(runtime);
-
   const flushBefore = await flushAccountSessions(accounts);
   for (const win of BrowserWindow.getAllWindows()) {
     try { win.destroy(); } catch (_) {}
   }
   await new Promise((resolve) => setTimeout(resolve, 300));
   const flushAfter = await flushAccountSessions(accounts);
-
   const resealed = runtime.profileBridge.resealDirty(accounts);
   const failures = resealFailures(resealed);
   if (failures.length) {
@@ -81,9 +80,6 @@ async function resealForShutdown(runtime) {
 async function closeAndResealActiveProfiles(runtime) {
   const accounts = syncAccountRegistry(runtime);
   const flushed = await flushAccountSessions(accounts);
-  // The renderer closes its visible WebView before calling password change or
-  // lock. Hidden workers must also release their account windows before a real
-  // Windows rekey Gate; if they do not, bridge cleanup fails closed.
   await new Promise((resolve) => setTimeout(resolve, 250));
   const resealed = runtime.profileBridge.resealDirty(accounts);
   const failures = resealFailures(resealed);
@@ -94,6 +90,36 @@ async function closeAndResealActiveProfiles(runtime) {
     throw error;
   }
   return { accounts, flushed, resealed };
+}
+
+function controlDiscoveryFile(runtime) {
+  return path.join(runtime.layout.controlDir, 'SeedanceDesktopStudio', 'control.json');
+}
+
+async function localControlRequest(runtime, method, route, body) {
+  const file = controlDiscoveryFile(runtime);
+  if (!fs.existsSync(file)) {
+    const error = new Error('Local Control Plane is not ready yet.');
+    error.code = 'CONTROL_PLANE_NOT_READY';
+    throw error;
+  }
+  const discovery = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const response = await fetch(`http://127.0.0.1:${discovery.port}${route}`, {
+    method,
+    headers: {
+      authorization: `Bearer ${discovery.token}`,
+      ...(body === undefined ? {} : { 'content-type': 'application/json' })
+    },
+    body: body === undefined ? undefined : JSON.stringify(body)
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok && response.status !== 202) {
+    const error = new Error(payload.message || payload.error || `HTTP ${response.status}`);
+    error.code = payload.error || 'LOCAL_CONTROL_ERROR';
+    error.statusCode = response.status;
+    throw error;
+  }
+  return payload;
 }
 
 function registerPortableIpc() {
@@ -140,6 +166,18 @@ function registerPortableIpc() {
     return { vault: vaultPublicStatus(runtime), resealed };
   });
 
+  // Renderer never receives the loopback bearer token. These local IPC calls
+  // proxy into the same Portable Control Plane used by Codex so desktop and
+  // automation cannot diverge on scheduling/recovery semantics.
+  ipcMain.handle('portable:dispatch-task', (_event, id) => {
+    const runtime = requirePortableRuntime();
+    return localControlRequest(runtime, 'POST', `/v1/tasks/${encodeURIComponent(String(id || ''))}/dispatch`, {});
+  });
+  ipcMain.handle('portable:recover-task', (_event, id) => {
+    const runtime = requirePortableRuntime();
+    return localControlRequest(runtime, 'POST', `/v1/tasks/${encodeURIComponent(String(id || ''))}/recover`, {});
+  });
+
   app.on('before-quit', (event) => {
     if (allowQuit) return;
     const runtime = requirePortableRuntime();
@@ -171,5 +209,6 @@ module.exports = {
   vaultPublicStatus,
   legacyAccounts,
   resealForShutdown,
-  closeAndResealActiveProfiles
+  closeAndResealActiveProfiles,
+  localControlRequest
 };
