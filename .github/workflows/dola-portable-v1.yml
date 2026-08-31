@@ -1,0 +1,25 @@
+name: Dola Portable V1
+
+on:
+  push:
+    branches:
+      - work/dola-portable-v1
+    paths:
+      - '06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop/**'
+      - '06_PRODUCTION/dola-seedance25-workbench/workstreams/portable-v1/**'
+      - '.github/workflows/dola-portable-v1.yml'
+  workflow_dispatch:
+
+jobs:
+  foundation-check:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: 06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and portable-path tests
+        run: npm run check
