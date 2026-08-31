@@ -66,10 +66,47 @@ Not validated by this CI:
 - Dola submit/result/download;
 - cross-machine profile session continuity.
 
-No existing real Dola Gate is reclassified by T-000 through T-003.
+### T-004 F1 durable project/job/idempotency + API Windows CI
+
+Code under test includes:
+
+- `src/core/atomic-json.js`;
+- `src/core/project-store.js`;
+- `test/project-store.test.js`;
+- Portable V1 project/job routes in `src/control-server.js`;
+- `portable-main.js` integration of the durable ProjectStore into the existing control plane;
+- portable CLI discovery + `projects` / `jobs` JSON commands;
+- `test/control-server-projects.test.js`.
+
+Behavior covered:
+
+- stable project creation;
+- deterministic project+shot+revision job identity;
+- same request is idempotent and returns the same job;
+- conflicting inputs under the same revision are rejected;
+- explicit new revision creates a distinct job;
+- I2V local source must be an absolute path and is staged under project inputs;
+- project result emits `PROJECT_COMPLETE` only after all created jobs succeed;
+- HTTP project routes preserve idempotency and expose durable result state;
+- CLI remains syntax-valid after portable discovery/project command changes.
+
+CI:
+
+- Workflow: `Dola Portable V1`
+- Platform: `windows-latest`
+- Node: 22
+- Run: `#15`
+- Head: `40b3267d4ad5a3996d5fae6a699d432bee281b27`
+- Job: `foundation-check`
+- Result: PASS / `conclusion=success`.
+
+This is an F1 foundation PASS at the platform-independent/control-contract level. It is not a real Dola generation Gate.
+
+No existing real Dola Gate is reclassified by T-000 through T-004.
 
 ## Next test targets
 
-1. Complete F0 compatibility/import behavior for existing userData if needed.
-2. F1 idempotency/project schema unit tests.
-3. Real Windows G1 only after lifecycle/download integration is ready.
+1. Finish compatibility/import behavior for existing AppData-based account/task data.
+2. Begin F2 account registry + per-account lease/global worker-pool tests.
+3. Prepare F5 recoverable lifecycle changes before real Windows G1.
+4. Real Windows G1 only after lifecycle + resolver/download integration is ready.
