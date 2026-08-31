@@ -14,7 +14,7 @@ button { color: inherit; }
 .brand, .panel-title > div { display: grid; gap: 4px; }
 .brand strong { font-size: 18px; }
 .brand span, .notice, .status, .account-copy small, .panel-title span, .gate-note, .task-meta { color: #97a4bf; font-size: 12px; }
-.primary, header button, .panel-title button, .task-card button { border: 1px solid #354466; border-radius: 10px; padding: 10px 12px; background: #1b2742; color: #fff; cursor: pointer; }
+.primary, header button, .panel-title button, .task-card button, .vault-card button { border: 1px solid #354466; border-radius: 10px; padding: 10px 12px; background: #1b2742; color: #fff; cursor: pointer; }
 .primary { background: #3157d5; border-color: #3157d5; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .accounts { display: grid; gap: 8px; overflow: auto; }
@@ -52,3 +52,15 @@ webview { width: 100%; height: 100%; border: 0; background: #fff; }
 .task-actions { display: flex; gap: 6px; }
 .task-card button { padding: 6px 8px; font-size: 11px; }
 .task-empty { color: #73809c; font-size: 12px; padding: 16px 4px; text-align: center; }
+
+.vault-gate { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 28px; background: rgba(5, 8, 16, .94); backdrop-filter: blur(12px); }
+.vault-gate[hidden] { display: none; }
+.vault-card { width: min(460px, 100%); display: grid; gap: 14px; padding: 26px; border: 1px solid #33415f; border-radius: 18px; background: #11192c; box-shadow: 0 24px 80px rgba(0, 0, 0, .45); }
+.vault-card h1 { margin: 0; font-size: 24px; }
+.vault-card p { margin: 0; color: #aab6cf; line-height: 1.65; font-size: 13px; }
+.vault-card label { display: grid; gap: 7px; color: #d9e0f1; font-size: 13px; }
+.vault-card input { width: 100%; border: 1px solid #3a4868; border-radius: 10px; padding: 11px 12px; background: #0b1222; color: #fff; outline: none; }
+.vault-card input:focus { border-color: #6487ff; }
+.vault-badge { width: fit-content; padding: 5px 8px; border-radius: 999px; background: #202d4d; color: #9db3ff; font-size: 10px; letter-spacing: .08em; }
+.vault-error { min-height: 18px; color: #ff9b9b; font-size: 12px; line-height: 1.5; }
+.vault-recovery { padding: 10px 12px; border: 1px solid #66502f; border-radius: 10px; background: #241c10; color: #f0cf91; font-size: 12px; line-height: 1.55; }
