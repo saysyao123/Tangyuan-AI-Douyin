@@ -11,6 +11,9 @@ const { ProjectStore } = require('./core/project-store');
 const { AccountRegistry } = require('./core/account-registry');
 const { WorkerScheduler } = require('./core/worker-scheduler');
 const { WorkerConfigStore } = require('./core/worker-config');
+const { ProfileVault } = require('./core/vault');
+const { ElectronProfileBridge } = require('./core/electron-profile-bridge');
+const { installPortableRuntime } = require('./core/portable-runtime');
 
 const root = resolvePortableRoot({
   env: process.env,
@@ -21,9 +24,10 @@ const root = resolvePortableRoot({
 const layout = buildPortableLayout(root);
 ensurePortableLayout(layout);
 
-// Keep the current POC implementation working while moving all runtime data
-// under the portable root. F3 will replace the compatibility Chromium profile
-// root with the encrypted vault lifecycle without changing account IDs.
+// Durable application metadata remains in userData during migration. F3 has
+// reserved a separate ephemeral sessionData root, but it is intentionally NOT
+// switched on until the desktop unlock Gate prevents Chromium partitions from
+// opening before the vault is unlocked.
 app.setPath('userData', layout.electronUserData);
 
 process.env.DOLA_WORKBENCH_ROOT = layout.root;
@@ -32,15 +36,23 @@ process.env.DOLA_WORKBENCH_LAYOUT_VERSION = String(LAYOUT_VERSION);
 process.env.SEEDANCE_STUDIO_CONTROL_DIR = layout.controlDir;
 process.env.DOLA_ARTIFACT_ROOT = layout.debugCapturesDir;
 
-// Portable V1 adds capabilities around the existing POC without forcing a
-// high-risk rewrite of main.js. The legacy Electron account/session handlers
-// remain the browser-session authority while durable metadata lives in the
-// Portable registry and projects store.
 const projectStore = new ProjectStore(layout);
 const accountRegistry = new AccountRegistry(layout);
 const workerConfig = new WorkerConfigStore(layout);
 const workerSettings = workerConfig.load();
 const workerScheduler = new WorkerScheduler(workerSettings);
+const vault = new ProfileVault(layout);
+const profileBridge = new ElectronProfileBridge(layout, vault);
+
+installPortableRuntime({
+  layout,
+  projectStore,
+  accountRegistry,
+  workerConfig,
+  workerScheduler,
+  vault,
+  profileBridge
+});
 
 const controlServer = require('./control-server');
 const originalStartControlServer = controlServer.startControlServer;
@@ -67,14 +79,21 @@ controlServer.startControlServer = async function startPortableControlServer(leg
           accounts: accountHealth.total,
           schedulableAccounts: accountHealth.schedulable,
           workers: workerScheduler.status(),
+          vault: vault.status(),
+          profileRuntime: {
+            sessionDataRootReserved: true,
+            electronSessionDataRedirected: false,
+            bridgeReady: true,
+            runtimeBinding: 'F3-foundation-only'
+          },
           f2RuntimeBinding: 'foundation-only'
         }
       };
     },
 
     // Account metadata is mirrored from the existing Electron session owner.
-    // This avoids moving/deleting live Chromium profile data during F2 while
-    // giving Codex a durable, dynamic registry for 20+ accounts.
+    // This avoids moving/deleting live Chromium profile data during F2/F3
+    // foundation work while giving Codex a durable dynamic registry.
     listAccounts: async () => syncAccounts(),
     createAccount: async (name) => {
       const legacy = await legacyHandlers.createAccount(name);
