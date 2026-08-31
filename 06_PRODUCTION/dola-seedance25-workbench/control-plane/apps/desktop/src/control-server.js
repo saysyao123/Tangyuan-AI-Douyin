@@ -85,11 +85,34 @@ async function startControlServer(handlers) {
         const body = await readJson(req);
         return writeJson(res, 201, { account: await handlers.createAccount(body.name) });
       }
+      if (req.method === 'GET' && parts.join('/') === 'v1/accounts/health') {
+        return writeJson(res, 200, await requireHandler(handlers, 'accountHealthSummary')());
+      }
+      if (req.method === 'POST' && parts.length === 4 && parts[0] === 'v1' && parts[1] === 'accounts' && parts[3] === 'pause') {
+        const body = await readJson(req);
+        return writeJson(res, 200, { account: await requireHandler(handlers, 'pauseAccount')(parts[2], body.reason) });
+      }
+      if (req.method === 'POST' && parts.length === 4 && parts[0] === 'v1' && parts[1] === 'accounts' && parts[3] === 'resume') {
+        return writeJson(res, 200, { account: await requireHandler(handlers, 'resumeAccount')(parts[2]) });
+      }
+      if (req.method === 'POST' && parts.length === 4 && parts[0] === 'v1' && parts[1] === 'accounts' && parts[3] === 'debug') {
+        return writeJson(res, 200, await requireHandler(handlers, 'debugAccount')(parts[2]));
+      }
       if (req.method === 'POST' && parts.length === 4 && parts[0] === 'v1' && parts[1] === 'accounts' && parts[3] === 'activate') {
         return writeJson(res, 200, { account: await handlers.activateAccount(parts[2]) });
       }
       if (req.method === 'GET' && parts.length === 4 && parts[0] === 'v1' && parts[1] === 'accounts' && parts[3] === 'session') {
         return writeJson(res, 200, { session: await handlers.getAccountSession(parts[2]) });
+      }
+      if (req.method === 'GET' && parts.join('/') === 'v1/workers') {
+        return writeJson(res, 200, await requireHandler(handlers, 'workerStatus')());
+      }
+      if (req.method === 'POST' && parts.join('/') === 'v1/workers/settings') {
+        const body = await readJson(req);
+        return writeJson(res, 200, await requireHandler(handlers, 'configureWorkers')(body));
+      }
+      if (req.method === 'POST' && parts.join('/') === 'v1/workers/sweep') {
+        return writeJson(res, 200, await requireHandler(handlers, 'sweepWorkers')());
       }
       if (req.method === 'GET' && parts.join('/') === 'v1/providers') {
         return writeJson(res, 200, { providers: await handlers.listProviders() });
@@ -166,7 +189,9 @@ async function startControlServer(handlers) {
       return writeJson(res, Number(error.statusCode) || 500, {
         error: error.code || 'control_error',
         message: error.message || String(error),
-        ...(error.existingJobId ? { existingJobId: error.existingJobId } : {})
+        ...(error.existingJobId ? { existingJobId: error.existingJobId } : {}),
+        ...(error.accountId ? { accountId: error.accountId } : {}),
+        ...(error.reason ? { reason: error.reason } : {})
       });
     }
   });
