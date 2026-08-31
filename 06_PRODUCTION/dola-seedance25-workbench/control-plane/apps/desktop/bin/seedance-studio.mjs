@@ -3,23 +3,46 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-function discoveryPath() {
-  const base = process.env.SEEDANCE_STUDIO_CONTROL_DIR
-    || process.env.LOCALAPPDATA
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+
+function portableControlPath(root) {
+  return path.join(path.resolve(root), 'runtime', 'control', 'SeedanceDesktopStudio', 'control.json');
+}
+
+function discoveryCandidates() {
+  const candidates = [];
+  if (process.env.SEEDANCE_STUDIO_CONTROL_DIR) {
+    candidates.push(path.join(path.resolve(process.env.SEEDANCE_STUDIO_CONTROL_DIR), 'SeedanceDesktopStudio', 'control.json'));
+  }
+  if (process.env.DOLA_WORKBENCH_ROOT) candidates.push(portableControlPath(process.env.DOLA_WORKBENCH_ROOT));
+  if (process.env.PORTABLE_EXECUTABLE_DIR) candidates.push(portableControlPath(process.env.PORTABLE_EXECUTABLE_DIR));
+
+  // Development bootstrap uses apps/desktop/.portable-dev.
+  candidates.push(portableControlPath(path.resolve(scriptDir, '..', '.portable-dev')));
+
+  const legacyBase = process.env.LOCALAPPDATA
     || process.env.APPDATA
     || path.join(os.homedir(), '.seedance-desktop-studio');
-  return path.join(base, 'SeedanceDesktopStudio', 'control.json');
+  candidates.push(path.join(legacyBase, 'SeedanceDesktopStudio', 'control.json'));
+  return [...new Set(candidates)];
 }
 
 function readDiscovery() {
-  try {
-    const parsed = JSON.parse(fs.readFileSync(discoveryPath(), 'utf8'));
-    if (!parsed.port || !parsed.token) throw new Error('Incomplete control discovery file.');
-    return parsed;
-  } catch (error) {
-    fail('Seedance Desktop Studio is not running or its control file is unavailable.', { cause: error.message });
+  const errors = [];
+  for (const filePath of discoveryCandidates()) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      if (!parsed.port || !parsed.token) throw new Error('Incomplete control discovery file.');
+      return parsed;
+    } catch (error) {
+      errors.push({ file: filePath, cause: error.message });
+    }
   }
+  fail('Seedance Desktop Studio is not running or its control file is unavailable.', {
+    checked: errors.map((item) => item.file)
+  });
 }
 
 async function request(method, route, body) {
@@ -74,6 +97,14 @@ function requireFlag(flags, key) {
   return String(value);
 }
 
+function readPrompt(flags) {
+  if (flags['prompt-file'] !== undefined && flags['prompt-file'] !== true) {
+    const promptPath = path.resolve(String(flags['prompt-file']));
+    return fs.readFileSync(promptPath, 'utf8');
+  }
+  return requireFlag(flags, 'prompt');
+}
+
 async function resolveAccount(value) {
   const { accounts } = await request('GET', '/v1/accounts');
   const exact = accounts.find(item => item.id === value);
@@ -89,6 +120,11 @@ async function resolveAccount(value) {
   fail('Account not found.', { account: value });
 }
 
+async function resolveOptionalAccount(flags) {
+  if (flags.account === undefined || flags.account === true || !String(flags.account).trim()) return null;
+  return resolveAccount(String(flags.account));
+}
+
 async function watchTask(id, intervalMs) {
   const terminal = new Set(['success', 'failed', 'cancelled']);
   while (true) {
@@ -97,6 +133,22 @@ async function watchTask(id, intervalMs) {
     if (terminal.has(payload.task.state)) return;
     await new Promise(resolve => setTimeout(resolve, intervalMs));
   }
+}
+
+function projectJobBody(flags, account) {
+  const body = {
+    shotId: requireFlag(flags, 'shot'),
+    provider: String(flags.provider || 'dola-web'),
+    mode: String(flags.mode || 't2v'),
+    model: String(flags.model || 'seedance-v2.5'),
+    duration: Number(flags.duration || 10),
+    ratio: String(flags.ratio || '9:16'),
+    prompt: readPrompt(flags)
+  };
+  if (flags.revision !== undefined && flags.revision !== true) body.revision = Number(flags.revision);
+  if (flags.image !== undefined && flags.image !== true) body.sourceImagePath = String(flags.image);
+  if (account) body.requestedAccountId = account.id;
+  return body;
 }
 
 async function main() {
@@ -120,6 +172,7 @@ async function main() {
     return print(await request('POST', `/v1/accounts/${encodeURIComponent(account.id)}/activate`, {}));
   }
 
+  // Legacy POC task commands remain available during migration.
   if (group === 'tasks' && action === 'list') return print(await request('GET', '/v1/tasks'));
   if (group === 'tasks' && action === 'get') {
     const id = String(flags.id || positional[0] || '').trim();
@@ -129,9 +182,6 @@ async function main() {
   if (group === 'tasks' && action === 'create') {
     const selector = requireFlag(flags, 'account');
     const account = await resolveAccount(selector);
-    const prompt = flags['prompt-file'] !== undefined && flags['prompt-file'] !== true
-      ? fs.readFileSync(path.resolve(String(flags['prompt-file'])), 'utf8')
-      : requireFlag(flags, 'prompt');
     const body = {
       accountId: account.id,
       provider: String(flags.provider || 'dola-web'),
@@ -139,7 +189,7 @@ async function main() {
       model: String(flags.model || 'seedance-v2.5'),
       duration: Number(flags.duration || 10),
       ratio: String(flags.ratio || '9:16'),
-      prompt
+      prompt: readPrompt(flags)
     };
     if (flags.image !== undefined && flags.image !== true) body.imagePath = String(flags.image);
     return print(await request('POST', '/v1/tasks', body));
@@ -161,6 +211,50 @@ async function main() {
     return watchTask(id, interval);
   }
 
+  // Portable V1 project/job commands. They create durable, idempotent work
+  // records but do not bypass provider Gates or submit directly to Dola.
+  if (group === 'projects' && action === 'list') return print(await request('GET', '/v1/projects'));
+  if (group === 'projects' && action === 'create') {
+    const name = flags.name === undefined ? positional.join(' ') : String(flags.name);
+    if (!name.trim()) fail('Usage: projects create --name "MV Project"');
+    const body = { name };
+    if (flags.id !== undefined && flags.id !== true) body.id = String(flags.id);
+    return print(await request('POST', '/v1/projects', body));
+  }
+  if (group === 'projects' && action === 'get') {
+    const id = String(flags.id || positional[0] || '').trim();
+    if (!id) fail('Usage: projects get --id <project-id>');
+    return print(await request('GET', `/v1/projects/${encodeURIComponent(id)}`));
+  }
+  if (group === 'projects' && action === 'jobs') {
+    const id = String(flags.id || flags.project || positional[0] || '').trim();
+    if (!id) fail('Usage: projects jobs --id <project-id>');
+    return print(await request('GET', `/v1/projects/${encodeURIComponent(id)}/jobs`));
+  }
+  if (group === 'projects' && action === 'result') {
+    const id = String(flags.id || flags.project || positional[0] || '').trim();
+    if (!id) fail('Usage: projects result --id <project-id>');
+    return print(await request('GET', `/v1/projects/${encodeURIComponent(id)}/result`));
+  }
+
+  if (group === 'jobs' && action === 'get') {
+    const id = String(flags.id || positional[0] || '').trim();
+    if (!id) fail('Usage: jobs get --id <job-id>');
+    return print(await request('GET', `/v1/jobs/${encodeURIComponent(id)}`));
+  }
+  if (group === 'jobs' && action === 'create') {
+    const projectId = requireFlag(flags, 'project');
+    const account = await resolveOptionalAccount(flags);
+    const body = projectJobBody(flags, account);
+    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/jobs`, body));
+  }
+  if (group === 'jobs' && (action === 'revise' || action === 'new-revision')) {
+    const projectId = requireFlag(flags, 'project');
+    const account = await resolveOptionalAccount(flags);
+    const body = projectJobBody({ ...flags, revision: undefined }, account);
+    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/revisions`, body));
+  }
+
   fail('Unknown command.', {
     commands: [
       'health',
@@ -168,10 +262,17 @@ async function main() {
       'accounts list',
       'accounts add --name "Dola A"',
       'accounts open --account "Dola A"',
+      'projects list',
+      'projects create --name "MV Project"',
+      'projects get --id <project-id>',
+      'projects jobs --id <project-id>',
+      'projects result --id <project-id>',
+      'jobs create --project <project-id> --shot S01 --duration 5 --ratio 9:16 --prompt "..."',
+      'jobs create --project <project-id> --shot S01 --mode i2v --image "C:\\path\\first-frame.png" --duration 5 --ratio 9:16 --prompt-file "C:\\path\\S01.md"',
+      'jobs revise --project <project-id> --shot S01 --duration 5 --prompt "..."',
+      'jobs get --id <job-id>',
       'tasks list',
-      'tasks create --account "Dola A" --provider dola-web-background --duration 5 --ratio 9:16 --prompt "..."',
-      'tasks create --account "Dola A" --provider dola-web-background --duration 5 --ratio 9:16 --prompt-file "D:\\seedance2.5测试\\dola-original-resolver\\runtime\\test-prompts\\...txt"',
-      'tasks create --account "Dola A" --provider dola-web-background --mode i2v --image "C:\\path\\first-frame.png" --duration 5 --ratio 9:16 --prompt "..."',
+      'tasks create --account "Dola A" --duration 5 --ratio 9:16 --prompt "..."',
       'tasks get --id <task-id>',
       'tasks dispatch --id <task-id>',
       'tasks cancel --id <task-id>',
