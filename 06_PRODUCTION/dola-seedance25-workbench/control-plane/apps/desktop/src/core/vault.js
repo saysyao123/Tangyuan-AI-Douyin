@@ -112,12 +112,14 @@ class ProfileVault {
       throw new Error('ProfileVault requires vaultDir, unlockedProfilesDir and backupsDir.');
     }
     this.layout = layout;
+    this.workingRoot = layout.vaultWorkingDir || layout.unlockedProfilesDir;
     this.configFile = path.join(layout.vaultDir, 'vault.json');
     this.indexFile = path.join(layout.vaultDir, 'index.json');
     this.accountsVaultDir = path.join(layout.vaultDir, 'accounts');
     this.sessionMarker = path.join(layout.unlockedProfilesDir, 'vault-session.json');
     fs.mkdirSync(this.accountsVaultDir, { recursive: true });
     fs.mkdirSync(layout.unlockedProfilesDir, { recursive: true });
+    fs.mkdirSync(this.workingRoot, { recursive: true });
     fs.mkdirSync(layout.backupsDir, { recursive: true });
     if (!readJson(this.indexFile, null)) writeJsonAtomic(this.indexFile, { version: 1, accounts: {}, updatedAt: Date.now() });
 
@@ -126,11 +128,15 @@ class ProfileVault {
     this.recoveryRequired = fs.existsSync(this.sessionMarker);
     const previous = readJson(this.sessionMarker, null);
     this.dirtyAccounts = new Set(Array.isArray(previous?.dirtyAccounts) ? previous.dirtyAccounts.map(String) : []);
-    if (this.recoveryRequired && this.dirtyAccounts.size) this.state = 'LOCKED';
   }
 
   isInitialized() {
     return Boolean(readJson(this.configFile, null));
+  }
+
+  _clearMasterKey() {
+    if (this._masterKey && Buffer.isBuffer(this._masterKey)) this._masterKey.fill(0);
+    this._masterKey = null;
   }
 
   _requireUnlocked() {
@@ -180,6 +186,10 @@ class ProfileVault {
     const config = readJson(this.configFile, null);
     if (!config) throw vaultError('VAULT_NOT_INITIALIZED', 'Vault is not initialized.', 412);
     if (Number(config.version) !== VAULT_VERSION) throw vaultError('VAULT_VERSION_UNSUPPORTED', 'Vault version is not supported.');
+
+    // Never let a failed re-unlock leave the previous key resident. A failed
+    // password attempt always returns the vault to a genuinely locked state.
+    this._clearMasterKey();
     this.state = 'UNLOCKING';
     try {
       const salt = Buffer.from(String(config.kdf?.salt || ''), 'base64');
@@ -190,12 +200,12 @@ class ProfileVault {
         key.fill(0);
         throw vaultError('VAULT_UNLOCK_FAILED', 'Vault password is incorrect.', 401);
       }
-      if (this._masterKey) this._masterKey.fill(0);
       this._masterKey = key;
       this.state = this.dirtyAccounts.size ? 'RESEAL_REQUIRED' : 'UNLOCKED';
       this._writeSessionMarker();
       return this.status();
     } catch (error) {
+      this._clearMasterKey();
       this.state = 'LOCKED';
       if (error.code) throw error;
       throw vaultError('VAULT_UNLOCK_FAILED', 'Vault could not be unlocked.', 401);
@@ -207,7 +217,7 @@ class ProfileVault {
   }
 
   workingDir(accountId) {
-    return path.join(this.layout.unlockedProfilesDir, safeSegment(accountId, 'account'));
+    return path.join(this.workingRoot, safeSegment(accountId, 'account'));
   }
 
   _readIndex() {
@@ -395,8 +405,7 @@ class ProfileVault {
     if (this.dirtyAccounts.size && options.force !== true) {
       throw vaultError('RESEAL_REQUIRED', 'One or more unlocked profiles must be resealed before locking.');
     }
-    if (this._masterKey) this._masterKey.fill(0);
-    this._masterKey = null;
+    this._clearMasterKey();
     if (!this.dirtyAccounts.size) {
       for (const entry of fs.readdirSync(this.layout.unlockedProfilesDir, { withFileTypes: true })) {
         if (entry.name === path.basename(this.sessionMarker)) continue;
@@ -415,7 +424,7 @@ class ProfileVault {
     const index = this._readIndex();
     const unlockedDirs = [];
     try {
-      for (const entry of fs.readdirSync(this.layout.unlockedProfilesDir, { withFileTypes: true })) {
+      for (const entry of fs.readdirSync(this.workingRoot, { withFileTypes: true })) {
         if (entry.isDirectory()) unlockedDirs.push(entry.name);
       }
     } catch (_) {}
