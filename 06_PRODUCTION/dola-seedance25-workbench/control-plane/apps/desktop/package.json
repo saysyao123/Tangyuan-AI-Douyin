@@ -15,6 +15,7 @@
     "appId": "com.tangyuan.dolaseedanceworkbench",
     "productName": "Dola Seedance Workbench",
     "asar": true,
+    "artifactName": "Dola-Seedance-Workbench-Portable-${version}-${arch}.${ext}",
     "directories": {
       "output": "dist"
     },
@@ -30,11 +31,7 @@
           "target": "portable",
           "arch": ["x64"]
         }
-      ],
-      "artifactName": "Dola-Seedance-Workbench-Portable-${version}-${arch}.${ext}"
-    },
-    "portable": {
-      "artifactName": "Dola-Seedance-Workbench-Portable-${version}-${arch}.${ext}"
+      ]
     }
   },
   "devDependencies": {
