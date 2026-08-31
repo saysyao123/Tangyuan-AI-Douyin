@@ -1,13 +1,14 @@
 {
   "name": "seedance-desktop-studio",
-  "version": "0.2.0",
+  "version": "0.3.0-portable-v1",
   "private": true,
-  "description": "Clean-room multi-account desktop shell for Dola sessions with a local Codex control plane.",
-  "main": "src/main.js",
+  "description": "Clean-room multi-account Dola workbench with a portable Windows data layout and local Codex control plane.",
+  "main": "src/portable-main.js",
   "scripts": {
     "start": "electron .",
     "studio": "node bin/seedance-studio.mjs",
-    "check": "node --check src/main.js && node --check src/control-server.js && node --check src/preload.js && node --check src/renderer/app.js && node --check src/background-dola.js && node --check bin/seedance-studio.mjs"
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/portable-main.js && node --check src/core/portable-paths.js && node --check src/main.js && node --check src/control-server.js && node --check src/preload.js && node --check src/renderer/app.js && node --check src/background-dola.js && node --check bin/seedance-studio.mjs && node --test test/*.test.js"
   },
   "devDependencies": {
     "electron": "44.0.0"
