@@ -1,10 +1,10 @@
 'use strict';
 
 const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
-const fs = require('node:fs');
 const path = require('node:path');
 const { readJson } = require('./core/atomic-json');
 const { requirePortableRuntime } = require('./core/portable-runtime');
+const { rekeyVaultPassword } = require('./core/vault-rekey');
 
 let registered = false;
 let allowQuit = false;
@@ -31,7 +31,8 @@ function vaultPublicStatus(runtime) {
     ...status,
     desktopUnlockRequired: !['UNLOCKED', 'RESEAL_REQUIRED'].includes(status.state),
     profileRuntimeBinding: 'experimental-f3',
-    codexCanUnlock: false
+    codexCanUnlock: false,
+    defaultPasswordActive: runtime.defaultPasswordActive === true
   };
 }
 
@@ -49,15 +50,15 @@ async function flushAccountSessions(accounts) {
   return results;
 }
 
+function resealFailures(items) {
+  return items.filter((item) => item.resealed === false && item.reason !== 'not-dirty');
+}
+
 async function resealForShutdown(runtime) {
   const status = runtime.vault.status();
   if (!['UNLOCKED', 'RESEAL_REQUIRED'].includes(status.state)) return { skipped: true, reason: 'vault-not-unlocked' };
   const accounts = syncAccountRegistry(runtime);
 
-  // Persist Chromium's currently buffered cookies/storage first. The real
-  // Windows Gate still has to prove file-handle release across Electron/Chromium
-  // versions; until then shutdown failure is fail-closed rather than silently
-  // leaving a clean PASS state.
   const flushBefore = await flushAccountSessions(accounts);
   for (const win of BrowserWindow.getAllWindows()) {
     try { win.destroy(); } catch (_) {}
@@ -66,7 +67,7 @@ async function resealForShutdown(runtime) {
   const flushAfter = await flushAccountSessions(accounts);
 
   const resealed = runtime.profileBridge.resealDirty(accounts);
-  const failures = resealed.filter((item) => item.resealed === false && item.reason !== 'not-dirty');
+  const failures = resealFailures(resealed);
   if (failures.length) {
     const error = new Error(`Could not reseal ${failures.length} account profile(s) before exit.`);
     error.code = 'PROFILE_RESEAL_FAILED';
@@ -77,6 +78,24 @@ async function resealForShutdown(runtime) {
   return { skipped: false, flushBefore, flushAfter, resealed, vault };
 }
 
+async function closeAndResealActiveProfiles(runtime) {
+  const accounts = syncAccountRegistry(runtime);
+  const flushed = await flushAccountSessions(accounts);
+  // The renderer closes its visible WebView before calling password change or
+  // lock. Hidden workers must also release their account windows before a real
+  // Windows rekey Gate; if they do not, bridge cleanup fails closed.
+  await new Promise((resolve) => setTimeout(resolve, 250));
+  const resealed = runtime.profileBridge.resealDirty(accounts);
+  const failures = resealFailures(resealed);
+  if (failures.length) {
+    const error = new Error('One or more account profiles could not be resealed. Close Dola worker/debug windows and retry.');
+    error.code = 'PROFILE_RESEAL_FAILED';
+    error.failures = failures;
+    throw error;
+  }
+  return { accounts, flushed, resealed };
+}
+
 function registerPortableIpc() {
   if (registered) return;
   registered = true;
@@ -85,12 +104,22 @@ function registerPortableIpc() {
   ipcMain.handle('vault:initialize', (_event, password) => {
     const runtime = requirePortableRuntime();
     runtime.vault.initialize(String(password || ''));
+    runtime.defaultPasswordActive = false;
     return vaultPublicStatus(runtime);
   });
   ipcMain.handle('vault:unlock', (_event, password) => {
     const runtime = requirePortableRuntime();
     runtime.vault.unlock(String(password || ''));
     return vaultPublicStatus(runtime);
+  });
+  ipcMain.handle('vault:change-password', async (_event, input) => {
+    const runtime = requirePortableRuntime();
+    const currentPassword = String(input?.currentPassword || '');
+    const newPassword = String(input?.newPassword || '');
+    await closeAndResealActiveProfiles(runtime);
+    const result = rekeyVaultPassword(runtime.vault, runtime.layout, currentPassword, newPassword);
+    runtime.defaultPasswordActive = false;
+    return { ...result, vault: vaultPublicStatus(runtime) };
   });
   ipcMain.handle('profiles:prepare-account', (_event, accountId) => {
     const runtime = requirePortableRuntime();
@@ -106,16 +135,7 @@ function registerPortableIpc() {
   });
   ipcMain.handle('vault:lock', async () => {
     const runtime = requirePortableRuntime();
-    const accounts = syncAccountRegistry(runtime);
-    await flushAccountSessions(accounts);
-    const resealed = runtime.profileBridge.resealDirty(accounts);
-    const failures = resealed.filter((item) => item.resealed === false && item.reason !== 'not-dirty');
-    if (failures.length) {
-      const error = new Error('One or more account profiles could not be resealed.');
-      error.code = 'PROFILE_RESEAL_FAILED';
-      error.failures = failures;
-      throw error;
-    }
+    const { resealed } = await closeAndResealActiveProfiles(runtime);
     runtime.vault.lock();
     return { vault: vaultPublicStatus(runtime), resealed };
   });
@@ -150,5 +170,6 @@ module.exports = {
   registerPortableIpc,
   vaultPublicStatus,
   legacyAccounts,
-  resealForShutdown
+  resealForShutdown,
+  closeAndResealActiveProfiles
 };
