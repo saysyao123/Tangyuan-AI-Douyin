@@ -21,6 +21,10 @@ function persistentPartitionName(partition) {
   return safeSegment(name, 'partition');
 }
 
+function directoryExists(dir) {
+  try { return fs.statSync(dir).isDirectory(); } catch (_) { return false; }
+}
+
 function directoryHasFiles(dir) {
   try { return fs.readdirSync(dir).length > 0; } catch (_) { return false; }
 }
@@ -65,8 +69,8 @@ class ElectronProfileBridge {
     const target = this.partitionDir(account);
     const dirty = status.dirtyAccounts.includes(id);
     // A dirty runtime directory is authoritative for this run, even when it is
-    // still empty (for example a newly-added account before its first login).
-    // This also preserves the newest plaintext state after an abnormal exit.
+    // empty (for example a newly-added account before its first login). This
+    // also preserves the newest plaintext state after an abnormal exit.
     if (dirty && fs.existsSync(target)) {
       return { accountId: id, partitionDir: target, recoveredRuntime: status.recoveryRequired, prepared: true };
     }
@@ -99,15 +103,32 @@ class ElectronProfileBridge {
     const id = String(account?.id || '').trim();
     if (!id) throw bridgeError('BAD_ACCOUNT_ID', 'Account id is required.', 400);
     const source = this.partitionDir(account);
+    const dirtyBefore = this.vault.status().dirtyAccounts.includes(id);
+
     if (!fs.existsSync(source)) {
-      if (!this.vault.status().dirtyAccounts.includes(id)) {
-        return { accountId: id, resealed: false, reason: 'not-dirty' };
-      }
+      if (!dirtyBefore) return { accountId: id, resealed: false, reason: 'not-dirty' };
       throw bridgeError('RUNTIME_PROFILE_MISSING', 'Dirty account runtime partition is missing; recovery is required.');
     }
-    const result = this.vault.sealProfile(id, source, { removeSource: true });
-    fs.rmSync(this.tempUnsealDir(id), { recursive: true, force: true });
-    return { ...result, resealed: true };
+
+    // Seal first, but fail closed until the plaintext runtime partition is
+    // confirmed removed. ProfileVault.sealProfile would normally clear dirty;
+    // therefore any removal failure explicitly marks the account dirty again.
+    let sealed;
+    try {
+      sealed = this.vault.sealProfile(id, source, { removeSource: false });
+      fs.rmSync(source, { recursive: true, force: false });
+      if (directoryExists(source)) {
+        throw bridgeError('PLAINTEXT_PROFILE_REMAINS', 'Plaintext runtime profile still exists after reseal.');
+      }
+      fs.rmSync(this.tempUnsealDir(id), { recursive: true, force: true });
+      return { ...sealed, resealed: true, plaintextRemoved: true };
+    } catch (error) {
+      // Preserve RESEAL_REQUIRED even when encryption succeeded but Chromium or
+      // antivirus file handles prevented plaintext cleanup.
+      try { this.vault.markDirty(id); } catch (_) {}
+      if (error.code) throw error;
+      throw bridgeError('PLAINTEXT_PROFILE_CLEANUP_FAILED', `Encrypted profile was written, but plaintext cleanup failed: ${error.message || error}`);
+    }
   }
 
   resealDirty(accounts) {
