@@ -14,7 +14,7 @@ button { color: inherit; }
 .brand, .panel-title > div { display: grid; gap: 4px; }
 .brand strong { font-size: 18px; }
 .brand span, .notice, .status, .account-copy small, .panel-title span, .gate-note, .task-meta { color: #97a4bf; font-size: 12px; }
-.primary, header button, .panel-title button, .task-card button, .vault-card button { border: 1px solid #354466; border-radius: 10px; padding: 10px 12px; background: #1b2742; color: #fff; cursor: pointer; }
+.primary, header button, .panel-title button, .task-card button, .vault-card button, .portable-actions button { border: 1px solid #354466; border-radius: 10px; padding: 10px 12px; background: #1b2742; color: #fff; cursor: pointer; }
 .primary { background: #3157d5; border-color: #3157d5; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .accounts { display: grid; gap: 8px; overflow: auto; }
@@ -43,6 +43,8 @@ webview { width: 100%; height: 100%; border: 0; background: #fff; }
 .task-form select, .task-form textarea { width: 100%; border: 1px solid #354466; border-radius: 8px; background: #111b31; color: #eef2ff; padding: 9px; }
 .task-form textarea { resize: vertical; min-height: 110px; max-height: 240px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.portable-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.portable-actions button { padding: 8px 9px; font-size: 11px; }
 .gate-note { line-height: 1.5; }
 .task-list-header { display: flex; justify-content: space-between; align-items: center; }
 .task-list-header span { color: #97a4bf; font-size: 12px; }
