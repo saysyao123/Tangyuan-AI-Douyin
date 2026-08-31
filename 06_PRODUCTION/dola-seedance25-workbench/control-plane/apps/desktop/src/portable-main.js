@@ -164,8 +164,6 @@ controlServer.startControlServer = async function startPortableControlServer(leg
         updatedAt: Date.now()
       });
       let result = await runner.run(task, account);
-      // One automatic observation-only recovery pass. This never clicks submit
-      // and therefore cannot duplicate a provider generation.
       if (result?.recoverable) {
         await sleep(5_000);
         const latest = await legacyHandlers.getTask(task.id) || task;
@@ -194,7 +192,6 @@ controlServer.startControlServer = async function startPortableControlServer(leg
     account = await verifyRunnerLogin(account);
     const recoveryOnly = ['observation_wait', 'result_observed', 'recovery_required', 'login_required'].includes(task.state);
 
-    // Start asynchronously so the loopback API/UI remains responsive.
     runPortableTaskInBackground(task, account, recoveryOnly ? 'recover' : 'run').catch(async (error) => {
       try {
         const runner = portableRuntime.backgroundRunner;
@@ -321,6 +318,7 @@ controlServer.startControlServer = async function startPortableControlServer(leg
 };
 
 require('./portable-ipc').registerPortableIpc();
+require('./portable-dialog-ipc').registerPortableDialogIpc();
 
 const backgroundModule = require('./background-dola');
 const { PortableDolaBackgroundRunner } = require('./background-dola-portable');
