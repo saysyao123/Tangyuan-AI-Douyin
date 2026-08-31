@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('seedanceDesktop', {
   }),
   lockVault: () => ipcRenderer.invoke('vault:lock'),
   prepareAccountSession: (id) => ipcRenderer.invoke('profiles:prepare-account', String(id || '')),
+  pickImage: () => ipcRenderer.invoke('portable:pick-image'),
 
   listAccounts: () => ipcRenderer.invoke('accounts:list'),
   addAccount: (name) => ipcRenderer.invoke('accounts:add', String(name || '')),
