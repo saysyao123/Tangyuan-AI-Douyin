@@ -29,6 +29,9 @@
       <strong>DolaWorkbench</strong>
       <span>Seedance · Multi-account · Codex</span>
     </div>
+    <div id="defaultPasswordNotice" class="security-notice" hidden>
+      当前仍使用首次预设保险库密码。完成首次登录测试后，建议点右上角“修改保险库密码”。
+    </div>
     <button id="addAccount" class="primary">+ 添加 Dola 账号</button>
     <div id="accounts" class="accounts"></div>
     <div class="notice">
@@ -43,6 +46,7 @@
         <div id="status" class="status">正在检查本地保险库…</div>
       </div>
       <div class="header-actions">
+        <button id="changeVaultPassword">修改保险库密码</button>
         <button id="lockVault">锁定保险库</button>
         <button id="reload" disabled>刷新 Dola</button>
         <button id="clearSession" disabled>清除本账号会话</button>
@@ -97,5 +101,6 @@
     <div id="tasks" class="tasks"></div>
   </aside>
   <script src="./app.js"></script>
+  <script src="./vault-settings.js"></script>
 </body>
 </html>
