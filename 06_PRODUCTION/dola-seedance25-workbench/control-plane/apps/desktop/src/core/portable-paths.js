@@ -37,6 +37,7 @@ function buildPortableLayout(rootValue) {
   const appDir = path.join(root, 'app');
   const runtimeDir = path.join(root, 'runtime');
   const dataDir = path.join(root, 'data');
+  const unlockedProfilesDir = path.join(runtimeDir, 'unlocked-profiles');
 
   return {
     version: LAYOUT_VERSION,
@@ -46,12 +47,19 @@ function buildPortableLayout(rootValue) {
     dataDir,
     controlDir: path.join(runtimeDir, 'control'),
     tempDir: path.join(runtimeDir, 'tmp'),
-    unlockedProfilesDir: path.join(runtimeDir, 'unlocked-profiles'),
+    unlockedProfilesDir,
+    // Chromium cookies/storage are eventually redirected here while the vault
+    // is unlocked. The whole directory is ephemeral and must be resealed or
+    // discarded on a clean shutdown. Durable encrypted packages live in
+    // data/vault, never here.
+    sessionDataDir: path.join(unlockedProfilesDir, 'electron-session-data'),
+    vaultWorkingDir: path.join(unlockedProfilesDir, 'vault-work'),
     vaultDir: path.join(dataDir, 'vault'),
     profilesDir: path.join(dataDir, 'profiles'),
-    // Compatibility location for the existing POC, which still stores its
-    // accounts/tasks JSON beside Electron persistent partition data. F1 will
-    // move metadata into dedicated stores without changing the partition IDs.
+    // Compatibility location for the existing POC. It remains durable during
+    // migration because legacy accounts/tasks still live beside userData.
+    // The new Electron `sessionData` root is separate so browser credentials
+    // can move to the encrypted vault without moving project/account metadata.
     electronUserData: path.join(dataDir, 'profiles', 'electron-user-data'),
     accountsDir: path.join(dataDir, 'accounts'),
     projectsDir: path.join(dataDir, 'projects'),
@@ -71,6 +79,8 @@ function directoryList(layout) {
     layout.controlDir,
     layout.tempDir,
     layout.unlockedProfilesDir,
+    layout.sessionDataDir,
+    layout.vaultWorkingDir,
     layout.dataDir,
     layout.vaultDir,
     layout.profilesDir,
