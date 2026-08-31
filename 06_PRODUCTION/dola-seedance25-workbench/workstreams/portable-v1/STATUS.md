@@ -15,13 +15,18 @@ Branch: `work/dola-portable-v1`
 - [x] Initial code audit completed.
 - [x] Reuse/refactor/new-build areas identified.
 - [x] Implementation Gates defined.
+- [x] Portable path/data-root module added.
+- [x] Electron portable bootstrap added and set as desktop entrypoint.
+- [x] Existing hard-coded Dola artifact default is overridden by portable bootstrap before `main.js` loads.
+- [x] Durable `data/` and ephemeral `runtime/` roots reserved with a versioned layout marker.
+- [x] Dev portable runtime is Git-ignored.
+- [x] Isolated Windows GitHub Actions check added.
+- [x] Windows CI run #2 passed on the current foundation.
 
 ## In progress
 
-- [ ] Portable path/data-root module.
-- [ ] Remove hard-coded developer artifact path from production default.
-- [ ] Reserve durable data/state/version layout.
-- [ ] Add compatibility strategy for existing userData accounts/tasks.
+- [ ] Define/import compatibility for existing AppData-based account/task data when a user upgrades from the old POC.
+- [ ] Move account/task metadata out of the compatibility Electron `userData` root into dedicated durable stores.
 
 ## Next after F0
 
