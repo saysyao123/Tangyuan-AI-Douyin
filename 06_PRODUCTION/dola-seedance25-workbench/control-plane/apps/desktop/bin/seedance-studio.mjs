@@ -18,13 +18,8 @@ function discoveryCandidates() {
   }
   if (process.env.DOLA_WORKBENCH_ROOT) candidates.push(portableControlPath(process.env.DOLA_WORKBENCH_ROOT));
   if (process.env.PORTABLE_EXECUTABLE_DIR) candidates.push(portableControlPath(process.env.PORTABLE_EXECUTABLE_DIR));
-
-  // Development bootstrap uses apps/desktop/.portable-dev.
   candidates.push(portableControlPath(path.resolve(scriptDir, '..', '.portable-dev')));
-
-  const legacyBase = process.env.LOCALAPPDATA
-    || process.env.APPDATA
-    || path.join(os.homedir(), '.seedance-desktop-studio');
+  const legacyBase = process.env.LOCALAPPDATA || process.env.APPDATA || path.join(os.homedir(), '.seedance-desktop-studio');
   candidates.push(path.join(legacyBase, 'SeedanceDesktopStudio', 'control.json'));
   return [...new Set(candidates)];
 }
@@ -40,9 +35,7 @@ function readDiscovery() {
       errors.push({ file: filePath, cause: error.message });
     }
   }
-  fail('Seedance Desktop Studio is not running or its control file is unavailable.', {
-    checked: errors.map((item) => item.file)
-  });
+  fail('Seedance Desktop Studio is not running or its control file is unavailable.', { checked: errors.map((item) => item.file) });
 }
 
 async function request(method, route, body) {
@@ -56,9 +49,7 @@ async function request(method, route, body) {
     body: body === undefined ? undefined : JSON.stringify(body)
   });
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    fail(payload.message || payload.error || `HTTP ${response.status}`, { status: response.status, ...payload });
-  }
+  if (!response.ok) fail(payload.message || payload.error || `HTTP ${response.status}`, { status: response.status, ...payload });
   return payload;
 }
 
@@ -99,8 +90,7 @@ function requireFlag(flags, key) {
 
 function readPrompt(flags) {
   if (flags['prompt-file'] !== undefined && flags['prompt-file'] !== true) {
-    const promptPath = path.resolve(String(flags['prompt-file']));
-    return fs.readFileSync(promptPath, 'utf8');
+    return fs.readFileSync(path.resolve(String(flags['prompt-file'])), 'utf8');
   }
   return requireFlag(flags, 'prompt');
 }
@@ -123,6 +113,12 @@ async function resolveAccount(value) {
 async function resolveOptionalAccount(flags) {
   if (flags.account === undefined || flags.account === true || !String(flags.account).trim()) return null;
   return resolveAccount(String(flags.account));
+}
+
+async function accountSelector(flags, positional, usage) {
+  const selector = String(flags.account || positional[0] || '').trim();
+  if (!selector) fail(usage);
+  return resolveAccount(selector);
 }
 
 async function watchTask(id, intervalMs) {
@@ -160,16 +156,38 @@ async function main() {
   if (group === 'providers' && action === 'list') return print(await request('GET', '/v1/providers'));
 
   if (group === 'accounts' && action === 'list') return print(await request('GET', '/v1/accounts'));
+  if (group === 'accounts' && action === 'health') return print(await request('GET', '/v1/accounts/health'));
   if (group === 'accounts' && action === 'add') {
     const name = flags.name === undefined ? positional.join(' ') : String(flags.name);
     if (!name.trim()) fail('Usage: accounts add --name "Dola A"');
     return print(await request('POST', '/v1/accounts', { name }));
   }
   if (group === 'accounts' && action === 'open') {
-    const selector = String(flags.account || positional[0] || '').trim();
-    if (!selector) fail('Usage: accounts open --account <id-or-name>');
-    const account = await resolveAccount(selector);
+    const account = await accountSelector(flags, positional, 'Usage: accounts open --account <id-or-name>');
     return print(await request('POST', `/v1/accounts/${encodeURIComponent(account.id)}/activate`, {}));
+  }
+  if (group === 'accounts' && action === 'debug') {
+    const account = await accountSelector(flags, positional, 'Usage: accounts debug --account <id-or-name>');
+    return print(await request('POST', `/v1/accounts/${encodeURIComponent(account.id)}/debug`, {}));
+  }
+  if (group === 'accounts' && action === 'pause') {
+    const account = await accountSelector(flags, positional, 'Usage: accounts pause --account <id-or-name> [--reason "..."]');
+    const reason = flags.reason === undefined || flags.reason === true ? 'MANUAL_PAUSE' : String(flags.reason);
+    return print(await request('POST', `/v1/accounts/${encodeURIComponent(account.id)}/pause`, { reason }));
+  }
+  if (group === 'accounts' && action === 'resume') {
+    const account = await accountSelector(flags, positional, 'Usage: accounts resume --account <id-or-name>');
+    return print(await request('POST', `/v1/accounts/${encodeURIComponent(account.id)}/resume`, {}));
+  }
+
+  if (group === 'workers' && action === 'status') return print(await request('GET', '/v1/workers'));
+  if (group === 'workers' && action === 'sweep') return print(await request('POST', '/v1/workers/sweep', {}));
+  if (group === 'workers' && (action === 'configure' || action === 'settings')) {
+    const body = {};
+    if (flags.max !== undefined && flags.max !== true) body.maxWorkers = Number(flags.max);
+    if (flags['idle-ms'] !== undefined && flags['idle-ms'] !== true) body.idleMs = Number(flags['idle-ms']);
+    if (!Object.keys(body).length) fail('Usage: workers configure --max 3 [--idle-ms 300000]');
+    return print(await request('POST', '/v1/workers/settings', body));
   }
 
   // Legacy POC task commands remain available during migration.
@@ -180,8 +198,7 @@ async function main() {
     return print(await request('GET', `/v1/tasks/${encodeURIComponent(id)}`));
   }
   if (group === 'tasks' && action === 'create') {
-    const selector = requireFlag(flags, 'account');
-    const account = await resolveAccount(selector);
+    const account = await resolveAccount(requireFlag(flags, 'account'));
     const body = {
       accountId: account.id,
       provider: String(flags.provider || 'dola-web'),
@@ -207,12 +224,9 @@ async function main() {
   if (group === 'tasks' && action === 'watch') {
     const id = String(flags.id || positional[0] || '').trim();
     if (!id) fail('Usage: tasks watch --id <task-id> [--interval 5000]');
-    const interval = Math.max(1000, Number(flags.interval || 5000));
-    return watchTask(id, interval);
+    return watchTask(id, Math.max(1000, Number(flags.interval || 5000)));
   }
 
-  // Portable V1 project/job commands. They create durable, idempotent work
-  // records but do not bypass provider Gates or submit directly to Dola.
   if (group === 'projects' && action === 'list') return print(await request('GET', '/v1/projects'));
   if (group === 'projects' && action === 'create') {
     const name = flags.name === undefined ? positional.join(' ') : String(flags.name);
@@ -245,14 +259,12 @@ async function main() {
   if (group === 'jobs' && action === 'create') {
     const projectId = requireFlag(flags, 'project');
     const account = await resolveOptionalAccount(flags);
-    const body = projectJobBody(flags, account);
-    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/jobs`, body));
+    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/jobs`, projectJobBody(flags, account)));
   }
   if (group === 'jobs' && (action === 'revise' || action === 'new-revision')) {
     const projectId = requireFlag(flags, 'project');
     const account = await resolveOptionalAccount(flags);
-    const body = projectJobBody({ ...flags, revision: undefined }, account);
-    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/revisions`, body));
+    return print(await request('POST', `/v1/projects/${encodeURIComponent(projectId)}/revisions`, projectJobBody({ ...flags, revision: undefined }, account)));
   }
 
   fail('Unknown command.', {
@@ -260,8 +272,15 @@ async function main() {
       'health',
       'providers list',
       'accounts list',
+      'accounts health',
       'accounts add --name "Dola A"',
       'accounts open --account "Dola A"',
+      'accounts debug --account "Dola A"',
+      'accounts pause --account "Dola A" --reason "maintenance"',
+      'accounts resume --account "Dola A"',
+      'workers status',
+      'workers configure --max 3 --idle-ms 300000',
+      'workers sweep',
       'projects list',
       'projects create --name "MV Project"',
       'projects get --id <project-id>',
