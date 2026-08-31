@@ -6,6 +6,7 @@ const { DolaBackgroundRunner } = require('./background-dola');
 const { ProviderLifecycleStore } = require('./core/provider-lifecycle-store');
 const { resolveJobMedia } = require('./core/dola-media-resolver');
 const { writeJsonAtomic } = require('./core/atomic-json');
+const { getPortableRuntime } = require('./core/portable-runtime');
 
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 function text(value) { return String(value || '').slice(0, 500); }
@@ -89,6 +90,10 @@ class PortableDolaBackgroundRunner extends DolaBackgroundRunner {
     this.lifecycleStore = lifecycle;
     this.mediaOutputRoot = path.resolve(process.env.DOLA_WORKBENCH_OUTPUT_ROOT || path.join(options.outputRoot || process.cwd(), 'resolved-media'));
     fs.mkdirSync(this.mediaOutputRoot, { recursive: true });
+    try {
+      const runtime = getPortableRuntime();
+      if (runtime) runtime.backgroundRunner = this;
+    } catch (_) {}
   }
 
   async finalizeMedia(task, account, result) {
@@ -131,7 +136,12 @@ class PortableDolaBackgroundRunner extends DolaBackgroundRunner {
   run(task, account) {
     this.lifecycleStore.begin(task, account);
     try { this.lifecycleStore.transition(task.id, 'PREPARING', {}, 'portable-runner-start'); } catch (_) {}
-    return super.run(task, account).then(async (result) => {
+    // Portable V1 concurrency is controlled by WorkerScheduler. Calling _run
+    // directly here permits independent account partitions to run concurrently
+    // while the scheduler still guarantees one lease per account and the
+    // configured global cap (default 3). The legacy runner's queueTail remains
+    // intact for legacy call sites.
+    return this._run(task, account).then(async (result) => {
       if (result?.ok) return this.finalizeMedia(task, account, result);
       if (isObservationTimeout(result?.error)) {
         return { ...result, recoverable: true, state: 'OBSERVATION_WAIT' };
@@ -146,8 +156,6 @@ class PortableDolaBackgroundRunner extends DolaBackgroundRunner {
     if (!this.lifecycleStore.get(task.id)) this.lifecycleStore.begin(task, account);
     try { this.lifecycleStore.transition(task.id, 'RECOVERY_REQUIRED', {}, 'explicit-recovery-without-resubmit'); } catch (_) {}
 
-    // First retry resolution from already captured evidence. This performs no
-    // Dola submit or provider request mutation.
     const existing = await resolveJobMedia(jobDir, this.mediaOutputRoot, task.id);
     if (existing.ok) return this._finishRecovered(task, account, existing);
 
