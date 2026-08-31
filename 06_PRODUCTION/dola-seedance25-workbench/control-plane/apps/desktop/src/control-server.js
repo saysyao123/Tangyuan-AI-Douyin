@@ -54,6 +54,13 @@ function routeParts(url) {
   return parsed.pathname.split('/').filter(Boolean).map(decodeURIComponent);
 }
 
+function requireHandler(handlers, name) {
+  if (typeof handlers[name] !== 'function') {
+    throw Object.assign(new Error(`Control capability is not available: ${name}`), { statusCode: 501, code: 'capability_not_available' });
+  }
+  return handlers[name];
+}
+
 async function startControlServer(handlers) {
   const token = crypto.randomBytes(32).toString('hex');
   const discoveryFile = controlDiscoveryPath();
@@ -87,6 +94,9 @@ async function startControlServer(handlers) {
       if (req.method === 'GET' && parts.join('/') === 'v1/providers') {
         return writeJson(res, 200, { providers: await handlers.listProviders() });
       }
+
+      // Legacy task routes stay stable while Portable V1 introduces the
+      // project/job model next to them.
       if (req.method === 'GET' && parts.join('/') === 'v1/tasks') {
         return writeJson(res, 200, { tasks: await handlers.listTasks() });
       }
@@ -109,11 +119,54 @@ async function startControlServer(handlers) {
         return writeJson(res, result.ok ? 200 : (result.statusCode || 409), result);
       }
 
+      // Portable V1 durable project/job routes. These do not dispatch Dola by
+      // themselves; they provide the idempotent control/data foundation used
+      // by the scheduler/provider in later Gates.
+      if (req.method === 'GET' && parts.join('/') === 'v1/projects') {
+        return writeJson(res, 200, { projects: await requireHandler(handlers, 'listProjects')() });
+      }
+      if (req.method === 'POST' && parts.join('/') === 'v1/projects') {
+        const body = await readJson(req);
+        const result = await requireHandler(handlers, 'createProject')(body);
+        return writeJson(res, result.created ? 201 : 200, result);
+      }
+      if (parts.length === 3 && parts[0] === 'v1' && parts[1] === 'projects' && req.method === 'GET') {
+        const project = await requireHandler(handlers, 'getProject')(parts[2]);
+        if (!project) return writeJson(res, 404, { error: 'project_not_found' });
+        return writeJson(res, 200, { project });
+      }
+      if (parts.length === 4 && parts[0] === 'v1' && parts[1] === 'projects' && parts[3] === 'jobs' && req.method === 'GET') {
+        const project = await requireHandler(handlers, 'getProject')(parts[2]);
+        if (!project) return writeJson(res, 404, { error: 'project_not_found' });
+        return writeJson(res, 200, { project, jobs: await requireHandler(handlers, 'listProjectJobs')(parts[2]) });
+      }
+      if (parts.length === 4 && parts[0] === 'v1' && parts[1] === 'projects' && parts[3] === 'jobs' && req.method === 'POST') {
+        const body = await readJson(req);
+        const result = await requireHandler(handlers, 'createProjectJob')({ ...body, projectId: parts[2] });
+        return writeJson(res, result.created ? 201 : 200, result);
+      }
+      if (parts.length === 4 && parts[0] === 'v1' && parts[1] === 'projects' && parts[3] === 'revisions' && req.method === 'POST') {
+        const body = await readJson(req);
+        const result = await requireHandler(handlers, 'createProjectJobRevision')({ ...body, projectId: parts[2] });
+        return writeJson(res, 201, result);
+      }
+      if (parts.length === 4 && parts[0] === 'v1' && parts[1] === 'projects' && parts[3] === 'result' && req.method === 'GET') {
+        const result = await requireHandler(handlers, 'getProjectResult')(parts[2]);
+        if (!result) return writeJson(res, 404, { error: 'project_not_found' });
+        return writeJson(res, 200, result);
+      }
+      if (parts.length === 3 && parts[0] === 'v1' && parts[1] === 'jobs' && req.method === 'GET') {
+        const job = await requireHandler(handlers, 'getProjectJob')(parts[2]);
+        if (!job) return writeJson(res, 404, { error: 'job_not_found' });
+        return writeJson(res, 200, { job });
+      }
+
       return writeJson(res, 404, { error: 'not_found' });
     } catch (error) {
       return writeJson(res, Number(error.statusCode) || 500, {
         error: error.code || 'control_error',
-        message: error.message || String(error)
+        message: error.message || String(error),
+        ...(error.existingJobId ? { existingJobId: error.existingJobId } : {})
       });
     }
   });
