@@ -37,7 +37,7 @@ test('legacy accounts import dynamically without hard-coded account names', () =
   } finally { cleanup(root); }
 });
 
-test('pause prevents scheduling but keeps account metadata available', () => {
+test('pause prevents scheduling and survives legacy status refresh', () => {
   const { root, registry } = fixture();
   try {
     const account = registry.create({ name: 'Dola A', status: 'READY' });
@@ -45,8 +45,12 @@ test('pause prevents scheduling but keeps account metadata available', () => {
     assert.equal(paused.enabled, false);
     assert.equal(paused.status, 'PAUSED');
     assert.equal(paused.schedulable, false);
-    assert.equal(paused.schedulingReason, 'ACCOUNT_DISABLED');
-    assert.equal(registry.get(account.id).name, 'Dola A');
+    assert.equal(paused.schedulingReason, 'ACCOUNT_PAUSED');
+    registry.syncLegacy([{ id: account.id, name: 'Dola A', status: 'READY', partition: account.partition }]);
+    const refreshed = registry.get(account.id);
+    assert.equal(refreshed.status, 'PAUSED');
+    assert.equal(refreshed.enabled, false);
+    assert.equal(refreshed.schedulingReason, 'ACCOUNT_PAUSED');
   } finally { cleanup(root); }
 });
 
