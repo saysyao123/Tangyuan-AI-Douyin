@@ -1,0 +1,74 @@
+name: Dola Portable Release ZIP
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - work/dola-portable-v1
+    paths:
+      - '06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop/**'
+      - '.github/workflows/dola-portable-release.yml'
+
+jobs:
+  build-portable-zip:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: 06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: 06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop/package.json
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: npm install --no-audit --no-fund
+
+      - name: Run Portable V1 checks
+        shell: pwsh
+        run: npm run check
+
+      - name: Build Windows x64 portable executable
+        shell: pwsh
+        run: npm run build:portable
+
+      - name: Assemble end-user ZIP
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $releaseRoot = Join-Path $PWD 'release\Dola-Seedance-Workbench-Portable-v1'
+          New-Item -ItemType Directory -Force -Path $releaseRoot | Out-Null
+          $exe = Get-ChildItem -Path (Join-Path $PWD 'dist') -Filter 'Dola-Seedance-Workbench-Portable-*.exe' | Select-Object -First 1
+          if (-not $exe) { throw 'Portable EXE was not produced.' }
+          Copy-Item $exe.FullName -Destination $releaseRoot
+          $docs = @(
+            'docs\START_HERE.txt',
+            'docs\USER_QUICKSTART.md',
+            'docs\PRESET_PASSWORD.txt',
+            'docs\KNOWN_LIMITATIONS.md',
+            'docs\RECOVERY.md',
+            'docs\SECURITY_BOUNDARY.md',
+            'docs\PORTABLE_LAYOUT.md',
+            'docs\BUILD_DELIVERY.md'
+          )
+          foreach ($doc in $docs) { Copy-Item (Join-Path $PWD $doc) -Destination $releaseRoot }
+          $zip = Join-Path $PWD 'release\Dola-Seedance-Workbench-Portable-v1.zip'
+          if (Test-Path $zip) { Remove-Item $zip -Force }
+          Compress-Archive -Path (Join-Path $releaseRoot '*') -DestinationPath $zip -CompressionLevel Optimal
+          Get-FileHash $zip -Algorithm SHA256 | Format-List | Out-File (Join-Path $PWD 'release\SHA256.txt') -Encoding utf8
+
+      - name: Upload portable ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dola-Seedance-Workbench-Portable-v1
+          path: |
+            06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop/release/Dola-Seedance-Workbench-Portable-v1.zip
+            06_PRODUCTION/dola-seedance25-workbench/control-plane/apps/desktop/release/SHA256.txt
+          if-no-files-found: error
+          retention-days: 30
