@@ -5,55 +5,73 @@ Branch: `work/dola-portable-v1`
 
 ## Current phase
 
-`F3 — ENCRYPTED PROFILE VAULT / ELECTRON SESSION BINDING` (implementation active)
+`RC1 — WINDOWS PORTABLE BUILD READY / REAL DOLA G1 USER GATE NEXT`
 
 ## Product execution rule
 
-Continue independently through F3-F9 unless a user decision or real Windows/Dola evidence Gate is required. Do not claim a real Dola capability merely because code or CI exists. No account-creation automation, CAPTCHA bypass, entitlement bypass, rate-limit evasion, or provider restriction circumvention is part of Portable V1.
+Continue independently unless a user decision or real Windows/Dola evidence Gate is required. Do not claim a real Dola capability merely because code, CI, packaging or simulation exists. No account-creation automation, CAPTCHA/MFA bypass, login bypass, entitlement/quota bypass, rate-limit evasion, 403 bypass, or provider restriction circumvention is part of Portable V1.
 
-## Completed
+## Completed engineering / CI foundation
 
 - [x] Requirements/product contract locked.
-- [x] Dedicated branch and workstream records.
+- [x] Dedicated branch and isolated `workstreams/portable-v1/` records.
 - [x] Portable Windows data/runtime layout.
 - [x] Durable ProjectStore, revisions, idempotency and project completion calculation.
 - [x] Portable HTTP/CLI project and job routes.
 - [x] Dynamic account registry without hard-coded A/B/C accounts.
 - [x] Global configurable worker semaphore (default 3) and one-generation-per-account lease policy foundation.
 - [x] Account pause/resume/debug/health/capability state foundation.
-- [x] ProfileVault with password-derived encryption, per-account authenticated encryption, dirty/reseal/recovery markers and encrypted backup support.
-- [x] Electron profile bridge foundation mapping account partitions to an ephemeral sessionData root.
-- [x] Renderer changed to keep only one visible Dola debug WebView active instead of pre-creating a WebView for every account.
-- [x] Vault wrong-password behavior clears the resident master key.
+- [x] ProfileVault with password-derived encryption, per-account authenticated encryption, dirty/reseal/recovery markers, password rekey and encrypted backup support.
+- [x] Fail-closed profile reseal foundation: plaintext runtime cleanup failure cannot be silently treated as a safe reseal.
+- [x] Electron sessionData/profile bridge foundation and desktop vault unlock Gate.
+- [x] Renderer keeps only one visible Dola debug WebView active instead of pre-creating one per account.
+- [x] Preset first-run vault password policy and change-password path included in RC1.
+- [x] Recoverable provider lifecycle foundation: post-submit observation timeout moves to recoverable observation state instead of blind resubmission.
+- [x] Recovery path retries existing evidence/page observation without clicking Generate again.
+- [x] Media resolver/download adapter foundation with candidate ranking, `.part` download, atomic finalize, MP4 signature/size/hash checks and permission failure preservation.
+- [x] Codex/local control contract includes account/worker/task/project/job state plus recovery/output surfaces.
+- [x] Windows x64 portable Electron packaging configured.
+- [x] End-user release ZIP workflow configured and successfully built.
 
-## Active F3 safety closeout
+## RC1 build receipt
 
-- [ ] Fail-closed reseal: encrypted package success must not clear dirty state if plaintext runtime removal fails.
-- [ ] Desktop startup unlock Gate: no Dola partition may open before vault unlock.
-- [ ] Default first-run password policy + forced-change recommendation in UI/docs.
-- [ ] Clean shutdown reseal hook and explicit recovery status.
-- [ ] Windows CI for the above foundation behaviors.
+Release source revision:
 
-## Next engineering slices
+`4369bf0f28d9a817b1d8dbee6fdc62526091b367`
 
-- [ ] F4: split the current Dola background runner into session/UI/lifecycle/conversation/capability provider modules.
-- [ ] F5: persist provider lifecycle and recover observation without blind resubmission after timeout.
-- [ ] F6: resolver/download adapter + technical validation + project outputs.
-- [ ] F7/F8: localhost workbench and Codex contract extension on the same stores.
-- [ ] F9: Windows portable packaging + migration/readme + release ZIP/artifact.
+Release workflow:
 
-## Highest current technical risk
+- `Dola Portable Release ZIP`
+- run `#3`
+- run id `33364676266`
+- result: PASS
+- artifact id: `9747918027`
 
-`P0: recoverable Dola result lifecycle` — successful UI submission and final media observation are not yet one recoverable durable state machine. This must be solved before G1 can pass.
+End-user ZIP:
+
+`Dola-Seedance-Workbench-Portable-v1.zip`
+
+Verified SHA-256:
+
+`377768cd5b8e631bb679b8718572dc8d68d09ae4485aa722c3eb43c147174d8f`
+
+Detailed receipt: `DELIVERY_RC1_2026-08-31.md`.
 
 ## Real-world Gates
 
-- G1 one-account end-to-end: NOT_READY.
-- G2 two-account isolation/parallel: NOT_READY.
-- G5 scheduler/batch: NOT_READY.
-- G20 pooled operation: NOT_READY.
+These are intentionally **not** upgraded to PASS by CI or packaging alone:
+
+- G1 one-account login -> generation -> result observation -> highest-quality accessible download: READY_FOR_USER_TEST / NOT_PASSED_YET.
+- real Windows clean shutdown -> restart -> vault unlock -> Dola login session persistence: READY_FOR_USER_TEST / NOT_PASSED_YET.
+- G2 two-account isolation/parallel: BLOCKED_BY_G1.
+- G5 scheduler/batch: BLOCKED_BY_G2.
+- G20 pooled operation: BLOCKED_BY_G5.
 - 30s: EXPERIMENTAL / entitlement-gated / no bypass.
 
-## Evidence discipline
+## Highest current technical risk
 
-No real Windows/Dola capability is marked PASS merely because code exists. Real session-dependent Gates require user-side Windows evidence.
+`P0: real provider lifecycle variability` — RC1 now has a recoverable lifecycle/resolver foundation, but Dola page/control/result shapes still must be proven against the user's actual Windows session. A real provider/UI change may require adapter fixes after G1 evidence.
+
+## Next action
+
+Use the RC1 ZIP on Windows with one authorized Dola account. Verify manual login, one normal 5s job, result observation/download, then clean shutdown/restart persistence. Record all resulting evidence in this workstream before expanding to G2/G5/G20.
