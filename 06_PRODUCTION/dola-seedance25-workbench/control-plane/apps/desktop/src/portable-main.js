@@ -25,16 +25,13 @@ const root = resolvePortableRoot({
 const layout = buildPortableLayout(root);
 ensurePortableLayout(layout);
 
-// Keep durable metadata separate from browser credentials. Electron userData
-// remains the migration-compatible home for accounts/tasks/UI metadata, while
-// Chromium session storage is redirected to the ephemeral vault-controlled
-// runtime root before app ready. No Dola partition is opened until renderer or
-// worker code explicitly prepares an account after vault unlock.
 app.setPath('userData', layout.electronUserData);
 app.setPath('sessionData', layout.sessionDataDir);
 
 process.env.DOLA_WORKBENCH_ROOT = layout.root;
 process.env.DOLA_WORKBENCH_DATA_ROOT = layout.dataDir;
+process.env.DOLA_WORKBENCH_STATE_ROOT = layout.stateDir;
+process.env.DOLA_WORKBENCH_OUTPUT_ROOT = layout.outputsDir;
 process.env.DOLA_WORKBENCH_LAYOUT_VERSION = String(LAYOUT_VERSION);
 process.env.SEEDANCE_STUDIO_CONTROL_DIR = layout.controlDir;
 process.env.DOLA_ARTIFACT_ROOT = layout.debugCapturesDir;
@@ -47,9 +44,8 @@ const workerScheduler = new WorkerScheduler(workerSettings);
 const vault = new ProfileVault(layout);
 const profileBridge = new ElectronProfileBridge(layout, vault);
 
-// User-requested first-run convenience: initialize/unlock with the public
-// bootstrap password. This is not treated as a security boundary; the desktop
-// UI prominently recommends replacing it after first successful login.
+// User-requested first-run convenience. The preset is public and therefore
+// only a bootstrap convenience; the UI recommends changing it after first use.
 let defaultPasswordActive = false;
 try {
   if (!vault.isInitialized()) {
@@ -59,14 +55,9 @@ try {
     try {
       vault.unlock(DEFAULT_INITIAL_VAULT_PASSWORD);
       defaultPasswordActive = true;
-    } catch (_) {
-      // A private replacement password has already been configured. Stay
-      // locked and let the local desktop unlock Gate request it.
-    }
+    } catch (_) {}
   }
-} catch (_) {
-  // Fail closed. The renderer can still show the normal unlock/recovery Gate.
-}
+} catch (_) {}
 
 const portableRuntime = installPortableRuntime({
   layout,
@@ -139,6 +130,11 @@ controlServer.startControlServer = async function startPortableControlServer(leg
             bridgeReady: true,
             runtimeBinding: 'F3-experimental-live'
           },
+          providerLifecycle: {
+            recoverWithoutResubmit: true,
+            mediaResolver: 'in-process-candidate-ranking',
+            runtimeBinding: 'F5-F6-experimental'
+          },
           f2RuntimeBinding: 'foundation-only'
         }
       };
@@ -202,11 +198,24 @@ controlServer.startControlServer = async function startPortableControlServer(leg
         };
       }
     },
+    recoverTask: async (id) => {
+      try {
+        const task = await legacyHandlers.getTask(id);
+        if (!task) return { ok: false, statusCode: 404, error: 'task_not_found' };
+        const account = await prepareAccount(task.accountId);
+        if (typeof legacyHandlers.recoverTask !== 'function') {
+          return { ok: false, statusCode: 501, error: 'recovery_not_available' };
+        }
+        return legacyHandlers.recoverTask(id, account);
+      } catch (error) {
+        return { ok: false, statusCode: Number(error.statusCode) || 409, error: error.code || 'recovery_blocked', message: error.message || String(error) };
+      }
+    },
 
     workerStatus: async () => ({
       ...workerScheduler.status(),
       runtimeBinding: 'foundation-only',
-      note: 'F2 lease/worker policy is active as a control foundation. Real multi-worker Dola runtime binding lands in F4/F5.'
+      note: 'F2 lease/worker policy is active as a control foundation; real account BrowserWindow concurrency still requires Windows G2.'
     }),
     configureWorkers: async (input) => {
       const saved = workerConfig.save(input || {});
@@ -227,8 +236,13 @@ controlServer.startControlServer = async function startPortableControlServer(leg
   return originalStartControlServer(handlers);
 };
 
-// Vault credentials are accepted only over Electron IPC from the trusted local
-// desktop preload. The loopback Codex Control Plane intentionally has no unlock
-// endpoint and receives status only.
 require('./portable-ipc').registerPortableIpc();
+
+// Incrementally replace only the provider runner used by legacy main.js. This
+// preserves the proven Dola UI adapter while adding recoverable lifecycle and
+// media resolution without a high-risk rewrite of all selector code at once.
+const backgroundModule = require('./background-dola');
+const { PortableDolaBackgroundRunner } = require('./background-dola-portable');
+backgroundModule.DolaBackgroundRunner = PortableDolaBackgroundRunner;
+
 require('./main');
