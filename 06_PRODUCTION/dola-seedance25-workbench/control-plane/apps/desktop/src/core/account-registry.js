@@ -8,13 +8,11 @@ const { readJson, writeJsonAtomic } = require('./atomic-json');
 const ACCOUNT_STATUSES = new Set([
   'UNKNOWN', 'NEEDS_LOGIN', 'READY', 'BUSY', 'PAUSED', 'ERROR', 'RESTRICTED'
 ]);
-
 const QUOTA_STATES = new Set(['UNKNOWN', 'AVAILABLE', 'LOW', 'EXHAUSTED']);
 const ENTITLEMENT_STATES = new Set(['UNKNOWN', 'AVAILABLE', 'UNAVAILABLE']);
 
 function cleanText(value, fallback = '', max = 160) {
-  const text = String(value ?? fallback).replace(/[\r\n\t]/g, ' ').trim();
-  return text.slice(0, max);
+  return String(value ?? fallback).replace(/[\r\n\t]/g, ' ').trim().slice(0, max);
 }
 
 function normalizeStatus(value, fallback = 'UNKNOWN') {
@@ -23,8 +21,7 @@ function normalizeStatus(value, fallback = 'UNKNOWN') {
 }
 
 function normalizeCapabilityBool(value) {
-  if (value === true || value === false) return value;
-  return 'unknown';
+  return value === true || value === false ? value : 'unknown';
 }
 
 function normalizeDurationState(value) {
@@ -57,11 +54,7 @@ function normalizeCapabilities(value = {}) {
   return {
     t2v: normalizeCapabilityBool(value.t2v),
     i2v: normalizeCapabilityBool(value.i2v),
-    durations: {
-      5: getDuration(5),
-      10: getDuration(10),
-      30: getDuration(30)
-    },
+    durations: { 5: getDuration(5), 10: getDuration(10), 30: getDuration(30) },
     quotaStatus: QUOTA_STATES.has(quota) ? quota : 'UNKNOWN',
     entitlementStatus: ENTITLEMENT_STATES.has(entitlement) ? entitlement : 'UNKNOWN',
     lastCheckedAt: Number(value.lastCheckedAt) || null
@@ -82,7 +75,6 @@ function normalizeAccount(value = {}, previous = null) {
   const capabilities = normalizeCapabilities({ ...(previous?.capabilities || {}), ...(value.capabilities || {}) });
   const health = normalizeHealth({ ...(previous?.health || {}), ...(value.health || {}) });
   const now = Date.now();
-
   return {
     id,
     name: cleanText(value.name ?? previous?.name, 'Dola Account', 80) || 'Dola Account',
@@ -103,8 +95,8 @@ function normalizeAccount(value = {}, previous = null) {
 
 function schedulingReason(account) {
   if (!account) return 'ACCOUNT_NOT_FOUND';
-  if (account.enabled !== true) return 'ACCOUNT_DISABLED';
   if (account.status === 'PAUSED') return 'ACCOUNT_PAUSED';
+  if (account.enabled !== true) return 'ACCOUNT_DISABLED';
   if (account.status === 'RESTRICTED' || account.restrictionCode) return account.restrictionCode || 'ACCOUNT_RESTRICTED';
   if (account.capabilities?.quotaStatus === 'EXHAUSTED') return 'QUOTA_EXHAUSTED';
   if (account.capabilities?.entitlementStatus === 'UNAVAILABLE') return 'ENTITLEMENT_UNAVAILABLE';
@@ -115,11 +107,7 @@ function schedulingReason(account) {
 
 function publicAccount(account) {
   const reason = schedulingReason(account);
-  return {
-    ...account,
-    schedulable: reason === null,
-    schedulingReason: reason
-  };
+  return { ...account, schedulable: reason === null, schedulingReason: reason };
 }
 
 class AccountRegistry {
@@ -135,11 +123,7 @@ class AccountRegistry {
 
   _read() {
     const parsed = readJson(this.registryFile, { version: 1, accounts: [] }) || { version: 1, accounts: [] };
-    return {
-      version: 1,
-      accounts: Array.isArray(parsed.accounts) ? parsed.accounts : [],
-      updatedAt: Number(parsed.updatedAt) || null
-    };
+    return { version: 1, accounts: Array.isArray(parsed.accounts) ? parsed.accounts : [], updatedAt: Number(parsed.updatedAt) || null };
   }
 
   _write(accounts) {
@@ -164,12 +148,7 @@ class AccountRegistry {
       error.code = 'ACCOUNT_EXISTS';
       throw error;
     }
-    const account = normalizeAccount({
-      ...input,
-      id,
-      source: input.source || 'portable',
-      status: input.status || 'NEEDS_LOGIN'
-    });
+    const account = normalizeAccount({ ...input, id, source: input.source || 'portable', status: input.status || 'NEEDS_LOGIN' });
     const state = this._read();
     state.accounts.push(account);
     this._write(state.accounts);
@@ -194,17 +173,17 @@ class AccountRegistry {
   }
 
   syncLegacy(accounts = []) {
-    const incoming = Array.isArray(accounts) ? accounts : [];
-    for (const legacy of incoming) {
+    for (const legacy of Array.isArray(accounts) ? accounts : []) {
       if (!legacy?.id) continue;
       const current = this.get(legacy.id);
+      const preserveLocalState = current && ['PAUSED', 'RESTRICTED'].includes(current.status);
       this.upsert({
         id: legacy.id,
         name: legacy.name,
         partition: legacy.partition,
         createdAt: legacy.createdAt,
         source: current?.source || 'legacy-poc',
-        status: legacy.status || current?.status || 'UNKNOWN',
+        status: preserveLocalState ? current.status : (legacy.status || current?.status || 'UNKNOWN'),
         lastError: legacy.lastError ?? current?.lastError,
         lastCheckedAt: legacy.lastCheckedAt ?? current?.lastCheckedAt,
         enabled: current?.enabled !== false,
@@ -229,20 +208,19 @@ class AccountRegistry {
   }
 
   pause(id, reason = 'MANUAL_PAUSE') {
-    return this.patch(id, {
-      enabled: false,
-      status: 'PAUSED',
-      pauseReason: cleanText(reason, 'MANUAL_PAUSE', 240) || 'MANUAL_PAUSE'
-    });
+    return this.patch(id, { enabled: false, status: 'PAUSED', pauseReason: cleanText(reason, 'MANUAL_PAUSE', 240) || 'MANUAL_PAUSE' });
   }
 
   resume(id) {
     const current = this.get(id);
-    if (!current) return this.patch(id, {});
-    let status = current.health?.loginStatus === 'logged_out' ? 'NEEDS_LOGIN' : 'READY';
-    if (current.restrictionCode || current.capabilities?.quotaStatus === 'EXHAUSTED' || current.capabilities?.entitlementStatus === 'UNAVAILABLE') {
-      status = 'RESTRICTED';
+    if (!current) {
+      const error = new Error('Account not found');
+      error.code = 'ACCOUNT_NOT_FOUND';
+      error.statusCode = 404;
+      throw error;
     }
+    let status = current.health?.loginStatus === 'logged_out' ? 'NEEDS_LOGIN' : 'READY';
+    if (current.restrictionCode || current.capabilities?.quotaStatus === 'EXHAUSTED' || current.capabilities?.entitlementStatus === 'UNAVAILABLE') status = 'RESTRICTED';
     return this.patch(id, { enabled: true, status, pauseReason: '' });
   }
 
@@ -296,12 +274,4 @@ class AccountRegistry {
   }
 }
 
-module.exports = {
-  AccountRegistry,
-  ACCOUNT_STATUSES,
-  normalizeAccount,
-  normalizeCapabilities,
-  normalizeHealth,
-  schedulingReason,
-  publicAccount
-};
+module.exports = { AccountRegistry, ACCOUNT_STATUSES, normalizeAccount, normalizeCapabilities, normalizeHealth, schedulingReason, publicAccount };
