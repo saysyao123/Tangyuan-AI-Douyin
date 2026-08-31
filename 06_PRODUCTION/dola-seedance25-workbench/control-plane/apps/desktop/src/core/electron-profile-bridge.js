@@ -64,11 +64,11 @@ class ElectronProfileBridge {
 
     const target = this.partitionDir(account);
     const dirty = status.dirtyAccounts.includes(id);
-    // Crash recovery rule: if this account was dirty and its plaintext runtime
-    // partition still exists, preserve that newer runtime state. Never replace
-    // it with an older sealed package automatically.
-    if (dirty && directoryHasFiles(target)) {
-      return { accountId: id, partitionDir: target, recoveredRuntime: true, prepared: true };
+    // A dirty runtime directory is authoritative for this run, even when it is
+    // still empty (for example a newly-added account before its first login).
+    // This also preserves the newest plaintext state after an abnormal exit.
+    if (dirty && fs.existsSync(target)) {
+      return { accountId: id, partitionDir: target, recoveredRuntime: status.recoveryRequired, prepared: true };
     }
 
     if (directoryHasFiles(target)) {
@@ -100,8 +100,6 @@ class ElectronProfileBridge {
     if (!id) throw bridgeError('BAD_ACCOUNT_ID', 'Account id is required.', 400);
     const source = this.partitionDir(account);
     if (!fs.existsSync(source)) {
-      // An account can exist without ever opening a Dola session in this run.
-      // If it is not dirty there is nothing to reseal.
       if (!this.vault.status().dirtyAccounts.includes(id)) {
         return { accountId: id, resealed: false, reason: 'not-dirty' };
       }
@@ -128,13 +126,14 @@ class ElectronProfileBridge {
   }
 
   runtimeStatus(accounts) {
+    const dirty = new Set(this.vault.status().dirtyAccounts.map(String));
     return (Array.isArray(accounts) ? accounts : []).map((account) => {
       const dir = this.partitionDir(account);
       return {
         accountId: account.id,
         partition: account.partition,
-        runtimePrepared: directoryHasFiles(dir) || fs.existsSync(dir),
-        dirty: this.vault.status().dirtyAccounts.includes(String(account.id))
+        runtimePrepared: fs.existsSync(dir),
+        dirty: dirty.has(String(account.id))
       };
     });
   }
