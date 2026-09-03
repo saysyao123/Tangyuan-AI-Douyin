@@ -1,0 +1,63 @@
+schema_version: "1.0"
+provider: dola
+status: LIVE_PROBE_REQUIRED
+last_reviewed: "2026-09-03"
+
+engine_target:
+  family: seedance
+  version: "2.5"
+  engine_fact:
+    max_single_generation_seconds: 30
+    source: "ByteDance Seed official launch, 2026-07-31"
+
+provider_surface:
+  duration_selection:
+    status: UNVERIFIED
+    supported_values: []
+    rule: >
+      Do not infer Dola duration controls from Seedance engine limits or from
+      third-party Dreamina/API products. Bind exact values only after a live Dola
+      UI/API capability probe on the account used for production.
+  image_to_video:
+    status: EXPECTED_BUT_LIVE_PROBE_REQUIRED
+  multi_reference:
+    status: LIVE_PROBE_REQUIRED
+  aspect_ratio_9_16:
+    status: LIVE_PROBE_REQUIRED
+  resolution_options:
+    status: LIVE_PROBE_REQUIRED
+  audio_generation_toggle:
+    status: LIVE_PROBE_REQUIRED
+
+semantic_duration_routes:
+  PRECISION:
+    desired_range_seconds: [5, 8]
+    provider_binding: SHORTEST_SUITABLE_SUPPORTED_DURATION
+    fallback_rule: >
+      If Dola's shortest Seedance 2.5 tier is longer than 8 seconds, use that
+      shortest tier but evaluate only whether the target action completes early
+      and how many seconds are genuinely usable. Do not invent an unsupported
+      duration parameter.
+  STANDARD:
+    desired_range_seconds: [8, 15]
+    provider_binding: NEAREST_SUPPORTED_DURATION_IN_OR_ABOVE_RANGE
+  EXTENDED:
+    desired_range_seconds: [15, 20]
+    provider_binding: NEAREST_SUPPORTED_DURATION_IN_RANGE
+
+benchmark_policy:
+  - Provider capability must be probed before R1 generation begins.
+  - The same provider duration setting must be used for Legacy and Lean variants within a comparison cell.
+  - A provider limitation changes the adapter binding, not the creative workflow.
+  - 30-second source mode is outside the current MV benchmark even if the provider exposes it.
+
+live_probe_required_fields:
+  - model_label_shown
+  - duration_choices
+  - aspect_ratio_choices
+  - resolution_choices
+  - accepted_reference_types
+  - maximum_reference_count_if_visible
+  - audio_generation_behavior_or_toggle
+  - watermark_behavior
+  - generation_result_download_options
