@@ -1,0 +1,113 @@
+schema_version: "1.0"
+status: EXPERIMENTAL
+provider_target: dola
+model_target: seedance-2.5
+
+objective: >
+  Determine whether a lean positive-first Production Card + Prompt Compiler
+  improves usable MV material yield and repair cost without weakening identity,
+  visual hit, or editability.
+
+locked_scope:
+  duration_strategies:
+    - PRECISION_5_8
+    - STANDARD_8_15
+    - EXTENDED_15_20
+  exclude:
+    - 30s source design
+    - replacing Canonical Runtime
+    - automatic removal of HG03 before evidence
+    - promoting one-off wins to production rules
+
+archetypes:
+  A_FACE_HAND:
+    purpose: identity-sensitive micro-performance with hand/face interaction
+    expected_module: FACE_HAND
+  B_MOVING_CAMERA:
+    purpose: moving subject with explicit camera-subject relationship
+    expected_module: CAMERA_PRECISION
+  C_PHYSICS:
+    purpose: one visible physical event with cloth/water/glass/contact risk
+    expected_module: PHYSICS
+
+metrics:
+  primary:
+    - accepted_material: boolean
+    - usable_seconds: number
+    - usable_ratio: number
+    - repair_count: integer
+    - regeneration_count: integer
+  quality:
+    - visual_hit_0_10
+    - identity_stability_0_10
+    - motion_execution_0_10
+    - editability_0_10
+  complexity:
+    - prompt_characters
+    - emitted_hard_constraints
+    - modules_loaded
+  human_cost:
+    - human_interruptions
+
+rounds:
+  - id: R1_LEGACY_VS_LEAN
+    purpose: test whether the full legacy control skeleton is actually necessary
+    duration_strategy: PRECISION_5_8
+    variants:
+      - LEGACY_FULL_SKELETON
+      - LEAN_CORE_PLUS_TRIGGERED_MODULE
+    archetypes:
+      - A_FACE_HAND
+      - B_MOVING_CAMERA
+      - C_PHYSICS
+    repeats_per_cell: 2
+    maximum_generations: 12
+    decision: >
+      Keep the lean path only if usable yield is not materially worse and
+      repair/regeneration cost is equal or lower. A prettier single sample is
+      not sufficient.
+
+  - id: R2_DURATION_ROUTER
+    purpose: find the shortest duration that reliably completes each task
+    prerequisite: R1 winner or non-inferior prompt structure selected
+    variants:
+      - PRECISION_5_8
+      - STANDARD_8_15
+      - EXTENDED_15_20
+    archetypes:
+      - A_FACE_HAND
+      - B_MOVING_CAMERA
+      - C_PHYSICS
+    repeats_per_cell: 1
+    maximum_generations: 9
+    decision: >
+      Prefer the shortest strategy that reaches acceptable usable material.
+      Longer duration must earn its cost through additional usable progression,
+      not merely additional runtime.
+
+  - id: R3_MODULE_ABLATION
+    purpose: verify conditional modules only where failure evidence justifies them
+    prerequisite: run only on archetypes with unresolved R1/R2 failure
+    pair_test:
+      - LEAN_CORE_ONLY
+      - LEAN_CORE_PLUS_TRIGGERED_MODULE
+    maximum_generations: 6
+    decision: >
+      Promote a module trigger only when it repeatedly reduces the targeted
+      failure without introducing equivalent new failures or excessive prompt cost.
+
+maximum_planned_generations: 27
+
+stop_rules:
+  - Stop a round early when one variant is clearly dominated across repeated cells.
+  - Do not spend generations optimizing an already accepted source beyond the benchmark need.
+  - Do not add a new constraint mid-cell without recording it as a new variant.
+  - Preserve failed outputs and compile metadata as evidence; do not rewrite history.
+
+promotion_gate:
+  required_before_rule_promotion:
+    - repeated_support_across_more_than_one_archetype_or_song_when_claim_is_general
+    - failure_mode_is_explicit
+    - model_validity_records_seedance_2_5
+    - no_semantic_duplicate_rule
+    - measurable_acceptance_or_cost_benefit
