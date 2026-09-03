@@ -14,10 +14,14 @@ provider_surface:
   duration_selection:
     status: UNVERIFIED
     supported_values: []
+    public_observation: >
+      Recent public community examples around Dola commonly show 10-second output,
+      with some user reports mentioning 5/10-second choices. This is evidence for
+      what to inspect, not a production contract.
     rule: >
-      Do not infer Dola duration controls from Seedance engine limits or from
-      third-party Dreamina/API products. Bind exact values only after a live Dola
-      UI/API capability probe on the account used for production.
+      Do not infer Dola duration controls from Seedance engine limits, third-party
+      APIs or community posts. Bind exact values only after a live Dola UI/API
+      capability probe on the account used for production.
   image_to_video:
     status: EXPECTED_BUT_LIVE_PROBE_REQUIRED
   multi_reference:
@@ -50,6 +54,7 @@ benchmark_policy:
   - The same provider duration setting must be used for Legacy and Lean variants within a comparison cell.
   - A provider limitation changes the adapter binding, not the creative workflow.
   - 30-second source mode is outside the current MV benchmark even if the provider exposes it.
+  - Account cycling, temporary identities, quota bypass or similar access workarounds are outside this Harness and must not be used as benchmark infrastructure.
 
 live_probe_required_fields:
   - model_label_shown
@@ -61,3 +66,11 @@ live_probe_required_fields:
   - audio_generation_behavior_or_toggle
   - watermark_behavior
   - generation_result_download_options
+
+probe_acceptance:
+  minimum_to_unlock_R1:
+    - model_label_shown confirms Seedance 2.5
+    - at least one usable image/reference upload path is visible
+    - one exact supported duration is recorded for PRECISION
+    - output aspect behavior for the 9:16 K0 is understood
+    - audio behavior is understood enough to keep Legacy/Lean equal
