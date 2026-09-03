@@ -1,6 +1,6 @@
-schema_version: "1.1"
+schema_version: "1.2"
 provider: dola
-status: SURFACE_SPLIT_REQUIRED
+status: EXPERT_MV_VISUAL_BENCHMARK_READY
 last_reviewed: "2026-09-03"
 
 engine_target:
@@ -12,20 +12,23 @@ engine_target:
 
 surfaces:
   EXPERT_AGENT:
-    status: PARTIALLY_OBSERVED
+    status: USER_CONFIRMED_15S
     description: >
-      Dola chat/expert mode interprets the user's request and may refuse or rewrite
-      before the video generation skill is actually invoked.
+      Dola Expert Mode interprets the request and invokes a video-generation skill.
+      It can generate 15-second reference-image videos on the user's current account.
+      Prompt semantics can be blocked before a video job is reached, so Expert-Agent
+      compatibility must be treated separately from Seedance render quality.
+    confirmed_duration_seconds: [5, 15]
     observed_R1:
       A_FACE_HAND: BLOCKED_BEFORE_CONFIRMED_VIDEO_JOB
-      B_MOVING_CAMERA: GENERATED_SUCCESSFULLY
+      B_MOVING_CAMERA: GENERATED_SUCCESSFULLY_BUT_LOW_MOTION_QUALITY
       C_PHYSICS: BLOCKED_BEFORE_CONFIRMED_VIDEO_JOB
     rule: >
       Expert-Agent refusal is not equivalent to a Seedance 2.5 render rejection.
       Record the stage reached before classifying the failure.
 
   DIRECT_VIDEO:
-    status: OPEN_SOURCE_OBSERVED_LIVE_PROBE_RECOMMENDED
+    status: OPEN_SOURCE_OBSERVED_SECONDARY_CONTROL
     description: >
       Dedicated Dola video-generation surface with separate model, duration and
       aspect-ratio controls plus prompt/reference submission.
@@ -39,83 +42,83 @@ surfaces:
       ratio_values: ["1:1", "3:4", "4:3", "9:16", "16:9", "21:9"]
       max_reference_images: 10
       modes: ["multi_ref", "text2video"]
-      evidence_scope: >
-        Treat as strong public implementation evidence for Dola surface behavior,
-        not as an official Dola API contract.
+    role_in_current_project: >
+      Secondary control surface only. Current MV benchmark priority is Expert Mode
+      because the user already has working 15-second generation there.
 
 provider_surface:
-  duration_selection:
-    status: OPEN_SOURCE_OBSERVED_5_10_EXPERT_AGENT_UNVERIFIED
-    supported_values_candidate: [5, 10]
-    rule: >
-      For R1 Expert Mode, 5 seconds is already confirmed by the successful B run.
-      Keep exact settings equal across comparison cells. Do not infer other values
-      from unrelated Seedance APIs.
-  image_to_video:
-    status: OBSERVED_VIA_EXPERT_AGENT_AND_OPEN_SOURCE_DIRECT_SURFACE
-  multi_reference:
-    status: OPEN_SOURCE_OBSERVED
+  image_reference:
+    status: CONFIRMED_IN_EXPERT_MODE
   aspect_ratio_9_16:
-    status: OPEN_SOURCE_OBSERVED_AND_R1_REQUESTED
-  resolution_options:
-    status: UNVERIFIED
-  audio_generation_toggle:
-    status: UNVERIFIED
+    status: CONFIRMED_FOR_CURRENT_WORKFLOW
+  expert_duration_15s:
+    status: CONFIRMED_BY_USER_RUNS
+  moderation_behavior:
+    status: TEXT_SEMANTICS_SENSITIVE
+    note: >
+      Current evidence suggests prompt wording can be blocked at the Expert-Agent
+      interpretation layer. This benchmark therefore avoids unnecessary anatomy,
+      contact and policy-like negative-language density and focuses on benign MV
+      visual events.
 
-semantic_duration_routes:
-  PRECISION:
-    desired_range_seconds: [5, 8]
-    provider_binding: 5
-    evidence: >
-      Expert Agent successfully generated B at requested 5 seconds; actively
-      maintained open-source Dola WebView also exposes 5/10-second choices.
-  STANDARD:
-    desired_range_seconds: [8, 15]
-    provider_binding_candidate: 10
-    status: NOT_YET_R1_VALIDATED
-  EXTENDED:
-    desired_range_seconds: [15, 20]
-    provider_binding_candidate: null
-    status: NO_CONFIRMED_DOLA_SURFACE_VALUE
+mv_strategy:
+  primary_surface: EXPERT_AGENT
+  primary_duration_seconds: 15
+  target_material: >
+    Visually strong, editable MV source material: environmental dynamics, symbolic
+    objects, light/weather/particles, surreal spatial transformation and lyric-hit
+    visual events. Human characters are optional, not a benchmark requirement.
+  priority_order:
+    - lyric_visual_hit
+    - visual_peak
+    - usable_seconds
+    - physical_coherence
+    - editability
+    - continuity
+  de_emphasized_for_current_benchmark:
+    - face_identity_stress_tests
+    - hand_face_contact
+    - complex_human_gait
+    - dialogue
 
-moderation_diagnostics:
-  required_fields:
-    - surface
-    - stage_reached
-    - status
-    - blocked_text
-  stage_values:
-    - AGENT_INTERPRETATION
-    - VIDEO_JOB_SUBMITTED
-    - VIDEO_RENDERING
-    - VIDEO_OUTPUT
-  policy: >
-    Do not classify an Expert-Agent natural-language refusal as a Seedance model
-    failure unless a real video job was submitted and the provider reports a block.
+prompt_policy:
+  style: POSITIVE_FIRST
+  structure:
+    - model_duration_aspect_reference_header
+    - lyric_or_emotional_intent
+    - one_primary_visual_event
+    - three_phase_15s_progression
+    - camera_relationship
+    - physical_residue_and_clean_end
+    - two_to_three_hard_constraints_if_needed
+  hard_constraint_budget:
+    preferred_max: 3
+  rule: >
+    Describe the desired image and motion directly. Do not turn historical failure
+    lists into long negative prompts. Add a prohibition only when violating it would
+    make the MV material unusable and the condition cannot be expressed positively.
 
 benchmark_policy:
-  - The same Dola surface must be used for paired Legacy/Lean runs inside one cell.
-  - The same duration and reference asset must be used inside one comparison cell.
-  - Expert-Agent compatibility must be measured separately from Seedance output quality.
-  - Do not change a prompt mid-cell after observing a failure; create a new diagnostic variant.
+  - Current benchmark uses 15-second Expert Mode as the primary production unit.
+  - A run is judged as MV material, not as a demo that must be perfect for all 15 seconds.
+  - Record usable windows and peak windows; partial success is valid.
+  - Do not change prompt rules after a single failure; classify the cause first.
   - Account cycling, temporary identities, quota bypass or similar access workarounds are outside this Harness.
   - Do not fabricate provenance or identity declarations to influence safety checks.
 
-safe_diagnostic_policy:
-  - Benign false positives should be diagnosed by simplifying ambiguous production language or by comparing provider surfaces.
-  - Do not attempt to evade genuine content moderation.
-  - Dola published policy should remain the authority for prohibited content.
+legacy_human_benchmark:
+  status: DEMOTED_TO_PROVIDER_DIAGNOSTIC_EVIDENCE
+  reason: >
+    The current MV goal does not require realistic human performance as the default
+    material source. B's odd gait remains useful evidence about Expert Mode motion
+    interpretation, but it no longer defines the main Seedance 2.5 acceptance bar.
 
 next_probe:
-  id: EXPERT_AGENT_COMPATIBILITY_A_C
+  id: DOLA_EXPERT_15S_MV_VISUAL_R2
   objective: >
-    Determine whether A/C fail because of Expert-Agent semantic interpretation.
-  controls:
-    - Seedance 2.5
-    - 5 seconds
-    - 9:16
-    - same K0 assets
-    - single shot
-  variants:
-    A: "near-face hand arc without physical face contact"
-    C: "small vessel releases water into basin; preserve gravity-impact-ripple physics"
+    Test whether Dola Expert Mode can reliably create beautiful, dynamic, lyric-hit
+    15-second MV material without relying on human-performance complexity.
+  categories:
+    - ENVIRONMENTAL_MOTION
+    - SYMBOLIC_OBJECT_EVENT
+    - SURREAL_SPATIAL_TRANSFORMATION
