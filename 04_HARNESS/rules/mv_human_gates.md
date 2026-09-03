@@ -1,215 +1,86 @@
-# Rules｜MV Human Gate Contract v1.0
+# Rules｜MV Human Gate Guidance v1.1 Lean
 
-> Status: `ACTIVE / WEB_R2_VALIDATED`
-> Role: 只定义“什么时候必须停下来让用户做主观/授权判断”。技术正确性应在到达人类 Gate 前由机器 QA 完成。
-> Core: **Human reviews taste and final authority; machines review implementation correctness.**
+> Status: `ACTIVE GUIDANCE / MACHINE STRUCTURE LIVES IN REGISTRY`
+> Core: **Human reviews taste and authority; machines review correctness.**
 
----
+Human Gate 的机器定义、stage_id、required receipt fields、preflight artifacts 以：
+`runtime/mv_human_gate_registry.json`
+为唯一权威。
 
-## 1. Why this exists
+本文件只定义用户应该判断什么，以及怎样减少不必要的人工中断。
 
-WEB R2 证明两个极端都不好：
-- 人工 Gate 太少：错误时间轴、碎剪、字幕实现问题会一路污染下游；
-- 人工 Gate 太多：用户被迫反复审核技术细节，流程变成来回循环。
+## Fixed Human Decisions
 
-因此未来默认只保留 5 个固定 Human Gates，并允许少量异常条件 Gate。
+### HG01｜Song Aesthetic
+用户判断：这首歌是否值得做、哪个候选方向最对。
+机器负责候选筛选、基本版本与可执行性证据。
 
----
+### HG02｜BGM Excerpt Listening
+用户判断：实际可试听片段的开头、主体段落、结尾与 fade 是否舒服、完整。
+机器负责 exact version、候选边界和技术准备。
 
-## 2. Fixed Human Gates｜DEFAULT
+### HG03｜Visual Direction / Reference Set
+用户判断：世界、人物、色彩、歌词视觉命中、整组美感与差异是否成立。
+机器先拦截明显重复、不可执行、身份/连续性错误。
 
-### HG01｜Song Aesthetic Gate
+当前仍是 Canonical durable Gate。是否未来改为 Conditional，必须由 Seedance 2.5 Benchmark 证明，而不是为了减少 Gate 先验删除。
 
-位置：Stage 1 Song Discovery。
+### HG04｜Picture Rhythm
+用户判断：整体节奏、情绪峰值/释放、镜头取舍是否舒服。
+机器负责音频真值、source risk、画幅、source-audio、基础实现正确性。
 
-系统先完成：
-- 候选筛选；
-- 版本/热度/可执行性基本核验；
-- 3–5 个有明确差异的候选。
+### HG05｜Final Acceptance
+用户判断：成片是否可接受/发布，以及是否存在必须重开上游的明确创意问题。
+机器先完成 Final technical validation。
 
-用户只决定：
-- 这首歌是否值得做；
-- 哪个候选审美最对。
+## Interaction Compression
 
-PASS：`REFERENCE_BGM_LOCKED`。
+**Durable Gate 数量 != 用户必须被打断的次数。**
 
-不要让用户做人肉资料检索或版本技术校验。
+当多个判断所需证据已经同时完整时，可以在一次用户交互里顺序询问/确认多个明确决定，例如 HG01 + HG02；但必须满足：
+- 每个判断问题独立清晰；
+- 用户的决定文本能分别对应；
+- Runtime 仍生成独立 durable receipt；
+- 不允许把一个模糊的“都可以”扩张成未实际做出的多个授权。
 
----
+目标不是追求固定交互次数，而是减少没有新增判断价值的中断。
 
-### HG02｜BGM Excerpt Listening Gate
+## Conditional Escalation
 
-位置：Stage 2，实际音频截取后。
+只有机器不能以低成本确定下一步时才升级用户，例如：
+- 强音频证据冲突且无法自动判定；
+- clean material 不足且局部 regen / alternate material 都无法自动选择；
+- 用户明确要求新的字幕审美或新的高成本视觉方向。
 
-系统先完成：
-- 精确版本锁定；
-- 候选起止点；
-- 检查前一句污染；
-- 检查结尾是否截断；
-- 需要时多留一句 release；
-- fade 候选；
-- 输出可直接试听文件。
+技术实现 bug 默认机器修复，不新增 Human Gate。
 
-用户只判断：
-- 开头是否舒服；
-- 是否进入了真正想要的段落；
-- 结尾是否完整、淡出是否舒服。
+## Gate Submission Contract
 
-PASS：`BGM_LOCKED`。
+提交用户前只需要做到：
+1. 说明当前唯一或少量明确的主观判断；
+2. 提供可以直接看/听的 artifact；
+3. 基础机器 QA 已完成；
+4. 说明 PASS 后会锁定什么决定。
 
-WEB R2 经验：用户最终要求“前面多 0.5s、后面多一句”，说明这一步必须在 Audio Timeline Package 之前完成；否则后续强制对齐会因为 BGM 再变而白做。
+不要把大段技术检查清单转嫁给用户。
 
----
+## Nearest-cause Rollback
 
-### HG03｜Visual Direction / First-frame Set Gate
+问题只回最近根因：
+- song / excerpt → AUDIO；
+- world / reference → DIRECT；
+- source usability → GENERATE；
+- picture / subtitle implementation → EDIT；
+- final technical / release → DELIVER。
 
-位置：Stage 5；Director Plan 已内部锁定、完整首帧组已生成后。
+下游实现 bug 不自动重开已通过的上游审美 Gate。
 
-系统先完成：
-- Stage 3 Natural Beat；
-- Stage 4 Director Concept / production allocation；
-- 首帧整组生成与 set-level QA；
-- 连续性、歌词命中、构图差异、动态可执行性检查。
+## Human Attention Health Check
 
-用户主要判断：
-- 世界/人物/色彩是否对；
-- 歌词是否“一眼命中”；
-- 整组是否够美、够统一、又不重复。
+如果用户频繁被要求审核：
+- 机器可判断的技术项；
+- 同一视觉方向的细小中间稿；
+- 不会改变下游动作的 QA；
+- 已经明确通过、却因无关实现 bug 被重新打开的决定；
 
-PASS：`FIRST_FRAME_SET_LOCKED`。
-
-默认不增加一个单独的“文字版 Director Plan 人工 Gate”，避免在抽象方案和首帧之间重复审批。只有高成本/高风险项目才提前要求 Director Gate。
-
----
-
-### HG04｜Picture Edit Rhythm Gate
-
-位置：Stage 8B，`Picture + locked BGM` 预览完成、技术 QA PASS 后。
-
-系统先完成：
-- W07 Dynamic QA；
-- W07.5 Atom/Arc Normalization（多镜素材时）；
-- Editor Audio Gate；
-- Edit Map；
-- Fragmentation QA；
-- WEB watermark-safe transform；
-- 音频 global-lag QA。
-
-用户只判断：
-- 节奏是否舒服；
-- 是否切得太碎；
-- 情绪峰值/释放是否成立；
-- 有没有明显导演层面的错误镜头。
-
-PASS：`EDIT_PREVIEW_QA_PASS`。
-
-禁止把以下基础错误交给用户发现：
-- BGM错版/错位；
-- 源视频音轨泄漏；
-- 水印角落漏出；
-- SAR/画幅错误；
-- 明显拓扑风险窗未剪掉。
-
----
-
-### HG05｜Final Acceptance Gate
-
-位置：Stage 10 技术 QA PASS、Final 已渲染后。
-
-系统先完成：
-- Subtitle Runtime Gate；
-- Final technical QA；
-- 开头/峰值/结尾/full-watch；
-- 交付包完整性；
-- final identity/hash。
-
-用户只判断：
-- 成片整体是否可以接受/发布；
-- 是否存在需要重新打开上游的明确创意问题。
-
-PASS 后：`COMPLETE_LOCKED`。
-
----
-
-## 3. Conditional Human Gates｜ONLY WHEN TRIGGERED
-
-### CHG-A｜Audio Alignment Exception
-
-仅当：
-- 强证据来源冲突超阈值；
-- repeated occurrence 无法自动判定；
-- forced alignment 有关键 unmatched/warning；
-- 机器听感证据不足。
-
-正常 Audio Timeline Package PASS 不要求用户逐行做人肉对齐。
-
-### CHG-B｜Dynamic Regeneration Decision
-
-仅当 W07/W07.5 证明：
-- clean duration 不足；
-- 核心歌词事件没生成出来；
-- 角色/拓扑错误无法靠 trim 修复；
-- 没有可替代 Atom/Arc。
-
-`TRIM_REQUIRED` 不是人工重生成 Gate；先剪可用素材。
-
-### CHG-C｜New Subtitle Style
-
-默认字幕基线已锁，不再每首歌做 A/B/C。
-
-只有用户明确说“这首歌要换字幕风格”，才打开新 Style Exploration Gate。
-实现 bug（padding/偏心/溢出/时间实现误差）不属于审美 Gate，由机器修复并重新 QA。
-
----
-
-## 4. Gate handoff contract｜HARD
-
-每次提交 Human Gate，必须同时提供：
-1. 当前要用户判断的唯一问题；
-2. 已完成的机器 QA；
-3. 可直接查看/试听的 artifact；
-4. 明确 PASS 标准；
-5. 用户 PASS 后要锁定的 state/artifact。
-
-禁止：
-- 一次让用户同时评 5 个技术问题；
-- 在机器 QA 未完成时先丢给用户“帮我看看”；
-- 用户已 PASS 后又因为下游实现 bug 重新打开同一个审美 Gate。
-
----
-
-## 5. Nearest-cause rollback｜HARD
-
-出现问题时只回滚到最近的根因层，不级联重做已锁上游。
-
-| 问题 | 默认回滚位置 |
-|---|---|
-| 选歌不对 | Stage 1 |
-| 音频段开头/结尾不舒服 | Stage 2；随后使 2A 失效 |
-| BGM hash/version/clip 改变 | Stage 2A rebuild；所有 timing-dependent 下游重新验证 |
-| 歌词时间轴证据错误 | Stage 2A |
-| 视觉世界/首帧不对 | Stage 4/5 |
-| 单条动态素材局部崩 | Stage 6/7，仅该 source |
-| 多镜素材内部隐藏碎镜 | Stage 7.5，不回首帧/导演 |
-| Picture Edit 太碎 | Stage 8B，优先重组 Atom/Arc；clean source 不足才回 Stage 6/7 |
-| 字幕框偏心/padding 错 | Stage 9 implementation；不改 timing、不改 Picture Edit |
-| 字幕跟人声时间真值错 | Stage 2A；不是 Stage 9 |
-| Final codec/SAR/metadata 问题 | Stage 10；不重剪 |
-
-原则：`Patch, Don't Cascade`。
-
----
-
-## 6. Expected user interaction count
-
-正常一首 MV 的默认人工确认次数目标：**5 次**。
-
-1. 选歌；
-2. BGM 片段；
-3. 首帧整组/视觉方向；
-4. Picture Edit；
-5. Final。
-
-其余阶段应自动执行或只在异常时打断。
-
-如果正常项目频繁超过 5 次人工确认，应复盘哪个技术 Gate 没有前置或哪个规则仍依赖用户做人肉 QA。
+则视为 Harness 设计问题，应优先修 Validator / state / handoff，而不是继续增加 Human Gate。

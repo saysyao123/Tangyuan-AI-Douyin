@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "status": "ACTIVE_PRESENTATION_LAYER",
+  "purpose": "Expose a small MV mental model to agents and users without replacing canonical machine stages.",
+  "authority": {
+    "canonical_stage_registry": "04_HARNESS/runtime/mv_stage_registry.json",
+    "transition_contract": "04_HARNESS/runtime/mv_transition_contract.json",
+    "human_gate_registry": "04_HARNESS/runtime/mv_human_gate_registry.json",
+    "rule": "Macro phases are derived views only. They never authorize a transition, waive an artifact, or replace canonical validation."
+  },
+  "principles": [
+    "Keep machine enforcement granular; keep agent attention coarse.",
+    "The agent reasons primarily about the current macro phase and current task, not the entire S00-S18 chain.",
+    "Canonical Runtime remains final authority for legal next actions.",
+    "A macro phase change is derived from canonical stage state, never manually asserted."
+  ],
+  "phases": [
+    {
+      "id": "AUDIO",
+      "label": "Lock the exact sound truth",
+      "stage_from": "S00_SLOT_CREATED",
+      "stage_to": "S03_AUDIO_TIMELINE_LOCKED",
+      "human_gates": ["HG01", "HG02"],
+      "outcome": "Exact song/excerpt identity and trusted lyric/music timeline are locked."
+    },
+    {
+      "id": "DIRECT",
+      "label": "Turn lyrics into producible visual intent",
+      "stage_from": "S04_NATURAL_BEAT_LOCKED",
+      "stage_to": "S06_HG03_FIRST_FRAMES_LOCKED",
+      "human_gates": ["HG03"],
+      "outcome": "Natural beats, director allocation, and accepted visual anchors are ready."
+    },
+    {
+      "id": "GENERATE",
+      "label": "Produce usable source material",
+      "stage_from": "S07_DYNAMIC_PROMPT_SET_READY",
+      "stage_to": "S10_EDITOR_AUDIO_GATE_PASS",
+      "human_gates": [],
+      "outcome": "Generated sources have usable windows, material roles, and required normalization/revalidation."
+    },
+    {
+      "id": "EDIT",
+      "label": "Assemble picture and subtitles",
+      "stage_from": "S11_EDIT_MAP_LOCKED",
+      "stage_to": "S13_SUBTITLE_IMPLEMENTATION_QA_PASS",
+      "human_gates": ["HG04"],
+      "outcome": "Picture rhythm is accepted and subtitle implementation is technically valid."
+    },
+    {
+      "id": "DELIVER",
+      "label": "Validate, release, and close the loop",
+      "stage_from": "S14_FINAL_TECH_QA_PASS",
+      "stage_to": "S18_POST_PUBLISH_REVIEWED",
+      "human_gates": ["HG05"],
+      "outcome": "Final media is validated, accepted, released, and optionally synchronized with publish data."
+    }
+  ]
+}
