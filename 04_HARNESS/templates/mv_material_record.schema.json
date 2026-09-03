@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MV Material Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "material_id",
+    "source_id",
+    "duration_s",
+    "status",
+    "usable_windows",
+    "edit_roles",
+    "failure",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "material_id": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "card_id": {"type": ["string", "null"]},
+    "provider": {"type": ["string", "null"]},
+    "model": {"type": ["string", "null"]},
+    "duration_s": {"type": "number", "exclusiveMinimum": 0},
+    "status": {"enum": ["PASS", "REPAIR", "ESCALATE", "REJECT"]},
+    "usable_windows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["start_s", "end_s"],
+        "properties": {
+          "start_s": {"type": "number", "minimum": 0},
+          "end_s": {"type": "number", "exclusiveMinimum": 0},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "edit_roles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["SETUP", "HOLD", "BRIDGE", "HIT", "PEAK", "AFTERMATH", "RELEASE"]}
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "visual_hit": {"type": "number", "minimum": 0, "maximum": 10},
+        "identity_stability": {"type": "number", "minimum": 0, "maximum": 10},
+        "motion_execution": {"type": "number", "minimum": 0, "maximum": 10},
+        "editability": {"type": "number", "minimum": 0, "maximum": 10}
+      }
+    },
+    "failure": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {"type": "string"},
+        "window": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "start_s": {"type": "number", "minimum": 0},
+            "end_s": {"type": "number", "minimum": 0}
+          }
+        },
+        "description": {"type": "string"},
+        "repairable_locally": {"type": "boolean"}
+      }
+    },
+    "next_action": {
+      "enum": ["ADD_TO_LIBRARY", "TRIM_AND_ADD", "REGENERATE_TAIL", "REGENERATE_SOURCE", "USE_ALTERNATE", "HUMAN_ESCALATION", "DROP"]
+    },
+    "notes": {"type": "string"}
+  }
+}
