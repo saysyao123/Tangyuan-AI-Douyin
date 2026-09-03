@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MV Production Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "card_id",
+    "beat_id",
+    "intent",
+    "visual_event",
+    "edit_role",
+    "duration_strategy",
+    "performance",
+    "hard_constraints",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "card_id": {"type": "string", "minLength": 1},
+    "beat_id": {"type": "string", "minLength": 1},
+    "lyric_text": {"type": "string"},
+    "time_range": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["start_s", "end_s"],
+      "properties": {
+        "start_s": {"type": "number", "minimum": 0},
+        "end_s": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "intent": {
+      "type": "string",
+      "description": "The single viewer-facing emotional or semantic result this source must create."
+    },
+    "visual_event": {
+      "type": "string",
+      "description": "The single dominant visible event that makes the lyric/beat specific."
+    },
+    "edit_role": {
+      "enum": ["SETUP", "HOLD", "BRIDGE", "HIT", "PEAK", "AFTERMATH", "RELEASE"]
+    },
+    "duration_strategy": {
+      "enum": ["PRECISION_5_8", "STANDARD_8_15", "EXTENDED_15_20"]
+    },
+    "reference": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"enum": ["K0_IMAGE", "REFERENCE_SET", "NONE"]},
+        "asset_id": {"type": ["string", "null"]},
+        "actual_asset_is_authority": {"type": "boolean", "default": true}
+      }
+    },
+    "performance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_action", "camera_relationship", "endpoint"],
+      "properties": {
+        "subject_action": {"type": "string"},
+        "camera_relationship": {
+          "enum": ["HOLD", "OBSERVE", "FOLLOW", "LEAD", "YIELD", "OVERTAKE", "DISCOVER", "REVEAL", "STATIC_ENVIRONMENT", "OTHER"]
+        },
+        "camera_path": {"type": "string"},
+        "environment_feedback": {"type": "string"},
+        "endpoint": {"type": "string", "description": "The clean, stable end state useful to an editor."}
+      }
+    },
+    "hard_constraints": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "reason"],
+        "properties": {
+          "id": {"type": "string"},
+          "text": {"type": "string"},
+          "reason": {"type": "string"},
+          "failure_cost": {"enum": ["HIGH", "MEDIUM", "LOW"]}
+        }
+      },
+      "description": "Trial soft target <=3. Items 4-5 require compiler complexity review; this schema does not yet block them."
+    },
+    "candidate_modules": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["FACE_HAND", "PHYSICS", "OCCLUSION", "MULTISHOT", "CAMERA_PRECISION"]
+      }
+    },
+    "risk_tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "provider_notes": {
+      "type": "object",
+      "description": "Provider-specific facts/parameters. Must not contain fabricated identity or safety declarations.",
+      "additionalProperties": true
+    },
+    "status": {"enum": ["DRAFT", "READY_FOR_COMPILE", "COMPILED", "GENERATED", "ACCEPTED", "REPAIR"]}
+  }
+}
