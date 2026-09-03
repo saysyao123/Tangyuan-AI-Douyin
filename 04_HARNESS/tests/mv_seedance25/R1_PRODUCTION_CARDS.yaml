@@ -1,0 +1,183 @@
+schema_version: "1.0"
+status: DRAFT_PENDING_REAL_K0
+round: R1_LEGACY_VS_LEAN
+
+cards:
+  - schema_version: "1.0"
+    card_id: R1_A_FACE_HAND
+    beat_id: A_FACE_HAND
+    lyric_text: "benchmark semantic: restrained emotion becomes visible through hand-face interaction"
+    time_range: null
+    intent: >
+      Create a restrained but clearly readable emotional escalation in which a
+      near-face hand interaction becomes the main expressive event without
+      sacrificing identity stability.
+    visual_event: >
+      Starting from the accepted K0 hand position, the hand completes one slow,
+      continuous interaction close to the face/lower-face region; the eyes and
+      head respond subtly, then the action settles instead of starting a second event.
+    edit_role: HIT
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: null
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Continue directly from K0. The already-raised hand makes one controlled
+        near-face movement while the head/eyes make only a small supporting response.
+      camera_relationship: OBSERVE
+      camera_path: >
+        Stable medium/medium-close observation with at most a gentle short approach;
+        do not make camera motion compete with the hand-face event.
+      environment_feedback: >
+        Hair, veil or garment edge may react softly to existing air movement only.
+      endpoint: >
+        Hand and head arrive at a calm readable resting relationship with a short
+        stable tail useful for trimming or holding.
+    hard_constraints:
+      - id: HC_A1
+        text: "Keep the same single character identity throughout the source."
+        reason: "Identity drift makes the benchmark result unusable."
+        failure_cost: HIGH
+      - id: HC_A2
+        text: "Do not introduce another human character."
+        reason: "Extra characters invalidate continuity and the comparison cell."
+        failure_cost: HIGH
+      - id: HC_A3
+        text: "The visible hand must remain anatomically coherent during the main interaction."
+        reason: "Hand topology failure directly defeats the tested event."
+        failure_cost: HIGH
+    candidate_modules:
+      - FACE_HAND
+    risk_tags:
+      - identity_sensitive
+      - near_face_hand
+      - hand_topology
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+    status: DRAFT
+
+  - schema_version: "1.0"
+    card_id: R1_B_MOVING_CAMERA
+    beat_id: B_MOVING_CAMERA
+    lyric_text: "benchmark semantic: the character keeps moving while the camera changes its relationship"
+    time_range: null
+    intent: >
+      Prove that character translation and camera translation can remain physically
+      legible at the same time without turning into an orbit, jump cut, or pose reset.
+    visual_event: >
+      The character continues the walking phase visible in K0 while the camera
+      moves from a trailing relationship toward a side/front relationship in one
+      continuous spatial path.
+    edit_role: BRIDGE
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: null
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Continue the existing walk without stopping or restarting; preserve the
+        same screen-travel direction and one continuous gait arc.
+      camera_relationship: OVERTAKE
+      camera_path: >
+        Begin from a rear-three-quarter or side-rear relation, translate forward
+        along a real lateral/forward path, reach the side, then finish slightly
+        ahead while maintaining readable distance change; this is not an orbit.
+      environment_feedback: >
+        Garment and hair respond to walking and existing wind; background parallax
+        should make camera translation readable.
+      endpoint: >
+        Character remains in motion or arrives at one clean stride phase while the
+        camera has clearly completed the overtake and offers a stable edit handoff.
+    hard_constraints:
+      - id: HC_B1
+        text: "Keep one continuous character identity and wardrobe."
+        reason: "Identity or costume drift invalidates camera-motion evaluation."
+        failure_cost: HIGH
+      - id: HC_B2
+        text: "Keep one continuous travel direction; do not reset the subject to a standing pose."
+        reason: "The benchmark tests motion continuity from K0."
+        failure_cost: HIGH
+      - id: HC_B3
+        text: "Camera movement must read as real translation rather than an in-place orbit."
+        reason: "This is the target camera-control failure mode."
+        failure_cost: HIGH
+    candidate_modules:
+      - CAMERA_PRECISION
+    risk_tags:
+      - moving_subject
+      - camera_translation
+      - gait_continuity
+      - parallax
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+    status: DRAFT
+
+  - schema_version: "1.0"
+    card_id: R1_C_PHYSICS
+    beat_id: C_PHYSICS
+    lyric_text: "benchmark semantic: one simple physical cause creates a believable visible consequence"
+    time_range: null
+    intent: >
+      Test whether a single causal physical event can remain coherent when the
+      prompt is simplified, using D01-B water/cloth evidence as the historical baseline.
+    visual_event: >
+      One already-staged object interaction continues from K0 and produces one
+      readable causal chain—for example held water falls and creates ripples, or a
+      lifted cloth/branch moves and the surrounding material responds—then settles.
+    edit_role: HOLD
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: null
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Perform only the one action required to complete the physical cause; keep
+        body/head performance secondary and controlled.
+      camera_relationship: HOLD
+      camera_path: >
+        Mostly stable framing with only minimal compensation needed to preserve the
+        causal event in view.
+      environment_feedback: >
+        Physical response follows one direction and one causal chain: contact/force
+        first, material response second, residue last.
+      endpoint: >
+        Main physical event completes and remaining water/cloth/object motion decays
+        naturally into a clean tail without a new event.
+    hard_constraints:
+      - id: HC_C1
+        text: "Preserve the same key object count and identity from K0."
+        reason: "Object substitution or multiplication destroys causality."
+        failure_cost: HIGH
+      - id: HC_C2
+        text: "Only one dominant physical event may drive the source."
+        reason: "Competing events make the physics comparison ambiguous."
+        failure_cost: HIGH
+      - id: HC_C3
+        text: "Keep contact and topology coherent through the causal event."
+        reason: "Broken contact/topology is the main unusable failure mode."
+        failure_cost: HIGH
+    candidate_modules:
+      - PHYSICS
+    risk_tags:
+      - physical_causality
+      - contact
+      - topology
+      - residue
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+    status: DRAFT
+
+binding_rule: >
+  Before compile, replace each null reference.asset_id with the registered asset_id
+  from R1_INPUT_MANIFEST.yaml. The same exact K0 asset must be used for both
+  LEGACY_FULL_SKELETON and LEAN_CORE_PLUS_TRIGGERED_MODULE within the same card.
