@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "K0-C_PHYSICS",
+  "media_type": "image",
+  "role": "R1_BENCHMARK_K0_PHYSICS",
+  "stage_origin": "R1_LEGACY_VS_LEAN",
+  "content": {
+    "sha256": "6734e163c8390c3504c19f2823395084bf1db9dbefa8114460553a6e574c57ed",
+    "bytes": 2065585
+  },
+  "locator": {
+    "kind": "conversation_attachment",
+    "value": "file_0000000009e081f5a5fcc28681c45c54"
+  },
+  "provenance": {
+    "kind": "generated",
+    "description": "Generated in the current ChatGPT project session from R1_K0_GENERATION_BRIEF.md; original fictional adult character, benchmark-only input."
+  },
+  "parents": [],
+  "metadata": {
+    "filename": "静谧庭院中的净手时光.png",
+    "width": 941,
+    "height": 1672,
+    "format": "PNG",
+    "aspect_ratio_target": "9:16",
+    "archetype": "C_PHYSICS",
+    "same_character_set": "R1_K0_SET_V1",
+    "benchmark_only": true,
+    "denoise_required": false
+  },
+  "registered_at": "2026-09-03T14:17:00+08:00"
+}
