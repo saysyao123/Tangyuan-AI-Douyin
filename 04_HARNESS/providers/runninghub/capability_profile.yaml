@@ -1,0 +1,51 @@
+schema_version: "1.0"
+provider: runninghub
+surface: DIRECT_API
+status: PUBLIC_API_CONTRACT_VERIFIED_LIVE_RUN_PENDING
+last_reviewed: "2026-09-03"
+
+engine_target:
+  family: seedance
+  version: "2.5-global"
+  endpoint_family: "/bytedance/seedance-2.5-global-token"
+
+capabilities:
+  multimodal_video:
+    endpoint: "/openapi/v2/bytedance/seedance-2.5-global-token/multimodal-video"
+    duration_seconds:
+      min: 4
+      max: 30
+      smart: -1
+    image_references_max: 30
+    video_references_max: 10
+    audio_references_max: 10
+    ratios: [adaptive, "16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+    output_formats: [mp4, mov]
+    generate_audio_control: true
+    return_last_frame_control: true
+    seed_control: true
+    bitrate_modes: [standard, high]
+
+mv_routes:
+  PRECISION:
+    preferred_durations: [5, 6, 7, 8]
+  STANDARD:
+    preferred_durations: [10, 12, 15]
+  EXTENDED:
+    preferred_durations: [15, 18, 20]
+  note: "30-second mode remains outside current MV production benchmark even though provider supports it."
+
+security_and_auth:
+  auth: "Authorization: Bearer ${RUNNINGHUB_API_KEY}"
+  policy:
+    - Use only the user's own legitimate RunningHub API key.
+    - Store key in local environment or secret store; never commit it to GitHub.
+    - Do not paste API keys, cookies or session tokens into project files or chat logs.
+    - No account cycling, quota bypass or temporary-account automation.
+
+source_confidence:
+  public_api_docs: HIGH
+  dola_expert_equivalence: NOT_ASSUMED
+  note: >
+    This is a direct provider surface for Seedance 2.5 testing. It is not treated
+    as Dola Expert Agent and not assumed to share Dola Expert moderation or routing.
