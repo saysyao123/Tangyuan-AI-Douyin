@@ -1,0 +1,163 @@
+schema_version: "1.0"
+status: COMPILED_DURATION_UNBOUND
+round: R1_LEGACY_VS_LEAN
+provider: dola
+model: seedance-2.5
+compiler_version: "0.1"
+
+shared_execution:
+  duration_binding: >
+    Replace {{DOLA_DURATION}} only after the live Dola capability probe. The exact
+    same duration and provider parameters must be used for Legacy and Lean within
+    each archetype.
+  reference_rule: "Exact registered K0 bytes are authority; do not recreate K0 from text."
+  repeat_rule: "Repeat #1 and #2 use the identical prompt and K0; no mid-cell patching."
+  audio_rule: >
+    Prefer a shared provider audio-off parameter if Dola exposes one. If not, append
+    the same neutral no-dialogue/no-music clause to both variants; audio handling is
+    not a prompt-strategy variable in R1.
+  safety_rule: >
+    The K0 assets in this benchmark are project-generated original fictional adult
+    characters. State that fact only as verified provenance; do not add language
+    intended to bypass provider safety or portrait controls.
+
+pairs:
+  A_FACE_HAND:
+    card_id: R1_A_FACE_HAND
+    k0_asset_id: K0-A_FACE_HAND
+    k0_sha256: 5bd1cd35e531299cf572938f1323d05a297291e771cb5a7f9acba80230d4724e
+    legacy:
+      variant: LEGACY_FULL_SKELETON
+      modules_loaded: [FACE_HAND]
+      emitted_hard_constraints: 3
+      prompt: |-
+        当前参考图为本项目生成的原创虚构成年角色图，只用于锁定同一角色、服装、浅石水庭构图和视频第0秒状态。
+
+        【DIRECTOR TASK】在 {{DOLA_DURATION}} 内完成一个克制但清晰的手脸互动：情绪不是靠大表情，而是通过已经靠近面部的右手、眼神和极小头部响应逐渐变得可读。整段只有这一个主事件。
+
+        【HARD FREEZE】始终保持K0-A中的同一名成年女性、炭蓝长外套、浅灰内层、黑色低位发髻、浅色石材水庭、当前光线与人物数量。不得新增第二真人。人物身份、服装结构、背景空间关系不重置。右手在主动作期间保持五指结构清楚、无融合、无额外手指。
+
+        【FRAME-0】当前已验收K0-A就是视频真实第0秒：右手已经抬到右侧下脸颊/太阳穴附近，距离面部只有几厘米但不遮眼；左手位于画面下方；头部已经轻微朝右手转动，眼睛看向手。
+
+        【STATIC BASE】浅石墙、水面反射和庭院结构保持稳定；左手、躯干和肩部只做自然呼吸级细动，不主动开启第二动作。
+
+        【ONE ALLOWED EVENT】右手从现有位置缓慢继续靠近并完成一次轻微、连贯、单向的近脸互动；眼神先跟随手，头部随后只做很小的配合转动，完成后停止升级。
+
+        【BOUND】右手只完成一次连续动作，不反复来回，不跨过整张脸，不遮住双眼；头部只做小幅响应；左手不抬起参与主事件。
+
+        【MOTION LOAD】subject=M；environment=S；camera=S。手脸关系是唯一中等动态轴，其余保持低动态。
+
+        【PHASES】前约25%：从K0无跳变延续，建立手、眼、脸的关系；中间约50%：右手缓慢靠近，眼睛和头部做一次配合响应；最后约25%：手和头到达稳定关系并保持，不再开启新动作。
+
+        【CAMERA】保持中近景观察，仅允许非常轻微的短距离靠近，摄影机不得绕人物旋转，不改变主构图方向，不与手部动作竞争。
+
+        【PHYSICAL FEEDBACK】只有少量发丝、衣料边缘和自然呼吸产生低幅余动；背景水面保持轻微自然反射。
+
+        【RESIDUE】主动作结束后，发丝与衣料可继续极轻回摆，人物保持稳定呼吸。
+
+        【SETTLED END】尾段形成可剪的稳定状态：右手与脸保持清楚间距，眼神稳定，身份与五官不漂移，不在结尾重新抬手或转身。
+
+        【AVOID】避免新增人物；避免右手结构崩坏；避免突然的大幅头转、绕拍或第二主动作。
+    lean:
+      variant: LEAN_CORE_PLUS_TRIGGERED_MODULE
+      modules_loaded: [FACE_HAND]
+      emitted_hard_constraints: 3
+      prompt: |-
+        从已锁定的K0-A直接继续：让克制情绪通过“右手靠近面部 + 眼神回应”这一件事变得清晰。右手已经在脸旁，继续做一次缓慢、自然、连续的近脸移动；眼睛先跟随手，头部只做很小的配合，左手和身体保持次要。摄影机保持中近景观察，只做很轻的短距离靠近，不抢主动作。发丝和衣料只产生轻微自然余动。动作完成后，手、脸和眼神形成稳定关系并留出干净尾段。
+
+        硬约束：保持同一人物身份与服装；不新增第二真人；右手在主互动过程中保持自然、完整的手指结构。
+
+  B_MOVING_CAMERA:
+    card_id: R1_B_MOVING_CAMERA
+    k0_asset_id: K0-B_MOVING_CAMERA
+    k0_sha256: a27f2af990fc7a333f63772f8502dd0b8c637c02a52ace71bb800b08cac69783
+    legacy:
+      variant: LEGACY_FULL_SKELETON
+      modules_loaded: [CAMERA_PRECISION]
+      emitted_hard_constraints: 3
+      prompt: |-
+        当前参考图为本项目生成的原创虚构成年角色图，只用于锁定同一角色、服装、浅石水庭空间和视频第0秒真实状态。
+
+        【DIRECTOR TASK】在 {{DOLA_DURATION}} 内完成一次真实可读的摄影机追越：人物持续向前行走，摄影机从K0-B的后侧三分之四关系沿真实空间向前移动，最终到达人物侧面并略微领先。目标是让人物位移和摄影机位移同时成立，而不是原地绕拍。
+
+        【HARD FREEZE】保持K0-B中的同一成年女性、炭蓝外套、浅灰内层、黑色发髻、相同庭院、水渠、石材与人物数量。不得新增第二真人。人物不停止、不重新摆成站姿；行进方向保持连续。摄影机运动必须体现真实平移和明显视差，不能变成围绕人物中心的原地环绕。
+
+        【FRAME-0】K0-B就是第0秒：人物已经处于一步行走过程中，身体向画面纵深前进；摄影机位于人物后侧三分之四位置；石材接缝、水渠边缘和远处门洞提供近中远层次。
+
+        【STATIC BASE】建筑、水渠、地面结构和远处门洞保持拓扑稳定；不改变世界、不换场景、不切换人物服装。
+
+        【ONE ALLOWED EVENT】人物继续同一方向稳定行走，同时摄影机完成一次连续追越，从后侧关系平移到侧面并略微领先。
+
+        【BOUND】人物不停步、不回头重置、不突然跑动；摄影机只完成一次连续追越，不围绕人物绕圈，不突然跳到正面，不做反向二次运动。
+
+        【MOTION LOAD】subject=M；environment=S；camera=M。人物行走与摄影机追越是同一空间关系的两个组成部分，环境只提供视差证据。
+
+        【PHASES】前约25%：延续K0步态，摄影机保持后侧跟随；中间约50%：摄影机沿路径向前平移，石缝、水渠边和门洞产生连续视差，逐渐到人物侧面；最后约25%：摄影机略微领先，人物仍保持同一行走方向，形成稳定可剪交接。
+
+        【CAMERA】真实横向+前向空间平移，距离变化连续；保持合理人物尺度，不以数字变焦替代位移；不得绕主体中心旋转。
+
+        【PHYSICAL FEEDBACK】衣摆与发丝对行走和现有空气产生自然滞后；脚步与身体重心连续，背景视差必须跟随摄影机真实变化。
+
+        【RESIDUE】追越完成后，衣摆和发丝继续轻微回摆，人物保持正常步态。
+
+        【SETTLED END】摄影机已经在人物侧面或略前方，人物仍处于干净的一步行走相位，画面可直接剪切或继续下一镜。
+
+        【AVOID】避免人物停住摆拍；避免摄影机原地环绕；避免身份/服装漂移或突然跳切。
+    lean:
+      variant: LEAN_CORE_PLUS_TRIGGERED_MODULE
+      modules_loaded: [CAMERA_PRECISION]
+      emitted_hard_constraints: 3
+      prompt: |-
+        从已锁定的K0-B直接继续人物当前这一步。她保持同一方向自然行走，不停下重新摆姿。摄影机从现在的后侧三分之四位置沿真实空间向前平移：先短暂跟随，再逐渐到达人物侧面，最后略微领先；石材接缝、水渠边缘和远处门洞应产生连续视差，让移动清楚读成真实追越，而不是绕人物原地旋转。衣摆和头发自然响应步伐。结尾保持人物仍在干净步态中、摄影机已完成追越，形成可剪交接。
+
+        硬约束：保持同一人物身份与服装；人物保持同一连续行进方向、不得重置成站姿；摄影机必须体现真实平移而不是原地环绕。
+
+  C_PHYSICS:
+    card_id: R1_C_PHYSICS
+    k0_asset_id: K0-C_PHYSICS
+    k0_sha256: 6734e163c8390c3504c19f2823395084bf1db9dbefa8114460553a6e574c57ed
+    legacy:
+      variant: LEGACY_FULL_SKELETON
+      modules_loaded: [PHYSICS]
+      emitted_hard_constraints: 3
+      prompt: |-
+        当前参考图为本项目生成的原创虚构成年角色图，只用于锁定同一角色、服装、水盆、水体关系和视频第0秒真实状态。
+
+        【DIRECTOR TASK】在 {{DOLA_DURATION}} 内只完成一条清楚的物理因果链：K0-C里已经从上方手掌开始下落的水继续落入石盆，产生一次明确撞击和同心波纹，然后逐渐衰减。人物表演和摄影机都必须让位于这个水事件。
+
+        【HARD FREEZE】保持K0-C中的同一成年女性、同一服装、两只可见手、石盆、背景水庭与人物数量。不得新增人物或复制手。保持手—水—盆的拓扑关系连续；整段只允许“水释放”成为唯一主物理事件。
+
+        【FRAME-0】K0-C就是第0秒：上方手掌已经托着并释放少量清水，水滴/细流已经开始向石盆下落；下方手掌在旁边但不是第二主动作；盆中已出现最初的小范围扰动。
+
+        【STATIC BASE】人物躯干、头部、下方手、石盆位置和背景建筑基本稳定；摄影机保持观察，不主动制造新的空间事件。
+
+        【ONE ALLOWED EVENT】上方手掌继续打开，剩余水量自然向下落入石盆；落水产生真实撞击，随后形成由内向外扩散的同心波纹，最后逐渐变弱。
+
+        【BOUND】只释放这一次水，不凭空增加大量水，不改成泼水，不让水逆流或悬浮；下方手不突然接水或开启第二动作；石盆和手的数量不变化。
+
+        【MOTION LOAD】subject=S；environment=M（仅水事件）；camera=S。所有注意力集中在单一物理因果链。
+
+        【PHASES】前约25%：延续现有落水，不跳变；中间约50%：水完成落下并撞击盆面，波纹开始扩散；最后约25%：手停止主动释放，波纹自然扩大并衰减，画面进入安静尾段。
+
+        【CAMERA】保持稳定中景观察，只允许极小补偿以确保手、水流、撞击点和波纹同时可见，不推拉、不绕拍、不切镜。
+
+        【PHYSICAL FEEDBACK】重力方向持续向下；水量从手中减少；撞击点先发生，再出现波纹；波纹从撞击中心向外传播并逐渐减弱。
+
+        【RESIDUE】主落水结束后只保留盆面波纹与少量残滴作为余韵。
+
+        【SETTLED END】上方手已经基本停止出水，两只手保持自然，盆面只剩逐渐衰减的波纹，形成可剪干净尾段。
+
+        【AVOID】避免水量凭空增加或逆重力；避免额外手/人物/物体；避免第二主事件或摄影机大动作。
+    lean:
+      variant: LEAN_CORE_PLUS_TRIGGERED_MODULE
+      modules_loaded: [PHYSICS]
+      emitted_hard_constraints: 3
+      prompt: |-
+        从已锁定的K0-C直接继续唯一的水事件：上方手掌中已经开始下落的清水继续自然落入石盆，先发生真实撞击，再从撞击点向外形成同心波纹，随后水量停止、波纹逐渐衰减。人物的头、身体和下方手保持次要且安静，摄影机稳定观察，只保证手、水流、撞击点和波纹始终可见。结尾让双手安静下来，只留下逐渐消散的水面余韵。
+
+        硬约束：保持同一人物、两只可见手、石盆和当前水体关系；只允许水释放成为主物理事件；手—水—盆的接触与重力因果保持连贯自然。
+
+compile_notes:
+  - Legacy intentionally preserves the prior multi-block control style but uses factual K0 provenance and current accepted image state.
+  - Lean uses positive-first core language plus only the task-triggered module and three high-cost constraints.
+  - No prompt is yet provider-duration-final until Dola capability_profile.yaml is live-probed.
