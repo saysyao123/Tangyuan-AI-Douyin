@@ -1,6 +1,6 @@
-schema_version: "1.0"
+schema_version: "1.1"
 provider: dola
-status: LIVE_PROBE_REQUIRED
+status: SURFACE_SPLIT_REQUIRED
 last_reviewed: "2026-09-03"
 
 engine_target:
@@ -10,67 +10,112 @@ engine_target:
     max_single_generation_seconds: 30
     source: "ByteDance Seed official launch, 2026-07-31"
 
+surfaces:
+  EXPERT_AGENT:
+    status: PARTIALLY_OBSERVED
+    description: >
+      Dola chat/expert mode interprets the user's request and may refuse or rewrite
+      before the video generation skill is actually invoked.
+    observed_R1:
+      A_FACE_HAND: BLOCKED_BEFORE_CONFIRMED_VIDEO_JOB
+      B_MOVING_CAMERA: GENERATED_SUCCESSFULLY
+      C_PHYSICS: BLOCKED_BEFORE_CONFIRMED_VIDEO_JOB
+    rule: >
+      Expert-Agent refusal is not equivalent to a Seedance 2.5 render rejection.
+      Record the stage reached before classifying the failure.
+
+  DIRECT_VIDEO:
+    status: OPEN_SOURCE_OBSERVED_LIVE_PROBE_RECOMMENDED
+    description: >
+      Dedicated Dola video-generation surface with separate model, duration and
+      aspect-ratio controls plus prompt/reference submission.
+    open_source_observation:
+      reference_project: "Shaun520/quota-flow"
+      model_values:
+        - "Dreamina Seedance 2.5"
+        - "Dreamina Seedance 2.0 Fast"
+        - "Dreamina Seedance 1.0"
+      duration_values: [5, 10]
+      ratio_values: ["1:1", "3:4", "4:3", "9:16", "16:9", "21:9"]
+      max_reference_images: 10
+      modes: ["multi_ref", "text2video"]
+      evidence_scope: >
+        Treat as strong public implementation evidence for Dola surface behavior,
+        not as an official Dola API contract.
+
 provider_surface:
   duration_selection:
-    status: UNVERIFIED
-    supported_values: []
-    public_observation: >
-      Recent public community examples around Dola commonly show 10-second output,
-      with some user reports mentioning 5/10-second choices. This is evidence for
-      what to inspect, not a production contract.
+    status: OPEN_SOURCE_OBSERVED_5_10_EXPERT_AGENT_UNVERIFIED
+    supported_values_candidate: [5, 10]
     rule: >
-      Do not infer Dola duration controls from Seedance engine limits, third-party
-      APIs or community posts. Bind exact values only after a live Dola UI/API
-      capability probe on the account used for production.
+      For R1 Expert Mode, 5 seconds is already confirmed by the successful B run.
+      Keep exact settings equal across comparison cells. Do not infer other values
+      from unrelated Seedance APIs.
   image_to_video:
-    status: EXPECTED_BUT_LIVE_PROBE_REQUIRED
+    status: OBSERVED_VIA_EXPERT_AGENT_AND_OPEN_SOURCE_DIRECT_SURFACE
   multi_reference:
-    status: LIVE_PROBE_REQUIRED
+    status: OPEN_SOURCE_OBSERVED
   aspect_ratio_9_16:
-    status: LIVE_PROBE_REQUIRED
+    status: OPEN_SOURCE_OBSERVED_AND_R1_REQUESTED
   resolution_options:
-    status: LIVE_PROBE_REQUIRED
+    status: UNVERIFIED
   audio_generation_toggle:
-    status: LIVE_PROBE_REQUIRED
+    status: UNVERIFIED
 
 semantic_duration_routes:
   PRECISION:
     desired_range_seconds: [5, 8]
-    provider_binding: SHORTEST_SUITABLE_SUPPORTED_DURATION
-    fallback_rule: >
-      If Dola's shortest Seedance 2.5 tier is longer than 8 seconds, use that
-      shortest tier but evaluate only whether the target action completes early
-      and how many seconds are genuinely usable. Do not invent an unsupported
-      duration parameter.
+    provider_binding: 5
+    evidence: >
+      Expert Agent successfully generated B at requested 5 seconds; actively
+      maintained open-source Dola WebView also exposes 5/10-second choices.
   STANDARD:
     desired_range_seconds: [8, 15]
-    provider_binding: NEAREST_SUPPORTED_DURATION_IN_OR_ABOVE_RANGE
+    provider_binding_candidate: 10
+    status: NOT_YET_R1_VALIDATED
   EXTENDED:
     desired_range_seconds: [15, 20]
-    provider_binding: NEAREST_SUPPORTED_DURATION_IN_RANGE
+    provider_binding_candidate: null
+    status: NO_CONFIRMED_DOLA_SURFACE_VALUE
+
+moderation_diagnostics:
+  required_fields:
+    - surface
+    - stage_reached
+    - status
+    - blocked_text
+  stage_values:
+    - AGENT_INTERPRETATION
+    - VIDEO_JOB_SUBMITTED
+    - VIDEO_RENDERING
+    - VIDEO_OUTPUT
+  policy: >
+    Do not classify an Expert-Agent natural-language refusal as a Seedance model
+    failure unless a real video job was submitted and the provider reports a block.
 
 benchmark_policy:
-  - Provider capability must be probed before R1 generation begins.
-  - The same provider duration setting must be used for Legacy and Lean variants within a comparison cell.
-  - A provider limitation changes the adapter binding, not the creative workflow.
-  - 30-second source mode is outside the current MV benchmark even if the provider exposes it.
-  - Account cycling, temporary identities, quota bypass or similar access workarounds are outside this Harness and must not be used as benchmark infrastructure.
+  - The same Dola surface must be used for paired Legacy/Lean runs inside one cell.
+  - The same duration and reference asset must be used inside one comparison cell.
+  - Expert-Agent compatibility must be measured separately from Seedance output quality.
+  - Do not change a prompt mid-cell after observing a failure; create a new diagnostic variant.
+  - Account cycling, temporary identities, quota bypass or similar access workarounds are outside this Harness.
+  - Do not fabricate provenance or identity declarations to influence safety checks.
 
-live_probe_required_fields:
-  - model_label_shown
-  - duration_choices
-  - aspect_ratio_choices
-  - resolution_choices
-  - accepted_reference_types
-  - maximum_reference_count_if_visible
-  - audio_generation_behavior_or_toggle
-  - watermark_behavior
-  - generation_result_download_options
+safe_diagnostic_policy:
+  - Benign false positives should be diagnosed by simplifying ambiguous production language or by comparing provider surfaces.
+  - Do not attempt to evade genuine content moderation.
+  - Dola published policy should remain the authority for prohibited content.
 
-probe_acceptance:
-  minimum_to_unlock_R1:
-    - model_label_shown confirms Seedance 2.5
-    - at least one usable image/reference upload path is visible
-    - one exact supported duration is recorded for PRECISION
-    - output aspect behavior for the 9:16 K0 is understood
-    - audio behavior is understood enough to keep Legacy/Lean equal
+next_probe:
+  id: EXPERT_AGENT_COMPATIBILITY_A_C
+  objective: >
+    Determine whether A/C fail because of Expert-Agent semantic interpretation.
+  controls:
+    - Seedance 2.5
+    - 5 seconds
+    - 9:16
+    - same K0 assets
+    - single shot
+  variants:
+    A: "near-face hand arc without physical face contact"
+    C: "small vessel releases water into basin; preserve gravity-impact-ripple physics"
