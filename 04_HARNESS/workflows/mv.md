@@ -1,592 +1,216 @@
-# Workflow｜AI MV Production v1.9
+# Workflow｜AI MV Production v2.0 Lean Interface
 
-> Status: `AUTHORITATIVE / R1 + WEB_R2 VALIDATED + WEB_R3 + D01-B CROSS-SONG HARDENED`
-> Role: MV 单一路径主流程。只定义阶段、输入/输出、Gate 与回滚边界；技术细节由独立 Rule JIT 加载。
-> Core: **先从真实平台音乐资产锁版本，再锁声音坐标，再按坐标导演素材；生成的是可剪素材池，不是 5 秒成片；局部问题只回滚最近根因。**
+> Status: `AUTHORITATIVE AGENT WORKFLOW / CANONICAL RUNTIME BACKED`
+> Role: 给 Agent / 用户提供最小可执行 MV 心智模型；不复制底层 Stage、Artifact、Transition、Gate 的机器定义。
+> Core: **锁定声音真值 -> 形成可生产视觉意图 -> 生产可剪素材 -> 完成画面编辑 -> 技术交付与闭环。**
 
----
+## 0. Authority
 
-## 0. Runtime load order
+本文件只负责“当前要解决什么问题”和 Macro Phase 之间的生产意图。
 
-默认只加载：
-1. `04_HARNESS/workflows/mv.md`
-2. `04_HARNESS/rules/mv_golden_runtime.md`
-3. `04_HARNESS/rules/mv_bgm_discovery.md`
-4. `04_HARNESS/rules/mv_audio_timeline.md`
-5. current MV Round `CURRENT_STATE.md`
+机器权威：
+- Stage：`runtime/mv_stage_registry.json`
+- Transition：`runtime/mv_transition_contract.json`
+- Human Gate：`runtime/mv_human_gate_registry.json`
+- Artifact：`runtime/mv_artifact_registry.json`
+- Macro Phase 映射：`runtime/mv_macro_phase_registry.json`
 
-Stage-specific JIT：
-- Stage-entry machine enforcement：`rules/mv_stage_entry_checklist.md`
-- Human decision boundary：`rules/mv_human_gates.md`
-- Stage 4/6/7/8：`rules/mv_editing.md`
-- Stage 5 first-frame set QA：`rules/mv_first_frame_qa.md`
-- Stage 5/6 character / I2V：`rules/ai_video.md`
-- Stage 7.5/8：`rules/mv_source_normalization.md`
-- Stage 9：`rules/mv_subtitle.md`
+若本文件中的解释与 Canonical Runtime 冲突，以机器权威为准。
 
-历史 R1/R2/R3 文件只用于排错、回归、溯源；正常 Runtime 不全文加载。
-
-关键 Stage 5 / 6 / 8B / 9 / 10 执行前必须通过 `mv_stage_entry_checklist.md` 的 machine entry check。已存在的技术 Gate 不允许被“先做一版看看”跳过。
+不要读取整个 S00–S18 链来执行普通任务；先从 current canonical stage 派生当前 Macro Phase，再只加载当前任务 JIT 模块。
 
 ---
 
-# Single Path｜固定主链
+# Macro Path
 
-`Song Discovery`
-→ `Douyin-first Exact BGM Version Discovery`
-→ `Exact BGM Clip Lock`
-→ **`AUDIO_TIMELINE_PACKAGE`**
-→ `Natural Beat`
-→ `Director Allocation`
-→ `First Frames`
-→ `Dynamic Source Generation`
-→ `Dynamic QA`
-→ `Shot Normalization`
-→ `Editor Audio Revalidation`
-→ `Picture Edit`
-→ `Subtitle Render + QA`
-→ `Final QA`
-→ `Close`
-→ `Post-Publish Sync`（30D/60真实发布后）
+`AUDIO -> DIRECT -> GENERATE -> EDIT -> DELIVER`
 
-禁止跳过 Stage 2A 后再在剪辑/字幕阶段补时间真值。
+这 5 个 Phase 是认知/生产层，不替代底层 Canonical Stage。
 
 ---
 
-# Stage 1｜Song Discovery
+# 1. AUDIO｜锁定唯一声音真值
+
+### Goal
+确保后续所有歌词、导演、剪辑、字幕都建立在同一个真实音频版本和时间坐标上。
 
 ### Work
-- 筛 3–5 个真正有差异的候选；
-- 核对基本版本/可执行性；
-- 不用 R1/R2 的具体歌曲/世界限制创意。
+按当前任务 JIT 完成：
+- 歌曲候选与版本发现；
+- 实际可试听 BGM 片段；
+- 用户审美/听感决定；
+- exact audio identity；
+- trusted lyric/music timeline package。
 
-### Human Gate
-`HG01 Song Aesthetic Gate`。
+### Human Decisions
+底层仍保留 `HG01` 与 `HG02` 两个独立 durable decision。
+用户交互可以在信息已经完整时合并成一次提交，但两个判断必须分别明确，Runtime receipt 仍分别记录，禁止伪造或跳过。
 
-### Output / Gate
-`REFERENCE_BGM_LOCKED`。
+### JIT
+- 版本发现：`rules/mv_bgm_discovery.md`
+- BGM 锁定后：`rules/mv_audio_timeline.md` + 对应 tools
+
+### Exit Outcome
+Canonical Runtime 已证明 exact BGM 与 Audio Timeline 可供下游使用。
 
 ---
 
-# Stage 1.5｜Exact BGM Version Discovery｜DOUYIN FIRST
+# 2. DIRECT｜把歌词变成可生产视觉意图
 
-详细规则：`rules/mv_bgm_discovery.md`。
+### Goal
+不是先套镜头配方，而是为每个 Natural Beat 找到不可替代的视觉答案，并明确它如何成为可生成、可剪辑的素材任务。
 
 ### Work
-歌曲家族通过 HG01 后，默认按以下顺序找真实版本：
+- Natural Beat / Hook / Peak / Release；
+- 世界、人物、材质和视觉母题；
+- 每个 Beat 的 `INTENT` 与 dominant visual event；
+- Production segment / source role；
+- 人物动作与摄影机关系；
+- Reference / K0 设计；
+- 视觉差异、连续性、可执行性检查。
 
-`Verified Douyin music asset`
-→ `Douyin-asset-anchored full-track discovery`
-→ `generic public full-track discovery`
-→ `other recovery routes`。
+### Core Rules
+- `lyric visual hit > light narrative continuity > camera trick`；
+- conceptual beat、Reference 数量、生成 source 数量、最终剪辑段数不是同一个概念；
+- 实际已接受 Reference/K0 像素高于旧 Director prose；
+- 不为了流程完整而强制固定镜头数量或固定 camera recipe。
 
-优先从真实抖音作品反查：
-- aweme id / work URL；
-- music asset id；
-- displayed title / author；
-- direct asset reference（如可得）；
-- 实际解码音频；
-- 多作品 fingerprint / alignment 结果。
+### Human Decision
+`HG03` 当前仍保留为 Canonical durable Gate。
+是否未来改为 Conditional，必须由 Seedance 2.5 Benchmark 证明，不在本次 Lean refactor 中先验删除。
 
-如果多个作品使用同 asset：
-- 优先选择最长、音质最好、结构最完整的实际趋势版本作为 HG02 listening reference；
-- 短版本若只是同起点 truncation，不误判为 remix；
-- 用户未要求更长时，不为了凑时长主动换成未知完整版。
+### JIT
+- 首帧/Reference QA：`rules/mv_first_frame_qa.md`
+- AI Reference / I2V：`rules/ai_video.md`
+- 需要时加载少量当前歌曲 Benchmark / Knowledge
 
-如果用户需要 30–40s 扩展版：
-- 先锁 Douyin asset；
-- 再找完整发行版；
-- 必须证明完整版与已锁 asset 声学对齐后才能扩展。
-
-### Required evidence
-至少保存 BGM discovery provenance；推荐：
-`BGM_DISCOVERY/asset_probe_report.json`。
-
-### Gate
-- `SONG_FAMILY_LOCKED`
-- `TREND_REFERENCE_AUDIO_VERSION_LOCKED` 或等价 high-confidence version state。
-
-版本证据不足则：
-`BGM_VERSION_DISCOVERY_BLOCKED`。
+### Exit Outcome
+Natural Beat、Director allocation、实际视觉 Anchor 已可直接交给素材生产。
 
 ---
 
-# Stage 2｜Exact BGM Clip Lock
+# 3. GENERATE｜生产可剪素材，而不是“生成任务记录”
+
+### Goal
+以最少生成与返工获得足够的 usable material。
 
 ### Work
-使用 Stage 1.5 已验证的实际 MP3/WAV/发布音频：
-- 核对 title / artist / exact version；
-- 选择语义完整段落；
-- 检查前一句污染；
-- 保留合理 pickup；
-- **绝不截断一句歌词**；
-- 结尾不舒服时优先多留完整 release line；
-- fade 在人声完成后发生；
-- 保存 source start/end、duration、speed、fade、SHA。
+- 由当前 Production task 编译生成 Prompt；
+- 外部 Provider / Seedance 生成；
+- 检查 identity、事件完成度、明显拓扑/物理问题；
+- 记录 usable windows、risk windows、source role；
+- 能 trim 就 trim，只有无法获得足够 clean material 时才局部 regen；
+- 多镜/隐藏切镜被实际证明后，再启用 Atom/Arc normalization；
+- 编辑前重新验证锁定音频身份。
 
-若存在已验证 Douyin trend-native 片段，默认先把它提交 HG02；只有用户觉得太短/结构不完整时才进入 asset-anchored extended route。
+### Material-first Output
+每条 source 的核心问题只有：
+1. 能不能剪？
+2. 哪几秒能剪？
+3. 承担什么角色？
+4. 真正失败点是什么？
+5. 下一步唯一动作是什么？
 
-### Human Gate
-`HG02 BGM Excerpt Listening Gate`。
+推荐最小 QA 语义：
+`STATUS / USABLE / FAILURE / NEXT`。
 
-### Output / Gate
-`BGM_LOCKED`。
+### Duration Strategy｜Seedance 2.5 Trial
+当前实验只研究：
+- `PRECISION = 5–8s`
+- `STANDARD = 8–15s`
+- `EXTENDED = 15–20s`
 
-### BGM authority｜HARD / D01-B promoted
+三者共用同一生产链，只是 Duration Strategy，不创建三套 Workflow。
+30s 不在当前实验范围。
 
-用户通过 HG02 实际试听后的锁定 BGM 是下游工作的音频真值。
+### Repair Rule
+`Patch, Don't Cascade`：单条 source 失败只修该 source 或失败区间；已有 usable window 不因尾部失败自动报废。
 
-下游公共 LRC、弱版本证据、波形推断或不确定 occurrence **不得为了适配自己而自动修改已通过的 BGM**。
+### JIT
+- 生成控制：`rules/ai_video.md`
+- 实际证明 multi-shot complexity 后：`rules/mv_source_normalization.md`
+- WEB source cleanup 需要时：`rules/mv_web_source_roughcut.md`
 
-只有以下情况允许重开 Stage 2：
-- 强证据证明当前音频本身错版 / 损坏；
-- 明确发现实际人声被截断且 HG02 判断依据有误；
-- 用户明确要求更改音频版本 / 起止 / fade。
+### Human Decision
+正常无固定 Human Gate。只有真实异常且机器无法做低成本局部修复时才升级用户。
 
-否则：时间轴证据必须适配已锁 BGM；证据冲突进入 Stage 2A / CHG-A，而不是先改 BGM。
-
-任何真正的后续音频版本/起止点变化都使 Stage 2A 及其 timing-dependent 下游失效。
-
----
-
-# Stage 2A｜AUDIO TIMELINE PACKAGE｜FIRST HARD GATE
-
-详细规则：`rules/mv_audio_timeline.md`。
-
-### Purpose
-把锁定 BGM 变成整个 MV 的**唯一时间坐标系**，而不是只为字幕服务。
-
-### Mandatory package
-至少包含：
-- `audio_identity.json`
-- `trusted_lyrics.txt`
-- raw strong timing evidence
-- `alignment_provenance.json`
-- `line_timeline.csv`
-- `lyrics_exact.srt`
-- `anchor_words.csv`
-- `music_events.csv`
-- `alignment_qa_report.md`
-- `package_manifest.json`
-
-Primary strong evidence：
-- verified same-version LRC；或
-- trusted lyrics + Chinese-capable forced alignment；或
-- official same-version timed lyric/video。
-
-Waveform/BPM/onset 只能 supporting。
-
-Repeated chorus / repeated lyric occurrence 必须在做边界结论前先锁定 occurrence；不得把另一遍副歌的时间戳套到当前 BGM。
-
-### Human Gate
-正常 PASS 不需要用户逐行人工核时间。
-只有强证据冲突/unmatched/repeated occurrence 无法自动判断时触发 `CHG-A`。
-
-### Output / Gate
-`AUDIO_TIMELINE_PACKAGE_LOCKED`。
-
-**未 PASS 不进入 Stage 3。**
+### Exit Outcome
+Material pool 足以进入 Picture Edit，并已通过 Canonical Runtime 的必要技术前置。
 
 ---
 
-# Stage 3｜Music / Lyric / Natural Beat
+# 4. EDIT｜用三个时钟组织作品
 
-### Input
-只使用已锁 Package，不创建第二套 lyric clock。
+### Goal
+把可用素材组织成完整 MV，而不是追求每条 source 自己成为迷你成片。
 
-### Work
-确定：
-- 语义/情绪结构；
-- Natural Beats；
-- Hook / Peak / Release；
-- Anchor Word 视觉机会；
-- 能量变化。
-
-Natural Beat 是语义/情绪单元，不是 5 秒配额。
-
-### Output
-`DIRECTOR_BEAT_MAP`。
-
-默认 AUTO。
-
----
-
-# Stage 4｜Director Concept + Production Allocation
-
-JIT：`rules/mv_editing.md` + `rules/mv_first_frame_qa.md`。
-
-### Work
-定义：
-- 世界 / palette / material；
-- character policy；
-- 每 Beat 的 dominant event；
-- camera/motion differentiation；
-- conceptual unit vs production segment；
-- raw-video headroom；
-- edit role：`HOLD / BRIDGE / HIT / PEAK / RELEASE`。
-
-Hard concept：
-`conceptual unit != first-frame count != dynamic-video count != final edit fragment count`。
-
-导演方案必须同时回答：
-1. 为什么语义命中；
-2. 为什么画面本身值得看；
-3. 整组为什么不会变成重复景别 / 重复动作 / 功能演示。
-
-“语义解释正确但画面功能化、工具化、说明书化”不能自动进入首帧生产。
-
-### Output / Gate
-`DIRECTOR_PLAN_LOCKED`。
-
-默认不单独占用一次人工审批；与 Stage 5 的整组首帧一起做视觉 Gate。
-
----
-
-# Stage 5｜First Frames
-
-### Entry
-必须通过：`rules/mv_stage_entry_checklist.md`。
-
-JIT：`rules/mv_first_frame_qa.md` + `rules/ai_video.md`。
-
-### Work
-每个 production segment 形成 0 秒动态锚点：
-- 主视觉事件起始态；
-- 主动作入口；
-- 摄影机/动作空间；
-- 可持续物理余韵；
-- 人物/物体 closure；
-- clean source-arc potential。
-
-整组 machine QA 固定包括：
-- lyric-specific hit；
-- standalone beauty；
-- palette / wardrobe / world coherence；
-- shot-scale / camera-angle differentiation；
-- dominant-event differentiation；
-- continuity；
-- dynamic performability；
-- edit value。
-
-如果 2 张以上在缩略图级别承担近似相同的空间/人物/动作职责，或方案仅“语义正确但不美”，先在 Stage 4/5 修正，不把基础问题交给 HG03。
-
-### Human Gate
-`HG03 Visual Direction / First-frame Set Gate`。
-
-### Output / Gate
-`FIRST_FRAME_SET_LOCKED`。
-
----
-
-# Stage 6｜Dynamic Prompt + External Generation
-
-### Entry
-必须通过：`rules/mv_stage_entry_checklist.md`。
-
-JIT：`rules/mv_editing.md` + `rules/ai_video.md`。
-
-### Visual authority｜HARD
-
-HG03 后：
-`accepted actual first-frame image / K0 pixels > old prompt > old Director prose`。
-
-动态提示词必须围绕实际验收图片写，不允许为了恢复废弃方案而让视频模型重构空间/道具/人物状态。
-
-### Source philosophy
-动态视频是 `RAW SOURCE`，不是最终 5 秒成片。
-
-生产版人物 I2V Prompt 必须满足 `ai_video.md` 的完整控制骨架，不得退化为普通描述：
-`HARD FREEZE -> FRAME-0 -> STATIC BASE -> ONE EVENT -> BOUND -> MOTION LOAD -> PHASES -> CAMERA -> PHYSICAL FEEDBACK -> RESIDUE -> SETTLED END -> SOUND -> AVOID`。
-
-对约 5s Seedance 类素材：
-- 1-shot：空间/情绪/连续动作/release；
-- 2-shot：常用默认，setup→event 或 detail→emotion；
-- 3-shot：发现/高潮/setup→event→aftermath；
-- >3-shot：只给真正 Hook/Peak。
-
-默认偏好：**1–2 镜；3 镜任务型。**
-
-每 Shot：
-`1 primary camera move + 1 primary subject action + 1 secondary physical motion`。
-
-生成前做 Camera Repetition / Load / Edit-value Gate。
-
-### Output / Gate
-`DYNAMIC_PROMPT_SET_READY`。
-
-外部 Seedance 执行属于 capability handoff，不等于审美 Gate。
-
----
-
-# Stage 7｜Dynamic Source QA
-
-### Work
-完整检查原始返回素材：
-- identity / face / hands / topology；
-- event 是否完成；
-- camera / beauty / repetition；
-- clean in/out；
-- internal cut/action windows；
-- source audio；
-- risk windows。
-
-Status：
-- `PASS_FULL`
-- `SOURCE_USABLE / TRIM_REQUIRED`
-- `REGEN_WATCH`
-- `REGENERATE`
-
-AI source audio 默认在 ingest 物理移除；锁定 BGM 是唯一音乐真源。
-
-### Required output
-`VISUAL_SOURCE_MAP`：source、fps/duration、clean windows、internal cuts/actions、risk windows、edit role、status。
-
-### Conditional Human Gate
-只有确实 `REGENERATE` / clean duration 不足才触发 `CHG-B`；`TRIM_REQUIRED` 先剪，不先重生成。
-
-单条 source 失败默认只修该 source。D01-B 已跨歌曲验证 `3 KEEP + 1 local regen` 路径可行；禁止无原因整组级联重生。
-
-### Gate
-`DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`。
-
----
-
-# Stage 7.5｜Shot Normalization / Atom-Arc Library
-
-JIT：`rules/mv_source_normalization.md`。
-
-**对 1–3 镜/多镜原片默认执行。**
-
-### Work
-- 原始 5s 文件永久保留；
-- 映射真实内部切镜/事件；
-- 派生单状态 `ATOM`；
-- 只有明确导演语法才保留 `ARC`；
-- 排除 duplicate / topology-risk / meaningless micro-shot；
-- WEB derived proxy 统一去 source audio；
-- WEB 有角落标记时整批使用同一 watermark-safe crop/zoom。
-
-### WEB rough-cut hard gate
-WEB 正式 Picture Edit 前，必须完成 `rules/mv_web_source_roughcut.md` 并得到：
-`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES`。
-
-### Output / Gate
-`NORMALIZED_SHOT_LIBRARY_MAP.csv`
-→ `SHOT_LIBRARY_READY`。
-
-禁止让复杂多镜原片作为 opaque block 直接进入最终剪辑再现场猜结构。
-
----
-
-# Stage 8A｜Editor Audio Gate
-
-Stage 2A 获取 timing truth；这里**只重验，不重新猜**。
-
-核对当前 BGM：hash/version/duration/clip/speed/lyrics 与 Package 一致。
-
-Mismatch → 回 Stage 2A。
-
-Gate：`EDITOR_AUDIO_GATE_PASS`。
-
----
-
-# Stage 8B｜Picture Edit
-
-### Entry｜HARD
-必须通过：`rules/mv_stage_entry_checklist.md`。
-
-WEB formal HG04 preview 额外要求：
-**`WEB_SOURCE_ROUGH_CUT_GATE_PASS = YES` before render.**
-
-带角落平台标记的 raw source 不得作为正式 HG04 evidence。
-若只是提前做内部节奏诊断，必须明确标记 `DIAGNOSTIC_ONLY / NOT_HG04`。
-
-JIT：`rules/mv_editing.md` + `rules/mv_source_normalization.md`。
-
-### Inputs
-- `line_timeline.csv`
-- `anchor_words.csv`
-- `music_events.csv`
-- `VISUAL_SOURCE_MAP`
-- `NORMALIZED_SHOT_LIBRARY_MAP.csv`
-
-### Three clocks
+### Three Clocks
 1. lyric clock；
 2. music-event clock；
 3. visual-action clock。
 
-Priority：
-`verified lyric/music truth > emotional flow > internal action integrity > musical cut point > equal duration`。
+前两者来自锁定 Audio Timeline；第三者来自实际素材。
 
-### Default edit grammar
-抒情/诗意 MV：`long-cut first / semantic-hit inside shot`。
+### Work
+- 建立 executable edit map；
+- 优先保护歌词/音乐真值与完整动作弧；
+- 允许 semantic hit 发生在镜头内部；
+- 避免因为歌词起点/Anchor Word 机械切镜；
+- 检查真实 perceptible shot flow，而不只数 timeline block；
+- Picture 通过后再做字幕实现；
+- Subtitle timing 只服从 canonical lyric clock，不从 Picture cut 反推。
 
-- lyric start ≠ mandatory cut；
-- Anchor Word ≠ mandatory cut；
-- 优先让已运行镜头内部动作命中语义；
-- 避免短距离 A→B→A；
-- 保留完整动作 arc；
-- 结尾留 release breathing room。
+### Human Decision
+`HG04`：用户只判断整体画面节奏、情绪、导演取舍；技术错误应在提交前机器处理。
 
-### Fragmentation Gate｜HARD
-同时统计：
-1. external fragment count；
-2. **perceptible visible-shot count**（含 Arc 内部镜头）。
+### JIT
+- Picture Edit：`rules/mv_editing.md`
+- Subtitle 阶段：`rules/mv_subtitle.md`
 
-约 35–40s 抒情 MV 可参考 8–12 个外部 block，但最终以 visible-shot flow 为准。
-
-### WEB geometry
-按照 `rules/mv_web_source_roughcut.md` 使用当前批次统一 clean proxy geometry；不得到 HG04 后才临时追水印。
-
-### Gates
-`EDIT_MAP_LOCKED`
-→ render `Picture + locked BGM`
-→ audio global-lag QA / visual technical QA
-→ `HG04 Picture Edit Rhythm Gate`
-→ `EDIT_PREVIEW_QA_PASS`。
-
-画面节奏问题默认只回 Stage 8B；clean source 不足才回 6/7。
+### Exit Outcome
+Picture rhythm 已接受，字幕实现已通过必要技术 QA。
 
 ---
 
-# Stage 9｜Subtitle Render + QA
+# 5. DELIVER｜验证、交付、发布状态闭环
 
-### Entry
-必须通过：`rules/mv_stage_entry_checklist.md`。
+### Goal
+确认作品真实可交付，并把生产结束、真实发布、发布后数据区分为不同 durable truth。
 
-JIT：`rules/mv_subtitle.md`。
+### Work
+- Final technical validation；
+- source audio leakage / media identity / resolution / SAR / subtitle / major risk checks；
+- final media identity/hash；
+- release package；
+- 用户实际确认发布后再执行 publish sync；
+- 单条表现数据进入 learning evidence，不自动重写 Production Rule。
 
-### Timing
-唯一来源：Stage 2A canonical SRT/timeline。
-禁止根据 Picture cut nudge 时间。
+### Human Decision
+`HG05`：最终作品接受/发布授权。
 
-### Style
-已锁字幕 baseline 默认直接复用：
-- 不再每首歌 A/B/C；
-- 只有用户明确要求新字幕风格才触发 `CHG-C`。
-
-### Fixed QA
-- all-line timing implementation check；
-- actual glyph bbox → fresh rounded box；
-- all-line padding/center geometry QA；
-- first / shortest / longest-one-line / two-line / final samples；
-- overflow / safe area / subject-cover check。
-
-实现 bug 只修实现，不重新打开审美设计。
-
-Gates：
-`SUBTITLE_STYLE_QA_PASS`
-→ `SUBTITLE_IMPLEMENTATION_QA_PASS`。
+### Exit Outcome
+Canonical Runtime 负责 Release / Publish / Post-publish 的真实状态推进。
 
 ---
 
-# Stage 10｜Final QA / Delivery
+# Rollback｜Nearest Cause Only
 
-### Entry
-必须通过：`rules/mv_stage_entry_checklist.md`。
+默认只修最近根因：
+- audio identity/timeline → AUDIO；
+- visual intent/reference → DIRECT；
+- 单条 source / usable material → GENERATE；
+- picture/subtitle implementation → EDIT；
+- codec/metadata/release implementation → DELIVER。
 
-### Mandatory machine QA before user
-- locked BGM identity/duration/hash；
-- no AI source-audio leakage；
-- Package identity；
-- resolution/fps/SAR/DAR；
-- no stretch/blank/black/accidental duplicate/risk frames；
-- watermark handling consistency；
-- subtitle geometry/timing/safe area；
-- opening / major transitions / peak / ending / full-watch；
-- delivery ZIP integrity；
-- final identity/hash。
-
-Gate：`FINAL_TECH_QA_PASS`
-→ `DELIVERABLE_RENDERED`。
-
-### Human Gate
-`HG05 Final Acceptance Gate`。
-
-用户 PASS 后才进入 Close。
+只有上游事实真的变化时，才让依赖它的下游失效。
 
 ---
 
-# Stage 11｜Close
+# Normal Runtime Does Not Load
 
-保存可复刻资产，不只保存最终 MP4：
-- final accepted MV + hash；
-- BGM discovery provenance / exact asset identity；
-- BGM identity；
-- full Audio Timeline Package/raw evidence/provenance；
-- Director/first-frame pointers；
-- `VISUAL_SOURCE_MAP`；
-- normalized Shot Library Map；
-- accepted Edit Map；
-- subtitle implementation + geometry/timing QA；
-- Final QA receipt；
-- promoted runtime rules；
-- Current State / Automation Matrix；
-- retrospective only when it adds durable learning。
+- 历史 R1/R2/R3 Prompt 全文；
+- 历史大型 QA / retrospective；
+- 旧 `*_HARNESS.md`；
+- `rules/mv_stage_entry_checklist.md` 作为第二套前置条件权威。
 
-Gate：`COMPLETE_LOCKED`。
-
-`COMPLETE_LOCKED` 表示生产链关闭，不等于真实平台已经发布。
-
----
-
-# Stage 12｜Post-Publish Sync｜30D/60
-
-当用户明确确认作品已发布：
-
-执行 `POST_PUBLISH_SYNC`，至少同步：
-1. per-slot `CURRENT_STATE` -> `PUBLISHED / DATA_COLLECTION_ACTIVE`；
-2. `05_IP_ASSETS/MV_30D_60_TRACKER.csv` -> `PUBLISHED`；
-3. program/root data state if applicable；
-4. known publish time / first observed metrics；
-5. 若 exact timestamp 未知，写 `timestamp_pending_backfill`，禁止猜时间。
-
-发布后的低播放/高播放属于 `PERFORMANCE EVIDENCE`，默认不自动重开已锁生产链。
-单条结果不得晋升/推翻 Production Rule。
-
----
-
-# Mandatory State Chain
-
-`REFERENCE_BGM_LOCKED`
-→ `TREND_REFERENCE_AUDIO_VERSION_LOCKED`（Douyin route 时）
-→ `BGM_LOCKED`
-→ `AUDIO_TIMELINE_PACKAGE_LOCKED`
-→ `DIRECTOR_BEAT_MAP`
-→ `DIRECTOR_PLAN_LOCKED`
-→ `FIRST_FRAME_SET_LOCKED`
-→ `DYNAMIC_PROMPT_SET_READY`
-→ `DYNAMIC_SOURCE_QA_LOCKED_FOR_EDIT`
-→ `SHOT_LIBRARY_READY`（multi-shot source 时）
-→ `WEB_SOURCE_ROUGH_CUT_GATE_PASS`（WEB）
-→ `EDITOR_AUDIO_GATE_PASS`
-→ `EDIT_MAP_LOCKED`
-→ `EDIT_PREVIEW_QA_PASS`
-→ `SUBTITLE_STYLE_QA_PASS`
-→ `SUBTITLE_IMPLEMENTATION_QA_PASS`
-→ `FINAL_TECH_QA_PASS`
-→ `DELIVERABLE_RENDERED`
-→ `COMPLETE_LOCKED`
-→ `PUBLISHED / DATA_COLLECTION_ACTIVE`（真实发布后）
-
----
-
-# Rollback Rule｜Patch, Don't Cascade
-
-详细人工/异常 Gate：`rules/mv_human_gates.md`。
-
-默认只回最近根因：
-- BGM discovery 版本证据错 → Stage 1.5；
-- 用户/强证据真正改 BGM → Stage 2A 及 timing-dependent 下游失效；
-- weak downstream timing evidence 与用户已通过 BGM 冲突 → Stage 2A / CHG-A，不先改 BGM；
-- timing / occurrence 错 → 2A；
-- 首帧/视觉错 → 4/5；
-- 单条动态崩 → 6/7该 source；
-- 隐藏多镜/碎镜 → 7.5；
-- WEB 水印 proxy Gate 漏做 → 7.5 / WEB rough-cut，复用同一 EDL；
-- Picture太碎 → 8B；
-- 字幕框/实现错 → 9；
-- Final codec/SAR/metadata错 → 10；
-- 发布后 Tracker/状态不同步 → Stage 12，仅同步状态。
-
-**下游实现 bug 不得自动重开已通过的上游审美 Gate。**
+需要排错、迁移、回归、规则溯源时再 JIT 读取。
