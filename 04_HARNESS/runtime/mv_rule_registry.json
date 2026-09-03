@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "MV-RULE-001",
+      "name": "canonical_state_over_chat_memory",
+      "status": "PROVEN",
+      "scope": ["runtime"],
+      "enforcement_layer": "RUNTIME",
+      "statement": "MV progress and legal next actions come from Canonical Runtime state, artifacts and transition receipts, not chat memory or prose claims.",
+      "failure_if_violated": "False progress, skipped prerequisites, unsupported history reconstruction.",
+      "prompt_cost": "NONE",
+      "evidence": {
+        "summary": "Validated by the 2026-08-27 Runtime Consolidation with transition, rollback, resume, migration and Web Bridge evidence.",
+        "cases": [
+          {"ref": "06_TESTS/MV/RUNTIME_CONSOLIDATION/MV_RUNTIME_CONSOLIDATION_AUDIT_v2.md", "result": "SUPPORT"}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "NOT_APPLICABLE", "seedance-2.5": "NOT_APPLICABLE"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    },
+    {
+      "id": "MV-RULE-002",
+      "name": "accepted_k0_over_old_prose",
+      "status": "PROVEN",
+      "scope": ["director", "reference", "i2v"],
+      "enforcement_layer": "PROMPT",
+      "statement": "When an actual Reference/K0 has been accepted, downstream prompts follow the real accepted asset state rather than reconstructing an abandoned Director plan.",
+      "failure_if_violated": "Prompt asks the video model to contradict its actual start image, increasing identity/object/space drift.",
+      "prompt_cost": "LOW",
+      "evidence": {
+        "summary": "Repeatedly promoted in current Director, First-frame QA and AI video rules.",
+        "cases": [
+          {"ref": "04_HARNESS/workflows/director.md", "result": "SUPPORT"},
+          {"ref": "04_HARNESS/rules/mv_first_frame_qa.md", "result": "SUPPORT"},
+          {"ref": "04_HARNESS/rules/ai_video.md", "result": "SUPPORT"}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "VALIDATED", "seedance-2.5": "UNVERIFIED"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    },
+    {
+      "id": "MV-RULE-003",
+      "name": "first_frame_character_closure",
+      "status": "PROVEN",
+      "scope": ["character_i2v"],
+      "enforcement_layer": "PROMPT",
+      "statement": "A generated source should not introduce new human characters that are absent from the accepted K0 when character identity continuity is required.",
+      "failure_if_violated": "Random character creation, identity drift and unusable continuity.",
+      "prompt_cost": "LOW",
+      "evidence": {
+        "summary": "Long-running production rule under the earlier Seedance workflow; requires model-specific revalidation for 2.5.",
+        "cases": [
+          {"ref": "04_HARNESS/rules/ai_video.md", "result": "SUPPORT"}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "VALIDATED", "seedance-2.5": "UNVERIFIED"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    },
+    {
+      "id": "MV-RULE-004",
+      "name": "legacy_full_prompt_control_skeleton",
+      "status": "TRIAL",
+      "scope": ["character_i2v", "stable_causality"],
+      "enforcement_layer": "KNOWLEDGE_ONLY",
+      "statement": "The legacy 15-block prompt-control skeleton may improve difficult I2V control, but must not be assumed necessary for every Seedance 2.5 source without direct comparison.",
+      "failure_if_violated": "If wrongly kept: attention dilution and prompt debt. If wrongly removed: possible stability loss on difficult shots.",
+      "prompt_cost": "HIGH",
+      "evidence": {
+        "summary": "Current ai_video rule reports prior cross-song validation, while the new Lean Harness audit identifies possible attention and maintenance cost. Revalidation is required rather than automatic inheritance.",
+        "cases": [
+          {"ref": "04_HARNESS/rules/ai_video.md", "result": "SUPPORT"},
+          {"ref": "04_HARNESS/tests/mv_seedance25/benchmark_matrix.yaml", "result": "MIXED", "note": "Pending direct legacy-vs-lean benchmark."}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "VALIDATED", "seedance-2.5": "UNVERIFIED"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    },
+    {
+      "id": "MV-RULE-005",
+      "name": "positive_first_prompting",
+      "status": "TRIAL",
+      "scope": ["generation_prompt"],
+      "enforcement_layer": "KNOWLEDGE_ONLY",
+      "statement": "Describe the desired result, performance, camera relation, primary visual event and endpoint before using a small number of high-value negative constraints.",
+      "failure_if_violated": "Potential attention dilution when prompts become histories of prohibited failures.",
+      "prompt_cost": "LOW",
+      "evidence": {
+        "summary": "Design hypothesis derived from Harness cleanup; not yet production-validated on Seedance 2.5.",
+        "cases": [
+          {"ref": "04_HARNESS/tools/mv_prompt_compiler/CONTRACT.md", "result": "MIXED", "note": "Awaiting benchmark evidence."}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "UNVERIFIED", "seedance-2.5": "UNVERIFIED"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    },
+    {
+      "id": "MV-RULE-006",
+      "name": "hard_constraint_budget",
+      "status": "TRIAL",
+      "scope": ["generation_prompt"],
+      "enforcement_layer": "KNOWLEDGE_ONLY",
+      "statement": "Target 0-3 hard constraints; review 4-5 for positive rewrite/parameter/validator migration; block >5 in the experimental compiler until simplified.",
+      "failure_if_violated": "Constraint accumulation may increase conflict, attention dilution and maintenance cost.",
+      "prompt_cost": "LOW",
+      "evidence": {
+        "summary": "Experimental governance rule; requires Seedance 2.5 benchmark before production promotion.",
+        "cases": [
+          {"ref": "04_HARNESS/tools/mv_prompt_compiler/CONTRACT.md", "result": "MIXED", "note": "Awaiting benchmark evidence."}
+        ]
+      },
+      "model_validity": {"seedance-2-mini": "UNVERIFIED", "seedance-2.5": "UNVERIFIED"},
+      "supersedes": [],
+      "retirement_reason": null,
+      "last_reviewed": "2026-09-03"
+    }
+  ]
+}
