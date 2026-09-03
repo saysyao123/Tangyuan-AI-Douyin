@@ -1,11 +1,11 @@
-# Runtime Manifest v3.5
+# Runtime Manifest v3.6
 
-> 用途：决定当前步骤最小加载集合。除非排错，不允许“为了保险把整个仓库都读一遍”。
+> 用途：决定当前任务的最小加载集合。除非排错、迁移或规则溯源，不允许“为了保险把整个仓库都读一遍”。
 
 ## Always Load
 
 - `04_HARNESS/SKILL.md`
-- `00_CONTROL/CURRENT_STATE.md`
+- 当前任务的 durable state / current slot state
 
 项目级定位只有当前任务涉及定位/边界时才加载：
 - `00_CONTROL/MASTER_CONTROL.md`
@@ -13,148 +13,96 @@
 
 ## Task Load Matrix
 
-| 当前任务 | Workflow | Rules | Template / Data |
+| 当前任务 | Workflow | Rules / Runtime | Template / Data |
 |---|---|---|---|
 | 选题 | `workflows/topic.md` | `rules/account_truth.md` | `01_TOPIC_SYSTEM/*` 按需 |
-| 口播稿 | `workflows/script.md` | `rules/account_truth.md` | `templates/script_contract.md` + 当前Source |
+| 口播稿 | `workflows/script.md` | `rules/account_truth.md` | `templates/script_contract.md` + 当前 Source |
 | 录音/ASR/时间轴 | `workflows/audio.md` | `rules/production_core.md` | 当前音频/稿件 |
 | 导演表 | `workflows/director.md` | `rules/production_core.md`,`rules/visual_core.md` | `templates/director_segment.md` + 当前时间轴 |
-| AI镜头 | 当前Director模块 | `rules/ai_video.md`,`rules/visual_core.md` | `templates/ai_first_frame_prompt.md` |
-| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md`,`rules/mv_audio_timeline.md` + 当前阶段相关Rules | 当前 MV Round `CURRENT_STATE.md`；时间轴阶段加载 `templates/mv_audio_timeline_package_contract.md` + `tools/mv_audio_timeline/*`；Benchmark 按需 |
-| HyperFrames解释 | 当前Director/Production模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
-| 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁Director/Assets/Audio |
+| AI镜头 | 当前 Director / MV 模块 | `rules/ai_video.md` JIT | 当前实际 Reference / K0 |
+| MV专项 | `workflows/mv.md` | `rules/mv_golden_runtime.md` + `runtime/mv_macro_phase_registry.json` + Canonical Runtime | 当前 slot state；按当前 Macro Phase JIT |
+| HyperFrames解释 | 当前 Director/Production 模块 | `rules/hyperframes.md`,`rules/visual_core.md` | `templates/hyperframes_scene_contract.md` |
+| 分段制作/总装 | `workflows/production.md` | `rules/production_core.md`,`rules/visual_core.md` | 已锁 Director/Assets/Audio |
 | 发布/数据复盘 | `workflows/publish_review.md` | `rules/account_truth.md` | `03_DATA/*`,`05_IP_ASSETS/PUBLISH_SYSTEM.md` 按需 |
-| 规则升级 | `workflows/publish_review.md` | 对应rule文件 | `knowledge/PROMOTION_POLICY.md`,`03_DATA/EXPERIMENTS.md` |
+| 规则升级 | `workflows/publish_review.md` | 当前权威 Rule | `knowledge/PROMOTION_POLICY.md`,`03_DATA/EXPERIMENTS.md` |
 
-## MV Runtime Rule
+## MV Minimal Runtime
 
-MV任务默认先读：
+MV 默认启动只需要：
 1. `workflows/mv.md`
 2. `rules/mv_golden_runtime.md`
-3. `rules/mv_audio_timeline.md`
-4. 当前 MV Round `CURRENT_STATE.md`
-5. 当前阶段 JIT 需要的 Rules / Template / Benchmark。
+3. `runtime/mv_macro_phase_registry.json`
+4. 当前 slot 的 Canonical `CURRENT_STATE.json`
 
-这 4 个默认入口负责：
-- 权威流程；
-- 跨Round Golden正确性；
-- BGM之后第一个硬节点 `AUDIO_TIMELINE_PACKAGE`；
-- 当前项目状态。
+底层合法状态与前置条件由以下机器权威负责，不需要在聊天上下文中重复背诵：
+- `runtime/mv_stage_registry.json`
+- `runtime/mv_transition_contract.json`
+- `runtime/mv_human_gate_registry.json`
+- `runtime/mv_artifact_registry.json`
+- `tools/mv_runtime_*.py`
 
-R1历史复盘、失败样本、旧Prompt只在排错/规则溯源/回归测试时加载。历史文件不负责正常Runtime继承；需要跨Round保留的经验必须晋升到 Rule / Workflow / Template / Gate。
+## MV Macro Phase JIT
 
-## MV Audio Timeline JIT Rule
+### AUDIO
+按实际任务加载：
+- 版本发现：`rules/mv_bgm_discovery.md`
+- BGM 锁定后时间真值：`rules/mv_audio_timeline.md`
+- 时间轴实现细节、环境锁和回归：`tools/mv_audio_timeline/README.md` + 对应 tool/test
 
-BGM一旦 `BGM_LOCKED`，下一阶段必须加载：
-- `rules/mv_audio_timeline.md`
-- `templates/mv_audio_timeline_package_contract.md`
-- `tools/mv_audio_timeline/package_tool.py`
-- `tools/mv_audio_timeline/final_gate.py`
-- `tools/mv_audio_timeline/alignment_runtime.lock.json`
-- 需要强制对齐时再加载/调用 `tools/mv_audio_timeline/run_alignment.py`；需要准备环境时调用 `bootstrap_alignment_env.py`。
+不要在 Manifest 复制具体 Python 版本、模型版本、命令和逐项 Gate 逻辑；这些由工具目录自身维护。
 
-时间轴模块分两层机器验证：
+### DIRECT
+按需要加载：
+- `rules/mv_first_frame_qa.md`
+- 当前实际 Reference / K0
+- AI Reference / I2V 时才加载 `rules/ai_video.md`
+- Benchmark 只挑当前歌曲相关少量参考
 
-### Layer 1｜Timing Core Gate
-运行：
-`python 04_HARNESS/tools/mv_audio_timeline/package_tool.py validate ...`
+### GENERATE
+按当前 source 风险加载：
+- `rules/ai_video.md`
+- 多镜/隐藏切镜被证明时：`rules/mv_source_normalization.md`
+- WEB source cleanup 需要时：`rules/mv_web_source_roughcut.md`
 
-它验证：强证据、raw evidence、provenance、音频 SHA/时长、歌词顺序、line timeline、逐行QA、可选双源差异。
+### EDIT
+按需要加载：
+- `rules/mv_editing.md`
+- 字幕阶段才加载 `rules/mv_subtitle.md`
 
-### Layer 2｜Complete Package Gate｜FINAL AUTHORITY
-运行：
-`python 04_HARNESS/tools/mv_audio_timeline/final_gate.py validate ... --write-manifest`
+### DELIVER
+默认依赖 Canonical Runtime / artifact validators；只有具体技术异常时加载对应 Rule / Tool。
 
-它在 Layer 1 PASS 基础上继续验证：
-- `lyrics_exact.srt` 与 line timeline 完全一致；
-- `anchor_words.csv` 的关键歌词锚点落在对应歌词窗内；
-- `music_events.csv` 合法且在当前 content timeline 内；
-- `alignment_qa_report.md` 存在，并由 provenance SHA 引用；
-- 完整Package资产齐全。
+## Human Gate JIT
 
-**只有 Layer 2 退出码 `0` 且由它写出 `package_manifest.json`，才允许设置：**
-`AUDIO_TIMELINE_PACKAGE_LOCKED = YES`。
+人类 Gate 的机器结构以 `runtime/mv_human_gate_registry.json` 为准。
+只有需要准备用户判断或异常升级时才加载 `rules/mv_human_gates.md`。
 
-Agent不得自行创建/修改一个写着 locked=true 的manifest来绕过 Final Gate。
+## Benchmark / Knowledge JIT
 
-任何非零退出码、缺 raw evidence/provenance、音频 SHA 不一致、歌词顺序不一致、任一行/Anchor/Event QA 非 PASS、SRT与timeline不一致、QA报告未seal、跨源冲突超阈值：
-`AUDIO_TIMELINE_PACKAGE_BLOCKED`。
+`knowledge/*` 是外部知识与实验层，不是 Runtime 默认上下文。
+- 新模型/新 Provider：只加载与当前假设有关的实验记录；
+- Director：少量 focused references；
+- First-frame / Dynamic：只加载与当前视觉风险相关的参考；
+- 历史成功 Prompt 不自动成为当前 Prompt 依赖。
 
-在 `AUDIO_TIMELINE_PACKAGE_LOCKED = YES` 之前：
-- 不进入正式 Natural Beat timing allocation；
-- 不进入 Director timing allocation；
-- 不进入 Picture Edit；
-- 不进入 Subtitle timing/render。
-
-进入剪辑时重新运行 Complete Package Gate，不允许剪辑模块临时重新猜时间轴。
-
-## Alignment Runtime Reproducibility Rule
-
-标准环境版本由：
-`tools/mv_audio_timeline/alignment_runtime.lock.json`
-锁定。
-
-当前主路线固定：
-- Python 3.11 recommended；
-- `xingyu-lyrics-aligner` 0.7.0，固定 Git commit；
-- WhisperX 3.8.6；
-- 固定中文 CTC align model identity。
-
-副交叉验证器固定：
-- `lyric-align` 0.3.0，固定 Git commit；
-- faster-whisper model identity记录在lock文件。
-
-环境建立/检查：
-`python tools/mv_audio_timeline/bootstrap_alignment_env.py install|doctor ...`
-
-缺引擎/缺模型/doctor失败必须返回 `AUDIO_ALIGNMENT_RUNTIME_BLOCKED`，不得切回 waveform guess。
-
-## MV Audio Timeline Regression Rule
-
-时间轴工具/规则/Workflow发生修改时，必须通过：
-- `python 04_HARNESS/tools/mv_audio_timeline/tests/test_package_tool.py`
-- `python 04_HARNESS/tools/mv_audio_timeline/tests/test_final_gate.py`
-- Python syntax check for all timing tools.
-
-当前回归范围至少覆盖：
-- raw evidence缺失 → FAIL；
-- diagnostic候选改名exact → FAIL；
-- BGM SHA变化 → FAIL；
-- repeated lyric occurrence保持顺序；
-- LRC offset转换正确；
-- 双源时间差超阈值 → FAIL；
-- 不完整Package → FAIL；
-- Anchor越出歌词窗 → FAIL；
-- 完整强证据Package → PASS并由Final Gate生成manifest。
-
-仓库 `.github/workflows/mv-audio-timeline-gate-tests.yml` 在相关代码/规则变更时运行同一套测试。CI未返回成功状态前，不得声称新改动已经通过CI；可以单独记录本地测试结果。
-
-## MV Benchmark JIT Rule
-
-`MV_BENCHMARK_LAYER.md` 是 External Knowledge，不是硬规则正文：
-- 新 Round：刷新最近7天轻量快照；
-- Director：只挑当前歌曲相关3–5个Focused works；
-- First-frame：只挑2–3个Beauty references；
-- Dynamic：只挑2–3个Director/Action references；
-- Final QA：只挑2–3个完成度/市场references。
-
-禁止因为Benchmark作者采用某个做法就直接升级为Locked Rule；必须经过本项目实验和用户验收。
+任何 Benchmark / Lesson 想进入长期 Rule，必须走 `knowledge/PROMOTION_POLICY.md`。
 
 ## Legacy Reference Policy
 
-旧Harness/复盘文件默认不参与Runtime。只有：
-1. 新模块缺必要细节；
-2. 需要追溯规则来源；
-3. 做迁移/回归测试；
-才加载。
+旧 Harness、Round、Prompt、QA 报告、Receipt 默认不参与正常 Runtime。
+只有以下情况读取：
+1. 排错；
+2. 迁移；
+3. 规则来源追溯；
+4. 回归测试。
 
-若旧文件与 `rules/*` 冲突，以当前权威 Rule/Workflow 为准，并记录待清理项。
+若旧文件与当前 Canonical Runtime / Rule 冲突，以当前权威层为准。
 
 ## Context Budget
 
 默认目标：
-- 启动层：≤4个核心文件；
-- 单模块执行：≤7个核心文件；
-- 排错/迁移才扩大上下文。
+- 启动：≤4 个核心文件；
+- 正常单任务：优先 ≤5 个核心文件；
+- 只有异常、迁移、研究时扩大上下文。
 
-任何新增文件必须明确属于 Workflow、Rule、Template、Knowledge、State 或 Documentation；无法归类则不要新增。
+新增文件前必须能明确回答：它属于 Workflow、Rule、Template、Knowledge、State、Tool 还是 Documentation。无法归类或不能改变执行结果/保留必要证据时，优先不新增。
