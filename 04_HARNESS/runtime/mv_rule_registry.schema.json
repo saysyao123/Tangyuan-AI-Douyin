@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MV Rule Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "rules"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "status", "scope", "enforcement_layer", "statement", "evidence", "model_validity"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^MV-RULE-[0-9]{3,}$"},
+          "name": {"type": "string"},
+          "status": {"enum": ["PROVEN", "TRIAL", "RETIRED"]},
+          "scope": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string"}
+          },
+          "enforcement_layer": {
+            "enum": ["RUNTIME", "VALIDATOR", "PROMPT", "PROVIDER_PARAMETER", "KNOWLEDGE_ONLY"]
+          },
+          "statement": {"type": "string"},
+          "failure_if_violated": {"type": "string"},
+          "prompt_cost": {"enum": ["NONE", "LOW", "MEDIUM", "HIGH"]},
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["summary", "cases"],
+            "properties": {
+              "summary": {"type": "string"},
+              "cases": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["ref", "result"],
+                  "properties": {
+                    "ref": {"type": "string"},
+                    "result": {"enum": ["SUPPORT", "CONTRADICT", "MIXED"]},
+                    "note": {"type": "string"}
+                  }
+                }
+              }
+            }
+          },
+          "model_validity": {
+            "type": "object",
+            "description": "A rule can be proven for one model generation and unverified for another.",
+            "additionalProperties": {
+              "enum": ["VALIDATED", "UNVERIFIED", "CONTRADICTED", "NOT_APPLICABLE"]
+            }
+          },
+          "supersedes": {"type": "array", "items": {"type": "string"}},
+          "retirement_reason": {"type": ["string", "null"]},
+          "last_reviewed": {"type": ["string", "null"], "format": "date"}
+        }
+      }
+    }
+  }
+}
