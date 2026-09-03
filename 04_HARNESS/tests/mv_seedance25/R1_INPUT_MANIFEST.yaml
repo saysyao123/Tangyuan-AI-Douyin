@@ -1,0 +1,97 @@
+schema_version: "1.0"
+status: K0_READY_PROVIDER_PROBE_REQUIRED
+round: R1_LEGACY_VS_LEAN
+provider_target: dola
+model_target: seedance-2.5
+
+purpose: >
+  Register the three exact K0 inputs required for the first Legacy-vs-Lean
+  comparison. The benchmark must use these exact image identities for both
+  prompt variants within each archetype.
+
+execution_rule:
+  all_inputs_required: true
+  same_k0_for_both_variants: true
+  asset_identity_required:
+    - asset_id
+    - sha256
+    - bytes
+    - provenance_kind
+    - locator_kind
+    - locator_value
+  authority: "actual K0 bytes > old prompt > old director prose"
+  block_when_missing: BENCHMARK_INPUT_BLOCKED
+
+historical_design_evidence:
+  source_project: "06_TESTS/MV/WEB_R3/30D_60/D01-B"
+  director_plan: "DIRECTOR_PLAN_v2.md"
+  video_qa: "VIDEO_SET_QA_v1.md"
+  note: >
+    Historical text and QA define parts of the test task, but the new generated
+    K0 set below is the actual R1 comparison authority.
+
+inputs:
+  A_FACE_HAND:
+    asset_id: K0-A_FACE_HAND
+    sha256: 5bd1cd35e531299cf572938f1323d05a297291e771cb5a7f9acba80230d4724e
+    bytes: 2006999
+    width: 941
+    height: 1672
+    format: PNG
+    locator_kind: conversation_attachment
+    locator_value: file_000000006a6881f69c8a7f547559d9d3
+    provenance_kind: generated
+    asset_record: "assets/K0-A_FACE_HAND.json"
+    status: READY
+    tested_condition: >
+      Near-face hand interaction is already staged at frame 0; face, raised hand,
+      lower hand, identity and small approach space remain readable.
+
+  B_MOVING_CAMERA:
+    asset_id: K0-B_MOVING_CAMERA
+    sha256: a27f2af990fc7a333f63772f8502dd0b8c637c02a52ace71bb800b08cac69783
+    bytes: 2075257
+    width: 941
+    height: 1672
+    format: PNG
+    locator_kind: conversation_attachment
+    locator_value: file_00000000555c81f5bb9dd8fdab67dd50
+    provenance_kind: generated
+    asset_record: "assets/K0-B_MOVING_CAMERA.json"
+    status: READY
+    tested_condition: >
+      Character is already in a walking phase; full-body travel direction and
+      near/mid/far courtyard geometry expose camera translation and parallax.
+
+  C_PHYSICS:
+    asset_id: K0-C_PHYSICS
+    sha256: 6734e163c8390c3504c19f2823395084bf1db9dbefa8114460553a6e574c57ed
+    bytes: 2065585
+    width: 941
+    height: 1672
+    format: PNG
+    locator_kind: conversation_attachment
+    locator_value: file_0000000009e081f5a5fcc28681c45c54
+    provenance_kind: generated
+    asset_record: "assets/K0-C_PHYSICS.json"
+    status: READY
+    tested_condition: >
+      One hand already releases water toward the basin while the second hand is
+      visible; the causal chain hand -> water -> impact -> ripple is explicit.
+
+k0_set_qa:
+  status: PASS_FOR_BENCHMARK
+  same_identity_family: true
+  same_wardrobe_family: true
+  same_world_family: true
+  obvious_blocking_generation_defect: false
+  denoise_required: false
+  note: >
+    Do not over-review minor aesthetic differences. These are controlled R1
+    benchmark anchors rather than final MV HG03 artwork.
+
+next_blocker: DOLA_LIVE_CAPABILITY_PROBE
+ready_condition: >
+  K0 identity is now locked. R1 generation may begin only after Dola capability
+  profile is live-probed and the same supported duration/parameters are bound to
+  Legacy and Lean rows within each comparison cell.

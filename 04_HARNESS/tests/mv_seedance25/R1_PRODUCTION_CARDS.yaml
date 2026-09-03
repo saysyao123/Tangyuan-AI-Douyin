@@ -1,0 +1,191 @@
+schema_version: "1.0"
+status: K0_BOUND_PROVIDER_PROBE_PENDING
+round: R1_LEGACY_VS_LEAN
+
+cards:
+  - schema_version: "1.0"
+    card_id: R1_A_FACE_HAND
+    beat_id: A_FACE_HAND
+    lyric_text: "benchmark semantic: restrained emotion becomes visible through hand-face interaction"
+    time_range: null
+    intent: >
+      Create a restrained but clearly readable emotional escalation in which the
+      near-face hand interaction already visible in K0 becomes the main expressive
+      event without sacrificing identity stability.
+    visual_event: >
+      Starting from K0-A's raised right hand, the hand completes one slow continuous
+      movement closer to the cheek/temple relationship while the eyes and head make
+      only a subtle supporting response; the action then settles instead of starting
+      a second event.
+    edit_role: HIT
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: K0-A_FACE_HAND
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Continue directly from the accepted K0. The already-raised right hand makes
+        one controlled near-face movement; the left hand remains secondary and the
+        head/eyes respond only enough to make the interaction readable.
+      camera_relationship: OBSERVE
+      camera_path: >
+        Stable medium-close observation with at most a gentle short approach; camera
+        motion must not compete with the hand-face event.
+      environment_feedback: >
+        Loose hair strands and garment edges may react softly to the existing air;
+        background stone and water remain quiet.
+      endpoint: >
+        Hand and head arrive at a calm readable resting relationship with a short
+        stable tail useful for trimming or holding.
+    hard_constraints:
+      - id: HC_A1
+        text: "Keep the same single character identity throughout the source."
+        reason: "Identity drift makes the benchmark result unusable."
+        failure_cost: HIGH
+      - id: HC_A2
+        text: "Do not introduce another human character."
+        reason: "Extra characters invalidate continuity and the comparison cell."
+        failure_cost: HIGH
+      - id: HC_A3
+        text: "The visible right hand must remain anatomically coherent during the main interaction."
+        reason: "Hand topology failure directly defeats the tested event."
+        failure_cost: HIGH
+    candidate_modules:
+      - FACE_HAND
+    risk_tags:
+      - identity_sensitive
+      - near_face_hand
+      - hand_topology
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+      provider_duration_binding: LIVE_PROBE_REQUIRED
+    status: READY_FOR_COMPILE
+
+  - schema_version: "1.0"
+    card_id: R1_B_MOVING_CAMERA
+    beat_id: B_MOVING_CAMERA
+    lyric_text: "benchmark semantic: the character keeps moving while the camera changes its relationship"
+    time_range: null
+    intent: >
+      Prove that the walking translation already visible in K0-B and camera
+      translation can remain physically legible at the same time without turning
+      into an orbit, jump cut or pose reset.
+    visual_event: >
+      The character continues the exact forward walking phase visible in K0-B while
+      the camera moves from a trailing rear-three-quarter relationship toward a
+      side/slightly-ahead relationship in one continuous spatial path.
+    edit_role: BRIDGE
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: K0-B_MOVING_CAMERA
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Continue the existing walk without stopping or restarting; preserve the
+        screen-travel direction and one continuous gait arc.
+      camera_relationship: OVERTAKE
+      camera_path: >
+        Begin from the actual K0 rear-three-quarter relation, translate forward
+        along a real lateral/forward path, reach the side, then finish slightly
+        ahead while maintaining readable distance change; this is not an orbit.
+      environment_feedback: >
+        Coat hem and hair respond to walking and existing air; repeated stone joints,
+        water-channel edges and doorway depth create visible parallax.
+      endpoint: >
+        Character remains in a clean stride phase while the camera has clearly
+        completed the overtake and offers a stable edit handoff.
+    hard_constraints:
+      - id: HC_B1
+        text: "Keep one continuous character identity and wardrobe."
+        reason: "Identity or costume drift invalidates camera-motion evaluation."
+        failure_cost: HIGH
+      - id: HC_B2
+        text: "Keep one continuous travel direction; do not reset the subject to a standing pose."
+        reason: "The benchmark tests motion continuity from K0."
+        failure_cost: HIGH
+      - id: HC_B3
+        text: "Camera movement must read as real translation rather than an in-place orbit."
+        reason: "This is the target camera-control failure mode."
+        failure_cost: HIGH
+    candidate_modules:
+      - CAMERA_PRECISION
+    risk_tags:
+      - moving_subject
+      - camera_translation
+      - gait_continuity
+      - parallax
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+      provider_duration_binding: LIVE_PROBE_REQUIRED
+    status: READY_FOR_COMPILE
+
+  - schema_version: "1.0"
+    card_id: R1_C_PHYSICS
+    beat_id: C_PHYSICS
+    lyric_text: "benchmark semantic: one simple physical cause creates a believable visible consequence"
+    time_range: null
+    intent: >
+      Test whether one explicit water-causality event can remain coherent when the
+      prompt is simplified, using the actual accepted K0-C as the authority.
+    visual_event: >
+      The water already leaving the raised palm in K0-C continues downward into the
+      stone basin, creates one readable impact and expanding ripple pattern, then
+      naturally decays while the character remains comparatively still.
+    edit_role: HOLD
+    duration_strategy: PRECISION_5_8
+    reference:
+      kind: K0_IMAGE
+      asset_id: K0-C_PHYSICS
+      actual_asset_is_authority: true
+    performance:
+      subject_action: >
+        Continue only the existing hand release. The raised palm opens enough to
+        finish releasing the held water while the lower hand remains secondary;
+        body and head motion stay minimal.
+      camera_relationship: HOLD
+      camera_path: >
+        Stable observational framing with only minimal compensation if necessary to
+        keep the falling water, impact point and ripple field visible.
+      environment_feedback: >
+        One causal chain only: hand release -> falling droplets/stream -> basin impact
+        -> expanding concentric ripples -> residual water motion settles.
+      endpoint: >
+        The release has completed; hands become quiet and the remaining basin ripples
+        decay naturally into a clean stable tail.
+    hard_constraints:
+      - id: HC_C1
+        text: "Preserve the same single character, two visible hands, basin and water interaction established by K0-C."
+        reason: "Object or topology substitution destroys the controlled causal setup."
+        failure_cost: HIGH
+      - id: HC_C2
+        text: "Only the water-release event may be the dominant physical event."
+        reason: "Competing events make the physics comparison ambiguous."
+        failure_cost: HIGH
+      - id: HC_C3
+        text: "Keep hand-water-basin contact topology physically coherent through the event."
+        reason: "Broken contact/topology is the main unusable failure mode."
+        failure_cost: HIGH
+    candidate_modules:
+      - PHYSICS
+    risk_tags:
+      - water_causality
+      - hand_water_contact
+      - topology
+      - ripple_residue
+    provider_notes:
+      provider: dola
+      model: seedance-2.5
+      benchmark_only: true
+      provider_duration_binding: LIVE_PROBE_REQUIRED
+    status: READY_FOR_COMPILE
+
+binding_rule: >
+  K0 references are now locked. Both LEGACY_FULL_SKELETON and
+  LEAN_CORE_PLUS_TRIGGERED_MODULE must use the exact same asset_id and SHA-256
+  for each card. Any K0 replacement creates a new benchmark version.

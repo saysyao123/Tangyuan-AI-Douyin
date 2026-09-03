@@ -1,0 +1,19 @@
+Use the uploaded reference image as the exact frame-0 state. Generate one continuous 5-second vertical cinematic shot.
+
+The woman is already walking forward at frame 0. Continue the existing gait naturally without stopping or restarting. Keep a physically coherent forward walk: alternating steps, stable body balance, natural arm swing, coat and hair responding to motion.
+
+Camera task: FOLLOW -> PARALLEL -> OVERTAKE.
+Start from the current rear three-quarter relationship. For the first beat, follow slightly behind. Then the camera accelerates forward with a small lateral displacement, reaches the woman's side, becomes briefly parallel, and finally moves slightly ahead of her while she continues in the same walking direction.
+
+The camera motion must be real spatial translation, not orbiting around the woman and not a fake zoom. Background stone edges, water channel and architecture should show clear parallax and changing perspective that proves the camera physically moved forward past the subject.
+
+The woman may make only a very small natural glance toward the camera as it reaches her side; her torso and walking direction remain forward. Do not turn the walk into a side-step, backward walk, pose, or stop.
+
+End state: the camera is slightly ahead, motion settles, and the woman is still walking naturally forward, leaving a clean moving tail for editing.
+
+Hard constraints:
+- preserve the same character identity, hairstyle, clothing and environment from the reference image;
+- keep one continuous forward walking direction from start to end;
+- execute real camera displacement with visible background parallax.
+
+No dialogue, narration, singing or music. Natural footsteps and light environmental sound only.
