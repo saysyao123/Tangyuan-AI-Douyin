@@ -1,8 +1,8 @@
 {
-  "source_url": "https://v.douyin.com/5fbdqTaJa5E/",
-  "fallback_url": "https://www.douyin.com/video/7676792655779705467",
-  "artifact_name": "zengzengyao-depth-anything-v2",
+  "source_url": "https://aweme.snssdk.com/aweme/v1/play/?video_id=v0300fg10000d9ji94vog65iflg2rolg&ratio=720p&line=0",
+  "fallback_url": "",
+  "artifact_name": "current-upload-21s-depth-anything-v2",
   "input_size": 518,
   "retention_days": 7,
-  "note": "Default DEPTH worker job. Future runs update this file only."
+  "note": "Temporary job reconstructed from the uploaded MP4's embedded public video id; process with the locked Depth Anything V2 Small cloud worker."
 }
