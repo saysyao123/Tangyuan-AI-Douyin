@@ -1,0 +1,8 @@
+{
+  "source_url": "https://v.douyin.com/5fbdqTaJa5E/",
+  "fallback_url": "https://www.douyin.com/video/7676792655779705467",
+  "artifact_name": "zengzengyao-depth-anything-v2",
+  "input_size": 518,
+  "retention_days": 7,
+  "note": "Default DEPTH worker job. Future runs update this file only."
+}
