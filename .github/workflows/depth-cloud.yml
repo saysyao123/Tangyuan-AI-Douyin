@@ -1,13 +1,13 @@
-name: Depth Cloud Test
+name: DEPTH Cloud Worker
 
 on:
   push:
     branches:
-      - test/depth-cloud-20260908
+      - depth-worker
     paths:
       - '.github/workflows/depth-cloud.yml'
-      - '06_TESTS/DEPTH_CLOUD/**'
-  workflow_dispatch:
+      - '06_TESTS/DEPTH_CLOUD/job.json'
+      - '06_TESTS/DEPTH_CLOUD/process_depth.py'
 
 permissions:
   contents: read
@@ -15,16 +15,34 @@ permissions:
 jobs:
   depth:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 180
 
     steps:
-      - name: Checkout test branch
+      - name: Checkout depth worker
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Load job config
+        run: |
+          python - <<'PY'
+          import json, os, re
+          cfg = json.load(open('06_TESTS/DEPTH_CLOUD/job.json', encoding='utf-8'))
+          vals = {
+              'SOURCE_URL': cfg['source_url'],
+              'FALLBACK_URL': cfg.get('fallback_url', ''),
+              'ARTIFACT_NAME': re.sub(r'[^A-Za-z0-9._-]+', '-', cfg.get('artifact_name', 'depth-anything-v2-output')).strip('-'),
+              'INPUT_SIZE': str(int(cfg.get('input_size', 518))),
+              'RETENTION_DAYS': str(max(1, min(90, int(cfg.get('retention_days', 7))))),
+          }
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as f:
+              for k, v in vals.items():
+                  f.write(f'{k}={v}\n')
+          print(vals)
+          PY
 
       - name: Install runtime
         run: |
@@ -48,19 +66,20 @@ jobs:
           print('checkpoint:', p)
           PY
 
-      - name: Download selected Douyin dance reference
+      - name: Download public reference video
         shell: bash
         run: |
           set -e
           python - <<'PY' || true
-          import requests
-          share = 'https://v.douyin.com/5fbdqTaJa5E/'
-          api = 'https://api.bugpk.com/api/douyin'
+          import os, requests
+          source = os.environ['SOURCE_URL']
           headers = {'User-Agent': 'Mozilla/5.0'}
-          r = requests.get(api, params={'url': share}, headers=headers, timeout=30)
+          if 'douyin.com' not in source:
+              raise RuntimeError('Skip Douyin parser for non-Douyin URL')
+          api = 'https://api.bugpk.com/api/douyin'
+          r = requests.get(api, params={'url': source}, headers=headers, timeout=30)
           r.raise_for_status()
           j = r.json()
-          print('parser code:', j.get('code'), j.get('msg'))
           data = j.get('data') or {}
           video = data.get('url')
           if not video:
@@ -75,25 +94,27 @@ jobs:
                   for chunk in vr.iter_content(1024 * 1024):
                       if chunk:
                           f.write(chunk)
-          print('downloaded input.mp4')
+          print('downloaded input.mp4 through public parser')
           PY
 
           if [ ! -s input.mp4 ]; then
-            echo 'Parser fallback: yt-dlp'
-            yt-dlp --no-playlist -o input.mp4 'https://www.douyin.com/video/7676792655779705467'
+            TARGET="$SOURCE_URL"
+            if [ -n "$FALLBACK_URL" ]; then TARGET="$FALLBACK_URL"; fi
+            echo "Parser fallback: yt-dlp $TARGET"
+            yt-dlp --no-playlist --merge-output-format mp4 -o input.mp4 "$TARGET"
           fi
 
           test -s input.mp4
           ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,r_frame_rate -of json input.mp4
 
-      - name: Generate high-detail depth videos
+      - name: Generate high-detail DEPTH outputs
         run: |
           mkdir -p depth_out
           python 06_TESTS/DEPTH_CLOUD/process_depth.py \
             --input input.mp4 \
             --checkpoint Depth-Anything-V2/checkpoints/depth_anything_v2_vits.pth \
             --outdir depth_out \
-            --input-size 518
+            --input-size "$INPUT_SIZE"
 
       - name: Encode browser-friendly H264 outputs
         run: |
@@ -102,13 +123,13 @@ jobs:
           ffmpeg -y -i depth_out/original_vs_depth_temporal.mp4 -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -movflags +faststart depth_out/original_vs_depth_h264.mp4
           ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,r_frame_rate -of json depth_out/depth_v2_temporal_h264.mp4 | tee depth_out/report.json
 
-      - name: Upload depth results
+      - name: Upload DEPTH results
         uses: actions/upload-artifact@v4
         with:
-          name: zengzengyao-depth-anything-v2
+          name: ${{ env.ARTIFACT_NAME }}
           path: |
             depth_out/depth_v2_raw_h264.mp4
             depth_out/depth_v2_temporal_h264.mp4
             depth_out/original_vs_depth_h264.mp4
             depth_out/report.json
-          retention-days: 7
+          retention-days: ${{ env.RETENTION_DAYS }}
