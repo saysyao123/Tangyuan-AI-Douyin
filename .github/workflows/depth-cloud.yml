@@ -1,0 +1,114 @@
+name: Depth Cloud Test
+
+on:
+  push:
+    branches:
+      - test/depth-cloud-20260908
+    paths:
+      - '.github/workflows/depth-cloud.yml'
+      - '06_TESTS/DEPTH_CLOUD/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  depth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          pip install opencv-python-headless matplotlib requests huggingface_hub yt-dlp
+
+      - name: Fetch Depth Anything V2 Small
+        run: |
+          git clone --depth 1 https://github.com/DepthAnything/Depth-Anything-V2.git
+          mkdir -p Depth-Anything-V2/checkpoints
+          python - <<'PY'
+          from huggingface_hub import hf_hub_download
+          p = hf_hub_download(
+              repo_id='depth-anything/Depth-Anything-V2-Small',
+              filename='depth_anything_v2_vits.pth',
+              local_dir='Depth-Anything-V2/checkpoints'
+          )
+          print('checkpoint:', p)
+          PY
+
+      - name: Download selected Douyin dance reference
+        shell: bash
+        run: |
+          set -e
+          python - <<'PY' || true
+          import requests
+          share = 'https://v.douyin.com/5fbdqTaJa5E/'
+          api = 'https://api.bugpk.com/api/douyin'
+          headers = {'User-Agent': 'Mozilla/5.0'}
+          r = requests.get(api, params={'url': share}, headers=headers, timeout=30)
+          r.raise_for_status()
+          j = r.json()
+          print('parser code:', j.get('code'), j.get('msg'))
+          data = j.get('data') or {}
+          video = data.get('url')
+          if not video:
+              backup = data.get('video_backup') or []
+              if isinstance(backup, list) and backup:
+                  video = backup[0]
+          if not video:
+              raise RuntimeError('No video URL returned by parser')
+          with requests.get(video, headers=headers, stream=True, timeout=120) as vr:
+              vr.raise_for_status()
+              with open('input.mp4', 'wb') as f:
+                  for chunk in vr.iter_content(1024 * 1024):
+                      if chunk:
+                          f.write(chunk)
+          print('downloaded input.mp4')
+          PY
+
+          if [ ! -s input.mp4 ]; then
+            echo 'Parser fallback: yt-dlp'
+            yt-dlp --no-playlist -o input.mp4 'https://www.douyin.com/video/7676792655779705467'
+          fi
+
+          test -s input.mp4
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,r_frame_rate -of json input.mp4
+
+      - name: Generate high-detail depth videos
+        run: |
+          mkdir -p depth_out
+          python 06_TESTS/DEPTH_CLOUD/process_depth.py \
+            --input input.mp4 \
+            --checkpoint Depth-Anything-V2/checkpoints/depth_anything_v2_vits.pth \
+            --outdir depth_out \
+            --input-size 518
+
+      - name: Encode browser-friendly H264 outputs
+        run: |
+          ffmpeg -y -i depth_out/depth_anything_v2_raw.mp4 -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -movflags +faststart depth_out/depth_v2_raw_h264.mp4
+          ffmpeg -y -i depth_out/depth_anything_v2_temporal.mp4 -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -movflags +faststart depth_out/depth_v2_temporal_h264.mp4
+          ffmpeg -y -i depth_out/original_vs_depth_temporal.mp4 -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -movflags +faststart depth_out/original_vs_depth_h264.mp4
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,r_frame_rate -of json depth_out/depth_v2_temporal_h264.mp4 | tee depth_out/report.json
+
+      - name: Upload depth results
+        uses: actions/upload-artifact@v4
+        with:
+          name: zengzengyao-depth-anything-v2
+          path: |
+            depth_out/depth_v2_raw_h264.mp4
+            depth_out/depth_v2_temporal_h264.mp4
+            depth_out/original_vs_depth_h264.mp4
+            depth_out/report.json
+          retention-days: 7
