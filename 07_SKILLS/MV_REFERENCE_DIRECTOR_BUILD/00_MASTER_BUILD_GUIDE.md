@@ -3,93 +3,92 @@
 > Repository: `saysyao123/Tangyuan-AI-Douyin`
 > Workspace: `07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/`
 > Status: **ACTIVE / BUILDING**
-> Role: 本文件是构建阶段唯一总控事实源（Single Source of Truth）。
+> Role: 构建阶段唯一总控事实源。
 
 ---
 
 # 0. 使用规则
 
-新对话 / 换模型 / 上下文过长时：
-
-1. 先读本文件；
-2. 找 `Current Active Module`；
-3. 只读该模块明确指向的 Evidence；
-4. `[x]` 只代表已有真实证据 / 用户确认；
-5. 完成当前项后先更新本文件，再进入下一项；
-6. 每次只推进一个 Active Module；
-7. 单次成功不能直接 Promote 为 Skill 规则。
-
-状态：`EXPERIMENT → VALIDATED → PROMOTED → RETIRED`。
+1. 新对话先读本文件。
+2. 找 `Current Active Module`，只读取对应 Evidence。
+3. `[x]` 必须有真实证据 / 用户确认。
+4. 每次只推进一个 Active Module。
+5. 单次成功不能直接 Promote。
+6. 状态：`EXPERIMENT → VALIDATED → PROMOTED → RETIRED`。
 
 ---
 
 # 1. 当前生产目标
 
-建立一套稳定、简单、可恢复的**动画 MV Reference-First Skill**。
+建立稳定、简单、可恢复的**动画 MV Reference-First Skill**。
 
-当前简化路线：
-
-`参考账号/歌库 → 抖音参考视频 → 用户下载提供 → BGM/歌词/卡点核对 → 决定 5–15s 合适时长 → Reference 拆解 → 动画化导演翻译 → K0 首帧 → 动态提示词 → Dola/Seedance 2.5 I2V → QA → 单变量迭代 → Lock`
+`核心账号/歌库 → 具体抖音参考视频 → 用户下载提供 → BGM/歌词/卡点核对 → 决定 5–15s 合适时长 → Reference 拆解 → 动画化导演翻译 → K0 → Dynamic Prompt → Dola/Seedance 2.5 I2V → QA → 单变量迭代 → Lock`
 
 ---
 
 # 2. 已锁定长期原则
 
-## 2.1 内容与时长
+## 2.1 时长
 
-- 歌词视觉命中 > 轻叙事连续 > 炫技镜头。
-- 单段生成按内容在 **5–15s** 灵活决定，不固定 5s 或 15s。
-- 5–7s：单一情绪/动作/视觉事件。
-- 8–10s：一个完整小段。
-- 10–15s：起势→发展→小高潮→收束。
-- 长 MV 只拼已 QA PASS 的 Segment。
+- 歌词视觉命中 > 轻叙事连续 > 炫技。
+- 单段按内容在 **5–15s** 灵活决定。
+- 5–7s：单一事件；8–10s：完整小段；10–15s：起势→发展→高潮→收束。
 
 ## 2.2 动画视觉
 
-默认不走真人角色路线。
+默认不走真人路线。
 
-- 人物：One Piece 式高辨识度轮廓、姿态张力、动作表现力；不复制具体角色。
-- 场景：新海诚式明亮、治愈、通透、天空/天气/光影/空气感；不复制具体场景。
-- 怪物/物品：吉卜力式温柔奇幻、灵性、陪伴感；不复制具体角色/道具。
+- 人物：One Piece 式高辨识轮廓 / 姿态张力 / 动作表现力，不复制具体角色。
+- 场景：新海诚式明亮 / 治愈 / 通透 / 天空天气光影，不复制具体场景。
+- 怪物 / 物品：吉卜力式温柔奇幻 / 灵性 / 陪伴感，不复制具体角色或道具。
 
-## 2.3 Douyin Reference
+## 2.3 核心账号与 Song Pool｜HARD
 
-- 抖音视频负责：选歌、卡点、动作、镜头、能量曲线、Peak、Ending。
-- 迁移 Structure，不迁移真人身份、脸、原服装、原场景和具体视觉表达。
-- Reference 源视频不限制 5/15s。
-- 用户选中后下载并提供视频；Agent 再负责 BGM/歌词/片段/卡点和拆解。
+- 用户提供的 **9 个核心账号全部进入 Song Pool**。
+- `Primary Role` 只决定权重和解释方式，不决定歌曲是否纳入。
+- 视觉账号使用的歌曲同样是选歌证据；有时“歌曲 × 画面适配”价值更高。
+- 同一 `SONG_FAMILY` 跨核心账号出现时提高信号。
+- 数据更新采用 **BEST EFFORT**：能更新到哪里就到哪里，不追求伪最新。
+- 搜不到更新作品 = `INDEX_PENDING`，不是“没发”。
+- supplemental / 汽水音乐只做佐证，不替代核心账号。
+- Work-level 原始事实源继续使用历史 `works.csv`，避免复制两套 89 行原始数据。
 
-## 2.4 当前生成入口
+## 2.4 Douyin Reference
 
-- 默认：Dola / Seedance 2.5 Image-to-Video。
-- 最简正式输入：**K0 + Dynamic Prompt**。
-- 参考图默认 ≤3–5；K0 单图够用就不补图。
-- 不恢复复杂多模态绑定、大量参考图堆叠、旧 Dola Video Reference 主线。
+- 负责：选歌、卡点、动作、镜头、能量曲线、Peak、Ending。
+- 迁移 Structure，不迁移真人身份 / 脸 / 原服装 / 原场景 / 具体视觉表达。
+- Reference 源时长不限 5/15s。
+- 用户选中**具体视频**后下载提供；此后才锁 AUDIO_VERSION。
 
-## 2.5 K0 / Motion
+## 2.5 当前生成入口
 
-- K0 = 可表演的 0 秒动态锚点，不是漂亮静帧。
-- 位移必须有抬脚→落脚→蹬地→重心转移→加减速；禁止无足部逻辑滑行/漂移。
-- 脚步不重要时优先稳定站位 + 转髋/转肩/躯干/手势/视线。
+- Dola / Seedance 2.5 Image-to-Video。
+- 默认最简输入：**K0 + Dynamic Prompt**。
+- refs ≤3–5；K0 单图够用就不补图。
+
+## 2.6 K0 / Motion
+
+- K0 = 可表演 0 秒动态锚点。
+- 禁止无足部逻辑滑行 / 漂移；位移需抬脚→落脚→蹬地→重心转移→加减速。
 - Prompt 正向目标优先，不因单次失败无限加禁止项。
 
-## 2.6 DEPTH
+## 2.7 DEPTH
 
-- DEPTH 是未来 Motion Reference Adapter，不是当前必经步骤。
+- 未来 Motion Reference Adapter，不是当前必经。
 - 已验证：GitHub Actions + Depth Anything V2 Small + Raw / Temporal / Compare。
 
 ---
 
-# 3. Master Flow v1.0
+# 3. Master Flow v1.1
 
 ```text
-M0  SONG POOL / REFERENCE ACCOUNT
+M0  CORE ACCOUNT MUSIC DATABASE / SONG POOL
 ↓
-M1  DOUYIN REFERENCE VIDEO SELECTION
+M1  CORE DOUYIN VIDEO CANDIDATE SELECTION
 ↓
 G1  HUMAN REFERENCE GATE
 ↓
-M2  USER PROVIDES DOWNLOADED REFERENCE VIDEO
+M2  USER DOWNLOADS & PROVIDES SELECTED VIDEO
 ↓
 M3  BGM / LYRICS / SEGMENT / BEAT VERIFICATION
 ↓
@@ -103,261 +102,144 @@ M7  K0 FIRST FRAME
 ↓
 G2  HUMAN K0 GATE
 ↓
-M8  DYNAMIC PROMPT COMPILATION
+M8  DYNAMIC PROMPT
 ↓
-M9  GENERATION ADAPTER
-    Current = Dola / Seedance 2.5 I2V
-    Default = K0 + Prompt, refs ≤3–5
+M9  DOLA / SEEDANCE 2.5 I2V
 ↓
-M10 5–15s SEGMENT GENERATION
+M10 SEGMENT GENERATION
 ↓
-M11 TECHNICAL QA
+M11 TECH QA
 ↓
-M12 HUMAN VIDEO QA
+M12 HUMAN QA
 ↓
-PASS → SEGMENT LOCK
-FAIL → FAILURE CLASSIFY → ONE-VARIABLE ITERATION
+PASS → LOCK
+FAIL → CLASSIFY → ONE-VARIABLE ITERATION
 ↓
-M13 ASSEMBLY（multi-segment only）
+M13 ASSEMBLY（if multi-segment）
 ↓
-M14 FINAL QA / FINAL LOCK
+M14 FINAL QA / LOCK
 ```
 
-Optional：`Primary Motion Reference → DEPTH → Temporal Motion → future Video/Motion Reference Adapter`
-
-Learning：`Production Evidence → EXPERIMENT → VALIDATED → Cross-project → PROMOTED`
+Optional：`Selected Reference → DEPTH → Temporal Motion → future Motion/Video Reference Adapter`。
 
 ---
 
-# 4. Human Gate 最小集合
+# 4. Human Gate
 
-1. **Reference Gate**：强制，用户选 Primary Reference。
-2. **Audio/Segment Gate**：条件触发，只有版本/剪辑段有真实歧义时停。
-3. **K0 Gate**：强制，确认视觉/角色/场景/动作入口。
+1. **Reference Gate**：强制；用户打开具体核心账号作品，选择要下载的一条。
+2. **Audio / Segment Gate**：条件触发；仅版本或切段有真实歧义时停。
+3. **K0 Gate**：强制。
 4. **Video QA Gate**：强制，只问：
-   - 画面明显好看吗？
-   - 歌词/情绪明显命中吗？
-   - 动作与镜头稳定自然吗？
+   - 好看吗？
+   - 歌词 / 情绪命中吗？
+   - 动作 / 镜头自然吗？
    - 值得重复生产吗？
 
-技术项优先交程序。
-
 ---
 
-# 5. 失败恢复
+# 5. Skill 构建清单
 
-分类：
+## Phase A｜产品 / Flow
+- [x] A00 逐段构建 Skill。
+- [x] A01 Reference-First。
+- [x] A02 Reference / DEPTH / Visual 分层。
+- [x] A03 oil-skill-creator 产品化方法。
+- [x] A04 总控工作区。
+- [x] A05 Master Flow 边界。
+- [ ] A06 最终 Skill 名称 / 触发 / 反向边界。
 
-- `S` Semantic
-- `R` Reference
-- `D` Director
-- `K` K0
-- `P` Prompt
-- `G` Generation
-
-规则：一次只改一个主要变量；回退到最近责任层；已 LOCKED 上游不因下游小问题重做。
-
----
-
-# 6. Skill 构建清单
-
-## Phase A｜产品与流程
-
-- [x] A00｜逐段构建 Skill。
-- [x] A01｜Reference-First。
-- [x] A02｜Douyin Reference / DEPTH / Visual 分层。
-- [x] A03｜采用 oil-skill-creator 产品化方法。
-- [x] A04｜建立总控工作区。
-- [x] A05｜Master Flow 边界确认。
-- [ ] A06｜最终 Skill 名称 / 触发范围 / 反向边界。
-
-## Phase B｜M0 Song Pool / Reference Account
-
-- [x] B00｜恢复历史参考账号 / 选歌数据库。
-- [x] B01｜区分可靠历史身份与需刷新趋势。
-- [x] B02｜定义数据库最小字段与可靠性状态。
-- [x] B03｜定义选歌原则：动画治愈适配、卡点可读、5–15s 可切、动画化潜力。
-- [x] B04｜建立恢复 + Current Watch Pool。
-- [x] B05｜用户确认：每轮最多 3 个候选，展示歌曲/来源/直链/动画适配/建议时长/一句话理由。
-- [ ] B06｜核心账号最新直接作品 Fresh Refresh。
-  - 当前：`PARTIAL / CORE INDEX PENDING`
-  - 已完成公开平台/补充信号刷新；不能冒充核心账号证据。
-- [ ] B07｜Promote 稳定选歌规则。
+## Phase B｜Core Account Music Database
+- [x] B00 恢复 9 个核心账号。
+- [x] B01 恢复历史 work-level 数据。
+- [x] B02 数据可靠性 / Song Family / Audio Version 分层。
+- [x] B03 选歌原则：动画治愈 / 卡点 / 5–15s / 动画化潜力。
+- [x] B04 所有核心账号 `music_pool = YES`；Primary Role 只影响权重。
+- [x] B05 统计 2026-08-10～08-17 历史抓取窗：89 works；8 个账号有作品，DYCORE09 为 data gap。
+- [x] B06 Best-Effort 数据库更新：逐账号处理，明确覆盖与缺口；不追求同步最新。
+- [ ] B07 Promote 稳定选歌规则（待本轮实际 Reference Gate 验证）。
 
 Evidence：
 - `01_REFERENCE_ACCOUNT_REGISTRY.md`
 - `02_SONG_POOL_RECOVERY.csv`
-- `03_FRESH_REFRESH_2026-09-09.md`
+- `test/mv-web-r3/06_TESTS/MV/WEB_R3/database/works.csv`
 
-## Phase C｜M1–M2 Reference Selection / Handoff
+## Phase C｜Reference Selection / Handoff
+- [x] C00 候选从 Core Song Pool 产生。
+- [x] C01 每轮最多 3 个 Primary Candidates。
+- [x] C02 每候选提供：核心账号 / 直链 / 时长 / 跨账号证据 / 动画适配 / Risk。
+- [ ] C03 Human Reference Gate。
+- [ ] C04 用户下载后的标准交接。
+- [ ] C05 真实试跑。
+- [ ] C06 Promote。
 
-- [ ] C00｜候选筛选输入。
-- [ ] C01｜最多 3 个候选。
-- [ ] C02｜链接/时长/Action Arc/Camera/Lyric Fit/Risk。
-- [ ] C03｜Human Reference Gate。
-- [ ] C04｜用户下载后的标准交接。
-- [ ] C05｜真实试跑。
-- [ ] C06｜Promote。
+Evidence：`04_SELECTION_ROUND_01.md`
 
-## Phase D｜M3 Audio / Lyrics / Beat
+## Phase D｜Audio / Lyrics / Beat
+- [ ] D00–D06：核对目标 → 技术探测 → Gate → 标准输出 → 实测 → 脚本化判断 → Promote。
 
-- [ ] D00｜核对目标。
-- [ ] D01｜时长/格式/BGM/歌词位置/Beat。
-- [ ] D02｜Audio/Segment Gate。
-- [ ] D03｜标准输出。
-- [ ] D04｜真实试跑。
-- [ ] D05｜判断脚本化。
-- [ ] D06｜Promote。
+## Phase E｜Duration
+- [ ] E00–E04：5–15s 判断规则 → 三档验证 → 服从歌词/卡点/动作 → 实例 → Promote。
 
-## Phase E｜M4 Duration
+## Phase F｜Reference Deconstruction
+- [ ] F00–F06：最小 Motion Map → 动作/重心/Camera/Energy/Ending → Copy Boundary → 实拆 → 删除装饰字段 → Human Review → Promote。
 
-- [ ] E00｜5–15s 判断规则。
-- [ ] E01｜5–7 / 8–10 / 10–15 三档验证。
-- [ ] E02｜时长服从歌词/卡点/动作任务。
-- [ ] E03｜真实案例。
-- [ ] E04｜Promote。
+## Phase G｜Animation Director
+- [ ] G00–G06：Lyrics + Motion → Animation Director → 三类审美职责 → 原创边界 → 最小导演输出 → 实测 → Review/Promote。
 
-## Phase F｜M5 Reference Deconstruction
+## Phase H｜K0
+- [ ] H00–H06：K0 定义 → 动态锚点字段 → 动画默认 → 真图 → Gate → 改善验证 → Promote。
 
-- [ ] F00｜Motion/Director Map 最小字段。
-- [ ] F01｜动作/重心/手势/Camera/Energy/Ending。
-- [ ] F02｜Structure Transfer / Copy Boundary。
-- [ ] F03｜真实拆解。
-- [ ] F04｜删除装饰字段。
-- [ ] F05｜用户确认可指导动画导演。
-- [ ] F06｜Promote。
+## Phase I｜Dynamic Prompt
+- [ ] I00–I06：Reference + Director + K0 编译 → 最小结构 → 卡点/动作链/Camera/Physics/Ending → 正向优先 → 无滑行 → 实测/Promote。
 
-## Phase G｜M6 Animation Director
-
-- [ ] G00｜Lyrics + Motion → Animation Director。
-- [ ] G01｜人物/场景/怪物物品三类审美职责。
-- [ ] G02｜避免复制具体受保护表达。
-- [ ] G03｜最小导演输出。
-- [ ] G04｜真实试跑。
-- [ ] G05｜用户确认。
-- [ ] G06｜Promote。
-
-## Phase H｜M7 K0
-
-- [ ] H00｜K0 定义。
-- [ ] H01｜Current State / Motion Entry / Weight / Camera / Secondary Motion。
-- [ ] H02｜动画角色/场景默认。
-- [ ] H03｜真实 K0。
-- [ ] H04｜Human K0 Gate。
-- [ ] H05｜验证对视频改善。
-- [ ] H06｜Promote。
-
-## Phase I｜M8 Dynamic Prompt
-
-- [ ] I00｜从 Reference + Director + K0 编译。
-- [ ] I01｜最小结构。
-- [ ] I02｜卡点/动作链/Camera/Physics/Ending。
-- [ ] I03｜正向目标优先。
-- [ ] I04｜无滑行/重心链。
-- [ ] I05｜真实验证。
-- [ ] I06｜Promote。
-
-## Phase J｜M9–M10 Generation
-
-- [ ] J00｜Dola/Seedance 2.5 I2V Adapter。
-- [ ] J01｜最简输入 K0 + Prompt。
-- [ ] J02｜refs ≤3–5。
-- [ ] J03｜真实 5–15s 生成。
-- [ ] J04｜记录参数/Evidence。
-- [ ] J05｜Adapter 可替换性。
-- [ ] J06｜Promote。
+## Phase J｜Generation
+- [ ] J00–J06：Dola/Seedance 2.5 Adapter → K0+Prompt → refs≤3–5 → 真实5–15s → Evidence → 可替换性 → Promote。
 
 ## Phase K｜QA / Iteration
-
-- [ ] K00｜Human QA 四问。
-- [ ] K01｜Technical QA。
-- [ ] K02｜S/R/D/K/P/G 归因。
-- [ ] K03｜最近责任层回退。
-- [ ] K04｜单变量迭代。
-- [ ] K05｜真实 QA→Iteration→QA。
-- [ ] K06｜Promote。
+- [ ] K00–K06：四问 → Tech QA → S/R/D/K/P/G → 最近层回退 → 单变量 → 实测闭环 → Promote。
 
 ## Phase L｜Assembly
-
-- [ ] L00｜只拼 PASS/LOCKED Segment。
-- [ ] L01｜音频/人物/场景/色调/情绪/接缝/Ending QA。
-- [ ] L02｜Locked Segment 不被无关修改牵连。
-- [ ] L03｜多段实测后 Promote。
+- [ ] L00–L03：只拼 LOCKED → 连续性 QA → 不牵连已锁段 → 多段实测 Promote。
 
 ## Phase M｜DEPTH Adapter
-
-- [ ] M00｜DEPTH 可选。
-- [ ] M01｜DAV2 Small 路线迁移。
-- [ ] M02｜Raw/Temporal/Compare。
-- [ ] M03｜Video/Motion Reference 接入条件。
-- [ ] M04｜不支持时自动跳过。
-- [ ] M05｜不污染 I2V 主线。
-- [ ] M06｜Promote。
-
-状态：`VALIDATED`（转换链已实测；Skill 集成未完成）。
+- [ ] M00–M06：可选 → DAV2 Small → Raw/Temporal/Compare → 接入条件 → 自动跳过 → 不污染 I2V → Promote。
+- 当前转换链：`VALIDATED / Skill integration pending`。
 
 ## Phase N｜Skill IA
-
-- [ ] N00｜名称/触发范围。
-- [ ] N01｜最小 SKILL.md。
-- [ ] N02｜只创建稳定 references。
-- [ ] N03｜只创建必要 scripts。
-- [ ] N04｜唯一事实源。
-- [ ] N05｜弱模型可读性。
+- [ ] N00–N05：名称/触发 → 最小 SKILL.md → 稳定 references → 必要 scripts → 唯一事实源 → 弱模型。
 
 ## Phase O｜Full Real Project
-
-- [ ] O00｜从更新歌库选全新歌曲。
-- [ ] O01｜Reference Gate。
-- [ ] O02｜BGM/Segment Lock。
-- [ ] O03｜K0 Gate。
-- [ ] O04｜真实 5–15s 生成。
-- [ ] O05｜QA + 单变量迭代。
-- [ ] O06｜PASS 或明确失败。
+- [ ] O00–O06：新歌 → Reference Gate → Audio Lock → K0 Gate → 5–15s → QA/Iteration → PASS/明确失败。
 
 ## Phase P｜oil-skill-creator Evaluation
-
-- [ ] P00｜P0/P1/P2 Review。
-- [ ] P01｜结构/重复/弱模型/宿主检查。
-- [ ] P02｜evals/evals.json。
-- [ ] P03｜with_skill vs without_skill/old_skill。
-- [ ] P04｜客观/主观分离。
-- [ ] P05｜用户 Human Review。
-- [ ] P06｜整改与回归。
+- [ ] P00–P06：Review → 结构/弱模型 → evals → with/without → 客观/主观 → Human Review → 回归。
 
 ## Phase Q｜Open Source
-
-- [ ] Q00｜排除单次项目/失败实验/个人路径。
-- [ ] Q01｜只保留 Skill 必需内容。
-- [ ] Q02｜README/安装/兼容/数据边界。
-- [ ] Q03｜严格校验。
-- [ ] Q04｜发布。
-- [ ] Q05｜干净环境复跑。
+- [ ] Q00–Q05：清理单次资产 → 最小 Skill → README → 校验 → 发布 → 干净环境复跑。
 
 ---
 
-# 7. Current Active Module
+# 6. Current Active Module
 
-**ACTIVE MODULE：Phase B / B06｜核心参考账号 Fresh Refresh**
+**ACTIVE MODULE：Phase C / C03｜Human Reference Gate**
 
-当前真实状态：
+当前交付：`04_SELECTION_ROUND_01.md`
 
-- 核心账号身份/角色：已恢复。
-- 2026-09-09 平台/补充公开信号：已刷新。
-- 核心账号 9 月新作品：公开索引不足，标 `INDEX_PENDING`，不能冒充已验证。
-- 当前优先 Recheck：
-  1. 《茶花开了，该回家了》
-  2. 《雀跃》
-  3. 《小半》
+本轮 Primary Candidates：
 
-下一步：继续获得核心账号直接 Reference；一旦有足够直接证据，完成 B06 → B07，再进入 Phase C Human Reference Gate。
+1. `Summer Love / 爱在盛夏`｜Aura + XIANGJISHI
+2. `爱让人脑袋空空`｜乐♩青春 + Aura + Lynne小凌 + 火乐烁
+3. `向山河林响`｜火乐烁
+
+用户实际打开具体抖音作品：
+
+- 有合适 → 选定一条并下载发回 → C04 / D00。
+- 都不合适 → 从完整 Core Song Pool 输出 Round 02 三条；不退回随机平台榜。
 
 ---
 
-# 8. 恢复协议
+# 7. 恢复协议
 
-真实项目后续建立 `PROJECT_STATE`，最低记录：Project / Song / Reference Account / Primary Reference / Reference File / BGM Segment / Target Duration / Current Stage / K0 / Prompt Version / Generation Version / QA / Next Action。
+真实项目后续 `PROJECT_STATE` 至少记录：Project / Song / Core Account / Primary Reference / Reference File / Audio Version / BGM Segment / Target Duration / Current Stage / K0 / Prompt Version / Generation Version / QA / Next Action。
 
 状态：`PENDING / ACTIVE / GATED / LOCKED / REWORK`。
-
-实验不会自动修改 Skill；只有跨任务成立的规则才 Promote。
