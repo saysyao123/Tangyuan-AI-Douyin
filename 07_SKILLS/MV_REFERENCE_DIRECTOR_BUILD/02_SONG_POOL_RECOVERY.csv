@@ -1,15 +1,30 @@
-song_family,source_layer,historical_signal_date,current_public_signal_date,visual_fit_0_10,animation_fit_0_10,segment_5_15s_fit,saturation_risk,status,audio_version_status,evidence_url,note
-雨后轻风有香,HISTORICAL_RADAR,2026-08-24,,10,10,HIGH,LOW_MEDIUM,HISTORICAL_RECHECK,NEED_RELOCK,,旧A3优先候选；自然/治愈意象极强；必须重新检查核心账号近期作品
-循迹,HISTORICAL_RADAR,2026-08-24,,8,9,HIGH,MEDIUM,HISTORICAL_RECHECK,NEED_RELOCK,,旧A3速度候选；人物情绪与风景释放适配；需重新确认当前性
-甲乙丙丁,HISTORICAL_RADAR,2026-08-24,2026-09-09,8,8,HIGH,MEDIUM_HIGH,PLATFORM_WATCH,VERSION_AMBIGUOUS,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7188047799517904953,当前汽水热歌推荐仍出现；旧热度不继承；继续观察但不优先
-我不难过,HISTORICAL_RADAR,2026-08-24,,8,8,HIGH,MEDIUM,HISTORICAL_RECHECK,NEED_RELOCK,,经典复热历史候选；适合克制情绪动画MV
-第57次取消发送,HISTORICAL_PLUS_CURRENT_DIRECT,2026-08-24,2026-09-09,6,6,HIGH,HIGH,CURRENT_DIRECT_WATCH,NEED_RELOCK,https://www.douyin.com/video/7682676133762824666,9月6-7日仍有直接手势舞/舞蹈作品；趋势仍在但格式不匹配且饱和高；不优先
-我怀念的,HISTORICAL_PLUS_CURRENT_PLATFORM,2026-08-24,2026-09-09,8,9,HIGH,MEDIUM,CURRENT_CORROBORATED,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7203983736064622592,历史与当前平台均有信号；需要核心账号直接作品再进入Gate
-小半,CURRENT_PLATFORM_ONLY,,2026-09-09,9,9,HIGH,UNKNOWN,CORE_RECHECK_PRIORITY_3,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7200303561195061287,当前多个持续更新歌单出现；情绪留白和动画化潜力高；缺核心账号直接Reference
-偏爱,CURRENT_PLATFORM_ONLY,,2026-09-09,8,8,HIGH,UNKNOWN,PLATFORM_WATCH,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7203983736064622592,当前持续更新热歌单；情绪明确；需检查是否适合治愈动画翻译
-来不及爱你,CURRENT_PLATFORM_ONLY,,2026-09-09,8,8,HIGH,UNKNOWN,PLATFORM_WATCH,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7203983736064622592,当前平台候选；需核心参考账号直接作品
-茶花开了，该回家了,CURRENT_PLATFORM_PLUS_VIRAL,,2026-09-09,10,10,HIGH,MEDIUM,CORE_RECHECK_PRIORITY_1,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7200303561195061287,当前多份汽水热歌单仍出现；9月存在“井柏然进行曲”走路卡点二创信号；自然/归途/步法适配高；缺核心账号直接Reference
-雀跃,CURRENT_PLATFORM_ONLY,,2026-09-09,9,9,HIGH,UNKNOWN,CORE_RECHECK_PRIORITY_2,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7200303561195061287,当前多个持续更新歌单出现；明亮释放类动画适配高；需直接Reference证据
-雨爱,CURRENT_PLATFORM_ONLY,,2026-09-09,10,10,HIGH,UNKNOWN,PLATFORM_WATCH,NEED_RELOCK,https://music.douyin.com/qishui/share/playlist?auto_play_bgm=1&playlist_id=7203983736064622592,雨景/城市/天空与新海诚式场景高度适配；需核心账号证据
-有点甜,CURRENT_DIRECT_SUPPLEMENTAL,,2026-09-03,8,9,HIGH,MEDIUM,SUPPLEMENTAL_DIRECT,KNOWN_LIVE_CLIP,https://jingxuan.douyin.com/m/video/7681207115771383075,咪咕音乐9月3日直接抖音精选15s作品；只作当前补充候选，不等于核心账号推荐
-想象（有一百种方式遇见你）,CURRENT_DIRECT_SUPPLEMENTAL,,2026-09-05,10,10,HIGH,LOW_MEDIUM,SUPPLEMENTAL_WATCH,KNOWN_ORIGINAL_POST,https://jingxuan.douyin.com/m/video/7681921417914469686,9月5日直接抖音精选新歌；超市转角/雨天没伞/演唱会人海等视觉事件极适合动画化；不是核心账号来源因此不越级进入Gate
+song_family,core_accounts,core_account_count,representative_account,representative_url,representative_duration_s,visual_fit_0_10,animation_fit_0_10,motion_fit_0_10,prior_project_use,status,audio_version_status,note
+爱让人脑袋空空,"乐♩青春|Aura|Lynne小凌|火乐烁",4,乐♩青春,https://www.douyin.com/video/7672476381650263962,15.372,8,10,10,NO,CORE_STRONG,NEED_RELOCK,"当前旧抓取窗跨核心账号重复最高；另有Aura/Lynne/火乐烁版本；适合高表情高动作动画"
+如果风会替我说话,"乐♩青春|XIANGJISHI|火乐烁",3,XIANGJISHI,https://www.douyin.com/video/7674182530162440933,11.934,10,10,8,YES,CORE_STRONG_BENCHMARK,NEED_RELOCK,"风/雨/星空天然适配动画；已有历史项目使用，适合回归基准但不优先全新项目"
+若爱有尽头,"乐♩青春|XIANGJISHI",2,XIANGJISHI,https://www.douyin.com/video/7673820758652768945,21.4,9,9,7,NO,CORE_REPEAT,NEED_RELOCK,"歌词情绪明确；星空/海等场景适合治愈动画"
+我救自己于人间水火,"Aura|XIANGJISHI",2,XIANGJISHI,https://www.douyin.com/video/7673442358406957285,15.967,10,10,8,YES,CORE_REPEAT_BENCHMARK,NEED_RELOCK,"两个视觉核心账号同歌；自我治愈主题很强；已有历史测试，可做基准"
+Summer Love 爱在盛夏,"Aura|XIANGJISHI",2,XIANGJISHI,https://www.douyin.com/video/7673068083896814202,17.467,10,10,9,NO,PRIMARY_CANDIDATE,NEED_RELOCK,"明亮夏日/海/恋爱；最贴当前One Piece式人物+新海诚式场景+治愈动态路线"
+杀破狼,"乐♩青春|XIANGJISHI",2,乐♩青春,https://www.douyin.com/video/7673547221526478026,13.073,8,9,10,NO,CORE_REPEAT,NEED_RELOCK,"动作张力强；更偏史诗/冒险，治愈度略低"
+做她的大地别做她的天,"Aura|火乐烁",2,Aura,https://www.douyin.com/video/7673796884212895016,24.034,9,9,6,NO,CORE_REPEAT,NEED_RELOCK,"海边日落情绪优秀；动作密度偏低，适合治愈关系型MV"
+有几次想你了,"XIANGJISHI|火乐烁",2,XIANGJISHI,https://www.douyin.com/video/7674136937083676665,15.467,9,9,7,NO,CORE_REPEAT,NEED_RELOCK,"星空/思念视觉清晰；15s左右原片结构直接可参考"
+沈园外,"Lynne小凌|火乐烁",2,火乐烁,https://www.douyin.com/video/7673837036692207537,25.1,8,9,9,NO,CORE_REPEAT_VERSION_RISK,VERSION_AMBIGUOUS,"翻唱/电音Remix版本差异大；先选具体作品再谈BGM"
+向山河林响,"火乐烁",1,火乐烁,https://www.douyin.com/video/7674993950716867770,30.167,10,10,10,NO,PRIMARY_CANDIDATE,NEED_RELOCK,"山河/出发/辽阔；人物冒险感和大场景动态高度匹配当前动画方向"
+阳光洒落,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7673393101587707877,20.0,10,10,7,NO,CORE_HIGH_FIT,NEED_RELOCK,"阳光/夏日/自由；治愈感非常高，动作可走轻动态"
+听见月亮的歌,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7673110065674699941,18.767,10,10,6,NO,CORE_HIGH_FIT,NEED_RELOCK,"迷路小船终有一天会靠岸；非常适合治愈奇幻动画和吉卜力式物件/伙伴"
+我真的好想你,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7674983489520299429,23.7,9,9,5,NO,CORE_HIGH_FIT,NEED_RELOCK,"星空/星轨/银河；场景强，动作偏低"
+荒漠,"乐♩青春",1,乐♩青春,https://www.douyin.com/video/7674976213065112294,18.669,9,9,8,NO,CORE_HIGH_FIT,NEED_RELOCK,"歌词+旅行+修行结构清楚；适合卡点和空间转场"
+我不难过,"Aura",1,Aura,https://www.douyin.com/video/7674543949536677170,18.4,9,9,5,YES,CORE_BENCHMARK,NEED_RELOCK,"冰岛黑沙滩+克制情绪；历史项目相关，适合回归不优先全新"
+巴黎微光,"火乐烁",1,火乐烁,https://www.douyin.com/video/7673819402874644401,19.734,10,10,6,NO,CORE_HIGH_FIT,NEED_RELOCK,"梦境/城市微光；新海诚式城市夜景动画适配高"
+余生都是雨声,"Lynne小凌",1,Lynne小凌,https://www.douyin.com/video/7673554699837118074,16.58,10,9,5,NO,CORE_HIGH_FIT,NEED_RELOCK,"雨声/安静/故人；治愈氛围强，动态偏慢"
+虹之间,"泡泡与茶",1,泡泡与茶,https://www.douyin.com/video/7673834715606011187,27.3,8,9,6,NO,CORE_CANDIDATE,NEED_RELOCK,"温暖Cover与人物情绪明确；可测试角色表演型动画"
+是我还不够好,"泡泡与茶",1,泡泡与茶,https://www.douyin.com/video/7673819684805823744,32.734,8,8,6,NO,CORE_CANDIDATE,NEED_RELOCK,"失落/回忆型情绪；适合治愈但整体偏伤感"
+你在不在,"泡泡与茶",1,泡泡与茶,https://www.douyin.com/video/7672729429788921131,24.134,8,9,5,NO,CORE_CANDIDATE,NEED_RELOCK,"明天有你在就够了；关系型治愈主题"
+白头偕老,"黑米与糖豆",1,黑米与糖豆,https://www.douyin.com/video/7674893658771970981,20.713,9,9,5,NO,CORE_CANDIDATE,NEED_RELOCK,"牵手跨岁月；温暖治愈但动作结构较轻"
+霸占你的温柔,"黑米与糖豆",1,黑米与糖豆,https://www.douyin.com/video/7672420432167884778,28.282,8,9,7,NO,CORE_CANDIDATE,NEED_RELOCK,"新歌/甜歌；可做明亮人物互动"
+遇见爱的人,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7673486773234820475,18.767,10,10,7,NO,CORE_HIGH_FIT,NEED_RELOCK,"四季/遇见/自由；场景变化与歌词视觉化空间大"
+Almost Almost 差一点心动,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7673132172815258725,18.5,10,10,8,NO,CORE_HIGH_FIT,NEED_RELOCK,"初夏/心动/自由；适合轻快治愈动态"
+我找到的答案是遗憾,"XIANGJISHI",1,XIANGJISHI,https://www.douyin.com/video/7673781402773713509,19.1,9,9,5,NO,CORE_HIGH_FIT,NEED_RELOCK,"治愈氛围强但情绪偏孤独；动作轻"
+归零（古筝版）,"佩佩治愈Ai",1,佩佩治愈Ai,https://www.douyin.com/video/7675010647281883750,34.064,10,10,9,NO,VISUAL_MUSIC_CANDIDATE,KNOWN_TRACK,"人物/神龙/仙界高动态AI视觉；证明视觉账号的配乐同样应进入音乐池"
+不懂爱恨情仇煎熬我们,"佩佩治愈Ai",1,佩佩治愈Ai,https://www.douyin.com/video/7672782295011584603,31.9,10,10,6,NO,VISUAL_MUSIC_CANDIDATE,KNOWN_TRACK,"花开花落治愈视觉；配乐与动画场景绑定价值高"
+Give up,"佩佩治愈Ai",1,佩佩治愈Ai,https://www.douyin.com/video/7672358906752033774,29.0,10,10,7,NO,VISUAL_MUSIC_CANDIDATE,KNOWN_TRACK,"风一样自由；动画治愈和动作入口都适配"
+爱的魔力小姐姐-未捕获,,0,,,0,,,0,NO,DATA_GAP,UNKNOWN,"旧抓取窗无保存作品；保持Music Pool资格，后续有直接作品再补充"
