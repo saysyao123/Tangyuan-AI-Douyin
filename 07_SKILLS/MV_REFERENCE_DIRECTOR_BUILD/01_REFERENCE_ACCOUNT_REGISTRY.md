@@ -1,141 +1,131 @@
-# MV Reference Director｜参考账号恢复表 v1
+# MV Reference Director｜核心参考账号与音乐池 v2
 
-> Build Phase: B00–B01
-> Status: `RECOVERED / FRESHNESS RECHECK REQUIRED`
-> Historical source: `test/mv-web-r3`
+> Build Phase: B00–B06
+> Status: `RECOVERED / BEST-EFFORT UPDATED`
+> Historical raw source: `test/mv-web-r3/06_TESTS/MV/WEB_R3/database/works.csv`
 
-## 1. 恢复结论
+## 1. 核心修正
 
-旧项目中已经存在较完整的参考账号体系，不需要从零重建。
+用户提供的 9 个核心账号 **全部进入 Song Pool**。
 
-当前恢复的可靠事实：
+账号的 `Primary Role` 只决定权重和擅长方向，不再决定“是否允许贡献歌曲”。
 
-- 用户种子核心账号共 9 个；
-- 账号职责原本就分为：选歌 / 趋势、视觉、剪辑包装、辅助样本；
-- 账号身份、历史角色和历史 profile link 可作为恢复基线；
-- 2026-08-24 的趋势热度、近 7 天作品和歌曲排序属于历史快照，**不能直接视为当前有效**；
-- 当前选歌优先恢复“账号池”，再刷新这些账号最近作品。
+- 音乐雷达账号：更适合判断新歌 / 复热 / 版本 / 包装。
+- 视觉账号：同样贡献歌曲，并且对“歌曲 × 画面适配”价值很高。
+- 剪辑 / 卡点账号：同时贡献歌曲、片段长度、卡点和镜头参考。
+- 辅助账号：有可验证作品就纳入；没有抓取到作品时标记缺口，不按 0 处理。
+
+因此正式规则为：
+
+`ALL CORE ACCOUNTS → SONG POOL`  
+`ACCOUNT ROLE → WEIGHT / INTERPRETATION`  
+`NOT → EXCLUSION`
 
 ---
 
 ## 2. Core Accounts
 
-| Account | Primary Role | 当前用途 | 历史 Profile | Freshness |
-|---|---|---|---|---|
-| 火乐烁 | 高频音推 / OST / 热歌信息 | **Primary Song Radar** | https://v.douyin.com/usOw3DchtXY/ | RECHECK |
-| 泡泡与茶 | 翻唱 / 复热 + 温暖人设音乐 | **Song Revival / Cover Radar** | https://v.douyin.com/TJckP4icg1A/ | RECHECK |
-| 黑米与糖豆 | 新歌 / 原创 / 音推包装 | **New Song Radar + Packaging** | https://v.douyin.com/_YS8e0YhgWo/ | RECHECK |
-| 乐 ♩青春 | 音乐 + 剪辑 + 歌词 + 卡点 | **Song + Beat/Edit Reference** | https://v.douyin.com/CjEXFsxea4E/ | RECHECK |
-| 佩佩治愈Ai | 人物型 AI 治愈视觉 | **Animation Visual Benchmark** | https://v.douyin.com/wIybp87hyRc/ | RECHECK |
-| Aura | 高审美风景 / 低文字沉浸 | **Scene / Healing Benchmark** | https://v.douyin.com/u8LKkQ0QoY4/ | RECHECK |
-| XIANGJISHI | 风景音推 / 治愈空间 | **Scene + Music Mood Benchmark** | https://v.douyin.com/Gy5W5QEGc_s/ | RECHECK |
-| Lynne小凌 | 历史补充测试账号 | Auxiliary | https://v.douyin.com/GkxtPfYaRFk/ | RECHECK / ROLE TBD |
-| 爱的魔力小姐姐 | 混合内容辅助样本 | Auxiliary | https://v.douyin.com/vZceq-VjuH8/ | RECHECK |
+| ID | Account | Primary Role | Music Pool | Music Use | Visual / Edit Use | Captured Works* |
+|---|---|---|---|---|---|---:|
+| DYCORE01 | 黑米与糖豆 | 新歌 / 原创 / 音推包装 | YES | 原创新歌、甜歌、R&B、新歌上线 | 包装辅助 | 8 |
+| DYCORE02 | 佩佩治愈Ai | 人物型 AI 治愈视觉 | YES | 画面与配乐组合、情绪音乐 | **高权重动画视觉** | 8 |
+| DYCORE03 | 乐 ♩青春 | 音乐 + 剪辑 + 歌词 + 卡点 | YES | 歌曲发现、歌词段 | **高权重卡点 / 剪辑** | 12 |
+| DYCORE04 | Aura | 高审美风景 / 低文字沉浸 | YES | 风景型歌曲、情绪歌曲 | **高权重场景 / 治愈** | 18 |
+| DYCORE05 | Lynne小凌 | 翻唱 / 音乐种草补充 | YES | 翻唱、经典、热歌版本 | 表演辅助 | 7 |
+| DYCORE06 | 泡泡与茶 | 翻唱 / 复热 + 温暖人设 | YES | Cover、复热、情绪歌曲 | 人物包装辅助 | 3 |
+| DYCORE07 | XIANGJISHI | 风景音推 / 治愈空间 | YES | **歌曲 + 场景双重信号** | **高权重治愈场景** | 16 |
+| DYCORE08 | 火乐烁 | 高频音推 / OST / 热歌信息 | YES | **高权重 Song Radar / 版本发现** | 包装辅助 | 17 |
+| DYCORE09 | 爱的魔力小姐姐 | 混合内容辅助样本 | YES | 有作品即纳入 | Auxiliary | 0 captured |
 
-### 当前推荐优先级
+`*` Captured Works = 旧数据库已实际保存的 2026-08-10 ～ 2026-08-17 抓取窗作品数；不是账号总作品量，也不是当前作品量。
 
-选歌时先看：
+总计：`89 captured works`。
 
-1. 火乐烁
-2. 泡泡与茶
-3. 黑米与糖豆
-4. 乐 ♩青春
-
-视觉翻译时再看：
-
-1. 佩佩治愈Ai
-2. Aura
-3. XIANGJISHI
-4. 乐 ♩青春
-
-不要把视觉账号的用歌直接等权当趋势信号。
+DYCORE09 的 `0 captured` 只代表该抓取窗没有保存到作品，禁止解释为“账号没有音乐作品”。
 
 ---
 
-## 3. Supplemental Radar
+## 3. 账号权重的正确用法
 
-历史补充账号：
+以后选歌不是“先只看 4 个音乐账号”。
 
-- 碳酸音乐：近期 / 月度热歌盘点；趋势辅助。
-- 油条Music：大体量音乐盘点；需类型降权。
-- CD传媒：动态歌词 / 经典歌近期再出现。
-- 志鹏Cello：音乐赏析 / 经典复热。
-- 马呜呜：音乐制作 / 经典歌讨论辅助。
-- DSD音乐〖百万调音师〗：高频热歌 / 经典歌发布；只作重复率辅助。
+正确方式：
 
-当前公开检索已确认：
-
-- `碳酸音乐` 在 2026-09-02 仍发布“2026年9月最近很火的12首歌曲”类内容，因此可继续保留为当前 supplemental radar。
-
-Supplemental 账号只能作为辅助；正式 Primary Reference 仍优先回到用户种子账号和直接抖音作品。
-
----
-
-## 4. 选歌数据的可靠性等级
-
-### A｜CURRENT DIRECT
-
-当前核心参考账号中存在可直接查看的近期作品，并能明确识别歌曲 / 音频。
-
-可用于 Human Reference Gate。
-
-### B｜CURRENT CORROBORATED
-
-有当前补充账号 / 汽水音乐 / 其他公开抖音信号，但尚未在核心账号中确认。
-
-可进入 WATCH，不直接锁歌。
-
-### C｜HISTORICAL
-
-只有旧 Radar / 旧数据库证据。
-
-只能作为重新检查的候选，不允许直接使用旧热度结论。
-
-### D｜UNKNOWN
-
-身份、链接、歌曲或版本无法确认。
-
-不使用，直到重新建立证据。
+1. 9 个核心账号的可验证音乐作品全部入池；
+2. 同一 `SONG_FAMILY` 跨账号出现时提高信号；
+3. 再根据账号角色解释信号：
+   - 火乐烁重复：趋势 / 版本信号更强；
+   - Aura / XIANGJISHI 重复：治愈视觉适配更强；
+   - 乐♩青春重复：歌词 / 卡点 / 剪辑适配更强；
+   - 佩佩治愈Ai 使用：动画 / AI 视觉适配值得重点观察；
+   - 泡泡与茶 / Lynne：Cover / 复热 / 人声版本价值更高；
+   - 黑米与糖豆：原创 / 新歌 / 包装价值更高。
+4. 不做简单等权平均，也不因 Primary Role 是 Visual 而丢弃音乐。
 
 ---
 
-## 5. Song Family / Audio Version 规则继续保留
+## 4. 已恢复的跨账号歌曲信号
 
-趋势阶段先判断：
+当前历史抓取窗中，已明确看到：
 
-`SONG_FAMILY = 歌曲本身`
+- `爱让人脑袋空空`：乐♩青春 + Aura + Lynne小凌 + 火乐烁（≥4 core accounts）。
+- `如果风会替我说话`：乐♩青春 + XIANGJISHI + 火乐烁（≥3）。
+- `若爱有尽头`：乐♩青春 + XIANGJISHI（≥2）。
+- `我救自己于人间水火`：Aura + XIANGJISHI（≥2）。
+- `Summer Love / 爱在盛夏`：Aura + XIANGJISHI（≥2）。
+- `杀破狼`：乐♩青春 + XIANGJISHI（≥2）。
+- `做她的大地别做她的天`：Aura + 火乐烁（≥2）。
+- `有几次想你了`：XIANGJISHI + 火乐烁（≥2）。
+- `沈园外`：Lynne小凌 + 火乐烁（≥2，版本不同）。
 
-进入真实 MV 后再锁：
-
-`AUDIO_VERSION = 具体原唱 / Live / Cover / Remix / sped-up / OST excerpt`
-
-禁止因为多账号都在使用同一 SONG_FAMILY，就误以为它们使用的是同一音频版本。
-
----
-
-## 6. 当前更新策略
-
-每次选新 MV：
-
-1. 先查看核心 Song Radar 账号近期作品；
-2. 提取 3–8 个 Song Family；
-3. 用 supplemental / 汽水音乐做当前性佐证；
-4. 过滤明显过热、纯舞蹈玩法或动画化价值低的候选；
-5. 最终只向用户展示最多 3 个可直接查看的抖音 Reference 候选；
-6. 用户选择 Primary Reference；
-7. 用户下载视频并提供给项目；
-8. 后续才进入 BGM / Lyrics / Beat / Duration。
+这些重复只证明 `SONG_FAMILY` 信号；进入 MV 后必须重新锁具体 `AUDIO_VERSION`。
 
 ---
 
-## 7. 旧数据源
+## 5. 数据更新策略｜BEST EFFORT，不追求伪最新
 
-可靠恢复源：
+每轮更新：
 
-- `06_TESTS/MV/WEB_R3/R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
-- `06_TESTS/MV/WEB_R3/database/accounts.csv`
-- `06_TESTS/MV/WEB_R3/R3_MUSIC_RADAR_WEEK_01.csv`
-- `06_TESTS/MV/WEB_R3/R3_MUSIC_SHORTLIST_v1.md`
-- `06_TESTS/MV/WEB_R3/database/`
+1. 优先从 9 个核心账号恢复 / 获取可直接打开的真实作品；
+2. 能更新到哪里就更新到哪里，不要求所有账号同步到同一天；
+3. 旧数据库中已经有直接作品 URL 的，允许作为有效候选池；
+4. 搜索引擎没有索引到更新作品时，标 `INDEX_PENDING`，不解释为“没发”；
+5. supplemental / 汽水音乐只做佐证，不能替代核心账号作品；
+6. 数据库完成条件 = **每个核心账号都被处理，并明确写出目前可恢复覆盖和缺口**，不是强行追到最新。
 
-这些历史文件作为 Evidence，不再作为当前执行事实源。
+---
+
+## 6. Song Family / Audio Version
+
+选歌比较阶段：`SONG_FAMILY`。
+
+用户选中具体抖音作品并下载后：锁 `AUDIO_VERSION`。
+
+同一歌不同账号可能是：原唱 / Cover / Remix / 电音 / R&B / Live / 剪辑片段；禁止提前当成同一音频。
+
+---
+
+## 7. 人工交付规则
+
+完成数据库比较后，每轮只给用户最多 3 个 Primary Candidates：
+
+- 歌曲；
+- 来源核心账号；
+- 对应抖音视频直链；
+- 跨账号证据；
+- 动画 MV 适配理由；
+- 风险 / 已使用历史；
+- 推荐优先级。
+
+用户只需要实际打开视频，选定要下载并发回的一个 Reference。
+
+---
+
+## 8. Evidence
+
+- `test/mv-web-r3/06_TESTS/MV/WEB_R3/database/accounts.csv`
+- `test/mv-web-r3/06_TESTS/MV/WEB_R3/database/works.csv`
+- `test/mv-web-r3/06_TESTS/MV/WEB_R3/R3_BENCHMARK_ACCOUNT_REGISTRY_v1.md`
+- `02_SONG_POOL_RECOVERY.csv`
+
+旧 `works.csv` 保留为 work-level 唯一原始快照，不在本工作区复制 89 行，避免双份事实源漂移。
