@@ -1,0 +1,12 @@
+<UserControl x:Class="TangyuanDolaStudio.Controls.BrowserHostControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+    <Grid x:Name="RootGrid" Background="White">
+        <StackPanel x:Name="Placeholder" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Dola Browser" FontSize="28" FontWeight="SemiBold" Foreground="#2B3342" HorizontalAlignment="Center"/>
+            <TextBlock Text="请选择账号实例并点击打开" Margin="0,10,0,0" Foreground="#677286" HorizontalAlignment="Center"/>
+            <TextBlock Text="每个账号使用独立 WebView2 User Data Folder" Margin="0,4,0,0" Foreground="#8993A5" FontSize="12" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
