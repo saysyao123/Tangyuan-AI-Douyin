@@ -22,7 +22,7 @@
 
 建立稳定、简单、可恢复的**动画 MV Reference-First Skill**。
 
-`核心账号/歌库 → 具体抖音参考 → 用户下载 → BGM/Audio Version Lock → Full Timeline Lock → Segment Production Plan → Reference Deconstruction → Multi-shot Animation Director → K0(first-shot anchor) → Multi-shot Dynamic Prompt → Dola/Seedance 2.5 → Trim/Hard Cut → QA → 单变量迭代 → Lock`
+`核心账号/歌库 → 具体抖音参考 → 用户下载 → BGM/Audio Version Lock → Full Timeline Lock → Segment Production Plan → Reference Deconstruction → Multi-shot Animation Director → K0(first-shot + asset contract) → Multi-shot Dynamic Prompt → Dola/Seedance 2.5 → Trim/Hard Cut → QA → 单变量迭代 → Lock`
 
 ---
 
@@ -63,7 +63,8 @@ Timeline 至少包含：精确总时长、逐句歌词/声音事件、Beat/Accen
 - 当前 10–12s 素材建议约 4–6 个主要镜头，仅为经验起点。
 - 每个关键歌词/音乐节点尽量对应明确视觉事件：人物动作 / 景别 / 机位 / 环境变化之一或组合。
 - 内部镜头可 hard cut / motivated cut；不追求 morph / 无缝长镜头。
-- K0 只负责**第一镜头的 0 秒锚点**，不约束整条视频维持同一机位。
+- Camera 可使用 follow / tracking / push / pull / side-move / light orbit / rise 等组合；人物、Camera、Environment 三层共同推进。
+- 允许近景、面部特写、眼部/手部/脚步等局部特写，但必须服务歌词/Beat。
 - Dynamic Prompt 必须显式写 Shot timeline / CUT cues。
 
 借鉴此前高动态“疯批打戏”有效逻辑：
@@ -72,7 +73,21 @@ Timeline 至少包含：精确总时长、逐句歌词/声音事件、Beat/Accen
 
 转译为情绪动画，不复制打斗动作；所有动态服务歌词和音乐。
 
-## 2.4 Segment Transition｜CURRENT PROJECT
+## 2.4 K0 Asset Contract｜HARD FOR CURRENT ROUTE
+
+K0 = **第一镜头动态锚点 + 该条生成素材 persistent asset contract**。
+
+K0 首帧必须预先建立该条素材持续需要的核心人物/内容：
+
+- 主角与核心服装轮廓；
+- 主场景及运动地面/方向；
+- 关键伙伴/风灵；
+- 主光线、天气、风向；
+- 后续局部特写所依赖的核心元素。
+
+后续丰富的是镜头、构图、动作和景别，不是让模型临时增加第二主角、新大型生物、新大型道具或全新空间系统。
+
+## 2.5 Segment Transition｜CURRENT PROJECT
 
 《爱让人脑袋空空》A→B 在 `BGM 8.700s` 使用 **Hard Cut**：
 
@@ -81,14 +96,14 @@ Timeline 至少包含：精确总时长、逐句歌词/声音事件、Beat/Accen
 - 保留角色身份、世界观、色彩逻辑、情绪因果；
 - B 主动改变景别/机位/朝向/空间层次至少一个维度。
 
-## 2.5 内容与动画视觉
+## 2.6 内容与动画视觉
 
 - 歌词视觉命中 > 轻叙事连续 > 炫技。
 - 人物：高辨识动画轮廓、姿态张力、动作表现力；不复制具体受保护角色。
 - 场景：明亮、治愈、通透、强天气/天空/光影空气感；不复制具体场景。
 - 怪物/物品：温柔奇幻、灵性、陪伴感；不复制具体角色/道具。
 
-## 2.6 Core Song Pool｜HARD
+## 2.7 Core Song Pool｜HARD
 
 - 用户提供的 9 个核心账号全部进入 Song Pool。
 - Primary Role 只决定权重，不决定是否纳入歌曲。
@@ -96,28 +111,27 @@ Timeline 至少包含：精确总时长、逐句歌词/声音事件、Beat/Accen
 - 更新采用 BEST EFFORT，不追求伪最新。
 - supplemental / 汽水音乐只作佐证，不替代核心账号。
 
-## 2.7 Douyin Reference
+## 2.8 Douyin Reference
 
 负责：选歌、歌词/卡点、动作、镜头、能量曲线、Peak、Ending。
 
 迁移 Structure，不迁移真人身份、脸、原服装、原场景和具体视觉表达。
 
-## 2.8 Current Generation Adapter
+## 2.9 Current Generation Adapter
 
 - Dola / Seedance 2.5 I2V。
 - 默认最简输入：**K0 + Dynamic Prompt**。
 - refs ≤3–5；单 K0 足够就不加图。
 - DEPTH 仅为未来 Motion Adapter，不是当前必经。
 
-## 2.9 Motion
+## 2.10 Motion
 
-- K0 = 第一镜头可表演的 0 秒动态锚点。
 - 位移必须有可读抬脚→落脚→蹬地→重心转移→加减速；禁止无足部逻辑滑行/漂移。
 - Prompt 正向目标优先，不因单次失败无限堆禁止项。
 
 ---
 
-# 3. Master Flow v1.4｜TIMELINE + MULTI-SHOT
+# 3. Master Flow v1.5｜TIMELINE + MULTI-SHOT + K0 ASSET CONTRACT
 
 ```text
 M0  CORE ACCOUNT MUSIC DATABASE
@@ -147,10 +161,13 @@ M7  MULTI-SHOT ANIMATION DIRECTOR
     - lyric/beat → visual event
     - shot timeline / cuts
     - character/camera/environment motion
+    - close/detail/follow/wide language
 ↓
 G3  DIRECTOR GATE
 ↓
-M8  K0-A / K0-B (FIRST-SHOT ANCHORS)
+M8  K0-A / K0-B
+    - first-shot anchor
+    - persistent asset contract
 ↓
 G4  HUMAN K0 GATE
 ↓
@@ -179,7 +196,7 @@ M15 FINAL QA / LOCK
 1. Reference Gate：用户选择具体抖音作品。
 2. Timeline Gate：硬检查点；无阻塞歧义才通过。
 3. **Director Gate**：确认镜头密度、主要视觉事件和段落动态方向后再生 K0。
-4. K0 Gate：确认第一镜头锚点/角色/场景。
+4. K0 Gate：确认第一镜头锚点、角色/场景和 persistent assets。
 5. Video QA Gate：好看吗 / 歌词情绪命中吗 / 动作镜头自然吗 / 值得重复吗。
 
 ---
@@ -195,6 +212,7 @@ M15 FINAL QA / LOCK
 - [x] A05 Master Flow 边界。
 - [x] A05.1 Timeline-First 修正。
 - [x] A05.2 Multi-shot 修正：不把生成视频默认成一镜到底。
+- [x] A05.3 K0 Asset Contract：首帧先建立持续核心资产，后续主要变化镜头/动作而非资产数量。
 - [ ] A06 最终 Skill 名称 / 触发 / 反向边界。
 
 ## Phase B｜Core Account Music Database
@@ -248,21 +266,22 @@ Evidence：`06_LOVE_EMPTY_HEAD_SEGMENT_PRODUCTION_PLAN_v2.md`；v1 已 supersede
 Evidence：`07_LOVE_EMPTY_HEAD_REFERENCE_DECONSTRUCTION_v1.md`。
 
 ## Phase G｜Multi-shot Animation Director
-- [x] G00 Locked Timeline + Segment Plan + Reference → Director Draft。
+- [x] G00 Locked Timeline + Segment Plan + Reference → Director。
 - [x] G01 A/B 共用角色/世界观，各自独立多镜头成段。
 - [x] G02 A hard-cut punctuation；B hard-cut restart。
-- [x] G03 歌词/Beat 驱动 shot density；当前 A=5 principal shots，B=4 principal core shots。
-- [x] G04 人物动作 + Camera + Environment 三层动态，原创视觉边界明确。
-- [ ] G05 Human Director Gate / 真实生成验证。
-- [ ] G06 Promote。
+- [x] G03 歌词/Beat 驱动 shot density；当前 A=5 principal core shots，B=4 principal core shots。
+- [x] G04 人物动作 + Camera + Environment 三层动态；加入 follow/track/close/detail/wide 镜头语言。
+- [x] G05 Human Director Gate：用户确认 multi-shot / 动态丰富 / K0 先建立核心内容的方向并要求继续。
+- [ ] G06 Promote（需真实生成 + 跨项目验证）。
 
-Evidence：`08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v2.md`。
+Evidence：`08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v3_LOCKED.md`；v2 已 superseded。
 
 ## Phase H｜K0
-- [ ] H00 K0 仅锚定每条生成素材第一镜头。
-- [ ] H01 K0-A / K0-B 首帧方案。
-- [ ] H02 Human K0 Gate。
-- [ ] H03–H06 生成改善验证 → Promote。
+- [ ] H00 K0 = first-shot anchor + persistent asset contract。
+- [ ] H01 K0-A / K0-B 正式首帧规格。
+- [ ] H02 实际生成 K0-A / K0-B。
+- [ ] H03 Human K0 Gate。
+- [ ] H04–H06 生成改善验证 → Promote。
 
 ## Phase I｜Multi-shot Dynamic Prompt
 - [ ] I00 Timeline + Director + K0 编译。
@@ -302,7 +321,7 @@ Evidence：`08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v2.md`。
 
 # 6. Current Active Module
 
-**ACTIVE MODULE：Phase G / G05｜《爱让人脑袋空空》Multi-shot Director Gate**
+**ACTIVE MODULE：Phase H / H00–H03｜《爱让人脑袋空空》K0-A / K0-B**
 
 Locked upstream：
 
@@ -311,20 +330,20 @@ Locked upstream：
 - Final A=`0.000–8.700s`
 - Final B=`8.700–15.370998s`
 - Generation A=`12s`；B=`10s`
-- Final A→B=`Hard Cut @ 8.700s`
+- A→B=`Hard Cut @ 8.700s`
 - Segment Plan=`06_LOVE_EMPTY_HEAD_SEGMENT_PRODUCTION_PLAN_v2.md`
 - Reference Map=`07_LOVE_EMPTY_HEAD_REFERENCE_DECONSTRUCTION_v1.md`
-- Director Draft=`08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v2.md`
+- Director=`08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v3_LOCKED.md`
+- Director Status=`LOCKED_FOR_CURRENT_PROJECT`
 
-Current Director density：
+K0 current rule：
 
-- A：5 principal shots / 8.700s final content
-- B：4 principal core shots / 6.671s final content
-- 全片约 9 个主要镜头；镜头数服从歌词/Beat，不作为未来固定模板。
+- K0-A = A0 first-shot / pre-handle anchor + A persistent asset contract；
+- K0-B = B0 first-shot / pre-handle anchor + B persistent asset contract；
+- 第一帧必须直接呈现后续持续需要的核心人物、服装、风灵、主场景、运动地面与主要光线/风向；
+- 不依赖后续模型临时发明核心角色/大型物件/新空间。
 
-**当前禁止生成 K0，直到 Multi-shot Director Gate 通过。**
-
-通过后唯一下一步：K0-A / K0-B 只设计第一镜头锚点，然后编译 multi-shot Dynamic Prompt。
+下一步唯一任务：正式定义并生成 K0-A / K0-B，进入 Human K0 Gate。通过后才能写 multi-shot Dynamic Prompt。
 
 ---
 
