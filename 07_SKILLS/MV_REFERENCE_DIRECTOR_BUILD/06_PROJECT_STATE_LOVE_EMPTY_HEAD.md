@@ -1,7 +1,7 @@
 # PROJECT_STATE｜爱让人脑袋空空
 
 > Status: `ACTIVE`
-> Current Stage: `MULTI_SHOT_DIRECTOR_GATE`
+> Current Stage: `K0_FIRST_FRAME`
 
 - Project: MV Reference Director Skill / first real run
 - Song Family: `爱让人脑袋空空`
@@ -18,16 +18,17 @@
 - Generated Material Plan: A=`12s`; B=`10s`; optional 5–15s coverage only if a concrete edit/scene need appears
 - Segment Plan: `06_LOVE_EMPTY_HEAD_SEGMENT_PRODUCTION_PLAN_v2.md` (`LOCKED / NOT YET GENERATION-VALIDATED`)
 - Reference Deconstruction: `07_LOVE_EMPTY_HEAD_REFERENCE_DECONSTRUCTION_v1.md`
-- Director Draft: `08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v2.md`
-- Director Status: `DRAFT_FOR_HUMAN_GATE`
-- Current Shot Plan: A=5 principal shots; B=4 principal core shots; multi-shot, lyric/beat driven
-- K0: `PENDING / NOT COUNTED AS COMPLETE`
-- K0 latest requirement: first frame must visibly establish all persistent core subjects/assets needed by that generated clip, so later shots do not rely on the model inventing major new people/objects/scene systems
+- Director: `08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v3_LOCKED.md`
+- Director Status: `LOCKED_FOR_CURRENT_PROJECT / NOT YET GENERATION-VALIDATED`
+- Current Shot Plan: A=5 principal core shots + A0 establishing; B=4 principal core shots + B0 establishing; lyric/beat-driven multi-shot
+- Camera Language: follow / tracking / push / pull / side-move / light orbit / rise + medium / close / face detail / hand detail / foot detail / wide / extreme-wide
+- K0: `ACTIVE / PENDING FORMAL ASSETS`
+- K0 Contract: first frame = first-shot dynamic anchor + persistent asset contract; visibly establish the main character, core clothing silhouette, wind-spirit, main environment, traversable ground/direction, light/weather/wind needed downstream
 - Dynamic Prompt: `PENDING`
 - Generation: `PENDING`
 - QA: `PENDING`
 - Assembly: `PENDING`
-- Next Action: finish Human Director Gate with the latest camera-language refinement; then formalize K0-A/K0-B, run K0 Gate, and only then compile multi-shot Dynamic Prompts.
+- Next Action: formalize K0-A and K0-B specifications, generate the two first-frame images, then stop at Human K0 Gate before compiling multi-shot Dynamic Prompts.
 
 ## Hard dependencies
 
@@ -37,4 +38,4 @@ If Audio Version changes:
 
 If only downstream visual choices change, Timeline remains locked.
 
-If Director Gate is not passed, K0 / Prompt / Generation must remain pending.
+If K0 Gate is not passed, Prompt / Generation remain pending.
