@@ -195,7 +195,7 @@ Optional：`Selected Reference → DEPTH → Temporal Motion → future Motion/V
 - [x] B04 所有核心账号 `music_pool = YES`；Primary Role 只影响权重。
 - [x] B05 统计 2026-08-10～08-17 历史抓取窗：89 works；8 个账号有作品，DYCORE09 为 data gap。
 - [x] B06 Best-Effort 数据库更新：逐账号处理，明确覆盖与缺口；不追求同步最新。
-- [ ] B07 Promote 稳定选歌规则（待本轮 Reference → Timeline 实测完成）。
+- [ ] B07 Promote 稳定选歌规则（待本轮完整 Reference→Generation→QA 后）。
 
 Evidence：
 - `01_REFERENCE_ACCOUNT_REGISTRY.md`
@@ -215,14 +215,16 @@ Evidence：`04_SELECTION_ROUND_01.md` + 当前用户上传 Reference。
 
 ## Phase D｜BGM / Full Timeline Lock
 - [x] D00 Reference 媒体技术探测：15.370998s；视频 1920×1080 30fps；AAC 44.1kHz stereo。
-- [ ] D01 锁定具体 BGM / Audio Version。
-- [ ] D02 建立完整逐句歌词 / Audio Event 时间轴。
-- [ ] D03 标注 Beat / Accent / Transition / Emotional Boundary。
-- [ ] D04 标注合法 Segment Cut Points / Peak / Release / Ending。
-- [ ] D05 Timeline QA：所有关键点有证据；不确定点标 NEED_VERIFY。
-- [ ] D06 `TIMELINE_LOCKED`。
+- [x] D01 锁定具体 BGM / Audio Version：使用所选 Reference 内 AAC 音频作为本项目唯一 BGM 基线。
+- [x] D02 建立完整逐句歌词 / Audio Event 时间轴：0.000–15.371s 全覆盖。
+- [x] D03 标注 Beat / Accent / Transition / Emotional Boundary；自动节拍估计约 129.2 BPM。
+- [x] D04 标注合法 Segment Cut Points / Peak / Release / Ending；主切点候选 `8.700s`。
+- [x] D05 Timeline QA：关键点均有视频帧/字幕/音频证据；无阻塞性 `NEED_VERIFY`。
+- [x] D06 `TIMELINE_LOCKED`：v1。
 - [ ] D07 判断哪些技术探测 / 时间轴步骤可脚本化。
 - [ ] D08 Promote Timeline-First 规则（跨项目验证后）。
+
+Evidence：`05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md`。
 
 ## Phase E｜Segment / Duration Plan
 - [ ] E00 只基于 LOCKED Timeline 决定 5–15s Segment。
@@ -272,23 +274,23 @@ Evidence：`04_SELECTION_ROUND_01.md` + 当前用户上传 Reference。
 
 # 6. Current Active Module
 
-**ACTIVE MODULE：Phase D / D01–D06｜《爱让人脑袋空空》BGM + Full Timeline Lock**
+**ACTIVE MODULE：Phase E / E00–E03｜《爱让人脑袋空空》Segment / Duration Plan**
 
-已锁：
+Locked upstream:
 
 - Song Family：`爱让人脑袋空空`
 - Primary Reference：用户上传具体抖音视频
-- Reference duration：`15.370998s`
+- Audio Version：所选 Reference 内 AAC 音频
+- BGM duration：`15.370998s`
+- Timeline：`05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md`
+- Timeline Status：`LOCKED`
+- Preferred semantic/music cut：`8.700s`
 
-当前禁止推进：Reference Deconstruction / Director / K0 / Prompt / Generation。
+当前下一步：
 
-下一步唯一任务：
-
-1. 锁具体 Audio Version；
-2. 建整段精确 Timeline；
-3. 标歌词 / Beat / 情绪 / 合法切点；
-4. QA 后标 `TIMELINE_LOCKED`；
-5. 只有此后才能进入 Segment Plan 与 Director。
+1. 只基于已锁 Timeline 决定正式 Segment Plan；
+2. 首选验证 `Segment A 0.000–8.700s` + `Segment B 8.700–15.371s`；
+3. Segment Plan 锁定后，才进入 Reference Deconstruction / Animation Director。
 
 ---
 
