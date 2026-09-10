@@ -30,32 +30,64 @@ public sealed class ProfileStore
             if (!File.Exists(ProfilesFile))
                 return new List<ProfileItem>();
 
-            await using var stream = File.OpenRead(ProfilesFile);
-            var profiles = await JsonSerializer.DeserializeAsync<List<ProfileItem>>(stream, _jsonOptions)
-                           ?? new List<ProfileItem>();
-
-            // Migrate the old root URL to the current direct Dola chat route.
-            foreach (var profile in profiles)
+            try
             {
-                if (string.IsNullOrWhiteSpace(profile.HomeUrl) ||
-                    profile.HomeUrl.Equals("https://www.dola.com/", StringComparison.OrdinalIgnoreCase) ||
-                    profile.HomeUrl.Equals("https://dola.com/", StringComparison.OrdinalIgnoreCase))
-                {
-                    profile.HomeUrl = "https://www.dola.com/chat/";
-                }
-            }
+                await using var stream = File.OpenRead(ProfilesFile);
+                var profiles = await JsonSerializer.DeserializeAsync<List<ProfileItem>>(stream, _jsonOptions)
+                               ?? new List<ProfileItem>();
 
-            return profiles;
-        }
-        catch (Exception ex)
-        {
-            AppLogger.Error("Failed to load profiles.json", ex);
-            throw;
+                foreach (var profile in profiles)
+                {
+                    if (string.IsNullOrWhiteSpace(profile.HomeUrl) ||
+                        profile.HomeUrl.Equals("https://www.dola.com/", StringComparison.OrdinalIgnoreCase) ||
+                        profile.HomeUrl.Equals("https://dola.com/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        profile.HomeUrl = "https://www.dola.com/chat/";
+                    }
+                }
+
+                return profiles;
+            }
+            catch (JsonException ex)
+            {
+                return RecoverCorruptProfileFile(ex);
+            }
+            catch (IOException ex)
+            {
+                AppLogger.Error("profiles.json read failed", ex);
+                throw;
+            }
         }
         finally
         {
             _ioLock.Release();
         }
+    }
+
+    private List<ProfileItem> RecoverCorruptProfileFile(Exception exception)
+    {
+        AppLogger.Error("profiles.json is corrupt; attempting automatic recovery", exception);
+
+        try
+        {
+            var backup = Path.Combine(AppRoot, $"profiles.corrupt-{DateTime.Now:yyyyMMdd-HHmmss}.json");
+            File.Move(ProfilesFile, backup, overwrite: true);
+            AppLogger.Warn($"Corrupt profile file moved to: {backup}");
+        }
+        catch (Exception backupEx)
+        {
+            AppLogger.Error("Failed to back up corrupt profiles.json; deleting it instead", backupEx);
+            try
+            {
+                File.Delete(ProfilesFile);
+            }
+            catch (Exception deleteEx)
+            {
+                AppLogger.Error("Failed to delete corrupt profiles.json", deleteEx);
+            }
+        }
+
+        return new List<ProfileItem>();
     }
 
     public async Task SaveAsync(IEnumerable<ProfileItem> profiles)
