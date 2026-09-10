@@ -1,7 +1,7 @@
 # PROJECT_STATE｜爱让人脑袋空空
 
 > Status: `ACTIVE`
-> Current Stage: `MULTI_SHOT_DYNAMIC_PROMPT`
+> Current Stage: `GENERATION_QA_ROUND01`
 
 - Project: MV Reference Director Skill / first real run
 - Song Family: `爱让人脑袋空空`
@@ -16,21 +16,25 @@
 - Final Segment B: `8.700–15.370998s` (`6.670998s`)
 - Final Transition: `Hard Cut @ 8.700s`
 - Generated Material Plan: A=`12s`; B=`10s`; optional 5–15s coverage only if a concrete edit/scene need appears
-- Segment Plan: `06_LOVE_EMPTY_HEAD_SEGMENT_PRODUCTION_PLAN_v2.md` (`LOCKED / NOT YET GENERATION-VALIDATED`)
+- Segment Plan: `06_LOVE_EMPTY_HEAD_SEGMENT_PRODUCTION_PLAN_v2.md`
 - Reference Deconstruction: `07_LOVE_EMPTY_HEAD_REFERENCE_DECONSTRUCTION_v1.md`
 - Director: `08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v3_LOCKED.md`
-- Director Status: `LOCKED_FOR_CURRENT_PROJECT / NOT YET GENERATION-VALIDATED`
-- Current Shot Plan: A=5 principal core shots + A0 establishing; B=4 principal core shots + B0 establishing; lyric/beat-driven multi-shot
-- Camera Language: follow / tracking / push / pull / side-move / light orbit / rise + medium / close / face detail / hand detail / foot detail / wide / extreme-wide
 - K0 Spec: `09_LOVE_EMPTY_HEAD_K0_SPEC_v1.md`
 - K0 Gate: `10_LOVE_EMPTY_HEAD_K0_GATE_v1.md`
-- K0 Status: `PASSED_FOR_CURRENT_PROJECT / NOT YET GENERATION-VALIDATED`
-- K0 Contract: first frame = first-shot dynamic anchor + persistent asset contract; visibly establish the main character, core clothing silhouette, wind-spirit, main environment, traversable ground/direction, light/weather/wind needed downstream
-- Dynamic Prompt: `ACTIVE / TO COMPILE`
-- Generation: `PENDING`
-- QA: `PENDING`
+- Dynamic Prompt v1: `10_LOVE_EMPTY_HEAD_MULTI_SHOT_PROMPTS_v1.md`
+- Generation Round 01: `COMPLETED / REAL EVIDENCE`
+- Generation A actual: `12.096009s / HEVC / 720x1280 / 24fps / AAC stereo`
+- Generation B actual: `10.080000s / HEVC / 720x1280 / 24fps / AAC stereo`
+- Generation QA Evidence: `11_LOVE_EMPTY_HEAD_GENERATION_QA_ROUND01.md`
+- Visual Director/Prompt: `PASS CANDIDATE`
+- Timing behavior: `SOFT CHOREOGRAPHY / NOT FRAME-ACCURATE`
+- Anti-sliding locomotion: `PASS CANDIDATE`
+- Character consistency: `GOOD / MINOR CLOSE-UP DRIFT`
+- Watermark: `BLOCKER_FOR_FINAL_DELIVERY` (dynamic/moving Dola AI watermark, sometimes overlaps face/hand/detail regions)
+- Audio: `FAIL_CURRENT_CONTRACT` (generated continuous musical/BGM bed; next prompt must explicitly allow scene SFX only and disallow music/voice)
+- Final QA: `NOT PASS YET`
 - Assembly: `PENDING`
-- Next Action: compile Segment A 12s and Segment B 10s multi-shot Dynamic Prompts from locked Timeline + Director v3 + passed K0; then enter Seedance 2.5 generation.
+- Next Action: keep successful visual Director/Prompt structure; make one controlled prompt change for Audio Contract only, while separately resolving the upstream clean/no-watermark delivery path. Do not Promote until real clean/audio-compliant output passes QA.
 
 ## Hard dependencies
 
@@ -40,4 +44,10 @@ If Audio Version changes:
 
 If only downstream visual choices change, Timeline remains locked.
 
-Dynamic Prompt must not introduce new persistent asset systems that were not declared by K0 unless a deliberate coverage redesign is approved.
+## Audio Contract for next iteration
+
+Allowed only: wind / grass and cloth rustle / footsteps / distant lake-water ambience / subtle wind-spirit whoosh.
+
+Disallow: BGM / music / score / melody / singing / humming / dialogue / voice / vocalization / rhythmic percussion or beat track.
+
+If forbidden music or voice remains, strip the entire generated audio track during final editing and rebuild from locked BGM + controlled scene SFX.
