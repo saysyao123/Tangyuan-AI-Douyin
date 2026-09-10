@@ -4,7 +4,7 @@ public sealed class ProfileItem
 {
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string DisplayName { get; set; } = "Dola";
-    public string HomeUrl { get; set; } = "https://www.dola.com/";
+    public string HomeUrl { get; set; } = "https://www.dola.com/chat/";
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
     public DateTimeOffset? LastOpenedAt { get; set; }
 
