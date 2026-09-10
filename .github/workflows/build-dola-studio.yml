@@ -1,0 +1,47 @@
+name: Build Tangyuan Dola Studio
+
+on:
+  push:
+    branches:
+      - project/dola-studio-v1
+    paths:
+      - '08_DOLA_STUDIO/**'
+      - '.github/workflows/build-dola-studio.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore 08_DOLA_STUDIO/src/TangyuanDolaStudio/TangyuanDolaStudio.csproj
+
+      - name: Publish single EXE
+        shell: pwsh
+        run: ./08_DOLA_STUDIO/build-release.ps1
+
+      - name: Verify EXE
+        shell: pwsh
+        run: |
+          $exe = '08_DOLA_STUDIO/publish/win-x64/TangyuanDolaStudio.exe'
+          if (!(Test-Path $exe)) { throw "Missing $exe" }
+          Get-Item $exe | Format-List Name,Length,LastWriteTime
+
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: TangyuanDolaStudio-win-x64
+          path: 08_DOLA_STUDIO/publish/win-x64/TangyuanDolaStudio.exe
+          if-no-files-found: error
+          retention-days: 30
