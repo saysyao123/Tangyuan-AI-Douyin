@@ -5,7 +5,9 @@ on:
     branches:
       - project/dola-studio-v1
     paths:
-      - '08_DOLA_STUDIO/**'
+      - '08_DOLA_STUDIO/src/**'
+      - '08_DOLA_STUDIO/build-release.ps1'
+      - '08_DOLA_STUDIO/TangyuanDolaStudio.sln'
       - '.github/workflows/build-dola-studio.yml'
   workflow_dispatch:
 
