@@ -9,95 +9,113 @@
 `project/dola-studio-v1`
 
 ## 当前阶段
-`P1 — Minimal Browser + A/B Session`
+`P1.1 — Runtime Stability Retest`
 
 ## 已通过 Gate
 
 - `P0_DOC_LOCK_PASS`
 - `P1_BUILD_PASS`
+- `P1.1_REBUILD_PASS`
 
-### P1_BUILD_PASS 证据
+## 已记录失败
 
-- `.NET 10` WPF 工程已建立；
-- Microsoft.Web.WebView2 已成功 Restore；
-- GitHub Actions Run #2 已完成；
-- `dotnet publish` 成功；
-- 单文件 `TangyuanDolaStudio.exe` 已生成并通过存在性校验；
-- Artifact：`TangyuanDolaStudio-win-x64`；
-- Artifact ID：`10135143353`；
-- EXE 大小：`140890395 bytes`；
-- EXE SHA-256：`69647c0f083988f3c729f5ebd527e33fa8d47e116cb930900b1c44e1a87df314`。
+- `P1_RUNTIME_FAIL_001`
 
-注意：`P1_BUILD_PASS` 只证明软件成功编译并产生 EXE，不等于 `SESSION_AB_PASS`。
+用户首次 Windows 真机测试发现：
+1. 点击“添加账号”直接闪退；
+2. 浏览器没有正确打开 Dola 页面。
 
-## 已锁定的重要结论
+该失败已单独记录于：`P1_RUNTIME_FAILURE_001.md`。
 
-- [x] 参考软件先完整研究，再逐步做减法；
-- [x] 项目升级为独立 `Tangyuan Dola Studio`；
-- [x] WPF + WebView2 为 P1 Browser Core；
-- [x] P1 每账号独立 User Data Folder；
-- [x] P1 为降低低配置机器负担，先采用“一个工作台 + 多 Profile + 当前单活动 WebView2”；
-- [x] 30 秒继续作为核心验证 Gate；
-- [x] 30 秒采用 MODEL_SUPPORTED → PLATFORM_EXPOSED → ACCOUNT_ALLOWED → SERVER_VERIFIED；
-- [x] clean download 优先验证平台本身正常返回的原始干净源；
-- [x] 原软件 Fingerprint / MachineGuid / request patch 等能力保留研究映射，但不进入规避限制的正式实现；
-- [x] Dola 与 MV Core 解耦，长期使用 Adapter 架构。
+---
+
+## P1.1 修复版构建证据
+
+GitHub Actions Run：`34433892482`
+
+最终代码 Commit：`67c31075753f6a536456e6e9fb4e757b6cf54aba`
+
+构建步骤：
+- Setup .NET 10：PASS
+- Restore：PASS
+- Publish single EXE：PASS
+- Verify EXE：PASS
+- Upload Windows EXE：PASS
+
+Artifact：`TangyuanDolaStudio-win-x64`
+
+Artifact ID：`10135480197`
+
+本轮下载后的 EXE：
+- 文件大小：`140906779 bytes`
+- SHA-256：`8e69e36b18350f58c64a3363f16884e12b959964963e46ef8869465352bf9fe8`
+
+注意：`P1.1_REBUILD_PASS` 只证明修复版可成功构建，不等于运行时问题已解决。
+
+---
+
+## 本轮已完成修复
+
+- [x] 移除 `Microsoft.VisualBasic.Interaction.InputBox`；
+- [x] 新建原生 WPF `ProfileEditorDialog`，对应参考软件 `AddInstanceDialog` 思路；
+- [x] Add / Rename / Delete 增加异常保护；
+- [x] 新建独立 `BrowserHostControl`，对应参考软件 `Views.BrowserHost` 模块；
+- [x] WebView2 控件先加入 WPF Visual Tree，再 `EnsureCoreWebView2Async`；
+- [x] CoreWebView2 初始化成功后再配置事件和执行导航；
+- [x] 默认 Dola 首页从根地址改为 `https://www.dola.com/chat/`；
+- [x] 老 Profile 自动迁移到 `/chat/`；
+- [x] 新增全局 UI / AppDomain / Task 异常捕获；
+- [x] 新增持久 `app.log`；
+- [x] 新增界面“日志”按钮；
+- [x] Profile JSON 改为 Semaphore + 临时文件 + 原子替换；
+- [x] 每账号独立 UDF 与下载目录继续保留。
+
+---
 
 ## 当前第一 Gate
 
-`SESSION_AB_PASS`
+`P1.1_RUNTIME_RETEST_PASS`
 
-## 当前唯一主任务
-
-在 Windows 真机运行已经构建的 EXE，并完成：
+### 当前唯一测试任务
 
 ```text
-Launch EXE
-→ Dola-001 打开
-→ 用户本人正常登录账号 A
-→ 切换 Dola-002
-→ 用户本人正常登录账号 B
-→ 完全关闭 EXE
-→ 重新启动
-→ 检查 A/B 是否分别保持登录
-→ 连续切换 20 次
-→ 检查是否串号
-→ 清除/退出 A Session
-→ 检查 B 是否保持不受影响
-→ 输出 P1_SESSION_AB_REPORT.md
+Launch P1.1 EXE
+→ 点击 + 添加
+→ 创建 Test-003
+→ 确认不闪退
+→ 选择 Dola-001
+→ 打开 / 切换账号
+→ 确认正确进入 Dola /chat/ 页面
+→ 确认页面可交互
 ```
 
-在 `SESSION_AB_PASS` 前，不进入 30 秒请求修改、Storyboard、复杂生成自动化、Proxy/Fingerprint/MachineGuid 等高级功能。
+若这四步通过，再恢复：
 
-## P1 实现状态
+`SESSION_AB_PASS`
 
-- [x] 建立 `.NET 10` WPF Solution；
-- [x] 引入 Microsoft.Web.WebView2；
-- [x] 建立 Profile Model；
-- [x] 建立 ProfileStore；
-- [x] 建立 BrowserInstanceManager；
-- [x] 建立 BrowserHost；
-- [x] 建立 AccountListPanel；
-- [x] 自动创建 `Dola-001 / Dola-002`；
-- [x] 每账号独立 UDF；
-- [x] 每账号独立下载目录；
-- [x] GitHub Actions 单 EXE 构建；
-- [x] 云端 Release Build 成功；
-- [ ] EXE 在用户 Windows 真机启动验证；
-- [ ] A/B 用户本人正常登录 Dola；
-- [ ] 完全退出后 Session 持久化测试；
-- [ ] 20 次启停/切换隔离测试；
-- [ ] 破坏 A Session 不影响 B 的隔离测试；
-- [ ] 输出 `P1_SESSION_AB_REPORT.md`。
+即：
 
-## 当前风险/未知项
+```text
+A 正常登录
+→ B 正常登录
+→ 完全退出
+→ 重启
+→ A/B 保持各自 Session
+→ 20 次切换不串号
+→ A 退出不影响 B
+```
 
-1. EXE 已通过编译与发布，但尚未在用户实际 Windows 环境进行 GUI / WebView2 启动验证；
-2. Dola 当前登录页是否在 WebView2 中存在兼容性/第三方登录限制尚未真机验证；
-3. Dola 当前页面和账号实际公开的 Seedance 2.5 时长尚未在我们自己的工作台中验证；
-4. Dola 原始下载是否稳定提供无可见水印源，需要真实生成结果验证；
-5. WebView2 多 Profile 的资源优化尚未实测，P1 先用独立 UDF；
-6. 低配置机器上的同时常驻实例数量尚未测量。
+在 `P1.1_RUNTIME_RETEST_PASS` 前，不测试 30 秒，不进入 Storyboard / Proxy / Fingerprint / MachineGuid / request patch 等后续模块。
+
+---
+
+## 当前风险 / 未知项
+
+1. P1.1 已修复结构偏差并云端构建成功，但必须由用户 Windows 真机确认运行时表现；
+2. Dola 登录流程在当前 WebView2 Runtime 下的第三方登录兼容性仍需实测；
+3. 若 Dola 页面仍失败，必须优先读取 `%LOCALAPPDATA%\TangyuanDolaStudio\logs\app.log`，不再凭现象猜测；
+4. Seedance 2.5 / 30 秒真实能力尚未进入验证；
+5. Dola 原始下载与可见水印状态尚未进入验证。
 
 ## 状态更新规则
 
