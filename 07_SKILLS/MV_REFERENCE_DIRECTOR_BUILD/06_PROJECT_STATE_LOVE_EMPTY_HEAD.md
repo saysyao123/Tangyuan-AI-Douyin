@@ -1,7 +1,7 @@
 # PROJECT_STATE｜爱让人脑袋空空
 
 > Status: `ACTIVE`
-> Current Stage: `K0_FIRST_FRAME`
+> Current Stage: `MULTI_SHOT_DYNAMIC_PROMPT`
 
 - Project: MV Reference Director Skill / first real run
 - Song Family: `爱让人脑袋空空`
@@ -22,13 +22,15 @@
 - Director Status: `LOCKED_FOR_CURRENT_PROJECT / NOT YET GENERATION-VALIDATED`
 - Current Shot Plan: A=5 principal core shots + A0 establishing; B=4 principal core shots + B0 establishing; lyric/beat-driven multi-shot
 - Camera Language: follow / tracking / push / pull / side-move / light orbit / rise + medium / close / face detail / hand detail / foot detail / wide / extreme-wide
-- K0: `ACTIVE / PENDING FORMAL ASSETS`
+- K0 Spec: `09_LOVE_EMPTY_HEAD_K0_SPEC_v1.md`
+- K0 Gate: `10_LOVE_EMPTY_HEAD_K0_GATE_v1.md`
+- K0 Status: `PASSED_FOR_CURRENT_PROJECT / NOT YET GENERATION-VALIDATED`
 - K0 Contract: first frame = first-shot dynamic anchor + persistent asset contract; visibly establish the main character, core clothing silhouette, wind-spirit, main environment, traversable ground/direction, light/weather/wind needed downstream
-- Dynamic Prompt: `PENDING`
+- Dynamic Prompt: `ACTIVE / TO COMPILE`
 - Generation: `PENDING`
 - QA: `PENDING`
 - Assembly: `PENDING`
-- Next Action: formalize K0-A and K0-B specifications, generate the two first-frame images, then stop at Human K0 Gate before compiling multi-shot Dynamic Prompts.
+- Next Action: compile Segment A 12s and Segment B 10s multi-shot Dynamic Prompts from locked Timeline + Director v3 + passed K0; then enter Seedance 2.5 generation.
 
 ## Hard dependencies
 
@@ -38,4 +40,4 @@ If Audio Version changes:
 
 If only downstream visual choices change, Timeline remains locked.
 
-If K0 Gate is not passed, Prompt / Generation remain pending.
+Dynamic Prompt must not introduce new persistent asset systems that were not declared by K0 unless a deliberate coverage redesign is approved.
