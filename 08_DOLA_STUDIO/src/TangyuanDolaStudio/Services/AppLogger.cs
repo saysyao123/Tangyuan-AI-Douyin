@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 
 namespace TangyuanDolaStudio.Services;
@@ -14,9 +15,7 @@ public static class AppLogger
     public static string LogFile { get; } = Path.Combine(LogDirectory, "app.log");
 
     public static void Info(string message) => Write("INFO", message, null);
-
     public static void Warn(string message) => Write("WARN", message, null);
-
     public static void Error(string message, Exception? exception = null) => Write("ERROR", message, exception);
 
     private static void Write(string level, string message, Exception? exception)
