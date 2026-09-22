@@ -142,4 +142,4 @@ judge_contract:
 
   activation_policy:
     requires_regression_suite: true
-    first_suite: "CONTRASTIVE_TESTSET_v0.1"
+    first_suite: "CONTRASTIVE_FIXTURES_v0.1 + CONTRASTIVE_ANSWER_KEY_v0.1"
