@@ -1,0 +1,113 @@
+stage_contract:
+  stage_id: "MOTION_DYNAMIC_PROMPT"
+  version: "0.1"
+  status: "DRAFT_READY_FOR_BASELINE"
+
+  goal: >
+    Convert a sealed shot/director handoff plus first-frame state into a generation-ready
+    dynamic prompt whose character displacement, camera behavior, and end state are
+    physically readable and compatible with the next video-generation stage.
+
+  input_contract:
+    required:
+      - director_handoff.shot_goal
+      - director_handoff.required_action_beats
+      - director_handoff.camera_intent
+      - director_handoff.required_end_state
+      - first_frame_handoff.start_pose
+      - first_frame_handoff.facing_direction
+      - first_frame_handoff.visible_body_regions
+    optional:
+      - first_frame_handoff.ground_visibility
+      - director_handoff.dialogue_or_audio_requirements
+      - director_handoff.transition_requirements
+      - reference_capability_notes
+
+  locked_rules:
+    - id: "LR01"
+      rule: "No unsupported whole-body ground sliding or drifting."
+    - id: "LR02"
+      rule: >
+        When ground displacement is required and feet are readable, locomotion should expose
+        an appropriate physical chain such as lift/step/plant/push-off, center-of-gravity
+        transfer, and acceleration/deceleration.
+    - id: "LR03"
+      rule: >
+        When feet/ground are not sufficiently readable, do not force detailed locomotion.
+        Prefer stable stance, hip/shoulder/torso rotation, reachable upper-body action,
+        and readable center-of-gravity change.
+    - id: "LR04"
+      rule: "Camera motion must have a declared purpose and must not substitute for character locomotion."
+    - id: "LR05"
+      rule: "The prompt must contain a readable completion/end state rather than stopping in an unresolved half-step when continuity requires a completed pose."
+    - id: "LR06"
+      rule: "Do not invent unsupported @Video/@Audio bindings or other unavailable reference capabilities."
+    - id: "LR07"
+      rule: "Prompt time ranges are soft choreography guides, not guarantees of frame-accurate generated timing."
+
+  acceptance_criteria:
+    critical:
+      - id: "M01"
+        name: "required_action_coverage"
+        definition: "Every required action beat from the upstream contract is represented."
+      - id: "M02"
+        name: "grounded_displacement"
+        definition: >
+          Any required ground displacement is supported by readable physical locomotion,
+          unless feet/ground evidence is insufficient and the prompt correctly avoids forcing it.
+      - id: "M03"
+        name: "no_unsupported_translation"
+        definition: "No unexplained sliding/drifting translation is instructed or implied."
+      - id: "M04"
+        name: "camera_intent_defined"
+        definition: "Camera behavior is explicit enough to support the shot goal and is not being used to fake missing body motion."
+      - id: "M05"
+        name: "end_state_defined"
+        definition: "The required ending/continuity state is explicit and physically reachable."
+      - id: "M06"
+        name: "reference_capability_valid"
+        definition: "The prompt does not depend on a reference binding/capability that is not actually available."
+      - id: "M07"
+        name: "evidence_sufficient"
+        definition: "The Judge has enough upstream state to evaluate M01-M06."
+    noncritical:
+      - id: "M08"
+        name: "inertia_and_settle"
+        definition: "Acceleration/deceleration or post-action settling is described where it materially affects motion quality."
+      - id: "M09"
+        name: "prompt_density_reasonable"
+        definition: "The prompt is not overloaded with mutually competing micro-actions that make execution ambiguous."
+
+  output_contract:
+    required:
+      - dynamic_prompt
+      - motion_summary
+      - camera_summary
+      - ending_state
+      - judge_result
+      - stage_status
+    optional:
+      - dialogue_or_audio_clause
+      - transition_clause
+
+  evidence_requirements:
+    - "sealed director/shot handoff"
+    - "sealed first-frame handoff or explicit reason first frame is not required"
+    - "final dynamic prompt candidate"
+
+  deterministic_prechecks:
+    - "required input fields exist"
+    - "required action beat list is non-empty"
+    - "required end state is present"
+    - "prompt text is non-empty"
+
+  failure_routes:
+    deterministic_failure: "REVISE"
+    semantic_failure: "REVISE"
+    insufficient_evidence: "ESCALATE"
+    contract_conflict: "ESCALATE"
+
+  seal_policy:
+    require_all_critical_pass: true
+    require_evidence_complete: true
+    allow_open_blocking_issues: false
