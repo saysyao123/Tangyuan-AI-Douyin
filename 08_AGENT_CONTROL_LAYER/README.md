@@ -203,3 +203,24 @@ This architecture is successful only if real project runs demonstrate:
 7. archived history remains recoverable without becoming default active context.
 
 A generated file or successful model response alone does not prove the architecture works. It must be validated on real MV/video production runs.
+
+
+## 9. Current pilot status
+
+First implementation assets are now available at:
+
+`pilots/MOTION_GATE_V0_1/`
+
+Status: `BASELINE_READY / NOT_VALIDATED`
+
+The pilot includes:
+- Stage Contract;
+- Stateless Judge Contract;
+- Compact Handoff Contract;
+- 20 blind contrastive pairs / 40 cases;
+- separate answer key;
+- blind baseline runbook;
+- result template;
+- expected impact analysis.
+
+Do not promote this architecture to the full MV workflow until the blind regression baseline and at least one real downstream generation test are completed.
