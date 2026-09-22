@@ -1,0 +1,145 @@
+judge_contract:
+  judge_id: "MOTION_JUDGE"
+  version: "0.1"
+  backend_baseline: "GPT-5.6 Fresh Stateless Judge"
+
+  purpose: >
+    Judge only whether the submitted dynamic prompt satisfies the sealed Motion Stage contract.
+    Do not rewrite the prompt, diagnose creatively, or consider unrelated project history.
+
+  fresh_context_required: true
+
+  input:
+    include:
+      - stage_goal
+      - required_action_beats
+      - camera_intent
+      - required_end_state
+      - first_frame_start_pose
+      - first_frame_facing_direction
+      - first_frame_visible_body_regions
+      - first_frame_ground_visibility_if_known
+      - locked_rules
+      - final_dynamic_prompt
+      - actual_reference_capabilities
+    exclude:
+      - executor_rationale
+      - discarded_prompt_versions
+      - full_project_chat_history
+      - unrelated_song_selection_history
+      - superseded_rules
+      - previous_judge_explanations
+
+  allowed_answers:
+    noul:
+      - "TRUE"
+      - "FALSE"
+      - "INSUFFICIENT_EVIDENCE"
+      - "NOT_APPLICABLE"
+
+  questions:
+    - id: "J01"
+      criterion: "M01_required_action_coverage"
+      type: "noul"
+      prompt: "Does the final prompt explicitly or unambiguously cover every required action beat?"
+      critical: true
+
+    - id: "J02"
+      criterion: "M02_grounded_displacement"
+      type: "noul"
+      prompt: >
+        For every required ground displacement that is visually supportable from the start state,
+        does the prompt describe a plausible physical movement chain rather than mere translation?
+      critical: true
+
+    - id: "J03"
+      criterion: "M03_no_unsupported_translation"
+      type: "noul"
+      prompt: >
+        Does the prompt avoid unsupported whole-body sliding/drifting or pose-preserving translation?
+        TRUE means no unsupported translation is present.
+      critical: true
+
+    - id: "J04"
+      criterion: "M04_camera_intent_defined"
+      type: "noul"
+      prompt: >
+        Is camera behavior explicit enough to serve the declared shot goal without replacing the
+        character's required physical motion?
+      critical: true
+
+    - id: "J05"
+      criterion: "M05_end_state_defined"
+      type: "noul"
+      prompt: >
+        Does the prompt define a physically reachable end/settled state that satisfies the required
+        continuity state?
+      critical: true
+
+    - id: "J06"
+      criterion: "M06_reference_capability_valid"
+      type: "noul"
+      prompt: >
+        Does the prompt avoid depending on unavailable or unverified media-reference bindings/capabilities?
+      critical: true
+
+    - id: "J07"
+      criterion: "M07_evidence_sufficient"
+      type: "noul"
+      prompt: >
+        Is the supplied upstream state sufficient to judge J01-J06 without inventing missing facts?
+      critical: true
+
+    - id: "J08"
+      criterion: "M08_inertia_and_settle"
+      type: "noul"
+      prompt: >
+        Where motion quality depends on it, does the prompt include appropriate acceleration,
+        deceleration, inertia, or post-action settling?
+      critical: false
+
+    - id: "J09"
+      criterion: "M09_prompt_density_reasonable"
+      type: "noul"
+      prompt: >
+        Is the motion instruction set sufficiently coherent that required actions are not obscured by
+        too many competing micro-actions?
+      critical: false
+
+  output:
+    explanations: false
+    schema:
+      contract_version: "string"
+      results:
+        J01: "allowed_answer"
+        J02: "allowed_answer"
+        J03: "allowed_answer"
+        J04: "allowed_answer"
+        J05: "allowed_answer"
+        J06: "allowed_answer"
+        J07: "allowed_answer"
+        J08: "allowed_answer"
+        J09: "allowed_answer"
+      failed_criteria: "array[string]"
+      insufficient_evidence_criteria: "array[string]"
+
+  deterministic_route:
+    if_J07_not_TRUE: "ESCALATE"
+    if_any_critical_FALSE: "REVISE"
+    if_any_critical_INSUFFICIENT_EVIDENCE: "ESCALATE"
+    if_all_critical_TRUE: "PASS"
+
+  anti_bias_rules:
+    - "Do not infer PASS from overall quality."
+    - "Do not waive a failed critical criterion because other criteria are strong."
+    - "Do not use executor rationale."
+    - "Do not invent missing first-frame or reference capability facts."
+    - "Do not turn soft time choreography into a frame-accurate requirement."
+
+  confidence_policy:
+    generated_numeric_confidence_is_not_calibrated: true
+    v0_1_use_numeric_thresholds: false
+
+  activation_policy:
+    requires_regression_suite: true
+    first_suite: "CONTRASTIVE_TESTSET_v0.1"
