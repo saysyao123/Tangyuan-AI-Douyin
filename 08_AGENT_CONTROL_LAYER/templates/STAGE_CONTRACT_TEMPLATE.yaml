@@ -1,0 +1,35 @@
+stage_contract:
+  stage_id: ""
+  version: "0.1"
+  status: "DRAFT"
+
+  goal: ""
+
+  input_contract:
+    required: []
+    optional: []
+
+  locked_rules: []
+
+  acceptance_criteria:
+    critical: []
+    noncritical: []
+
+  output_contract:
+    required: []
+    optional: []
+
+  evidence_requirements: []
+
+  dependencies: {}
+
+  failure_routes:
+    deterministic_failure: "REVISE"
+    semantic_failure: "REVISE"
+    insufficient_evidence: "ESCALATE"
+    human_gate_required: "ESCALATE"
+
+  seal_policy:
+    require_all_critical_pass: true
+    require_evidence_complete: true
+    allow_open_blocking_issues: false
