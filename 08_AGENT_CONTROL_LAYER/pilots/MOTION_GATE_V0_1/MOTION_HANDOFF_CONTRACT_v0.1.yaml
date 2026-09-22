@@ -1,0 +1,52 @@
+handoff_contract:
+  handoff_id: "MOTION_HANDOFF"
+  version: "0.1"
+
+  generated_only_after_stage_status: "SEALED"
+
+  required_fields:
+    stage:
+      stage_id: "MOTION_DYNAMIC_PROMPT"
+      stage_version: "string"
+      contract_version: "0.1"
+
+    result:
+      dynamic_prompt: "string"
+      motion_summary: "string"
+      camera_summary: "string"
+      ending_state: "string"
+
+    inherited_locked_state:
+      character_identity_ref: "reference"
+      scene_ref: "reference"
+      first_frame_ref: "reference"
+      facing_direction: "string"
+      required_end_state: "string"
+
+    generation_constraints:
+      unsupported_sliding_forbidden: true
+      unavailable_reference_bindings_forbidden: true
+      timing_semantics: "SOFT_CHOREOGRAPHY"
+
+    evidence_refs:
+      director_handoff: "reference"
+      first_frame_handoff: "reference"
+      judge_result: "reference"
+
+    judge:
+      judge_id: "MOTION_JUDGE"
+      judge_version: "0.1"
+      route: "PASS"
+
+    open_issues: "array"
+
+  intentionally_excluded:
+    - "discarded prompt drafts"
+    - "executor rationale"
+    - "full judge reasoning"
+    - "unrelated earlier project history"
+    - "superseded motion rules"
+
+  downstream_promise: >
+    The next video-generation stage should be able to operate from this handoff plus its own Skill
+    without loading the complete Motion-stage discussion history.
