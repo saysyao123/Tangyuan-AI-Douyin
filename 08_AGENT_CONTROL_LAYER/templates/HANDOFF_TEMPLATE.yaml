@@ -1,0 +1,27 @@
+handoff:
+  stage_id: ""
+  stage_version: ""
+  contract_version: ""
+
+  result:
+    artifacts: []
+
+  decisions: {}
+
+  locked_rules_forward: []
+
+  continuity_state: {}
+
+  evidence_refs: []
+
+  open_issues: []
+
+  next_stage_input:
+    required_payload: {}
+
+  archive_ref: ""
+
+  seal:
+    status: "SEALED"
+    judged_by: ""
+    judge_contract_version: ""
