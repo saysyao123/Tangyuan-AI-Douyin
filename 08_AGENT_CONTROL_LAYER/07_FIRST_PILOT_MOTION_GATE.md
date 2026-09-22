@@ -151,3 +151,16 @@ The pilot does not:
 The first question is only:
 
 > Can GPT-5.6, used as a fresh stateless typed Judge, make one stage more reliable and more modular?
+
+
+## Implementation status update — 2026-09-22
+
+The v0.1 implementation package now exists at:
+
+`08_AGENT_CONTROL_LAYER/pilots/MOTION_GATE_V0_1/`
+
+Current status:
+
+`BASELINE_READY / NOT_VALIDATED`
+
+It contains the formal Stage/Judge/Handoff contracts plus a blind 20-pair contrastive regression suite. The next valid step is a fresh-context blind Judge baseline; do not treat document creation as proof that the architecture improves production yet.
