@@ -33,7 +33,7 @@ This pilot is based on already locked or observed repository rules:
 - `MOTION_STAGE_CONTRACT_v0.1.yaml`
 - `MOTION_JUDGE_CONTRACT_v0.1.yaml`
 - `MOTION_HANDOFF_CONTRACT_v0.1.yaml`
-- `CONTRASTIVE_TESTSET_v0.1.jsonl`
+- `CONTRASTIVE_FIXTURES_v0.1 + CONTRASTIVE_ANSWER_KEY_v0.1.jsonl`
 - `BASELINE_RUNBOOK.md`
 
 ## Core flow
