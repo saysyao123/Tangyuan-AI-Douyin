@@ -1,0 +1,45 @@
+judge_contract:
+  judge_id: ""
+  version: "0.1"
+
+  purpose: ""
+
+  input:
+    include:
+      - stage_goal
+      - acceptance_criteria
+      - locked_rules
+      - final_artifact
+      - required_evidence
+    exclude:
+      - executor_rationale
+      - discarded_drafts
+      - unrelated_history
+      - superseded_rules
+
+  questions:
+    - id: ""
+      type: "noul"
+      criterion: ""
+      allowed_answers:
+        - "TRUE"
+        - "FALSE"
+        - "INSUFFICIENT_EVIDENCE"
+        - "NOT_APPLICABLE"
+      critical: true
+
+  output:
+    include:
+      - contract_version
+      - results
+      - failed_criteria
+    explanations: false
+
+  deterministic_route:
+    insufficient_evidence: "ESCALATE"
+    any_critical_false: "REVISE"
+    all_critical_true: "PASS"
+
+  regression:
+    suite_version: ""
+    required_before_activation: true
