@@ -31,7 +31,7 @@
 {"case_id":"R2_031","criterion":"J08_inertia_and_settle","expected":"NOT_APPLICABLE","route":"PASS","relation_group":"P08B"}
 {"case_id":"R2_032","criterion":"J06_reference_capability_valid","expected":"FALSE","route":"REVISE","relation_group":null}
 {"case_id":"R2_033","criterion":"J02_grounded_displacement","expected":"FALSE","route":"REVISE","relation_group":"P02A"}
-{"case_id":"R2_034","criterion":"J09_prompt_density_reasonable","expected":"NOT_APPLICABLE","route":"PASS","relation_group":null}
+{"case_id":"R2_034","criterion":"J06_reference_capability_valid","expected":"TRUE","route":"PASS","relation_group":null}
 {"case_id":"R2_035","criterion":"J04_camera_intent_defined","expected":"TRUE","route":"PASS","relation_group":null}
 {"case_id":"R2_036","criterion":"J07_evidence_sufficient","expected":"TRUE","route":"PASS","relation_group":null}
 {"case_id":"R2_037","criterion":"J01_required_action_coverage","expected":"FALSE","route":"REVISE","relation_group":"P01B"}
