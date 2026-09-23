@@ -1,0 +1,111 @@
+stage_contract:
+  stage_id: "PROJECT_AUDIO"
+  version: "0.1"
+  status: "READY_FOR_TEST"
+
+  goal: >
+    Establish one authoritative media/timeline truth for the MV so every downstream stage
+    consumes the same selected audio version, segment boundaries, duration, lyric/audio-event
+    timeline, and project output frame format without reconstructing them from history.
+
+  input_contract:
+    required:
+      - source_media_ref
+      - selected_audio_version_ref
+      - segment_start_seconds
+      - segment_end_seconds
+      - target_aspect_ratio
+      - timeline_mode
+      - human_audio_lock
+    conditional:
+      lyric_or_caption_driven:
+        - timeline_units
+      multi_segment_generation_expected:
+        - legal_cut_points
+    optional:
+      - audio_probe
+      - beat_or_onset_evidence
+      - source_video_probe
+      - high_level_content_mode
+
+  locked_rules:
+    - id: "A01"
+      rule: "Exactly one selected audio version is authoritative."
+    - id: "A02"
+      rule: "Final timeline duration is derived from selected segment start/end, not from later generation duration."
+    - id: "A03"
+      rule: "Lyric/audio-event boundaries are downstream truth once sealed; later stages consume rather than recreate them."
+    - id: "A04"
+      rule: "Generation duration, shot count, character, scene, camera and motion design do not belong to S1."
+    - id: "A05"
+      rule: "Changing the selected audio version or locked segment invalidates downstream timeline-dependent stages."
+    - id: "A06"
+      rule: "Song/segment selection requires explicit Human Lock before S1 can SEALED."
+
+  deterministic_checks:
+    - id: "D01"
+      check: "segment_end_seconds > segment_start_seconds"
+    - id: "D02"
+      check: "locked_duration_seconds == segment_end_seconds - segment_start_seconds within tolerance"
+    - id: "D03"
+      check: "selected_audio_version_ref is non-empty and unique"
+    - id: "D04"
+      check: "target_aspect_ratio is explicit"
+    - id: "D05"
+      check: "if timeline_units exist, first unit begins at segment start and last unit ends at segment end within tolerance"
+    - id: "D06"
+      check: "timeline_units are ordered and contain no material gap/overlap unless explicitly annotated"
+    - id: "D07"
+      check: "human_audio_lock == PASS"
+
+  semantic_acceptance_criteria:
+    - id: "J01"
+      name: "timeline_authority_clear"
+      definition: "It is unambiguous which audio/segment/timeline is authoritative."
+      critical: true
+    - id: "J02"
+      name: "timeline_semantics_complete"
+      definition: "For lyric/caption-driven work, timeline units preserve complete lyric/audio meaning across the selected range."
+      critical: true
+    - id: "J03"
+      name: "cut_points_semantically_valid"
+      definition: "Any proposed downstream segment cut point preserves a meaningful lyric/music boundary rather than arbitrarily splitting a semantic unit."
+      critical: false
+    - id: "J04"
+      name: "downstream_reconstruct_not_required"
+      definition: "The handoff contains enough timeline truth that DIRECTOR does not need to recreate the audio timeline."
+      critical: true
+    - id: "J05"
+      name: "scope_clean"
+      definition: "S1 does not lock downstream creative/generation decisions that belong to Director, First Frame, Motion or Generation."
+      critical: true
+
+  output_contract:
+    required:
+      - project_audio_handoff
+      - selected_audio_version_ref
+      - locked_segment
+      - locked_duration_seconds
+      - target_aspect_ratio
+      - timeline_mode
+      - timeline_units_or_explicit_not_required
+      - human_audio_lock
+      - stage_status
+    optional:
+      - beat_or_onset_evidence
+      - preferred_semantic_cut_points
+
+  seal_policy:
+    require_all_deterministic_checks_pass: true
+    require_all_critical_semantic_criteria_pass: true
+    require_human_audio_lock_pass: true
+    allow_open_blocking_issues: false
+
+  explicit_non_goals:
+    - "director concept"
+    - "shot count"
+    - "generation clip duration"
+    - "character design"
+    - "scene design"
+    - "camera language"
+    - "motion prompt"
