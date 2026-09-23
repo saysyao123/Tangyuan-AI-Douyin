@@ -28,7 +28,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 | Build ID | Component | Status | Test | Delivery | Review result | Next allowed action |
 |---|---|---|---|---|---|---|
 | F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / user authorized S1 start | Start S1 PROJECT_AUDIO |
-| S1 | PROJECT_AUDIO | DESIGNING | Representative real-project test planned | — | — | Complete S1 contract/test/delivery/review |
+| S1 | PROJECT_AUDIO | REVIEW | Deterministic PASS 7/7 + real downstream consumption check | S1_DELIVERY_RUN01.yaml | Fresh Judge PENDING | Run independent S1 Fresh Review |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
