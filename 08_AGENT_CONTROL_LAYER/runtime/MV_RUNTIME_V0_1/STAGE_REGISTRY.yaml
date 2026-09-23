@@ -1,0 +1,16 @@
+runtime_id: "MV_RUNTIME_V0_1"
+version: "0.1"
+
+stages:
+  - {order: 1, id: "PROJECT_AUDIO", folder: "stages/01_PROJECT_AUDIO", purpose: "Lock source audio, selected segment, duration, lyric/timeline truth, format and project boundaries.", deep_design_status: "BLOCKED_UNTIL_F0_SEALED", human_gate: false}
+  - {order: 2, id: "DIRECTOR", folder: "stages/02_DIRECTOR", purpose: "Convert sealed audio/timeline truth into visual function, emotional arc, shot requirements and downstream action requirements.", deep_design_status: "BLOCKED_UNTIL_PROJECT_AUDIO_SEALED", human_gate: true}
+  - {order: 3, id: "FIRST_FRAME", folder: "stages/03_FIRST_FRAME", purpose: "Create and lock character/scene/pose visual anchors required by generation.", deep_design_status: "BLOCKED_UNTIL_DIRECTOR_SEALED", human_gate: true}
+  - {order: 4, id: "MOTION", folder: "stages/04_MOTION", purpose: "Create generation-ready dynamic prompt and motion state from Director + First Frame handoffs.", deep_design_status: "BLOCKED_UNTIL_FIRST_FRAME_SEALED", human_gate: false, existing_research_asset: "../../pilots/MOTION_GATE_V0_1"}
+  - {order: 5, id: "GENERATION", folder: "stages/05_GENERATION", purpose: "Execute real image-to-video/video-generation action and record actual artifact/evidence.", deep_design_status: "BLOCKED_UNTIL_MOTION_SEALED", human_gate: false}
+  - {order: 6, id: "VIDEO_QA", folder: "stages/06_VIDEO_QA", purpose: "Convert generated media into structured evidence, judge failures, and route local retry/keep/escalation.", deep_design_status: "BLOCKED_UNTIL_GENERATION_SEALED", human_gate: false}
+  - {order: 7, id: "ASSEMBLY_FINAL", folder: "stages/07_ASSEMBLY_FINAL", purpose: "Assemble sealed segments, validate continuity/audio/technical state, and produce final deliverable.", deep_design_status: "BLOCKED_UNTIL_VIDEO_QA_SEALED", human_gate: true}
+
+development_rule:
+  max_unsealed_stages_in_deep_design: 1
+  downstream_placeholder_allowed: true
+  downstream_implementation_before_upstream_seal: false
