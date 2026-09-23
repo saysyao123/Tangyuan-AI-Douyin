@@ -1,0 +1,118 @@
+{
+  "project_id": "LOVE_EMPTY_HEAD_REFERENCE_RUN",
+  "source_media_ref": "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md#selected-reference",
+  "selected_audio_version_ref": "exact audio extracted from the user-selected Douyin reference clip",
+  "segment_start_seconds": 0,
+  "segment_end_seconds": 15.370998,
+  "locked_duration_seconds": 15.370998,
+  "target_aspect_ratio": "9:16",
+  "timeline_mode": "LYRIC_CAPTION",
+  "human_audio_lock": {
+    "status": "PASS",
+    "evidence": "Timeline Lock records user-selected reference clip and locks its extracted audio as authoritative."
+  },
+  "audio_probe": {
+    "codec": "AAC",
+    "sample_rate_hz": 44100,
+    "channels": 2,
+    "duration_seconds": 15.370998
+  },
+  "source_video_probe": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "H.264",
+    "duration_seconds": 15.370998
+  },
+  "timeline_units": [
+    {
+      "id": "T00",
+      "start": 0,
+      "end": 0.4,
+      "function": "musical pickup / opening accent"
+    },
+    {
+      "id": "T01",
+      "start": 0.4,
+      "end": 0.78,
+      "function": "爱 爱"
+    },
+    {
+      "id": "T02",
+      "start": 0.78,
+      "end": 1.567,
+      "function": "爱总是"
+    },
+    {
+      "id": "T03",
+      "start": 1.567,
+      "end": 2.517,
+      "function": "好了疤"
+    },
+    {
+      "id": "T04",
+      "start": 2.517,
+      "end": 3.4,
+      "function": "忘了痛"
+    },
+    {
+      "id": "T05",
+      "start": 3.4,
+      "end": 4.933,
+      "function": "让人脑袋空空"
+    },
+    {
+      "id": "T06",
+      "start": 4.933,
+      "end": 6.633,
+      "function": "直到心破了洞"
+    },
+    {
+      "id": "T07",
+      "start": 6.633,
+      "end": 7.333,
+      "function": "见了红"
+    },
+    {
+      "id": "T08",
+      "start": 7.333,
+      "end": 8.7,
+      "function": "换来步履匆匆"
+    },
+    {
+      "id": "T09",
+      "start": 8.7,
+      "end": 10.533,
+      "function": "从开始情有独钟"
+    },
+    {
+      "id": "T10",
+      "start": 10.533,
+      "end": 12.333,
+      "function": "到最后泪眼汹涌"
+    },
+    {
+      "id": "T11",
+      "start": 12.333,
+      "end": 13.767,
+      "function": "承诺全被风吹得"
+    },
+    {
+      "id": "T12",
+      "start": 13.767,
+      "end": 15.371,
+      "function": "无影无踪"
+    }
+  ],
+  "preferred_semantic_cut_points": [
+    {
+      "time": 8.7,
+      "status": "PREFERRED",
+      "reason": "new semantic paragraph + subtitle/shot boundary + strong local onset"
+    }
+  ],
+  "evidence_refs": [
+    "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md",
+    "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/09_LOVE_EMPTY_HEAD_K0_SPEC_v1.md"
+  ]
+}
