@@ -77,3 +77,23 @@ This v0.1 does not judge:
 - generated audio/BGM quality.
 
 Those belong to later gates. The first pilot stays deliberately narrow.
+
+
+## Run02 status
+
+Run01 scored 40/40 but exposed a positional-fixture confound (A=TRUE / B=FALSE for every pair).
+
+A deconfounded second benchmark is now available at:
+
+`runs/RUN02/`
+
+Status: `READY_FOR_FRESH_JUDGE`
+
+Run02 contains 54 independent cases:
+- exactly 6 per J01-J09 criterion;
+- hidden contrastive relations;
+- 18 standalone cases;
+- TRUE / FALSE / INSUFFICIENT_EVIDENCE / NOT_APPLICABLE coverage;
+- no visible answer or pair metadata in Judge fixtures.
+
+Do not change `MOTION_JUDGE v0.1` before Run02 is scored.
