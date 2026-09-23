@@ -1,0 +1,53 @@
+judge_contract:
+  judge_id: "PROJECT_AUDIO_JUDGE"
+  version: "0.2"
+  backend: "GPT-5.6 Fresh Stateless Judge"
+
+  purpose: >
+    Judge only whether the proposed PROJECT_AUDIO delivery establishes a complete,
+    internally coherent and scope-clean audio/timeline truth for downstream Director use.
+
+  input:
+    include:
+      - stage_contract
+      - proposed_handoff
+      - timeline_units
+      - legal_cut_points_if_any
+      - evidence_refs
+    exclude:
+      - project format metadata
+      - director rationale
+      - character/scene concepts
+      - dynamic prompts
+      - full project history
+      - superseded audio versions
+
+  allowed_answers:
+    - "TRUE"
+    - "FALSE"
+    - "INSUFFICIENT_EVIDENCE"
+    - "NOT_APPLICABLE"
+
+  questions:
+    - id: "J01"
+      prompt: "Is one authoritative audio version and selected segment unambiguous?"
+      critical: true
+    - id: "J02"
+      prompt: "If the project is lyric/caption-driven, do the timeline units cover the selected range with complete semantic units?"
+      critical: true
+    - id: "J03"
+      prompt: "Are proposed semantic cut points valid boundaries for downstream segmentation?"
+      critical: false
+    - id: "J04"
+      prompt: "Can DIRECTOR consume this handoff without reconstructing the audio/lyric timeline from source history?"
+      critical: true
+    - id: "J05"
+      prompt: "Is the handoff limited to audio/timeline truth rather than project-format or downstream creative/generation decisions?"
+      critical: true
+
+  route:
+    any_critical_FALSE: "REVISE"
+    any_critical_INSUFFICIENT_EVIDENCE: "ESCALATE"
+    all_critical_TRUE: "PASS"
+
+  explanations: false
