@@ -27,8 +27,8 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 
 | Build ID | Component | Status | Test | Delivery | Review result | Next allowed action |
 |---|---|---|---|---|---|---|
-| F0 | Runtime Framework | READY_FOR_REVIEW | Structural self-check complete | Runtime skeleton + tracker + schemas | PENDING USER/PROJECT REVIEW | Review F0 |
-| S1 | PROJECT_AUDIO | NOT_STARTED | — | — | — | Blocked until F0 SEALED |
+| F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / user authorized S1 start | Start S1 PROJECT_AUDIO |
+| S1 | PROJECT_AUDIO | DESIGNING | Representative real-project test planned | — | — | Complete S1 contract/test/delivery/review |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -46,26 +46,16 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 - [x] Runtime build/test/seal runbook created
 - [x] Seven stage placeholders created
 - [x] Progress tracker created
-- [ ] F0 reviewed
-- [ ] F0 SEALED
+- [x] F0 reviewed
+- [x] F0 SEALED
 
 ## Current active build target
 
-F0 — Runtime Framework
+S1 — PROJECT_AUDIO
 
 ## Current next decision
 
-Review whether the framework is:
-
-- small enough;
-- clear enough;
-- compatible with step-by-step construction;
-- free from premature deep stage design;
-- suitable as the permanent progress reference.
-
-If PASS: F0 -> SEALED; S1 PROJECT_AUDIO -> DESIGNING.
-
-If FAIL: F0 -> REVISE; do not start S1.
+S1 is now the active build target. Build only PROJECT_AUDIO until its test, delivery, review, and Seal are complete.
 
 ## Runtime completion definition
 
