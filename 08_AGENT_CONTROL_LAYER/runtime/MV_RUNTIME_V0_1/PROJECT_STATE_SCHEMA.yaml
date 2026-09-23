@@ -1,0 +1,122 @@
+runtime:
+  runtime_id: "MV_RUNTIME_V0_1"
+  runtime_version: "0.1"
+  mode: "EXPERIMENTAL"
+
+project:
+  project_id: ""
+  title: ""
+  created_at: ""
+  current_stage: "PROJECT_AUDIO"
+  overall_status: "NOT_STARTED"
+
+stage_state_schema:
+  allowed_status:
+    - "NOT_STARTED"
+    - "DESIGNING"
+    - "READY_FOR_TEST"
+    - "TESTING"
+    - "DELIVERED"
+    - "REVIEW"
+    - "SEALED"
+    - "REVISE"
+    - "BLOCKED"
+    - "DIRTY"
+  required_fields:
+    - "stage_id"
+    - "contract_version"
+    - "status"
+    - "depends_on"
+    - "input_handoff_refs"
+    - "artifact_refs"
+    - "evidence_refs"
+    - "judge_result_ref"
+    - "human_gate"
+    - "archive_ref"
+    - "updated_at"
+
+project_state:
+  PROJECT_AUDIO:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: []
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: false, status: null}
+    archive_ref: null
+    updated_at: null
+  DIRECTOR:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["PROJECT_AUDIO"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: true, status: null}
+    archive_ref: null
+    updated_at: null
+  FIRST_FRAME:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["DIRECTOR"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: true, status: null}
+    archive_ref: null
+    updated_at: null
+  MOTION:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["DIRECTOR", "FIRST_FRAME"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: false, status: null}
+    archive_ref: null
+    updated_at: null
+  GENERATION:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["MOTION"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: false, status: null}
+    archive_ref: null
+    updated_at: null
+  VIDEO_QA:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["GENERATION"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: false, status: null}
+    archive_ref: null
+    updated_at: null
+  ASSEMBLY_FINAL:
+    contract_version: null
+    status: "NOT_STARTED"
+    depends_on: ["VIDEO_QA"]
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: true, status: null}
+    archive_ref: null
+    updated_at: null
+
+state_truth_rules:
+  - "A model statement alone cannot change stage status to SEALED."
+  - "SEALED requires required artifacts, required evidence, Judge PASS, and any required Human Gate PASS."
+  - "A stage reopened after SEALED must increment version."
+  - "Contract-breaking upstream change marks affected downstream dependents DIRTY."
+  - "Internal implementation changes do not invalidate downstream stages when the output contract remains compatible."
