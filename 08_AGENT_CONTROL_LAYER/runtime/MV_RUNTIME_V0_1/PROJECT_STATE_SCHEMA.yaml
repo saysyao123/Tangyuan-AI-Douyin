@@ -7,6 +7,7 @@ project:
   project_id: ""
   title: ""
   created_at: ""
+  target_aspect_ratio: ""
   current_stage: "PROJECT_AUDIO"
   overall_status: "NOT_STARTED"
 
