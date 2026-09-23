@@ -224,3 +224,13 @@ The pilot includes:
 - expected impact analysis.
 
 Do not promote this architecture to the full MV workflow until the blind regression baseline and at least one real downstream generation test are completed.
+
+## 10. MV Runtime v0.1
+
+The progressive end-to-end video runtime framework is now located at:
+
+`runtime/MV_RUNTIME_V0_1/`
+
+Current status: `F0_FRAMEWORK_READY_FOR_REVIEW`.
+
+The runtime is deliberately built one stage at a time. Detailed S1 PROJECT_AUDIO design must not begin until F0 is reviewed and SEALED.
