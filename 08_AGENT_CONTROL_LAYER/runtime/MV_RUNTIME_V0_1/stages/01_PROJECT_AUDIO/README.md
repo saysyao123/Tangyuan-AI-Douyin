@@ -1,33 +1,35 @@
 # Stage PROJECT_AUDIO
 
-Status: NOT_STARTED
+Status: REVIEW
 
 ## Purpose
 
-Lock source audio, selected segment, duration, lyric/timeline truth, format and project boundaries.
+Lock the authoritative source audio, selected segment, exact duration, lyric/audio-event timeline, semantic cut points, output aspect ratio, and Human Audio Lock.
 
-## Current development lock
+S1 deliberately does not lock Director, shot count, generation duration, character, scene, camera, or motion decisions.
 
-Detailed design is blocked until: F0 Framework SEALED.
+## Current Run01
 
-This folder is currently a placeholder only.
+Representative project:
+《爱让人脑袋空空》
 
-Do not add deep Stage logic before the dependency is SEALED.
+Artifacts:
+- S1_STAGE_CONTRACT_v0.1.yaml
+- S1_JUDGE_CONTRACT_v0.1.yaml
+- S1_HANDOFF_CONTRACT_v0.1.yaml
+- S1_TEST_PLAN.md
+- S1_TEST_INPUT_RUN01.json
+- validate_s1_run01.py
+- S1_DELIVERY_RUN01.yaml
+- S1_TEST_REPORT_RUN01.md
+- S1_FRESH_REVIEW_START_PROMPT.md
+- S1_STATUS.md
 
-## Expected future delivery
+Current result:
+- deterministic checks: PASS 7/7
+- representative handoff: DELIVERED
+- real downstream Director consumption: VERIFIED
+- Human Audio Lock: PASS
+- Fresh Judge: PENDING
 
-Locked media/timeline handoff for DIRECTOR.
-
-## Future build sequence
-
-1. Contract Design
-2. Test Plan
-3. Isolated Test
-4. Delivery Artifact
-5. Review
-6. PASS -> SEALED
-7. Allow next Stage design
-
-## Non-goal now
-
-No detailed rules, prompts, Judge schema, or Skill implementation are locked in this placeholder.
+Do not design S2 until S1 is SEALED.
