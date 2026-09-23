@@ -38,12 +38,12 @@ stage_state_schema:
 
 project_state:
   PROJECT_AUDIO:
-    contract_version: "0.1"
+    contract_version: "0.2"
     status: "REVIEW"
     depends_on: []
     input_handoff_refs: []
-    artifact_refs: ["stages/01_PROJECT_AUDIO/S1_DELIVERY_RUN01.yaml"]
-    evidence_refs: ["stages/01_PROJECT_AUDIO/S1_TEST_REPORT_RUN01.md"]
+    artifact_refs: ["stages/01_PROJECT_AUDIO/S1_DELIVERY_RUN02_v0.2.yaml"]
+    evidence_refs: ["stages/01_PROJECT_AUDIO/S1_TEST_REPORT_RUN02_v0.2.md"]
     judge_result_ref: null
     human_gate: {required: true, status: "PASS"}
     archive_ref: null
