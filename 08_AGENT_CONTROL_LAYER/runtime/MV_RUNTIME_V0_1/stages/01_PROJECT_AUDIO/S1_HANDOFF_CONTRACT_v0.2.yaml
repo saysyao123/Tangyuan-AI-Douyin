@@ -1,0 +1,40 @@
+handoff_contract:
+  handoff_id: "PROJECT_AUDIO_HANDOFF"
+  version: "0.2"
+
+  required:
+    project_id: "string"
+    source_media_ref: "reference"
+    selected_audio_version_ref: "reference"
+    locked_segment:
+      start_seconds: "number"
+      end_seconds: "number"
+      duration_seconds: "number"
+    timeline_mode: "LYRIC_CAPTION | MUSIC_EVENT | FREEFORM"
+    timeline_units: "array_or_explicit_not_required"
+    authoritative_timeline_ref: "reference"
+    human_audio_lock:
+      status: "PASS"
+      evidence_ref: "reference"
+    stage:
+      id: "PROJECT_AUDIO"
+      contract_version: "0.2"
+      status: "SEALED"
+
+  optional:
+    beat_or_onset_evidence: "reference_or_summary"
+    preferred_semantic_cut_points: "array"
+
+  deliberately_excluded:
+    - project_aspect_ratio
+    - generation_duration
+    - shot_count
+    - director_concept
+    - character
+    - scene
+    - camera
+    - motion_prompt
+
+  downstream_promise: >
+    DIRECTOR can derive visual/emotional structure from this handoff without reopening
+    the full audio-selection discussion or recalculating the authoritative timeline.
