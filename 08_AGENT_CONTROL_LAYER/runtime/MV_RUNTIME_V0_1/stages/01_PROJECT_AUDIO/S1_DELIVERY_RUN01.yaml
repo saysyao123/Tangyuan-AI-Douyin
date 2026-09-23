@@ -1,0 +1,64 @@
+handoff:
+  handoff_id: "PROJECT_AUDIO_HANDOFF"
+  version: "0.1"
+  project_id: "LOVE_EMPTY_HEAD_REFERENCE_RUN"
+
+  source_media_ref: "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md#selected-reference"
+  selected_audio_version_ref: "exact audio extracted from the user-selected Douyin reference clip"
+
+  locked_segment:
+    start_seconds: 0.000
+    end_seconds: 15.370998
+    duration_seconds: 15.370998
+
+  target_aspect_ratio: "9:16"
+  timeline_mode: "LYRIC_CAPTION"
+
+  authoritative_timeline_ref: "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md"
+
+  timeline_units:
+    - {id: "T00", start: 0.000, end: 0.400, function: "musical pickup / opening accent"}
+    - {id: "T01", start: 0.400, end: 0.780, function: "爱 爱"}
+    - {id: "T02", start: 0.780, end: 1.567, function: "爱总是"}
+    - {id: "T03", start: 1.567, end: 2.517, function: "好了疤"}
+    - {id: "T04", start: 2.517, end: 3.400, function: "忘了痛"}
+    - {id: "T05", start: 3.400, end: 4.933, function: "让人脑袋空空"}
+    - {id: "T06", start: 4.933, end: 6.633, function: "直到心破了洞"}
+    - {id: "T07", start: 6.633, end: 7.333, function: "见了红"}
+    - {id: "T08", start: 7.333, end: 8.700, function: "换来步履匆匆"}
+    - {id: "T09", start: 8.700, end: 10.533, function: "从开始情有独钟"}
+    - {id: "T10", start: 10.533, end: 12.333, function: "到最后泪眼汹涌"}
+    - {id: "T11", start: 12.333, end: 13.767, function: "承诺全被风吹得"}
+    - {id: "T12", start: 13.767, end: 15.371, function: "无影无踪"}
+
+  beat_or_onset_evidence:
+    summary: "Approx 129.2 BPM estimate; beat/onset is secondary evidence, lyric boundaries remain primary truth."
+    ref: "07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md#beat-accent-analysis"
+
+  preferred_semantic_cut_points:
+    - time_seconds: 8.700
+      status: "PREFERRED"
+      reason: "Completes first consequence unit; next lyric starts a new semantic paragraph; shot/subtitle boundary; strong onset."
+
+  human_audio_lock:
+    status: "PASS"
+    evidence_ref: "Timeline Lock records the user-selected reference clip and exact extracted audio as the locked Audio Version."
+
+  stage:
+    id: "PROJECT_AUDIO"
+    contract_version: "0.1"
+    status: "DELIVERED_PENDING_FRESH_REVIEW"
+
+  intentionally_not_locked:
+    - "generation clip duration"
+    - "shot count"
+    - "director concept"
+    - "character"
+    - "scene"
+    - "camera"
+    - "motion prompt"
+
+  downstream_instruction: >
+    DIRECTOR must consume this handoff as timeline truth and must not recreate or silently alter
+    the selected audio version, 0.000-15.370998 segment, lyric boundaries, or 8.700 preferred
+    semantic split without reopening PROJECT_AUDIO.
