@@ -1,0 +1,43 @@
+handoff:
+  handoff_id: "SONG_SELECTION_HANDOFF"
+  version: "0.2"
+
+  selected_song_family: "若爱有尽头"
+
+  selection_evidence:
+    core_account_signal: "Historical trusted-core repeat: 乐♩青春 + XIANGJISHI."
+    lyric_visual_fit: "High emotional/visual translation potential for animated MV."
+    animation_fit: "Historical pool 9/10."
+    motion_fit: "Historical pool 7/10; requires Director to prevent static-atmosphere bias."
+    prior_project_use: "Candidate-only; no formal prior project lock."
+    version_risk: "Multiple performance/version references may differ; S1 must verify exact acquired version."
+
+  candidate_reference_leads:
+    - source: "historical trusted-core reference"
+      account: "XIANGJISHI"
+      ref: "https://www.douyin.com/video/7673820758652768945"
+      current_note: "historically useful reference lead; current media availability uncertain"
+    - source: "current public Douyin work"
+      account: "音乐小屋"
+      ref: "https://www.douyin.com/video/7675199543096406626"
+      current_note: "song-family confirmation / live performance; visually weaker"
+    - source: "current public YouTube lyric/audio reference"
+      account: "夢音樂娛樂 | DreamMusicEntertainment"
+      ref: "https://www.youtube.com/watch?v=PdPPHkcqVvA"
+      current_note: "audio/lyric acquisition lead; not a motion reference"
+
+  preferred_reference_lead: "https://www.douyin.com/video/7673820758652768945"
+
+  human_song_family_lock:
+    status: "PASS"
+    selected_by: "user"
+
+  stage:
+    id: "SONG_SELECTION"
+    contract_version: "0.2"
+    status: "SEALED"
+
+  downstream_instruction: >
+    Do not reopen song selection unless S1 proves the Song Family itself is unusable.
+    S1 must attempt media acquisition independently using the supplied leads and other
+    normal public/authorized sources, then verify the exact acquired audio version.
