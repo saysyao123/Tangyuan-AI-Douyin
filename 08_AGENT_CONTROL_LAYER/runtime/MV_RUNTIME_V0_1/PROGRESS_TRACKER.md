@@ -28,8 +28,8 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 | Build ID | Component | Status | Test | Delivery | Review result | Next allowed action |
 |---|---|---|---|---|---|---|
 | F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / entry-stage correction accepted | Start S0 SONG_SELECTION |
-| S0 | SONG_SELECTION | REVIEW | Chinese filter + dedupe + Top3 PASS; B selected | S0_SHORTLIST_TEST_RUN01.md | REFERENCE_RECOVERY | Recover usable 若爱有尽头 reference or approve split-reference mode |
-| S1 | PROJECT_AUDIO | BLOCKED | Prebuilt v0.2 candidate: deterministic PASS 6/6 + downstream consumption verified | S1_DELIVERY_RUN02_v0.2.yaml | Fresh Judge deferred | Wait for S0 SEALED handoff, then re-integrate/review S1 |
+| S0 | SONG_SELECTION | SEALED | Chinese filter + dedupe + Top3 PASS; 若爱有尽头 selected | S0_DELIVERY_RUN01_v0.2.yaml | Human Song Family Lock PASS | S1 owns material acquisition |
+| S1 | PROJECT_AUDIO | DESIGNING | S1A autonomous acquisition started for 若爱有尽头 | S1A_ACQUISITION_CASE_001.md | MEDIA_NOT_ACQUIRED_YET | Continue autonomous normal-source acquisition |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -52,11 +52,11 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 
 ## Current active build target
 
-S0 — SONG_SELECTION
+S1 — PROJECT_AUDIO / S1A MATERIAL_ACQUISITION
 
 ## Current next decision
 
-S0 Test Run01: B《若爱有尽头》selected at Song Family level. Original reference is unavailable in the user's normal workflow, so S0 is now in REFERENCE_RECOVERY. S1 remains blocked.
+S0 is SEALED with Song Family《若爱有尽头》. S1 is active. Current phase: S1A autonomous material acquisition. Timeline/version analysis is blocked until actual analyzable media is acquired.
 
 ## Runtime completion definition
 
