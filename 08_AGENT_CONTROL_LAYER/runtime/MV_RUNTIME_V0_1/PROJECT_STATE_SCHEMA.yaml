@@ -50,7 +50,7 @@ project_state:
     updated_at: null
   PROJECT_AUDIO:
     contract_version: "0.3-draft"
-    status: "DESIGNING"
+    status: "BLOCKED"
     depends_on: ["SONG_SELECTION"]
     input_handoff_refs: ["stages/00_SONG_SELECTION/S0_DELIVERY_RUN01_v0.2.yaml"]
     artifact_refs: ["stages/01_PROJECT_AUDIO/S1A_ACQUISITION_CASE_001.md"]
