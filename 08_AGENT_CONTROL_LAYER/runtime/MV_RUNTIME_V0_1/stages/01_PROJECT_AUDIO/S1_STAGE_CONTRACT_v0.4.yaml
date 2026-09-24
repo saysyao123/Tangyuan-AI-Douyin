@@ -1,0 +1,98 @@
+stage_contract:
+  stage_id: "PROJECT_AUDIO"
+  version: "0.4"
+  status: "FINAL"
+
+  goal: >
+    Starting from a sealed Song Family, obtain an analyzable source, establish
+    the authoritative usable source/version for the run, construct the lyric/audio
+    timeline for the selected production material, obtain Human Audio Lock, and
+    deliver one sealed Project Audio handoff.
+
+  upstream_required:
+    - song_selection_handoff
+    - selected_song_family
+    - candidate_reference_leads
+    - human_song_family_lock
+
+  phases:
+    - {id: "S1A", name: "MATERIAL_ACQUISITION"}
+    - {id: "S1B", name: "SOURCE_VERSION_VERIFICATION"}
+    - {id: "S1C", name: "SEGMENT_TIMELINE_ANALYSIS"}
+    - {id: "S1D", name: "AUDIO_TIMELINE_LOCK"}
+
+  acquisition_policy:
+    autonomous_default: true
+    user_upload_default: false
+    user_provided_fallback:
+      allowed: true
+      condition: "explicit exception or test run"
+      must_be_recorded_separately: true
+
+  coverage_state:
+    allowed:
+      - "ANALYSIS_PREVIEW_ACQUIRED"
+      - "TARGET_SEGMENT_SOURCE_ACQUIRED"
+      - "FULL_SOURCE_ACQUIRED"
+      - "ACQUISITION_BLOCKED"
+    rules:
+      - "Preview-only media may support identity/technical checks."
+      - "Formal segment selection requires TARGET_SEGMENT_SOURCE_ACQUIRED or FULL_SOURCE_ACQUIRED."
+      - "Full-song best-section search requires FULL_SOURCE_ACQUIRED."
+      - "A webpage URL alone is never MEDIA_ACQUIRED."
+
+  source_identity_policy:
+    - "No silent cover/remix/live substitution."
+    - "Alternate singer/version requires SAME_WORK_VERIFIED or explicit user approval."
+    - "A user-provided source explicitly accepted for the run may become the authoritative test source."
+
+  timeline_policy:
+    - "Timeline boundaries derive from the accepted source material."
+    - "Timeline duration must match the accepted source range within tolerance."
+    - "Sealed lyric/audio-event boundaries become downstream truth."
+    - "Director/camera/scene/motion design is excluded from S1."
+
+  human_gate:
+    required: true
+    gate_name: "HUMAN_AUDIO_LOCK"
+    production_mode: "USER_CONFIRMATION_REQUIRED"
+    test_mode: "AUTO_CONFIRMED_FOR_TEST_ALLOWED_IF_EXPLICITLY_RECORDED"
+
+  deterministic_checks:
+    acquisition:
+      - "analyzable media artifact/object exists"
+      - "source provenance is recorded"
+      - "coverage state is explicit"
+    source:
+      - "authoritative source for current run is explicit"
+      - "version ambiguity is resolved, accepted, or declared"
+    timeline:
+      - "source_end > source_start"
+      - "locked duration matches source range within tolerance"
+      - "timeline units are ordered and inside source range"
+    seal:
+      - "human_audio_lock == PASS"
+
+  seal_policy:
+    requires:
+      - deterministic_checks_pass
+      - evidence_sufficient
+      - human_audio_lock_pass
+      - stage_seal_judge_pass
+
+  output_contract:
+    required:
+      - source_media
+      - final_audio
+      - timeline
+      - human_audio_lock
+      - stage_status
+      - project_audio_handoff
+
+  explicit_non_goals:
+    - "director concept"
+    - "shot count"
+    - "character design"
+    - "scene design"
+    - "camera design"
+    - "motion prompt design"
