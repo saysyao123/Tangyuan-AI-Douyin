@@ -1,0 +1,65 @@
+handoff:
+  handoff_id: "PROJECT_AUDIO_HANDOFF"
+  version: "0.4"
+  retest_run: "RETEST01"
+  mode: "KNOWN_GOOD_REPLAY"
+  status: "SEALED"
+
+  upstream:
+    handoff_ref: "../00_SONG_SELECTION/S0_DELIVERY_RETEST01_v0.3.yaml"
+    selected_song_family: "若爱有尽头"
+    human_song_family_lock: "PASS"
+
+  acquisition:
+    normal_autonomous_route: "SOURCE_COVERAGE_RESEARCH_UNRESOLVED"
+    current_run_route: "USER_PROVIDED_MEDIA_FALLBACK"
+    exception_recorded: true
+    coverage_state: "TARGET_SEGMENT_SOURCE_ACQUIRED"
+
+  source_media:
+    filename: "“如果爱有尽头 怎么想念没有”.mp4"
+    sha256: "7de784c0b396538cc866747e7c93a80b01b0535e7a7070610089c9a925b158b9"
+    source_duration_seconds: 21.400
+    audio_duration_seconds: 21.360907
+    audio_codec: "AAC LC"
+    sample_rate_hz: 44100
+    channels: 2
+    authoritative_for_run: true
+
+  final_audio:
+    decision: "USE_FULL_SOURCE_AUDIO"
+    source_start_seconds: 0.00
+    source_end_seconds: 21.360907
+    duration_seconds: 21.360907
+    artifact_filename: "若爱有尽头_完整素材提取_21.4s.mp3"
+
+  timeline:
+    mode: "LYRIC_VISUAL_BOUNDARY"
+    tolerance_seconds: 0.25
+    units:
+      - {id: "L01", start: 0.00, end: 2.50, lyric: "如果爱有尽头"}
+      - {id: "L02", start: 2.50, end: 5.75, lyric: "怎么想念没有"}
+      - {id: "L03", start: 5.75, end: 8.00, lyric: "我该如何拼凑"}
+      - {id: "L04", start: 8.00, end: 10.75, lyric: "没有你的以后"}
+      - {id: "L05", start: 10.75, end: 13.75, lyric: "你随时光远走"}
+      - {id: "L06", start: 13.75, end: 16.25, lyric: "回忆却总逗留"}
+      - {id: "L07", start: 16.25, end: 18.75, lyric: "怪我太过念旧"}
+      - {id: "L08", start: 18.75, end: 21.36, lyric: "迟迟不肯退后"}
+
+  human_audio_lock:
+    status: "PASS"
+    selected_by: "assistant_test_operator"
+    gate_mode: "AUTO_CONFIRMED_FOR_TEST"
+    decision: "USE_FULL_SOURCE_AUDIO"
+
+  judge:
+    result_ref: "S1_STAGE_SEAL_JUDGE_RETEST01.json"
+    route: "PASS"
+    mode: "SAME_MODEL_MINIMAL_CONTEXT_TEST"
+
+  stage:
+    id: "PROJECT_AUDIO"
+    contract_version: "0.4"
+    status: "SEALED"
+    next_stage_allowed: true
+    next_stage: "DIRECTOR"
