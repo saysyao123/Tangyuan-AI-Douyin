@@ -29,7 +29,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 |---|---|---|---|---|---|---|
 | F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / entry-stage correction accepted | Start S0 SONG_SELECTION |
 | S0 | SONG_SELECTION | SEALED | Chinese filter + dedupe + Top3 PASS; 若爱有尽头 selected | S0_DELIVERY_RUN01_v0.2.yaml | Human Song Family Lock PASS | S1 owns material acquisition |
-| S1 | PROJECT_AUDIO | REVISE | Run01: S1 architecture PASS; acquisition adapter blocked by runtime media access | S1_TEST_REPORT_RUN01.md | REVISE_S1A_ONLY | Build/test one reliable autonomous Acquisition Adapter |
+| S1 | PROJECT_AUDIO | BLOCKED | S1A v0.2 validated: Apple + Deezer + Direct Media + Router; direct-media E2E PASS | S1A_VALIDATION_REPORT_v0.2.md | S1A COMPONENT PASS / 若爱有尽头 exact-version CATALOG_COVERAGE_BLOCKED | Find compliant exact-version source, then resume S1B |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -56,7 +56,7 @@ S1 — PROJECT_AUDIO / S1A MATERIAL_ACQUISITION
 
 ## Current next decision
 
-S0 remains SEALED. S1 Run01 localized the only current blocker to S1A Material Acquisition. Revise/test S1A only; S1B-S1D remain frozen until MEDIA_ACQUIRED.
+S0 remains SEALED. S1A component is now validated and frozen at v0.2. The current project is blocked only because the selected 张蓓蓓/林叙 version is not covered by the current compliant acquisition catalogs. Resume S1B immediately once exact media is acquired.
 
 ## Runtime completion definition
 
