@@ -1,0 +1,42 @@
+handoff_contract:
+  handoff_id: "SONG_SELECTION_HANDOFF"
+  version: "0.2"
+
+  generated_after:
+    human_song_family_lock: "PASS"
+
+  required:
+    selected_song_family: "string"
+    selection_evidence:
+      core_account_signal: "summary"
+      lyric_visual_fit: "summary"
+      animation_fit: "summary"
+      motion_fit: "summary"
+      prior_project_use: "summary"
+      version_risk: "summary"
+    candidate_reference_leads: "array"
+    human_song_family_lock:
+      status: "PASS"
+      selected_by: "user"
+    stage:
+      id: "SONG_SELECTION"
+      contract_version: "0.2"
+      status: "SEALED"
+
+  optional:
+    preferred_reference_lead: "reference_or_null"
+
+  deliberately_excluded:
+    - acquired_media_file
+    - exact_audio_version
+    - extracted_audio_file
+    - final_segment_start
+    - final_segment_end
+    - lyric_timeline
+    - beat_grid
+    - semantic_cut_timestamps
+    - director_plan
+
+  downstream_promise: >
+    S1 PROJECT_AUDIO receives a user-selected Song Family plus reference/source leads.
+    S1 owns media acquisition, exact version verification, segment analysis and timeline lock.
