@@ -1,0 +1,1 @@
+run=001\nsong=若爱有尽头\nadapter=DEEZER_PREVIEW_V0_1\n
