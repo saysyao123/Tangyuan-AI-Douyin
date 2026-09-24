@@ -1,3 +1,4 @@
-run=001
+run=002
 song=若爱有尽头
 adapter=APPLE_ITUNES_PREVIEW_V0_1
+publish_result=true
