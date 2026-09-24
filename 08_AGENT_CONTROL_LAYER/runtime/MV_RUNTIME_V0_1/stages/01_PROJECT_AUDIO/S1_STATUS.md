@@ -1,11 +1,11 @@
 # S1 PROJECT_AUDIO Status
 
-Status: HUMAN_AUDIO_LOCK_PENDING
+Status: SEALED
 
 Selected Song Family:
 `若爱有尽头`
 
-## Current formal source
+## Final source
 
 Mode:
 `USER_PROVIDED_MEDIA_FALLBACK`
@@ -16,39 +16,54 @@ Source:
 Classification:
 `TARGET_SEGMENT_SOURCE_ACQUIRED`
 
+## Final audio decision
+
+Use the full original source audio.
+
+Final range:
+`0.00s -> 21.360907s`
+
+Final artifact:
+`若爱有尽头_完整素材提取_21.4s.mp3`
+
+The previous 16.06s candidate is:
+`SUPERSEDED_BY_FULL_SOURCE_AUDIO`
+
 ## S1A
 
-Autonomous acquisition research remains separate.
+Autonomous acquisition research remains separate and unresolved.
 
 See:
 `S1A_USER_PROVIDED_MATERIAL_NOTE.md`
 
-The current user-supplied material is an exception fallback and does not close S1A research.
+This run used the user-provided source as an explicit fallback.
 
 ## S1B
 
-PASS for current provided source.
+PASS
 
 ## S1C
 
-PASS.
+PASS
 
-Recommended cut:
-`5.30s -> 21.36s`
-
-Candidate:
-`若爱有尽头_S1候选片段_v1_16.06s.mp3`
+Full 21.4s source accepted as the production audio segment.
 
 ## S1D
 
-Status:
-`HUMAN_AUDIO_LOCK_PENDING`
+Human Audio Lock:
+`PASS`
 
-Do not enter S2 until user listens and explicitly approves the candidate.
+User decision:
+Use the original 21.4s audio without further shortening.
 
-Current evidence:
-- S1_RUN02_USER_MEDIA_ANALYSIS.md
-- S1_DELIVERY_RUN02_CANDIDATE.yaml
+## Final handoff
+
+`S1_DELIVERY_RUN02_FINAL.yaml`
 
 S1 SEALED:
-NO
+YES
+
+Next stage:
+`S2 DIRECTOR`
+
+S2 is now allowed to begin, but has not been started.
