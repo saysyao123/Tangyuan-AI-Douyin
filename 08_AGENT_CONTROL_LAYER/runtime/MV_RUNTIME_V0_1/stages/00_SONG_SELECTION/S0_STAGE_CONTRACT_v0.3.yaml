@@ -1,0 +1,82 @@
+stage_contract:
+  stage_id: "SONG_SELECTION"
+  version: "0.3"
+  status: "FINAL"
+
+  goal: >
+    Produce a small evidence-backed shortlist of Chinese-language Song Families,
+    remove historically ineligible choices, and obtain exactly one Song Family
+    lock before PROJECT_AUDIO begins.
+
+  input_contract:
+    required:
+      - trusted_song_pool_ref
+      - trusted_core_account_registry_ref
+      - used_song_ledger_ref
+      - fresh_refresh_ref
+      - language_policy
+      - current_project_selection_goal
+    optional:
+      - current_platform_search_evidence
+      - supplemental_music_evidence
+
+  decision_pipeline:
+    - "LANGUAGE_FILTER"
+    - "HISTORICAL_USE_DEDUPE"
+    - "SONG_FAMILY_DEDUPE"
+    - "FRESHNESS_AND_REFERENCE_EVIDENCE"
+    - "QUALIFICATION"
+    - "TOP3"
+    - "HUMAN_SONG_FAMILY_LOCK"
+
+  song_family_policy:
+    normalize_variants_to_song_family: true
+    preserve_reference_variants_as_leads: true
+    song_family_is_not_audio_version: true
+
+  shortlist_policy:
+    max_primary_candidates_per_round: 3
+    no_forced_winner: true
+    user_may_reject_all: true
+
+  human_gate:
+    required: true
+    gate_name: "HUMAN_SONG_FAMILY_LOCK"
+    production_mode: "USER_CONFIRMATION_REQUIRED"
+    test_mode: "AUTO_CONFIRMED_FOR_TEST_ALLOWED_IF_EXPLICITLY_RECORDED"
+
+  deterministic_checks:
+    - "all Primary candidates satisfy language policy"
+    - "HARD_EXCLUDE and REGRESSION_ONLY songs do not enter a fresh Top3"
+    - "no duplicate Song Family appears twice"
+    - "Primary shortlist contains 1 to 3 candidates"
+    - "selected Song Family exists in the delivered shortlist"
+    - "S0 performs no media acquisition or timeline analysis"
+
+  output_contract:
+    required:
+      - selected_song_family
+      - selection_evidence
+      - candidate_reference_leads
+      - human_song_family_lock
+      - stage_status
+    deliberately_excluded:
+      - acquired_media_file
+      - exact_audio_version
+      - lyric_timeline
+      - beat_grid
+      - final_segment_start
+      - final_segment_end
+      - director_plan
+
+  seal_policy:
+    requires:
+      - deterministic_checks_pass
+      - evidence_sufficient
+      - human_song_family_lock_pass
+      - stage_seal_judge_pass
+
+  downstream_promise: >
+    S1 receives a locked Song Family and reference/source leads. S1 owns media
+    acquisition, exact usable source/version determination, segment/timeline
+    analysis, and Human Audio Lock.
