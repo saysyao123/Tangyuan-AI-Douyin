@@ -29,7 +29,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 |---|---|---|---|---|---|---|
 | F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / entry-stage correction accepted | Start S0 SONG_SELECTION |
 | S0 | SONG_SELECTION | SEALED | Chinese filter + dedupe + Top3 PASS; 若爱有尽头 selected | S0_DELIVERY_RUN01_v0.2.yaml | Human Song Family Lock PASS | S1 owns material acquisition |
-| S1 | PROJECT_AUDIO | REVIEW | User-provided 21.4s source validated; full lyric timeline built; 16.06s candidate clipped | S1_RUN02_USER_MEDIA_ANALYSIS.md | HUMAN_AUDIO_LOCK_PENDING | User listens and approves or requests local S1 revision |
+| S1 | PROJECT_AUDIO | SEALED | User-provided 21.4s source validated; full lyric timeline built | S1_DELIVERY_RUN02_FINAL.yaml | HUMAN_AUDIO_LOCK PASS | S2 DIRECTOR may begin |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -52,7 +52,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 
 ## Current active build target
 
-S1 — PROJECT_AUDIO / S1A MATERIAL_ACQUISITION
+S2 — DIRECTOR (allowed, not started)
 
 ## Current next decision
 
