@@ -1,6 +1,6 @@
 # S0 SONG_SELECTION
 
-Status: HUMAN_REFERENCE_GATE  
+Status: REFERENCE_RECOVERY  
 Current candidate contract: v0.2-draft
 
 ## Purpose
@@ -65,12 +65,18 @@ Preselection gates:
 - core/supplemental evidence separation: PASS
 - Top 3 delivery: PASS
 
-Current candidates:
-- A 向山河林响
+Human preference:
 - B 若爱有尽头
-- C 阳光洒落
+
+Original B reference is operationally unavailable for the user's current workflow.
 
 Current gate:
-HUMAN_REFERENCE_GATE
+REFERENCE_RECOVERY
+
+The selected Song Family remains locked as the preferred candidate, but S0 is not sealed until a usable concrete reference is recovered or SPLIT_REFERENCE mode is explicitly adopted.
+
+See:
+- S0_REFERENCE_AVAILABILITY_GATE_v0.1.md
+- S0_RUN01_B_REFERENCE_RECOVERY.md
 
 S1 remains blocked.
