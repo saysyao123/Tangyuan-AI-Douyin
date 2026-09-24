@@ -1,0 +1,109 @@
+stage_contract:
+  stage_id: "PROJECT_AUDIO"
+  version: "0.3-draft"
+  status: "DESIGNING"
+
+  goal: >
+    Starting from a user-selected Song Family, independently acquire usable media
+    from normal public/authorized sources, verify the exact acquired version,
+    analyze/select the production segment, build the authoritative lyric/audio-event
+    timeline, and deliver one sealed Project Audio handoff.
+
+  upstream_required:
+    - song_selection_handoff
+    - selected_song_family
+    - candidate_reference_leads
+    - human_song_family_lock
+
+  phases:
+    - id: "S1A"
+      name: "MATERIAL_ACQUISITION"
+      goal: "Obtain an actual analyzable media artifact without requiring the user to pre-supply it."
+    - id: "S1B"
+      name: "VERSION_VERIFICATION"
+      goal: "Verify title/artist/version/source/duration and establish one candidate Audio Version."
+    - id: "S1C"
+      name: "SEGMENT_TIMELINE_ANALYSIS"
+      goal: "Find the useful production segment and construct lyric/audio-event timing and semantic boundaries."
+    - id: "S1D"
+      name: "AUDIO_TIMELINE_LOCK"
+      goal: "Present the result for Human Audio/Segment Lock and seal the authoritative handoff."
+
+  acquisition_policy:
+    attempt_order:
+      - "existing accessible source lead from S0"
+      - "same Song Family from trusted/public source with normal media access"
+      - "official/authorized public audio/video page with usable media access"
+      - "public media file/direct asset exposed by the source"
+      - "alternate version only if exact-version differences are explicitly recorded"
+    success_requires:
+      - "actual analyzable media bytes/artifact OR an equivalent tool-accessible media object"
+      - "source provenance recorded"
+      - "no silent version substitution"
+    blocked_when:
+      - "only webpage metadata is available"
+      - "streaming page is visible but media bytes are not accessible to the runtime"
+      - "source requires bypassing platform restrictions or unsupported login/download circumvention"
+    blocked_route: "ACQUISITION_BLOCKED"
+    user_upload_default: false
+    user_upload_fallback_only: true
+
+  material_state:
+    allowed:
+      - "ACQUISITION_SEARCHING"
+      - "MEDIA_ACQUIRED"
+      - "MEDIA_ACQUIRED_VERSION_UNVERIFIED"
+      - "VERSION_VERIFIED"
+      - "ACQUISITION_BLOCKED"
+
+  locked_rules:
+    - id: "A01"
+      rule: "S1 owns media acquisition; S0 does not need to deliver a local media file."
+    - id: "A02"
+      rule: "A webpage URL alone is not MEDIA_ACQUIRED."
+    - id: "A03"
+      rule: "Do not substitute a different cover/remix/live version without recording the version change."
+    - id: "A04"
+      rule: "Exactly one verified Audio Version becomes authoritative before timeline lock."
+    - id: "A05"
+      rule: "Final timeline duration is derived from selected segment start/end, not generation duration."
+    - id: "A06"
+      rule: "Lyric/audio-event boundaries become downstream truth once sealed."
+    - id: "A07"
+      rule: "Director/character/scene/camera/motion do not belong to S1."
+    - id: "A08"
+      rule: "If normal autonomous acquisition fails, report ACQUISITION_BLOCKED; do not pretend success."
+
+  deterministic_checks:
+    acquisition:
+      - "media artifact/object exists"
+      - "media can be probed/analyzed"
+      - "source provenance is recorded"
+    version:
+      - "selected_audio_version_ref is explicit"
+      - "version identity is verified or ambiguity is declared"
+    timeline:
+      - "segment_end_seconds > segment_start_seconds"
+      - "locked_duration matches segment boundaries within tolerance"
+      - "timeline units cover selected segment without unexplained material gap/overlap"
+    seal:
+      - "human_audio_lock == PASS"
+
+  output_contract:
+    required:
+      - acquired_media_record
+      - verified_audio_version
+      - locked_segment
+      - locked_duration_seconds
+      - timeline_mode
+      - timeline_units_or_explicit_not_required
+      - human_audio_lock
+      - project_audio_handoff
+
+  explicit_non_goals:
+    - "project aspect ratio / output format"
+    - "visual reference recovery for Director"
+    - "director concept"
+    - "shot count"
+    - "generation duration"
+    - "character/scene/camera/motion design"
