@@ -45,7 +45,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 - [x] Transition rules created
 - [x] Context Compiler rules created
 - [x] Runtime build/test/seal runbook created
-- [x] Seven stage placeholders created
+- [x] Eight-stage placeholders created
 - [x] Progress tracker created
 - [x] F0 reviewed
 - [x] F0 SEALED
