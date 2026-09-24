@@ -1,0 +1,43 @@
+name: MV Runtime State Validator
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/VALIDATOR_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install validator dependency
+        run: python -m pip install pyyaml
+      - name: Run state validator
+        run: |
+          mkdir -p validator_out
+          set +e
+          python 08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/tools/runtime_state_validator.py > validator_out/result.json
+          RC=$?
+          echo $RC > validator_out/returncode.txt
+          cat validator_out/result.json
+          set -e
+      - name: Publish validator result
+        if: always()
+        run: |
+          set -e
+          RESULT_DIR='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/validation/latest'
+          mkdir -p "$RESULT_DIR"
+          cp validator_out/result.json "$RESULT_DIR/result.json" || true
+          cp validator_out/returncode.txt "$RESULT_DIR/returncode.txt" || true
+          git config user.name 'tangyuan-runtime-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$RESULT_DIR"
+          if git diff --cached --quiet; then echo 'No validator change.'; else git commit -m 'control: publish runtime validator result'; git push; fi
+      - name: Enforce validator
+        run: |
+          test "$(cat validator_out/returncode.txt)" = '0'
