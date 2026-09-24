@@ -1,0 +1,7 @@
+{
+  "adapter": "AUDIOMACK_API_FULL_V0_1",
+  "info_preview": "{\"errorcode\":1003,\"message\":\"Invalid consumer key\"}",
+  "play_preview": "{\"errorcode\":1003,\"message\":\"Invalid consumer key\"}",
+  "status": "NO_STREAM_URL",
+  "media_urls": []
+}
