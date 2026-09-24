@@ -1,0 +1,19 @@
+{
+  "judge_contract_version": "stage_seal_v0.1",
+  "stage": "SONG_SELECTION",
+  "execution_mode": "SAME_MODEL_MINIMAL_CONTEXT_TEST",
+  "independence": "NOT_FULLY_FRESH",
+  "test_only": true,
+  "results": {
+    "language_policy": "TRUE",
+    "historical_dedupe": "TRUE",
+    "song_family_dedupe": "TRUE",
+    "shortlist_size_valid": "TRUE",
+    "selected_song_in_shortlist": "TRUE",
+    "s0_s1_boundary_respected": "TRUE",
+    "evidence_sufficient": "TRUE"
+  },
+  "failed_criteria": [],
+  "route": "PASS",
+  "limitation": "Protocol path validated; not evidence of independent fresh-model judgment."
+}
