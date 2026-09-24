@@ -1,0 +1,120 @@
+stage_contract:
+  stage_id: "SONG_SELECTION"
+  version: "0.1-draft"
+  status: "DESIGNING"
+
+  goal: >
+    Produce a small, evidence-backed shortlist of concrete song/reference candidates
+    from trusted sources and obtain a Human Reference Lock on exactly one concrete work
+    before detailed audio/timeline analysis begins.
+
+  input_contract:
+    required:
+      - trusted_song_pool_ref
+      - trusted_core_account_registry_ref
+      - current_project_selection_goal
+      - prior_project_use_history
+    optional:
+      - current_platform_search_evidence
+      - supplemental_music_evidence
+      - user_theme_preference
+      - motion_test_priority
+      - visual_style_priority
+      - novelty_priority
+
+  source_policy:
+    primary:
+      - "trusted core accounts"
+      - "existing verified work URLs"
+      - "current verified works from the same trusted accounts when available"
+    supplemental:
+      - "search/index evidence"
+      - "other music platforms as corroboration only"
+    forbidden_as_default:
+      - "random chart replacement when trusted pool still has candidates"
+
+  song_family_policy:
+    normalize_work_variants_to_song_family: true
+    preserve_concrete_work_identity: true
+    do_not_treat_song_family_as_audio_version: true
+
+  candidate_evidence_required:
+    - song_family
+    - concrete_reference_account
+    - concrete_reference_url_or_ref
+    - observed_or_captured_duration_if_available
+    - core_account_signal
+    - visual_or_lyric_fit_summary
+    - animation_fit_summary
+    - motion_fit_summary
+    - prior_project_use
+    - known_version_risk
+    - candidate_risk_summary
+
+  qualification_dimensions:
+    - id: "Q01"
+      name: "core_signal"
+      meaning: "How strong/repeated is the song signal across trusted core accounts?"
+    - id: "Q02"
+      name: "lyric_visual_hit"
+      meaning: "Does the song/reference expose a clear visualizable semantic hook?"
+    - id: "Q03"
+      name: "animation_fit"
+      meaning: "Can it support an original animated-character/world treatment?"
+    - id: "Q04"
+      name: "motion_fit"
+      meaning: "Can the candidate support readable 5–15s motion rather than only static atmosphere?"
+    - id: "Q05"
+      name: "reference_quality"
+      meaning: "Is there a concrete reference work useful enough to inspect/select?"
+    - id: "Q06"
+      name: "new_test_value"
+      meaning: "Does it add useful production/testing value rather than only repeat an already-saturated project?"
+    - id: "Q07"
+      name: "version_risk"
+      meaning: "Are cover/remix/live/electronic variants likely to make the exact later Audio Version ambiguous?"
+
+  shortlist_policy:
+    max_primary_candidates_per_round: 3
+    allow_backup_pool: true
+    no_forced_winner: true
+    user_may_reject_all: true
+    rejected_round_action: "RUN_NEXT_ROUND_FROM_TRUSTED_POOL"
+
+  human_gate:
+    required: true
+    gate_name: "HUMAN_REFERENCE_LOCK"
+    valid_results:
+      - "SELECT_ONE_CONCRETE_REFERENCE"
+      - "REJECT_ALL_AND_CONTINUE"
+    automatic_model_selection_forbidden: true
+
+  deterministic_checks:
+    - "primary shortlist contains 1 to 3 candidates"
+    - "every primary candidate has a concrete reference URL/ref"
+    - "candidate song families are clearly identified"
+    - "candidate evidence is not missing required fields"
+    - "selected result, if any, points to exactly one concrete reference work"
+    - "S0 does not claim an exact Audio Version or timeline before S1"
+
+  output_contract:
+    if_selected:
+      - song_selection_handoff
+      - selected_song_family
+      - selected_concrete_reference
+      - selection_evidence_summary
+      - human_reference_lock
+    if_rejected_all:
+      - rejection_record
+      - next_round_required
+
+  explicit_non_goals:
+    - "exact audio extraction"
+    - "Audio Version lock"
+    - "full lyric transcription"
+    - "lyric timestamps"
+    - "beat/onset grid"
+    - "semantic cut timestamps"
+    - "segment start/end lock"
+    - "director concept"
+    - "character or scene design"
