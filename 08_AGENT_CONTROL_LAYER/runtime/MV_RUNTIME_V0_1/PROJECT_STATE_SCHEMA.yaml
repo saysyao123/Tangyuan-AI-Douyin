@@ -8,7 +8,7 @@ project:
   title: ""
   created_at: ""
   target_aspect_ratio: ""
-  current_stage: "PROJECT_AUDIO"
+  current_stage: "SONG_SELECTION"
   overall_status: "NOT_STARTED"
 
 stage_state_schema:
@@ -37,10 +37,21 @@ stage_state_schema:
     - "updated_at"
 
 project_state:
+  SONG_SELECTION:
+    contract_version: "0.1-draft"
+    status: "DESIGNING"
+    depends_on: []
+    input_handoff_refs: []
+    artifact_refs: []
+    evidence_refs: []
+    judge_result_ref: null
+    human_gate: {required: true, status: null}
+    archive_ref: null
+    updated_at: null
   PROJECT_AUDIO:
     contract_version: "0.2"
-    status: "REVIEW"
-    depends_on: []
+    status: "BLOCKED"
+    depends_on: ["SONG_SELECTION"]
     input_handoff_refs: []
     artifact_refs: ["stages/01_PROJECT_AUDIO/S1_DELIVERY_RUN02_v0.2.yaml"]
     evidence_refs: ["stages/01_PROJECT_AUDIO/S1_TEST_REPORT_RUN02_v0.2.md"]
