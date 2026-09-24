@@ -29,7 +29,7 @@ A later stage may have a placeholder contract before that point, but must not be
 
 ## 3. Runtime target flow
 
-S1 PROJECT_AUDIO -> S2 DIRECTOR -> S3 FIRST_FRAME -> S4 MOTION -> S5 GENERATION -> S6 VIDEO_QA -> S7 ASSEMBLY_FINAL
+S0 SONG_SELECTION -> S1 PROJECT_AUDIO -> S2 DIRECTOR -> S3 FIRST_FRAME -> S4 MOTION -> S5 GENERATION -> S6 VIDEO_QA -> S7 ASSEMBLY_FINAL
 
 This is the first proposed runtime shape. It is intentionally smaller than the existing long-form MV HARNESS.
 
@@ -55,15 +55,13 @@ This is the first proposed runtime shape. It is intentionally smaller than the e
 
 Only framework F0 is implemented now.
 
-The seven stages are registered as placeholders. Do not treat them as complete designs.
-
-Next allowed development action after F0 review: S1 PROJECT_AUDIO — Contract Design.
+The runtime now begins with S0 SONG_SELECTION. S0 is the only active design target. Existing S1 PROJECT_AUDIO v0.2 work is preserved as a prebuilt downstream candidate but is blocked until S0 is sealed and its handoff is integrated.
 
 ## 7. Existing Motion work
 
 The existing 08_AGENT_CONTROL_LAYER/pilots/MOTION_GATE_V0_1/ is preserved as a research/pilot asset.
 
-It may later be connected into S4 MOTION, but the runtime will not silently inherit it until S1–S3 contracts establish the actual upstream handoff requirements.
+It may later be connected into S4 MOTION, but the runtime will not silently inherit it until S0–S3 contracts establish the actual upstream handoff requirements.
 
 ## 8. Success condition for the runtime
 
@@ -77,3 +75,7 @@ The runtime succeeds only when one real MV can travel through all seven stages w
 - targeted archive lookup;
 - no silent state progression;
 - human review only at high-value gates.
+
+## 9. Entry-stage correction
+
+The runtime previously started at PROJECT_AUDIO. Review showed that real MV production begins earlier: choosing the song/reference itself. SONG_SELECTION is now a separate S0 stage. PROJECT_AUDIO remains responsible only for locking the selected audio version and timeline after S0 Human Reference Lock.
