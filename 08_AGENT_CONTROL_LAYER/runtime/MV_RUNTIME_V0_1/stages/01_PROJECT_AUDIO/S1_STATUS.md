@@ -1,42 +1,60 @@
 # S1 PROJECT_AUDIO Status
 
-Status: PARTIAL_PASS_NOT_SEALED
+Status: BLOCKED_FULL_SOURCE_REQUIRED
 
 Selected Song Family:
 `若爱有尽头`
 
-## Current source states
+## Current media truth
 
-张蓓蓓 / 林叙:
-`METADATA_AND_LYRICS_VERIFIED / MEDIA_NOT_ACQUIRED`
+Existing local MP3:
+`30.014688s preview only`
 
-于一:
-`ANALYSIS_PREVIEW_ACQUIRED / ALT_VERSION_IDENTITY_UNVERIFIED`
+Classification:
+`ANALYSIS_PREVIEW_ACQUIRED`
 
-## S1A
-PASS / SEALED_COMPONENT_V0_2
+This file is explicitly NOT accepted as:
+- TARGET_SEGMENT_SOURCE_ACQUIRED
+- FULL_SOURCE_ACQUIRED
 
-## S1B
-PARTIAL
+Therefore:
+- no formal segment clip may be delivered from this preview;
+- no authoritative lyric/audio timeline may be sealed;
+- no S2 transition is allowed.
 
-## S1C
-PARTIAL PASS
+## Full-source attempts
 
-Technical clip candidates from acquired preview:
-- T1: 14.756–29.698s (preview-relative), preferred for motion density
-- T2: 4.644–19.807s (preview-relative), alternate smoother arc
+### YouTube public full lyric/audio video
+Result:
+`PUBLIC_STREAM_FETCH_FAILED`
 
-Semantic timeline:
-NOT LOCKED
+Reason:
+platform required sign-in / bot confirmation.
 
-## S1D
-NOT PASSED
+No cookie/session bypass was attempted.
 
-## Overall
-`S1_OVERALL = PARTIAL_PASS_NOT_SEALED`
+### Audiomack public full page
+Result:
+`PUBLIC_STREAM_FETCH_FAILED`
 
-Next requirement:
-verify/acquire a suitable version of the same intended work with target-segment or full-source coverage.
+### Audiomack documented API
+Result:
+`NO_STREAM_URL`
 
-Do not return to S0.
-S2 remains blocked.
+Reason:
+API returned `Invalid consumer key`.
+
+## Current S1 route
+
+`STAY_IN_S1 / ACQUIRE_FULL_OR_TARGET_SEGMENT_SOURCE`
+
+Do NOT return to S0.
+Do NOT enter S2.
+
+Next success condition:
+obtain either:
+1. FULL_SOURCE_ACQUIRED, or
+2. TARGET_SEGMENT_SOURCE_ACQUIRED with complete semantic lead-in/out.
+
+Only then:
+full material analysis -> segment selection -> clipped MP3 -> Human Audio Lock.
