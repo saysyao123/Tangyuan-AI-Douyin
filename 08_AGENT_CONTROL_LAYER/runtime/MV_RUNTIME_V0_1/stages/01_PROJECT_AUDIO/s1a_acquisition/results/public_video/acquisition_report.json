@@ -1,0 +1,8 @@
+{
+  "adapter": "PUBLIC_VIDEO_FALLBACK_V0_1",
+  "source": "https://www.youtube.com/watch?v=0MaeQBH3pXw",
+  "yt_dlp_returncode": 1,
+  "status": "PUBLIC_STREAM_FETCH_FAILED",
+  "audio_files": [],
+  "subtitle_files": []
+}
