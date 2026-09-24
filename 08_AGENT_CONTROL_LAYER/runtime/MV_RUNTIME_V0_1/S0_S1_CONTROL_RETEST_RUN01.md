@@ -93,3 +93,49 @@ PASS
 
 Next:
 run deterministic Runtime State Validator against State / Tracker / Handoffs.
+
+
+## Deterministic Runtime Validator
+
+Validator:
+`MV_RUNTIME_STATE_VALIDATOR_V0_1`
+
+GitHub Actions:
+`PASS`
+
+Checks:
+`23 / 23 PASS`
+
+Errors:
+`[]`
+
+Validated:
+- Tracker S0/S1/S2 status matches Project State;
+- S0 Contract v0.3 is FINAL;
+- S1 Contract v0.4 is FINAL;
+- S0/S1 retest deliveries are SEALED;
+- S0/S1 Human Gates are PASS;
+- S0/S1 structured Judge routes are PASS and correctly marked test-only / not fully fresh;
+- S0/S1 Project State is SEALED;
+- S2 dependency and current-stage routing are correct;
+- active State references contain no DRAFT contract references.
+
+## Final Retest Result
+
+`S0_TO_S1_CONTROL_RETEST_RUN01 = PASS`
+
+Runtime truth after retest:
+
+```
+S0 SONG_SELECTION  v0.3  SEALED
+        ↓
+S1 PROJECT_AUDIO   v0.4  SEALED
+        ↓
+S2 DIRECTOR              NOT_STARTED / ALLOWED
+```
+
+The state-drift defect found during review is closed for S0/S1.
+
+Remaining known limitation:
+independent Fresh Judge execution has not yet been proven. Retest01 validates
+the typed Judge protocol using same-model minimal-context execution only.
