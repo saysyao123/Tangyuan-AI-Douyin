@@ -4,12 +4,12 @@ runtime:
   mode: "EXPERIMENTAL"
 
 project:
-  project_id: ""
-  title: ""
-  created_at: ""
+  project_id: "MV_RETEST_若爱有尽头"
+  title: "若爱有尽头"
+  created_at: "2026-09-24"
   target_aspect_ratio: ""
-  current_stage: "PROJECT_AUDIO"
-  overall_status: "NOT_STARTED"
+  current_stage: "DIRECTOR"
+  overall_status: "IN_PROGRESS"
 
 stage_state_schema:
   allowed_status:
@@ -38,39 +38,65 @@ stage_state_schema:
 
 project_state:
   SONG_SELECTION:
-    contract_version: "0.2"
+    stage_id: "SONG_SELECTION"
+    contract_version: "0.3"
     status: "SEALED"
     depends_on: []
     input_handoff_refs: []
-    artifact_refs: []
-    evidence_refs: []
-    judge_result_ref: null
-    human_gate: {required: true, status: null}
+    artifact_refs:
+      - "stages/00_SONG_SELECTION/S0_STAGE_CONTRACT_v0.3.yaml"
+      - "stages/00_SONG_SELECTION/S0_DELIVERY_RETEST01_v0.3.yaml"
+    evidence_refs:
+      - "S0_S1_CONTROL_RETEST_RUN01.md"
+    judge_result_ref: "stages/00_SONG_SELECTION/S0_STAGE_SEAL_JUDGE_RETEST01.json"
+    judge_independence: "TEST_ONLY_SAME_MODEL_MINIMAL_CONTEXT"
+    human_gate:
+      required: true
+      status: "PASS"
+      mode: "AUTO_CONFIRMED_FOR_TEST"
     archive_ref: null
-    updated_at: null
+    updated_at: "2026-09-24"
+
   PROJECT_AUDIO:
-    contract_version: "0.3-draft"
-    status: "BLOCKED"
+    stage_id: "PROJECT_AUDIO"
+    contract_version: "0.4"
+    status: "SEALED"
     depends_on: ["SONG_SELECTION"]
-    input_handoff_refs: ["stages/00_SONG_SELECTION/S0_DELIVERY_RUN01_v0.2.yaml"]
-    artifact_refs: ["stages/01_PROJECT_AUDIO/S1A_ACQUISITION_CASE_001.md"]
-    evidence_refs: ["stages/01_PROJECT_AUDIO/S1_TEST_REPORT_RUN02_v0.2.md"]
-    judge_result_ref: null
-    human_gate: {required: true, status: "PASS"}
+    input_handoff_refs:
+      - "stages/00_SONG_SELECTION/S0_DELIVERY_RETEST01_v0.3.yaml"
+    artifact_refs:
+      - "stages/01_PROJECT_AUDIO/S1_STAGE_CONTRACT_v0.4.yaml"
+      - "stages/01_PROJECT_AUDIO/S1_DELIVERY_RETEST01_v0.4.yaml"
+      - "stages/01_PROJECT_AUDIO/S1_DELIVERY_RUN02_FINAL.yaml"
+    evidence_refs:
+      - "stages/01_PROJECT_AUDIO/S1_RUN02_USER_MEDIA_ANALYSIS.md"
+      - "stages/01_PROJECT_AUDIO/S1A_USER_PROVIDED_MATERIAL_NOTE.md"
+      - "S0_S1_CONTROL_RETEST_RUN01.md"
+    judge_result_ref: "stages/01_PROJECT_AUDIO/S1_STAGE_SEAL_JUDGE_RETEST01.json"
+    judge_independence: "TEST_ONLY_SAME_MODEL_MINIMAL_CONTEXT"
+    human_gate:
+      required: true
+      status: "PASS"
+      mode: "AUTO_CONFIRMED_FOR_TEST"
     archive_ref: null
-    updated_at: null
+    updated_at: "2026-09-24"
+
   DIRECTOR:
+    stage_id: "DIRECTOR"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["PROJECT_AUDIO"]
-    input_handoff_refs: []
+    input_handoff_refs:
+      - "stages/01_PROJECT_AUDIO/S1_DELIVERY_RETEST01_v0.4.yaml"
     artifact_refs: []
     evidence_refs: []
     judge_result_ref: null
     human_gate: {required: true, status: null}
     archive_ref: null
-    updated_at: null
+    updated_at: "2026-09-24"
+
   FIRST_FRAME:
+    stage_id: "FIRST_FRAME"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["DIRECTOR"]
@@ -81,7 +107,9 @@ project_state:
     human_gate: {required: true, status: null}
     archive_ref: null
     updated_at: null
+
   MOTION:
+    stage_id: "MOTION"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["DIRECTOR", "FIRST_FRAME"]
@@ -92,7 +120,9 @@ project_state:
     human_gate: {required: false, status: null}
     archive_ref: null
     updated_at: null
+
   GENERATION:
+    stage_id: "GENERATION"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["MOTION"]
@@ -103,7 +133,9 @@ project_state:
     human_gate: {required: false, status: null}
     archive_ref: null
     updated_at: null
+
   VIDEO_QA:
+    stage_id: "VIDEO_QA"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["GENERATION"]
@@ -114,7 +146,9 @@ project_state:
     human_gate: {required: false, status: null}
     archive_ref: null
     updated_at: null
+
   ASSEMBLY_FINAL:
+    stage_id: "ASSEMBLY_FINAL"
     contract_version: null
     status: "NOT_STARTED"
     depends_on: ["VIDEO_QA"]
@@ -128,7 +162,8 @@ project_state:
 
 state_truth_rules:
   - "A model statement alone cannot change stage status to SEALED."
-  - "SEALED requires required artifacts, required evidence, Judge PASS, and any required Human Gate PASS."
+  - "SEALED requires required artifacts, evidence, Judge PASS, and required Human Gate PASS."
+  - "Test-only same-model Judge results must be explicitly marked and do not prove Fresh Judge independence."
   - "A stage reopened after SEALED must increment version."
   - "Contract-breaking upstream change marks affected downstream dependents DIRTY."
-  - "Internal implementation changes do not invalidate downstream stages when the output contract remains compatible."
+  - "Internal implementation changes do not invalidate downstream stages when output contract remains compatible."
