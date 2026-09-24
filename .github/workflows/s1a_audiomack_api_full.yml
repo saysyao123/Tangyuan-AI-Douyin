@@ -1,0 +1,57 @@
+name: S1A Audiomack API Full Source Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/AUDIOMACK_API_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query documented Audiomack public API endpoints
+        run: |
+          mkdir -p am_api_out
+          set +e
+          curl -sS -D am_api_out/info_headers.txt -o am_api_out/info_body.txt 'https://api.audiomack.com/v1/music/song/yu-yi-8/ruo-ai-you-jin-tou'
+          echo $? > am_api_out/info_rc.txt
+          curl -sS -X POST -D am_api_out/play_headers.txt -o am_api_out/play_body.txt 'https://api.audiomack.com/v1/music/song/yu-yi-8/ruo-ai-you-jin-tou/play'
+          echo $? > am_api_out/play_rc.txt
+          set -e
+          python - <<'PY'
+          import json, pathlib, re
+          out=pathlib.Path('am_api_out')
+          info=(out/'info_body.txt').read_text(errors='replace') if (out/'info_body.txt').exists() else ''
+          play=(out/'play_body.txt').read_text(errors='replace') if (out/'play_body.txt').exists() else ''
+          report={'adapter':'AUDIOMACK_API_FULL_V0_1','info_preview':info[:3000],'play_preview':play[:3000],'status':'NO_STREAM_URL'}
+          urls=re.findall(r'https?://[^\"\s]+', info+'\n'+play)
+          media=[u for u in urls if any(x in u.lower() for x in ['.mp3','.m4a','.aac','.mp4','streaming'])]
+          report['media_urls']=media[:10]
+          if media: report['status']='STREAM_URL_DISCOVERED'
+          (out/'acquisition_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s1a-audiomack-api-test
+          path: am_api_out/
+          retention-days: 7
+      - name: Publish report
+        if: always()
+        run: |
+          set -e
+          RESULT_DIR="08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/results/audiomack_api"
+          mkdir -p "$RESULT_DIR"
+          cp am_api_out/acquisition_report.json "$RESULT_DIR/acquisition_report.json" || true
+          git config user.name "tangyuan-s1a-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$RESULT_DIR"
+          if git diff --cached --quiet; then echo 'No result change.'; else git commit -m 's1a: publish Audiomack API result'; git push; fi
