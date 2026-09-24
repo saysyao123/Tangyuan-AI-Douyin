@@ -1,0 +1,54 @@
+[
+  {
+    "id": 4213630792,
+    "title": "若爱有尽头",
+    "title_short": "若爱有尽头",
+    "artist": "于一",
+    "album": "若爱有尽头",
+    "duration": 216,
+    "link": "https://www.deezer.com/track/4213630792",
+    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/3/f/0/63fb4a01a14636262445300f5dfb34be.mp3?hdnea=exp=1790230243~acl=/api/1/1/6/3/f/0/63fb4a01a14636262445300f5dfb34be.mp3*~data=user_id=0,application_id=42~hmac=d00b098817c568aae28660661d30f9e735e2a31a6202f83bf155c0b12f12c221",
+    "rank": 100000,
+    "title_match": true,
+    "artist_match": false
+  },
+  {
+    "id": 4213630802,
+    "title": "若爱有尽头（伴奏）",
+    "title_short": "若爱有尽头（伴奏）",
+    "artist": "于一",
+    "album": "若爱有尽头",
+    "duration": 216,
+    "link": "https://www.deezer.com/track/4213630802",
+    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/7/e/0/d7eab3db900fb8e2063bb3522cfb2609.mp3?hdnea=exp=1790230243~acl=/api/1/1/d/7/e/0/d7eab3db900fb8e2063bb3522cfb2609.mp3*~data=user_id=0,application_id=42~hmac=7989dd62314797f753a515667ec3bc59e11e0c4e78c82d98aaad932b5c99e56b",
+    "rank": 100000,
+    "title_match": false,
+    "artist_match": false
+  },
+  {
+    "id": 4231798442,
+    "title": "若爱有尽头（如果爱尽头）",
+    "title_short": "若爱有尽头（如果爱尽头）",
+    "artist": "张东林",
+    "album": "若爱有尽头（如果爱尽头）",
+    "duration": 206,
+    "link": "https://www.deezer.com/track/4231798442",
+    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/3/f/8/0/3f8945568182fa162c074f9828620c78.mp3?hdnea=exp=1790230243~acl=/api/1/1/3/f/8/0/3f8945568182fa162c074f9828620c78.mp3*~data=user_id=0,application_id=42~hmac=d1c015ac95be01ac2d3c0526896ba0e25985888e1fb2820bc23f7a0dee60bc58",
+    "rank": 100000,
+    "title_match": false,
+    "artist_match": false
+  },
+  {
+    "id": 4231798452,
+    "title": "你怎么舍得我难过（烟嗓版）",
+    "title_short": "你怎么舍得我难过（烟嗓版）",
+    "artist": "张东林",
+    "album": "若爱有尽头（如果爱尽头）",
+    "duration": 219,
+    "link": "https://www.deezer.com/track/4231798452",
+    "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/a/d/0/8adc48f98122004022dbb2c048953a06.mp3?hdnea=exp=1790230243~acl=/api/1/1/8/a/d/0/8adc48f98122004022dbb2c048953a06.mp3*~data=user_id=0,application_id=42~hmac=0d5978c97178da607ab68a6fc3dfdae8585ec2f60d619f2bf598451233804e7b",
+    "rank": 100000,
+    "title_match": false,
+    "artist_match": false
+  }
+]

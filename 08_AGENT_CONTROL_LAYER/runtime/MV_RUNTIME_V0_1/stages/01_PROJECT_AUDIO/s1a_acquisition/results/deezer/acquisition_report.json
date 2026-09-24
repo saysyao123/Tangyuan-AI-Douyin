@@ -1,0 +1,33 @@
+{
+  "adapter": "DEEZER_PREVIEW_V0_1",
+  "target": {
+    "title": "若爱有尽头",
+    "artist_hints": [
+      "张蓓蓓",
+      "林叙"
+    ],
+    "countries": [
+      "cn",
+      "hk",
+      "tw",
+      "us"
+    ]
+  },
+  "queries": [
+    {
+      "term": "若爱有尽头",
+      "count": 4
+    },
+    {
+      "term": "若爱有尽头 张蓓蓓",
+      "count": 0
+    },
+    {
+      "term": "若爱有尽头 林叙",
+      "count": 0
+    }
+  ],
+  "candidate_count": 4,
+  "exact_preview_matches": [],
+  "status": "NO_EXACT_PREVIEW_MATCH"
+}
