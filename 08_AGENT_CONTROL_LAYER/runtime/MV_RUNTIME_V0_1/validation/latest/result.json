@@ -1,0 +1,122 @@
+{
+  "validator": "MV_RUNTIME_STATE_VALIDATOR_V0_1",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "tracker_status_S0",
+      "pass": true,
+      "detail": "expected SEALED"
+    },
+    {
+      "check": "tracker_status_S1",
+      "pass": true,
+      "detail": "expected SEALED"
+    },
+    {
+      "check": "tracker_status_S2",
+      "pass": true,
+      "detail": "expected NOT_STARTED"
+    },
+    {
+      "check": "s0_contract_version",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_contract_version",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_contract_final",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_contract_final",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_delivery_sealed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_delivery_contract",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_gate_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_delivery_sealed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_delivery_contract",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_gate_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_judge_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_judge_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_judge_test_marker",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_judge_test_marker",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_state_sealed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_state_sealed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "director_dependency",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "current_stage_director",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "no_draft_ref_SONG_SELECTION",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "no_draft_ref_PROJECT_AUDIO",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "errors": []
+}
