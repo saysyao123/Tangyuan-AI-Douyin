@@ -1,0 +1,26 @@
+{
+  "adapter": "DIRECT_PUBLIC_MEDIA_V0_1",
+  "url": "https://cdnt-preview.dzcdn.net/api/1/1/6/3/f/0/63fb4a01a14636262445300f5dfb34be.mp3?hdnea=exp=1790230243~acl=/api/1/1/6/3/f/0/63fb4a01a14636262445300f5dfb34be.mp3*~data=user_id=0,application_id=42~hmac=d00b098817c568aae28660661d30f9e735e2a31a6202f83bf155c0b12f12c221",
+  "status": "MEDIA_ACQUIRED",
+  "content_type": "audio/mpeg",
+  "content_length_header": "480245",
+  "bytes": 480245,
+  "sha256": "62e1955e98a30279cf7b22b6f87517457ffb8bebc6dcf9199e9003fae347269c",
+  "artifact": "direct_out/media.mp3",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ],
+    "format": {
+      "format_name": "mp3",
+      "duration": "30.014688",
+      "bit_rate": "128002"
+    }
+  }
+}
