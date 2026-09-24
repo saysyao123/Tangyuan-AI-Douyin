@@ -1,0 +1,57 @@
+name: S1A Direct Media Selftest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/SELFTEST_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure ffprobe
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+      - name: Resolve one public preview URL from Deezer result
+        id: resolve
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          p="08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/results/deezer/candidates.json"
+          a=json.load(open(p,encoding="utf-8"))
+          u=next(x["preview"] for x in a if x.get("preview"))
+          print("url="+u)
+          PY
+      - name: Run direct public media adapter
+        run: |
+          python 08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/direct_public_media.py '${{ steps.resolve.outputs.url }}' direct_out
+      - name: Upload selftest artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s1a-direct-selftest
+          path: direct_out/
+          retention-days: 7
+      - name: Publish selftest report
+        if: always()
+        run: |
+          set -e
+          RESULT_DIR="08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/results/selftest"
+          mkdir -p "$RESULT_DIR"
+          cp direct_out/acquisition_report.json "$RESULT_DIR/acquisition_report.json" || true
+          git config user.name "tangyuan-s1a-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$RESULT_DIR"
+          if git diff --cached --quiet; then
+            echo "No result change."
+          else
+            git commit -m "s1a: publish direct-media selftest result"
+            git push
+          fi
