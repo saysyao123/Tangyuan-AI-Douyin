@@ -4,7 +4,7 @@ Date: 2026-09-24
 
 ## Component verdict
 
-`S1A COMPONENT = VALIDATED`
+`S1A COMPONENT = VALIDATED`\n\nCoverage semantics are also validated: a 30-second preview proves acquisition mechanics but is classified as ANALYSIS_PREVIEW_ACQUIRED, not FULL_SOURCE_ACQUIRED.
 
 S1A can now autonomously:
 1. query normal public/official preview catalogs;
