@@ -1,0 +1,3 @@
+run=001
+song=若爱有尽头
+router=S1A_ACQUISITION_ROUTER_V0_1
