@@ -1,8 +1,10 @@
 # S0 SONG_SELECTION Status
 
-Status: REFERENCE_RECOVERY
+Status: SEALED
 
-Contract candidate: S0_STAGE_CONTRACT v0.2-draft
+Contract: S0 v0.2
+Selected Song Family:
+`若爱有尽头`
 
 Preselection:
 - Chinese-only filter: PASS
@@ -11,23 +13,26 @@ Preselection:
 - pool freshness handling: PASS
 - Top 3 delivery: PASS
 
-Human song-family preference:
-`若爱有尽头`
+Human Song Family Lock:
+PASS
 
-Original concrete reference:
-`https://www.douyin.com/video/7673820758652768945`
+Delivery:
+`S0_DELIVERY_RUN01_v0.2.yaml`
 
-Original reference operational status:
-`UNAVAILABLE_FOR_USER_WORKFLOW`
+Important boundary:
+S0 does NOT require the selected media file to be acquired.
 
-Current state:
-`SONG_FAMILY_SELECTED / REFERENCE_RECOVERY`
+Reference/source leads are handed to S1.
+
+S1 PROJECT_AUDIO now owns:
+- media acquisition;
+- exact version verification;
+- source selection;
+- segment extraction/analysis;
+- timeline lock.
 
 S0 SEALED:
-NO
+YES
 
-S1 PROJECT_AUDIO:
-BLOCKED
-
-Next action:
-Recover a usable reference for the selected Song Family, or explicitly approve SPLIT_REFERENCE mode.
+Next stage:
+S1 PROJECT_AUDIO
