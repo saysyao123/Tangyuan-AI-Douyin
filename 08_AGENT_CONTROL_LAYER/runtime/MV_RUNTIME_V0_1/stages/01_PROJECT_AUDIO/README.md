@@ -1,65 +1,54 @@
 # Stage PROJECT_AUDIO
 
-Status: REVIEW
+Status: DESIGNING / S1A_ACQUISITION_SEARCHING
 
-Current candidate: v0.2
+Current full-stage candidate:
+`v0.3-draft`
 
 ## Purpose
 
-Lock only the authoritative audio and timeline truth required downstream.
+Starting from S0's user-selected Song Family, S1 owns the full audio-material path:
 
-S1 owns:
-- source media reference;
-- selected audio version;
-- locked start/end/duration;
-- lyric/audio-event timeline;
-- semantic cut-point evidence;
-- Human Audio Lock.
+S1A MATERIAL_ACQUISITION
+-> S1B VERSION_VERIFICATION
+-> S1C SEGMENT_TIMELINE_ANALYSIS
+-> S1D AUDIO_TIMELINE_LOCK
 
-S1 does not own:
-- project aspect ratio/output format;
-- Director;
-- generation duration;
-- shot count;
-- character;
-- scene;
-- camera;
-- motion.
+## New default
 
-Project-format metadata belongs to Runtime Project State.
+S0 does not need to deliver a local file.
 
-## Build history
+S1 must first attempt to obtain analyzable media itself from normal public/authorized sources.
 
-### v0.1
-Representative test passed deterministic checks, but review exposed a boundary problem:
-`target_aspect_ratio` was coupled into PROJECT_AUDIO using downstream evidence.
+The user is not expected to manually download/upload media as the default workflow.
 
-Result:
-`SUPERSEDED_BEFORE_SEAL`
+## S1A success condition
 
-### v0.2
-Aspect ratio removed from S1 and moved to project-level metadata.
+`MEDIA_ACQUIRED` requires actual analyzable media bytes/object.
 
-Representative real-project test:
-《爱让人脑袋空空》
+A webpage, title, lyrics page, thumbnail or search result alone does not count.
 
-Results:
-- deterministic checks: PASS 6/6
-- exact duration: 15.370998s
-- T00–T12 timeline continuity: PASS
-- Human Audio Lock: PASS
-- downstream Director consumption: VERIFIED
-- Fresh Judge: PENDING
+## Current real case
 
-Current artifacts:
-- S1_STAGE_CONTRACT_v0.2.yaml
-- S1_JUDGE_CONTRACT_v0.2.yaml
-- S1_HANDOFF_CONTRACT_v0.2.yaml
-- S1_TEST_INPUT_RUN02_v0.2.json
-- validate_s1_v0.2.py
-- S1_DELIVERY_RUN02_v0.2.yaml
-- S1_TEST_REPORT_RUN02_v0.2.md
-- S1_FRESH_REVIEW_START_PROMPT_v0.2.md
-- S1_STATUS.md
+Selected Song Family:
+`若爱有尽头`
+
+Current S1A state:
+`ACQUISITION_SEARCHING`
+
+See:
+- S1_STAGE_CONTRACT_DRAFT_v0.3.yaml
+- S1A_MATERIAL_ACQUISITION_v0.1.md
+- S1A_ACQUISITION_CASE_001.md
+
+## Preserved earlier work
+
+S1 v0.2 successfully tested:
+- timeline continuity;
+- deterministic duration checks;
+- compact timeline handoff;
+- downstream Director consumption.
+
+That work remains useful for S1C/S1D, but v0.2 is no longer the complete entry contract because media acquisition now belongs at the front of S1.
 
 Do not start S2 until S1 is SEALED.
