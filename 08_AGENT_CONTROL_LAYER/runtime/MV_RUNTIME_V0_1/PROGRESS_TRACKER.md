@@ -27,8 +27,9 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 
 | Build ID | Component | Status | Test | Delivery | Review result | Next allowed action |
 |---|---|---|---|---|---|---|
-| F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / user authorized S1 start | Start S1 PROJECT_AUDIO |
-| S1 | PROJECT_AUDIO | REVIEW | v0.2 Deterministic PASS 6/6 + real downstream consumption verified | S1_DELIVERY_RUN02_v0.2.yaml | Fresh Judge v0.2 PENDING | Run independent S1 v0.2 Fresh Review |
+| F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / entry-stage correction accepted | Start S0 SONG_SELECTION |
+| S0 | SONG_SELECTION | DESIGNING | Historical success path being formalized | — | — | Finish S0 design, then isolated test |
+| S1 | PROJECT_AUDIO | BLOCKED | Prebuilt v0.2 candidate: deterministic PASS 6/6 + downstream consumption verified | S1_DELIVERY_RUN02_v0.2.yaml | Fresh Judge deferred | Wait for S0 SEALED handoff, then re-integrate/review S1 |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -51,17 +52,17 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 
 ## Current active build target
 
-S1 — PROJECT_AUDIO
+S0 — SONG_SELECTION
 
 ## Current next decision
 
-S1 is now the active build target. Build only PROJECT_AUDIO until its test, delivery, review, and Seal are complete.
+S0 is now the active build target. Build only SONG_SELECTION until candidate sourcing, shortlist logic, Human Reference Gate, delivery, review, and Seal are complete. Existing S1 artifacts are preserved but blocked.
 
 ## Runtime completion definition
 
 The runtime itself is not considered validated until:
 
-- all S1–S7 are SEALED in one real project run;
+- all S0–S7 are SEALED in one real project run;
 - selective reopen/rebuild has been tested at least once;
 - a downstream stage succeeds from Compact Handoff without loading full history;
 - final video passes human final review.
