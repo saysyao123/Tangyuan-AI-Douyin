@@ -65,7 +65,7 @@ It may later be connected into S4 MOTION, but the runtime will not silently inhe
 
 ## 8. Success condition for the runtime
 
-The runtime succeeds only when one real MV can travel through all seven stages while demonstrating:
+The runtime succeeds only when one real MV can travel through all eight stages while demonstrating:
 
 - small active context;
 - verified stage state;
