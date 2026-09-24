@@ -1,69 +1,42 @@
 # S1 PROJECT_AUDIO Status
 
-Status: BLOCKED_SOURCE_COVERAGE
+Status: PARTIAL_PASS_NOT_SEALED
 
 Selected Song Family:
 `若爱有尽头`
 
-Target version hints:
-`张蓓蓓 / 林叙`
+## Current source states
 
-Current full-stage candidate:
-`S1_STAGE_CONTRACT_DRAFT_v0.3.yaml`
+张蓓蓓 / 林叙:
+`METADATA_AND_LYRICS_VERIFIED / MEDIA_NOT_ACQUIRED`
 
-## S1A MATERIAL_ACQUISITION
+于一:
+`ANALYSIS_PREVIEW_ACQUIRED / ALT_VERSION_IDENTITY_UNVERIFIED`
 
-Component:
-`SEALED_COMPONENT_V0_2 / PASS`
+## S1A
+PASS / SEALED_COMPONENT_V0_2
 
-Validated adapters:
-- APPLE_ITUNES_PREVIEW_V0_1
-- DEEZER_PREVIEW_V0_1
-- DIRECT_PUBLIC_MEDIA_V0_1
-- S1A_ACQUISITION_ROUTER_V0_1
+## S1B
+PARTIAL
 
-End-to-end media selftest:
-PASS
+## S1C
+PARTIAL PASS
 
-Current target case:
-`CATALOG_COVERAGE_BLOCKED`
+Technical clip candidates from acquired preview:
+- T1: 14.756–29.698s (preview-relative), preferred for motion density
+- T2: 4.644–19.807s (preview-relative), alternate smoother arc
 
-Meaning:
-the exact 张蓓蓓/林叙 version is confirmed by public evidence, but no current compliant adapter exposes its analyzable media bytes.
+Semantic timeline:
+NOT LOCKED
 
-## S1B VERSION_VERIFICATION
+## S1D
+NOT PASSED
 
-State:
-`WAITING_FOR_MEDIA`
+## Overall
+`S1_OVERALL = PARTIAL_PASS_NOT_SEALED`
 
-Metadata evidence:
-available
+Next requirement:
+verify/acquire a suitable version of the same intended work with target-segment or full-source coverage.
 
-Exact acquired-media verification:
-pending
-
-## S1C SEGMENT_TIMELINE_ANALYSIS
-
-State:
-`BLOCKED_BY_MEDIA`
-
-## S1D AUDIO_TIMELINE_LOCK
-
-State:
-`NOT_STARTED`
-
-## Route
-
-Do NOT return to S0.
-Do NOT revise S1A architecture.
-Do NOT silently switch to 于一 / 张东林 / another same-title version.
-
-Next action:
-obtain an authorized/public analyzable source for the selected exact version, then resume at S1B.
-
-Evidence:
-- S1A_VALIDATION_REPORT_v0.2.md
-- s1a_acquisition/results/router/final_report.json
-- s1a_acquisition/results/selftest/acquisition_report.json
-
-S2 remains blocked until S1 SEALED.
+Do not return to S0.
+S2 remains blocked.
