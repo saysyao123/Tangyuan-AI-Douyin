@@ -1,0 +1,49 @@
+name: S1A Acquisition Router
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/ROUTER_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install media probe
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+      - name: Run S1A router
+        env:
+          S1A_ROUTER_OUT: router_out
+        run: |
+          python 08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/s1a_router.py
+      - name: Upload router artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s1a-router-result
+          path: router_out/
+          retention-days: 7
+      - name: Publish structured result
+        if: always()
+        run: |
+          set -e
+          RESULT_DIR="08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/results/router"
+          mkdir -p "$RESULT_DIR"
+          cp router_out/final_report.json "$RESULT_DIR/final_report.json" || true
+          git config user.name "tangyuan-s1a-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$RESULT_DIR"
+          if git diff --cached --quiet; then
+            echo "No result change."
+          else
+            git commit -m "s1a: publish router acquisition result"
+            git push
+          fi
