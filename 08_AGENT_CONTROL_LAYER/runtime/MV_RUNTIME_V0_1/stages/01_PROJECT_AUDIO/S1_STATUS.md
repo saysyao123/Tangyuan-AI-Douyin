@@ -1,60 +1,54 @@
 # S1 PROJECT_AUDIO Status
 
-Status: BLOCKED_FULL_SOURCE_REQUIRED
+Status: HUMAN_AUDIO_LOCK_PENDING
 
 Selected Song Family:
 `若爱有尽头`
 
-## Current media truth
+## Current formal source
 
-Existing local MP3:
-`30.014688s preview only`
+Mode:
+`USER_PROVIDED_MEDIA_FALLBACK`
+
+Source:
+`“如果爱有尽头 怎么想念没有”.mp4`
 
 Classification:
-`ANALYSIS_PREVIEW_ACQUIRED`
+`TARGET_SEGMENT_SOURCE_ACQUIRED`
 
-This file is explicitly NOT accepted as:
-- TARGET_SEGMENT_SOURCE_ACQUIRED
-- FULL_SOURCE_ACQUIRED
+## S1A
 
-Therefore:
-- no formal segment clip may be delivered from this preview;
-- no authoritative lyric/audio timeline may be sealed;
-- no S2 transition is allowed.
+Autonomous acquisition research remains separate.
 
-## Full-source attempts
+See:
+`S1A_USER_PROVIDED_MATERIAL_NOTE.md`
 
-### YouTube public full lyric/audio video
-Result:
-`PUBLIC_STREAM_FETCH_FAILED`
+The current user-supplied material is an exception fallback and does not close S1A research.
 
-Reason:
-platform required sign-in / bot confirmation.
+## S1B
 
-No cookie/session bypass was attempted.
+PASS for current provided source.
 
-### Audiomack public full page
-Result:
-`PUBLIC_STREAM_FETCH_FAILED`
+## S1C
 
-### Audiomack documented API
-Result:
-`NO_STREAM_URL`
+PASS.
 
-Reason:
-API returned `Invalid consumer key`.
+Recommended cut:
+`5.30s -> 21.36s`
 
-## Current S1 route
+Candidate:
+`若爱有尽头_S1候选片段_v1_16.06s.mp3`
 
-`STAY_IN_S1 / ACQUIRE_FULL_OR_TARGET_SEGMENT_SOURCE`
+## S1D
 
-Do NOT return to S0.
-Do NOT enter S2.
+Status:
+`HUMAN_AUDIO_LOCK_PENDING`
 
-Next success condition:
-obtain either:
-1. FULL_SOURCE_ACQUIRED, or
-2. TARGET_SEGMENT_SOURCE_ACQUIRED with complete semantic lead-in/out.
+Do not enter S2 until user listens and explicitly approves the candidate.
 
-Only then:
-full material analysis -> segment selection -> clipped MP3 -> Human Audio Lock.
+Current evidence:
+- S1_RUN02_USER_MEDIA_ANALYSIS.md
+- S1_DELIVERY_RUN02_CANDIDATE.yaml
+
+S1 SEALED:
+NO
