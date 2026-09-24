@@ -1,7 +1,7 @@
 # S0 SONG_SELECTION
 
-Status: DESIGNING  
-Current candidate contract: v0.1-draft
+Status: HUMAN_REFERENCE_GATE  
+Current candidate contract: v0.2-draft
 
 ## Purpose
 
@@ -56,7 +56,21 @@ Core Account / Trusted Song Pool
 
 ## Current status
 
-Framework/design only.
+Test Run01 delivered.
 
-Next action:
-Review the v0.1 S0 method and then test it against the historical successful Round 01 before using a new live selection round.
+Preselection gates:
+- Chinese-only filter: PASS
+- historical used-song dedupe: PASS
+- Song Family dedupe: PASS
+- core/supplemental evidence separation: PASS
+- Top 3 delivery: PASS
+
+Current candidates:
+- A 向山河林响
+- B 若爱有尽头
+- C 阳光洒落
+
+Current gate:
+HUMAN_REFERENCE_GATE
+
+S1 remains blocked.
