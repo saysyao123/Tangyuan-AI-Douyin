@@ -1,0 +1,41 @@
+handoff_contract:
+  handoff_id: "SONG_SELECTION_HANDOFF"
+  version: "0.1-draft"
+
+  generated_only_after:
+    human_reference_lock: "PASS"
+
+  required:
+    selected_song_family: "string"
+    selected_concrete_reference:
+      account: "string"
+      reference_url_or_ref: "reference"
+      observed_or_captured_duration_seconds: "number_or_unknown"
+    selection_evidence:
+      core_account_signal: "summary"
+      lyric_visual_fit: "summary"
+      animation_fit: "summary"
+      motion_fit: "summary"
+      prior_project_use: "summary"
+      version_risk: "summary"
+    human_reference_lock:
+      status: "PASS"
+      selected_by: "user"
+    stage:
+      id: "SONG_SELECTION"
+      contract_version: "0.1"
+      status: "SEALED"
+
+  deliberately_excluded:
+    - exact_audio_version
+    - extracted_audio_file
+    - final_segment_start
+    - final_segment_end
+    - lyric_timeline
+    - beat_grid
+    - semantic_cut_timestamps
+    - director_plan
+
+  downstream_promise: >
+    S1 PROJECT_AUDIO receives one concrete user-selected reference and may begin
+    exact Audio Version / segment / timeline locking without reopening the candidate-selection history.
