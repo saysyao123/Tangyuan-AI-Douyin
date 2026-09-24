@@ -1,0 +1,81 @@
+{
+  "adapter": "APPLE_ITUNES_PREVIEW_V0_1",
+  "target": {
+    "title": "若爱有尽头",
+    "artist_hints": [
+      "张蓓蓓",
+      "林叙"
+    ],
+    "countries": [
+      "cn",
+      "hk",
+      "tw",
+      "us"
+    ]
+  },
+  "queries": [
+    {
+      "country": "cn",
+      "term": "若爱有尽头",
+      "count": 0
+    },
+    {
+      "country": "cn",
+      "term": "若爱有尽头 张蓓蓓",
+      "count": 0
+    },
+    {
+      "country": "cn",
+      "term": "若爱有尽头 林叙",
+      "count": 0
+    },
+    {
+      "country": "hk",
+      "term": "若爱有尽头",
+      "count": 50
+    },
+    {
+      "country": "hk",
+      "term": "若爱有尽头 张蓓蓓",
+      "count": 1
+    },
+    {
+      "country": "hk",
+      "term": "若爱有尽头 林叙",
+      "count": 50
+    },
+    {
+      "country": "tw",
+      "term": "若爱有尽头",
+      "count": 50
+    },
+    {
+      "country": "tw",
+      "term": "若爱有尽头 张蓓蓓",
+      "count": 1
+    },
+    {
+      "country": "tw",
+      "term": "若爱有尽头 林叙",
+      "count": 50
+    },
+    {
+      "country": "us",
+      "term": "若爱有尽头",
+      "count": 50
+    },
+    {
+      "country": "us",
+      "term": "若爱有尽头 张蓓蓓",
+      "count": 0
+    },
+    {
+      "country": "us",
+      "term": "若爱有尽头 林叙",
+      "count": 1
+    }
+  ],
+  "candidate_count": 220,
+  "exact_preview_matches": [],
+  "status": "NO_EXACT_PREVIEW_MATCH"
+}
