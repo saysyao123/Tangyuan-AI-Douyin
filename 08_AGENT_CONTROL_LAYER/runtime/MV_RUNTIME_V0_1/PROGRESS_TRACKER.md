@@ -29,7 +29,7 @@ A downstream stage may have a placeholder folder, but detailed design must wait 
 |---|---|---|---|---|---|---|
 | F0 | Runtime Framework | SEALED | Structural self-check complete | Runtime skeleton + tracker + schemas | PASS / entry-stage correction accepted | Start S0 SONG_SELECTION |
 | S0 | SONG_SELECTION | SEALED | Chinese filter + dedupe + Top3 PASS; 若爱有尽头 selected | S0_DELIVERY_RUN01_v0.2.yaml | Human Song Family Lock PASS | S1 owns material acquisition |
-| S1 | PROJECT_AUDIO | DESIGNING | S1A autonomous acquisition started for 若爱有尽头 | S1A_ACQUISITION_CASE_001.md | MEDIA_NOT_ACQUIRED_YET | Continue autonomous normal-source acquisition |
+| S1 | PROJECT_AUDIO | REVISE | Run01: S1 architecture PASS; acquisition adapter blocked by runtime media access | S1_TEST_REPORT_RUN01.md | REVISE_S1A_ONLY | Build/test one reliable autonomous Acquisition Adapter |
 | S2 | DIRECTOR | NOT_STARTED | — | — | — | Blocked until S1 SEALED |
 | S3 | FIRST_FRAME | NOT_STARTED | — | — | — | Blocked until S2 SEALED |
 | S4 | MOTION | NOT_STARTED | Existing pilot available, not integrated | — | — | Blocked until S3 SEALED |
@@ -56,7 +56,7 @@ S1 — PROJECT_AUDIO / S1A MATERIAL_ACQUISITION
 
 ## Current next decision
 
-S0 is SEALED with Song Family《若爱有尽头》. S1 is active. Current phase: S1A autonomous material acquisition. Timeline/version analysis is blocked until actual analyzable media is acquired.
+S0 remains SEALED. S1 Run01 localized the only current blocker to S1A Material Acquisition. Revise/test S1A only; S1B-S1D remain frozen until MEDIA_ACQUIRED.
 
 ## Runtime completion definition
 
