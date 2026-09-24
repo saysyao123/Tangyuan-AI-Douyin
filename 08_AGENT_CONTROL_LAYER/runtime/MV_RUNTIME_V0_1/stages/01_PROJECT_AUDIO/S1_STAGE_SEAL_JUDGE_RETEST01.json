@@ -1,0 +1,23 @@
+{
+  "judge_contract_version": "stage_seal_v0.1",
+  "stage": "PROJECT_AUDIO",
+  "execution_mode": "SAME_MODEL_MINIMAL_CONTEXT_TEST",
+  "independence": "NOT_FULLY_FRESH",
+  "test_only": true,
+  "results": {
+    "upstream_handoff_valid": "TRUE",
+    "analyzable_source_exists": "TRUE",
+    "source_provenance_recorded": "TRUE",
+    "coverage_state_valid": "TRUE",
+    "preview_not_misclassified_as_full": "TRUE",
+    "authoritative_source_explicit": "TRUE",
+    "timeline_ordered": "TRUE",
+    "timeline_inside_source_range": "TRUE",
+    "human_audio_lock_pass": "TRUE",
+    "s1_s2_boundary_respected": "TRUE",
+    "evidence_sufficient": "TRUE"
+  },
+  "failed_criteria": [],
+  "route": "PASS",
+  "limitation": "Protocol path validated; not evidence of independent fresh-model judgment."
+}
