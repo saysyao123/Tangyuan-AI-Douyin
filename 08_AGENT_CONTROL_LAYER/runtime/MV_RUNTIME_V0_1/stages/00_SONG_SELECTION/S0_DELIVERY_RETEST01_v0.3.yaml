@@ -1,0 +1,44 @@
+handoff:
+  handoff_id: "SONG_SELECTION_HANDOFF"
+  version: "0.3"
+  retest_run: "RETEST01"
+  mode: "KNOWN_GOOD_REPLAY"
+
+  shortlist:
+    - {id: "A", song_family: "向山河林响", eligible: true}
+    - {id: "B", song_family: "若爱有尽头", eligible: true}
+    - {id: "C", song_family: "阳光洒落", eligible: true}
+
+  selected_song_family: "若爱有尽头"
+
+  selection_evidence:
+    language_policy: "CHINESE_PASS"
+    historical_use: "ELIGIBLE_CANDIDATE_ONLY"
+    song_family_dedupe: "PASS"
+    core_signal: "Historical trusted-core repeat: 乐♩青春 + XIANGJISHI"
+    lyric_visual_fit: "HIGH"
+    animation_fit: "HIGH"
+    motion_fit: "MODERATE_WITH_STATIC_ATMOSPHERE_RISK"
+    version_risk: "MULTIPLE_VERSIONS_REQUIRE_S1_VERIFICATION"
+
+  candidate_reference_leads:
+    - "https://www.douyin.com/video/7673820758652768945"
+    - "https://www.douyin.com/video/7675199543096406626"
+    - "https://www.youtube.com/watch?v=PdPPHkcqVvA"
+
+  human_song_family_lock:
+    status: "PASS"
+    selected_by: "assistant_test_operator"
+    gate_mode: "AUTO_CONFIRMED_FOR_TEST"
+
+  judge:
+    result_ref: "S0_STAGE_SEAL_JUDGE_RETEST01.json"
+    route: "PASS"
+    mode: "SAME_MODEL_MINIMAL_CONTEXT_TEST"
+
+  stage:
+    id: "SONG_SELECTION"
+    contract_version: "0.3"
+    status: "SEALED"
+
+  next_stage: "PROJECT_AUDIO"
