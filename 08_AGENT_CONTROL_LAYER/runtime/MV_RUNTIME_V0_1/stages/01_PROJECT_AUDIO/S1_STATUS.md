@@ -1,44 +1,69 @@
 # S1 PROJECT_AUDIO Status
 
-Status: REVISE_S1A_ONLY
+Status: BLOCKED_SOURCE_COVERAGE
 
 Selected Song Family:
 `若爱有尽头`
 
+Target version hints:
+`张蓓蓓 / 林叙`
+
 Current full-stage candidate:
 `S1_STAGE_CONTRACT_DRAFT_v0.3.yaml`
 
-## Run01 result
+## S1A MATERIAL_ACQUISITION
 
-S1 architecture:
+Component:
+`SEALED_COMPONENT_V0_2 / PASS`
+
+Validated adapters:
+- APPLE_ITUNES_PREVIEW_V0_1
+- DEEZER_PREVIEW_V0_1
+- DIRECT_PUBLIC_MEDIA_V0_1
+- S1A_ACQUISITION_ROUTER_V0_1
+
+End-to-end media selftest:
 PASS
 
-S1A Material Acquisition:
-FAIL / RUNTIME_CAPABILITY_BLOCKED
+Current target case:
+`CATALOG_COVERAGE_BLOCKED`
 
-S1B Version Verification:
-PARTIAL_METADATA_ONLY
+Meaning:
+the exact 张蓓蓓/林叙 version is confirmed by public evidence, but no current compliant adapter exposes its analyzable media bytes.
 
-S1C Segment / Timeline:
-BLOCKED
+## S1B VERSION_VERIFICATION
 
-S1D Audio Timeline Lock:
-NOT_STARTED
+State:
+`WAITING_FOR_MEDIA`
 
-## Important interpretation
+Metadata evidence:
+available
+
+Exact acquired-media verification:
+pending
+
+## S1C SEGMENT_TIMELINE_ANALYSIS
+
+State:
+`BLOCKED_BY_MEDIA`
+
+## S1D AUDIO_TIMELINE_LOCK
+
+State:
+`NOT_STARTED`
+
+## Route
 
 Do NOT return to S0.
+Do NOT revise S1A architecture.
+Do NOT silently switch to 于一 / 张东林 / another same-title version.
 
-Song selection remains valid.
+Next action:
+obtain an authorized/public analyzable source for the selected exact version, then resume at S1B.
 
-Do NOT modify timeline logic yet.
+Evidence:
+- S1A_VALIDATION_REPORT_v0.2.md
+- s1a_acquisition/results/router/final_report.json
+- s1a_acquisition/results/selftest/acquisition_report.json
 
-Only S1A Acquisition Adapter should be revised/tested.
-
-Current evidence:
-`S1_TEST_REPORT_RUN01.md`
-
-Current route:
-`REVISE_S1A_ONLY`
-
-S2 remains blocked until S1 reaches SEALED.
+S2 remains blocked until S1 SEALED.
