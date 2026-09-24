@@ -1,8 +1,9 @@
 runtime_id: "MV_RUNTIME_V0_1"
-version: "0.1"
+version: "0.2"
 
 stages:
-  - {order: 1, id: "PROJECT_AUDIO", folder: "stages/01_PROJECT_AUDIO", purpose: "Lock source audio, selected segment, duration, lyric/timeline truth, format and project boundaries.", deep_design_status: "ACTIVE_DESIGN", human_gate: true}
+  - {order: 0, id: "SONG_SELECTION", folder: "stages/00_SONG_SELECTION", purpose: "Build a qualified song/reference candidate set from the trusted song pool, deliver no more than three primary candidates, and obtain a Human Reference Lock on one concrete work before any audio/timeline analysis begins.", deep_design_status: "ACTIVE_DESIGN", human_gate: true}
+  - {order: 1, id: "PROJECT_AUDIO", folder: "stages/01_PROJECT_AUDIO", purpose: "After S0 selects one concrete reference, lock the exact audio version, selected segment, duration and lyric/audio-event timeline.", deep_design_status: "BLOCKED_UNTIL_SONG_SELECTION_SEALED", human_gate: true}
   - {order: 2, id: "DIRECTOR", folder: "stages/02_DIRECTOR", purpose: "Convert sealed audio/timeline truth into visual function, emotional arc, shot requirements and downstream action requirements.", deep_design_status: "BLOCKED_UNTIL_PROJECT_AUDIO_SEALED", human_gate: true}
   - {order: 3, id: "FIRST_FRAME", folder: "stages/03_FIRST_FRAME", purpose: "Create and lock character/scene/pose visual anchors required by generation.", deep_design_status: "BLOCKED_UNTIL_DIRECTOR_SEALED", human_gate: true}
   - {order: 4, id: "MOTION", folder: "stages/04_MOTION", purpose: "Create generation-ready dynamic prompt and motion state from Director + First Frame handoffs.", deep_design_status: "BLOCKED_UNTIL_FIRST_FRAME_SEALED", human_gate: false, existing_research_asset: "../../pilots/MOTION_GATE_V0_1"}
