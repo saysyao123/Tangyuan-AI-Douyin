@@ -1,0 +1,74 @@
+name: S1A Audiomack Full Source Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/AUDIOMACK_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp
+      - name: Download public Audiomack source
+        env:
+          TARGET_URL: https://audiomack.com/yu-yi-8/song/ruo-ai-you-jin-tou
+        run: |
+          mkdir -p am_out
+          set +e
+          yt-dlp --no-playlist --no-cookies -f ba -x --audio-format mp3 --audio-quality 0 -o 'am_out/source.%(ext)s' "$TARGET_URL" > am_out/yt_dlp.log 2>&1
+          RC=$?
+          echo $RC > am_out/returncode.txt
+          set -e
+          python - <<'PY'
+          import glob, hashlib, json, os, subprocess
+          files=glob.glob('am_out/*')
+          aud=[p for p in files if p.endswith('.mp3')]
+          rc=int(open('am_out/returncode.txt').read().strip())
+          report={'adapter':'AUDIOMACK_PUBLIC_FULL_V0_1','source':'https://audiomack.com/yu-yi-8/song/ruo-ai-you-jin-tou','yt_dlp_returncode':rc,'status':'FAILED','audio_files':aud}
+          if aud:
+              p=aud[0]
+              report['bytes']=os.path.getsize(p)
+              report['sha256']=hashlib.sha256(open(p,'rb').read()).hexdigest()
+              try:
+                  probe=subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration,format_name,bit_rate:stream=codec_name,sample_rate,channels','-of','json',p],text=True)
+                  report['probe']=json.loads(probe)
+                  dur=float(report['probe']['format'].get('duration',0) or 0)
+                  report['status']='FULL_SOURCE_ACQUIRED' if dur>120 else 'MEDIA_ACQUIRED_SHORT'
+              except Exception as e:
+                  report['probe_error']=str(e)
+                  report['status']='MEDIA_BYTES_ACQUIRED_PROBE_FAILED'
+          elif rc!=0:
+              report['status']='PUBLIC_STREAM_FETCH_FAILED'
+          open('am_out/acquisition_report.json','w',encoding='utf-8').write(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s1a-audiomack-full
+          path: am_out/
+          retention-days: 7
+      - name: Publish structured result
+        if: always()
+        run: |
+          set -e
+          RESULT_DIR="08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/stages/01_PROJECT_AUDIO/s1a_acquisition/results/audiomack"
+          mkdir -p "$RESULT_DIR"
+          cp am_out/acquisition_report.json "$RESULT_DIR/acquisition_report.json" || true
+          cp am_out/yt_dlp.log "$RESULT_DIR/yt_dlp.log" || true
+          git config user.name "tangyuan-s1a-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$RESULT_DIR"
+          if git diff --cached --quiet; then echo 'No result change.'; else git commit -m 's1a: publish Audiomack full-source result'; git push; fi
