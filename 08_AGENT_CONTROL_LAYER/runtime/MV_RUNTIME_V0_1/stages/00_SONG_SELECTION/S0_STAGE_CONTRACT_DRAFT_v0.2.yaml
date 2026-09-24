@@ -1,0 +1,122 @@
+stage_contract:
+  stage_id: "SONG_SELECTION"
+  version: "0.2-draft"
+  status: "READY_FOR_TEST"
+
+  goal: >
+    Produce a small, evidence-backed shortlist of concrete Chinese-language
+    song/reference candidates from the trusted song ecosystem, after freshness
+    refresh and historical-use dedupe, and obtain a Human Reference Lock on
+    exactly one concrete work before S1 begins.
+
+  input_contract:
+    required:
+      - trusted_song_pool_ref
+      - trusted_core_account_registry_ref
+      - used_song_ledger_ref
+      - fresh_refresh_ref
+      - current_project_selection_goal
+      - language_policy
+      - prior_project_use_history
+    optional:
+      - current_platform_search_evidence
+      - supplemental_music_evidence
+
+  preselection_gates:
+    order:
+      - "LANGUAGE_FILTER"
+      - "HISTORICAL_USE_DEDUPE"
+      - "SONG_FAMILY_DEDUPE"
+      - "FRESHNESS_AND_REFERENCE_EVIDENCE"
+      - "QUALIFICATION"
+      - "TOP3"
+      - "HUMAN_REFERENCE_GATE"
+
+    language_filter:
+      required_primary_language: "CHINESE"
+      ambiguous_language_action: "EXCLUDE_UNTIL_VERIFIED"
+
+    historical_use_dedupe:
+      hard_exclude:
+        - "FORMAL_COMPLETED_PUBLISHED"
+        - "FORMAL_DEEP_PROJECT"
+        - "FORMAL_COMPLETE_MV"
+        - "FORMAL_RELEASED"
+        - "DEEP_DIRECTOR_FIRST_FRAME"
+        - "DEEP_MV_PROJECT"
+      regression_only:
+        - "PROCESS_TEST_MATERIAL"
+        - "HISTORICAL_BENCHMARK_USE"
+      prior_candidate_only:
+        action: "ELIGIBLE"
+
+    freshness_policy:
+      preferred: "CURRENT_CORE_DIRECT"
+      allowed_for_test: "HISTORICAL_CORE_VERIFIED"
+      supplemental_only: "SUPPLEMENTAL_CURRENT"
+      unresolved: "INDEX_PENDING"
+
+  source_policy:
+    primary:
+      - "trusted core accounts"
+      - "existing verified core-account work URLs"
+      - "current verified works from the same trusted accounts when available"
+    supplemental:
+      - "public platform trend evidence"
+      - "music-platform corroboration"
+    rule: "Supplemental evidence cannot impersonate core-account direct evidence."
+
+  song_family_policy:
+    normalize_work_variants_to_song_family: true
+    preserve_concrete_work_identity: true
+    do_not_treat_song_family_as_audio_version: true
+
+  qualification_dimensions:
+    - {id: "Q01", name: "core_signal"}
+    - {id: "Q02", name: "lyric_visual_hit"}
+    - {id: "Q03", name: "animation_fit"}
+    - {id: "Q04", name: "motion_fit"}
+    - {id: "Q05", name: "reference_quality"}
+    - {id: "Q06", name: "new_test_value"}
+    - {id: "Q07", name: "version_risk"}
+
+  shortlist_policy:
+    max_primary_candidates_per_round: 3
+    no_forced_winner: true
+    user_may_reject_all: true
+    rejected_round_action: "RUN_NEXT_ROUND_FROM_TRUSTED_POOL"
+
+  human_gate:
+    required: true
+    gate_name: "HUMAN_REFERENCE_LOCK"
+    automatic_model_selection_forbidden: true
+
+  deterministic_checks:
+    - "all primary candidates satisfy Chinese-language policy"
+    - "no HARD_EXCLUDE or REGRESSION_ONLY song enters new-project Top 3"
+    - "no duplicate Song Family appears twice in Top 3"
+    - "primary shortlist contains 1 to 3 candidates"
+    - "every Primary Candidate has a concrete core reference URL/ref"
+    - "supplemental-only candidates remain outside Primary Top 3"
+    - "S0 does not perform S1 timeline analysis"
+
+  output_contract:
+    before_human_selection:
+      - shortlist_delivery
+      - refresh_status
+      - dedupe_status
+      - human_gate_status
+    after_human_selection:
+      - song_selection_handoff
+      - selected_song_family
+      - selected_concrete_reference
+      - human_reference_lock
+
+  explicit_non_goals:
+    - "exact Audio Version lock"
+    - "lyric timestamp timeline"
+    - "BPM / beat analysis"
+    - "semantic cut timestamps"
+    - "final segment start/end"
+    - "generation duration"
+    - "director design"
