@@ -1,0 +1,2 @@
+run=001
+purpose=validate-direct-public-media-adapter
