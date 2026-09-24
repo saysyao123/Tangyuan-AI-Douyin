@@ -1,82 +1,125 @@
-# S1 PROJECT_AUDIO — Test Report Run01
+# S1 PROJECT_AUDIO — Real Test Run01
 
-Status: DELIVERED / READY_FOR_FRESH_REVIEW
+Date: 2026-09-24
+Selected Song Family: 若爱有尽头
+Upstream: S0_DELIVERY_RUN01_v0.2.yaml
 
-Representative project: 《爱让人脑袋空空》
+## Executive result
 
-## 1. Deterministic validation
+Overall S1:
+PARTIAL / ACQUISITION ADAPTER NOT YET VALIDATED
 
-Result: PASS 7/7
+Architecture:
+PASS
 
-- D01 segment_end > segment_start: PASS
-- D02 locked duration matches start/end: PASS
-- D03 selected audio version present: PASS
-- D04 target aspect ratio explicit: PASS
-- D05 timeline begins/ends at locked segment boundaries: PASS
-- D06 timeline units ordered and contiguous: PASS
-- D07 Human Audio Lock present: PASS
+Current production blocker:
+S1A MATERIAL_ACQUISITION
 
-Derived duration:
-15.370998s
+The blocker is not Song Selection and not Timeline logic.
+It is the current runtime's inability to obtain analyzable media bytes/object from the available public streaming pages.
 
-Timeline continuity:
-T00 through T12 are contiguous within 0.001s tolerance.
+## S1A MATERIAL_ACQUISITION
 
-## 2. Representative evidence
+### Sources attempted
 
-Authoritative timeline:
-`07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/05_LOVE_EMPTY_HEAD_TIMELINE_LOCK_v1.md`
+1. Historical XIANGJISHI Douyin reference
+   - Song Family: 若爱有尽头
+   - historical reference lead
+   - user reports normal direct-download workflow no longer works
+   - result: NOT_ACQUIRED
 
-Target aspect ratio evidence:
-`07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/09_LOVE_EMPTY_HEAD_K0_SPEC_v1.md`
+2. Current Douyin work
+   - https://www.douyin.com/video/7675199543096406626
+   - publicly indexed and readable as a webpage
+   - identifies 林叙/张蓓蓓《若爱有尽头》
+   - current runtime receives page metadata/text, not analyzable MP4/audio bytes
+   - result: NOT_ACQUIRED
 
-## 3. Downstream consumption test
+3. YouTube dynamic lyric/audio reference
+   - https://www.youtube.com/watch?v=PdPPHkcqVvA
+   - identifies 林叙《若爱有尽头》
+   - published 2026-08-13
+   - public search metadata available
+   - direct page/media fetch is throttled/not exposed as analyzable media to the current runtime
+   - result: NOT_ACQUIRED
 
-Existing locked Director output:
-`07_SKILLS/MV_REFERENCE_DIRECTOR_BUILD/08_LOVE_EMPTY_HEAD_ANIMATION_DIRECTOR_v3_LOCKED.md`
+4. YouTube lyric reference
+   - https://www.youtube.com/watch?v=0MaeQBH3pXw
+   - identifies 张蓓蓓、林叙《若爱有尽头》
+   - published 2026-08-16
+   - full lyrics are publicly visible in search result metadata
+   - actual media bytes are not exposed
+   - result: NOT_ACQUIRED
 
-Observed:
-- Director consumes Segment A = BGM 0.000–8.700s.
-- Director consumes Segment B = BGM 8.700–15.370998s.
-- Director preserves the 8.700 semantic reset.
-- Director builds creative shot/camera/generation logic on top of the timeline rather than redefining the selected source audio.
+5. KuGou public web evidence
+   - public search result lists 张蓓蓓、林叙 - 若爱有尽头
+   - useful as version/song identity corroboration
+   - web page does not expose analyzable media to this runtime
+   - result: METADATA_ONLY
 
-This is strong evidence that a compact PROJECT_AUDIO handoff can serve as authoritative downstream truth.
+6. Third-party free MP3 aggregators
+   - discoverable on the public web
+   - deliberately NOT used as the normal production acquisition route because provenance/version/file-safety and copyright status are unclear
+   - result: REJECTED_AS_DEFAULT_ADAPTER
 
-## 4. Scope-cleanliness check
+## S1B VERSION_VERIFICATION
 
-The new S1 delivery intentionally does NOT lock:
-- generation clip duration;
-- shot count;
-- Director concept;
-- character;
-- scene;
-- camera;
-- motion prompt.
+Status:
+PARTIAL / METADATA_VERIFIED, MEDIA_VERSION_NOT_YET_VERIFIED
 
-This corrects a major architecture risk: audio/timeline truth and generation/directing decisions remain separated.
+Evidence currently supports:
+- Song Family: 若爱有尽头
+- recurring artist/version identity on current public sources: 张蓓蓓 / 林叙
+- one current Douyin page explicitly points viewers to 林叙/张蓓蓓完整版
+- a current YouTube lyric version labels 张蓓蓓、林叙
+- another current YouTube dynamic lyric version labels 林叙
+- KuGou public search evidence lists 张蓓蓓、林叙
 
-## 5. Preliminary semantic audit
+What is NOT yet established:
+- which exact media master/audio edit will be used;
+- whether the historical XIANGJISHI edit matches the 张蓓蓓/林叙 public full version;
+- exact waveform/duration/codec of the production artifact.
 
-Architect-context preliminary reading:
+Therefore S1B cannot be SEALED.
 
-- J01 timeline authority clear: PASS candidate
-- J02 timeline semantics complete: PASS candidate
-- J03 preferred 8.700 cut semantically valid: PASS candidate
-- J04 downstream reconstruction not required: PASS candidate, supported by actual Director consumption
-- J05 scope clean: PASS candidate
+## S1C SEGMENT_TIMELINE_ANALYSIS
 
-These are not yet a valid Fresh Judge result because this same context designed S1.
+Status:
+BLOCKED_BY_S1A
 
-## 6. Current conclusion
+Public lyric text is sufficient for semantic pre-reading, but not for an authoritative timestamp timeline.
 
-S1 has passed:
-- design completeness;
-- deterministic testing;
-- representative real-project delivery;
-- downstream consumption evidence.
+No exact lyric timestamps, Beat/Onset or segment boundaries are locked in this run.
 
-Remaining required gate:
-- independent Fresh Stateless Judge review of S1 delivery.
+This is intentional.
 
-Do not start S2 until that review returns PASS and S1 is SEALED.
+## S1D AUDIO_TIMELINE_LOCK
+
+Status:
+NOT_STARTED
+
+## Test conclusion
+
+The new S1 architecture behaved correctly:
+
+1. S0 handed off only Song Family + source leads.
+2. S1 independently attempted acquisition.
+3. S1 did not ask the user for a file as the first action.
+4. S1 distinguished page metadata from actual media acquisition.
+5. S1 did not silently substitute a live/cover/lyric-video version.
+6. S1 stopped before inventing an exact timeline.
+7. Failure is localized to one adapter: media acquisition.
+
+## Required next improvement
+
+Do not redesign S0.
+Do not redesign S1C timeline logic.
+
+Build/test an S1A Acquisition Adapter capable of one of:
+- normal official/public preview media acquisition;
+- integrated URL-to-media/transcription access;
+- tool-accessible public video/audio object;
+- trusted source connector that can expose analyzable media.
+
+Once one such adapter produces MEDIA_ACQUIRED:
+S1B -> S1C -> S1D should resume on the same selected Song Family.
