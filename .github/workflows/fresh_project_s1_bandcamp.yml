@@ -1,0 +1,93 @@
+name: Fresh Project S1 Bandcamp Acquire Analyze
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  acquire-analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp numpy scipy librosa soundfile
+      - name: Acquire full public stream
+        run: |
+          mkdir -p fresh_s1
+          set +e
+          yt-dlp --no-playlist --no-cookies -x --audio-format mp3 --audio-quality 0 -o 'fresh_s1/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-' > fresh_s1/acquire.log 2>&1
+          RC=$?
+          echo $RC > fresh_s1/acquire_rc.txt
+          set -e
+          python - <<'PY'
+          import glob, hashlib, json, os, subprocess
+          files=glob.glob('fresh_s1/full*.mp3')
+          report={'source':'https://peachillusion.bandcamp.com/track/-','status':'FAILED','files':files}
+          if files:
+              p=files[0]
+              probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration,format_name,bit_rate:stream=codec_name,sample_rate,channels','-of','json',p],text=True))
+              report.update({'status':'FULL_SOURCE_ACQUIRED','artifact':p,'bytes':os.path.getsize(p),'sha256':hashlib.sha256(open(p,'rb').read()).hexdigest(),'probe':probe})
+          else:
+              report['acquire_rc']=int(open('fresh_s1/acquire_rc.txt').read().strip())
+          open('fresh_s1/acquisition_report.json','w',encoding='utf-8').write(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Analyze audio structure
+        run: |
+          python - <<'PY'
+          import glob, json, numpy as np, librosa
+          aud=glob.glob('fresh_s1/full*.mp3')
+          if not aud:
+              open('fresh_s1/audio_analysis.json','w').write(json.dumps({'status':'BLOCKED_NO_MEDIA'})); raise SystemExit(0)
+          p=aud[0]
+          y,sr=librosa.load(p,sr=22050,mono=True)
+          dur=len(y)/sr
+          tempo,beats=librosa.beat.beat_track(y=y,sr=sr)
+          tempo=float(np.atleast_1d(tempo)[0])
+          beat_times=librosa.frames_to_time(beats,sr=sr).tolist()
+          onset_env=librosa.onset.onset_strength(y=y,sr=sr)
+          onset_frames=librosa.onset.onset_detect(onset_envelope=onset_env,sr=sr,backtrack=True)
+          onset_times=librosa.frames_to_time(onset_frames,sr=sr).tolist()
+          rms=librosa.feature.rms(y=y,frame_length=2048,hop_length=512)[0]
+          times=librosa.frames_to_time(np.arange(len(rms)),sr=sr,hop_length=512)
+          # score 20s windows on 0.5s grid by RMS + onset density
+          candidates=[]
+          for start in np.arange(0,max(0,dur-20),0.5):
+              end=start+20
+              mask=(times>=start)&(times<end)
+              avg=float(np.mean(rms[mask])) if mask.any() else 0
+              ons=sum(start<=t<end for t in onset_times)
+              score=avg*(1+0.018*ons)
+              candidates.append({'start':round(float(start),3),'end':round(float(end),3),'avg_rms':avg,'onsets':ons,'score':score})
+          candidates=sorted(candidates,key=lambda x:x['score'],reverse=True)[:12]
+          out={'status':'PASS','duration':dur,'tempo_bpm':tempo,'beat_times':beat_times,'onset_times':onset_times,'top_20s_windows':candidates}
+          open('fresh_s1/audio_analysis.json','w',encoding='utf-8').write(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+      - name: Upload full source artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fresh-project-s1-source
+          path: fresh_s1/
+          retention-days: 7
+      - name: Publish reports
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_runtime'
+          mkdir -p "$DEST"
+          cp fresh_s1/acquisition_report.json "$DEST/acquisition_report.json" || true
+          cp fresh_s1/audio_analysis.json "$DEST/audio_analysis.json" || true
+          cp fresh_s1/acquire.log "$DEST/acquire.log" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish S1 acquisition and audio analysis'; git push; fi
