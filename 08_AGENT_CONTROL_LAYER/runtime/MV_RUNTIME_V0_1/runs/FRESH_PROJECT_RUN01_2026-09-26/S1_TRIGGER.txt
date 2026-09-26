@@ -1,0 +1,3 @@
+run=001
+song=告别
+source=bandcamp-public-stream
