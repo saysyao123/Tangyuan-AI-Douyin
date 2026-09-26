@@ -1,0 +1,2 @@
+run=001
+mode=audio-self-similarity
