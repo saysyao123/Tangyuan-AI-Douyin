@@ -1,0 +1,55 @@
+name: Fresh Project S1 Vocal Timing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_VOCAL_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vocals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp demucs faster-whisper
+      - name: Acquire
+        run: |
+          mkdir -p vocal_out
+          yt-dlp --no-playlist --no-cookies -x --audio-format wav -o 'vocal_out/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-'
+      - name: Separate vocals
+        run: |
+          python -m demucs --two-stems=vocals -n htdemucs --device cpu -o vocal_out/separated vocal_out/full.wav
+          find vocal_out/separated -type f -maxdepth 4 -print
+      - name: Transcribe separated vocals
+        run: |
+          python - <<'PY'
+          import glob,json
+          from faster_whisper import WhisperModel
+          files=glob.glob('vocal_out/separated/**/vocals.wav',recursive=True)
+          if not files: raise SystemExit('no vocals.wav')
+          p=files[0]
+          model=WhisperModel('small',device='cpu',compute_type='int8')
+          segments,info=model.transcribe(p,language='zh',beam_size=5,word_timestamps=True,vad_filter=False,condition_on_previous_text=False)
+          out=[]
+          for s in segments:
+              out.append({'start':float(s.start),'end':float(s.end),'text':s.text.strip(),'words':[{'start':float(w.start),'end':float(w.end),'word':w.word} for w in (s.words or [])]})
+          open('vocal_out/vocal_whisper.json','w',encoding='utf-8').write(json.dumps({'duration':info.duration,'segments':out},ensure_ascii=False,indent=2))
+          PY
+      - name: Publish
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_vocal_timing'
+          mkdir -p "$DEST"
+          cp vocal_out/vocal_whisper.json "$DEST/vocal_whisper.json" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish vocal-separated lyric timing'; git push; fi
