@@ -1,0 +1,49 @@
+name: Fresh Project S1 Timing Fast
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_TIMING_FAST_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  timing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp faster-whisper
+      - name: Acquire
+        run: |
+          mkdir -p fast_timing
+          yt-dlp --no-playlist --no-cookies -x --audio-format mp3 --audio-quality 0 -o 'fast_timing/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-'
+      - name: Transcribe tiny
+        run: |
+          python - <<'PY'
+          import glob,json
+          from faster_whisper import WhisperModel
+          p=glob.glob('fast_timing/full*.mp3')[0]
+          model=WhisperModel('tiny',device='cpu',compute_type='int8')
+          segments,info=model.transcribe(p,language='zh',beam_size=3,word_timestamps=True,vad_filter=False)
+          out=[]
+          for s in segments:
+              out.append({'start':float(s.start),'end':float(s.end),'text':s.text.strip()})
+          open('fast_timing/whisper_tiny.json','w',encoding='utf-8').write(json.dumps({'duration':info.duration,'segments':out},ensure_ascii=False,indent=2))
+          PY
+      - name: Publish
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_timing_fast'
+          mkdir -p "$DEST"
+          cp fast_timing/whisper_tiny.json "$DEST/whisper_tiny.json" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish fast lyric timing'; git push; fi
