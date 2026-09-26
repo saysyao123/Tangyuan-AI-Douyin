@@ -1,0 +1,7 @@
+[Bandcamp] Extracting URL: https://peachillusion.bandcamp.com/track/-
+[Bandcamp] -: Downloading webpage
+WARNING: [Bandcamp] The extractor is attempting impersonation, but no impersonate target is available. If you encounter errors, then see  https://github.com/yt-dlp/yt-dlp#impersonation  for information on installing the required dependencies
+[info] 1805045878: Downloading 1 format(s): mp3-128
+[download] Destination: fresh_s1/full.mp3
+[download]   0.0% of    3.08MiB at  Unknown B/s ETA Unknown[download]   0.1% of    3.08MiB at  Unknown B/s ETA Unknown[download]   0.2% of    3.08MiB at  Unknown B/s ETA Unknown[download]   0.5% of    3.08MiB at   12.72MiB/s ETA 00:00  [download]   1.0% of    3.08MiB at   21.02MiB/s ETA 00:00[download]   2.0% of    3.08MiB at   35.47MiB/s ETA 00:00[download]   4.0% of    3.08MiB at   27.04MiB/s ETA 00:00[download]   8.1% of    3.08MiB at   37.45MiB/s ETA 00:00[download]  16.2% of    3.08MiB at   51.02MiB/s ETA 00:00[download]  32.4% of    3.08MiB at   75.54MiB/s ETA 00:00[download]  64.9% of    3.08MiB at  115.36MiB/s ETA 00:00[download] 100.0% of    3.08MiB at  149.50MiB/s ETA 00:00[download] 100% of    3.08MiB in 00:00:00 at 9.10MiB/s   
+[ExtractAudio] Not converting audio fresh_s1/full.mp3; file is already in target format mp3

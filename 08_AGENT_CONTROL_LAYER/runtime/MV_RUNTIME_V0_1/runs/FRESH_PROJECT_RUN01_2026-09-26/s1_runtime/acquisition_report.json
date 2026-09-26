@@ -1,0 +1,28 @@
+{
+  "source": "https://peachillusion.bandcamp.com/track/-",
+  "status": "FULL_SOURCE_ACQUIRED",
+  "files": [
+    "fresh_s1/full.mp3"
+  ],
+  "artifact": "fresh_s1/full.mp3",
+  "bytes": 3232077,
+  "sha256": "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "format_name": "mp3",
+      "duration": "201.978776",
+      "bit_rate": "128016"
+    }
+  }
+}
