@@ -1,0 +1,2 @@
+run=002
+mode=full-source-structure-plus-whisper
