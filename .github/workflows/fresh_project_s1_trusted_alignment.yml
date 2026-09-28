@@ -65,6 +65,16 @@ jobs:
           import json; open('align_public/lyrics_meta.json','w').write(json.dumps(meta,ensure_ascii=False,indent=2))
           print(meta)
           if not 24 <= len(lines) <= 32: raise SystemExit(f'unexpected lyrics line count {len(lines)}')
+          sections={
+            'version':1,'line_index_base':0,'line_end_inclusive':False,
+            'sections':[
+              {'id':'verse1','audio_start':0.0,'audio_end':46.068,'line_start':0,'line_end':6,'kind':'singing'},
+              {'id':'chorus1','audio_start':46.068,'audio_end':78.437,'line_start':6,'line_end':14,'kind':'singing'},
+              {'id':'verse2','audio_start':78.437,'audio_end':122.207,'line_start':14,'line_end':20,'kind':'singing'},
+              {'id':'chorus2','audio_start':122.207,'audio_end':192.702,'line_start':20,'line_end':28,'kind':'singing'}
+            ]
+          }
+          open('align_jobs/job/sections.json','w',encoding='utf-8').write(json.dumps(sections,ensure_ascii=False,indent=2))
           PY
           sudo chown -R 10001:10001 align_jobs align_models
       - name: Pull Xingyu CPU image
@@ -88,59 +98,69 @@ jobs:
               --output-dir /jobs/job/result \
               --language zh \
               --device cpu \
+              --section-manifest /jobs/job/sections.json \
               --json-result > align_public/cli_result.json
       - name: Sanitize and validate alignment
         run: |
           python - <<'PY'
-          import json,hashlib,os,subprocess
+          import json,hashlib,subprocess
           from pathlib import Path
           root=Path('align_jobs/job/result')
           align=json.loads((root/'alignment.json').read_text(encoding='utf-8'))
           report=json.loads((root/'report.json').read_text(encoding='utf-8'))
-          # discover aligned lines without depending on one exact internal key
-          candidates=[]
-          def walk(x):
-              if isinstance(x,dict):
-                  if any(k in x for k in ['startMs','start_ms','start']) and any(k in x for k in ['endMs','end_ms','end']) and any(k in x for k in ['text','displayText','display_text']): candidates.append(x)
-                  for v in x.values(): walk(v)
-              elif isinstance(x,list):
-                  for v in x: walk(v)
-          walk(align)
-          def ms(v):
-              v=float(v)
-              return v if v>1000 else v*1000
-          rows=[]; seen=set()
-          for x in candidates:
-              txt=x.get('displayText',x.get('display_text',x.get('text','')))
-              s=x.get('startMs',x.get('start_ms',x.get('start'))); e=x.get('endMs',x.get('end_ms',x.get('end')))
-              if not txt or s is None or e is None: continue
-              key=(str(txt),round(ms(s)),round(ms(e)))
-              if key in seen: continue
-              seen.add(key); rows.append({'text':str(txt),'start_ms':round(ms(s)),'end_ms':round(ms(e))})
-          rows=sorted(rows,key=lambda r:(r['start_ms'],r['end_ms']))
-          # Keep lyric lines only by matching trusted source order where possible
           trusted=[x.strip() for x in Path('align_jobs/job/trusted_lyrics.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          raw_lines=align.get('lines',[])
           aligned=[]
-          for idx,t in enumerate(trusted,1):
-              match=next((r for r in rows if r['text'].replace(' ','')==t.replace(' ','')),None)
-              if match: aligned.append({'line_id':idx,'start_ms':match['start_ms'],'end_ms':match['end_ms'],'text_sha8':hashlib.sha256(t.encode()).hexdigest()[:8]})
-          # fallback: inspect known line-like schema keys directly if text matching misses
-          summary={'tool':'XINGYU_LYRICS_ALIGNER','trusted_line_count':len(trusted),'matched_line_count':len(aligned),'warnings':report.get('warnings',[]),'report_summary':{k:v for k,v in report.items() if k not in ['lyrics','lines','tokens'] and isinstance(v,(str,int,float,bool,type(None)))} ,'lines':aligned}
-          if len(aligned) < max(20,int(len(trusted)*0.7)):
-              summary['status']='ALIGNMENT_MATCH_INSUFFICIENT'
-              Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
-              raise SystemExit('insufficient aligned line match')
-          # Expected 28 lyric lines from official page structure: V1 1-6, C1 7-14, V2 15-20, C2 21-28.
+          for x in raw_lines:
+              idx=int(x.get('index',-1))+1
+              start=x.get('start'); end=x.get('end')
+              txt=x.get('text','')
+              if idx<1 or start is None or end is None: continue
+              aligned.append({
+                'line_id':idx,
+                'start_ms':round(float(start)*1000),
+                'end_ms':round(float(end)*1000),
+                'status':x.get('status'),
+                'section_id':x.get('section_id'),
+                'text_sha8':hashlib.sha256(txt.encode()).hexdigest()[:8]
+              })
+          aligned=sorted(aligned,key=lambda r:r['line_id'])
+          summary={
+            'tool':'XINGYU_LYRICS_ALIGNER_SECTIONED',
+            'trusted_line_count':len(trusted),
+            'matched_line_count':len(aligned),
+            'warnings':report.get('warnings',[]),
+            'report_summary':{k:v for k,v in report.items() if k not in ['lyrics','lines','tokens'] and isinstance(v,(str,int,float,bool,type(None)))},
+            'lines':aligned
+          }
           byid={r['line_id']:r for r in aligned}
-          if 7 not in byid or 14 not in byid or 21 not in byid or 28 not in byid:
-              summary['status']='REQUIRED_CHORUS_LINES_MISSING'
+          required=list(range(1,29))
+          if any(i not in byid for i in required):
+              summary['status']='MISSING_ALIGNED_LINES'
               Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
-              raise SystemExit('required chorus boundaries missing')
+              raise SystemExit('missing aligned lines')
+          durations=[(r['end_ms']-r['start_ms'])/1000 for r in aligned]
+          monotonic=all(aligned[i]['start_ms']>=aligned[i-1]['end_ms']-50 for i in range(1,len(aligned)))
           c1={'start_ms':byid[7]['start_ms'],'end_ms':byid[14]['end_ms']}
           c2={'start_ms':byid[21]['start_ms'],'end_ms':byid[28]['end_ms']}
-          summary.update({'status':'PASS_LINE_LEVEL','chorus1':c1,'chorus2':c2})
+          checks={
+            'all_28_lines':len(aligned)==28,
+            'character_count_matches':bool(report.get('character_count_matches')),
+            'non_monotonic_zero':int(report.get('non_monotonic_line_count',999))==0,
+            'missing_chars_zero':int(report.get('missing_character_timestamps',999))==0,
+            'monotonic':monotonic,
+            'max_line_duration_le_12s':max(durations)<=12.0,
+            'chorus1_in_section':45000<=c1['start_ms']<80000 and 45000<c1['end_ms']<=80000,
+            'chorus2_in_section':120000<=c2['start_ms']<193000 and 120000<c2['end_ms']<=193000,
+            'choruses_distinct':c2['start_ms']>c1['end_ms']+30000
+          }
+          summary.update({'checks':checks,'max_line_duration_seconds':max(durations),'chorus1':c1,'chorus2':c2})
+          if not all(checks.values()):
+              summary['status']='ALIGNMENT_QUALITY_REJECTED'
+              Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
+              raise SystemExit('alignment quality rejected')
+          summary['status']='PASS_LINE_LEVEL'
           Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
-          # cut chorus 1 with tiny safe handles
           start=max(0,c1['start_ms']/1000-0.20); end=c1['end_ms']/1000+0.30
           out='align_public/桃子假象_告别_S1_FINAL_ALIGNED.mp3'
           subprocess.check_call(['ffmpeg','-y','-v','error','-ss',f'{start:.3f}','-to',f'{end:.3f}','-i','align_audio/full.mp3','-c:a','libmp3lame','-q:a','2',out])
