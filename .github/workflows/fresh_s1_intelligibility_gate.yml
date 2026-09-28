@@ -1,0 +1,119 @@
+name: Fresh S1 Lyric Intelligibility Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_INTELLIGIBILITY_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  intelligibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp requests beautifulsoup4 demucs faster-whisper opencc-python-reimplemented rapidfuzz
+      - name: Acquire source and official lyric lines
+        run: |
+          mkdir -p intel/audio intel/lyrics intel/out
+          yt-dlp --no-playlist --no-cookies -x --audio-format wav -o 'intel/audio/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-'
+          python - <<'PY'
+          import re,requests,json
+          from bs4 import BeautifulSoup
+          html=requests.get('https://peachillusion.bandcamp.com/track/-',headers={'User-Agent':'Mozilla/5.0'},timeout=30).text
+          soup=BeautifulSoup(html,'html.parser')
+          node=soup.select_one('.lyricsText') or soup.find(attrs={'class':re.compile('lyrics')})
+          raw=node.get_text('\n',strip=False)
+          blocks=[x.strip() for x in re.split(r'\u00a0+|\n+',raw) if x.strip()]
+          if len(blocks)==8:
+              lines=[]
+              for b in blocks: lines.extend([x for x in b.split(' ') if x])
+          else:
+              lines=[x.strip() for x in blocks if x.strip()]
+          if len(lines)!=28: raise SystemExit(f'expected 28 lines, got {len(lines)}')
+          open('intel/lyrics/lines.json','w',encoding='utf-8').write(json.dumps(lines,ensure_ascii=False))
+          PY
+      - name: Separate vocals
+        run: |
+          python -m demucs --two-stems=vocals -n htdemucs --device cpu -o intel/separated intel/audio/full.wav
+          cp intel/separated/htdemucs/full/vocals.wav intel/audio/vocals.wav
+      - name: Evaluate candidate lyric regions
+        run: |
+          python - <<'PY'
+          import json,subprocess,re,os
+          from pathlib import Path
+          from rapidfuzz.fuzz import ratio
+          from opencc import OpenCC
+          from faster_whisper import WhisperModel
+          cc=OpenCC('t2s')
+          lines=json.loads(Path('intel/lyrics/lines.json').read_text(encoding='utf-8'))
+          cands=[
+            {'id':'VERSE1_CLEAN','start':29.805,'end':46.048,'line_ids':list(range(2,7))},
+            {'id':'CHORUS1_FOR_COMPARE','start':47.428,'end':75.556,'line_ids':list(range(7,15))},
+            {'id':'VERSE2_CLEAN','start':104.443,'end':122.187,'line_ids':list(range(16,21))},
+            {'id':'CHORUS2_REJECTED_PREV','start':122.747,'end':138.410,'line_ids':list(range(21,29))}
+          ]
+          for c in cands:
+              expected=''.join(lines[i-1] for i in c['line_ids'])
+              c['expected_chars']=len(expected)
+              c['expected_norm']=re.sub(r'[^\u4e00-\u9fff0-9a-zA-Z]','',cc.convert(expected))
+              for stem in ['full','vocals']:
+                  out=f"intel/audio/{c['id']}_{stem}.wav"
+                  subprocess.check_call(['ffmpeg','-y','-v','error','-ss',str(c['start']),'-to',str(c['end']),'-i',f'intel/audio/{stem}.wav','-ac','1','-ar','16000',out])
+          model=WhisperModel('small',device='cpu',compute_type='int8')
+          rows=[]
+          for c in cands:
+              row={k:v for k,v in c.items() if k!='expected_norm'}
+              scores=[]
+              for stem in ['full','vocals']:
+                  path=f"intel/audio/{c['id']}_{stem}.wav"
+                  segs,info=model.transcribe(path,language='zh',beam_size=5,condition_on_previous_text=False,vad_filter=False,temperature=0.0)
+                  txt=''.join(s.text for s in segs)
+                  norm=re.sub(r'[^\u4e00-\u9fff0-9a-zA-Z]','',cc.convert(txt))
+                  sim=ratio(c['expected_norm'],norm)/100.0 if norm else 0.0
+                  scores.append(sim)
+                  row[f'{stem}_asr_chars']=len(norm)
+                  row[f'{stem}_similarity']=round(sim,4)
+              row['best_similarity']=round(max(scores),4)
+              row['mean_similarity']=round(sum(scores)/len(scores),4)
+              # guard against empty / hallucinated short transcript
+              row['intelligibility_pass']=bool(row['best_similarity']>=0.22 and max(row['full_asr_chars'],row['vocals_asr_chars'])>=max(6,int(c['expected_chars']*0.25)))
+              rows.append(row)
+          # Select only practical MV windows <=20s, and never select known rejected previous chorus unless it somehow strongly wins.
+          eligible=[r for r in rows if r['intelligibility_pass'] and (r['end']-r['start'])<=20.0 and r['id']!='CHORUS2_REJECTED_PREV']
+          selected=max(eligible,key=lambda x:(x['best_similarity'],x['mean_similarity']),default=None)
+          report={'method':'RAW_PLUS_DEMUCS_VOCALS_ASR_CONTRAST','candidates':rows,'selected':selected,'status':'PASS' if selected else 'NO_INTELLIGIBLE_CANDIDATE'}
+          Path('intel/out/intelligibility_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          if not selected: raise SystemExit(3)
+          # render selected with safe handles
+          rs=max(0,float(selected['start'])-0.25); re_=float(selected['end'])+0.35
+          subprocess.check_call(['ffmpeg','-y','-v','error','-ss',f'{rs:.3f}','-to',f'{re_:.3f}','-i','intel/audio/full.wav','-c:a','libmp3lame','-q:a','2','intel/out/桃子假象_告别_S1_RETEST_FINAL.mp3'])
+          meta={'selected_id':selected['id'],'lyric_start':selected['start'],'lyric_end':selected['end'],'render_start':rs,'render_end':re_,'line_ids':selected['line_ids'],'best_similarity':selected['best_similarity'],'mean_similarity':selected['mean_similarity']}
+          Path('intel/out/final_meta.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+      - name: Upload retest artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fresh-s1-intelligibility-retest
+          path: intel/out/
+          retention-days: 7
+      - name: Publish report
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_intelligibility_retest'
+          mkdir -p "$DEST"
+          cp intel/out/intelligibility_report.json "$DEST/intelligibility_report.json" || true
+          cp intel/out/final_meta.json "$DEST/final_meta.json" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish lyric intelligibility retest'; git push; fi
