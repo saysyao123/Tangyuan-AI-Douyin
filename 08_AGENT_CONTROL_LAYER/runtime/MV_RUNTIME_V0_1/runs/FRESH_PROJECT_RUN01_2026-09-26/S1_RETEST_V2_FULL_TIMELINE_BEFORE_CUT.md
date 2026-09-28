@@ -134,3 +134,37 @@ user listens to the V2 candidate.
 If concrete lyrics are audibly present and boundaries feel natural:
 HUMAN_AUDIO_LOCK -> PASS
 Otherwise revise S1C only.
+
+
+## Cloud lyric-intelligibility contrast result
+
+Method:
+RAW audio + Demucs vocal stem + Whisper-small, compared against the trusted
+official lyric text for each candidate region.
+
+Result:
+`NO_INTELLIGIBLE_CANDIDATE`
+
+Observed:
+- VERSE1_CLEAR: ASR similarity 0
+- CHORUS1_FOR_COMPARE: ASR similarity 0
+- VERSE2_CLEAR: ASR similarity 0
+- previous CHORUS2: ASR similarity 0
+
+Interpretation:
+Whisper ASR is not a reliable hard gate for this shoegaze/dream-pop mix.
+This does not promote any forced-alignment result to truth and does not reject
+a segment by itself.
+
+Final S1 evidence priority for this music type:
+
+1. full-source structural timeline
+2. trusted lyric source
+3. local line-boundary consistency
+4. acoustic lexical-change evidence
+5. ASR only as auxiliary evidence
+6. Human Audio Review as mandatory final audible-lyric gate
+
+The V2 candidate remains VERSE1_CLEAR because it has the strongest acoustic
+lexical-change evidence among the tested practical windows and clean line
+boundaries. S1 remains unsealed until Human Audio Review.
