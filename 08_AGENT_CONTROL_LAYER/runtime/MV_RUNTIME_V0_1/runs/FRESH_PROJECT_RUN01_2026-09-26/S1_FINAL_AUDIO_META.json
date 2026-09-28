@@ -1,0 +1,23 @@
+{
+  "artifact": "桃子假象_告别_S1_FINAL_122.547-138.710s.mp3",
+  "sha256": "8de24f5913b752e24fbfd78f2c35e7b58a29d1e8178c673550fc86713c53e087",
+  "render_start_seconds": 122.547,
+  "render_end_seconds": 138.71,
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "duration": "16.195918",
+      "bit_rate": "173918"
+    }
+  }
+}

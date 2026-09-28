@@ -1,0 +1,55 @@
+{
+  "validator": "S1_SELECTED_SEGMENT_LINE_LEVEL_VALIDATOR_V0_1",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "s1a_full_source",
+      "pass": true
+    },
+    {
+      "check": "trusted_lyrics_28",
+      "pass": true
+    },
+    {
+      "check": "global_defect_explicit",
+      "pass": true
+    },
+    {
+      "check": "selected_status",
+      "pass": true
+    },
+    {
+      "check": "eight_lines",
+      "pass": true
+    },
+    {
+      "check": "monotonic",
+      "pass": true
+    },
+    {
+      "check": "durations",
+      "pass": true
+    },
+    {
+      "check": "segment_bounds",
+      "pass": true
+    },
+    {
+      "check": "handles",
+      "pass": true
+    },
+    {
+      "check": "expected_duration",
+      "pass": true
+    },
+    {
+      "check": "audio_lock",
+      "pass": true
+    },
+    {
+      "check": "sealed",
+      "pass": true
+    }
+  ],
+  "errors": []
+}
