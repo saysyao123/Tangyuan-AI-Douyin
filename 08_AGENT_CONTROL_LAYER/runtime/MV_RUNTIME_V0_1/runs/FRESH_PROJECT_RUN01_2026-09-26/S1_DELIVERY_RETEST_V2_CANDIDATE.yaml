@@ -1,0 +1,49 @@
+s1_retest_v2:
+  run_id: "FRESH_PROJECT_RUN01_2026-09-26"
+  status: "HUMAN_AUDIO_REVIEW_PENDING"
+  song_family: "告别"
+  artist: "桃子假象 Peach Illusion"
+
+  full_source:
+    coverage: "FULL_SOURCE_ACQUIRED"
+    duration_seconds: 201.978776
+    sample_rate_hz: 44100
+    channels: 2
+
+  full_timeline:
+    - {start: 0.000, end: 29.805, role: "INTRO_ATMOSPHERIC", lyric_precision: "LOW"}
+    - {start: 29.805, end: 46.048, role: "VERSE1_CLEAR_LEXICAL", lyric_precision: "HIGH"}
+    - {start: 46.048, end: 47.428, role: "TRANSITION", lyric_precision: "N/A"}
+    - {start: 47.428, end: 75.556, role: "HIGH_ENERGY_VOCALISE", lyric_precision: "LOW"}
+    - {start: 75.556, end: 104.443, role: "INTERLUDE_TO_VERSE2", lyric_precision: "LOW"}
+    - {start: 104.443, end: 122.187, role: "VERSE2_CLEAR_LEXICAL", lyric_precision: "MEDIUM_HIGH"}
+    - {start: 122.187, end: 122.747, role: "TRANSITION", lyric_precision: "N/A"}
+    - {start: 122.747, end: 192.702, role: "HIGH_ENERGY_VOCALISE_EXTENDED", lyric_precision: "LOW"}
+    - {start: 192.702, end: 201.979, role: "OUTRO_DECAY", lyric_precision: "N/A"}
+
+  selected_candidate:
+    id: "VERSE1_CLEAR"
+    lyric_start_seconds: 29.805
+    lyric_end_seconds: 46.048
+    render_start_seconds: 29.555
+    render_end_seconds: 46.398
+    rendered_duration_seconds: 16.875102
+    artifact_filename: "桃子假象_告别_S1_RETEST_VERSE1_29.555-46.398s.mp3"
+    artifact_sha256: "3548cd82fde16859281780605c80122b6f8be7e557ae92c00d45d34d4cd22e15"
+
+  selected_lyric_units:
+    - {line_id: 2, start: 29.805, end: 36.506, semantic_cue: "等待失去的人"}
+    - {line_id: 3, start: 36.506, end: 37.467, semantic_cue: "等待某一天"}
+    - {line_id: 4, start: 37.467, end: 39.727, semantic_cue: "离开对方视野"}
+    - {line_id: 5, start: 39.727, end: 41.267, semantic_cue: "画出一个圆"}
+    - {line_id: 6, start: 41.267, end: 46.048, semantic_cue: "抵达旅程终点"}
+
+  previous_candidate:
+    range: "122.547–138.710s"
+    status: "REJECTED_BY_HUMAN"
+    reason: "mostly sustained ah/vocalise; concrete lyrics not perceptible"
+
+  next_gate:
+    name: "HUMAN_AUDIO_REVIEW"
+    required: true
+    status: "PENDING"
