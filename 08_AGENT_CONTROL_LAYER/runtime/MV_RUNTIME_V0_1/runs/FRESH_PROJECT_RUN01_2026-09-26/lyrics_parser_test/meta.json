@@ -1,0 +1,24 @@
+{
+  "status": "BAD_LINE_COUNT",
+  "line_count": 8,
+  "char_count": 198,
+  "sha256": "23a642e167136aa5fb52c8a9339e960669e5004466a9033868be0eb25016c2ce",
+  "separator_stats": {
+    "br_tags": 0,
+    "nbsp_entities": 0,
+    "unicode_nbsp": 7,
+    "raw_newlines": 0,
+    "fragment_len": 215,
+    "raw_len": 215
+  },
+  "line_lengths": [
+    17,
+    25,
+    9,
+    48,
+    17,
+    25,
+    9,
+    48
+  ]
+}
