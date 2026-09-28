@@ -1,0 +1,57 @@
+name: Fresh S1 Finalize Line-Level Segment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_FINALIZE_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp pyyaml
+      - name: Acquire full source and cut final segment
+        run: |
+          mkdir -p final_out
+          yt-dlp --no-playlist --no-cookies -x --audio-format mp3 --audio-quality 0 -o 'final_out/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-'
+          ffmpeg -y -v error -ss 122.547 -to 138.710 -i final_out/full.mp3 -c:a libmp3lame -q:a 2 'final_out/桃子假象_告别_S1_FINAL_122.547-138.710s.mp3'
+          ffprobe -v error -show_entries format=duration,bit_rate:stream=codec_name,sample_rate,channels -of json 'final_out/桃子假象_告别_S1_FINAL_122.547-138.710s.mp3' > final_out/probe.json
+          sha256sum 'final_out/桃子假象_告别_S1_FINAL_122.547-138.710s.mp3' | awk '{print $1}' > final_out/sha256.txt
+      - name: Validate S1 delivery
+        run: |
+          cd '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26'
+          python validate_s1_final_line_level.py > s1_final_validator.json
+          cat s1_final_validator.json
+      - name: Publish metadata
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          run=pathlib.Path('08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26')
+          probe=json.loads(pathlib.Path('final_out/probe.json').read_text())
+          sha=pathlib.Path('final_out/sha256.txt').read_text().strip()
+          meta={'artifact':'桃子假象_告别_S1_FINAL_122.547-138.710s.mp3','sha256':sha,'render_start_seconds':122.547,'render_end_seconds':138.710,'probe':probe}
+          (run/'S1_FINAL_AUDIO_META.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_FINAL_AUDIO_META.json' '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_final_validator.json'
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish final line-level S1 delivery'; git push; fi
+      - name: Upload final audio
+        uses: actions/upload-artifact@v4
+        with:
+          name: fresh-s1-final-audio
+          path: |
+            final_out/桃子假象_告别_S1_FINAL_122.547-138.710s.mp3
+            final_out/probe.json
+            final_out/sha256.txt
+          retention-days: 7
