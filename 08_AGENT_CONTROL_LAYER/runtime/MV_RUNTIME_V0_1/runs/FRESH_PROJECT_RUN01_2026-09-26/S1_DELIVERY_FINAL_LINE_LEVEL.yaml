@@ -1,0 +1,91 @@
+project:
+  run_id: "FRESH_PROJECT_RUN01_2026-09-26"
+  mode: "FRESH_NO_PRIOR_EXECUTION_DATA"
+
+s1:
+  contract_version: "0.4"
+  selected_song_family: "告别"
+  selected_artist: "桃子假象 Peach Illusion"
+
+  upstream:
+    s0_delivery_ref: "S0_DELIVERY.yaml"
+    selected_song_family_match: true
+
+  s1a_material_acquisition:
+    status: "PASS"
+    coverage_state: "FULL_SOURCE_ACQUIRED"
+    source: "https://peachillusion.bandcamp.com/track/-"
+    duration_seconds: 201.978776
+    format: "mp3"
+    sample_rate_hz: 44100
+    channels: 2
+    bitrate_bps: 128016
+    sha256: "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43"
+
+  s1b_source_version_verification:
+    status: "PASS"
+    authoritative_for_run: true
+    trusted_lyrics_source: "official Bandcamp track page"
+    trusted_lyrics_line_count: 28
+    trusted_lyrics_char_count: 178
+    trusted_lyrics_sha256: "b30336878e17945d2cb9fee9a36d470db101ae1b2d59124fafcdd9db1dd07dea"
+
+  s1c_timeline:
+    overall_alignment:
+      method: "Xingyu Lyrics Aligner / WhisperX CTC forced alignment"
+      status: "PARTIAL_LOW_CONFIDENCE"
+      reason: "verse1 line 1 duration outlier; whole-song line-level seal rejected"
+      all_28_lines_present: true
+      character_count_matches: true
+      missing_character_timestamps: 0
+      non_monotonic_line_count: 0
+    selected_segment_alignment:
+      status: "PASS_LINE_LEVEL_SELECTED_SEGMENT"
+      section: "CHORUS_2"
+      source_start_seconds: 122.747
+      source_end_seconds: 138.410
+      line_ids: [21,22,23,24,25,26,27,28]
+      line_timings:
+        - {line_id: 21, start: 122.747, end: 123.587, text_sha8: "5f7da74d"}
+        - {line_id: 22, start: 123.587, end: 125.448, text_sha8: "31b86e93"}
+        - {line_id: 23, start: 125.448, end: 128.888, text_sha8: "fcfcb9f7"}
+        - {line_id: 24, start: 128.888, end: 129.669, text_sha8: "5af3c209"}
+        - {line_id: 25, start: 129.669, end: 133.489, text_sha8: "3aee2366"}
+        - {line_id: 26, start: 133.489, end: 134.290, text_sha8: "fc1d69ec"}
+        - {line_id: 27, start: 134.290, end: 137.910, text_sha8: "cbf27c94"}
+        - {line_id: 28, start: 137.910, end: 138.410, text_sha8: "f367042b"}
+      checks:
+        all_selected_lines_timed: true
+        selected_lines_monotonic: true
+        max_selected_line_duration_seconds: 3.820
+        selected_lines_duration_gate_seconds: 8.0
+        inside_structural_chorus_region: true
+        repeated_lyric_identity_verified: true
+
+  selected_production_segment:
+    decision: "USE_CHORUS_2_LINE_LEVEL_ALIGNED"
+    lyric_source_start_seconds: 122.747
+    lyric_source_end_seconds: 138.410
+    render_start_seconds: 122.547
+    render_end_seconds: 138.710
+    expected_render_duration_seconds: 16.163
+    artifact_filename: "桃子假象_告别_S1_FINAL_122.547-138.710s.mp3"
+    reason:
+      - "selected segment has reliable line-level forced alignment"
+      - "8/8 selected lyric lines have ordered timestamps"
+      - "max selected line duration is 3.82s"
+      - "global verse1 alignment defect is outside selected production segment"
+      - "preserves complete chorus semantics with small audio handles"
+
+  s1d_audio_lock:
+    status: "PASS"
+    gate_mode: "AUTO_CONFIRMED_FOR_TEST"
+    decision: "USE_CHORUS_2_LINE_LEVEL_ALIGNED"
+
+  stage:
+    id: "PROJECT_AUDIO"
+    contract_version: "0.4"
+    status: "SEALED"
+    seal_precision: "LINE_LEVEL_SELECTED_SEGMENT"
+    next_stage_allowed: true
+    next_stage: "DIRECTOR"
