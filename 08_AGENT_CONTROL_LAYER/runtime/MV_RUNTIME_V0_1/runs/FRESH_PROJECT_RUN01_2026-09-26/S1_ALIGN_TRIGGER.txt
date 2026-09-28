@@ -1,3 +1,4 @@
-run=003
+run=004
 method=xingyu-trusted-lyrics-ctc
 parser=bandcamp-v4-validated
+sections=structure-v1
