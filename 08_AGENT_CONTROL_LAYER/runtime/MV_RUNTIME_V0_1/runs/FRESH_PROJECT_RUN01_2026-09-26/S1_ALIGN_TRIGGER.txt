@@ -1,2 +1,3 @@
-run=001
+run=002
 method=xingyu-trusted-lyrics-ctc
+parser=bandcamp-v2
