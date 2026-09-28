@@ -46,10 +46,20 @@ jobs:
           candidates=[re.sub(r'[ \\t]+',' ',x).strip() for x in text.split('\n')]
           lines=[x for x in candidates if x and x.lower() not in {'lyrics','credits','about'}]
           lines=[x for x in lines if not x.lower().startswith('from time')]
+          if len(lines)==8:
+              expanded=[]
+              for block in lines:
+                  expanded.extend([x.strip() for x in block.split(' ') if x.strip()])
+              lines=expanded
           if len(lines)<20:
               flat=node.get_text(' ',strip=True)
               flat=flat.replace('\u00a0','  ')
               lines=[x.strip() for x in re.split(r'[ \\t]{2,}',flat) if x.strip()]
+              if len(lines)==8:
+                  expanded=[]
+                  for block in lines:
+                      expanded.extend([x.strip() for x in block.split(' ') if x.strip()])
+                  lines=expanded
           open('align_jobs/job/trusted_lyrics.txt','w',encoding='utf-8').write('\n'.join(lines)+'\n')
           meta={'line_count':len(lines),'sha256':hashlib.sha256(('\n'.join(lines)).encode()).hexdigest(),'char_count':sum(map(len,lines)),'separator_stats':sep_stats}
           import json; open('align_public/lyrics_meta.json','w').write(json.dumps(meta,ensure_ascii=False,indent=2))
