@@ -1,0 +1,79 @@
+project:
+  run_id: "FRESH_PROJECT_RUN01_2026-09-26"
+  mode: "FRESH_NO_PRIOR_EXECUTION_DATA"
+
+s1:
+  contract_version: "0.4"
+  selected_song_family: "告别"
+  selected_artist: "桃子假象 Peach Illusion"
+
+  upstream:
+    s0_delivery_ref: "S0_DELIVERY.yaml"
+    selected_song_family_match: true
+
+  s1a_material_acquisition:
+    status: "PASS"
+    coverage_state: "FULL_SOURCE_ACQUIRED"
+    source: "https://peachillusion.bandcamp.com/track/-"
+    source_type: "PUBLIC_FULL_STREAM_PAGE"
+    duration_seconds: 201.978776
+    format: "mp3"
+    sample_rate_hz: 44100
+    channels: 2
+    bitrate_bps: 128016
+    bytes: 3232077
+    sha256: "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43"
+
+  s1b_source_version_verification:
+    status: "PASS"
+    source_identity: "桃子假象 Peach Illusion - 告别"
+    release_date: "2026-05-15"
+    public_lyrics_available: true
+    authoritative_for_run: true
+
+  s1c_segment_timeline_analysis:
+    status: "PASS_SECTION_LEVEL"
+    tempo_bpm: 63.02400914634146
+    song_structure_evidence:
+      first_large_section: {start: 0.000, end: 46.068, role: "VERSE_1_REGION"}
+      first_core_section: {start: 46.068, end: 78.437, role: "CHORUS_1_REGION"}
+      repeated_verse_region: {start: 78.437, end: 122.207, role: "VERSE_2_REGION"}
+      repeated_high_energy_region: {start: 122.207, end: 192.702, role: "CHORUS_2_PLUS_EXTENDED_OUTRO_REGION"}
+      tail: {start: 192.702, end: 201.945, role: "OUTRO_DECAY"}
+    repetition_evidence:
+      verse_similarity: 0.992037296295166
+      chorus_family_similarity: 0.9821923971176147
+    asr:
+      normal_whisper: "REJECTED_AS_UNRELIABLE"
+      vocal_separated_whisper: "REJECTED_AS_UNRELIABLE"
+      reason: "shoegaze/dream-pop vocal masking caused obvious hallucinated text"
+    lyric_timing_precision:
+      level: "SECTION_LEVEL_VERIFIED"
+      line_level: "NOT_VERIFIED"
+      rule: "Do not fabricate line-level timestamps when ASR evidence is unreliable."
+
+  selected_production_segment:
+    decision: "USE_FIRST_COMPLETE_CHORUS_REGION"
+    start_seconds: 46.068390
+    end_seconds: 78.437007
+    source_duration_seconds: 32.368617
+    rendered_duration_seconds: 32.417959
+    artifact_filename: "桃子假象_告别_S1核心副歌_46.068-78.437s.mp3"
+    artifact_sha256: "31c5726b010a7be79c96fc4f274dfdd0b6ba154683deeedcc06dbed5c4a82d47"
+    rationale:
+      - "beat-aligned structural boundaries"
+      - "first full high-energy repeated section"
+      - "official lyric structure supports verse-to-chorus transition"
+      - "preserves complete section instead of forcing arbitrary 15-20s cut"
+
+  s1d_audio_lock:
+    status: "PASS"
+    gate_mode: "AUTO_CONFIRMED_FOR_TEST"
+    decision: "USE_FIRST_COMPLETE_CHORUS_REGION"
+
+  stage:
+    id: "PROJECT_AUDIO"
+    status: "SEALED"
+    contract_version: "0.4"
+    next_stage_allowed: true
+    next_stage: "DIRECTOR"
