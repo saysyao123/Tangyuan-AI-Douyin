@@ -1,0 +1,25 @@
+{
+  "source_chorus_start_seconds": 121.183,
+  "source_chorus_end_seconds": 137.864,
+  "render_start_seconds": 120.983,
+  "render_end_seconds": 138.16400000000002,
+  "rendered_duration_seconds": 17.214694,
+  "artifact_sha256": "c8bf19359e27ac7df6d33290c687e4c5472c357e002992ca688ff09e5048ecf7",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "duration": "17.214694",
+      "bit_rate": "175357"
+    }
+  }
+}

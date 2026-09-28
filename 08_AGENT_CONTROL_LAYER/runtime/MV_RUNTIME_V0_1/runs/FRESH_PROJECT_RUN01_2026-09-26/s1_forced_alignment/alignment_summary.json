@@ -1,0 +1,199 @@
+{
+  "tool": "XINGYU_LYRICS_ALIGNER",
+  "trusted_line_count": 28,
+  "matched_line_count": 28,
+  "warnings": [],
+  "report_summary": {
+    "version": 1,
+    "language": "zh",
+    "line_count": 28,
+    "aligned_or_partial_lines": 28,
+    "input_alignment_characters": 178,
+    "timed_character_entries": 178,
+    "missing_character_timestamps": 0,
+    "character_count_matches": true,
+    "non_monotonic_line_count": 0,
+    "estimated_token_count": 102,
+    "skipped_line_count": 0,
+    "firstAlignedLyricStartMs": 17160
+  },
+  "lines": [
+    {
+      "line_id": 1,
+      "start_ms": 17160,
+      "end_ms": 44061,
+      "text_sha8": "f47043ad"
+    },
+    {
+      "line_id": 2,
+      "start_ms": 44061,
+      "end_ms": 74542,
+      "text_sha8": "bcf8a92c"
+    },
+    {
+      "line_id": 3,
+      "start_ms": 74542,
+      "end_ms": 101263,
+      "text_sha8": "e7207221"
+    },
+    {
+      "line_id": 4,
+      "start_ms": 101263,
+      "end_ms": 111683,
+      "text_sha8": "fd07b89c"
+    },
+    {
+      "line_id": 5,
+      "start_ms": 111683,
+      "end_ms": 115483,
+      "text_sha8": "02ca09f3"
+    },
+    {
+      "line_id": 6,
+      "start_ms": 115483,
+      "end_ms": 121183,
+      "text_sha8": "7777de9a"
+    },
+    {
+      "line_id": 7,
+      "start_ms": 121183,
+      "end_ms": 123483,
+      "text_sha8": "5f7da74d"
+    },
+    {
+      "line_id": 8,
+      "start_ms": 123483,
+      "end_ms": 123583,
+      "text_sha8": "31b86e93"
+    },
+    {
+      "line_id": 9,
+      "start_ms": 123583,
+      "end_ms": 125783,
+      "text_sha8": "fcfcb9f7"
+    },
+    {
+      "line_id": 10,
+      "start_ms": 125783,
+      "end_ms": 127743,
+      "text_sha8": "5af3c209"
+    },
+    {
+      "line_id": 11,
+      "start_ms": 127743,
+      "end_ms": 134664,
+      "text_sha8": "3aee2366"
+    },
+    {
+      "line_id": 12,
+      "start_ms": 134664,
+      "end_ms": 135584,
+      "text_sha8": "fc1d69ec"
+    },
+    {
+      "line_id": 13,
+      "start_ms": 135584,
+      "end_ms": 137264,
+      "text_sha8": "cbf27c94"
+    },
+    {
+      "line_id": 14,
+      "start_ms": 137264,
+      "end_ms": 137864,
+      "text_sha8": "f367042b"
+    },
+    {
+      "line_id": 15,
+      "start_ms": 137864,
+      "end_ms": 139224,
+      "text_sha8": "dd2ccaef"
+    },
+    {
+      "line_id": 16,
+      "start_ms": 139224,
+      "end_ms": 140124,
+      "text_sha8": "b68d8c94"
+    },
+    {
+      "line_id": 17,
+      "start_ms": 140124,
+      "end_ms": 141324,
+      "text_sha8": "1c149d4d"
+    },
+    {
+      "line_id": 18,
+      "start_ms": 141324,
+      "end_ms": 144584,
+      "text_sha8": "ece2c7b9"
+    },
+    {
+      "line_id": 19,
+      "start_ms": 111683,
+      "end_ms": 115483,
+      "text_sha8": "02ca09f3"
+    },
+    {
+      "line_id": 20,
+      "start_ms": 145084,
+      "end_ms": 147104,
+      "text_sha8": "e135ab41"
+    },
+    {
+      "line_id": 21,
+      "start_ms": 121183,
+      "end_ms": 123483,
+      "text_sha8": "5f7da74d"
+    },
+    {
+      "line_id": 22,
+      "start_ms": 123483,
+      "end_ms": 123583,
+      "text_sha8": "31b86e93"
+    },
+    {
+      "line_id": 23,
+      "start_ms": 123583,
+      "end_ms": 125783,
+      "text_sha8": "fcfcb9f7"
+    },
+    {
+      "line_id": 24,
+      "start_ms": 125783,
+      "end_ms": 127743,
+      "text_sha8": "5af3c209"
+    },
+    {
+      "line_id": 25,
+      "start_ms": 127743,
+      "end_ms": 134664,
+      "text_sha8": "3aee2366"
+    },
+    {
+      "line_id": 26,
+      "start_ms": 134664,
+      "end_ms": 135584,
+      "text_sha8": "fc1d69ec"
+    },
+    {
+      "line_id": 27,
+      "start_ms": 135584,
+      "end_ms": 137264,
+      "text_sha8": "cbf27c94"
+    },
+    {
+      "line_id": 28,
+      "start_ms": 137264,
+      "end_ms": 137864,
+      "text_sha8": "f367042b"
+    }
+  ],
+  "status": "PASS_LINE_LEVEL",
+  "chorus1": {
+    "start_ms": 121183,
+    "end_ms": 137864
+  },
+  "chorus2": {
+    "start_ms": 121183,
+    "end_ms": 137864
+  }
+}
