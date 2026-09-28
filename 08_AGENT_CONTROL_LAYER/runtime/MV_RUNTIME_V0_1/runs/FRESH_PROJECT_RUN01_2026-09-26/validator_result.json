@@ -1,0 +1,77 @@
+{
+  "validator": "FRESH_S0_S1_VALIDATOR_V0_1",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "fresh_mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_contract",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s0_gate",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "song_handoff_match",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_contract",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1a_full_source",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1b_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1c_section_pass",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "asr_not_promoted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "segment_order",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "segment_duration",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_gate",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "s1_sealed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "next_stage_director",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "errors": []
+}
