@@ -1,0 +1,30 @@
+name: Fresh S0 S1 Validator
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/VALIDATE_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: python -m pip install pyyaml
+      - name: Validate fresh run
+        run: |
+          cd '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26'
+          python validate_fresh_run.py > validator_result.json
+          cat validator_result.json
+      - name: Commit validator result
+        run: |
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/validator_result.json'
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish final validator result'; git push; fi
