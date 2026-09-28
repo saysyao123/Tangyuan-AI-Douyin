@@ -1,0 +1,146 @@
+name: Fresh Project S1 Trusted Lyrics Alignment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/S1_ALIGN_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare source and trusted lyrics
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade yt-dlp requests beautifulsoup4
+          mkdir -p align_audio align_jobs/job align_models align_public
+          yt-dlp --no-playlist --no-cookies -x --audio-format mp3 --audio-quality 0 -o 'align_audio/full.%(ext)s' 'https://peachillusion.bandcamp.com/track/-'
+          python - <<'PY'
+          import hashlib,re,requests
+          from bs4 import BeautifulSoup
+          url='https://peachillusion.bandcamp.com/track/-'
+          html=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=30).text
+          soup=BeautifulSoup(html,'html.parser')
+          node=soup.select_one('.lyricsText') or soup.find(attrs={'class':re.compile('lyrics')})
+          if node is None: raise SystemExit('lyrics node not found')
+          raw=node.get_text('\n')
+          lines=[re.sub(r'\s+',' ',x).strip() for x in raw.splitlines()]
+          lines=[x for x in lines if x and x.lower() not in {'lyrics'}]
+          # drop page labels if present
+          lines=[x for x in lines if not x.lower().startswith('from time') and x.lower() not in {'credits','about'}]
+          open('align_jobs/job/trusted_lyrics.txt','w',encoding='utf-8').write('\n'.join(lines)+'\n')
+          meta={'line_count':len(lines),'sha256':hashlib.sha256(('\n'.join(lines)).encode()).hexdigest(),'char_count':sum(map(len,lines))}
+          import json; open('align_public/lyrics_meta.json','w').write(json.dumps(meta,ensure_ascii=False,indent=2))
+          print(meta)
+          if len(lines) < 20: raise SystemExit(f'unexpected lyrics line count {len(lines)}')
+          PY
+          sudo chown -R 10001:10001 align_jobs align_models
+      - name: Pull Xingyu CPU image
+        run: docker pull ghcr.io/wangjiqing/xingyu-lyrics-aligner:latest
+      - name: Pull Chinese alignment model
+        run: |
+          docker run --rm \
+            -v "$PWD/align_models:/models" \
+            ghcr.io/wangjiqing/xingyu-lyrics-aligner:latest \
+            xingyu-align models pull --language zh --device cpu
+      - name: Align trusted lyrics
+        run: |
+          docker run --rm \
+            -v "$PWD/align_audio:/music:ro" \
+            -v "$PWD/align_jobs:/jobs" \
+            -v "$PWD/align_models:/models" \
+            ghcr.io/wangjiqing/xingyu-lyrics-aligner:latest \
+            xingyu-align align \
+              --audio /music/full.mp3 \
+              --lyrics /jobs/job/trusted_lyrics.txt \
+              --output-dir /jobs/job/result \
+              --language zh \
+              --device cpu \
+              --json-result > align_public/cli_result.json
+      - name: Sanitize and validate alignment
+        run: |
+          python - <<'PY'
+          import json,hashlib,os,subprocess
+          from pathlib import Path
+          root=Path('align_jobs/job/result')
+          align=json.loads((root/'alignment.json').read_text(encoding='utf-8'))
+          report=json.loads((root/'report.json').read_text(encoding='utf-8'))
+          # discover aligned lines without depending on one exact internal key
+          candidates=[]
+          def walk(x):
+              if isinstance(x,dict):
+                  if any(k in x for k in ['startMs','start_ms','start']) and any(k in x for k in ['endMs','end_ms','end']) and any(k in x for k in ['text','displayText','display_text']): candidates.append(x)
+                  for v in x.values(): walk(v)
+              elif isinstance(x,list):
+                  for v in x: walk(v)
+          walk(align)
+          def ms(v):
+              v=float(v)
+              return v if v>1000 else v*1000
+          rows=[]; seen=set()
+          for x in candidates:
+              txt=x.get('displayText',x.get('display_text',x.get('text','')))
+              s=x.get('startMs',x.get('start_ms',x.get('start'))); e=x.get('endMs',x.get('end_ms',x.get('end')))
+              if not txt or s is None or e is None: continue
+              key=(str(txt),round(ms(s)),round(ms(e)))
+              if key in seen: continue
+              seen.add(key); rows.append({'text':str(txt),'start_ms':round(ms(s)),'end_ms':round(ms(e))})
+          rows=sorted(rows,key=lambda r:(r['start_ms'],r['end_ms']))
+          # Keep lyric lines only by matching trusted source order where possible
+          trusted=[x.strip() for x in Path('align_jobs/job/trusted_lyrics.txt').read_text(encoding='utf-8').splitlines() if x.strip()]
+          aligned=[]
+          for idx,t in enumerate(trusted,1):
+              match=next((r for r in rows if r['text'].replace(' ','')==t.replace(' ','')),None)
+              if match: aligned.append({'line_id':idx,'start_ms':match['start_ms'],'end_ms':match['end_ms'],'text_sha8':hashlib.sha256(t.encode()).hexdigest()[:8]})
+          # fallback: inspect known line-like schema keys directly if text matching misses
+          summary={'tool':'XINGYU_LYRICS_ALIGNER','trusted_line_count':len(trusted),'matched_line_count':len(aligned),'warnings':report.get('warnings',[]),'report_summary':{k:v for k,v in report.items() if k not in ['lyrics','lines','tokens'] and isinstance(v,(str,int,float,bool,type(None)))} ,'lines':aligned}
+          if len(aligned) < max(20,int(len(trusted)*0.7)):
+              summary['status']='ALIGNMENT_MATCH_INSUFFICIENT'
+              Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
+              raise SystemExit('insufficient aligned line match')
+          # Expected 28 lyric lines from official page structure: V1 1-6, C1 7-14, V2 15-20, C2 21-28.
+          byid={r['line_id']:r for r in aligned}
+          if 7 not in byid or 14 not in byid or 21 not in byid or 28 not in byid:
+              summary['status']='REQUIRED_CHORUS_LINES_MISSING'
+              Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
+              raise SystemExit('required chorus boundaries missing')
+          c1={'start_ms':byid[7]['start_ms'],'end_ms':byid[14]['end_ms']}
+          c2={'start_ms':byid[21]['start_ms'],'end_ms':byid[28]['end_ms']}
+          summary.update({'status':'PASS_LINE_LEVEL','chorus1':c1,'chorus2':c2})
+          Path('align_public/alignment_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
+          # cut chorus 1 with tiny safe handles
+          start=max(0,c1['start_ms']/1000-0.20); end=c1['end_ms']/1000+0.30
+          out='align_public/桃子假象_告别_S1_FINAL_ALIGNED.mp3'
+          subprocess.check_call(['ffmpeg','-y','-v','error','-ss',f'{start:.3f}','-to',f'{end:.3f}','-i','align_audio/full.mp3','-c:a','libmp3lame','-q:a','2',out])
+          probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration,bit_rate:stream=sample_rate,channels,codec_name','-of','json',out],text=True))
+          delivery={'source_chorus_start_seconds':c1['start_ms']/1000,'source_chorus_end_seconds':c1['end_ms']/1000,'render_start_seconds':start,'render_end_seconds':end,'rendered_duration_seconds':float(probe['format']['duration']),'artifact_sha256':hashlib.sha256(open(out,'rb').read()).hexdigest(),'probe':probe}
+          Path('align_public/final_audio_meta.json').write_text(json.dumps(delivery,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+      - name: Upload private alignment artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fresh-s1-trusted-alignment
+          path: |
+            align_jobs/job/result/
+            align_public/
+          retention-days: 7
+      - name: Publish sanitized result only
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/s1_forced_alignment'
+          mkdir -p "$DEST"
+          cp align_public/lyrics_meta.json "$DEST/lyrics_meta.json" || true
+          cp align_public/alignment_summary.json "$DEST/alignment_summary.json" || true
+          cp align_public/final_audio_meta.json "$DEST/final_audio_meta.json" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish trusted lyric alignment summary'; git push; fi
