@@ -1,0 +1,53 @@
+name: Fresh S1 Lyrics Parser Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/LYRICS_PARSER_TRIGGER.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  parser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse Bandcamp lyrics
+        run: |
+          python -m pip install --quiet requests beautifulsoup4
+          mkdir -p parser_out
+          python - <<'PY'
+          import hashlib,json,re,requests
+          from bs4 import BeautifulSoup
+          url='https://peachillusion.bandcamp.com/track/-'
+          html=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=30).text
+          soup=BeautifulSoup(html,'html.parser')
+          node=soup.select_one('.lyricsText') or soup.find(attrs={'class':re.compile('lyrics')})
+          if node is None: raise SystemExit('lyrics node not found')
+          fragment=node.decode_contents()
+          raw=node.get_text('\n',strip=False)
+          stats={'br_tags':len(re.findall(r'(?i)<br\\s*/?>',fragment)),'nbsp_entities':fragment.count('&nbsp;'),'unicode_nbsp':raw.count('\u00a0'),'raw_newlines':raw.count('\n'),'fragment_len':len(fragment),'raw_len':len(raw)}
+          # Extract direct text preserving whitespace; split on newline, NBSP, or runs of 2+ horizontal spaces
+          text=BeautifulSoup(re.sub(r'(?i)<br\\s*/?>','\n',fragment),'html.parser').get_text('\n',strip=False)
+          text=text.replace('\r','').replace('\u00a0','  ')
+          parts=re.split(r'\n+|[ \\t]{2,}',text)
+          lines=[re.sub(r'[ \\t]+',' ',x).strip() for x in parts]
+          lines=[x for x in lines if x and x.lower() not in {'lyrics','credits','about'} and not x.lower().startswith('from time')]
+          meta={'status':'PASS' if 24<=len(lines)<=32 else 'BAD_LINE_COUNT','line_count':len(lines),'char_count':sum(map(len,lines)),'sha256':hashlib.sha256(('\n'.join(lines)).encode()).hexdigest(),'separator_stats':stats,'line_lengths':[len(x) for x in lines]}
+          open('parser_out/meta.json','w').write(json.dumps(meta,ensure_ascii=False,indent=2))
+          print(json.dumps(meta,ensure_ascii=False,indent=2))
+          if meta['status']!='PASS': raise SystemExit(2)
+          PY
+      - name: Publish meta
+        if: always()
+        run: |
+          DEST='08_AGENT_CONTROL_LAYER/runtime/MV_RUNTIME_V0_1/runs/FRESH_PROJECT_RUN01_2026-09-26/lyrics_parser_test'
+          mkdir -p "$DEST"
+          cp parser_out/meta.json "$DEST/meta.json" || true
+          git config user.name 'tangyuan-fresh-run-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add "$DEST"
+          if git diff --cached --quiet; then echo no-change; else git commit -m 'fresh-run: publish lyrics parser test'; git push; fi
