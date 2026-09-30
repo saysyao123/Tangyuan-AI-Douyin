@@ -6,7 +6,7 @@
   "production_s1_sealed": false,
   "source_screen_is_audio_lock": false,
   "unit_regressions_passed": true,
-  "unit_regression_summary": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 0.002s\n\nOK",
+  "unit_regression_summary": ".......................\n----------------------------------------------------------------------\nRan 23 tests in 0.003s\n\nOK",
   "authority": "RUN_CURRENT_STATE.yaml + S0_DELIVERY.yaml",
   "historical_s1_delivery_used": false
 }
