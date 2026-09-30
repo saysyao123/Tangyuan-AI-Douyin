@@ -1,0 +1,43 @@
+{
+  "original_shortlist_requalification": [
+    {
+      "id": "A",
+      "song": "告别",
+      "artist": "桃子假象 Peach Illusion",
+      "decision": "EXCLUDE_CURRENT_RUN",
+      "reason": "three human audio rejections plus explicit upstream reopen",
+      "scope": "tested source / this production goal",
+      "reentry_condition": "New concrete reference with clearly different, independently verified lyric audibility; explicit re-evaluation only"
+    },
+    {
+      "id": "B",
+      "song": "一个人在家",
+      "decision": "SUPPLEMENTAL_RESEARCH_ONLY",
+      "asr_support": "PARTIAL_SUPPORTS",
+      "trusted_match_chars": [
+        0,
+        11,
+        7
+      ],
+      "reference_review": "NOT_PASSED",
+      "core_provenance": "MISSING",
+      "freshness_note": "Artist page shows public publication on 2024-09-23; Bandcamp lists 2026-07-06. Not proof of 2026 first release."
+    },
+    {
+      "id": "C",
+      "song": "阁楼上的广广 Guangguang In The Attic",
+      "decision": "SUPPLEMENTAL_RESEARCH_ONLY",
+      "asr_support": "INSUFFICIENT",
+      "trusted_match_chars": [
+        0,
+        5,
+        2
+      ],
+      "reference_review": "NOT_PASSED",
+      "core_provenance": "MISSING",
+      "freshness_note": "Catalog date 2026-06-11; recency does not establish audible lyric fitness."
+    }
+  ],
+  "qualified_primary": [],
+  "selected_song": null
+}

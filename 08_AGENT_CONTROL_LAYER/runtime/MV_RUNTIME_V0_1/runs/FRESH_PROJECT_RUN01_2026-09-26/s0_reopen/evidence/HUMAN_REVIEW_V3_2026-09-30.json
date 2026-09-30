@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-30",
+  "reviewed_artifact": "gaobie_S1C_V3_diagnostic_18.000-30.900.mp3",
+  "source_range": [
+    18.0,
+    30.9
+  ],
+  "artifact_sha256": "ab73aa2d954168449c6dedfa75649dfdeee5b7847f2e48006e471202d3e00060",
+  "human_audio_review": "FAIL",
+  "user_feedback": "我觉得问题可能还是出在了S0阶段,选歌有问题,你需要重新梳理一下. 我听了内容,这是一首基本没有歌词的内容。",
+  "authority": "EXPLICIT_USER_UPSTREAM_REOPEN_AND_AUDIO_REJECTION",
+  "scope": "CURRENT_RUN_SELECTION_AND_TESTED_SOURCE; NOT_ALL_VERSIONS",
+  "asr_is_rejection_authority": false
+}

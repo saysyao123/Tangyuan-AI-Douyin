@@ -1,3 +1,8 @@
+> **2026-09-30 最新变更：本文原来的“仅修 S1C、S0 不重开”指令已被用户后续要求替换。**
+> 用户再次试听否决 V3，并要求重审选歌。当前 S0=REOPENED，原《告别》选择撤销，S1 未封存，S2 阻塞。
+> 从 RUN_CURRENT_STATE.yaml、S0_CURRENT_STATUS.md、S0_REOPEN_REVIEW_2026-09-30.md 和 s0_reopen/S0_QUALIFICATION_ADDENDUM_v0.4.yaml 继续。
+> 下方为当时交接正文，仅保留历史背景，不得按其 S1-only 路径继续重复切音频。
+
 # Work Mode Handoff — MV Runtime Fresh Project Run01
 
 > Date: 2026-09-30  
@@ -683,4 +688,5 @@ The next Work action is **not** Director design.
 The next Work action is:
 
 `repair S1C full-song lyric timeline -> produce a genuinely audible lyric candidate -> deliver audio + timeline for human review.`
+
 

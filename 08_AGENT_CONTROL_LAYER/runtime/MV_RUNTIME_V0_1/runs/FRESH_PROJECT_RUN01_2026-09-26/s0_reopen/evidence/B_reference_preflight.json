@@ -1,0 +1,63 @@
+{
+  "id": "B",
+  "source_url": "https://xiangxiang.bandcamp.com/album/hear-it-xiangxiang-it",
+  "title": "一个人在家",
+  "track_id": 985094992,
+  "catalog_duration_seconds": 246.462,
+  "source_page_sha256": "66909a0ce70e29fd217b257a4c5934fd813fc15ce5677432788d759621ebdc62",
+  "preview_bytes": 1500000,
+  "preview_sha256": "68760594212b2e55e25da334c543a0420a7cefc75709714a71ee1884d0db3ab6",
+  "fetch_http_status": 206,
+  "fetch_limit_bytes": 1500000,
+  "reference_only": true,
+  "full_source_acquired": false,
+  "current_release_date": "06 Jul 2026 07:51:03 GMT",
+  "album_release_date": "06 Jul 2026 07:51:03 GMT",
+  "lyric_source_url": "https://xiangxiang.bandcamp.com/track/-",
+  "artist_earliest_verified_publication": "2024-09-23",
+  "artist_publication_source": "https://streetvoice.com/chachapw/songs/786644/",
+  "lyric_text_sha256": "062b74ee3f12663296033ded9d6dad3eaafe30db1aeb545a2309bf6590a1fb3f",
+  "preview_duration_seconds": 90.0,
+  "rows": [
+    {
+      "start": 0,
+      "end": 30,
+      "asr_char_count": 0,
+      "asr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "trusted_lyric_chars": 100,
+      "longest_contiguous_match_chars": 0,
+      "trusted_text_match": false
+    },
+    {
+      "start": 30,
+      "end": 60,
+      "asr_char_count": 31,
+      "asr_sha256": "7fa28ed89e9b85b08853989a6fbf280af9304f64d3549a8ca621cb931cd9575f",
+      "trusted_lyric_chars": 100,
+      "longest_contiguous_match_chars": 11,
+      "trusted_text_match": true
+    },
+    {
+      "start": 60,
+      "end": 90,
+      "asr_char_count": 7,
+      "asr_sha256": "b9ce36206bc08887fa6270bd4810c88b9ff4830fe26ddbbcdbee12dba8a7c85b",
+      "trusted_lyric_chars": 100,
+      "longest_contiguous_match_chars": 7,
+      "trusted_text_match": true
+    }
+  ],
+  "audio_reference_status": "ASR_LEXICAL_SUPPORT_ONLY_NOT_HUMAN_LOCK",
+  "source_tier": "SUPPLEMENTAL_NO_CORE_REFERENCE_IN_ORIGINAL_DELIVERY",
+  "qualify_result": {
+    "qualification": "NOT_QUALIFIED",
+    "blockers": [
+      "SOURCE_TIER_NOT_PASSED",
+      "AUDIBLE_CHINESE_NOT_PASSED",
+      "CONTINUOUS_MEANINGFUL_LYRICS_NOT_PASSED",
+      "SEMANTIC_VISUAL_FIT_NOT_PASSED",
+      "ACTUAL_LISTENING_REVIEW_REQUIRED"
+    ],
+    "s0_sealed": false
+  }
+}

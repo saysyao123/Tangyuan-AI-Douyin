@@ -17,16 +17,16 @@
       1,
       2
     ],
-    "human_audio_review": "PENDING",
-    "concrete_words_audible": "INSUFFICIENT",
+    "human_audio_review": "FAIL",
+    "concrete_words_audible": "FALSE",
     "actual_source_verified": "TRUE",
     "lyric_order_verified": "TRUE",
     "phrase_boundaries_clean": "INSUFFICIENT",
     "production_duration_practical": "TRUE",
     "asr_support": "WEAK",
     "forced_alignment_support": "CONFLICTS",
-    "route": "REVISE",
-    "gate": "INSUFFICIENT_EVIDENCE",
+    "route": "REJECT_SONG",
+    "gate": "FAIL",
     "allow_final_cut": false,
     "allow_seal": false
   },
@@ -48,6 +48,10 @@
       "reason": "no concrete lyrics reported by user"
     }
   ],
-  "song_rejection": "NOT_PROVEN",
-  "s0_reopen": false
+  "song_rejection": "REJECTED_FOR_CURRENT_RUN_BY_HUMAN",
+  "s0_reopen": true,
+  "reopen_reason": "LYRIC_INTELLIGIBILITY_UNSUITABLE_FOR_TARGET_MV_MODE",
+  "latest_human_review_ref": "s0_reopen/evidence/HUMAN_REVIEW_V3_2026-09-30.json",
+  "next_action": "S0_REFERENCE_QUALIFICATION",
+  "classification_scope": "Current run and tested source; no universal no-lyrics claim."
 }

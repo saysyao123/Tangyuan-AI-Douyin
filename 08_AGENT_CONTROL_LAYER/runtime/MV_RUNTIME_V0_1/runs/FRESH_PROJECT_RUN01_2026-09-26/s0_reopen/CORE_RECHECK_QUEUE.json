@@ -1,0 +1,70 @@
+{
+  "queue_kind": "RESEARCH_PRIORITY_NOT_PRIMARY_SHORTLIST",
+  "queue": [
+    {
+      "priority": 1,
+      "song_family": "向山河林响",
+      "core_account": "火乐烁",
+      "reference_url": "https://www.douyin.com/video/7674993950716867770",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "historical_note": "山河/出发/辽阔；人物冒险感和大场景动态高度匹配当前动画方向",
+      "current_media_access": {
+        "id": "CORE01",
+        "url": "https://www.douyin.com/video/7674993950716867770",
+        "status": 200,
+        "bytes": 72914,
+        "has_video_player_evidence": false,
+        "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+      },
+      "lyric_eligibility": "INSUFFICIENT",
+      "qualification": "RESEARCH_REQUIRED",
+      "history_policy": "ELIGIBLE",
+      "production_recommendation": false
+    },
+    {
+      "priority": 2,
+      "song_family": "听见月亮的歌",
+      "core_account": "XIANGJISHI",
+      "reference_url": "https://www.douyin.com/video/7673110065674699941",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "historical_note": "迷路小船终有一天会靠岸；非常适合治愈奇幻动画和吉卜力式物件/伙伴",
+      "current_media_access": {
+        "id": "CORE02",
+        "url": "https://www.douyin.com/video/7673110065674699941",
+        "status": 200,
+        "bytes": 72914,
+        "has_video_player_evidence": false,
+        "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+      },
+      "lyric_eligibility": "INSUFFICIENT",
+      "qualification": "RESEARCH_REQUIRED",
+      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+      "production_recommendation": false
+    },
+    {
+      "priority": 3,
+      "song_family": "遇见爱的人",
+      "core_account": "XIANGJISHI",
+      "reference_url": "https://www.douyin.com/video/7673486773234820475",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "historical_note": "四季/遇见/自由；场景变化与歌词视觉化空间大",
+      "current_media_access": {
+        "id": "CORE03",
+        "url": "https://www.douyin.com/video/7673486773234820475",
+        "status": 200,
+        "bytes": 72914,
+        "has_video_player_evidence": false,
+        "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+      },
+      "lyric_eligibility": "INSUFFICIENT",
+      "qualification": "RESEARCH_REQUIRED",
+      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+      "production_recommendation": false
+    }
+  ],
+  "qualified_primary_count": 0,
+  "next_action": "Recover actual accessible audio for core reference; bounded lyric review; preserve core/supplemental distinction."
+}

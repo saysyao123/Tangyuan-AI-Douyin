@@ -1,0 +1,79 @@
+{
+  "version": "0.4-run-local",
+  "status": "ACTIVE_FOR_UPSTREAM_REOPEN",
+  "scope": "THIS_FRESH_RUN_ONLY",
+  "base_contract": "stages/00_SONG_SELECTION/S0_STAGE_CONTRACT_v0.3.yaml",
+  "trigger": "User requested S0 re-evaluation after third audio rejection",
+  "frozen_contract_file_modified": false,
+  "explicit_rule_replacements": [
+    {
+      "old": "S0 performs no media acquisition or timeline analysis",
+      "new": "S0 may inspect a bounded publicly accessible reference preview solely for eligibility. No full-source acquisition, full-song timeline, beat analysis or production-cut selection in S0."
+    },
+    {
+      "old": "Primary shortlist contains 1 to 3 candidates",
+      "new": "Qualified shortlist may contain 0 to 3; zero yields RESEARCH_REQUIRED, never forced selection."
+    }
+  ],
+  "preserved_rules": [
+    "Chinese language",
+    "All nine core accounts contribute; role affects weight, not inclusion",
+    "Historical exclusion and Song Family dedupe",
+    "Core/supplemental distinction",
+    "Exact production version and full-source truth stay in S1",
+    "Human Song Family Lock and evidence-based seal",
+    "No S2 before S1 is sealed"
+  ],
+  "qualification_pipeline": [
+    "TRUSTED_POOL_AND_PROVENANCE",
+    "HISTORY_AND_FAMILY_DEDUPE",
+    "ACTUAL_REFERENCE_MEDIA_ACCESS",
+    "AUDIBLE_CHINESE_CONTINUOUS_LYRIC_CHECK",
+    "SEMANTIC_FIT_CHECK",
+    "QUALIFIED_MAX_THREE",
+    "HUMAN_SONG_REFERENCE_LOCK",
+    "S0_SEAL"
+  ],
+  "qualification_evidence": {
+    "required": [
+      "Playable actual audio tied to exact reference identity, with preview hash or media ID",
+      "At least two consecutive meaningful Chinese phrases within a coherent short preview",
+      "Actual listening review identifying word content and vocalise dominance",
+      "Short paraphrased semantic cue grounded in audible phrases",
+      "Current historical eligibility and core evidence",
+      "Source and visual references explicitly single or split"
+    ],
+    "insufficient_alone": [
+      "Chinese song title",
+      "Lyrics page",
+      "Release date",
+      "Genre",
+      "Forced alignment",
+      "ASR transcript",
+      "LRC timestamp",
+      "HTTP 200 HTML page"
+    ]
+  },
+  "preflight_budget": {
+    "preview_seconds_per_candidate_max": 90,
+    "preview_windows_max": 3,
+    "window_seconds_max": 30,
+    "single_reference_bytes_max": 1500000,
+    "new_production_cut": false,
+    "failure_budget": "After clear human rejection of a candidate, stop advancing it; repeated lyric ambiguity triggers S0 re-evaluation instead of alignment retries."
+  },
+  "priority_order": [
+    "Audible meaningful lyric suitability is a hard filter",
+    "Usable trusted reference and historical eligibility",
+    "Lyric semantic and visual fit",
+    "Practical production/access effort",
+    "New release preference as tie-breaker; verified first-publication date differs from platform listing date"
+  ],
+  "upstream_failure_routes": {
+    "LOCAL_TIMING_ERROR": "REVISE_S1C_SAME_VERIFIED_REFERENCE",
+    "LYRIC_INTELLIGIBILITY_OR_HUMAN_SONG_REJECTION": "REOPEN_S0_EXCLUDE_CURRENT_REFERENCE",
+    "SOURCE_VERSION_MISMATCH": "REPAIR_S1B_OR_REFERENCE_PRECHECK_NO_SILENT_SUBSTITUTION",
+    "NO_ACCESSIBLE_MEDIA": "REFERENCE_RECOVERY_NO_FAKE_PASS"
+  },
+  "seal_rule": "Only qualified candidate plus explicit human lock and evidence-based seal permits S1 restart. Test auto-lock never waives qualification."
+}

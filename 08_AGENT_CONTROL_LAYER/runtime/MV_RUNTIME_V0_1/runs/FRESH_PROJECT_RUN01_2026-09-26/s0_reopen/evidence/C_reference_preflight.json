@@ -1,0 +1,60 @@
+{
+  "id": "C",
+  "source_url": "https://zxc0514.bandcamp.com/track/guangguang-in-the-attic",
+  "title": "阁楼上的广广 Guangguang In The Attic",
+  "track_id": 3093152909,
+  "catalog_duration_seconds": 212.5,
+  "source_page_sha256": "c7450f5301e5589cc7b5638d415aa25087697c1b4acbbb2704bf562779f54d47",
+  "preview_bytes": 1500000,
+  "preview_sha256": "6fe74ffac29dd33a09d0d6a856d62cdc536e553e5e0af0744c70dbbcf2555bf6",
+  "fetch_http_status": 206,
+  "fetch_limit_bytes": 1500000,
+  "reference_only": true,
+  "full_source_acquired": false,
+  "current_release_date": null,
+  "album_release_date": "11 Jun 2026 00:00:00 GMT",
+  "lyric_text_sha256": "7b63d396a8adca9bfa2a3e1fd8593a5ce546f5d2466f59215ac222cf37271a8d",
+  "preview_duration_seconds": 90.0,
+  "rows": [
+    {
+      "start": 0,
+      "end": 30,
+      "asr_char_count": 0,
+      "asr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "trusted_lyric_chars": 159,
+      "longest_contiguous_match_chars": 0,
+      "trusted_text_match": false
+    },
+    {
+      "start": 30,
+      "end": 60,
+      "asr_char_count": 9,
+      "asr_sha256": "8bd1758d8ecdc013911ad1db882a1fa9f315653cedcb37f20538f919782f51df",
+      "trusted_lyric_chars": 159,
+      "longest_contiguous_match_chars": 5,
+      "trusted_text_match": false
+    },
+    {
+      "start": 60,
+      "end": 90,
+      "asr_char_count": 4,
+      "asr_sha256": "39b4d254b443f8bee1b234539e3ef1988e4691296676daab3709acd349e0e611",
+      "trusted_lyric_chars": 159,
+      "longest_contiguous_match_chars": 2,
+      "trusted_text_match": false
+    }
+  ],
+  "audio_reference_status": "ASR_LEXICAL_SUPPORT_ONLY_NOT_HUMAN_LOCK",
+  "source_tier": "SUPPLEMENTAL_NO_CORE_REFERENCE_IN_ORIGINAL_DELIVERY",
+  "qualify_result": {
+    "qualification": "NOT_QUALIFIED",
+    "blockers": [
+      "SOURCE_TIER_NOT_PASSED",
+      "AUDIBLE_CHINESE_NOT_PASSED",
+      "CONTINUOUS_MEANINGFUL_LYRICS_NOT_PASSED",
+      "SEMANTIC_VISUAL_FIT_NOT_PASSED",
+      "ACTUAL_LISTENING_REVIEW_REQUIRED"
+    ],
+    "s0_sealed": false
+  }
+}

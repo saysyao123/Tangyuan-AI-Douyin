@@ -1,0 +1,24 @@
+{
+  "status": "PASS_ARTIFACT_AND_CONTROL_CHECKS_ONLY",
+  "checks": {
+    "latest_v3_human_fail": true,
+    "s0_reopened": true,
+    "no_selected_song": true,
+    "no_fake_qualified_shortlist": true,
+    "s1_restart_blocked": true,
+    "s2_blocked": true,
+    "s0_historical_delivery_preserved": true,
+    "source_technical_facts_preserved": true,
+    "queue_is_not_shortlist": true,
+    "no_global_ledger_blanket_ban": true
+  },
+  "gate_regression": {
+    "status": "PASS",
+    "case_count": 12,
+    "meaning": "Qualification is separate from human song lock and stage seal."
+  },
+  "s0_qualification": "NOT_PASSED",
+  "s0_seal": "BLOCKED",
+  "s1_restart": "BLOCKED",
+  "next_action": "Actual reference media and audible lyric verification required."
+}

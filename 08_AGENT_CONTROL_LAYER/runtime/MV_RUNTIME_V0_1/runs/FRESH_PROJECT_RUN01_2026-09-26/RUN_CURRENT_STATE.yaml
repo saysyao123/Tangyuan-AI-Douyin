@@ -1,0 +1,24 @@
+{
+  "run_id": "FRESH_PROJECT_RUN01_2026-09-26",
+  "updated_date": "2026-09-30",
+  "current_stage": "S0_SONG_SELECTION",
+  "s0": "REOPENED",
+  "s1": "NOT_SEALED_REJECTED_CURRENT_SELECTION",
+  "s2": "BLOCKED",
+  "selected_song_family": null,
+  "previous_selected_song_family": "告别",
+  "previous_artist": "桃子假象 Peach Illusion",
+  "previous_selection": "REVOKED_FOR_THIS_RUN_BY_HUMAN",
+  "technical_source_evidence_retained": {
+    "s1a": "PASS_HISTORICAL_ACQUISITION",
+    "s1b": "PASS_HISTORICAL_METADATA_IDENTITY",
+    "source_sha256": "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43",
+    "does_not_prove_lyric_eligibility": true
+  },
+  "active_s0_contract": "frozen v0.3 plus run-local s0_reopen/S0_QUALIFICATION_ADDENDUM_v0.4.yaml",
+  "next_gate": "AUDIBLE_CHINESE_LYRIC_REFERENCE_QUALIFICATION",
+  "s0_seal_allowed": false,
+  "s1_restart_allowed": false,
+  "global_old_project_tracker_authoritative": false,
+  "authority_ref": "s0_reopen/evidence/HUMAN_REVIEW_V3_2026-09-30.json"
+}

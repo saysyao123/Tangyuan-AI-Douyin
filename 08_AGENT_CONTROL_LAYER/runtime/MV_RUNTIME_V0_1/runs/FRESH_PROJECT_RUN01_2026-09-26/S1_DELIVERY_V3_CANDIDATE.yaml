@@ -1,14 +1,14 @@
 {
   "run_id": "FRESH_PROJECT_RUN01_2026-09-26",
   "song": "告别 — 桃子假象 Peach Illusion",
-  "s0": "SEALED",
+  "s0": "REOPENED",
   "s1a": "PASS",
   "s1b": "PASS",
-  "s1c": "REVISE",
-  "s1d": "NOT_PASSED",
+  "s1c": "REJECTED_FOR_CURRENT_SELECTION",
+  "s1d": "FAIL",
   "s1": "NOT_SEALED",
   "s2": "BLOCKED",
-  "delivery_kind": "DIAGNOSTIC_CANDIDATE_PENDING_AUDIBLE_GATE",
+  "delivery_kind": "REJECTED_BY_HUMAN_HISTORICAL_DIAGNOSTIC",
   "selected_production_region": null,
   "final_audio": null,
   "final_lyric_timeline": null,
@@ -67,6 +67,6 @@
       "confidence": "PLATFORM_REFERENCE_ONLY"
     }
   ],
-  "human_audio_lock": "PENDING",
-  "next_action": "Review actual diagnostic audio. PASS only if both concrete phrases and clean boundaries verified; otherwise revise S1C. Reject song/reopen S0 only after sufficient whole-song evidence."
+  "human_audio_lock": "FAIL",
+  "next_action": "Return to S0 under S0_QUALIFICATION_ADDENDUM_v0.4; do not extract more candidates from this source."
 }

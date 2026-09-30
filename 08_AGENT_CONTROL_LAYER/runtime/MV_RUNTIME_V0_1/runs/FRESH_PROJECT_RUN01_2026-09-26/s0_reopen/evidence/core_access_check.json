@@ -1,0 +1,26 @@
+[
+  {
+    "id": "CORE01",
+    "url": "https://www.douyin.com/video/7674993950716867770",
+    "status": 200,
+    "bytes": 72914,
+    "has_video_player_evidence": false,
+    "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+  },
+  {
+    "id": "CORE02",
+    "url": "https://www.douyin.com/video/7673110065674699941",
+    "status": 200,
+    "bytes": 72914,
+    "has_video_player_evidence": false,
+    "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+  },
+  {
+    "id": "CORE03",
+    "url": "https://www.douyin.com/video/7673486773234820475",
+    "status": 200,
+    "bytes": 72914,
+    "has_video_player_evidence": false,
+    "page_hint": "HTML_SHELL_NOT_MEDIA_EVIDENCE"
+  }
+]
