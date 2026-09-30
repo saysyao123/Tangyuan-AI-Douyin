@@ -1,0 +1,54 @@
+{
+  "version": "0.5-run-local",
+  "status": "ACTIVE",
+  "scope": "THIS_FRESH_RUN_ONLY",
+  "supersedes": "s0_reopen/S0_QUALIFICATION_ADDENDUM_v0.4.yaml",
+  "reason": "Restore frozen S0/S1 responsibilities; v0.4 wrongly required actual listening before direction selection.",
+  "frozen_contract_file_modified": false,
+  "s0": {
+    "responsibility": "SongFamily direction selection from trusted provenance, documentary Chinese-language evidence, semantic fit and history; at most 3 distinct families.",
+    "media_required_before_direction_shortlist": false,
+    "core_preferred": true,
+    "normalized_core_tiers": [
+      "VERIFIED_CORE",
+      "HISTORICAL_CORE_VERIFIED",
+      "HISTORICAL_VERIFIED_CORE",
+      "CURRENT_CORE_DIRECT"
+    ],
+    "supplemental_test_requires_explicit_enable": true,
+    "supplemental_test_can_be_called_core": false,
+    "zero_direction_candidates_allowed": true,
+    "human_song_family_lock_required_before_formal_handoff": true
+  },
+  "s1": {
+    "responsibility": "Acquire exact source; verify version; early content screen; full timeline and phrase boundaries; human audio review.",
+    "early_screen": "Two independent nonoverlapping windows with at least 6 consecutive Chinese characters matching trusted lyrics authorize further analysis only. Experimental heuristic, not calibrated audibility proof.",
+    "lyric_prompt_in_asr": false,
+    "metadata_or_lrc_alone_can_pass": false,
+    "asr_alone_can_seal": false,
+    "full_audio_before_production_cut": true,
+    "final_seal_requires": [
+      "actual source identity and hash",
+      "audible concrete lyrics",
+      "version lock",
+      "full timeline verified",
+      "phrase boundaries verified",
+      "human audio review PASS"
+    ]
+  },
+  "failure_routes": {
+    "page_shell": "Recover same-family public source or explicit split audio/visual reference; never claim acquisition from HTTP 200.",
+    "wrong_version": "Repair S1B, no silent substitution.",
+    "human_source_rejection": "Cache rejected hash, do not retry by changing window.",
+    "human_family_rejection": "Reopen S0 and exclude family for this run.",
+    "budget": "At most 2 source attempts per family and 3 families before stop with evidence summary; no invented candidate."
+  },
+  "validation_scope": {
+    "test_target": "一个人在家 — 想想XiangXiang",
+    "source_group": "SUPPLEMENTAL_TEST",
+    "formal_production_selection": false,
+    "auto_test_permissions_do_not_waive_audio_review": true
+  },
+  "authority": "RUN_CURRENT_STATE.yaml and current S0_DELIVERY.yaml; historical S1_DELIVERY.yaml is not the current seal.",
+  "no_s2_before_s1_seal": true
+}

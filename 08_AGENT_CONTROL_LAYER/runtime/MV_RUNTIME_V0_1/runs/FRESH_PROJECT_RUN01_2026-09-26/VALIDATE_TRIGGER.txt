@@ -1,2 +1,1 @@
-run=001
-expected=PASS
+2026-09-30: run-local v0.5 S0/S1 boundary repair; current-state and 23 regression checks; no production audio seal.

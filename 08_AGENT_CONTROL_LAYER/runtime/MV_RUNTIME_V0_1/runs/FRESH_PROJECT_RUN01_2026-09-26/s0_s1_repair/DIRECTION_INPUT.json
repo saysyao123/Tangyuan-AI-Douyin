@@ -1,0 +1,56 @@
+[
+  {
+    "song_family": "向山河林响",
+    "source_tier": "HISTORICAL_CORE_VERIFIED",
+    "language_support": "HISTORICAL_CHINESE_REFERENCE",
+    "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+    "history_policy": "ELIGIBLE",
+    "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+    "reference_leads": [
+      "https://www.douyin.com/video/7674993950716867770"
+    ],
+    "core_account": "火乐烁",
+    "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+    "current_freshness": "NOT_REFRESHED",
+    "semantic_priority": 3,
+    "semantic_note": "山河/出发/辽阔；人物冒险感和大场景动态高度匹配当前动画方向",
+    "exact_audio_status": "UNVERIFIED",
+    "production_recommendation": false
+  },
+  {
+    "song_family": "听见月亮的歌",
+    "source_tier": "HISTORICAL_CORE_VERIFIED",
+    "language_support": "HISTORICAL_CHINESE_REFERENCE",
+    "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+    "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+    "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+    "reference_leads": [
+      "https://www.douyin.com/video/7673110065674699941"
+    ],
+    "core_account": "XIANGJISHI",
+    "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+    "current_freshness": "NOT_REFRESHED",
+    "semantic_priority": 2,
+    "semantic_note": "迷路小船终有一天会靠岸；非常适合治愈奇幻动画和吉卜力式物件/伙伴",
+    "exact_audio_status": "UNVERIFIED",
+    "production_recommendation": false
+  },
+  {
+    "song_family": "遇见爱的人",
+    "source_tier": "HISTORICAL_CORE_VERIFIED",
+    "language_support": "HISTORICAL_CHINESE_REFERENCE",
+    "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+    "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+    "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+    "reference_leads": [
+      "https://www.douyin.com/video/7673486773234820475"
+    ],
+    "core_account": "XIANGJISHI",
+    "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+    "current_freshness": "NOT_REFRESHED",
+    "semantic_priority": 1,
+    "semantic_note": "四季/遇见/自由；场景变化与歌词视觉化空间大",
+    "exact_audio_status": "UNVERIFIED",
+    "production_recommendation": false
+  }
+]

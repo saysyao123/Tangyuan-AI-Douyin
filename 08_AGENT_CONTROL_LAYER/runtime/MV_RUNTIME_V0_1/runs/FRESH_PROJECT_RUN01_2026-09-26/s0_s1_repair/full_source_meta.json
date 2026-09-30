@@ -1,0 +1,32 @@
+{
+  "song_family": "一个人在家",
+  "artist": "想想XiangXiang",
+  "source_url": "https://xiangxiang.bandcamp.com/track/-",
+  "track_id": 985094992,
+  "coverage": "FULL_SOURCE_ACQUIRED",
+  "catalog_duration_seconds": 246.462,
+  "bytes": 3944279,
+  "sha256": "2c47c8baa120908d8662e33cba72dac52763e2b1e3a734584501ab7e10113ad9",
+  "matches_previous_reference_prefix": true,
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "duration": "246.491429",
+      "bit_rate": "128013"
+    }
+  },
+  "purpose": "SUPPLEMENTAL_TEST_VALIDATION_ONLY_NOT_PRODUCTION_SELECTION",
+  "lyric_chars": 100,
+  "lyric_text_sha256": "062b74ee3f12663296033ded9d6dad3eaafe30db1aeb545a2309bf6590a1fb3f",
+  "release_note": "2024-09-23 public artist publication verified earlier; not represented as a 2026 first release."
+}

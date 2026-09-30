@@ -1,3 +1,5 @@
+> 2026-09-30 最新执行状态：v0.5 S0/S1 边界修复已取代下文旧 S1C 接续要求和上一轮 v0.4 前置试听规则。正式 S0=SHORTLIST_READY（历史核心方向3首，音频均未验收，选歌未锁定）；《告别》保持否决。补充测试《一个人在家》完整来源和早期歌词支持验证完成，正式 S1 未封存、S2 阻断。执行入口为 RUN_CURRENT_STATE.yaml、S0_CURRENT_STATUS.md、S1_CURRENT_STATUS.md，以及 s0_s1_repair/REPAIR_REPORT_2026-09-30.md。不要恢复下文已被人工撤销的封存或测试自动锁定。
+
 > **2026-09-30 最新变更：本文原来的“仅修 S1C、S0 不重开”指令已被用户后续要求替换。**
 > 用户再次试听否决 V3，并要求重审选歌。当前 S0=REOPENED，原《告别》选择撤销，S1 未封存，S2 阻塞。
 > 从 RUN_CURRENT_STATE.yaml、S0_CURRENT_STATUS.md、S0_REOPEN_REVIEW_2026-09-30.md 和 s0_reopen/S0_QUALIFICATION_ADDENDUM_v0.4.yaml 继续。
@@ -688,5 +690,3 @@ The next Work action is **not** Director design.
 The next Work action is:
 
 `repair S1C full-song lyric timeline -> produce a genuinely audible lyric candidate -> deliver audio + timeline for human review.`
-
-

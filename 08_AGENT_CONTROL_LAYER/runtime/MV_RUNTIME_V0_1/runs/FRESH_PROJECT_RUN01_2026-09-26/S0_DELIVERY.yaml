@@ -4,8 +4,8 @@
     "objective": "Chinese-language lyric-driven animated MV; practical audible lyric suitability first; new-release preference remains secondary"
   },
   "s0": {
-    "contract_version": "0.3 + run-local 0.4 qualification addendum",
-    "status": "REOPENED",
+    "contract_version": "0.3 + run-local 0.5 boundary repair",
+    "status": "SHORTLIST_READY",
     "selected_song_family": null,
     "qualified_shortlist": [],
     "qualified_primary_count": 0,
@@ -19,8 +19,68 @@
     },
     "candidate_evidence_ref": "s0_reopen/ORIGINAL_SHORTLIST_REVIEW.json",
     "core_recheck_ref": "s0_reopen/CORE_RECHECK_QUEUE.json",
-    "next_gate": "REFERENCE_AUDIO_QUALIFICATION",
+    "next_gate": "CHOOSE_AND_LOCK_CORE_SONG_FAMILY_THEN_RECOVER_EXACT_SOURCE",
     "s1_restart_allowed": false,
-    "stage_status": "NOT_SEALED"
+    "stage_status": "NOT_SEALED",
+    "direction_shortlist": [
+      {
+        "song_family": "向山河林响",
+        "source_tier": "HISTORICAL_CORE_VERIFIED",
+        "language_support": "HISTORICAL_CHINESE_REFERENCE",
+        "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+        "history_policy": "ELIGIBLE",
+        "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+        "reference_leads": [
+          "https://www.douyin.com/video/7674993950716867770"
+        ],
+        "core_account": "火乐烁",
+        "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+        "current_freshness": "NOT_REFRESHED",
+        "semantic_priority": 3,
+        "semantic_note": "山河/出发/辽阔；人物冒险感和大场景动态高度匹配当前动画方向",
+        "exact_audio_status": "UNVERIFIED",
+        "production_recommendation": false
+      },
+      {
+        "song_family": "听见月亮的歌",
+        "source_tier": "HISTORICAL_CORE_VERIFIED",
+        "language_support": "HISTORICAL_CHINESE_REFERENCE",
+        "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+        "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+        "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+        "reference_leads": [
+          "https://www.douyin.com/video/7673110065674699941"
+        ],
+        "core_account": "XIANGJISHI",
+        "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+        "current_freshness": "NOT_REFRESHED",
+        "semantic_priority": 2,
+        "semantic_note": "迷路小船终有一天会靠岸；非常适合治愈奇幻动画和吉卜力式物件/伙伴",
+        "exact_audio_status": "UNVERIFIED",
+        "production_recommendation": false
+      },
+      {
+        "song_family": "遇见爱的人",
+        "source_tier": "HISTORICAL_CORE_VERIFIED",
+        "language_support": "HISTORICAL_CHINESE_REFERENCE",
+        "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+        "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+        "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+        "reference_leads": [
+          "https://www.douyin.com/video/7673486773234820475"
+        ],
+        "core_account": "XIANGJISHI",
+        "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+        "current_freshness": "NOT_REFRESHED",
+        "semantic_priority": 1,
+        "semantic_note": "四季/遇见/自由；场景变化与歌词视觉化空间大",
+        "exact_audio_status": "UNVERIFIED",
+        "production_recommendation": false
+      }
+    ],
+    "direction_candidate_count": 3,
+    "shortlist_meaning": "DOCUMENTARY_DIRECTION_ELIGIBILITY_ONLY_NOT_AUDIBLE_AUDIO_APPROVAL",
+    "s1_research_allowed": true,
+    "repair_ref": "s0_s1_repair/S0_S1_BOUNDARY_ADDENDUM_v0.5.yaml"
   }
 }

@@ -1,0 +1,109 @@
+{
+  "execution_mode": "LOCAL_MEDIA_HASH_VERIFIED",
+  "direction_shortlist": [
+    {
+      "song_family": "向山河林响",
+      "source_tier": "HISTORICAL_CORE_VERIFIED",
+      "language_support": "HISTORICAL_CHINESE_REFERENCE",
+      "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+      "history_policy": "ELIGIBLE",
+      "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+      "reference_leads": [
+        "https://www.douyin.com/video/7674993950716867770"
+      ],
+      "core_account": "火乐烁",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "semantic_priority": 3,
+      "semantic_note": "山河/出发/辽阔；人物冒险感和大场景动态高度匹配当前动画方向",
+      "exact_audio_status": "UNVERIFIED",
+      "production_recommendation": false,
+      "assessment": {
+        "direction_status": "ELIGIBLE",
+        "source_group": "CORE",
+        "reasons": [],
+        "audio_truth": "UNLOCKED",
+        "requires_audio_before_s0_direction": false
+      }
+    },
+    {
+      "song_family": "听见月亮的歌",
+      "source_tier": "HISTORICAL_CORE_VERIFIED",
+      "language_support": "HISTORICAL_CHINESE_REFERENCE",
+      "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+      "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+      "reference_leads": [
+        "https://www.douyin.com/video/7673110065674699941"
+      ],
+      "core_account": "XIANGJISHI",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "semantic_priority": 2,
+      "semantic_note": "迷路小船终有一天会靠岸；非常适合治愈奇幻动画和吉卜力式物件/伙伴",
+      "exact_audio_status": "UNVERIFIED",
+      "production_recommendation": false,
+      "assessment": {
+        "direction_status": "ELIGIBLE",
+        "source_group": "CORE",
+        "reasons": [],
+        "audio_truth": "UNLOCKED",
+        "requires_audio_before_s0_direction": false
+      }
+    },
+    {
+      "song_family": "遇见爱的人",
+      "source_tier": "HISTORICAL_CORE_VERIFIED",
+      "language_support": "HISTORICAL_CHINESE_REFERENCE",
+      "language_evidence_ref": "s0_s1_repair/trusted_pool.csv",
+      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
+      "history_evidence_ref": "s0_s1_repair/trusted_used_ledger.csv",
+      "reference_leads": [
+        "https://www.douyin.com/video/7673486773234820475"
+      ],
+      "core_account": "XIANGJISHI",
+      "evidence_age": "HISTORICAL_CORE_SNAPSHOT_2026_08",
+      "current_freshness": "NOT_REFRESHED",
+      "semantic_priority": 1,
+      "semantic_note": "四季/遇见/自由；场景变化与歌词视觉化空间大",
+      "exact_audio_status": "UNVERIFIED",
+      "production_recommendation": false,
+      "assessment": {
+        "direction_status": "ELIGIBLE",
+        "source_group": "CORE",
+        "reasons": [],
+        "audio_truth": "UNLOCKED",
+        "requires_audio_before_s0_direction": false
+      }
+    }
+  ],
+  "validation_branch": {
+    "purpose": "VALIDATION_ONLY_NOT_PRODUCTION_LOCK",
+    "song_family": "一个人在家",
+    "source_group": "SUPPLEMENTAL_TEST",
+    "media_hash_verified": true,
+    "full_scan_bound_to_media": true,
+    "source_evidence": {
+      "actual_media_exists": true,
+      "identity_verified": true,
+      "sha256": "2c47c8baa120908d8662e33cba72dac52763e2b1e3a734584501ab7e10113ad9",
+      "rejected_source_hashes": [
+        "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43"
+      ],
+      "supporting_windows": 5,
+      "best_contiguous_match_chars": 9,
+      "human_audio_review": "PENDING"
+    },
+    "screen": {
+      "route": "FULL_ANALYSIS_ELIGIBLE",
+      "allow_full_analysis": true,
+      "audible_lyric_gate": "NOT_PASSED",
+      "allow_final_cut": false,
+      "allow_s1_seal": false,
+      "allow_s2": false
+    }
+  },
+  "production_selected_song_family": null,
+  "formal_s1_seal": false,
+  "allow_s2": false
+}

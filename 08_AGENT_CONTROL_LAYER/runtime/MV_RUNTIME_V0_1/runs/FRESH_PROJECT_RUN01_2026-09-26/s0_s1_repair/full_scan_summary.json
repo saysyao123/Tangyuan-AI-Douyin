@@ -1,0 +1,98 @@
+{
+  "method": "BLIND_SENSEVOICE_ALL_DECODED_AUDIO_THEN_TRUSTED_TEXT_COMPARISON",
+  "lyric_prompt_supplied_to_recognizer": false,
+  "decoded_duration_seconds": 246.4615,
+  "rows": [
+    {
+      "start_seconds": 0,
+      "end_seconds": 30,
+      "asr_chars": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "trusted_contiguous_match_chars": 0,
+      "support": "INSUFFICIENT",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 30,
+      "end_seconds": 60,
+      "asr_chars": 30,
+      "transcript_sha256": "921f8cd6004de9c00d0ebb0f61c7b78af65f6b4a502f1cf741ee9f604a6ad936",
+      "trusted_contiguous_match_chars": 9,
+      "support": "SUPPORTS",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 60,
+      "end_seconds": 90,
+      "asr_chars": 8,
+      "transcript_sha256": "5212ff6f4c9c5963921b5ef4fbe2f52fa645c6ebb5e563b23c77964e54e76de4",
+      "trusted_contiguous_match_chars": 7,
+      "support": "SUPPORTS",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 90,
+      "end_seconds": 120,
+      "asr_chars": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "trusted_contiguous_match_chars": 0,
+      "support": "INSUFFICIENT",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 120,
+      "end_seconds": 150,
+      "asr_chars": 24,
+      "transcript_sha256": "452d325c785512c70051595ad372e35df92f605b612e0e2909cb5aa2cc0d0fc4",
+      "trusted_contiguous_match_chars": 9,
+      "support": "SUPPORTS",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 150,
+      "end_seconds": 180,
+      "asr_chars": 6,
+      "transcript_sha256": "8f907e93994207980ab39ee0315f77a46c24bbd4f2012e4e5b92e942170f6bb1",
+      "trusted_contiguous_match_chars": 6,
+      "support": "SUPPORTS",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 180,
+      "end_seconds": 210,
+      "asr_chars": 4,
+      "transcript_sha256": "862943db0552926462755f4dcfe9d997b92b2fc362d58097a8b797d9e3f060e6",
+      "trusted_contiguous_match_chars": 1,
+      "support": "INSUFFICIENT",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 210,
+      "end_seconds": 240,
+      "asr_chars": 6,
+      "transcript_sha256": "ce5b251534b016e19282061aa3222d2ad359d4cecb8e8538e40b1aea17360333",
+      "trusted_contiguous_match_chars": 6,
+      "support": "SUPPORTS",
+      "review_status": "NOT_HUMAN_LOCKED"
+    },
+    {
+      "start_seconds": 240,
+      "end_seconds": 246.4615,
+      "asr_chars": 2,
+      "transcript_sha256": "93817cc7cdf250f36541ab7cc6f05eded48a5809ebc6b0f96fe2a43cf80e7cfc",
+      "trusted_contiguous_match_chars": 2,
+      "support": "INSUFFICIENT",
+      "review_status": "NOT_HUMAN_LOCKED"
+    }
+  ],
+  "supporting_window_count": 5,
+  "human_audio_review": "PENDING",
+  "formal_s1_seal": false,
+  "asr_alone_can_seal": false,
+  "source_sha256": "2c47c8baa120908d8662e33cba72dac52763e2b1e3a734584501ab7e10113ad9",
+  "model_name": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17",
+  "runtime_versions": {
+    "sherpa-onnx": "1.13.8",
+    "window_seconds": 30
+  }
+}

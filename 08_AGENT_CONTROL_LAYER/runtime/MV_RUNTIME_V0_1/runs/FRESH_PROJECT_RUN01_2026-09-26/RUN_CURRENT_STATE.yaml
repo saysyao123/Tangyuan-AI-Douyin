@@ -1,9 +1,9 @@
 {
   "run_id": "FRESH_PROJECT_RUN01_2026-09-26",
   "updated_date": "2026-09-30",
-  "current_stage": "S0_SONG_SELECTION",
-  "s0": "REOPENED",
-  "s1": "NOT_SEALED_REJECTED_CURRENT_SELECTION",
+  "current_stage": "S0_DIRECTION_SELECTION_AND_S1_TEST_VALIDATION",
+  "s0": "SHORTLIST_READY",
+  "s1": "NOT_SEALED",
   "s2": "BLOCKED",
   "selected_song_family": null,
   "previous_selected_song_family": "告别",
@@ -15,10 +15,33 @@
     "source_sha256": "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43",
     "does_not_prove_lyric_eligibility": true
   },
-  "active_s0_contract": "frozen v0.3 plus run-local s0_reopen/S0_QUALIFICATION_ADDENDUM_v0.4.yaml",
-  "next_gate": "AUDIBLE_CHINESE_LYRIC_REFERENCE_QUALIFICATION",
+  "active_s0_contract": "frozen v0.3 plus run-local s0_s1_repair/S0_S1_BOUNDARY_ADDENDUM_v0.5.yaml",
+  "next_gate": "CHOOSE_AND_LOCK_CORE_SONG_FAMILY_THEN_RECOVER_EXACT_SOURCE",
   "s0_seal_allowed": false,
   "s1_restart_allowed": false,
   "global_old_project_tracker_authoritative": false,
-  "authority_ref": "s0_reopen/evidence/HUMAN_REVIEW_V3_2026-09-30.json"
+  "authority_ref": "s0_reopen/evidence/HUMAN_REVIEW_V3_2026-09-30.json",
+  "s1_research_allowed": true,
+  "rejected_song_families": [
+    "告别"
+  ],
+  "rejected_source_hashes": [
+    "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43"
+  ],
+  "direction_shortlist": [
+    "向山河林响",
+    "听见月亮的歌",
+    "遇见爱的人"
+  ],
+  "validation_branch": {
+    "purpose": "VALIDATION_ONLY_NOT_PRODUCTION_LOCK",
+    "song_family": "一个人在家",
+    "source_group": "SUPPLEMENTAL_TEST",
+    "source_acquisition": "FULL_SOURCE_ACQUIRED",
+    "early_lexical_screen": "FULL_ANALYSIS_ELIGIBLE",
+    "human_audio_review": "PENDING",
+    "allow_s1_seal": false,
+    "allow_s2": false,
+    "evidence_ref": "s0_s1_repair/REAL_VALIDATION_RESULT.json"
+  }
 }

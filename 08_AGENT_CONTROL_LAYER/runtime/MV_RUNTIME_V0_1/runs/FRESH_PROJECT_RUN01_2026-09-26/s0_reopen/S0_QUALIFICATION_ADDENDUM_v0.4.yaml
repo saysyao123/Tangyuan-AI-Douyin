@@ -1,6 +1,6 @@
 {
   "version": "0.4-run-local",
-  "status": "ACTIVE_FOR_UPSTREAM_REOPEN",
+  "status": "SUPERSEDED_BY_RUN_LOCAL_V0_5",
   "scope": "THIS_FRESH_RUN_ONLY",
   "base_contract": "stages/00_SONG_SELECTION/S0_STAGE_CONTRACT_v0.3.yaml",
   "trigger": "User requested S0 re-evaluation after third audio rejection",
@@ -75,5 +75,6 @@
     "SOURCE_VERSION_MISMATCH": "REPAIR_S1B_OR_REFERENCE_PRECHECK_NO_SILENT_SUBSTITUTION",
     "NO_ACCESSIBLE_MEDIA": "REFERENCE_RECOVERY_NO_FAKE_PASS"
   },
-  "seal_rule": "Only qualified candidate plus explicit human lock and evidence-based seal permits S1 restart. Test auto-lock never waives qualification."
+  "seal_rule": "Only qualified candidate plus explicit human lock and evidence-based seal permits S1 restart. Test auto-lock never waives qualification.",
+  "superseded_by": "s0_s1_repair/S0_S1_BOUNDARY_ADDENDUM_v0.5.yaml"
 }
