@@ -1,0 +1,244 @@
+{
+  "source_url": "https://music-tw.line.me/track/7977444003",
+  "page_sha256": "e839bc08ceb8f095da3e448ad2a5260119be1b8c493097c951a107447c205c11",
+  "line_count": 28,
+  "trusted_order_exact_match": true,
+  "rows": [
+    {
+      "line_ids": [
+        1
+      ],
+      "platform_start": 18.15,
+      "platform_next_event": 25.79,
+      "text_sha256": "f47043ad335a58311cbfb3a86ecb5e72fca1f8e61824fe2046417e912def548f",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        2
+      ],
+      "platform_start": 25.79,
+      "platform_next_event": 30.67,
+      "text_sha256": "bcf8a92c3603c59855caeecc3c1519e91b2da39d5c5e1ba7befb7acb3c30873e",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        3
+      ],
+      "platform_start": 31.04,
+      "platform_next_event": 34.73,
+      "text_sha256": "e7207221ac0080d7a7b09410f60aef944d1915de8e2bd0a250c2cc5e8af05c89",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        4
+      ],
+      "platform_start": 34.73,
+      "platform_next_event": 38.46,
+      "text_sha256": "fd07b89c7492cb97f82399128b487d921568bad46f57c354d2cc0df88787f9e2",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        5
+      ],
+      "platform_start": 38.46,
+      "platform_next_event": 42.0,
+      "text_sha256": "02ca09f3b310ba64c55e253e7e0350406e732ba282c5dec3fd453bf025abe841",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        6
+      ],
+      "platform_start": 42.0,
+      "platform_next_event": 45.9,
+      "text_sha256": "7777de9a6b598b01296795b562dda2415a3faa7b6b276dc8255e2697b59c97f0",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        7
+      ],
+      "platform_start": 46.52,
+      "platform_next_event": 50.58,
+      "text_sha256": "5f7da74db773b943b82ef3dc95b05d22b18eb4a3bbde51596bf1c8bb951ad373",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        8,
+        9
+      ],
+      "platform_start": 50.58,
+      "platform_next_event": 58.17,
+      "text_sha256": "632389fba23a1b0bde5871264fb3e2bc85ebf5551efaac47084f994d41ba5da6",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        10
+      ],
+      "platform_start": 58.17,
+      "platform_next_event": 60.09,
+      "text_sha256": "5af3c20920b0ce7e5e1f279bcc42928aad8591a4443b9a9a6189147547f292df",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        11
+      ],
+      "platform_start": 60.09,
+      "platform_next_event": 67.75,
+      "text_sha256": "3aee2366484b61c09abd8b49f70c86470252dc5e550ead340e04ea994fb16055",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        12
+      ],
+      "platform_start": 67.75,
+      "platform_next_event": 71.46000000000001,
+      "text_sha256": "fc1d69ec9e0b308fbbb89c7e2373d8da71ba52165bc64bcd6a80b2864d8f42c4",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        13
+      ],
+      "platform_start": 71.46000000000001,
+      "platform_next_event": 83.98,
+      "text_sha256": "cbf27c94055d8832a4566408d7228b824836e0481598232f9300622dc3c62e36",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        14
+      ],
+      "platform_start": 83.98,
+      "platform_next_event": 93.43,
+      "text_sha256": "f367042b7242223112815d8da55cb196845ac49ba594efe58362c841d708953c",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        15
+      ],
+      "platform_start": 94.25,
+      "platform_next_event": 101.97999999999999,
+      "text_sha256": "dd2ccaef1aa39fdbdff0e07c2a5818aa75e2e132c7c84b5827fc188795a735e6",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        16
+      ],
+      "platform_start": 101.97999999999999,
+      "platform_next_event": 106.67,
+      "text_sha256": "b68d8c9444dda9c48b3cca7292d814e24860176bb1ebff50290136691d17dc69",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        17
+      ],
+      "platform_start": 107.08,
+      "platform_next_event": 110.93,
+      "text_sha256": "1c149d4deb0f66d35846f0a2b3ae995091d0fc08d33815a6de30daac811537e4",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        18
+      ],
+      "platform_start": 110.93,
+      "platform_next_event": 114.7,
+      "text_sha256": "ece2c7b9d5d4afb33e1b554386a24a2f90c69bb3c505dcbc801a6e571963f98e",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        19
+      ],
+      "platform_start": 114.7,
+      "platform_next_event": 118.14,
+      "text_sha256": "02ca09f3b310ba64c55e253e7e0350406e732ba282c5dec3fd453bf025abe841",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        20
+      ],
+      "platform_start": 118.14,
+      "platform_next_event": 122.74,
+      "text_sha256": "e135ab4138da37bea37eaeac0805cac8075620c85cd0f58c5b75cd647efdbf65",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        21
+      ],
+      "platform_start": 123.18,
+      "platform_next_event": 126.86,
+      "text_sha256": "5f7da74db773b943b82ef3dc95b05d22b18eb4a3bbde51596bf1c8bb951ad373",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        22,
+        23
+      ],
+      "platform_start": 126.86,
+      "platform_next_event": 134.36,
+      "text_sha256": "632389fba23a1b0bde5871264fb3e2bc85ebf5551efaac47084f994d41ba5da6",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        24
+      ],
+      "platform_start": 134.36,
+      "platform_next_event": 136.18,
+      "text_sha256": "5af3c20920b0ce7e5e1f279bcc42928aad8591a4443b9a9a6189147547f292df",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        25
+      ],
+      "platform_start": 136.18,
+      "platform_next_event": 143.93,
+      "text_sha256": "3aee2366484b61c09abd8b49f70c86470252dc5e550ead340e04ea994fb16055",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        26
+      ],
+      "platform_start": 143.93,
+      "platform_next_event": 147.78,
+      "text_sha256": "fc1d69ec9e0b308fbbb89c7e2373d8da71ba52165bc64bcd6a80b2864d8f42c4",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        27
+      ],
+      "platform_start": 147.78,
+      "platform_next_event": 160.12,
+      "text_sha256": "cbf27c94055d8832a4566408d7228b824836e0481598232f9300622dc3c62e36",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    },
+    {
+      "line_ids": [
+        28
+      ],
+      "platform_start": 160.12,
+      "platform_next_event": 168.63,
+      "text_sha256": "f367042b7242223112815d8da55cb196845ac49ba594efe58362c841d708953c",
+      "boundary_type": "DISPLAY_CUE_NOT_MEASURED_PHRASE_OFFSET"
+    }
+  ]
+}

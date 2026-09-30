@@ -1,0 +1,93 @@
+{
+  "method": "RAW_PLUS_DEMUCS_VOCALS_ASR_CONTRAST",
+  "candidates": [
+    {
+      "id": "VERSE1_CLEAN",
+      "start": 29.805,
+      "end": 46.048,
+      "line_ids": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expected_chars": 30,
+      "full_asr_chars": 7,
+      "full_similarity": 0.0,
+      "vocals_asr_chars": 0,
+      "vocals_similarity": 0.0,
+      "best_similarity": 0.0,
+      "mean_similarity": 0.0,
+      "intelligibility_pass": false
+    },
+    {
+      "id": "CHORUS1_FOR_COMPARE",
+      "start": 47.428,
+      "end": 75.556,
+      "line_ids": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "expected_chars": 51,
+      "full_asr_chars": 7,
+      "full_similarity": 0.0,
+      "vocals_asr_chars": 111,
+      "vocals_similarity": 0.0,
+      "best_similarity": 0.0,
+      "mean_similarity": 0.0,
+      "intelligibility_pass": false
+    },
+    {
+      "id": "VERSE2_CLEAN",
+      "start": 104.443,
+      "end": 122.187,
+      "line_ids": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "expected_chars": 30,
+      "full_asr_chars": 7,
+      "full_similarity": 0.0,
+      "vocals_asr_chars": 7,
+      "vocals_similarity": 0.0,
+      "best_similarity": 0.0,
+      "mean_similarity": 0.0,
+      "intelligibility_pass": false
+    },
+    {
+      "id": "CHORUS2_REJECTED_PREV",
+      "start": 122.747,
+      "end": 138.41,
+      "line_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "expected_chars": 51,
+      "full_asr_chars": 106,
+      "full_similarity": 0.0,
+      "vocals_asr_chars": 1,
+      "vocals_similarity": 0.0,
+      "best_similarity": 0.0,
+      "mean_similarity": 0.0,
+      "intelligibility_pass": false
+    }
+  ],
+  "selected": null,
+  "status": "NO_INTELLIGIBLE_CANDIDATE"
+}

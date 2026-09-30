@@ -1,0 +1,31 @@
+{
+  "artifact_kind": "DIAGNOSTIC_AUDIO_FOR_AUDIBLE_GATE_NOT_FINAL_AUDIO",
+  "filename": "gaobie_S1C_V3_diagnostic_18.000-30.900.mp3",
+  "source_sha256": "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43",
+  "render_start": 18.0,
+  "render_end": 30.9,
+  "intended_content_duration_seconds": 12.9,
+  "mp3_container_duration_seconds": 12.930612,
+  "bytes": 252094,
+  "sha256": "ab73aa2d954168449c6dedfa75649dfdeee5b7847f2e48006e471202d3e00060",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "side_data_list": [
+          {}
+        ]
+      }
+    ],
+    "format": {
+      "duration": "12.930612",
+      "bit_rate": "155967"
+    }
+  },
+  "signal_processing": "STEREO_PRESERVED_NO_NORMALIZATION_NO_VOCAL_ENHANCEMENT",
+  "purpose": "Human audible-lyric and phrase-boundary review before production selection",
+  "formal_production_cut": false
+}

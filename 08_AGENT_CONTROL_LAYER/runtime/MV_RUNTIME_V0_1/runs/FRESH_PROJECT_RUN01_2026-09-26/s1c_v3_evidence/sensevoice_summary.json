@@ -1,0 +1,371 @@
+{
+  "method": "SENSEVOICE_INT8_BLIND_FULL_SONG_FOUR_CHANNELS",
+  "package": "sherpa-onnx==1.13.8",
+  "model": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17",
+  "model_sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51",
+  "input_contains_lyric_prompt": false,
+  "decoded_duration_seconds": 201.9453125,
+  "windows_per_channel": 11,
+  "total_windows": 44,
+  "control_sample": "official zh.wav",
+  "control_result": "NONEMPTY_NEAR_MATCH_WITH_ONE_SUBSTITUTION",
+  "stereo_correlation": 0.7673268874377174,
+  "mid_rms": 0.2092064917087555,
+  "side_rms": 0.07596703618764877,
+  "meaningful_lyric_sequences_recovered": 0,
+  "interpretation": "INSUFFICIENT_LYRIC_EVIDENCE_NOT_PROOF_OF_ABSENCE",
+  "rows": [
+    {
+      "channel": "mid",
+      "start": 0,
+      "end": 30,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 20,
+      "end": 50,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 40,
+      "end": 70,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 60,
+      "end": 90,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 80,
+      "end": 110,
+      "transcript_char_count": 2,
+      "transcript_sha256": "7a655569d7aab2029ca20b72aea1237bb7852fc2a5b4a297e9a49b4fed453b2a",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 100,
+      "end": 130,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 120,
+      "end": 150,
+      "transcript_char_count": 1,
+      "transcript_sha256": "b70bb4acc0484cf040de4c07c60f9db722283da2c4a672c39291de621e92c33f",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 140,
+      "end": 170,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 160,
+      "end": 190,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 180,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "mid",
+      "start": 200,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 0,
+      "end": 30,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 20,
+      "end": 50,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 40,
+      "end": 70,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 60,
+      "end": 90,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 80,
+      "end": 110,
+      "transcript_char_count": 2,
+      "transcript_sha256": "7a655569d7aab2029ca20b72aea1237bb7852fc2a5b4a297e9a49b4fed453b2a",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 100,
+      "end": 130,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 120,
+      "end": 150,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 140,
+      "end": 170,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 160,
+      "end": 190,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 180,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "left",
+      "start": 200,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 0,
+      "end": 30,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 20,
+      "end": 50,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 40,
+      "end": 70,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 60,
+      "end": 90,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 80,
+      "end": 110,
+      "transcript_char_count": 2,
+      "transcript_sha256": "7a655569d7aab2029ca20b72aea1237bb7852fc2a5b4a297e9a49b4fed453b2a",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 100,
+      "end": 130,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 120,
+      "end": 150,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 140,
+      "end": 170,
+      "transcript_char_count": 1,
+      "transcript_sha256": "7c2c50fbaf7b274733d5fa623040492ef299c898075f8fc47fd28356c7e08898",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 160,
+      "end": 190,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 180,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "right",
+      "start": 200,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 0,
+      "end": 30,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 20,
+      "end": 50,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 40,
+      "end": 70,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 60,
+      "end": 90,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 80,
+      "end": 110,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 100,
+      "end": 130,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 120,
+      "end": 150,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 140,
+      "end": 170,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 160,
+      "end": 190,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 180,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    },
+    {
+      "channel": "side",
+      "start": 200,
+      "end": 201.945312,
+      "transcript_char_count": 0,
+      "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sequence_support": "NONE"
+    }
+  ]
+}

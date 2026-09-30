@@ -1,0 +1,53 @@
+{
+  "gate_name": "AUDIBLE_LYRIC_VERIFICATION",
+  "scope": "RUN_LOCAL_ADDENDUM_TO_FROZEN_S1_V0_4",
+  "frozen_contract_modified": false,
+  "policy": [
+    "ASR alone cannot PASS",
+    "Forced alignment alone cannot PASS",
+    "Platform display timestamps alone cannot PASS",
+    "Human FAIL overrides machine green",
+    "PENDING/INSUFFICIENT blocks final production selection, final cut, seal and S2"
+  ],
+  "current_candidate": {
+    "id": "V3_OPENING_TWO_LINES_DIAGNOSTIC",
+    "segment_start": 18.0,
+    "segment_end": 30.9,
+    "trusted_lyric_ids": [
+      1,
+      2
+    ],
+    "human_audio_review": "PENDING",
+    "concrete_words_audible": "INSUFFICIENT",
+    "actual_source_verified": "TRUE",
+    "lyric_order_verified": "TRUE",
+    "phrase_boundaries_clean": "INSUFFICIENT",
+    "production_duration_practical": "TRUE",
+    "asr_support": "WEAK",
+    "forced_alignment_support": "CONFLICTS",
+    "route": "REVISE",
+    "gate": "INSUFFICIENT_EVIDENCE",
+    "allow_final_cut": false,
+    "allow_seal": false
+  },
+  "previous_candidates": [
+    {
+      "id": "CHORUS2_PREVIOUS",
+      "start": 122.547,
+      "end": 138.71,
+      "human_audio_review": "FAIL",
+      "concrete_words_audible": "FALSE",
+      "reason": "sustained ah vocalise reported by user"
+    },
+    {
+      "id": "VERSE1_V2_PREVIOUS",
+      "start": 29.555,
+      "end": 46.398,
+      "human_audio_review": "FAIL",
+      "concrete_words_audible": "FALSE",
+      "reason": "no concrete lyrics reported by user"
+    }
+  ],
+  "song_rejection": "NOT_PROVEN",
+  "s0_reopen": false
+}

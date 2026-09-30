@@ -1,6 +1,8 @@
 # S1 Retest V2 — Full Timeline Before Cut
 
-Status: HUMAN_AUDIO_REVIEW_PENDING
+Status: REJECTED_BY_HUMAN / SUPERSEDED
+
+> 2026-09-30: The user rejected this V2 audio too. All CLEAR/HIGH labels below are historical claims withdrawn by V3. No production eligibility follows from this document. See S1_CURRENT_STATUS.md.
 
 ## Why V1 failed
 
@@ -168,3 +170,4 @@ Final S1 evidence priority for this music type:
 The V2 candidate remains VERSE1_CLEAR because it has the strongest acoustic
 lexical-change evidence among the tested practical windows and clean line
 boundaries. S1 remains unsealed until Human Audio Review.
+

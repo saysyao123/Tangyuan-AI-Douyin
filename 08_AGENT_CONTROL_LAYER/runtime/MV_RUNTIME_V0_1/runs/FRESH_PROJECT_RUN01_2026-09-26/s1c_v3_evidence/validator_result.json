@@ -1,0 +1,27 @@
+{
+  "artifact_consistency": "PASS",
+  "checks": {
+    "source_hash_matches": true,
+    "trusted_28_lines_in_reference": true,
+    "full_map_ordered_contiguous": true,
+    "map_covers_container_duration": true,
+    "all_four_asr_channels_cover_decoded_audio": true,
+    "diagnostic_mp3_duration_within_0_1s": true,
+    "diagnostic_source_range_in_bounds": true,
+    "no_final_cut_or_seal_allowed": true,
+    "old_v2_pending_corrected": true,
+    "human_failures_preserved": true
+  },
+  "gate_regression": {
+    "regression_checks": 14,
+    "status": "PASS"
+  },
+  "audible_lyric_gate": {
+    "route": "REVISE",
+    "gate": "INSUFFICIENT_EVIDENCE",
+    "allow_final_cut": false,
+    "allow_seal": false
+  },
+  "s1_stage_seal": "BLOCKED",
+  "validation_meaning": "Artifact/gate checks passed; lyric audibility not proven; S1 remains unsealed."
+}

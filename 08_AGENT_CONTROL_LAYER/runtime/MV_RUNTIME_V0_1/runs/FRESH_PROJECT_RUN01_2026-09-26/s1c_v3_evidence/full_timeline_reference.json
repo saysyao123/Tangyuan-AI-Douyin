@@ -1,0 +1,388 @@
+{
+  "status": "REFERENCE_MAP_COMPLETE_AUDIBLE_MAP_INCOMPLETE",
+  "source_sha256": "6463db1a27b6d3ebdd1541205796f42888cadc281fa2c45e14c07c4fcfaf4a43",
+  "timeline": [
+    {
+      "start": 0,
+      "end": 18.15,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 18.15,
+      "end": 25.79,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        1
+      ],
+      "semantic_cue": "夜晚孤独的旅人",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 25.79,
+      "end": 30.67,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        2
+      ],
+      "semantic_cue": "失去后的等待",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 30.67,
+      "end": 31.04,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 31.04,
+      "end": 34.73,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        3
+      ],
+      "semantic_cue": "等待离开",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 34.73,
+      "end": 38.46,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        4
+      ],
+      "semantic_cue": "退出对方视野",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 38.46,
+      "end": 42.0,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        5
+      ],
+      "semantic_cue": "画圆",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 42.0,
+      "end": 45.9,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        6
+      ],
+      "semantic_cue": "围绕终点",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 45.9,
+      "end": 46.52,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 46.52,
+      "end": 50.58,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        7
+      ],
+      "semantic_cue": "告别时刻",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 50.58,
+      "end": 58.17,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        8,
+        9
+      ],
+      "semantic_cue": "不确定 / 遗憾难以计算",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 58.17,
+      "end": 60.09,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        10
+      ],
+      "semantic_cue": "继续等待",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 60.09,
+      "end": 67.75,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        11
+      ],
+      "semantic_cue": "让时间回答",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 67.75,
+      "end": 71.46,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        12
+      ],
+      "semantic_cue": "对方的疑问",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 71.46,
+      "end": 83.98,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        13
+      ],
+      "semantic_cue": "保留再见的记忆",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 83.98,
+      "end": 93.43,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        14
+      ],
+      "semantic_cue": "记住眼神",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 93.43,
+      "end": 94.25,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 94.25,
+      "end": 101.98,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        15
+      ],
+      "semantic_cue": "夜晚与孤独",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 101.98,
+      "end": 106.67,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        16
+      ],
+      "semantic_cue": "告别后的自己",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 106.67,
+      "end": 107.08,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 107.08,
+      "end": 110.93,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        17
+      ],
+      "semantic_cue": "当下这一刻",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 110.93,
+      "end": 114.7,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        18
+      ],
+      "semantic_cue": "希望改变",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 114.7,
+      "end": 118.14,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        19
+      ],
+      "semantic_cue": "画圆",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 118.14,
+      "end": 122.74,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        20
+      ],
+      "semantic_cue": "返回起点",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 122.74,
+      "end": 123.18,
+      "reference_role": "NO_DISPLAYED_LYRIC",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_ATMOSPHERIC_VOCAL",
+      "confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 123.18,
+      "end": 126.86,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        21
+      ],
+      "semantic_cue": "告别时刻",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 126.86,
+      "end": 134.36,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        22,
+        23
+      ],
+      "semantic_cue": "不确定 / 遗憾难以计算",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 134.36,
+      "end": 136.18,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        24
+      ],
+      "semantic_cue": "继续等待",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 136.18,
+      "end": 143.93,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        25
+      ],
+      "semantic_cue": "让时间回答",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 143.93,
+      "end": 147.78,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        26
+      ],
+      "semantic_cue": "对方的疑问",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 147.78,
+      "end": 160.12,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        27
+      ],
+      "semantic_cue": "保留再见的记忆",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 160.12,
+      "end": 168.63,
+      "reference_role": "PLATFORM_LYRIC_CUE",
+      "line_ids": [
+        28
+      ],
+      "semantic_cue": "记住眼神",
+      "audible_role": "UNVERIFIED_CONCRETE_LYRIC_OR_VOCALISE",
+      "time_confidence": "PLATFORM_REFERENCE_ONLY",
+      "audibility_confidence": "INSUFFICIENT"
+    },
+    {
+      "start": 168.63,
+      "end": 201.978776,
+      "reference_role": "CREDITS_OUTRO",
+      "audible_role": "UNVERIFIED_INSTRUMENT_OR_VOCALISE_OUTRO",
+      "confidence": "INSUFFICIENT"
+    }
+  ],
+  "human_observations": [
+    {
+      "id": "CHORUS2_PREVIOUS",
+      "start": 122.547,
+      "end": 138.71,
+      "human_audio_review": "FAIL",
+      "concrete_words_audible": "FALSE",
+      "reason": "sustained ah vocalise reported by user"
+    },
+    {
+      "id": "VERSE1_V2_PREVIOUS",
+      "start": 29.555,
+      "end": 46.398,
+      "human_audio_review": "FAIL",
+      "concrete_words_audible": "FALSE",
+      "reason": "no concrete lyrics reported by user"
+    }
+  ],
+  "observation_scope": "ONLY_EXACT_REVIEWED_RANGES; DO_NOT_EXTRAPOLATE"
+}

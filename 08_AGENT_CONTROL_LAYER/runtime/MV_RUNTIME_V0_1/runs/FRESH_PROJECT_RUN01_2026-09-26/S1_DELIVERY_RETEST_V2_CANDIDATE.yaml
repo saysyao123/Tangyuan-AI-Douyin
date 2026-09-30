@@ -1,6 +1,6 @@
 s1_retest_v2:
   run_id: "FRESH_PROJECT_RUN01_2026-09-26"
-  status: "HUMAN_AUDIO_REVIEW_PENDING"
+  status: "REJECTED_BY_HUMAN"
   song_family: "告别"
   artist: "桃子假象 Peach Illusion"
 
@@ -46,4 +46,9 @@ s1_retest_v2:
   next_gate:
     name: "HUMAN_AUDIO_REVIEW"
     required: true
-    status: "PENDING"
+    status: "FAIL"
+
+
+# 2026-09-30 correction: human review in WORK_MODE_HANDOFF supersedes V2 pending state.
+# V2 lyric times and HIGH confidence labels are historical and not current truth.
+# Current authority: S1_CURRENT_STATUS.md and S1C_FULL_TIMELINE_V3.md.
