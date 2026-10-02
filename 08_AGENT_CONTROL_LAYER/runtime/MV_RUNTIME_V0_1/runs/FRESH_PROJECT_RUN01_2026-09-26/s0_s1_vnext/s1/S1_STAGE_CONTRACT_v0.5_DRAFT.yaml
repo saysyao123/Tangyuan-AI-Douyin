@@ -1,0 +1,45 @@
+{
+  "version": "0.5-draft",
+  "status": "DESIGN_ONLY_BLOCKED_BY_S0",
+  "entry_condition": "A sealed S0 handoff with HG01 production human PASS",
+  "phases": {
+    "S1A": "Acquire the exact full source autonomously; user upload is fallback only and the blocker must be recorded.",
+    "S1B": "Lock source identity, version, probe and hash; bind trusted lyrics without silently substituting a cover/remix.",
+    "S1C": "Analyze the complete song before cutting. Type every interval as CONCRETE_LYRIC, INSTRUMENTAL, VOCALISE, TRANSITION, SILENCE, or UNKNOWN_NEEDS_REVIEW.",
+    "S1D": "Derive at most three coherent review excerpts from the completed timeline.",
+    "S1E": "Human Audio Lock HG02; PASS creates locked final audio and permits the S1 seal."
+  },
+  "candidate_requirements": [
+    "complete semantic and musical phrase",
+    "audible concrete lyrics for lyric-driven MV",
+    "trusted lyric order",
+    "clean phrase boundaries",
+    "practical production duration without a fixed-duration shortcut",
+    "no blocking UNKNOWN_NEEDS_REVIEW interval"
+  ],
+  "truth_rules": [
+    "ASR cannot independently pass lyric truth",
+    "forced alignment or LRC cannot independently pass lyric truth",
+    "human FAIL overrides machine evidence",
+    "full timeline precedes excerpt selection and cutting"
+  ],
+  "seal_requires": [
+    "exact source identity and SHA256",
+    "full-source technical probe",
+    "trusted lyric identity or explicit no-lyric decision",
+    "complete typed timeline",
+    "selected excerpt timeline and boundary checks",
+    "review audio artifact",
+    "HG02 production human PASS",
+    "fresh deterministic judge PASS"
+  ],
+  "failure_routes": {
+    "WRONG_VERSION": "REPAIR_S1B",
+    "UNRESOLVED_TIMELINE": "REVISE_S1C",
+    "NO_AUDIBLE_LYRIC_REGION": "REJECT_SONG_AND_REOPEN_S0",
+    "HUMAN_SOURCE_REJECTION": "CACHE_HASH_AND_REOPEN_S0_OR_REPAIR_VERSION",
+    "ACQUISITION_BLOCKED": "REPORT_BLOCKER_AND_USE_USER_SOURCE_ONLY_AS_FALLBACK"
+  },
+  "forbidden": ["visual direction", "storyboard", "first-frame work", "S2 entry before S1 seal"]
+}
+

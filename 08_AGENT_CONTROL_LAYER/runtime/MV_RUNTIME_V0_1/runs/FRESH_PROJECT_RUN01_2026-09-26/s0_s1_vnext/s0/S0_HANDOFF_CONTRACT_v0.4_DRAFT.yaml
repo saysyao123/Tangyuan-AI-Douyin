@@ -1,0 +1,21 @@
+{
+  "version": "0.4-draft",
+  "required_when_sealed": {
+    "song_family": "non-empty",
+    "artist_or_account": "non-empty",
+    "language_evidence": "CHINESE",
+    "source_lane": "PRIMARY_CORE or explicitly enabled SUPPLEMENTAL_TEST",
+    "history_policy": "ELIGIBLE",
+    "reference_identity_tied": true,
+    "reference_access": "human-reviewable",
+    "semantic_direction": "non-empty",
+    "human_gate": "HG01 PASS / PRODUCTION / USER"
+  },
+  "must_not_include": [
+    "exact production media",
+    "full-song timeline",
+    "final segment timestamps",
+    "S1 audio seal"
+  ]
+}
+

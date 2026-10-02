@@ -1,0 +1,16 @@
+{
+  "version": "0.5-draft",
+  "required_outputs": [
+    "source identity, URL/provenance, probe and SHA256",
+    "trusted lyric reference privately retained where copyright requires, plus public hash/identity metadata",
+    "complete typed full-song timeline",
+    "selected segment timestamps and line/semantic map",
+    "review excerpt audio",
+    "HG02 receipt",
+    "locked final audio only after HG02 PASS",
+    "fresh judge result"
+  ],
+  "copyright_rule": "Do not commit copyrighted full media or full lyrics unless licensed; commit metadata, hashes, derived timings and permissible review artifacts only.",
+  "downstream": "S2 entry is allowed only when every seal requirement is present and HG02 is PASS."
+}
+

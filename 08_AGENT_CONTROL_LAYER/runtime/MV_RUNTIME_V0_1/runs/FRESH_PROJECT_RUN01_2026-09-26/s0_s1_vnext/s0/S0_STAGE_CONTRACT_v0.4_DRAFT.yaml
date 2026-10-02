@@ -1,0 +1,43 @@
+{
+  "version": "0.4-draft",
+  "status": "READY_FOR_TEST_NOT_FINAL",
+  "goal": "Return zero to three distinct Chinese Song Family directions and make at least one genuinely reviewable for HG01.",
+  "lanes": ["PRIMARY_CORE", "SUPPLEMENTAL_TEST", "WATCH"],
+  "pipeline": [
+    "CHINESE_LANGUAGE_EVIDENCE",
+    "HISTORY_EXCLUSION_AND_FAMILY_DEDUPE",
+    "CORE_PROVENANCE_AND_DIRECTION_FIT",
+    "MAX_THREE_DIRECTIONS",
+    "CURRENT_HUMAN_REVIEWABLE_REFERENCE",
+    "HG01_HUMAN_SONG_FAMILY_LOCK",
+    "S0_SEAL"
+  ],
+  "states": [
+    "SONG_POOL_REFRESH_REQUIRED",
+    "REFERENCE_REFRESH_REQUIRED",
+    "READY_FOR_HG01",
+    "SEALED"
+  ],
+  "reviewable_reference_access": [
+    "PLAYABLE_PUBLIC_REFERENCE",
+    "USER_PROVIDED_REFERENCE",
+    "VERIFIED_REFERENCE_MEDIA"
+  ],
+  "insufficient_alone": [
+    "HTTP_200",
+    "HTML_SHELL",
+    "TITLE_ONLY",
+    "LYRICS_PAGE_ONLY",
+    "ASR_ONLY",
+    "FORCED_ALIGNMENT_ONLY"
+  ],
+  "forbidden_s0_outputs": [
+    "exact_source_hash",
+    "full_song_timeline",
+    "production_segment",
+    "locked_final_audio"
+  ],
+  "seal_rule": "Exactly one eligible and reviewable Song Family plus explicit production human PASS. TEST or AUTO confirmation never seals production S0.",
+  "downstream_rule": "S1 entry is false unless S0 is SEALED; S2 remains blocked until S1 is sealed."
+}
+
