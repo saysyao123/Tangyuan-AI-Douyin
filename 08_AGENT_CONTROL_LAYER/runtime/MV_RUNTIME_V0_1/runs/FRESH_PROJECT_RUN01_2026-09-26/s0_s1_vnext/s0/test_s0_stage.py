@@ -7,6 +7,7 @@ def candidate(name="甲", **changes):
     item = {
         "song_family": name,
         "artist_or_account": "账号",
+        "song_family_identity_status": "RESOLVED",
         "source_lane": "PRIMARY_CORE",
         "language_evidence": "CHINESE",
         "history_policy": "ELIGIBLE",
@@ -39,6 +40,9 @@ class S0Tests(unittest.TestCase):
     def test_family_dedupe(self): self.assertEqual(evaluate_s0(payload([candidate(),candidate()]))["direction_candidates"], ["甲"])
     def test_max_three(self): self.assertEqual(len(evaluate_s0(payload([candidate(str(i)) for i in range(5)]))["direction_candidates"]), 3)
     def test_zero_valid(self): self.assertEqual(evaluate_s0(payload([]))["stage_route"], "SONG_POOL_REFRESH_REQUIRED")
+    def test_unresolved_identity_routes_before_reference(self):
+        result=evaluate_s0(payload([candidate(song_family_identity_status="UNRESOLVED")]))
+        self.assertEqual(result["stage_route"], "SONG_IDENTITY_REFRESH_REQUIRED")
     def test_pending_human_does_not_seal(self): self.assertFalse(evaluate_s0(payload([candidate()]))["s0_sealed"])
     def test_test_auto_cannot_seal(self):
         c={"status":"PASS","actor":"AUTO","mode":"TEST","song_family":"甲"}
@@ -49,4 +53,3 @@ class S0Tests(unittest.TestCase):
 
 
 if __name__ == "__main__": unittest.main()
-

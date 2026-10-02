@@ -5,6 +5,7 @@
   "lanes": ["PRIMARY_CORE", "SUPPLEMENTAL_TEST", "WATCH"],
   "pipeline": [
     "CHINESE_LANGUAGE_EVIDENCE",
+    "SONG_FAMILY_IDENTITY_NORMALIZATION",
     "HISTORY_EXCLUSION_AND_FAMILY_DEDUPE",
     "CORE_PROVENANCE_AND_DIRECTION_FIT",
     "MAX_THREE_DIRECTIONS",
@@ -14,6 +15,7 @@
   ],
   "states": [
     "SONG_POOL_REFRESH_REQUIRED",
+    "SONG_IDENTITY_REFRESH_REQUIRED",
     "REFERENCE_REFRESH_REQUIRED",
     "READY_FOR_HG01",
     "SEALED"
@@ -31,6 +33,7 @@
     "ASR_ONLY",
     "FORCED_ALIGNMENT_ONLY"
   ],
+  "identity_rule": "Song title, performer and recommending/curator account must be separate fields. Search-title similarity, a concatenated label or a curator account cannot establish Song Family identity.",
   "forbidden_s0_outputs": [
     "exact_source_hash",
     "full_song_timeline",
@@ -40,4 +43,3 @@
   "seal_rule": "Exactly one eligible and reviewable Song Family plus explicit production human PASS. TEST or AUTO confirmation never seals production S0.",
   "downstream_rule": "S1 entry is false unless S0 is SEALED; S2 remains blocked until S1 is sealed."
 }
-

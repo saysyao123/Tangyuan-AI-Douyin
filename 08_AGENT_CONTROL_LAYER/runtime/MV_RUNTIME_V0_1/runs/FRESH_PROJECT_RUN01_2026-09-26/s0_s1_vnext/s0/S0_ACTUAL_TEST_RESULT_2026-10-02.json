@@ -2,87 +2,15 @@
   "validator": "PASS",
   "errors": [],
   "warnings": [],
-  "stage_route": "REFERENCE_REFRESH_REQUIRED",
-  "direction_candidates": [
+  "stage_route": "SONG_IDENTITY_REFRESH_REQUIRED",
+  "direction_candidates": [],
+  "identity_refresh_candidates": [
     "向山河林响",
     "听见月亮的歌",
     "遇见爱的人"
   ],
   "hg01_ready_candidates": [],
-  "candidate_details": [
-    {
-      "song_family": "向山河林响",
-      "artist_or_account": "火乐烁",
-      "source_lane": "HISTORICAL_CORE_VERIFIED",
-      "language_evidence": "CHINESE",
-      "history_policy": "ELIGIBLE",
-      "semantic_direction": "山河、出发、辽阔；适合人物冒险与大场景动态",
-      "reference_review": {
-        "identity_tied": true,
-        "user_reviewable": false,
-        "access": "HTML_SHELL_ONLY",
-        "current_freshness": "NOT_REFRESHED",
-        "http_status": 200,
-        "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"
-      },
-      "direction_eligible": true,
-      "eligibility_reasons": [],
-      "hg01_ready": false,
-      "review_warnings": [
-        "CURRENT_HUMAN_REVIEWABLE_REFERENCE_REQUIRED",
-        "HTTP_PAGE_IS_NOT_REVIEWABLE_MEDIA",
-        "REFERENCE_NOT_REFRESHED"
-      ]
-    },
-    {
-      "song_family": "听见月亮的歌",
-      "artist_or_account": "XIANGJISHI",
-      "source_lane": "HISTORICAL_CORE_VERIFIED",
-      "language_evidence": "CHINESE",
-      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
-      "semantic_direction": "迷路小船终会靠岸；适合治愈奇幻动画",
-      "reference_review": {
-        "identity_tied": true,
-        "user_reviewable": false,
-        "access": "HTML_SHELL_ONLY",
-        "current_freshness": "NOT_REFRESHED",
-        "http_status": 200,
-        "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"
-      },
-      "direction_eligible": true,
-      "eligibility_reasons": [],
-      "hg01_ready": false,
-      "review_warnings": [
-        "CURRENT_HUMAN_REVIEWABLE_REFERENCE_REQUIRED",
-        "HTTP_PAGE_IS_NOT_REVIEWABLE_MEDIA",
-        "REFERENCE_NOT_REFRESHED"
-      ]
-    },
-    {
-      "song_family": "遇见爱的人",
-      "artist_or_account": "XIANGJISHI",
-      "source_lane": "HISTORICAL_CORE_VERIFIED",
-      "language_evidence": "CHINESE",
-      "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER",
-      "semantic_direction": "四季、遇见、自由；歌词视觉化空间大",
-      "reference_review": {
-        "identity_tied": true,
-        "user_reviewable": false,
-        "access": "HTML_SHELL_ONLY",
-        "current_freshness": "NOT_REFRESHED",
-        "http_status": 200,
-        "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"
-      },
-      "direction_eligible": true,
-      "eligibility_reasons": [],
-      "hg01_ready": false,
-      "review_warnings": [
-        "CURRENT_HUMAN_REVIEWABLE_REFERENCE_REQUIRED",
-        "HTTP_PAGE_IS_NOT_REVIEWABLE_MEDIA",
-        "REFERENCE_NOT_REFRESHED"
-      ]
-    }
-  ],
+  "candidate_details": [],
   "selected_song_family": null,
   "human_gate": "PENDING",
   "s0_sealed": false,

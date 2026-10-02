@@ -5,20 +5,19 @@
   "human_confirmation": {"status": "PENDING", "actor": "USER", "mode": "PRODUCTION", "song_family": null},
   "candidates": [
     {
-      "song_family": "向山河林响", "artist_or_account": "火乐烁", "source_lane": "HISTORICAL_CORE_VERIFIED",
+      "song_family": "向山河林响", "song_title": null, "performer": null, "recommending_account": "火乐烁", "song_family_identity_status": "UNRESOLVED", "identity_note": "Stored label may concatenate title and performer; current search suggests 向山河 — 林响 but exact source identity is not yet proven.", "source_lane": "HISTORICAL_CORE_VERIFIED",
       "language_evidence": "CHINESE", "history_policy": "ELIGIBLE", "semantic_direction": "山河、出发、辽阔；适合人物冒险与大场景动态",
       "reference_review": {"identity_tied": true, "user_reviewable": false, "access": "HTML_SHELL_ONLY", "current_freshness": "NOT_REFRESHED", "http_status": 200, "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"}
     },
     {
-      "song_family": "听见月亮的歌", "artist_or_account": "XIANGJISHI", "source_lane": "HISTORICAL_CORE_VERIFIED",
+      "song_family": "听见月亮的歌", "song_title": "听见月亮的歌", "performer": null, "recommending_account": "XIANGJISHI", "song_family_identity_status": "UNRESOLVED", "identity_note": "Same-title catalog results exist under other performers; recommending account must not be treated as performer.", "source_lane": "HISTORICAL_CORE_VERIFIED",
       "language_evidence": "CHINESE", "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER", "semantic_direction": "迷路小船终会靠岸；适合治愈奇幻动画",
       "reference_review": {"identity_tied": true, "user_reviewable": false, "access": "HTML_SHELL_ONLY", "current_freshness": "NOT_REFRESHED", "http_status": 200, "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"}
     },
     {
-      "song_family": "遇见爱的人", "artist_or_account": "XIANGJISHI", "source_lane": "HISTORICAL_CORE_VERIFIED",
+      "song_family": "遇见爱的人", "song_title": null, "performer": null, "recommending_account": "XIANGJISHI", "song_family_identity_status": "UNRESOLVED", "identity_note": "Stored phrase has no independently resolved catalog identity.", "source_lane": "HISTORICAL_CORE_VERIFIED",
       "language_evidence": "CHINESE", "history_policy": "NO_EXCLUSION_IN_CURRENT_LEDGER", "semantic_direction": "四季、遇见、自由；歌词视觉化空间大",
       "reference_review": {"identity_tied": true, "user_reviewable": false, "access": "HTML_SHELL_ONLY", "current_freshness": "NOT_REFRESHED", "http_status": 200, "evidence_ref": "s0_reopen/CORE_RECHECK_QUEUE.json"}
     }
   ]
 }
-

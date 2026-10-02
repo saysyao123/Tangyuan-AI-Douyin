@@ -2,7 +2,10 @@
   "version": "0.4-draft",
   "required_when_sealed": {
     "song_family": "non-empty",
-    "artist_or_account": "non-empty",
+    "song_title": "resolved",
+    "performer": "resolved",
+    "recommending_account": "recorded separately when applicable",
+    "song_family_identity_status": "RESOLVED",
     "language_evidence": "CHINESE",
     "source_lane": "PRIMARY_CORE or explicitly enabled SUPPLEMENTAL_TEST",
     "history_policy": "ELIGIBLE",
@@ -18,4 +21,3 @@
     "S1 audio seal"
   ]
 }
-

@@ -18,7 +18,7 @@ def _contains_forbidden(value):
 
 def evaluate_s0(payload):
     data = deepcopy(payload)
-    errors, warnings, eligible, ready = [], [], [], []
+    errors, warnings, identity_pending, eligible, ready = [], [], [], [], []
     if _contains_forbidden(data):
         errors.append("S0_BOUNDARY_LEAKAGE")
 
@@ -34,6 +34,8 @@ def evaluate_s0(payload):
         seen.add(family)
         if item.get("language_evidence") != "CHINESE":
             reasons.append("CHINESE_LANGUAGE_EVIDENCE_REQUIRED")
+        if item.get("song_family_identity_status", "RESOLVED") != "RESOLVED":
+            reasons.append("SONG_FAMILY_IDENTITY_UNRESOLVED")
         if item.get("history_policy") not in {"ELIGIBLE", "NO_EXCLUSION_IN_CURRENT_LEDGER"}:
             reasons.append("HISTORY_EXCLUDED")
         lane = item.get("source_lane")
@@ -46,6 +48,8 @@ def evaluate_s0(payload):
             reasons.append("SEMANTIC_DIRECTION_REQUIRED")
         item["direction_eligible"] = not reasons
         item["eligibility_reasons"] = reasons
+        if reasons == ["SONG_FAMILY_IDENTITY_UNRESOLVED"]:
+            identity_pending.append(item)
         if not item["direction_eligible"]:
             continue
         eligible.append(item)
@@ -84,6 +88,8 @@ def evaluate_s0(payload):
         route = "READY_FOR_HG01"
     elif eligible:
         route = "REFERENCE_REFRESH_REQUIRED"
+    elif identity_pending:
+        route = "SONG_IDENTITY_REFRESH_REQUIRED"
     else:
         route = "SONG_POOL_REFRESH_REQUIRED"
 
@@ -93,6 +99,7 @@ def evaluate_s0(payload):
         "warnings": warnings,
         "stage_route": route,
         "direction_candidates": [x["song_family"] for x in eligible],
+        "identity_refresh_candidates": [x["song_family"] for x in identity_pending],
         "hg01_ready_candidates": [x["song_family"] for x in ready],
         "candidate_details": eligible,
         "selected_song_family": selected if production_human_pass else None,
@@ -101,4 +108,3 @@ def evaluate_s0(payload):
         "s1_entry_allowed": production_human_pass,
         "s2_entry_allowed": False,
     }
-
