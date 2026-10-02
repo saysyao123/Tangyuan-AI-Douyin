@@ -8,4 +8,4 @@ This packet rebuilds the first two stages without changing the production run st
 - S1 is contract/design only and remains blocked until S0 is sealed by a production human decision.
 - S2 remains blocked.
 
-Start with `BUILD_STATUS_2026-10-02.md`, then read `00_STAGE_SEQUENCE.md`.
+Start with `BUILD_STATUS_2026-10-02.md`, then read `s0/S0_IDENTITY_AUDIT_2026-10-02.md` and `00_STAGE_SEQUENCE.md`.

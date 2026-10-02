@@ -9,3 +9,5 @@
 - S1 entry: false.
 
 The rules work and correctly refuse a false stage PASS. The stored fields conflate or omit title, performer and recommending account, so exact Song Family identity must be resolved first. All three records are also based on an August historical snapshot, are marked `NOT_REFRESHED`, and currently resolve only to HTML shells rather than human-reviewable media. Normalize identity, obtain a current identity-tied playable reference for at least one direction, rerun this evaluator, and only then present HG01 to the user.
+
+Discovery evidence and mismatch handling are recorded in `S0_IDENTITY_AUDIT_2026-10-02.md`.
