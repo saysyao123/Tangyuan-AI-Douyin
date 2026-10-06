@@ -1,0 +1,5 @@
+engine/assets/*.png
+engine/lib/fonts/*.woff
+*.mp4
+*.mp3
+__pycache__/

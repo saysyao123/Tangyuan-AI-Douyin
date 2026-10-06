@@ -1,0 +1,53 @@
+{
+ "project": "/workspace/scratch/3b5eb813b8de/Tangyuan-AI-Douyin/08_AGENT_CONTROL_LAYER/pilots/MOTION_DIRECTOR_RUN03_2026-10-06/engine",
+ "segments": [
+  {
+   "id": "gesture",
+   "window_lt": [
+    0.0,
+    2.48
+   ],
+   "frames": 37,
+   "ms_mean": 28.8,
+   "ms_max": 83.5,
+   "ms_cold": 31.9,
+   "deterministic": true,
+   "det_maxdiff": 0,
+   "motion_pct": 3.76,
+   "motion_max": 59.84,
+   "still_pairs_pct": 0.0,
+   "spike_ratio": 77.5,
+   "spikes_at_lt": [
+    0.482,
+    1.102,
+    1.24,
+    1.447,
+    1.929
+   ],
+   "framing": [],
+   "text_tracked": 0
+  },
+  {
+   "id": "hold",
+   "window_lt": [
+    0.35,
+    2.591
+   ],
+   "frames": 33,
+   "ms_mean": 22.2,
+   "ms_max": 29.9,
+   "ms_cold": 56.3,
+   "deterministic": true,
+   "det_maxdiff": 0,
+   "motion_pct": 3.17,
+   "motion_max": 4.81,
+   "still_pairs_pct": 0.0,
+   "spike_ratio": 1.4,
+   "spikes_at_lt": [],
+   "framing": [],
+   "text_tracked": 0
+  }
+ ],
+ "transitions": [],
+ "page_errors": []
+}

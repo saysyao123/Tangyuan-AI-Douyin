@@ -1,0 +1,34 @@
+{
+  "status": "PROBE_NOT_FULL_FILM",
+  "parent": "IMAGE_ART_MV_RUN02_2026-10-06",
+  "full_audio_unchanged": true,
+  "source_excerpt": [
+    16.25,
+    21.360907
+  ],
+  "duration": 5.110907,
+  "lyric_units": [
+    "怪我太过念旧",
+    "迟迟不肯退后"
+  ],
+  "keyframe_count": 8,
+  "atlas_grid": [
+    4,
+    2
+  ],
+  "atlas_size": [
+    1536,
+    1024
+  ],
+  "cell_size": [
+    384,
+    512
+  ],
+  "movement_goal": "hand rises, contacts scarf, grips, then holds; inward draw and shoulder weight remain unvalidated",
+  "camera": "fixed medium-close action shot, held pose across second lyric; initial extra cuts removed after independent review",
+  "new_walk_animation": false,
+  "video_model_used": false,
+  "image_file_preserved": true,
+  "atlas_sha256": "f9cc297fc4188debfbc291862b508af6f49f7456d172e33f2d39796596706fd1",
+  "version": "revised_one_shot_probe"
+}

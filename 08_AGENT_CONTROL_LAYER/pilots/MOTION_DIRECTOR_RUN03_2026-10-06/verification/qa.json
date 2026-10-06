@@ -1,0 +1,52 @@
+{
+  "project": "engine",
+  "segments": [
+    {
+      "id": "gesture",
+      "window_lt": [
+        0.0,
+        2.48
+      ],
+      "frames": 37,
+      "ms_mean": 28.7,
+      "ms_max": 54.8,
+      "ms_cold": 22.4,
+      "deterministic": true,
+      "det_maxdiff": 0,
+      "motion_pct": 2.22,
+      "motion_max": 15.37,
+      "still_pairs_pct": 0.0,
+      "spike_ratio": 20.3,
+      "spikes_at_lt": [
+        0.482,
+        1.102,
+        1.24,
+        1.447
+      ],
+      "framing": [],
+      "text_tracked": 0
+    },
+    {
+      "id": "hold",
+      "window_lt": [
+        0.35,
+        2.591
+      ],
+      "frames": 33,
+      "ms_mean": 23.8,
+      "ms_max": 26.2,
+      "ms_cold": 25.3,
+      "deterministic": true,
+      "det_maxdiff": 0,
+      "motion_pct": 0.83,
+      "motion_max": 1.02,
+      "still_pairs_pct": 0.0,
+      "spike_ratio": 1.2,
+      "spikes_at_lt": [],
+      "framing": [],
+      "text_tracked": 0
+    }
+  ],
+  "transitions": [],
+  "page_errors": []
+}
