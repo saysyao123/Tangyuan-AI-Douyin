@@ -1,0 +1,104 @@
+{
+  "status": "FULL_FILM_RENDERED_AWAITING_USER_AESTHETIC_REVIEW",
+  "parent_versions": [
+    "IMAGE_ART_MV_RUN02_2026-10-06",
+    "MOTION_DIRECTOR_RUN03_2026-10-06"
+  ],
+  "duration": 21.360907,
+  "lyric_boundaries": [
+    0,
+    2.5,
+    5.75,
+    8,
+    10.75,
+    13.75,
+    16.25,
+    18.75,
+    21.360907
+  ],
+  "shot_views": 10,
+  "shots": [
+    {
+      "t0": 0,
+      "t1": 1.35,
+      "camera": "establishing push",
+      "event": "thread separates"
+    },
+    {
+      "t0": 1.35,
+      "t1": 2.5,
+      "camera": "closer cut and push",
+      "event": "thread residue"
+    },
+    {
+      "t0": 2.5,
+      "t1": 5.75,
+      "camera": "lateral track",
+      "event": "wind and broken thread"
+    },
+    {
+      "t0": 5.75,
+      "t1": 8,
+      "camera": "push toward photo",
+      "event": "six irregular pieces join"
+    },
+    {
+      "t0": 8,
+      "t1": 9.55,
+      "camera": "room lateral move",
+      "event": "curtain steam light"
+    },
+    {
+      "t0": 9.55,
+      "t1": 10.75,
+      "camera": "table detail push",
+      "event": "empty second place"
+    },
+    {
+      "t0": 10.75,
+      "t1": 12.67,
+      "camera": "medium-close push",
+      "event": "reach and miss"
+    },
+    {
+      "t0": 12.67,
+      "t1": 13.75,
+      "camera": "paper follow insert",
+      "event": "photo departs"
+    },
+    {
+      "t0": 13.75,
+      "t1": 16.25,
+      "camera": "ease back with lateral drift",
+      "event": "photo pieces return and linger"
+    },
+    {
+      "t0": 16.25,
+      "t1": 21.360907,
+      "camera": "push then pull back in one shot",
+      "event": "raise hand grip scarf hold"
+    }
+  ],
+  "reach_generated_poses": 6,
+  "reach_used_cells": [
+    0,
+    1,
+    2,
+    4,
+    5
+  ],
+  "reach_cell_size": [
+    512,
+    512
+  ],
+  "gesture_used_poses": 8,
+  "gesture_cell_size": [
+    384,
+    512
+  ],
+  "video_model_used": false,
+  "walking_claimed": false,
+  "natural_continuous_character_animation_claimed": false,
+  "original_audio_sha256": "42c8fd3ce982b54d6792c66eebff6edd1406a823e53cf2a9c93b03d772ccebfe",
+  "official_S0_S1_status_changed": false
+}

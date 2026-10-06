@@ -1,0 +1,52 @@
+[
+  {
+    "path": "engine/assets/bridge.png",
+    "size": 2488255,
+    "sha256": "968aa16e14d45809e6255751e5149bd22576d4a5746b2987c6148d7b01deb947"
+  },
+  {
+    "path": "engine/assets/close.png",
+    "size": 2654736,
+    "sha256": "ecfec445a8058d9b7becd6afe36c09d547a16ac46b988923809ab5d0d4ca4824"
+  },
+  {
+    "path": "engine/assets/gesture_atlas.png",
+    "size": 2892245,
+    "sha256": "f9cc297fc4188debfbc291862b508af6f49f7456d172e33f2d39796596706fd1"
+  },
+  {
+    "path": "engine/assets/master.png",
+    "size": 2664897,
+    "sha256": "3553e24d44cf3e22e234fdfd5bb98424f1664e81a934fec72203787ed640e2ac"
+  },
+  {
+    "path": "engine/assets/memory.png",
+    "size": 3147855,
+    "sha256": "e0029e0efdba2c9358c285f27499fa6af39f523307d2c11bfb72af590597dd2b"
+  },
+  {
+    "path": "engine/assets/reach_atlas.png",
+    "size": 2746730,
+    "sha256": "e5e4bff687ce087011e54b19044d16d3293b33cf33899f9be25d8deab4ace941"
+  },
+  {
+    "path": "engine/assets/room.png",
+    "size": 2287872,
+    "sha256": "d3f1a041b6da38a94e9121c155259b0d99f991b79b873d7d9b756e15b63817df"
+  },
+  {
+    "path": "engine/assets/woman.png",
+    "size": 1447410,
+    "sha256": "5425493a80b825266092820bdd6255544d25a9dceb228f81a8bc04d1dd355508"
+  },
+  {
+    "path": "engine/lib/fonts/LXGWWenKai-500.woff",
+    "size": 2098296,
+    "sha256": "734bd187392579417ac83effe31d37b9de43c7b290bcb400800456511ed79e8f"
+  },
+  {
+    "path": "engine/lib/fonts/NotoSansSC-500.woff",
+    "size": 1416188,
+    "sha256": "928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512"
+  }
+]
