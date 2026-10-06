@@ -1,0 +1,46 @@
+{
+  "video": "Tangyuan_CodeMotion_MV_final.mp4",
+  "sha256": "910330f31a0884062c8325a3055fd02595f31c7f8d43d8baa8f403ade35c6394",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1080,
+        "height": 1920,
+        "avg_frame_rate": "30/1",
+        "duration": "21.366667",
+        "nb_read_frames": "641"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2,
+        "avg_frame_rate": "0/0",
+        "duration": "21.360998",
+        "nb_read_frames": "920"
+      }
+    ],
+    "format": {
+      "duration": "21.366667"
+    }
+  },
+  "checks": {
+    "portrait_1080x1920": true,
+    "30fps": true,
+    "641_frames": true,
+    "audio_present": true,
+    "duration_within_one_frame": true,
+    "audio_envelope_preserved": true,
+    "audio_offset_within_10ms": true
+  },
+  "audio_rms_correlation": 0.9999834443177916,
+  "audio_rms_best_lag_seconds": 0.0,
+  "audio_rms_resolution_seconds": 0.01,
+  "audio_subjective_listening": "not performed in this run; reuse user-confirmed source",
+  "technical_result": "PASS"
+}
