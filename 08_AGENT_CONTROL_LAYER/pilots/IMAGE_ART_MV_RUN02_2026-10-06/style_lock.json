@@ -1,0 +1,12 @@
+{
+  "user_choice": "A · 电影插画（推荐）",
+  "source_master": "engine/assets/master.png",
+  "stage": "STYLE_LOCKED",
+  "audio_sha256": "42c8fd3ce982b54d6792c66eebff6edd1406a823e53cf2a9c93b03d772ccebfe",
+  "lyric_units": 8,
+  "duration": 21.360907,
+  "imagegen": true,
+  "video_model": false,
+  "timing_tolerance_seconds": 0.25,
+  "scope": "independent aesthetic-upgrade pilot; formal S0/S1 project status unchanged"
+}

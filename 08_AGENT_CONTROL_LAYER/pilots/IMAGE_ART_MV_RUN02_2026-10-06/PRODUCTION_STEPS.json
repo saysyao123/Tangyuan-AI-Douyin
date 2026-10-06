@@ -1,0 +1,40 @@
+{
+  "source": "built-in image_gen",
+  "chosen_direction": "A",
+  "reference": "engine/assets/master.png",
+  "assets": [
+    {
+      "file": "engine/assets/bridge.png",
+      "prompt_key": "bridge",
+      "reference": "master",
+      "function": "clean scene plate"
+    },
+    {
+      "file": "engine/assets/woman.png",
+      "prompt_key": "woman",
+      "reference": "master",
+      "function": "transparent character sprite; renderer restores sole anchor"
+    },
+    {
+      "file": "engine/assets/memory.png",
+      "prompt_key": "memory",
+      "reference": "master",
+      "function": "couple photograph content"
+    },
+    {
+      "file": "engine/assets/room.png",
+      "prompt_key": "room",
+      "reference": "master",
+      "function": "two-chair two-cup empty-room plate"
+    },
+    {
+      "file": "engine/assets/close.png",
+      "prompt_key": "close",
+      "reference": "master",
+      "function": "same-character scarf-holding close view"
+    }
+  ],
+  "post_generation_image_editing": "none; originals copied unchanged",
+  "video_compositing": "Canvas image layers, crop sampling, deterministic local displacement, fixed sole anchor, paper clipping/transforms, captions",
+  "video_model_calls": 0
+}

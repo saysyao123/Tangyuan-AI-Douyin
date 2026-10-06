@@ -1,0 +1,79 @@
+[
+  {
+    "key": "master",
+    "file": "engine/assets/master.png",
+    "width": 941,
+    "height": 1672,
+    "mode": "RGB",
+    "alpha_bbox": null,
+    "sha256": "3553e24d44cf3e22e234fdfd5bb98424f1664e81a934fec72203787ed640e2ac",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  },
+  {
+    "key": "bridge",
+    "file": "engine/assets/bridge.png",
+    "width": 941,
+    "height": 1672,
+    "mode": "RGB",
+    "alpha_bbox": null,
+    "sha256": "968aa16e14d45809e6255751e5149bd22576d4a5746b2987c6148d7b01deb947",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  },
+  {
+    "key": "woman",
+    "file": "engine/assets/woman.png",
+    "width": 941,
+    "height": 1672,
+    "mode": "RGBA",
+    "alpha_bbox": [
+      0,
+      31,
+      909,
+      1656
+    ],
+    "sha256": "5425493a80b825266092820bdd6255544d25a9dceb228f81a8bc04d1dd355508",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  },
+  {
+    "key": "memory",
+    "file": "engine/assets/memory.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "alpha_bbox": null,
+    "sha256": "e0029e0efdba2c9358c285f27499fa6af39f523307d2c11bfb72af590597dd2b",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  },
+  {
+    "key": "room",
+    "file": "engine/assets/room.png",
+    "width": 941,
+    "height": 1672,
+    "mode": "RGB",
+    "alpha_bbox": null,
+    "sha256": "d3f1a041b6da38a94e9121c155259b0d99f991b79b873d7d9b756e15b63817df",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  },
+  {
+    "key": "close",
+    "file": "engine/assets/close.png",
+    "width": 941,
+    "height": 1672,
+    "mode": "RGB",
+    "alpha_bbox": null,
+    "sha256": "ecfec445a8058d9b7becd6afe36c09d547a16ac46b988923809ab5d0d4ca4824",
+    "generated_with": "ChatGPT built-in image_gen",
+    "version": "Run02 A cinematic illustration",
+    "original_pixels_preserved": true
+  }
+]
