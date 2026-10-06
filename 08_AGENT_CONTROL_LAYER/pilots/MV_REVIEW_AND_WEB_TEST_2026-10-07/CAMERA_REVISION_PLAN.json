@@ -1,0 +1,29 @@
+{
+  "status": "PROPOSED_NOT_RENDERED",
+  "duration_seconds": 21.360907,
+  "lyric_boundaries": [0, 2.5, 5.75, 8, 10.75, 13.75, 16.25, 18.75, 21.360907],
+  "shots": [
+    {"start":0,"end":5.75,"lyrics":[0,1],"event":"桥上人物、断线和风建立孤独","camera":"locked","remove":"同图跳近又缩回"},
+    {"start":5.75,"end":8,"lyrics":[2],"event":"照片碎片拼合","camera":"locked close shot"},
+    {"start":8,"end":10.75,"lyrics":[3],"event":"空椅与双杯，环境微动","camera":"locked","remove":"内外双层相机"},
+    {"start":10.75,"end":13.75,"lyrics":[4],"event":"伸手，照片脱离可触范围","camera":"locked medium close shot","constraint":"人物与照片同一坐标世界"},
+    {"start":13.75,"end":16.25,"lyrics":[5],"event":"照片仍在视线内，情绪停顿","camera":"locked object shot","asset_gate":"先验收静帧构图"},
+    {"start":16.25,"end":21.360907,"lyrics":[6,7],"event":"保留八帧扶围巾及末帧停留","camera":"prefer locked; experimental one-way micro push"}
+  ],
+  "tail_test": {
+    "duration_seconds":5.110907,
+    "logical_canvas":[1080,1920],
+    "target_fps":30,
+    "pose_starts":[0,0.42,0.66,0.87,1.03,1.19,1.36,1.56],
+    "atlas":{"width":1536,"height":1024,"columns":4,"rows":2,"cell":[384,512],"order":"row-major","alpha":"preserve"},
+    "actor":{"x":-212,"y":296,"scale":3.2,"wind_region_x_lt":112,"original_global_time_offset":16.25},
+    "A":{"z":1.025,"pivot":[600,980],"dx":0,"dy":0,"movement":"none"},
+    "B":{"z_start":1.025,"z_end":1.055,"pivot":[600,980],"dx":0,"dy":0,"move_start":1.65,"move_end":2.65,"easing":"p*p*(3-2*p)","after":"hold; no reverse","purpose":"扶住后强调已成立的动作","amplitude_status":"experimental, not validated"},
+    "control_variables":["assets","character placement","pose timing","pose blending","background animation","local wind","fonts","captions","audio"],
+    "simplification_rule":"若环境无法复用，A/B同时使用同一静态背景，标记简化测试，不能称与Run04完全等同",
+    "sequence":["2s runtime proof","tail A/B","human camera verdict","intro 0-5.75s test","six-shot full movie"]
+  },
+  "camera_contract_fields":["purpose","subject","emphasis","start_end","stop_condition"],
+  "acceptance":"user verdict independent from technical export checks",
+  "formal_S0_S1_status_changed":false
+}

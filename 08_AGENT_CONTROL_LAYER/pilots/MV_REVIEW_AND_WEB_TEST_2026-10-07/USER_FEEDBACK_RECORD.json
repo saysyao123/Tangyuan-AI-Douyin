@@ -1,0 +1,18 @@
+{
+  "record_date_local": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "baseline_commit": "9e53367ccd52326effe0ce0166903d9b92d2df12",
+  "feedback_quote": "镜头的运镜方式确实不大行，有点瞎运的感觉，同一个画画，产生了莫名起面的多次运镜，最后的人物扶围巾的动作效果十分好。感觉很不错。",
+  "verdicts": {
+    "gesture": "USER_GESTURE_ACCEPTED",
+    "camera": "USER_CAMERA_REJECTED",
+    "export": "PRIOR_TECHNICAL_CHECKS_PASSED",
+    "new_camera_plan": "PROPOSED_NOT_RENDERED_NOT_ACCEPTED"
+  },
+  "accepted_scope": "扶围巾动作的观看效果；不扩展为连续人体运动或整片运镜通过",
+  "rejected_scope": "同图多次无明确动机的运镜",
+  "independent_review_scope": "Run04 PASS_FOR_USER_REVIEW 不是用户审美通过",
+  "locked": ["电影插画A", "现有角色身份", "八帧扶围巾素材", "原动作时刻与末帧停留", "歌曲", "歌词与字幕时间轴"],
+  "request": "结合原始技能深度复盘，提出更好方案及普通ChatGPT网页端可执行测试",
+  "delivery_this_round": "报告、相机方案、网页启动指令和素材包；不重做整片"
+}
