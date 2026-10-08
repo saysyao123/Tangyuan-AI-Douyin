@@ -1,0 +1,4656 @@
+{
+  "checkedAt": "2026-10-08T06:02:27.889Z",
+  "scope": "仅检查原帖 MP4 文件头和响应，不代表浏览器起播或完整视听审看",
+  "total": 581,
+  "passed": 575,
+  "failed": 6,
+  "results": [
+    {
+      "id": "2107501993057005676",
+      "sourceUrl": "https://x.com/HadesDesign/status/2107501993057005676",
+      "checkedAt": "2026-10-08T06:02:08.378Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107501886844891607",
+      "sourceUrl": "https://x.com/kevrussell/status/2107501886844891607",
+      "checkedAt": "2026-10-08T06:02:08.387Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107501594992423246",
+      "sourceUrl": "https://x.com/jeffbruchado/status/2107501594992423246",
+      "checkedAt": "2026-10-08T06:02:08.388Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107501581365281248",
+      "sourceUrl": "https://x.com/MATCHA_ORANGE_/status/2107501581365281248",
+      "checkedAt": "2026-10-08T06:02:08.388Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107501431695495470",
+      "sourceUrl": "https://x.com/magica_ai/status/2107501431695495470",
+      "checkedAt": "2026-10-08T06:02:08.389Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107500032538575272",
+      "sourceUrl": "https://x.com/briangulo_/status/2107500032538575272",
+      "checkedAt": "2026-10-08T06:02:08.389Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499968143733228",
+      "sourceUrl": "https://x.com/itnavi2022/status/2107499968143733228",
+      "checkedAt": "2026-10-08T06:02:08.390Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499721560641723",
+      "sourceUrl": "https://x.com/Atomic0111/status/2107499721560641723",
+      "checkedAt": "2026-10-08T06:02:08.390Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499672915021992",
+      "sourceUrl": "https://x.com/RyanSael/status/2107499672915021992",
+      "checkedAt": "2026-10-08T06:02:13.452Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499626265784473",
+      "sourceUrl": "https://x.com/onmanjrekar/status/2107499626265784473",
+      "checkedAt": "2026-10-08T06:02:13.513Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499606494126235",
+      "sourceUrl": "https://x.com/Issayaui/status/2107499606494126235",
+      "checkedAt": "2026-10-08T06:02:13.518Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107499130536763520",
+      "sourceUrl": "https://x.com/redp314/status/2107499130536763520",
+      "checkedAt": "2026-10-08T06:02:13.526Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107498407745225201",
+      "sourceUrl": "https://x.com/scobelverse/status/2107498407745225201",
+      "checkedAt": "2026-10-08T06:02:13.530Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107498382482973039",
+      "sourceUrl": "https://x.com/RezzAIMusic/status/2107498382482973039",
+      "checkedAt": "2026-10-08T06:02:13.547Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107498302388482100",
+      "sourceUrl": "https://x.com/sankalpdomore/status/2107498302388482100",
+      "checkedAt": "2026-10-08T06:02:13.550Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107497103643816445",
+      "sourceUrl": "https://x.com/commonman_16/status/2107497103643816445",
+      "checkedAt": "2026-10-08T06:02:13.595Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107496783635185802",
+      "sourceUrl": "https://x.com/the_vibepreneur/status/2107496783635185802",
+      "checkedAt": "2026-10-08T06:02:13.599Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107495093200691462",
+      "sourceUrl": "https://x.com/nabendu82/status/2107495093200691462",
+      "checkedAt": "2026-10-08T06:02:13.603Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107494964410429923",
+      "sourceUrl": "https://x.com/0c103a/status/2107494964410429923",
+      "checkedAt": "2026-10-08T06:02:13.612Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107494910731698494",
+      "sourceUrl": "https://x.com/hikarinosunmin/status/2107494910731698494",
+      "checkedAt": "2026-10-08T06:02:13.614Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107492949382901859",
+      "sourceUrl": "https://x.com/liyue_ai/status/2107492949382901859",
+      "checkedAt": "2026-10-08T06:02:13.627Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107485265715712508",
+      "sourceUrl": "https://x.com/TanLuAI/status/2107485265715712508",
+      "checkedAt": "2026-10-08T06:02:13.631Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107485136103325759",
+      "sourceUrl": "https://x.com/pro_gramma/status/2107485136103325759",
+      "checkedAt": "2026-10-08T06:02:13.639Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107484860717973791",
+      "sourceUrl": "https://x.com/JohnKlerAI/status/2107484860717973791",
+      "checkedAt": "2026-10-08T06:02:13.679Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107481547242873319",
+      "sourceUrl": "https://x.com/luoleiorg/status/2107481547242873319",
+      "checkedAt": "2026-10-08T06:02:13.691Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107480273969627325",
+      "sourceUrl": "https://x.com/YFeng2022/status/2107480273969627325",
+      "checkedAt": "2026-10-08T06:02:13.692Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107478488760385762",
+      "sourceUrl": "https://x.com/jpshrodinger/status/2107478488760385762",
+      "checkedAt": "2026-10-08T06:02:13.693Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107477830661796205",
+      "sourceUrl": "https://x.com/FredericZ0/status/2107477830661796205",
+      "checkedAt": "2026-10-08T06:02:13.695Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107473998212927525",
+      "sourceUrl": "https://x.com/agentchengfeng/status/2107473998212927525",
+      "checkedAt": "2026-10-08T06:02:13.712Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107469294238134394",
+      "sourceUrl": "https://x.com/Adam38363368936/status/2107469294238134394",
+      "checkedAt": "2026-10-08T06:02:13.722Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107465618668871824",
+      "sourceUrl": "https://x.com/isaac_shrem/status/2107465618668871824",
+      "checkedAt": "2026-10-08T06:02:13.755Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107461812316942784",
+      "sourceUrl": "https://x.com/hylwr/status/2107461812316942784",
+      "checkedAt": "2026-10-08T06:02:13.779Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107461457936093325",
+      "sourceUrl": "https://x.com/Billpwchan/status/2107461457936093325",
+      "checkedAt": "2026-10-08T06:02:13.783Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107459822438539692",
+      "sourceUrl": "https://x.com/TanLuAI/status/2107459822438539692",
+      "checkedAt": "2026-10-08T06:02:13.791Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107457994208190801",
+      "sourceUrl": "https://x.com/austinskhosana_/status/2107457994208190801",
+      "checkedAt": "2026-10-08T06:02:13.831Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107455787823952091",
+      "sourceUrl": "https://x.com/Dheepanratnam/status/2107455787823952091",
+      "checkedAt": "2026-10-08T06:02:13.857Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107455583129313304",
+      "sourceUrl": "https://x.com/vib3coded/status/2107455583129313304",
+      "checkedAt": "2026-10-08T06:02:13.859Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107453817071804670",
+      "sourceUrl": "https://x.com/JayTL00/status/2107453817071804670",
+      "checkedAt": "2026-10-08T06:02:13.865Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107451914954911838",
+      "sourceUrl": "https://x.com/prasenx/status/2107451914954911838",
+      "checkedAt": "2026-10-08T06:02:13.867Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107449614412493219",
+      "sourceUrl": "https://x.com/HOTHEAD01TH/status/2107449614412493219",
+      "checkedAt": "2026-10-08T06:02:13.867Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107443821630107654",
+      "sourceUrl": "https://x.com/7998l201/status/2107443821630107654",
+      "checkedAt": "2026-10-08T06:02:13.923Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107443775232438381",
+      "sourceUrl": "https://x.com/kepochnik/status/2107443775232438381",
+      "checkedAt": "2026-10-08T06:02:13.927Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107434660057800861",
+      "sourceUrl": "https://x.com/JindaLi_/status/2107434660057800861",
+      "checkedAt": "2026-10-08T06:02:13.943Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107423625175593319",
+      "sourceUrl": "https://x.com/FiniYang/status/2107423625175593319",
+      "checkedAt": "2026-10-08T06:02:13.947Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107422149300600951",
+      "sourceUrl": "https://x.com/jammingrat/status/2107422149300600951",
+      "checkedAt": "2026-10-08T06:02:13.991Z",
+      "httpStatus": 404,
+      "ok": false,
+      "reason": "HTTP 404（不自动跟随重定向）"
+    },
+    {
+      "id": "2107417865406324750",
+      "sourceUrl": "https://x.com/beefnoode/status/2107417865406324750",
+      "checkedAt": "2026-10-08T06:02:13.999Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107408409859359211",
+      "sourceUrl": "https://x.com/LufzzLiz/status/2107408409859359211",
+      "checkedAt": "2026-10-08T06:02:14.007Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107402637700460669",
+      "sourceUrl": "https://x.com/YangOnchain/status/2107402637700460669",
+      "checkedAt": "2026-10-08T06:02:14.031Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107399895011434935",
+      "sourceUrl": "https://x.com/jiangjiangling/status/2107399895011434935",
+      "checkedAt": "2026-10-08T06:02:14.038Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107399371121930610",
+      "sourceUrl": "https://x.com/lnkiai/status/2107399371121930610",
+      "checkedAt": "2026-10-08T06:02:14.052Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107397947168362555",
+      "sourceUrl": "https://x.com/GdML1b0OFr90679/status/2107397947168362555",
+      "checkedAt": "2026-10-08T06:02:14.063Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107396397800841635",
+      "sourceUrl": "https://x.com/aicreataro/status/2107396397800841635",
+      "checkedAt": "2026-10-08T06:02:14.071Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107396054786224262",
+      "sourceUrl": "https://x.com/nanneifxy/status/2107396054786224262",
+      "checkedAt": "2026-10-08T06:02:14.083Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107372731721539640",
+      "sourceUrl": "https://x.com/supasaiyanian/status/2107372731721539640",
+      "checkedAt": "2026-10-08T06:02:14.124Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107369442602876972",
+      "sourceUrl": "https://x.com/ohmyangboy/status/2107369442602876972",
+      "checkedAt": "2026-10-08T06:02:14.124Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107367735466573937",
+      "sourceUrl": "https://x.com/FavioVaz/status/2107367735466573937",
+      "checkedAt": "2026-10-08T06:02:14.140Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107367341973717334",
+      "sourceUrl": "https://x.com/offcod8/status/2107367341973717334",
+      "checkedAt": "2026-10-08T06:02:14.147Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107352553382195584",
+      "sourceUrl": "https://x.com/realunclena/status/2107352553382195584",
+      "checkedAt": "2026-10-08T06:02:14.159Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107285581109547516",
+      "sourceUrl": "https://x.com/gruberbuilds/status/2107285581109547516",
+      "checkedAt": "2026-10-08T06:02:14.175Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107284687039467575",
+      "sourceUrl": "https://x.com/cheery9998/status/2107284687039467575",
+      "checkedAt": "2026-10-08T06:02:14.195Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107235777029476636",
+      "sourceUrl": "https://x.com/opusultra/status/2107235777029476636",
+      "checkedAt": "2026-10-08T06:02:14.216Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107212634835849505",
+      "sourceUrl": "https://x.com/_princegupta13/status/2107212634835849505",
+      "checkedAt": "2026-10-08T06:02:14.219Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107187734414582139",
+      "sourceUrl": "https://x.com/ElitzaVasileva/status/2107187734414582139",
+      "checkedAt": "2026-10-08T06:02:14.251Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107186892047597821",
+      "sourceUrl": "https://x.com/mdaman010/status/2107186892047597821",
+      "checkedAt": "2026-10-08T06:02:14.271Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107186094777434454",
+      "sourceUrl": "https://x.com/elie2222/status/2107186094777434454",
+      "checkedAt": "2026-10-08T06:02:14.287Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107175794145386838",
+      "sourceUrl": "https://x.com/rubenssoto_ai/status/2107175794145386838",
+      "checkedAt": "2026-10-08T06:02:14.299Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107166049326285268",
+      "sourceUrl": "https://x.com/mdaman010/status/2107166049326285268",
+      "checkedAt": "2026-10-08T06:02:14.321Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107159129420964343",
+      "sourceUrl": "https://x.com/nazimadakli/status/2107159129420964343",
+      "checkedAt": "2026-10-08T06:02:14.363Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107157967329960060",
+      "sourceUrl": "https://x.com/13_narcissus/status/2107157967329960060",
+      "checkedAt": "2026-10-08T06:02:14.367Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107149734100062383",
+      "sourceUrl": "https://x.com/xserart/status/2107149734100062383",
+      "checkedAt": "2026-10-08T06:02:14.378Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107139500980007379",
+      "sourceUrl": "https://x.com/EKeric13/status/2107139500980007379",
+      "checkedAt": "2026-10-08T06:02:14.391Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107108561851445324",
+      "sourceUrl": "https://x.com/gkxspace/status/2107108561851445324",
+      "checkedAt": "2026-10-08T06:02:14.437Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107104693448999402",
+      "sourceUrl": "https://x.com/ballerinifb/status/2107104693448999402",
+      "checkedAt": "2026-10-08T06:02:14.451Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107102281640653237",
+      "sourceUrl": "https://x.com/Narfdemo2000/status/2107102281640653237",
+      "checkedAt": "2026-10-08T06:02:14.459Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107093105992417482",
+      "sourceUrl": "https://x.com/hungryturbo/status/2107093105992417482",
+      "checkedAt": "2026-10-08T06:02:14.468Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107086714820870617",
+      "sourceUrl": "https://x.com/JaydenDavisNC/status/2107086714820870617",
+      "checkedAt": "2026-10-08T06:02:14.475Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107086004964282814",
+      "sourceUrl": "https://x.com/alexgreensh/status/2107086004964282814",
+      "checkedAt": "2026-10-08T06:02:14.524Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107022944916709886",
+      "sourceUrl": "https://x.com/tradphi/status/2107022944916709886",
+      "checkedAt": "2026-10-08T06:02:14.541Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107020311380033949",
+      "sourceUrl": "https://x.com/vib3coded/status/2107020311380033949",
+      "checkedAt": "2026-10-08T06:02:14.551Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2107018546194882678",
+      "sourceUrl": "https://x.com/AlchainHust/status/2107018546194882678",
+      "checkedAt": "2026-10-08T06:02:14.551Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106989958762516875",
+      "sourceUrl": "https://x.com/Xanderwow_A/status/2106989958762516875",
+      "checkedAt": "2026-10-08T06:02:14.556Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106958663525314769",
+      "sourceUrl": "https://x.com/ClaudeCode_UT/status/2106958663525314769",
+      "checkedAt": "2026-10-08T06:02:14.556Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106955771183272343",
+      "sourceUrl": "https://x.com/AlchainHust/status/2106955771183272343",
+      "checkedAt": "2026-10-08T06:02:14.572Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106941357915058661",
+      "sourceUrl": "https://x.com/Tao100086/status/2106941357915058661",
+      "checkedAt": "2026-10-08T06:02:14.628Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106883204762185728",
+      "sourceUrl": "https://x.com/DFakkeldy/status/2106883204762185728",
+      "checkedAt": "2026-10-08T06:02:14.635Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106877108693913741",
+      "sourceUrl": "https://x.com/Kyle_Coghlan/status/2106877108693913741",
+      "checkedAt": "2026-10-08T06:02:14.643Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106874360678023377",
+      "sourceUrl": "https://x.com/dilemma017/status/2106874360678023377",
+      "checkedAt": "2026-10-08T06:02:14.647Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106836531734581448",
+      "sourceUrl": "https://x.com/ZackSample/status/2106836531734581448",
+      "checkedAt": "2026-10-08T06:02:14.661Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106835487365419479",
+      "sourceUrl": "https://x.com/alexcooldev/status/2106835487365419479",
+      "checkedAt": "2026-10-08T06:02:14.689Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106829942206173497",
+      "sourceUrl": "https://x.com/BHolmesDev/status/2106829942206173497",
+      "checkedAt": "2026-10-08T06:02:14.727Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106755940326523082",
+      "sourceUrl": "https://x.com/ashh_codes/status/2106755940326523082",
+      "checkedAt": "2026-10-08T06:02:14.765Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106743642668875913",
+      "sourceUrl": "https://x.com/cryptowluha/status/2106743642668875913",
+      "checkedAt": "2026-10-08T06:02:14.809Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106734468715466818",
+      "sourceUrl": "https://x.com/argbeknwn/status/2106734468715466818",
+      "checkedAt": "2026-10-08T06:02:14.818Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106715812023226687",
+      "sourceUrl": "https://x.com/Adimazuz03/status/2106715812023226687",
+      "checkedAt": "2026-10-08T06:02:14.835Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106706231029314030",
+      "sourceUrl": "https://x.com/shivamdesignin/status/2106706231029314030",
+      "checkedAt": "2026-10-08T06:02:14.839Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106684612822896770",
+      "sourceUrl": "https://x.com/ayhankorkmaz_/status/2106684612822896770",
+      "checkedAt": "2026-10-08T06:02:14.876Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106684010181337136",
+      "sourceUrl": "https://x.com/Graalitoo/status/2106684010181337136",
+      "checkedAt": "2026-10-08T06:02:14.899Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106656783221899534",
+      "sourceUrl": "https://x.com/L_ARCH_01/status/2106656783221899534",
+      "checkedAt": "2026-10-08T06:02:14.908Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106604492728967620",
+      "sourceUrl": "https://x.com/dobokuya77/status/2106604492728967620",
+      "checkedAt": "2026-10-08T06:02:14.927Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106567073149190228",
+      "sourceUrl": "https://x.com/DeryaTR_/status/2106567073149190228",
+      "checkedAt": "2026-10-08T06:02:14.983Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106483328635592921",
+      "sourceUrl": "https://x.com/pranavclickks/status/2106483328635592921",
+      "checkedAt": "2026-10-08T06:02:14.984Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106472635391529002",
+      "sourceUrl": "https://x.com/duramirmagus/status/2106472635391529002",
+      "checkedAt": "2026-10-08T06:02:14.987Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106414547569676331",
+      "sourceUrl": "https://x.com/ItsmeAjayKV/status/2106414547569676331",
+      "checkedAt": "2026-10-08T06:02:15.001Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106378121557782950",
+      "sourceUrl": "https://x.com/konstantinsaifo/status/2106378121557782950",
+      "checkedAt": "2026-10-08T06:02:15.012Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106324559805010004",
+      "sourceUrl": "https://x.com/redp314/status/2106324559805010004",
+      "checkedAt": "2026-10-08T06:02:15.059Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106313749846249487",
+      "sourceUrl": "https://x.com/Lattice_Node/status/2106313749846249487",
+      "checkedAt": "2026-10-08T06:02:15.071Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106310907899105704",
+      "sourceUrl": "https://x.com/seiiiiiiiiiiru/status/2106310907899105704",
+      "checkedAt": "2026-10-08T06:02:15.077Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106299981875347740",
+      "sourceUrl": "https://x.com/shironagasu_ai/status/2106299981875347740",
+      "checkedAt": "2026-10-08T06:02:15.090Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106266004515172366",
+      "sourceUrl": "https://x.com/ponzponz15/status/2106266004515172366",
+      "checkedAt": "2026-10-08T06:02:15.132Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106236856979607569",
+      "sourceUrl": "https://x.com/aicreataro/status/2106236856979607569",
+      "checkedAt": "2026-10-08T06:02:15.140Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106144184449085474",
+      "sourceUrl": "https://x.com/dotey/status/2106144184449085474",
+      "checkedAt": "2026-10-08T06:02:15.143Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106131543752122774",
+      "sourceUrl": "https://x.com/anshuc/status/2106131543752122774",
+      "checkedAt": "2026-10-08T06:02:15.148Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106114830780223567",
+      "sourceUrl": "https://x.com/minchoi/status/2106114830780223567",
+      "checkedAt": "2026-10-08T06:02:15.151Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106091485125091695",
+      "sourceUrl": "https://x.com/dashiAIxz/status/2106091485125091695",
+      "checkedAt": "2026-10-08T06:02:15.171Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106075623613694123",
+      "sourceUrl": "https://x.com/loganmb_/status/2106075623613694123",
+      "checkedAt": "2026-10-08T06:02:15.225Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105990418886480092",
+      "sourceUrl": "https://x.com/akakuma0219/status/2105990418886480092",
+      "checkedAt": "2026-10-08T06:02:15.227Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105983802367688910",
+      "sourceUrl": "https://x.com/tkz_aiart/status/2105983802367688910",
+      "checkedAt": "2026-10-08T06:02:15.235Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106659260683948113",
+      "sourceUrl": "https://x.com/LiveTranscriber/status/2106659260683948113",
+      "checkedAt": "2026-10-08T06:02:15.257Z",
+      "httpStatus": 404,
+      "ok": false,
+      "reason": "HTTP 404（不自动跟随重定向）"
+    },
+    {
+      "id": "2106657471150567512",
+      "sourceUrl": "https://x.com/Chengzilhy/status/2106657471150567512",
+      "checkedAt": "2026-10-08T06:02:15.272Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106616126776230055",
+      "sourceUrl": "https://x.com/ItsmeAjayKV/status/2106616126776230055",
+      "checkedAt": "2026-10-08T06:02:15.295Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106568339917324296",
+      "sourceUrl": "https://x.com/akokoi1/status/2106568339917324296",
+      "checkedAt": "2026-10-08T06:02:15.297Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106557414992752745",
+      "sourceUrl": "https://x.com/techartist_/status/2106557414992752745",
+      "checkedAt": "2026-10-08T06:02:15.307Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106527292633825693",
+      "sourceUrl": "https://x.com/xikhar/status/2106527292633825693",
+      "checkedAt": "2026-10-08T06:02:15.333Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106493673425047896",
+      "sourceUrl": "https://x.com/LexnLin/status/2106493673425047896",
+      "checkedAt": "2026-10-08T06:02:15.367Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106466745661980904",
+      "sourceUrl": "https://x.com/AIWarper/status/2106466745661980904",
+      "checkedAt": "2026-10-08T06:02:15.387Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106462870745534946",
+      "sourceUrl": "https://x.com/CsaplarD/status/2106462870745534946",
+      "checkedAt": "2026-10-08T06:02:15.395Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106449409978626416",
+      "sourceUrl": "https://x.com/AndreiProvkin/status/2106449409978626416",
+      "checkedAt": "2026-10-08T06:02:15.428Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106442652522885551",
+      "sourceUrl": "https://x.com/Jazzen_Chen/status/2106442652522885551",
+      "checkedAt": "2026-10-08T06:02:15.446Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106426962738880879",
+      "sourceUrl": "https://x.com/DilumSanjaya/status/2106426962738880879",
+      "checkedAt": "2026-10-08T06:02:15.447Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106411941497389342",
+      "sourceUrl": "https://x.com/LLMJunky/status/2106411941497389342",
+      "checkedAt": "2026-10-08T06:02:15.471Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106402474676588632",
+      "sourceUrl": "https://x.com/gkxspace/status/2106402474676588632",
+      "checkedAt": "2026-10-08T06:02:15.507Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106395987996536913",
+      "sourceUrl": "https://x.com/maxescu/status/2106395987996536913",
+      "checkedAt": "2026-10-08T06:02:15.520Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106387548486738010",
+      "sourceUrl": "https://x.com/GamefxAI/status/2106387548486738010",
+      "checkedAt": "2026-10-08T06:02:15.527Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106375041269342691",
+      "sourceUrl": "https://x.com/0xaxit/status/2106375041269342691",
+      "checkedAt": "2026-10-08T06:02:15.531Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106323424473907257",
+      "sourceUrl": "https://x.com/ItsmeAjayKV/status/2106323424473907257",
+      "checkedAt": "2026-10-08T06:02:15.567Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106313584829431901",
+      "sourceUrl": "https://x.com/ForkedPush/status/2106313584829431901",
+      "checkedAt": "2026-10-08T06:02:15.579Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106307854085029889",
+      "sourceUrl": "https://x.com/ring_hyacinth/status/2106307854085029889",
+      "checkedAt": "2026-10-08T06:02:15.588Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106222619225895169",
+      "sourceUrl": "https://x.com/Kyoung12292/status/2106222619225895169",
+      "checkedAt": "2026-10-08T06:02:15.595Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106208810604081208",
+      "sourceUrl": "https://x.com/ItsDarcy_AI/status/2106208810604081208",
+      "checkedAt": "2026-10-08T06:02:15.696Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106190496075035096",
+      "sourceUrl": "https://x.com/Layton_Gott/status/2106190496075035096",
+      "checkedAt": "2026-10-08T06:02:15.719Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106068105894207525",
+      "sourceUrl": "https://x.com/ux_vlad/status/2106068105894207525",
+      "checkedAt": "2026-10-08T06:02:15.725Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106067189300113572",
+      "sourceUrl": "https://x.com/knutsi/status/2106067189300113572",
+      "checkedAt": "2026-10-08T06:02:15.759Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106066980730011908",
+      "sourceUrl": "https://x.com/join_devana/status/2106066980730011908",
+      "checkedAt": "2026-10-08T06:02:15.769Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106066675166531796",
+      "sourceUrl": "https://x.com/0xzxch/status/2106066675166531796",
+      "checkedAt": "2026-10-08T06:02:15.835Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106065282221424822",
+      "sourceUrl": "https://x.com/psicomante/status/2106065282221424822",
+      "checkedAt": "2026-10-08T06:02:15.855Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106065029850091943",
+      "sourceUrl": "https://x.com/EMostaque/status/2106065029850091943",
+      "checkedAt": "2026-10-08T06:02:15.861Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106064200535859685",
+      "sourceUrl": "https://x.com/techartist_/status/2106064200535859685",
+      "checkedAt": "2026-10-08T06:02:15.868Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106063780891459846",
+      "sourceUrl": "https://x.com/nelvOfficial/status/2106063780891459846",
+      "checkedAt": "2026-10-08T06:02:15.871Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106063015632158974",
+      "sourceUrl": "https://x.com/theSethian/status/2106063015632158974",
+      "checkedAt": "2026-10-08T06:02:15.905Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106062220735963507",
+      "sourceUrl": "https://x.com/NotionLab7/status/2106062220735963507",
+      "checkedAt": "2026-10-08T06:02:15.929Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106060741732147653",
+      "sourceUrl": "https://x.com/Juleboost3/status/2106060741732147653",
+      "checkedAt": "2026-10-08T06:02:15.939Z",
+      "httpStatus": 404,
+      "ok": false,
+      "reason": "HTTP 404（不自动跟随重定向）"
+    },
+    {
+      "id": "2106057217040368042",
+      "sourceUrl": "https://x.com/kevindatas/status/2106057217040368042",
+      "checkedAt": "2026-10-08T06:02:15.959Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106056138894479482",
+      "sourceUrl": "https://x.com/0xInsiderf5/status/2106056138894479482",
+      "checkedAt": "2026-10-08T06:02:15.987Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106053810405654768",
+      "sourceUrl": "https://x.com/AliKibao/status/2106053810405654768",
+      "checkedAt": "2026-10-08T06:02:15.991Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106044513177194584",
+      "sourceUrl": "https://x.com/aeng_t5/status/2106044513177194584",
+      "checkedAt": "2026-10-08T06:02:15.999Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106041581119971749",
+      "sourceUrl": "https://x.com/HarbingerDan/status/2106041581119971749",
+      "checkedAt": "2026-10-08T06:02:16.087Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106041578204655748",
+      "sourceUrl": "https://x.com/blueemi99/status/2106041578204655748",
+      "checkedAt": "2026-10-08T06:02:16.147Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106040262245896675",
+      "sourceUrl": "https://x.com/allenrokxlate/status/2106040262245896675",
+      "checkedAt": "2026-10-08T06:02:16.174Z",
+      "httpStatus": 404,
+      "ok": false,
+      "reason": "HTTP 404（不自动跟随重定向）"
+    },
+    {
+      "id": "2106040056616239235",
+      "sourceUrl": "https://x.com/mszzz0011/status/2106040056616239235",
+      "checkedAt": "2026-10-08T06:02:16.183Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2106039413645996348",
+      "sourceUrl": "https://x.com/91_elon/status/2106039413645996348",
+      "checkedAt": "2026-10-08T06:02:16.187Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105926129567879524",
+      "sourceUrl": "https://x.com/JSalmisaari/status/2105926129567879524",
+      "checkedAt": "2026-10-08T06:02:16.219Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105850801663234374",
+      "sourceUrl": "https://x.com/Chengzilhy/status/2105850801663234374",
+      "checkedAt": "2026-10-08T06:02:16.227Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105839618872738138",
+      "sourceUrl": "https://x.com/TOPSTR1X/status/2105839618872738138",
+      "checkedAt": "2026-10-08T06:02:16.275Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105825930799432073",
+      "sourceUrl": "https://x.com/cherry_mx_reds/status/2105825930799432073",
+      "checkedAt": "2026-10-08T06:02:16.287Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105816670896009224",
+      "sourceUrl": "https://x.com/cherry_mx_reds/status/2105816670896009224",
+      "checkedAt": "2026-10-08T06:02:16.291Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105804692811137242",
+      "sourceUrl": "https://x.com/blueemi99/status/2105804692811137242",
+      "checkedAt": "2026-10-08T06:02:16.299Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105783511433318451",
+      "sourceUrl": "https://x.com/SPAC89/status/2105783511433318451",
+      "checkedAt": "2026-10-08T06:02:16.306Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105774088492916757",
+      "sourceUrl": "https://x.com/Mr_Salio/status/2105774088492916757",
+      "checkedAt": "2026-10-08T06:02:16.359Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105771088374288692",
+      "sourceUrl": "https://x.com/mesmerlord/status/2105771088374288692",
+      "checkedAt": "2026-10-08T06:02:16.363Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105766824558174486",
+      "sourceUrl": "https://x.com/mesmerlord/status/2105766824558174486",
+      "checkedAt": "2026-10-08T06:02:16.364Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105758042830549235",
+      "sourceUrl": "https://x.com/mesmerlord/status/2105758042830549235",
+      "checkedAt": "2026-10-08T06:02:16.371Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105757136219504862",
+      "sourceUrl": "https://x.com/chetaslua/status/2105757136219504862",
+      "checkedAt": "2026-10-08T06:02:16.372Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105685544906952811",
+      "sourceUrl": "https://x.com/TimJayas/status/2105685544906952811",
+      "checkedAt": "2026-10-08T06:02:16.390Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105683672737145017",
+      "sourceUrl": "https://x.com/studiotimfu/status/2105683672737145017",
+      "checkedAt": "2026-10-08T06:02:16.393Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105680287854440715",
+      "sourceUrl": "https://x.com/MengTo/status/2105680287854440715",
+      "checkedAt": "2026-10-08T06:02:16.422Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105679580191416322",
+      "sourceUrl": "https://x.com/yoshifujidesign/status/2105679580191416322",
+      "checkedAt": "2026-10-08T06:02:16.423Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105675232954474831",
+      "sourceUrl": "https://x.com/Abmankendrick/status/2105675232954474831",
+      "checkedAt": "2026-10-08T06:02:16.443Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105675146166169912",
+      "sourceUrl": "https://x.com/agentgamesbot/status/2105675146166169912",
+      "checkedAt": "2026-10-08T06:02:16.467Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105666912097358187",
+      "sourceUrl": "https://x.com/msbr_dev/status/2105666912097358187",
+      "checkedAt": "2026-10-08T06:02:16.544Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105659005817462972",
+      "sourceUrl": "https://x.com/ReconScribe/status/2105659005817462972",
+      "checkedAt": "2026-10-08T06:02:16.547Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105655716564656404",
+      "sourceUrl": "https://x.com/wenbozhu0328/status/2105655716564656404",
+      "checkedAt": "2026-10-08T06:02:16.555Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105606322310054044",
+      "sourceUrl": "https://x.com/ann_nnng/status/2105606322310054044",
+      "checkedAt": "2026-10-08T06:02:16.561Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105595903943774360",
+      "sourceUrl": "https://x.com/bazfurby/status/2105595903943774360",
+      "checkedAt": "2026-10-08T06:02:16.570Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105590078638792932",
+      "sourceUrl": "https://x.com/6_KAKUU/status/2105590078638792932",
+      "checkedAt": "2026-10-08T06:02:16.575Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105587887500911001",
+      "sourceUrl": "https://x.com/suth_a/status/2105587887500911001",
+      "checkedAt": "2026-10-08T06:02:16.631Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105583511017046319",
+      "sourceUrl": "https://x.com/quentin_barden/status/2105583511017046319",
+      "checkedAt": "2026-10-08T06:02:16.635Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105580875299836388",
+      "sourceUrl": "https://x.com/charliejhills/status/2105580875299836388",
+      "checkedAt": "2026-10-08T06:02:16.678Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105567585680941521",
+      "sourceUrl": "https://x.com/wuhao1031/status/2105567585680941521",
+      "checkedAt": "2026-10-08T06:02:16.679Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105563112539893936",
+      "sourceUrl": "https://x.com/shion_nichicoma/status/2105563112539893936",
+      "checkedAt": "2026-10-08T06:02:16.697Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105561265531957530",
+      "sourceUrl": "https://x.com/_postminimal/status/2105561265531957530",
+      "checkedAt": "2026-10-08T06:02:16.719Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105560227622076768",
+      "sourceUrl": "https://x.com/huannguyenduc28/status/2105560227622076768",
+      "checkedAt": "2026-10-08T06:02:16.723Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105560147863187557",
+      "sourceUrl": "https://x.com/BasiratAfroz1/status/2105560147863187557",
+      "checkedAt": "2026-10-08T06:02:16.747Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105559563764220114",
+      "sourceUrl": "https://x.com/SimonasLTU1/status/2105559563764220114",
+      "checkedAt": "2026-10-08T06:02:16.768Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105559382150742523",
+      "sourceUrl": "https://x.com/Artless101/status/2105559382150742523",
+      "checkedAt": "2026-10-08T06:02:16.795Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105558561602560448",
+      "sourceUrl": "https://x.com/TheAIObserverX/status/2105558561602560448",
+      "checkedAt": "2026-10-08T06:02:16.811Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105556318132310361",
+      "sourceUrl": "https://x.com/shinshin86/status/2105556318132310361",
+      "checkedAt": "2026-10-08T06:02:16.852Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105304203770118434",
+      "sourceUrl": "https://x.com/JohnnyWang8802/status/2105304203770118434",
+      "checkedAt": "2026-10-08T06:02:16.871Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105361184543133877",
+      "sourceUrl": "https://x.com/nakazakifam/status/2105361184543133877",
+      "checkedAt": "2026-10-08T06:02:16.878Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105361031371383180",
+      "sourceUrl": "https://x.com/drcollect/status/2105361031371383180",
+      "checkedAt": "2026-10-08T06:02:16.947Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105360949888840080",
+      "sourceUrl": "https://x.com/thebuggeddev/status/2105360949888840080",
+      "checkedAt": "2026-10-08T06:02:16.965Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105360011916697713",
+      "sourceUrl": "https://x.com/nullbytes00/status/2105360011916697713",
+      "checkedAt": "2026-10-08T06:02:16.975Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105354745988927980",
+      "sourceUrl": "https://x.com/NISSANNS2/status/2105354745988927980",
+      "checkedAt": "2026-10-08T06:02:17.012Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105354432460554648",
+      "sourceUrl": "https://x.com/yulikay/status/2105354432460554648",
+      "checkedAt": "2026-10-08T06:02:17.026Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105350783416021472",
+      "sourceUrl": "https://x.com/techartist_/status/2105350783416021472",
+      "checkedAt": "2026-10-08T06:02:17.035Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105346791021629821",
+      "sourceUrl": "https://x.com/eigeorguy/status/2105346791021629821",
+      "checkedAt": "2026-10-08T06:02:17.036Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105346401878356252",
+      "sourceUrl": "https://x.com/AylmerTH/status/2105346401878356252",
+      "checkedAt": "2026-10-08T06:02:17.087Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105346293724045443",
+      "sourceUrl": "https://x.com/codewithkamal/status/2105346293724045443",
+      "checkedAt": "2026-10-08T06:02:17.095Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105282502726484258",
+      "sourceUrl": "https://x.com/haxzie_/status/2105282502726484258",
+      "checkedAt": "2026-10-08T06:02:17.104Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105245039521628213",
+      "sourceUrl": "https://x.com/JakubAntowski/status/2105245039521628213",
+      "checkedAt": "2026-10-08T06:02:17.115Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105020794602676465",
+      "sourceUrl": "https://x.com/L1vsun/status/2105020794602676465",
+      "checkedAt": "2026-10-08T06:02:17.119Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105231699407986785",
+      "sourceUrl": "https://x.com/ideavim/status/2105231699407986785",
+      "checkedAt": "2026-10-08T06:02:17.120Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105230653457650116",
+      "sourceUrl": "https://x.com/ppop123/status/2105230653457650116",
+      "checkedAt": "2026-10-08T06:02:17.146Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105231283248844875",
+      "sourceUrl": "https://x.com/ericpoderoso_cg/status/2105231283248844875",
+      "checkedAt": "2026-10-08T06:02:17.159Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105229630139502795",
+      "sourceUrl": "https://x.com/koldo2k/status/2105229630139502795",
+      "checkedAt": "2026-10-08T06:02:17.179Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105228931506852141",
+      "sourceUrl": "https://x.com/m_deuce/status/2105228931506852141",
+      "checkedAt": "2026-10-08T06:02:17.183Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105221575117324685",
+      "sourceUrl": "https://x.com/thibaultbessonm/status/2105221575117324685",
+      "checkedAt": "2026-10-08T06:02:17.195Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105221279100141928",
+      "sourceUrl": "https://x.com/ajinkya_shejul/status/2105221279100141928",
+      "checkedAt": "2026-10-08T06:02:17.224Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105221177035940200",
+      "sourceUrl": "https://x.com/KanikaBK/status/2105221177035940200",
+      "checkedAt": "2026-10-08T06:02:17.259Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105220761086828778",
+      "sourceUrl": "https://x.com/anvithbuilds/status/2105220761086828778",
+      "checkedAt": "2026-10-08T06:02:17.260Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105174061697618314",
+      "sourceUrl": "https://x.com/LuisBizarro/status/2105174061697618314",
+      "checkedAt": "2026-10-08T06:02:17.283Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105187523630944530",
+      "sourceUrl": "https://x.com/stefanomainardi/status/2105187523630944530",
+      "checkedAt": "2026-10-08T06:02:17.311Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105082553996820579",
+      "sourceUrl": "https://x.com/hymmakbar/status/2105082553996820579",
+      "checkedAt": "2026-10-08T06:02:17.315Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2105075653183778925",
+      "sourceUrl": "https://x.com/nikooo777/status/2105075653183778925",
+      "checkedAt": "2026-10-08T06:02:17.323Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104115092124012980",
+      "sourceUrl": "https://x.com/llama3dstudio/status/2104115092124012980",
+      "checkedAt": "2026-10-08T06:02:17.345Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104212841657962937",
+      "sourceUrl": "https://x.com/irinatoxi/status/2104212841657962937",
+      "checkedAt": "2026-10-08T06:02:17.360Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104159752095998343",
+      "sourceUrl": "https://x.com/Maruo_0314/status/2104159752095998343",
+      "checkedAt": "2026-10-08T06:02:17.399Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104837895773417649",
+      "sourceUrl": "https://x.com/Vignesh_rav/status/2104837895773417649",
+      "checkedAt": "2026-10-08T06:02:17.423Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104820347875045751",
+      "sourceUrl": "https://x.com/sidgiri2104/status/2104820347875045751",
+      "checkedAt": "2026-10-08T06:02:17.440Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104809653947265030",
+      "sourceUrl": "https://x.com/decompwlj/status/2104809653947265030",
+      "checkedAt": "2026-10-08T06:02:17.487Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104800823620632641",
+      "sourceUrl": "https://x.com/BlendiByl/status/2104800823620632641",
+      "checkedAt": "2026-10-08T06:02:17.521Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104186357824487573",
+      "sourceUrl": "https://x.com/techartist_/status/2104186357824487573",
+      "checkedAt": "2026-10-08T06:02:17.543Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104148233106723099",
+      "sourceUrl": "https://x.com/LexnLin/status/2104148233106723099",
+      "checkedAt": "2026-10-08T06:02:17.575Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104070024575242622",
+      "sourceUrl": "https://x.com/lemomo_ai/status/2104070024575242622",
+      "checkedAt": "2026-10-08T06:02:17.576Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104001664793600012",
+      "sourceUrl": "https://x.com/xikhar/status/2104001664793600012",
+      "checkedAt": "2026-10-08T06:02:17.595Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102543530002456775",
+      "sourceUrl": "https://x.com/Nickxyzn/status/2102543530002456775",
+      "checkedAt": "2026-10-08T06:02:17.619Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104520072014508316",
+      "sourceUrl": "https://x.com/akokoi1/status/2104520072014508316",
+      "checkedAt": "2026-10-08T06:02:17.631Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104111432149164474",
+      "sourceUrl": "https://x.com/LuisBizarro/status/2104111432149164474",
+      "checkedAt": "2026-10-08T06:02:17.647Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102940980379017293",
+      "sourceUrl": "https://x.com/dotey/status/2102940980379017293",
+      "checkedAt": "2026-10-08T06:02:17.666Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104792004978974928",
+      "sourceUrl": "https://x.com/NoFollowers2023/status/2104792004978974928",
+      "checkedAt": "2026-10-08T06:02:17.711Z",
+      "httpStatus": 404,
+      "ok": false,
+      "reason": "HTTP 404（不自动跟随重定向）"
+    },
+    {
+      "id": "2104788406656184436",
+      "sourceUrl": "https://x.com/yupengfei990919/status/2104788406656184436",
+      "checkedAt": "2026-10-08T06:02:17.716Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104780688113455342",
+      "sourceUrl": "https://x.com/LuisBizarro/status/2104780688113455342",
+      "checkedAt": "2026-10-08T06:02:17.734Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104775404368412946",
+      "sourceUrl": "https://x.com/salRoid/status/2104775404368412946",
+      "checkedAt": "2026-10-08T06:02:17.743Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104774377736974736",
+      "sourceUrl": "https://x.com/Thusatharan/status/2104774377736974736",
+      "checkedAt": "2026-10-08T06:02:17.755Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104773451265589544",
+      "sourceUrl": "https://x.com/Mikami_Gugenka/status/2104773451265589544",
+      "checkedAt": "2026-10-08T06:02:17.852Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104747385692053930",
+      "sourceUrl": "https://x.com/AmaySignedIn/status/2104747385692053930",
+      "checkedAt": "2026-10-08T06:02:17.900Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104733074340872656",
+      "sourceUrl": "https://x.com/petergostev/status/2104733074340872656",
+      "checkedAt": "2026-10-08T06:02:17.942Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104719112803062038",
+      "sourceUrl": "https://x.com/solvXuk/status/2104719112803062038",
+      "checkedAt": "2026-10-08T06:02:17.943Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104715277120180702",
+      "sourceUrl": "https://x.com/techartist_/status/2104715277120180702",
+      "checkedAt": "2026-10-08T06:02:17.949Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104548658171834749",
+      "sourceUrl": "https://x.com/chirovisuals/status/2104548658171834749",
+      "checkedAt": "2026-10-08T06:02:17.984Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104548405565595747",
+      "sourceUrl": "https://x.com/farooqsheik/status/2104548405565595747",
+      "checkedAt": "2026-10-08T06:02:17.991Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104504480968683521",
+      "sourceUrl": "https://x.com/CeciliaW888/status/2104504480968683521",
+      "checkedAt": "2026-10-08T06:02:17.999Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104352888793477147",
+      "sourceUrl": "https://x.com/techartist_/status/2104352888793477147",
+      "checkedAt": "2026-10-08T06:02:18.143Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104347638883873255",
+      "sourceUrl": "https://x.com/gogu_name/status/2104347638883873255",
+      "checkedAt": "2026-10-08T06:02:18.164Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104342945713561812",
+      "sourceUrl": "https://x.com/bobbyships/status/2104342945713561812",
+      "checkedAt": "2026-10-08T06:02:18.175Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104225890800705789",
+      "sourceUrl": "https://x.com/charliejhills/status/2104225890800705789",
+      "checkedAt": "2026-10-08T06:02:18.183Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104214187522318512",
+      "sourceUrl": "https://x.com/AJtheMongol/status/2104214187522318512",
+      "checkedAt": "2026-10-08T06:02:18.221Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104207365008687553",
+      "sourceUrl": "https://x.com/mayuresh_empire/status/2104207365008687553",
+      "checkedAt": "2026-10-08T06:02:18.223Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104181266459644283",
+      "sourceUrl": "https://x.com/aayush4soni/status/2104181266459644283",
+      "checkedAt": "2026-10-08T06:02:18.243Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104144532644544921",
+      "sourceUrl": "https://x.com/Rakhsh_Tech/status/2104144532644544921",
+      "checkedAt": "2026-10-08T06:02:18.247Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104094723887501736",
+      "sourceUrl": "https://x.com/konstantinsaifo/status/2104094723887501736",
+      "checkedAt": "2026-10-08T06:02:18.263Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104093497561436573",
+      "sourceUrl": "https://x.com/VectorCrossProd/status/2104093497561436573",
+      "checkedAt": "2026-10-08T06:02:18.265Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104085484347818226",
+      "sourceUrl": "https://x.com/op7418/status/2104085484347818226",
+      "checkedAt": "2026-10-08T06:02:18.267Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104046743751139812",
+      "sourceUrl": "https://x.com/lisp_mi/status/2104046743751139812",
+      "checkedAt": "2026-10-08T06:02:18.284Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104039075175182487",
+      "sourceUrl": "https://x.com/servasyy/status/2104039075175182487",
+      "checkedAt": "2026-10-08T06:02:18.319Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104027910004949132",
+      "sourceUrl": "https://x.com/sreeramkannan/status/2104027910004949132",
+      "checkedAt": "2026-10-08T06:02:18.327Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104008163561451923",
+      "sourceUrl": "https://x.com/manaimovie/status/2104008163561451923",
+      "checkedAt": "2026-10-08T06:02:18.348Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104003920251257328",
+      "sourceUrl": "https://x.com/blitast_studio/status/2104003920251257328",
+      "checkedAt": "2026-10-08T06:02:18.353Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104002636513206422",
+      "sourceUrl": "https://x.com/simonw/status/2104002636513206422",
+      "checkedAt": "2026-10-08T06:02:18.355Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103998389058740521",
+      "sourceUrl": "https://x.com/kum1ta/status/2103998389058740521",
+      "checkedAt": "2026-10-08T06:02:18.369Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103997975173439834",
+      "sourceUrl": "https://x.com/jmitani/status/2103997975173439834",
+      "checkedAt": "2026-10-08T06:02:18.378Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103997282270248974",
+      "sourceUrl": "https://x.com/akakuma0219/status/2103997282270248974",
+      "checkedAt": "2026-10-08T06:02:18.392Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103992442072813651",
+      "sourceUrl": "https://x.com/eigeorguy/status/2103992442072813651",
+      "checkedAt": "2026-10-08T06:02:18.403Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103989270558167364",
+      "sourceUrl": "https://x.com/BlendiByl/status/2103989270558167364",
+      "checkedAt": "2026-10-08T06:02:18.443Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103987596301119645",
+      "sourceUrl": "https://x.com/yoshifujidesign/status/2103987596301119645",
+      "checkedAt": "2026-10-08T06:02:18.447Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103976291699728742",
+      "sourceUrl": "https://x.com/ChrisGPT/status/2103976291699728742",
+      "checkedAt": "2026-10-08T06:02:18.459Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103975338976182477",
+      "sourceUrl": "https://x.com/WiFiMoneyGuy/status/2103975338976182477",
+      "checkedAt": "2026-10-08T06:02:18.471Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102787937482252537",
+      "sourceUrl": "https://x.com/deedydas/status/2102787937482252537",
+      "checkedAt": "2026-10-08T06:02:18.481Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103315922098470926",
+      "sourceUrl": "https://x.com/stephanlivera/status/2103315922098470926",
+      "checkedAt": "2026-10-08T06:02:18.483Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103273003555402193",
+      "sourceUrl": "https://x.com/twoclipping/status/2103273003555402193",
+      "checkedAt": "2026-10-08T06:02:18.503Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102583898865873225",
+      "sourceUrl": "https://x.com/akokoi1/status/2102583898865873225",
+      "checkedAt": "2026-10-08T06:02:18.511Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102606609574941028",
+      "sourceUrl": "https://x.com/akokoi1/status/2102606609574941028",
+      "checkedAt": "2026-10-08T06:02:18.519Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102853258582880547",
+      "sourceUrl": "https://x.com/Ror_Fly/status/2102853258582880547",
+      "checkedAt": "2026-10-08T06:02:18.531Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103116235009347650",
+      "sourceUrl": "https://x.com/WinterArc2125/status/2103116235009347650",
+      "checkedAt": "2026-10-08T06:02:18.539Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102827887732932956",
+      "sourceUrl": "https://x.com/AxtonLiu/status/2102827887732932956",
+      "checkedAt": "2026-10-08T06:02:18.559Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103511590884815282",
+      "sourceUrl": "https://x.com/sonnylazuardi/status/2103511590884815282",
+      "checkedAt": "2026-10-08T06:02:18.567Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102476258948927543",
+      "sourceUrl": "https://x.com/majidmanzarpour/status/2102476258948927543",
+      "checkedAt": "2026-10-08T06:02:18.568Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102801274173587569",
+      "sourceUrl": "https://x.com/donaldjewkes/status/2102801274173587569",
+      "checkedAt": "2026-10-08T06:02:18.583Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103381720410333314",
+      "sourceUrl": "https://x.com/VincentWei93/status/2103381720410333314",
+      "checkedAt": "2026-10-08T06:02:18.591Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103918792845963545",
+      "sourceUrl": "https://x.com/achxvi/status/2103918792845963545",
+      "checkedAt": "2026-10-08T06:02:18.595Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103099194693271874",
+      "sourceUrl": "https://x.com/pradeepXkapoor/status/2103099194693271874",
+      "checkedAt": "2026-10-08T06:02:18.600Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103499977632997524",
+      "sourceUrl": "https://x.com/alex_prompter/status/2103499977632997524",
+      "checkedAt": "2026-10-08T06:02:18.623Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103576084499358051",
+      "sourceUrl": "https://x.com/leonabboud/status/2103576084499358051",
+      "checkedAt": "2026-10-08T06:02:18.639Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104044910769016888",
+      "sourceUrl": "https://x.com/Yunn260414/status/2104044910769016888",
+      "checkedAt": "2026-10-08T06:02:18.643Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103683057689522564",
+      "sourceUrl": "https://x.com/dotey/status/2103683057689522564",
+      "checkedAt": "2026-10-08T06:02:18.655Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104039666093572362",
+      "sourceUrl": "https://x.com/feiflow/status/2104039666093572362",
+      "checkedAt": "2026-10-08T06:02:18.656Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103557735086428547",
+      "sourceUrl": "https://x.com/kloss_xyz/status/2103557735086428547",
+      "checkedAt": "2026-10-08T06:02:18.663Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103483957266268381",
+      "sourceUrl": "https://x.com/verbove/status/2103483957266268381",
+      "checkedAt": "2026-10-08T06:02:18.687Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103761658745335993",
+      "sourceUrl": "https://x.com/sudo_kiran/status/2103761658745335993",
+      "checkedAt": "2026-10-08T06:02:18.715Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103757767727255661",
+      "sourceUrl": "https://x.com/zhu185178/status/2103757767727255661",
+      "checkedAt": "2026-10-08T06:02:18.719Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103742861971726495",
+      "sourceUrl": "https://x.com/lukasersil/status/2103742861971726495",
+      "checkedAt": "2026-10-08T06:02:18.722Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102450239923720440",
+      "sourceUrl": "https://x.com/vib3coded/status/2102450239923720440",
+      "checkedAt": "2026-10-08T06:02:18.727Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103746671591256286",
+      "sourceUrl": "https://x.com/zigapoto/status/2103746671591256286",
+      "checkedAt": "2026-10-08T06:02:18.727Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103741636635496583",
+      "sourceUrl": "https://x.com/kurahu_capten/status/2103741636635496583",
+      "checkedAt": "2026-10-08T06:02:18.739Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102591147927654847",
+      "sourceUrl": "https://x.com/RyanSael/status/2102591147927654847",
+      "checkedAt": "2026-10-08T06:02:18.748Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102495989194236158",
+      "sourceUrl": "https://x.com/shfred0/status/2102495989194236158",
+      "checkedAt": "2026-10-08T06:02:18.763Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102573127192727704",
+      "sourceUrl": "https://x.com/ann_nnng/status/2102573127192727704",
+      "checkedAt": "2026-10-08T06:02:18.799Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103304514329854102",
+      "sourceUrl": "https://x.com/gavinpurcell/status/2103304514329854102",
+      "checkedAt": "2026-10-08T06:02:18.811Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103502614134718609",
+      "sourceUrl": "https://x.com/pankajkumar_dev/status/2103502614134718609",
+      "checkedAt": "2026-10-08T06:02:18.823Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102876925102555526",
+      "sourceUrl": "https://x.com/goodside/status/2102876925102555526",
+      "checkedAt": "2026-10-08T06:02:18.838Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102844654169575547",
+      "sourceUrl": "https://x.com/kimmonismus/status/2102844654169575547",
+      "checkedAt": "2026-10-08T06:02:18.857Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102779758408774104",
+      "sourceUrl": "https://x.com/superalesha/status/2102779758408774104",
+      "checkedAt": "2026-10-08T06:02:18.859Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102786378282987591",
+      "sourceUrl": "https://x.com/Aurelien_Gz/status/2102786378282987591",
+      "checkedAt": "2026-10-08T06:02:18.867Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102436464323661880",
+      "sourceUrl": "https://x.com/devteamdrew/status/2102436464323661880",
+      "checkedAt": "2026-10-08T06:02:18.912Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102437977435893771",
+      "sourceUrl": "https://x.com/kevin_t_ngo/status/2102437977435893771",
+      "checkedAt": "2026-10-08T06:02:18.932Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102441708395041170",
+      "sourceUrl": "https://x.com/Miguel07Code/status/2102441708395041170",
+      "checkedAt": "2026-10-08T06:02:18.933Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102445641205248145",
+      "sourceUrl": "https://x.com/poolio/status/2102445641205248145",
+      "checkedAt": "2026-10-08T06:02:18.935Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102449278283313303",
+      "sourceUrl": "https://x.com/higgsfield_ai/status/2102449278283313303",
+      "checkedAt": "2026-10-08T06:02:18.940Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102453658889953717",
+      "sourceUrl": "https://x.com/higgsfield_ai/status/2102453658889953717",
+      "checkedAt": "2026-10-08T06:02:18.959Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102457111787745405",
+      "sourceUrl": "https://x.com/strawhatsu4/status/2102457111787745405",
+      "checkedAt": "2026-10-08T06:02:18.991Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102463453176979794",
+      "sourceUrl": "https://x.com/edwinarbus/status/2102463453176979794",
+      "checkedAt": "2026-10-08T06:02:18.992Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102471841046786153",
+      "sourceUrl": "https://x.com/Stefan_3D_AI/status/2102471841046786153",
+      "checkedAt": "2026-10-08T06:02:18.999Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102477340920152162",
+      "sourceUrl": "https://x.com/trq212/status/2102477340920152162",
+      "checkedAt": "2026-10-08T06:02:19.011Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102478640428773861",
+      "sourceUrl": "https://x.com/chetaslua/status/2102478640428773861",
+      "checkedAt": "2026-10-08T06:02:19.015Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102493303388475855",
+      "sourceUrl": "https://x.com/cherry_mx_reds/status/2102493303388475855",
+      "checkedAt": "2026-10-08T06:02:19.019Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102498589259821559",
+      "sourceUrl": "https://x.com/aollivier82/status/2102498589259821559",
+      "checkedAt": "2026-10-08T06:02:19.047Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102512879258009818",
+      "sourceUrl": "https://x.com/AndrewOnXYZ/status/2102512879258009818",
+      "checkedAt": "2026-10-08T06:02:19.071Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102514581684052169",
+      "sourceUrl": "https://x.com/other__reality/status/2102514581684052169",
+      "checkedAt": "2026-10-08T06:02:19.072Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102531681450119426",
+      "sourceUrl": "https://x.com/Voxyz_ai/status/2102531681450119426",
+      "checkedAt": "2026-10-08T06:02:19.075Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102536138884092185",
+      "sourceUrl": "https://x.com/higgsfield_ai/status/2102536138884092185",
+      "checkedAt": "2026-10-08T06:02:19.076Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102623690152419633",
+      "sourceUrl": "https://x.com/Stefan_3D_AI/status/2102623690152419633",
+      "checkedAt": "2026-10-08T06:02:19.092Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102636308707287201",
+      "sourceUrl": "https://x.com/seiiiiiiiiiiru/status/2102636308707287201",
+      "checkedAt": "2026-10-08T06:02:19.095Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102641562824135022",
+      "sourceUrl": "https://x.com/Stefan_3D_AI/status/2102641562824135022",
+      "checkedAt": "2026-10-08T06:02:19.139Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102679018206052828",
+      "sourceUrl": "https://x.com/RileyRalmuto/status/2102679018206052828",
+      "checkedAt": "2026-10-08T06:02:19.147Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102680453912449223",
+      "sourceUrl": "https://x.com/akokoi1/status/2102680453912449223",
+      "checkedAt": "2026-10-08T06:02:19.151Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102699703309898026",
+      "sourceUrl": "https://x.com/akokoi1/status/2102699703309898026",
+      "checkedAt": "2026-10-08T06:02:19.157Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102722719502704941",
+      "sourceUrl": "https://x.com/masahirochaen/status/2102722719502704941",
+      "checkedAt": "2026-10-08T06:02:19.164Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102766871007436993",
+      "sourceUrl": "https://x.com/ystknsh/status/2102766871007436993",
+      "checkedAt": "2026-10-08T06:02:19.175Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102913101926731879",
+      "sourceUrl": "https://x.com/higgsfield_ai/status/2102913101926731879",
+      "checkedAt": "2026-10-08T06:02:19.222Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102984873351037161",
+      "sourceUrl": "https://x.com/gregpr07/status/2102984873351037161",
+      "checkedAt": "2026-10-08T06:02:19.231Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103141339651350646",
+      "sourceUrl": "https://x.com/deedydas/status/2103141339651350646",
+      "checkedAt": "2026-10-08T06:02:19.248Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103227982592831846",
+      "sourceUrl": "https://x.com/seiiiiiiiiiiru/status/2103227982592831846",
+      "checkedAt": "2026-10-08T06:02:19.255Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103523994440012086",
+      "sourceUrl": "https://x.com/devteamdrew/status/2103523994440012086",
+      "checkedAt": "2026-10-08T06:02:19.291Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103482164193165711",
+      "sourceUrl": "https://x.com/kevin_t_ngo/status/2103482164193165711",
+      "checkedAt": "2026-10-08T06:02:19.299Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103505613846196323",
+      "sourceUrl": "https://x.com/WinterArc2125/status/2103505613846196323",
+      "checkedAt": "2026-10-08T06:02:19.309Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103865359988125706",
+      "sourceUrl": "https://x.com/AndrewOnXYZ/status/2103865359988125706",
+      "checkedAt": "2026-10-08T06:02:19.336Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103965547780345859",
+      "sourceUrl": "https://x.com/deedydas/status/2103965547780345859",
+      "checkedAt": "2026-10-08T06:02:19.347Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104105016235860050",
+      "sourceUrl": "https://x.com/akokoi1/status/2104105016235860050",
+      "checkedAt": "2026-10-08T06:02:19.380Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104151743907160546",
+      "sourceUrl": "https://x.com/deedydas/status/2104151743907160546",
+      "checkedAt": "2026-10-08T06:02:19.380Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104166304177336520",
+      "sourceUrl": "https://x.com/marc_bara/status/2104166304177336520",
+      "checkedAt": "2026-10-08T06:02:19.389Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104196382404084075",
+      "sourceUrl": "https://x.com/shreyanshbuilds/status/2104196382404084075",
+      "checkedAt": "2026-10-08T06:02:19.443Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104200939095904322",
+      "sourceUrl": "https://x.com/akokoi1/status/2104200939095904322",
+      "checkedAt": "2026-10-08T06:02:19.444Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104206465863131449",
+      "sourceUrl": "https://x.com/chapi13/status/2104206465863131449",
+      "checkedAt": "2026-10-08T06:02:19.453Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104207707980869918",
+      "sourceUrl": "https://x.com/TheViableEdge/status/2104207707980869918",
+      "checkedAt": "2026-10-08T06:02:19.472Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104211152662106358",
+      "sourceUrl": "https://x.com/SimonGoodman_/status/2104211152662106358",
+      "checkedAt": "2026-10-08T06:02:19.485Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104212402875101463",
+      "sourceUrl": "https://x.com/DannyVerkissen/status/2104212402875101463",
+      "checkedAt": "2026-10-08T06:02:19.523Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104213302624821647",
+      "sourceUrl": "https://x.com/kevin_t_ngo/status/2104213302624821647",
+      "checkedAt": "2026-10-08T06:02:19.535Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104214763358015565",
+      "sourceUrl": "https://x.com/illodevcode/status/2104214763358015565",
+      "checkedAt": "2026-10-08T06:02:19.539Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104225521869705468",
+      "sourceUrl": "https://x.com/canghe/status/2104225521869705468",
+      "checkedAt": "2026-10-08T06:02:19.545Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104227261142692347",
+      "sourceUrl": "https://x.com/itsyashf/status/2104227261142692347",
+      "checkedAt": "2026-10-08T06:02:19.547Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104231262600700140",
+      "sourceUrl": "https://x.com/nakazakifam/status/2104231262600700140",
+      "checkedAt": "2026-10-08T06:02:19.555Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104234497156018396",
+      "sourceUrl": "https://x.com/sidodtv/status/2104234497156018396",
+      "checkedAt": "2026-10-08T06:02:19.591Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104235944383803495",
+      "sourceUrl": "https://x.com/mukhtharcm/status/2104235944383803495",
+      "checkedAt": "2026-10-08T06:02:19.603Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104240538941538517",
+      "sourceUrl": "https://x.com/bekamakhar/status/2104240538941538517",
+      "checkedAt": "2026-10-08T06:02:19.611Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104241160487338005",
+      "sourceUrl": "https://x.com/qiqing/status/2104241160487338005",
+      "checkedAt": "2026-10-08T06:02:19.627Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104242902218285246",
+      "sourceUrl": "https://x.com/truenyl/status/2104242902218285246",
+      "checkedAt": "2026-10-08T06:02:19.628Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104246455938797888",
+      "sourceUrl": "https://x.com/stfu0911/status/2104246455938797888",
+      "checkedAt": "2026-10-08T06:02:19.662Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104247692503204330",
+      "sourceUrl": "https://x.com/Miguel07Code/status/2104247692503204330",
+      "checkedAt": "2026-10-08T06:02:19.687Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104249941136666741",
+      "sourceUrl": "https://x.com/ryan_morr/status/2104249941136666741",
+      "checkedAt": "2026-10-08T06:02:19.699Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104254095196602550",
+      "sourceUrl": "https://x.com/hasiyevv/status/2104254095196602550",
+      "checkedAt": "2026-10-08T06:02:19.723Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104254444603076730",
+      "sourceUrl": "https://x.com/linus5x/status/2104254444603076730",
+      "checkedAt": "2026-10-08T06:02:19.735Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104256238246596651",
+      "sourceUrl": "https://x.com/omni1896837/status/2104256238246596651",
+      "checkedAt": "2026-10-08T06:02:19.735Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103119648271290566",
+      "sourceUrl": "https://x.com/AxtonLiu/status/2103119648271290566",
+      "checkedAt": "2026-10-08T06:02:19.747Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102558320695402885",
+      "sourceUrl": "https://x.com/ForwardEditor/status/2102558320695402885",
+      "checkedAt": "2026-10-08T06:02:19.751Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103122947133309311",
+      "sourceUrl": "https://x.com/MengTo/status/2103122947133309311",
+      "checkedAt": "2026-10-08T06:02:19.752Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103169764244017396",
+      "sourceUrl": "https://x.com/SidMenonTM/status/2103169764244017396",
+      "checkedAt": "2026-10-08T06:02:19.771Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103149275945517546",
+      "sourceUrl": "https://x.com/akokoi1/status/2103149275945517546",
+      "checkedAt": "2026-10-08T06:02:19.799Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102919394775220530",
+      "sourceUrl": "https://x.com/gandamu_ml/status/2102919394775220530",
+      "checkedAt": "2026-10-08T06:02:19.807Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102576886182453454",
+      "sourceUrl": "https://x.com/hayashimon1/status/2102576886182453454",
+      "checkedAt": "2026-10-08T06:02:19.831Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102966807376334856",
+      "sourceUrl": "https://x.com/ish_creative/status/2102966807376334856",
+      "checkedAt": "2026-10-08T06:02:19.832Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103138089790996843",
+      "sourceUrl": "https://x.com/manaimovie/status/2103138089790996843",
+      "checkedAt": "2026-10-08T06:02:19.870Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102782449478668290",
+      "sourceUrl": "https://x.com/pradeepXkapoor/status/2102782449478668290",
+      "checkedAt": "2026-10-08T06:02:19.875Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102652072252584046",
+      "sourceUrl": "https://x.com/tetumemo/status/2102652072252584046",
+      "checkedAt": "2026-10-08T06:02:19.880Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102744321355067761",
+      "sourceUrl": "https://x.com/varga_bee/status/2102744321355067761",
+      "checkedAt": "2026-10-08T06:02:19.887Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102755328161116223",
+      "sourceUrl": "https://x.com/wizardbrainz/status/2102755328161116223",
+      "checkedAt": "2026-10-08T06:02:19.891Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102722754172850310",
+      "sourceUrl": "https://x.com/zdkiel_labs/status/2102722754172850310",
+      "checkedAt": "2026-10-08T06:02:19.895Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102741813719138661",
+      "sourceUrl": "https://x.com/NiloTechInc/status/2102741813719138661",
+      "checkedAt": "2026-10-08T06:02:19.927Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102736587708854585",
+      "sourceUrl": "https://x.com/0x0funky/status/2102736587708854585",
+      "checkedAt": "2026-10-08T06:02:19.952Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103166575071330778",
+      "sourceUrl": "https://x.com/0xpai_eth/status/2103166575071330778",
+      "checkedAt": "2026-10-08T06:02:19.963Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103192634395361596",
+      "sourceUrl": "https://x.com/Bishal_Ramdam1/status/2103192634395361596",
+      "checkedAt": "2026-10-08T06:02:19.964Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102737776219168939",
+      "sourceUrl": "https://x.com/DotCSV/status/2102737776219168939",
+      "checkedAt": "2026-10-08T06:02:19.964Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103130115177898208",
+      "sourceUrl": "https://x.com/Hectoryu/status/2103130115177898208",
+      "checkedAt": "2026-10-08T06:02:19.976Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102890107200229817",
+      "sourceUrl": "https://x.com/JuancaGlez7/status/2102890107200229817",
+      "checkedAt": "2026-10-08T06:02:19.997Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103237989065277590",
+      "sourceUrl": "https://x.com/RetropunkAI/status/2103237989065277590",
+      "checkedAt": "2026-10-08T06:02:20.005Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102838830285898214",
+      "sourceUrl": "https://x.com/Tz_2022/status/2102838830285898214",
+      "checkedAt": "2026-10-08T06:02:20.028Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103009037164110327",
+      "sourceUrl": "https://x.com/addyosmani/status/2103009037164110327",
+      "checkedAt": "2026-10-08T06:02:20.031Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103174501345493197",
+      "sourceUrl": "https://x.com/deedydas/status/2103174501345493197",
+      "checkedAt": "2026-10-08T06:02:20.039Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103202431224119500",
+      "sourceUrl": "https://x.com/eztati/status/2103202431224119500",
+      "checkedAt": "2026-10-08T06:02:20.048Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103171088637419631",
+      "sourceUrl": "https://x.com/goodside/status/2103171088637419631",
+      "checkedAt": "2026-10-08T06:02:20.055Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102695622042411419",
+      "sourceUrl": "https://x.com/hanifproduktif/status/2102695622042411419",
+      "checkedAt": "2026-10-08T06:02:20.079Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103022039854657902",
+      "sourceUrl": "https://x.com/hooyall0113/status/2103022039854657902",
+      "checkedAt": "2026-10-08T06:02:20.103Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102954743442399395",
+      "sourceUrl": "https://x.com/imShiWen/status/2102954743442399395",
+      "checkedAt": "2026-10-08T06:02:20.137Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103095131536764940",
+      "sourceUrl": "https://x.com/jisaku_net/status/2103095131536764940",
+      "checkedAt": "2026-10-08T06:02:20.151Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102805376466891137",
+      "sourceUrl": "https://x.com/joaoli13/status/2102805376466891137",
+      "checkedAt": "2026-10-08T06:02:20.179Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103183904563998809",
+      "sourceUrl": "https://x.com/ng169onX/status/2103183904563998809",
+      "checkedAt": "2026-10-08T06:02:20.198Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102731669853573582",
+      "sourceUrl": "https://x.com/oscarmartin/status/2102731669853573582",
+      "checkedAt": "2026-10-08T06:02:20.203Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102605736002150408",
+      "sourceUrl": "https://x.com/rainwishyt/status/2102605736002150408",
+      "checkedAt": "2026-10-08T06:02:20.203Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102751132502446549",
+      "sourceUrl": "https://x.com/sundyme/status/2102751132502446549",
+      "checkedAt": "2026-10-08T06:02:20.215Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103108964821107104",
+      "sourceUrl": "https://x.com/Akash_Bang/status/2103108964821107104",
+      "checkedAt": "2026-10-08T06:02:20.251Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102897123037761640",
+      "sourceUrl": "https://x.com/Fujin_Metaverse/status/2102897123037761640",
+      "checkedAt": "2026-10-08T06:02:20.255Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102853289259729328",
+      "sourceUrl": "https://x.com/Luchigatica/status/2102853289259729328",
+      "checkedAt": "2026-10-08T06:02:20.272Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103154189064876406",
+      "sourceUrl": "https://x.com/N8Programs/status/2103154189064876406",
+      "checkedAt": "2026-10-08T06:02:20.275Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103114698610683964",
+      "sourceUrl": "https://x.com/Oscar_sanmillan/status/2103114698610683964",
+      "checkedAt": "2026-10-08T06:02:20.327Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103108551799632050",
+      "sourceUrl": "https://x.com/WangYeruo/status/2103108551799632050",
+      "checkedAt": "2026-10-08T06:02:20.328Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102656273112326609",
+      "sourceUrl": "https://x.com/aicreataro/status/2102656273112326609",
+      "checkedAt": "2026-10-08T06:02:20.335Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103244081388503196",
+      "sourceUrl": "https://x.com/araminta_k/status/2103244081388503196",
+      "checkedAt": "2026-10-08T06:02:20.349Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103075805098070315",
+      "sourceUrl": "https://x.com/azhar_builds/status/2103075805098070315",
+      "checkedAt": "2026-10-08T06:02:20.351Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102462889160286423",
+      "sourceUrl": "https://x.com/bridgemindai/status/2102462889160286423",
+      "checkedAt": "2026-10-08T06:02:20.377Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103127192591065595",
+      "sourceUrl": "https://x.com/coolbat1999/status/2103127192591065595",
+      "checkedAt": "2026-10-08T06:02:20.407Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102787822855893072",
+      "sourceUrl": "https://x.com/deweytn/status/2102787822855893072",
+      "checkedAt": "2026-10-08T06:02:20.409Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102733714845491558",
+      "sourceUrl": "https://x.com/dhruvalgolakiya/status/2102733714845491558",
+      "checkedAt": "2026-10-08T06:02:20.416Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103037586663235713",
+      "sourceUrl": "https://x.com/dhruvalgolakiya/status/2103037586663235713",
+      "checkedAt": "2026-10-08T06:02:20.427Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103003425915195750",
+      "sourceUrl": "https://x.com/elianiva_/status/2103003425915195750",
+      "checkedAt": "2026-10-08T06:02:20.470Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103015561076564319",
+      "sourceUrl": "https://x.com/haidaulau/status/2103015561076564319",
+      "checkedAt": "2026-10-08T06:02:20.483Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103237884564414633",
+      "sourceUrl": "https://x.com/jake11moran/status/2103237884564414633",
+      "checkedAt": "2026-10-08T06:02:20.488Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103247490237825416",
+      "sourceUrl": "https://x.com/jake11moran/status/2103247490237825416",
+      "checkedAt": "2026-10-08T06:02:20.491Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102724347446305104",
+      "sourceUrl": "https://x.com/leo_xiaolei/status/2102724347446305104",
+      "checkedAt": "2026-10-08T06:02:20.495Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103117698863390805",
+      "sourceUrl": "https://x.com/reg_andr/status/2103117698863390805",
+      "checkedAt": "2026-10-08T06:02:20.496Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103144778481475686",
+      "sourceUrl": "https://x.com/sab8a/status/2103144778481475686",
+      "checkedAt": "2026-10-08T06:02:20.507Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102827288190689364",
+      "sourceUrl": "https://x.com/shribuilds/status/2102827288190689364",
+      "checkedAt": "2026-10-08T06:02:20.539Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102911234526048706",
+      "sourceUrl": "https://x.com/throughiris_/status/2102911234526048706",
+      "checkedAt": "2026-10-08T06:02:20.563Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102554209166000267",
+      "sourceUrl": "https://x.com/twoclipping/status/2102554209166000267",
+      "checkedAt": "2026-10-08T06:02:20.575Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103104303808348305",
+      "sourceUrl": "https://x.com/vikktorrrre/status/2103104303808348305",
+      "checkedAt": "2026-10-08T06:02:20.576Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102611841122017632",
+      "sourceUrl": "https://x.com/yangfei33113/status/2102611841122017632",
+      "checkedAt": "2026-10-08T06:02:20.579Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102548178646016377",
+      "sourceUrl": "https://x.com/AnduArtist/status/2102548178646016377",
+      "checkedAt": "2026-10-08T06:02:20.636Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102684116525437206",
+      "sourceUrl": "https://x.com/KanaWorks_AI/status/2102684116525437206",
+      "checkedAt": "2026-10-08T06:02:20.655Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102817977812824335",
+      "sourceUrl": "https://x.com/OriSilver/status/2102817977812824335",
+      "checkedAt": "2026-10-08T06:02:20.659Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102775755646337530",
+      "sourceUrl": "https://x.com/abxxai/status/2102775755646337530",
+      "checkedAt": "2026-10-08T06:02:20.663Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102861462461124755",
+      "sourceUrl": "https://x.com/jantijssen/status/2102861462461124755",
+      "checkedAt": "2026-10-08T06:02:20.672Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103129343253778767",
+      "sourceUrl": "https://x.com/koldo2k/status/2103129343253778767",
+      "checkedAt": "2026-10-08T06:02:20.679Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103153899431432535",
+      "sourceUrl": "https://x.com/razeden0/status/2103153899431432535",
+      "checkedAt": "2026-10-08T06:02:20.683Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103483923783373039",
+      "sourceUrl": "https://x.com/sankakuten91256/status/2103483923783373039",
+      "checkedAt": "2026-10-08T06:02:20.695Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102561072624410878",
+      "sourceUrl": "https://x.com/Tariq_at/status/2102561072624410878",
+      "checkedAt": "2026-10-08T06:02:20.739Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103173729656459455",
+      "sourceUrl": "https://x.com/anjmaxx/status/2103173729656459455",
+      "checkedAt": "2026-10-08T06:02:20.743Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102879729594343605",
+      "sourceUrl": "https://x.com/cube__lol/status/2102879729594343605",
+      "checkedAt": "2026-10-08T06:02:20.759Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103116003689550013",
+      "sourceUrl": "https://x.com/gandamu_ml/status/2103116003689550013",
+      "checkedAt": "2026-10-08T06:02:20.780Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103133462798483752",
+      "sourceUrl": "https://x.com/marcthecreatorr/status/2103133462798483752",
+      "checkedAt": "2026-10-08T06:02:20.797Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103082510607610023",
+      "sourceUrl": "https://x.com/pleometric/status/2103082510607610023",
+      "checkedAt": "2026-10-08T06:02:20.798Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103120880796873091",
+      "sourceUrl": "https://x.com/ruinolab/status/2103120880796873091",
+      "checkedAt": "2026-10-08T06:02:20.810Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103475507471806929",
+      "sourceUrl": "https://x.com/sbalhatlani/status/2103475507471806929",
+      "checkedAt": "2026-10-08T06:02:20.826Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103472385563459833",
+      "sourceUrl": "https://x.com/shneural/status/2103472385563459833",
+      "checkedAt": "2026-10-08T06:02:20.831Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103039084944138621",
+      "sourceUrl": "https://x.com/somasoma_blue/status/2103039084944138621",
+      "checkedAt": "2026-10-08T06:02:20.851Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102692569792835994",
+      "sourceUrl": "https://x.com/Aadidev0/status/2102692569792835994",
+      "checkedAt": "2026-10-08T06:02:20.852Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103288413969621231",
+      "sourceUrl": "https://x.com/AxtonLiu/status/2103288413969621231",
+      "checkedAt": "2026-10-08T06:02:20.859Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102599211212554616",
+      "sourceUrl": "https://x.com/ExistentialEnso/status/2102599211212554616",
+      "checkedAt": "2026-10-08T06:02:20.886Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103457566978162901",
+      "sourceUrl": "https://x.com/Hesamation/status/2103457566978162901",
+      "checkedAt": "2026-10-08T06:02:20.891Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102893186330841502",
+      "sourceUrl": "https://x.com/JustinPerea/status/2102893186330841502",
+      "checkedAt": "2026-10-08T06:02:20.903Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102899866762440893",
+      "sourceUrl": "https://x.com/KamStudioLabs/status/2102899866762440893",
+      "checkedAt": "2026-10-08T06:02:20.922Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102903173161877996",
+      "sourceUrl": "https://x.com/KamStudioLabs/status/2102903173161877996",
+      "checkedAt": "2026-10-08T06:02:20.923Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102908742518100086",
+      "sourceUrl": "https://x.com/KamStudioLabs/status/2102908742518100086",
+      "checkedAt": "2026-10-08T06:02:20.936Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102503027340988559",
+      "sourceUrl": "https://x.com/LCSlates/status/2102503027340988559",
+      "checkedAt": "2026-10-08T06:02:20.947Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103152093733253544",
+      "sourceUrl": "https://x.com/Lucas_IA_/status/2103152093733253544",
+      "checkedAt": "2026-10-08T06:02:20.987Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102592355165782312",
+      "sourceUrl": "https://x.com/Michaelzsguo/status/2102592355165782312",
+      "checkedAt": "2026-10-08T06:02:21.019Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103380404791333144",
+      "sourceUrl": "https://x.com/NFT_Chen/status/2103380404791333144",
+      "checkedAt": "2026-10-08T06:02:21.047Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102787420399825023",
+      "sourceUrl": "https://x.com/NoFollowers2023/status/2102787420399825023",
+      "checkedAt": "2026-10-08T06:02:21.069Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103418429248069973",
+      "sourceUrl": "https://x.com/Sarut0biSasuke/status/2103418429248069973",
+      "checkedAt": "2026-10-08T06:02:21.089Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102910805721362875",
+      "sourceUrl": "https://x.com/YoshiKura535130/status/2102910805721362875",
+      "checkedAt": "2026-10-08T06:02:21.098Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102803889183736141",
+      "sourceUrl": "https://x.com/aj_dev_smith/status/2102803889183736141",
+      "checkedAt": "2026-10-08T06:02:21.115Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103449416325890146",
+      "sourceUrl": "https://x.com/ajith_io/status/2103449416325890146",
+      "checkedAt": "2026-10-08T06:02:21.127Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103108967194833310",
+      "sourceUrl": "https://x.com/bradmillscan/status/2103108967194833310",
+      "checkedAt": "2026-10-08T06:02:21.143Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102472218269900876",
+      "sourceUrl": "https://x.com/cherry_mx_reds/status/2102472218269900876",
+      "checkedAt": "2026-10-08T06:02:21.155Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103028027861152225",
+      "sourceUrl": "https://x.com/cromwellian/status/2103028027861152225",
+      "checkedAt": "2026-10-08T06:02:21.187Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102726428991373480",
+      "sourceUrl": "https://x.com/ctgptlb/status/2102726428991373480",
+      "checkedAt": "2026-10-08T06:02:21.195Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102436001473786054",
+      "sourceUrl": "https://x.com/dfeinition/status/2102436001473786054",
+      "checkedAt": "2026-10-08T06:02:21.200Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102742924148830211",
+      "sourceUrl": "https://x.com/hanifproduktif/status/2102742924148830211",
+      "checkedAt": "2026-10-08T06:02:21.207Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103169675928764486",
+      "sourceUrl": "https://x.com/ianstig/status/2103169675928764486",
+      "checkedAt": "2026-10-08T06:02:21.255Z",
+      "ok": false,
+      "reason": "原帖媒体地址无效或缺失"
+    },
+    {
+      "id": "2102849219388133592",
+      "sourceUrl": "https://x.com/imthatcarlos/status/2102849219388133592",
+      "checkedAt": "2026-10-08T06:02:21.255Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103247844542922825",
+      "sourceUrl": "https://x.com/ishuagra02/status/2103247844542922825",
+      "checkedAt": "2026-10-08T06:02:21.255Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103132260589338762",
+      "sourceUrl": "https://x.com/jackfriks/status/2103132260589338762",
+      "checkedAt": "2026-10-08T06:02:21.256Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103170666187117006",
+      "sourceUrl": "https://x.com/johnknopf/status/2103170666187117006",
+      "checkedAt": "2026-10-08T06:02:21.259Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102645793828036643",
+      "sourceUrl": "https://x.com/jurlycat/status/2102645793828036643",
+      "checkedAt": "2026-10-08T06:02:21.259Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103148835270971419",
+      "sourceUrl": "https://x.com/ladprofit/status/2103148835270971419",
+      "checkedAt": "2026-10-08T06:02:21.279Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103465246014746943",
+      "sourceUrl": "https://x.com/mablesjoseph/status/2103465246014746943",
+      "checkedAt": "2026-10-08T06:02:21.318Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102535945333657960",
+      "sourceUrl": "https://x.com/onofumi_AI/status/2102535945333657960",
+      "checkedAt": "2026-10-08T06:02:21.332Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103024907965612250",
+      "sourceUrl": "https://x.com/pivi___/status/2103024907965612250",
+      "checkedAt": "2026-10-08T06:02:21.335Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102986085328716066",
+      "sourceUrl": "https://x.com/ring_hyacinth/status/2102986085328716066",
+      "checkedAt": "2026-10-08T06:02:21.343Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103171975220781332",
+      "sourceUrl": "https://x.com/samspike_/status/2103171975220781332",
+      "checkedAt": "2026-10-08T06:02:21.343Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103829449359966629",
+      "sourceUrl": "https://x.com/shushant_l/status/2103829449359966629",
+      "checkedAt": "2026-10-08T06:02:21.397Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103117547776163845",
+      "sourceUrl": "https://x.com/so_ainsight/status/2103117547776163845",
+      "checkedAt": "2026-10-08T06:02:21.403Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102463796149440888",
+      "sourceUrl": "https://x.com/superalesha/status/2102463796149440888",
+      "checkedAt": "2026-10-08T06:02:21.411Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103019799614034026",
+      "sourceUrl": "https://x.com/x4b47x/status/2103019799614034026",
+      "checkedAt": "2026-10-08T06:02:21.415Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103015953877647820",
+      "sourceUrl": "https://x.com/xlcomplete/status/2103015953877647820",
+      "checkedAt": "2026-10-08T06:02:21.427Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103082248320766456",
+      "sourceUrl": "https://x.com/yaakuups/status/2103082248320766456",
+      "checkedAt": "2026-10-08T06:02:21.428Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102572941699354900",
+      "sourceUrl": "https://x.com/pleometric/status/2102572941699354900",
+      "checkedAt": "2026-10-08T06:02:21.434Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102610626321490404",
+      "sourceUrl": "https://x.com/eudaemonea/status/2102610626321490404",
+      "checkedAt": "2026-10-08T06:02:21.455Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102487989381156991",
+      "sourceUrl": "https://x.com/superalesha/status/2102487989381156991",
+      "checkedAt": "2026-10-08T06:02:21.486Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102575577563570450",
+      "sourceUrl": "https://x.com/aj_dev_smith/status/2102575577563570450",
+      "checkedAt": "2026-10-08T06:02:21.488Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102466523164274839",
+      "sourceUrl": "https://x.com/alexalbert__/status/2102466523164274839",
+      "checkedAt": "2026-10-08T06:02:21.531Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103530750767206626",
+      "sourceUrl": "https://x.com/bridgemindai/status/2103530750767206626",
+      "checkedAt": "2026-10-08T06:02:21.532Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103272686570918334",
+      "sourceUrl": "https://x.com/emollick/status/2103272686570918334",
+      "checkedAt": "2026-10-08T06:02:21.556Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102717699600368045",
+      "sourceUrl": "https://x.com/chetaslua/status/2102717699600368045",
+      "checkedAt": "2026-10-08T06:02:21.563Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102511304456212763",
+      "sourceUrl": "https://x.com/blueemi99/status/2102511304456212763",
+      "checkedAt": "2026-10-08T06:02:21.571Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102878288008057171",
+      "sourceUrl": "https://x.com/kevin_t_ngo/status/2102878288008057171",
+      "checkedAt": "2026-10-08T06:02:21.623Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102539904274325540",
+      "sourceUrl": "https://x.com/scottstts/status/2102539904274325540",
+      "checkedAt": "2026-10-08T06:02:21.624Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102370144546889735",
+      "sourceUrl": "https://x.com/chetaslua/status/2102370144546889735",
+      "checkedAt": "2026-10-08T06:02:21.639Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102817596009504849",
+      "sourceUrl": "https://x.com/AndrewOnXYZ/status/2102817596009504849",
+      "checkedAt": "2026-10-08T06:02:21.644Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102788371114246177",
+      "sourceUrl": "https://x.com/ishuagra02/status/2102788371114246177",
+      "checkedAt": "2026-10-08T06:02:21.651Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102884238576296179",
+      "sourceUrl": "https://x.com/goodside/status/2102884238576296179",
+      "checkedAt": "2026-10-08T06:02:21.678Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103482545111232946",
+      "sourceUrl": "https://x.com/oozn/status/2103482545111232946",
+      "checkedAt": "2026-10-08T06:02:21.707Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102574688769650976",
+      "sourceUrl": "https://x.com/cherry_mx_reds/status/2102574688769650976",
+      "checkedAt": "2026-10-08T06:02:21.708Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102788223835463902",
+      "sourceUrl": "https://x.com/scheemunai/status/2102788223835463902",
+      "checkedAt": "2026-10-08T06:02:21.715Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102640820776046818",
+      "sourceUrl": "https://x.com/Shoalst0ne/status/2102640820776046818",
+      "checkedAt": "2026-10-08T06:02:21.724Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103525576912855363",
+      "sourceUrl": "https://x.com/jackfriks/status/2103525576912855363",
+      "checkedAt": "2026-10-08T06:02:21.773Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102528278732894667",
+      "sourceUrl": "https://x.com/liu8in/status/2102528278732894667",
+      "checkedAt": "2026-10-08T06:02:21.779Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096264296099459079",
+      "sourceUrl": "https://x.com/petergostev/status/2096264296099459079",
+      "checkedAt": "2026-10-08T06:02:21.783Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096003511104508411",
+      "sourceUrl": "https://x.com/duncantrussell/status/2096003511104508411",
+      "checkedAt": "2026-10-08T06:02:21.791Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096612996256579653",
+      "sourceUrl": "https://x.com/reach_vb/status/2096612996256579653",
+      "checkedAt": "2026-10-08T06:02:21.791Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2095756085890310311",
+      "sourceUrl": "https://x.com/tomkrcha/status/2095756085890310311",
+      "checkedAt": "2026-10-08T06:02:21.795Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096209514248958161",
+      "sourceUrl": "https://x.com/athrix_codes/status/2096209514248958161",
+      "checkedAt": "2026-10-08T06:02:21.823Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096478021234426059",
+      "sourceUrl": "https://x.com/Dimillian/status/2096478021234426059",
+      "checkedAt": "2026-10-08T06:02:21.856Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102815918049132792",
+      "sourceUrl": "https://x.com/Govindaiii/status/2102815918049132792",
+      "checkedAt": "2026-10-08T06:02:21.863Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103128559174971663",
+      "sourceUrl": "https://x.com/LinearUncle/status/2103128559174971663",
+      "checkedAt": "2026-10-08T06:02:21.871Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104443232512020686",
+      "sourceUrl": "https://x.com/ZorviaLux/status/2104443232512020686",
+      "checkedAt": "2026-10-08T06:02:21.875Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104419979924033781",
+      "sourceUrl": "https://x.com/HuskiStudio/status/2104419979924033781",
+      "checkedAt": "2026-10-08T06:02:21.907Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104410980700889227",
+      "sourceUrl": "https://x.com/AI__TSUBAKI/status/2104410980700889227",
+      "checkedAt": "2026-10-08T06:02:21.923Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104397688511103374",
+      "sourceUrl": "https://x.com/Zarnab_with_Ai/status/2104397688511103374",
+      "checkedAt": "2026-10-08T06:02:21.927Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104392249400594823",
+      "sourceUrl": "https://x.com/AIwithJessica/status/2104392249400594823",
+      "checkedAt": "2026-10-08T06:02:21.935Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2096055605127475262",
+      "sourceUrl": "https://x.com/Africanistkemte/status/2096055605127475262",
+      "checkedAt": "2026-10-08T06:02:21.936Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2005728750307278889",
+      "sourceUrl": "https://x.com/knightama/status/2005728750307278889",
+      "checkedAt": "2026-10-08T06:02:21.955Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "1906062326140158099",
+      "sourceUrl": "https://x.com/jeffSARRIS/status/1906062326140158099",
+      "checkedAt": "2026-10-08T06:02:21.992Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2054758414195306953",
+      "sourceUrl": "https://x.com/Strength04_X/status/2054758414195306953",
+      "checkedAt": "2026-10-08T06:02:21.995Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2029501005235102206",
+      "sourceUrl": "https://x.com/visualsk2/status/2029501005235102206",
+      "checkedAt": "2026-10-08T06:02:22.003Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2014368636236874028",
+      "sourceUrl": "https://x.com/_YuliyaLev_/status/2014368636236874028",
+      "checkedAt": "2026-10-08T06:02:22.023Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2001379106970308918",
+      "sourceUrl": "https://x.com/HashemGhaili/status/2001379106970308918",
+      "checkedAt": "2026-10-08T06:02:22.040Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "1980278377597571260",
+      "sourceUrl": "https://x.com/Ben__Springer/status/1980278377597571260",
+      "checkedAt": "2026-10-08T06:02:22.071Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2091155876899959138",
+      "sourceUrl": "https://x.com/mikevicenzino/status/2091155876899959138",
+      "checkedAt": "2026-10-08T06:02:22.087Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "1916852096852459617",
+      "sourceUrl": "https://x.com/SimonGFarmer/status/1916852096852459617",
+      "checkedAt": "2026-10-08T06:02:22.103Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "1913547157493162035",
+      "sourceUrl": "https://x.com/Wytsekoetse/status/1913547157493162035",
+      "checkedAt": "2026-10-08T06:02:22.154Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2103117246860345550",
+      "sourceUrl": "https://x.com/Voxyz_ai/status/2103117246860345550",
+      "checkedAt": "2026-10-08T06:02:22.158Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102740041621762166",
+      "sourceUrl": "https://x.com/RyanSael/status/2102740041621762166",
+      "checkedAt": "2026-10-08T06:02:22.201Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102798578427265368",
+      "sourceUrl": "https://x.com/NicksonTan/status/2102798578427265368",
+      "checkedAt": "2026-10-08T06:02:22.203Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2102752585371226241",
+      "sourceUrl": "https://x.com/yrzhe_top/status/2102752585371226241",
+      "checkedAt": "2026-10-08T06:02:22.236Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104776177609293975",
+      "sourceUrl": "https://x.com/Prathamesh_812/status/2104776177609293975",
+      "checkedAt": "2026-10-08T06:02:22.236Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104775199698629064",
+      "sourceUrl": "https://x.com/ChrisGPT/status/2104775199698629064",
+      "checkedAt": "2026-10-08T06:02:22.239Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104773492491346349",
+      "sourceUrl": "https://x.com/rao_abhi_17/status/2104773492491346349",
+      "checkedAt": "2026-10-08T06:02:22.243Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104771867781574928",
+      "sourceUrl": "https://x.com/ImagineArt_X/status/2104771867781574928",
+      "checkedAt": "2026-10-08T06:02:22.261Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104765209596612730",
+      "sourceUrl": "https://x.com/nikomaster01/status/2104765209596612730",
+      "checkedAt": "2026-10-08T06:02:22.323Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104763812733981142",
+      "sourceUrl": "https://x.com/park_danie36173/status/2104763812733981142",
+      "checkedAt": "2026-10-08T06:02:22.327Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104756321908375866",
+      "sourceUrl": "https://x.com/MasonMosen/status/2104756321908375866",
+      "checkedAt": "2026-10-08T06:02:22.328Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104756133558984946",
+      "sourceUrl": "https://x.com/paojiaofty/status/2104756133558984946",
+      "checkedAt": "2026-10-08T06:02:22.343Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104753708584095936",
+      "sourceUrl": "https://x.com/Khazs0/status/2104753708584095936",
+      "checkedAt": "2026-10-08T06:02:22.347Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104743033300242670",
+      "sourceUrl": "https://x.com/miu21590/status/2104743033300242670",
+      "checkedAt": "2026-10-08T06:02:22.389Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104740780208164947",
+      "sourceUrl": "https://x.com/VeronicaVZMusic/status/2104740780208164947",
+      "checkedAt": "2026-10-08T06:02:22.394Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104736947822645622",
+      "sourceUrl": "https://x.com/gogu_name/status/2104736947822645622",
+      "checkedAt": "2026-10-08T06:02:22.407Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104736355905360348",
+      "sourceUrl": "https://x.com/FranzmeierRandy/status/2104736355905360348",
+      "checkedAt": "2026-10-08T06:02:22.427Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104728379798827135",
+      "sourceUrl": "https://x.com/leandroriviello/status/2104728379798827135",
+      "checkedAt": "2026-10-08T06:02:22.427Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104721373545558470",
+      "sourceUrl": "https://x.com/Kta_Z/status/2104721373545558470",
+      "checkedAt": "2026-10-08T06:02:22.427Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104719287613341732",
+      "sourceUrl": "https://x.com/chetanankola/status/2104719287613341732",
+      "checkedAt": "2026-10-08T06:02:22.604Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104717572788883829",
+      "sourceUrl": "https://x.com/xikhar/status/2104717572788883829",
+      "checkedAt": "2026-10-08T06:02:22.649Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104649028193632524",
+      "sourceUrl": "https://x.com/l3d1c/status/2104649028193632524",
+      "checkedAt": "2026-10-08T06:02:22.652Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104628062771888552",
+      "sourceUrl": "https://x.com/bedirhantongdev/status/2104628062771888552",
+      "checkedAt": "2026-10-08T06:02:22.685Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104607774793679182",
+      "sourceUrl": "https://x.com/maheshdhiman/status/2104607774793679182",
+      "checkedAt": "2026-10-08T06:02:22.687Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104598355372646422",
+      "sourceUrl": "https://x.com/tejaskalpande/status/2104598355372646422",
+      "checkedAt": "2026-10-08T06:02:22.691Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104595346882175311",
+      "sourceUrl": "https://x.com/washow_cfo/status/2104595346882175311",
+      "checkedAt": "2026-10-08T06:02:22.691Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104590334152056983",
+      "sourceUrl": "https://x.com/shion_takk/status/2104590334152056983",
+      "checkedAt": "2026-10-08T06:02:22.713Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104662818742309357",
+      "sourceUrl": "https://x.com/mattworkman/status/2104662818742309357",
+      "checkedAt": "2026-10-08T06:02:22.757Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104678989616795662",
+      "sourceUrl": "https://x.com/polovlad1/status/2104678989616795662",
+      "checkedAt": "2026-10-08T06:02:22.779Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104664355270992140",
+      "sourceUrl": "https://x.com/chriscodling5/status/2104664355270992140",
+      "checkedAt": "2026-10-08T06:02:22.780Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104360004715446416",
+      "sourceUrl": "https://x.com/uglyrobot/status/2104360004715446416",
+      "checkedAt": "2026-10-08T06:02:22.783Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104359673382175100",
+      "sourceUrl": "https://x.com/chuhaiqu/status/2104359673382175100",
+      "checkedAt": "2026-10-08T06:02:22.792Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104392800892764552",
+      "sourceUrl": "https://x.com/AndyL5cc/status/2104392800892764552",
+      "checkedAt": "2026-10-08T06:02:22.811Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104236916316971191",
+      "sourceUrl": "https://x.com/StefanoStraus/status/2104236916316971191",
+      "checkedAt": "2026-10-08T06:02:22.847Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104216976801587629",
+      "sourceUrl": "https://x.com/konstantinsaifo/status/2104216976801587629",
+      "checkedAt": "2026-10-08T06:02:22.867Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104211672370201053",
+      "sourceUrl": "https://x.com/EWashoku/status/2104211672370201053",
+      "checkedAt": "2026-10-08T06:02:22.887Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104206095313215591",
+      "sourceUrl": "https://x.com/moguzbulbul/status/2104206095313215591",
+      "checkedAt": "2026-10-08T06:02:22.910Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104198927549604161",
+      "sourceUrl": "https://x.com/arthurkatcher/status/2104198927549604161",
+      "checkedAt": "2026-10-08T06:02:22.931Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104193522715029657",
+      "sourceUrl": "https://x.com/allforbigfire/status/2104193522715029657",
+      "checkedAt": "2026-10-08T06:02:22.955Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104180455813812667",
+      "sourceUrl": "https://x.com/BrainWavePub/status/2104180455813812667",
+      "checkedAt": "2026-10-08T06:02:22.979Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104145227573248467",
+      "sourceUrl": "https://x.com/Acoramaa/status/2104145227573248467",
+      "checkedAt": "2026-10-08T06:02:22.991Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104131805175844923",
+      "sourceUrl": "https://x.com/JurgenPloeger/status/2104131805175844923",
+      "checkedAt": "2026-10-08T06:02:23.007Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104102479927620029",
+      "sourceUrl": "https://x.com/sanjay_khadka07/status/2104102479927620029",
+      "checkedAt": "2026-10-08T06:02:23.015Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    },
+    {
+      "id": "2104222017696469188",
+      "sourceUrl": "https://x.com/akokoi1/status/2104222017696469188",
+      "checkedAt": "2026-10-08T06:02:23.015Z",
+      "httpStatus": 206,
+      "ok": true,
+      "bytesInspected": 1024
+    }
+  ]
+}

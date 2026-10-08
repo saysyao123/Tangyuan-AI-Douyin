@@ -1,0 +1,128 @@
+[
+  {
+    "repo": "JohnHeibel/ClaudeAnimationBase",
+    "path": "ANIMATION_GUIDE.md",
+    "ref": null,
+    "sha": "055bf10bb1d1e86963e4429665130ddbd1026b3e",
+    "bytes": 36029,
+    "url": "https://github.com/JohnHeibel/ClaudeAnimationBase/blob/main/ANIMATION_GUIDE.md",
+    "body_sha256": "f638e1fb3876f587e39ec11a20e2df3aac91421c926d82c2743768642caab990"
+  },
+  {
+    "repo": "JohnHeibel/ClaudeAnimationBase",
+    "path": "src/core.js",
+    "ref": null,
+    "sha": "f6d43a21879f279002986e110b902ed0abab3f68",
+    "bytes": 21863,
+    "url": "https://github.com/JohnHeibel/ClaudeAnimationBase/blob/main/src/core.js",
+    "body_sha256": "7d8942e917c35089a6db94610367c12e849fe51cbd56ab8e73489046852b0ae2"
+  },
+  {
+    "repo": "JohnHeibel/ClaudeAnimationBase",
+    "path": "render.mjs",
+    "ref": null,
+    "sha": "e675a87f91ce72bf61cb8f93a998fb97e76a25c0",
+    "bytes": 11754,
+    "url": "https://github.com/JohnHeibel/ClaudeAnimationBase/blob/main/render.mjs",
+    "body_sha256": "1151ad59ad0c7bbe59e4e273465689d81d41f896d6bafc8981b527d110b77fe6"
+  },
+  {
+    "repo": "JohnnyWang8802/songbie",
+    "path": "score.js",
+    "ref": "97225eb54a351c9938ad896e04bef7a7020393fb",
+    "sha": "c085636c3dcdd6864d0782e3c705ef74aab00377",
+    "bytes": 4194,
+    "url": "https://github.com/JohnnyWang8802/songbie/blob/97225eb54a351c9938ad896e04bef7a7020393fb/score.js",
+    "body_sha256": "480d966c29d1d59d27f8fc71ca26b6dc22a2e0ce2d93644e051c38498774da93"
+  },
+  {
+    "repo": "JohnnyWang8802/songbie",
+    "path": "render.js",
+    "ref": "97225eb54a351c9938ad896e04bef7a7020393fb",
+    "sha": "82cf14b4d957a82028cd798dc23dd7763f2fd272",
+    "bytes": 62655,
+    "url": "https://github.com/JohnnyWang8802/songbie/blob/97225eb54a351c9938ad896e04bef7a7020393fb/render.js",
+    "body_sha256": "5f28a68605e93b4f06210b7c8fa943e27e7a3453613f68f5f5a5282fe96f0242"
+  },
+  {
+    "repo": "ledbetterljoshua/functional-emotions-video",
+    "path": "ANIMATION_GUIDE.md",
+    "ref": null,
+    "sha": "b4577b3fce87da2ff6a56bba88bd9299de65b4d2",
+    "bytes": 9079,
+    "url": "https://github.com/ledbetterljoshua/functional-emotions-video/blob/main/ANIMATION_GUIDE.md",
+    "body_sha256": "34086b09712d58c7035f241e5a54c4520d7ca29c42b377be9fd9a552627a3b60"
+  },
+  {
+    "repo": "ledbetterljoshua/functional-emotions-video",
+    "path": "js/lib.js",
+    "ref": null,
+    "sha": "20280b0123f852237061f33ee1bfec7243f31ab2",
+    "bytes": 19483,
+    "url": "https://github.com/ledbetterljoshua/functional-emotions-video/blob/main/js/lib.js",
+    "body_sha256": "110ce39e3399ef58a9f996a135cb86f324b77ec64794b5b375199dc9a2ae55c6"
+  },
+  {
+    "repo": "lemomo-ai/lemo-opuscar",
+    "path": "DIRECTOR.md",
+    "ref": null,
+    "sha": "3ae2c2c1eeb51ba69b7d550ce42726922872136e",
+    "bytes": 10403,
+    "url": "https://github.com/lemomo-ai/lemo-opuscar/blob/main/DIRECTOR.md",
+    "body_sha256": "317495c3dac573f2e8b0dadfd56511a1b35a7c385e9f75beca1034af05960678"
+  },
+  {
+    "repo": "lemomo-ai/lemo-opuscar",
+    "path": "TECHNIQUE.md",
+    "ref": null,
+    "sha": "30fd18d09dd37e9d53cc7666f3f28e78a1a6c36e",
+    "bytes": 12364,
+    "url": "https://github.com/lemomo-ai/lemo-opuscar/blob/main/TECHNIQUE.md",
+    "body_sha256": "cd456c1d936e9b44cc4e05fa5d3b062cc4d2dc079620e36902cd74cbb0a43fd6"
+  },
+  {
+    "repo": "heygen-com/hyperframes-community-skills",
+    "path": "skills/session-story/SKILL.md",
+    "ref": "master",
+    "sha": "2ade5a2868693edd50dd460d96288aebee7dc043",
+    "bytes": 7203,
+    "url": "https://github.com/heygen-com/hyperframes-community-skills/blob/master/skills/session-story/SKILL.md",
+    "body_sha256": "6f51892638993db78378532774fbd1df885cd75133f923a4a5af9ea3eedeecb3"
+  },
+  {
+    "repo": "alesha-pro/tools",
+    "path": "skills/hand-drawn-canvas-animation/SKILL.md",
+    "ref": "main",
+    "sha": "c43db5b1f2e2dce9dca889feb43cc8df28843819",
+    "bytes": 10520,
+    "url": "https://github.com/alesha-pro/tools/blob/main/skills/hand-drawn-canvas-animation/SKILL.md",
+    "body_sha256": "f4941e35a541d9e4d5eeb3be46c6cc577f7895b1f15016507ad4a868802d08d8"
+  },
+  {
+    "repo": "simonw/tools",
+    "path": "kakapo-party.html",
+    "ref": "main",
+    "sha": "11a5891759f21703dd73774016804aada07ea7ff",
+    "bytes": 45823,
+    "url": "https://github.com/simonw/tools/blob/main/kakapo-party.html",
+    "body_sha256": "7e847f6f8b2ad4624fdb08d5bfd49f71a302b79021f24963dcf988d81a0e9b20"
+  },
+  {
+    "repo": "buildwithhanif/claude-animation-skill",
+    "path": "examples/ant-colony/film.mjs",
+    "ref": "main",
+    "sha": "51e1335c198a506d79cc1080f414ee08c80aabf2",
+    "bytes": 28830,
+    "url": "https://github.com/buildwithhanif/claude-animation-skill/blob/main/examples/ant-colony/film.mjs",
+    "body_sha256": "8afbee75c4c7c1a60ac162cdc8207aec4a0e2078f47713522f0aaf8888fb57c0"
+  },
+  {
+    "repo": "wy51ai/floorplan-3d",
+    "path": "LICENSE",
+    "ref": null,
+    "sha": "9081fb945f7a0cb31c0624c7ee69c99582d4a14c",
+    "bytes": 1061,
+    "url": "https://github.com/wy51ai/floorplan-3d/blob/master/LICENSE",
+    "body_sha256": "293e6ff11a707c7797873366aae769dd0df3c8d4a33e51c01ae4dd5f91664f14"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "catalog_inventory": "COMPLETE_581_OF_581",
+  "tracked_file_inventory": "COMPLETE_1943_OF_1943",
+  "per_case_topic_notes": "COMPLETE_581_OF_581_HYPOTHESIS_LEVEL",
+  "inline_prompt_reading": "COMPLETE_128_OF_128",
+  "cover_thumbnail_review": "COMPLETE_581_OF_581",
+  "upstream_unit_tests": {
+    "passed": 81,
+    "failed": 0
+  },
+  "generated_consistency": "PASS",
+  "site_package": {
+    "status": "PASS",
+    "files": 586,
+    "size_mb": 27.73
+  },
+  "media_headers": {
+    "passed": 575,
+    "failed": 6,
+    "total": 581
+  },
+  "external_readmes_inspected": 39,
+  "focused_source_files_inspected": 14,
+  "full_video_review": {
+    "completed": 0,
+    "total_cases": 581,
+    "remaining": "全部片段、完整音轨及多附件逐项观看尚未完成"
+  },
+  "external_project_reproduction": {
+    "completed": 0,
+    "status": "NOT_RUN"
+  },
+  "source_link_prompt_complete_author_bound_text": "NOT_INDEPENDENTLY_CONFIRMED_73",
+  "runtime_rules_promoted": false,
+  "page_retrieval_is_identity_proof": false
+}

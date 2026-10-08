@@ -1,0 +1,52 @@
+{
+  "repository": "guanmo-ai/awesome-ai-motion",
+  "commit": "e8df52d548fa6f15acc39098e6a0bf3df1651309",
+  "study_date_utc": "2026-10-08",
+  "data_sha256": "51407c7018fe06351da38f93cc0fc649ff7c49fb6cd9d0986b6379cf2e300bf8",
+  "stats": {
+    "cases": 581,
+    "tracked_files": 1943,
+    "categories": {
+      "产品宣传": 110,
+      "叙事短片": 96,
+      "3D 与交互": 113,
+      "短动效": 74,
+      "知识讲解": 97,
+      "像素与角色": 39,
+      "音乐与歌词": 52
+    },
+    "stage": {
+      "discovery": 545,
+      "catalogued": 36
+    },
+    "prompt_status": {
+      "unknown": 380,
+      "brief": 118,
+      "original": 83
+    },
+    "inline_prompt_records": 128,
+    "source_link_prompt_records": 73,
+    "original_inline": 52,
+    "original_source_link": 31,
+    "resource_associations": 90,
+    "unique_resource_urls": 84,
+    "resource_kinds": {
+      "demo": 41,
+      "code": 27,
+      "tool": 22
+    },
+    "cases_with_resources": 70,
+    "external_readmes": 39,
+    "focused_code_and_guide_files": 14,
+    "multi_video_records": 16,
+    "attachment_count": 601,
+    "total_primary_duration_hours": 13.18819,
+    "guide_records": 16,
+    "work_post_fetch_count": 581,
+    "work_post_http_body_count": 571,
+    "resource_and_prompt_page_count": 157,
+    "resource_and_prompt_page_retrieved": 156
+  },
+  "source_frozen": true,
+  "scope": "固定提交全部目录、结构及可取得资料；不等于全部作品完整视听与独立复现"
+}

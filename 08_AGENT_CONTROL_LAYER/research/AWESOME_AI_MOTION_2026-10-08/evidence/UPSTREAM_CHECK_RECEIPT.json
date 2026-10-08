@@ -1,0 +1,37 @@
+{
+  "source_commit": "e8df52d548fa6f15acc39098e6a0bf3df1651309",
+  "date_utc": "2026-10-08",
+  "checks": [
+    {
+      "command": "node --test tests/*.test.mjs",
+      "exit_code": 0,
+      "tests": 81,
+      "pass": 81,
+      "fail": 0,
+      "test_output_sha256": "fa355cf02f8f64e93fd99b79cd138454bc44a0eaed0f2d836ce0414dbe9447f6"
+    },
+    {
+      "command": "node scripts/build.mjs --check",
+      "exit_code": 0,
+      "cases": 581
+    },
+    {
+      "command": "node scripts/check-target.mjs",
+      "exit_code": 0,
+      "target": "guanmo-ai/awesome-ai-motion"
+    },
+    {
+      "command": "node scripts/package-site.mjs",
+      "exit_code": 0,
+      "files": 586,
+      "size_mb": 27.73
+    }
+  ],
+  "not_run": [
+    "浏览器逐条实际起播",
+    "完整音轨／全片评审",
+    "39 个外部工程安装与重建",
+    "上游发布身份审计／部署"
+  ],
+  "interpretation": "这些通过证明目录、生成和静态包一致，不证明 581 个作品可以独立重建。"
+}

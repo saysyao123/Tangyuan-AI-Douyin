@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks_passed": 2762,
+  "cases": 581,
+  "files": 1943,
+  "prompt_records": 201,
+  "resource_associations": 90,
+  "upstream_hashes_rechecked": true,
+  "full_video_review_proven": false,
+  "external_reproduction_proven": false
+}
