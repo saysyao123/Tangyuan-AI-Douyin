@@ -27,3 +27,10 @@ Updated 2026-10-08.
 
 ## Next visual work
 One **single image generation request per new original frame**. Correct the image-generation drift into contact sheets; do not crop them for main artwork. Generate missing L02 L03 L05 L06 standalone 9:16 heroes, then stable, consistent L07 and L08 start/middle/end real keyposes. Score human-motion smoothness only when pose evidence exists. Avoid pointless whole-frame pans/zooms.
+
+
+## 2026-10-08 Cloud follow-up
+- Huashu **real Chromium renderer** synthetic engine QA RUN 37737780845 = SUCCESS, 75 frames, 1080x1920, H.264/AAC, frame delta/nonstatic verified.
+- The original five GPT art PNG files were not in the GitHub repo and were NOT used in that cloud fixture. P5 real-art cloud render still PENDING.
+- An upload-once ZIP contract with exact manifest and SHA pin was added in `P5_SINGLE_UPLOAD.md`: a user can upload ONE ~10MB ZIP in the GitHub browser. Push will auto-detect it and trigger production.
+- The prior incorrect stage-assets root was fixed. Artistically reviewed story footage requires other four lyric heroes and true actor action keyframes.

@@ -1,28 +1,48 @@
 #!/usr/bin/env python3
-"""Fail-closed material import for actual GPT-native art, never fallback to legacy."""
-import hashlib, shutil
+"""P5 production GPT asset import. Accept verified individual PNGs OR one complete upload ZIP.
+Fail closed on missing art, wrong digest, ZipSlip, extra entry, or synthetic fixture contamination.
+"""
+import hashlib,json,shutil
 from pathlib import Path
-THIS=Path(__file__).resolve().parent
-DEST=THIS.parents[1]/'08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/assets/gpt'
-SHA={
-  "L01_clean.png": "b55ed043aa7b2ceb045805e175e91ed2fc69d07d5a6b30be928141b0ec950f23",
-  "L04_hero.png": "e30f3dd4866d3fa72e9a84b14672ab2849c18700173e1d61e8cc58026459cb7b",
-  "L07_clean.png": "bc9734bae6e79c350529ac1129addd7e44831c628102a81301ec5b25aea47d88",
-  "L07_photo.png": "9bdaba8db9e28727b1d8459e5c8805e65222d33d52a0755176292e370cf85614",
-  "L08_hero.png": "8c483dd2fdfe6688d9a04e8f9f9956c8ba650fea9068a876d99852c1c6c6c9cb"
-}
+from zipfile import ZipFile,BadZipFile
+HERE=Path(__file__).resolve().parent
+REPO=HERE.parents[1]
+DEST=REPO/'08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/assets/gpt'
+ZIP=HERE/'assets/GPT_NATIVE_ANCHORS_UPLOAD.zip'
+EXPECTED=json.loads((HERE/'prepared_assets_expected_sha.json').read_text(encoding='utf-8'))
+def verify(name,data):
+    if not data.startswith(b'\x89PNG\r\n\x1a\n'):raise SystemExit('FAIL_CLOSED_NOT_PNG: '+name)
+    actual=hashlib.sha256(data).hexdigest()
+    if actual!=EXPECTED[name]:raise SystemExit('FAIL_CLOSED_HASH_MISMATCH: '+name)
+    if len(data)>12_000_000:raise SystemExit('FAIL_CLOSED_UNEXPECTED_IMAGE_SIZE: '+name)
+    return data
 def stage():
-    # Fail before creating output directories so partial imports cannot masquerade as valid assets.
-    verified=[]
-    for name,expected in SHA.items():
-        src=THIS/'assets/prepared'/name
-        if not src.exists():raise SystemExit('FAIL_CLOSED_MISSING_GPT_ART: '+name)
-        actual=hashlib.sha256(src.read_bytes()).hexdigest()
-        if actual!=expected:raise SystemExit('FAIL_CLOSED_HASH_MISMATCH: '+name)
-        verified.append((src,name))
+    contents={}
+    if ZIP.is_file():
+        try:
+            with ZipFile(ZIP,'r') as z:
+                allowed=set(EXPECTED)|{'UPLOAD_MANIFEST.json'}
+                members=z.namelist()
+                if len(set(members))!=len(members) or set(members)!=allowed:
+                    raise SystemExit('FAIL_CLOSED_ZIP_ENTRIES: expected 5 PNG + manifest; no extras')
+                manifest=json.loads(z.read('UPLOAD_MANIFEST.json').decode('utf-8'))
+                if manifest.get('audio_included') is not False:
+                    raise SystemExit('FAIL_CLOSED_AUDIO_MUST_NOT_BE_IN_PUBLIC_ASSET')
+                for name in EXPECTED:
+                    if manifest['items'][name]['sha256']!=EXPECTED[name]:
+                        raise SystemExit('FAIL_CLOSED_MANIFEST_MISMATCH: '+name)
+                    contents[name]=verify(name,z.read(name))
+        except BadZipFile as exc: raise SystemExit('FAIL_CLOSED_INVALID_ZIP '+str(exc))
+        provenance='UPLOADED_SINGLE_ZIP'
+    else:
+        for name in EXPECTED:
+            f=HERE/'assets/prepared'/name
+            if not f.is_file():raise SystemExit('FAIL_CLOSED_MISSING_GPT_ART: '+str(f))
+            contents[name]=verify(name,f.read_bytes())
+        provenance='INDIVIDUAL_PNG_FILES'
     DEST.mkdir(parents=True,exist_ok=True)
-    for src,name in verified: shutil.copyfile(src,DEST/name)
     fixture=DEST/'.SYNTHETIC_FIXTURE_ONLY'
-    if fixture.exists(): fixture.unlink()
-    print('PASS_GPT_IMAGE_IMPORT',len(SHA),'files to',DEST)
+    if fixture.exists():fixture.unlink()
+    for name,data in contents.items():(DEST/name).write_bytes(data)
+    print('PASS_GPT_PRODUCTION_ASSETS',len(contents),provenance,DEST,flush=True)
 if __name__=='__main__':stage()
