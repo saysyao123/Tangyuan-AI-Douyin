@@ -1,23 +1,50 @@
 {
   "project": "MV_WEB_STABLE_V1",
   "repo": "saysyao123/Tangyuan-AI-Douyin",
-  "status": "P0_FILES_STAGED_P1_NOT_YET_PROVEN",
+  "updated": "2026-10-08",
+  "phase": "P1_SEALED",
   "p0": {
-    "source": "huashu-art-motion@26dba25b2b495c2138848c29a2c90df356a20325",
-    "engine": "Run01 Skill-fork Canvas render.py",
+    "status": "PASS",
+    "source_skill": "alchaincyf/huashu-art-motion@26dba25b2b495c2138848c29a2c90df356a20325",
+    "renderer": "08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/render.py",
     "workflow": ".github/workflows/mv_web_stable_smoke.yml"
   },
   "p1": {
-    "required": "successful workflow run, artifact, ffprobe 60 frames 30fps 1080x1920, AAC audio, decode OK",
-    "run_id": null,
-    "status": "UNVERIFIED"
+    "status": "PASS",
+    "run_id": 37723404840,
+    "artifact_id": 11526711881,
+    "commit_sha": "2b60de04713f46faa27cee57904920f1b6bfb1f5",
+    "tested": "2026-10-08",
+    "proof_file": "mv_web_stable/P1_RESULT.md",
+    "video": {
+      "duration_s": 2,
+      "frames": 60,
+      "fps": 30,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "audio_codec": "aac",
+      "channels": 2,
+      "sha256": "61acc58a40bf179174f8a71d5f8be0f2cf15261bef7eefc386fb9b3b5a6890c6"
+    },
+    "checks_passed": [
+      "dimensions_1080x1920",
+      "exactly_60_frames",
+      "fps_30",
+      "duration_2s",
+      "audio_aac_stereo",
+      "full_decode",
+      "preview_png"
+    ]
   },
   "p2": {
-    "status": "BLOCKED_UNTIL_P1_PASS"
+    "status": "READY_NOT_STARTED",
+    "contract": "mv_web_stable/P2_SHOT_CONTRACT.md",
+    "hard_gate": "8 independent segments, accurate frozen boundaries, match-cut and natural motion visual review"
   },
-  "safeguards": {
-    "music": "synthetic smoke only; do not publish original music",
-    "api_key": "never commit",
-    "scene_generation": "GPT native image generation only"
+  "constraints": {
+    "p1_audio": "synthetic 440Hz sine for test, not copyrighted song",
+    "assets": "GPT native image generation for new character and scene images",
+    "model": "Not a claim of actual full MV generation or image model API access from GitHub Actions"
   }
 }
