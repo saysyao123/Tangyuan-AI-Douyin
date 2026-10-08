@@ -2,7 +2,7 @@
   "project": "MV_WEB_STABLE_V1",
   "repo": "saysyao123/Tangyuan-AI-Douyin",
   "updated": "2026-10-08",
-  "phase": "P3_FOUR_GPT_HERO_STILLS_LOCAL_ART_GATE_PENDING",
+  "phase": "P4_INDEPENDENT_IMAGE_GENERATION_BLOCKED_BAD_COLLAGE_OUTPUT",
   "p0": {
     "status": "PASS",
     "source_skill": "alchaincyf/huashu-art-motion@26dba25b2b495c2138848c29a2c90df356a20325",
@@ -81,5 +81,25 @@
     "art_manifest": "mv_web_stable/p3/four_anchor_manifest.json",
     "handoff": "mv_web_stable/p3/P3_STATUS.md",
     "cloud_image_gate": "BLOCKED_UNTIL_BINARIES_IMPORTED"
+  },
+  "p4": {
+    "status": "PARTIAL_ONLY",
+    "source": "mv_web_stable/p4/P4_STATUS.md",
+    "hero_ready_geometry": [
+      "L01",
+      "L04",
+      "L07",
+      "L08"
+    ],
+    "hero_missing": [
+      "L02",
+      "L03",
+      "L05",
+      "L06"
+    ],
+    "actor_pose_sequences": "NOT_GENERATED",
+    "automatic_new_art_cloud_render": "NOT_TESTED",
+    "asset_upload_status": "NOT_UPLOADED",
+    "next": "Clean one-shot GPT native images then image-driven cloud integration"
   }
 }

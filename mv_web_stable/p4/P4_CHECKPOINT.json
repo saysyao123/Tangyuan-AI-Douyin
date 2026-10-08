@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-08",
+  "status": "P4_PARTIAL_ART_ONLY",
+  "image_registry_path": "mv_web_stable/p3/four_anchor_manifest.json",
+  "known_hero_originals": [
+    "L01",
+    "L04",
+    "L07",
+    "L08"
+  ],
+  "missing_individual_hero_images": [
+    "L02",
+    "L03",
+    "L05",
+    "L06"
+  ],
+  "missing_action_sequences": [
+    "L07 arm reach start+mid+end",
+    "L08 scarf reach start+mid+end"
+  ],
+  "validation": {
+    "geometry": "4/8 passed",
+    "require_all": "expected failure",
+    "rejected_storyboard": "1024x1536 contact sheet non 9:16",
+    "note": "local container QA, no Github Actions art run"
+  },
+  "no_audio_public": true
+}
