@@ -1,0 +1,32 @@
+{
+  "stage": "P5_GPT_ART_SKIA_FALLBACK_LOCAL_PROOF",
+  "date": "2026-10-08",
+  "source_module": "08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/scenes/gpt_images.js",
+  "frames": 310,
+  "duration_seconds": 10.333333333333334,
+  "resolution": "1080x1920",
+  "fps": 30,
+  "source_global_frame_spans": {
+    "L01": [
+      0,
+      75
+    ],
+    "L04": [
+      240,
+      322
+    ],
+    "L07": [
+      488,
+      562
+    ],
+    "L08": [
+      562,
+      641
+    ]
+  },
+  "mp4_sha256": "d3d9c4d6fd4558e44af2668fadd5ba0f08c950d34a47b6ae2a7cd45adf62d9c5",
+  "codec_decode": "PASS",
+  "cloud_new_art_render": "NOT_TESTED_IMAGES_MISSING",
+  "human_action_keyframes": "MISSING",
+  "other_lyrics": "L02_L03_L05_L06_MISSING"
+}
