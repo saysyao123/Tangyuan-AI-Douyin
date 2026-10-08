@@ -3,73 +3,68 @@ on:
   workflow_dispatch:
     inputs:
       shot:
-        description: Choose ONE GPT-native illustration scene
-        required: true
+        description: Render one independent shot
         type: choice
+        required: true
         default: L01
         options: [L01, L04, L07, L08]
+      art_mode:
+        description: Production uses real hashed GPT image files; synthetic fixture is technical test only
+        type: choice
+        required: true
+        default: production
+        options: [production, synthetic-fixture]
   push:
     paths:
       - 'mv_web_stable/p5/**'
       - '.github/workflows/mv_web_stable_p5.yml'
-      - '08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/eras_gpt.js'
-      - '08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine/scenes/gpt_images.js'
 permissions:
   contents: read
 jobs:
-  source-export:
-    name: Export pinned Huashu source for reproducible P5 tests
-    runs-on: ubuntu-24.04
-    timeout-minutes: 6
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build source snapshot without user's original song
-        run: |
-          zip -qr huashu_p5_engine_source.zip 08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/engine
-          ls -lh huashu_p5_engine_source.zip
-      - uses: actions/upload-artifact@v4
-        with:
-          name: huashu-p5-engine-source-${{ github.run_id }}
-          path: huashu_p5_engine_source.zip
-          retention-days: 14
-  render:
-    if: github.event_name == 'workflow_dispatch'
+  engine-test:
+    name: Actual Huashu Chromium engine - art status separated
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    env:
+      SHOT_ID: ${{ inputs.shot || 'L01' }}
+      ART_MODE: ${{ inputs.art_mode || 'synthetic-fixture' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install actual Huashu Chromium + FFmpeg dependencies
+      - name: Install pinned dependencies
         run: |
-          python -m pip install playwright==1.51.0
+          python -m pip install playwright==1.51.0 pillow==11.1.0
           python -m playwright install --with-deps chromium --only-shell
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ffmpeg
       - name: Restore Huashu fonts
         run: python 08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/bootstrap_fonts.py
-      - name: Import and SHA-verify the five actual GPT art PNGs (fail closed)
-        run: python mv_web_stable/p5/stage_assets.py
-      - name: Create harmless 21.36-second synthetic-only audio (copyright-safe)
+      - name: Prepare input images in an explicitly marked mode
+        run: |
+          if [ "$ART_MODE" = "synthetic-fixture" ]; then
+            python mv_web_stable/p5/make_fixture.py
+          else
+            python mv_web_stable/p5/stage_assets.py
+          fi
+      - name: Make synthetic test-only audio
         run: |
           mkdir -p mv_web_stable/p5/out
           ffmpeg -v error -y -f lavfi -i 'sine=frequency=440:sample_rate=44100:duration=21.360907' -af volume=0.08 -ac 2 -c:a pcm_s16le mv_web_stable/p5/out/tone.wav
-      - name: Render real image-layer shot with the original Huashu engine
-        env:
-          SHOT_ID: ${{ inputs.shot }}
+      - name: Render with original Huashu Chromium renderer
         run: |
-          python mv_web_stable/p5/render_one.py --shot "$SHOT_ID" --audio mv_web_stable/p5/out/tone.wav --out "mv_web_stable/p5/out/HUASHU_GPT_${SHOT_ID}.mp4"
-      - name: Basic codec and decode QA
-        env:
-          SHOT_ID: ${{ inputs.shot }}
+          python -u mv_web_stable/p5/render_one.py --shot "$SHOT_ID" --art-mode "$ART_MODE" --audio mv_web_stable/p5/out/tone.wav --out "mv_web_stable/p5/out/HUASHU_${ART_MODE}_${SHOT_ID}.mp4"
+      - name: Verify decode and scene motion
         run: |
-          ffprobe -v error -show_entries stream=codec_name,codec_type,width,height,nb_frames -show_entries format=duration -of json "mv_web_stable/p5/out/HUASHU_GPT_${SHOT_ID}.mp4"
-          ffmpeg -v error -xerror -i "mv_web_stable/p5/out/HUASHU_GPT_${SHOT_ID}.mp4" -f null -
+          python mv_web_stable/p5/verify_scene.py --shot "$SHOT_ID" --art-mode "$ART_MODE" --file "mv_web_stable/p5/out/HUASHU_${ART_MODE}_${SHOT_ID}.mp4" --out mv_web_stable/p5/out/scene_qa.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: huashu-p5-gpt-scene-${{ inputs.shot }}-${{ github.run_id }}
-          path: mv_web_stable/p5/out/HUASHU_GPT_*.mp4
-          retention-days: 14
+          name: huashu-p5-${{ env.ART_MODE }}-${{ env.SHOT_ID }}-${{ github.run_id }}
+          path: |
+            mv_web_stable/p5/out/HUASHU_*.mp4
+            mv_web_stable/p5/out/scene_qa.json
+            mv_web_stable/p5/out/*_frame_*.png
           if-no-files-found: warn
+          retention-days: 14
