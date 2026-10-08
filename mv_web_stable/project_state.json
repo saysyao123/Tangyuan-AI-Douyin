@@ -38,15 +38,21 @@
     ]
   },
   "p2": {
-    "status": "IN_PROGRESS_TECHNICAL_TEST",
+    "status": "SHOT_ISOLATION_PASS__ART_GATE_PENDING",
     "source_contract": "mv_web_stable/p2/shot_contract.json",
     "image_manifest": "mv_web_stable/p2/assets_manifest.json",
     "art_status": "MISSING_GPT_NATIVE_IMAGES",
     "rehearsal_run_id": 37724566599,
-    "rehearsal_proof": "PENDING",
+    "rehearsal_proof": "mv_web_stable/p2/P2_EXECUTION_REPORT.md",
     "safety": "Old Run01 drawings allowed only for structural rehearsal, never official production imagery",
     "technical_gate": "8 continuous lyric spans, cloud isolated shot MP4, global frames + complete decode",
-    "artistic_gate": "PENDING, not started until ChatGPT GPT-native images are actually generated"
+    "artistic_gate": "PENDING, not started until ChatGPT GPT-native images are actually generated",
+    "verified_shot": "L03",
+    "verified_frames": 68,
+    "total_song_frames": 641,
+    "artifact_id": 11527580905,
+    "production_art": "MISSING (no fresh GPT-native images created)",
+    "next_gate": "Generate new 4-anchor GPT images L01/L04/L07/L08, then asset audit and actual layer render"
   },
   "constraints": {
     "p1_audio": "synthetic 440Hz sine for test, not copyrighted song",
