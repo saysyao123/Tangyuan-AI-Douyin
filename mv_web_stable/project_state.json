@@ -58,5 +58,28 @@
     "p1_audio": "synthetic 440Hz sine for test, not copyrighted song",
     "assets": "GPT native image generation for new character and scene images",
     "model": "Not a claim of actual full MV generation or image model API access from GitHub Actions"
+  },
+  "p3": {
+    "status": "GPT_FOUR_HERO_ANCHORS_LOCAL_NOT_CLOUD_READY",
+    "gpt_native_hero_shots": [
+      "L01",
+      "L04",
+      "L07",
+      "L08"
+    ],
+    "missing_hero_shots": [
+      "L02",
+      "L03",
+      "L05",
+      "L06"
+    ],
+    "important_limitations": [
+      "Images are full-frame baked stills, not animated pose keyframes",
+      "No actual image binaries yet uploaded to GitHub",
+      "Local sampler not a Huashu Skill native production render"
+    ],
+    "art_manifest": "mv_web_stable/p3/four_anchor_manifest.json",
+    "handoff": "mv_web_stable/p3/P3_STATUS.md",
+    "cloud_image_gate": "BLOCKED_UNTIL_BINARIES_IMPORTED"
   }
 }

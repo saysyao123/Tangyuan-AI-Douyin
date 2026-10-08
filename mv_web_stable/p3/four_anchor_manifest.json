@@ -1,0 +1,81 @@
+{
+  "schema": "MV_P3_GPT_HERO_STILLS_V1",
+  "date": "2026-10-08",
+  "state": "FOUR_IMAGES_PRODUCED_IN_CONVERSATION_NOT_UPLOADED_TO_GITHUB",
+  "source": "GPT native image generation in ChatGPT",
+  "images": [
+    {
+      "id": "L01",
+      "original_file": "雨夜水乡红线月影.png",
+      "import_to": "mv_web_stable/p3/assets/L01_GPT_NATIVE_HERO.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "ead5d305737b002e420fd1f017d77c6f7bb09368d0f6d9c5d7d86c03c2453d01",
+      "scene_type": "BAKED_FULL_FRAME_HERO",
+      "layers_separate": false,
+      "visual_review": "NOT_FINAL_PASS",
+      "cloud_available": false
+    },
+    {
+      "id": "L04",
+      "original_file": "月下空席与双盏茶.png",
+      "import_to": "mv_web_stable/p3/assets/L04_GPT_NATIVE_HERO.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "6a59c8ac50b1916c6f82243a5f545142921132fdb2cae717f006f29795e27707",
+      "scene_type": "BAKED_FULL_FRAME_HERO",
+      "layers_separate": false,
+      "visual_review": "NOT_FINAL_PASS",
+      "cloud_available": false
+    },
+    {
+      "id": "L07",
+      "original_file": "雨夜追忆_灯影中的漂流照片.png",
+      "import_to": "mv_web_stable/p3/assets/L07_GPT_NATIVE_HERO.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "a6085b7fba7f4f4a352a3df59e15445444b6702c79ca77474471c13ff9dae84f",
+      "scene_type": "BAKED_FULL_FRAME_HERO",
+      "layers_separate": false,
+      "visual_review": "NOT_FINAL_PASS",
+      "cloud_available": false
+    },
+    {
+      "id": "L08",
+      "original_file": "雨夜灯影中的红围巾少女.png",
+      "import_to": "mv_web_stable/p3/assets/L08_GPT_NATIVE_HERO.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "bc0c8720e5710e91e777f63875ab356906095de3ee1da27505cd44cdc652ccf3",
+      "scene_type": "BAKED_FULL_FRAME_HERO",
+      "layers_separate": false,
+      "visual_review": "NOT_FINAL_PASS",
+      "cloud_available": false
+    }
+  ],
+  "absent_main_hero_shots": [
+    "L02",
+    "L03",
+    "L05",
+    "L06"
+  ],
+  "absent_motion_layers": [
+    "L01:thread_layer",
+    "L04:empty_scene_layer",
+    "L07:three_pose_action",
+    "L08:three_pose_action"
+  ],
+  "sampler": {
+    "name": "P3_四张GPT新图_动作与卡点样片.mp4",
+    "mode": "LOCAL_COMPOSITOR_NOT_HUASHU_SKILL_NATIVE",
+    "frame_count": 311,
+    "fps": 30,
+    "duration_s": 10.366667,
+    "width": 1080,
+    "height": 1920,
+    "original_song_source_sha256": "42c8fd3ce982b54d6792c66eebff6edd1406a823e53cf2a9c93b03d772ccebfe",
+    "mp4_sha256": "03c3ad0b4a052d0ed242c82100ce989d8d87d4cecdfd1a88674731f6b02018bd",
+    "qa": "TECH_DECODE_PASS_ART_GATE_PENDING",
+    "github_runner_tested": false
+  }
+}
