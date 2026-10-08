@@ -2,7 +2,7 @@
   "project": "MV_WEB_STABLE_V1",
   "repo": "saysyao123/Tangyuan-AI-Douyin",
   "updated": "2026-10-08",
-  "phase": "P5_CLOUD_HUASHU_ENGINE_VERIFIED_GPT_UPLOAD_SINGLE_ZIP_READY",
+  "phase": "P6_EIGHT_LYRIC_LOCAL_MP4_DELIVERED_CLOUD_GPT_ASSET_GATE_PENDING",
   "p0": {
     "status": "PASS",
     "source_skill": "alchaincyf/huashu-art-motion@26dba25b2b495c2138848c29a2c90df356a20325",
@@ -131,5 +131,38 @@
       "L08 scarf-touch sequence"
     ],
     "note": "Synthetic fixture renderer validation must not be interpreted as production art pass"
+  },
+  "p6": {
+    "status": "LOCAL_FULL_EIGHT_SHOT_MP4_PASS",
+    "local_duration_seconds": 21.366667,
+    "total_frames": 641,
+    "video_resolution": "1080x1920",
+    "frame_rate": 30,
+    "video_codec": "H264",
+    "audio_codec": "AAC",
+    "video_sha256": "1dba6e16dd33304fa3aef7bee4d50f0f6c62c80ad6f82d40ce12fabe65d0c22b",
+    "source_audio_sha256": "42c8fd3ce982b54d6792c66eebff6edd1406a823e53cf2a9c93b03d772ccebfe",
+    "full_decode": "PASS",
+    "blackdetect": "PASS_NO_BLACK_SEGMENT_OVER_0_1_S",
+    "timeline": "8 independent source frame spans with absolute frame boundaries",
+    "approved_original_gpt_art": [
+      "L01",
+      "L04",
+      "L07",
+      "L08"
+    ],
+    "derived_gpt_scene_compositions": [
+      "L02",
+      "L03",
+      "L05",
+      "L06"
+    ],
+    "imagegen_collages": "REJECTED_NOT_USED",
+    "actor_keyframe_generation": "MISSING_GPT_ACTION_POSES_L07_L08",
+    "cloud_full_eight_shot_render": "NOT_TESTED",
+    "source_code_archive": "Current ChatGPT conversation delivery ZIP (contains huashu_gpt_mv_all8.mjs, original art layers, original-source sound and technical QA). Not committed to public repo because of private/copyrighted audio and size.",
+    "tech_gate": "PASS",
+    "artistic_gate": "PARTIAL_BY_DESIGN_NEW_GPT_IMAGES_NOT_COMPLETE",
+    "note": "Eight-shot coherent music video can be watched now; do not label as eight independently GPT-generated artworks, nor as fully cloud-produced."
   }
 }

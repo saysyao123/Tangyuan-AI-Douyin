@@ -1,0 +1,72 @@
+{
+  "project": "若爱有尽头",
+  "stage": "P6",
+  "fps": 30,
+  "video_width": 1080,
+  "video_height": 1920,
+  "total_frames": 641,
+  "original_gpt_image_count": 4,
+  "derived_independent_composition_count": 4,
+  "actor_animation_keyframes_missing": [
+    "L07",
+    "L08"
+  ],
+  "shots": [
+    {
+      "id": "L01",
+      "lyric": "如果爱有尽头",
+      "start_frame": 0,
+      "end_frame": 75,
+      "art": "original_gpt"
+    },
+    {
+      "id": "L02",
+      "lyric": "怎么想念没有",
+      "start_frame": 75,
+      "end_frame": 172,
+      "art": "derived_crop"
+    },
+    {
+      "id": "L03",
+      "lyric": "我该如何拼凑",
+      "start_frame": 172,
+      "end_frame": 240,
+      "art": "derived_crop_and_photo_shards"
+    },
+    {
+      "id": "L04",
+      "lyric": "没有你的以后",
+      "start_frame": 240,
+      "end_frame": 322,
+      "art": "original_gpt"
+    },
+    {
+      "id": "L05",
+      "lyric": "你随时光远走",
+      "start_frame": 322,
+      "end_frame": 412,
+      "art": "derived_table_close"
+    },
+    {
+      "id": "L06",
+      "lyric": "回忆却总逗留",
+      "start_frame": 412,
+      "end_frame": 488,
+      "art": "derived_window_view"
+    },
+    {
+      "id": "L07",
+      "lyric": "怪我太过念旧",
+      "start_frame": 488,
+      "end_frame": 562,
+      "art": "original_gpt"
+    },
+    {
+      "id": "L08",
+      "lyric": "迟迟不肯退后",
+      "start_frame": 562,
+      "end_frame": 641,
+      "art": "original_gpt"
+    }
+  ]
+}
