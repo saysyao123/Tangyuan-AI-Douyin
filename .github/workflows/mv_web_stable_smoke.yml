@@ -1,11 +1,8 @@
 name: MV Web Stable P1 Smoke
 
+# Manual web launch: avoid re-rendering for docs or unrelated commits.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'mv_web_stable/**'
-      - '.github/workflows/mv_web_stable_smoke.yml'
 
 permissions:
   contents: read
