@@ -38,9 +38,15 @@
     ]
   },
   "p2": {
-    "status": "READY_NOT_STARTED",
-    "contract": "mv_web_stable/P2_SHOT_CONTRACT.md",
-    "hard_gate": "8 independent segments, accurate frozen boundaries, match-cut and natural motion visual review"
+    "status": "IN_PROGRESS_TECHNICAL_TEST",
+    "source_contract": "mv_web_stable/p2/shot_contract.json",
+    "image_manifest": "mv_web_stable/p2/assets_manifest.json",
+    "art_status": "MISSING_GPT_NATIVE_IMAGES",
+    "rehearsal_run_id": 37724566599,
+    "rehearsal_proof": "PENDING",
+    "safety": "Old Run01 drawings allowed only for structural rehearsal, never official production imagery",
+    "technical_gate": "8 continuous lyric spans, cloud isolated shot MP4, global frames + complete decode",
+    "artistic_gate": "PENDING, not started until ChatGPT GPT-native images are actually generated"
   },
   "constraints": {
     "p1_audio": "synthetic 440Hz sine for test, not copyrighted song",
