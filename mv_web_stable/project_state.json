@@ -2,7 +2,7 @@
   "project": "MV_WEB_STABLE_V1",
   "repo": "saysyao123/Tangyuan-AI-Douyin",
   "updated": "2026-10-08",
-  "phase": "P5_GPT_PICTURE_HUASHU_SCENE_LOCAL_PROVEN_CLOUD_PNG_IMPORT_PENDING",
+  "phase": "P5_CLOUD_HUASHU_ENGINE_VERIFIED_GPT_UPLOAD_SINGLE_ZIP_READY",
   "p0": {
     "status": "PASS",
     "source_skill": "alchaincyf/huashu-art-motion@26dba25b2b495c2138848c29a2c90df356a20325",
@@ -110,6 +110,26 @@
     "film_segments": "L01/L04/L07/L08, source global frames",
     "missing": "L02/L03/L05/L06 original art and L07/L08 complete dynamic actor keypose series",
     "visual_director_gate": "PENDING",
-    "report": "mv_web_stable/p5/P5_STATUS.md"
+    "report": "mv_web_stable/p5/P5_STATUS.md",
+    "cloud_huashu_chromium_synthetic_engine_status": "PASS",
+    "cloud_synthetic_engine_run_id": 37738329305,
+    "cloud_synthetic_engine_proof": "75 frames, 2.5 sec, 1080x1920, H264/AAC, all decode and motion QA passed",
+    "full_gpt_png_binary_archive": "GPT_NATIVE_ANCHORS_UPLOAD.zip (10,321,830 bytes, verified locally)",
+    "archive_uploaded_to_github": false,
+    "production_gpt_cloud_render_status": "BLOCKED_AWAITING_SINGLE_ZIP_UPLOAD",
+    "upload_contract": "mv_web_stable/p5/P5_SINGLE_UPLOAD.md",
+    "source_audio_in_public_repo": false,
+    "full_eight_lyric_mv_status": "NOT_COMPLETE",
+    "absent_new_hero_frames": [
+      "L02",
+      "L03",
+      "L05",
+      "L06"
+    ],
+    "absent_actor_keyframe_sequences": [
+      "L07 reach sequence",
+      "L08 scarf-touch sequence"
+    ],
+    "note": "Synthetic fixture renderer validation must not be interpreted as production art pass"
   }
 }
