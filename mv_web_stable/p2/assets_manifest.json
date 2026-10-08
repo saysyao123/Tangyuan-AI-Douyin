@@ -1,0 +1,178 @@
+{
+  "schema": "MV_P2_IMAGE_ASSETS_V1",
+  "source": "GPT_NATIVE_IMAGE_GENERATION_ONLY",
+  "production_ready": false,
+  "notes": "No new GPT-native images are present. Do not substitute legacy Run01 artwork as formal assets.",
+  "shots": {
+    "L01": {
+      "scene": {
+        "path": "assets/L01/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "hero": {
+        "path": "assets/L01/hero.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "thread_insert": {
+        "path": "assets/L01/thread_insert.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L02": {
+      "scene": {
+        "path": "assets/L02/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "hero": {
+        "path": "assets/L02/hero.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L03": {
+      "scene": {
+        "path": "assets/L03/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "photo": {
+        "path": "assets/L03/photo.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L04": {
+      "scene": {
+        "path": "assets/L04/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "photo": {
+        "path": "assets/L04/photo.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L05": {
+      "scene": {
+        "path": "assets/L05/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "photo": {
+        "path": "assets/L05/photo.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "photo_lift_insert": {
+        "path": "assets/L05/photo_lift_insert.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L06": {
+      "scene": {
+        "path": "assets/L06/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "photo": {
+        "path": "assets/L06/photo.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L07": {
+      "scene": {
+        "path": "assets/L07/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_start": {
+        "path": "assets/L07/pose_start.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_middle": {
+        "path": "assets/L07/pose_middle.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_end": {
+        "path": "assets/L07/pose_end.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    },
+    "L08": {
+      "scene": {
+        "path": "assets/L08/scene.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_start": {
+        "path": "assets/L08/pose_start.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_middle": {
+        "path": "assets/L08/pose_middle.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      },
+      "pose_end": {
+        "path": "assets/L08/pose_end.png",
+        "state": "MISSING",
+        "source": "GPT_NATIVE",
+        "sha256": null,
+        "visual_gate": "PENDING"
+      }
+    }
+  }
+}

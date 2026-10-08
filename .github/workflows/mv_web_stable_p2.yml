@@ -1,0 +1,58 @@
+name: MV Web Stable P2 One-Lyric Rehearsal
+on:
+  workflow_dispatch:
+    inputs:
+      shot:
+        description: One shot / source-timeline segment
+        type: choice
+        required: true
+        default: L03
+        options: [L01, L02, L03, L04, L05, L06, L07, L08]
+  push:
+    paths:
+      - 'mv_web_stable/p2/**'
+      - '.github/workflows/mv_web_stable_p2.yml'
+permissions:
+  contents: read
+jobs:
+  shot-rehearsal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare Playwright and FFmpeg
+        run: |
+          python -m pip install playwright==1.51.0
+          python -m playwright install --with-deps chromium --only-shell
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ffmpeg
+      - name: Restore Huashu fonts
+        run: python 08_AGENT_CONTROL_LAYER/pilots/CODE_MOTION_MV_RUN01_2026-10-06/bootstrap_fonts.py
+      - name: Validate eight-lyric shot contract
+        run: python mv_web_stable/p2/validate.py
+      - name: Generate safe synthetic source-time audio
+        run: |
+          ffmpeg -v error -y -f lavfi -i 'sine=frequency=440:sample_rate=44100:duration=21.360907' -af 'volume=0.08' -ac 2 -c:a pcm_s16le mv_web_stable/p2/out/reference_tone.wav
+      - name: Render selected shot in Huashu rehearsal engine
+        env:
+          SELECTED_SHOT: ${{ inputs.shot || 'L03' }}
+        run: |
+          python mv_web_stable/p2/render_shot.py --shot "$SELECTED_SHOT" --audio mv_web_stable/p2/out/reference_tone.wav
+      - name: Verify clip and extract middle still
+        env:
+          SELECTED_SHOT: ${{ inputs.shot || 'L03' }}
+        run: python mv_web_stable/p2/verify_clip.py --shot "$SELECTED_SHOT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p2-lyric-${{ inputs.shot || 'L03' }}-${{ github.run_id }}
+          path: |
+            mv_web_stable/p2/out/score.json
+            mv_web_stable/p2/out/REHEARSAL_*.mp4
+            mv_web_stable/p2/out/*_middle.png
+            mv_web_stable/p2/out/*_verification.json
+          retention-days: 14
+          if-no-files-found: warn
