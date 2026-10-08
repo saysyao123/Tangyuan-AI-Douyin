@@ -1,0 +1,30 @@
+{
+  "run_id": "WEB_MV_EXPERIENCE_AB_RUN01_2026-10-08",
+  "contract_path": "08_AGENT_CONTROL_LAYER/research/AWESOME_AI_MOTION_2026-10-08/WEB_MV_EXPERIENCE_HANDOFF.md",
+  "contract_read_all": true,
+  "output_level": "REAL_MP4S_IN_CHAT_ARTIFACT_NOT_IN_PUBLIC_GITHUB",
+  "duration_seconds": 7.633333333333334,
+  "frames": 229,
+  "fps": 30,
+  "resolution": [
+    1080,
+    1920
+  ],
+  "source_song_sha256": "42c8fd3ce982b54d6792c66eebff6edd1406a823e53cf2a9c93b03d772ccebfe",
+  "original_audio_start_s": 13.733333333333333,
+  "original_audio_end_s": 21.366666666666667,
+  "A_sha256": "1d2531f8173df5ace8d9ae1064f9baab3d95e1a5776f8855951e12be1245e72c",
+  "B_sha256": "33ab5ef5f25696e9d499d598fa507c77c5aa509476eb88ea24d8d73e89be6cc7",
+  "decoded_pcm_sha256_both": "e88f8016bd54ea58ca71f5f8559b8be63e26d0e3c2ced39a1ebb6dbd6db7f0a5",
+  "video_full_decode_A": true,
+  "video_full_decode_B": true,
+  "blackdetect_A_segments": 0,
+  "blackdetect_B_segments": 0,
+  "one_changed_variable": "camera A fixed; camera B exactly one 0..5.5% monotonic push t=4.85..6.50 anchored on scarf/hand",
+  "source_actor": "historical gesture_atlas.png 8 poses; not regenerated GPT-native actor pose assets",
+  "human_full_speed_audio_watched": false,
+  "machine_technical_gate": "PASS",
+  "human_artistic_gate": "PENDING_USER_REVIEW",
+  "stop_before_expanding": true,
+  "note": "Two MP4s and source/QA package are attached to the ChatGPT conversation. Original music is intentionally NOT uploaded to PUBLIC GitHub."
+}
