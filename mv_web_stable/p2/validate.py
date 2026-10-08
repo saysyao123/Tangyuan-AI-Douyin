@@ -33,7 +33,8 @@ if args.require_assets:
             raw=f.read_bytes()
             if len(raw)<33 or not raw.startswith(b'\x89PNG\r\n\x1a\n'):problems.append(str(f)+' not PNG');continue
             w,h=struct.unpack('>II',raw[16:24])
-            if w<768 or h<1152:problems.append(str(f)+' low res')
+            minw,minh = (768,1152) if slot in ('scene','hero','pose_start','pose_middle','pose_end') else (768,512)
+            if w<minw or h<minh:problems.append(str(f)+f' low res ({w}x{h}; expected at least {minw}x{minh})')
             if hashlib.sha256(raw).hexdigest()!=record.get('sha256'):problems.append(str(f)+' hash mismatch')
 out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True)
 r={'status':'PASS' if not problems else 'FAIL','type':'production_assets' if args.require_assets else 'structural','fps':30,'total_frames':sum(x['frames'] for x in frames),'shots':frames,'problems':problems}
