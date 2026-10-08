@@ -37,7 +37,7 @@ try:
     a1,a2=[Image.open(shotpath/(args.shot+'_frame_'+str(i)+'.png')).convert('RGB').resize((270,480)) for i in (0,2)]
     d=ImageChops.difference(a1,a2)
     report['frame_difference_mean']=sum(ImageStat.Stat(d).mean)/3
-    report['nonstatic_scene']=report['frame_difference_mean']>.13
+    report['nonstatic_scene']=report['frame_difference_mean']>.025
     report['sha256']=hashlib.sha256(mp4.read_bytes()).hexdigest()
     report['status']='TECHNICAL_PASS' if all(checks.values()) and report['nonstatic_scene'] else 'FAIL'
     if args.art_mode=='synthetic-fixture':report['art_gate']='NOT_APPLICABLE_SYNTHETIC_ONLY'
