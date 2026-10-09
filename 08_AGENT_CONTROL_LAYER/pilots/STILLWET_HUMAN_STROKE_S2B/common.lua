@@ -28,8 +28,18 @@ p:sketch({{0,813},{400,813},{1000,813}},{pressure=0.2})
 p:sketch({{481,493},{478,739},{502,888},{542,938},{638,938},{677,881},{709,577},{709,493}},{pressure=0.25})
 p:sketch({{170,966},{217,902},{309,884},{388,907},{446,966},{401,1022},{305,1048},{207,1030},{170,966}},{pressure=0.23})
 fix()
-work(wall-objs:grow(12),{hand="broad",pile=bg,coverage=1.35,angle=0.20,length={90,175},load=0.55,clip=true,seed=100})
-work(tableTop-objs:grow(6),{hand="broad",pile=cloth,coverage=1.48,angle=0.05,length={80,152},load=0.6,clip=true,seed=101})
+-- S2B2: the shared PRIMARY underpainting itself must not become wallpaper.
+-- Intentional long, varied, fully covered broad passages followed by soft blending.
+work(wall-objs:grow(12),{hand="broad",pile=bg,coverage=2.15,
+  angle=function(x,y) return 0.12+0.24*math.sin(y/218) end,
+  angle_jitter=0.22,curve={0.20,0.11},length={95,195},
+  load=0.63,dips={3,0.72,0.92},fill=true,clip=true,seed=100})
+blend(wall-objs:grow(12),{angle=0.20,coverage=0.63,clip=true,seed=105})
+work(tableTop-objs:grow(6),{hand="broad",pile=cloth,coverage=2.0,
+  angle=function(x,y) return 0.06+0.14*math.sin(x/188) end,
+  angle_jitter=0.17,curve={0.12,0.07},length={90,170},
+  load=0.63,fill=true,clip=true,seed=101})
+blend(tableTop-objs:grow(6),{angle=0.03,coverage=0.45,clip=true,seed=106})
 work(ellipse(596,942,192,30):soften(12),{hand="scumble",pile=shade,coverage=0.75,angle=0,clip=true,seed=102})
 work(ellipse(321,1041,160,20):soften(12),{hand="scumble",pile=shade,coverage=0.7,angle=0,clip=true,seed=103})
 print("S2B identical first ground; separate A/B painter decisions follow")
