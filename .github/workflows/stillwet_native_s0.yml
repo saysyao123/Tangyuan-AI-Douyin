@@ -31,9 +31,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git clone --filter=blob:none https://github.com/aliceisjustplaying/claude-paint.git original
+          mkdir original
           cd original
-          git checkout --detach 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git init -q
+          git remote add origin https://github.com/aliceisjustplaying/claude-paint.git
+          git sparse-checkout init --cone
+          git sparse-checkout set crates scripts paintings/sampler .cargo
+          git fetch --depth 1 --filter=blob:none origin 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git checkout --detach FETCH_HEAD
           test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
           git rev-parse HEAD
 
