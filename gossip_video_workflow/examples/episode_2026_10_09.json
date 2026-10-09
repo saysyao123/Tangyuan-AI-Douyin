@@ -1,0 +1,1076 @@
+{
+  "id": "gossip_2026_10_09_zh",
+  "language": "zh",
+  "edition": "2026-10-09",
+  "label": "今日热议选编",
+  "footer": "真实资料／先核实再评论",
+  "voice": "zf_001",
+  "voice_speed": 0.92,
+  "model_revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+  "editorial_review_complete": true,
+  "direction": "# DIRECTION · 2026-10-09 中文吃瓜选编\n\n日期口径：Asia/Shanghai。三条分别标明历史调查、10月4日事故与10月8日回应、10月国庆采访。\n\n## 视觉\n1080×1920 竖版 30fps，纸白 #fafaf8，墨黑 #0a0a0a，安全橙 #FF6B35，56px 安全边距；标题 Noto Sans CJK SC Light，整句字幕 Medium，最多三行。\n首帧：手机画面/博物馆内部/横店旧资料三图及“短剧账单两年22万”。所有人物和场景为历史/示意，不指称为本次事件人物。首句必须在3秒以内；实际 Kokoro 测时不通过则改写首句。\n\n## 剪辑动作和镜头\n01 手机教育资料不同不重叠区间做账单情境，真实账单数字采用中文标题。该视频是2022年教材素材，不能假装老人实际支付；注意去除英文字幕/台标，如果无法裁净则更换素材，不能硬出片。\n02 大英博物馆2014年内部实拍，衬托地点，但未拍到瓷器损坏。不展示其他器物冒充受损文物。必要时另经授权插入馆方说明原文截图，屏显注明记者转述；未拿到不能编造官方截图。\n03 中国新闻网2019年横店活动实拍+2007—2018年横店实景照。要特别留意镜头里的儿童正脸。不能把2019现场视为2026国庆场面。静态画面尽量少，在静态段给阅读时间。\n每行对应独立声轨：zf_001 / 0.92；间隙自然，不采用机械排比；BGM 自动 sidechain 压低；句中不使用假引号，新闻事实带来源。\n\n## 必做 QA\n先查 URL 可直下与素材授权，视频 probe 后验证 crop、含英语画面、台标和儿童脸；每句实测语音并确保视频时长不超过5分钟；运行 ffmpeg 与 Chromium doctor，React/GSAP render，最终 --stt；检测逐句 AAC 对齐，关键帧和全部转场；用户真人试听 pending。未完成上述步骤一律标 awaiting_review。\n",
+  "brief": "# 2026年10月9日｜中文热议三则（北京时间）\n\n**编辑日期**：2026-10-09（Asia/Shanghai）；这是一份近几天话题选编，非官方热榜。\n\n## 01｜短剧充值账单：两年多22.58万元\n\n- **原事件区间**：2024年1月至2026年4月（家属统计口径）。\n- **原始报道**：2026年9月22日至23日，《IT时报》；本期将旧报道作为近期持续讨论选编，不能称10月9日新发事故。\n- **主要事实**：报道引述家属整理的4887笔充值订单、365个剧场及累计22.58万元；2025年11月7日单日29笔、1466.3元。均为报道和家属统计口径，不等于独立审计、犯罪认定。\n- **链接**：https://www.sina.cn/news/detail/5346244192898709.html；https://www.woshipm.com/marketing/6468834.html\n\n## 02｜大英博物馆：清代瓷碗落下，另件瓷盒受损\n\n- **事件发生**：2026-10-04。\n- **馆方回应**：2026-10-08，回应红星新闻、封面新闻等记者；华商网于10月9日转载红星新闻。\n- **确认事实**：馆方确认两件康熙时期瓷器受损，碗从展架落到下层；器物送修；展架及固定件暂未显示故障迹象。\n- **仍待确认**：真实掉落原因、修复效果，不能用媒体截图自行断言展柜有质量问题。\n- **链接**：https://news.hsw.cn/system/2026/1009/1965288.shtml；https://finance.sina.com.cn/wm/2026-10-08/doc-iniuptaz3523535.shtml\n\n## 03｜横店游客体验拍短剧\n\n- **新闻发表日**：2026-10-08。报道回顾国庆假期游客在横店参与短剧拍摄。\n- **采访内容**：部分年轻游客热衷反派，部分中老年游客喜欢古装角色；导演张金泉讲述有人走错预约片场以及假期排期协调问题。\n- **链接**：https://m.sohu.com/a/1084953940_121948396\n\n## 来源限制和影像注明\n\n- **X**：没读到用户账户与收藏：用户未提供账号及授权入口；本期不使用推文卡，不编互动量。\n- **YouTube**：找到中国新闻网历史授权视频，但不是2026年现场；不宣称已获得2026年国庆原视频。\n- **影像**：三个章节使用可公开追溯的历史/情境资料。并非本次事件当事人、掉落现场或2026年横店游客影像；需在最终编码抽帧后再次确认是否残留台标、原字幕、儿童正脸。\n- **授权**：一些素材 CC BY-SA 4.0，需保留署名、许可链接、修改说明并评估成片发布的 ShareAlike 义务。\n",
+  "facts": {
+    "R01": {
+      "text": "《IT时报》2026年9月22至23日报道，一位近七十岁老人因看短剧，两年多支付约22.58万元；报道使用化名。",
+      "status": "verified",
+      "urls": [
+        "https://www.sina.cn/news/detail/5346244192898709.html",
+        "https://www.woshipm.com/marketing/6468834.html"
+      ]
+    },
+    "R02": {
+      "text": "家属统计出4887笔充值订单、365个短剧剧场。",
+      "status": "verified",
+      "urls": [
+        "https://www.sina.cn/news/detail/5346244192898709.html"
+      ]
+    },
+    "R03": {
+      "text": "家属账单称2025年11月7日充值29次、共1466.3元。",
+      "status": "verified",
+      "urls": [
+        "https://www.sina.cn/news/detail/5346244192898709.html"
+      ]
+    },
+    "R04": {
+      "text": "该调查发表于2026年9月，不是2026年10月9日新发生的事件。",
+      "status": "verified",
+      "urls": [
+        "https://www.sina.cn/news/detail/5346244192898709.html",
+        "https://www.woshipm.com/marketing/6468834.html"
+      ]
+    },
+    "M01": {
+      "text": "大英博物馆称2026年10月4日，两件清康熙时期瓷器受损，一只碗掉落连累下层小盒。",
+      "status": "verified",
+      "urls": [
+        "https://finance.sina.com.cn/tech/roll/2026-10-08/doc-iniuphpf3708985.shtml",
+        "https://finance.sina.com.cn/wm/2026-10-08/doc-iniuptaz3523535.shtml"
+      ]
+    },
+    "M02": {
+      "text": "2026年10月8日博物馆回复记者：支架及固定件目前未显示故障迹象，原因仍需调查。",
+      "status": "verified",
+      "urls": [
+        "https://news.hsw.cn/system/2026/1009/1965288.shtml"
+      ]
+    },
+    "M03": {
+      "text": "受损瓷器已经交专业团队修复，报道提到官网展品状态不再展出。",
+      "status": "verified",
+      "urls": [
+        "https://www.sohu.com/a/1085217809_116237",
+        "https://news.hsw.cn/system/2026/1009/1965288.shtml"
+      ]
+    },
+    "H01": {
+      "text": "2026年10月8日刊发的记者郑思芳报道，回顾2026国庆期间横店景区游客体验拍短剧的热潮。",
+      "status": "verified",
+      "urls": [
+        "https://m.sohu.com/a/1084953940_121948396"
+      ]
+    },
+    "H02": {
+      "text": "该报道写到一些年轻游客乐于尝试反派角色，部分中老年女性青睐古装角色。",
+      "status": "verified",
+      "urls": [
+        "https://m.sohu.com/a/1084953940_121948396"
+      ]
+    },
+    "H03": {
+      "text": "该报道采访的导演张金泉描述，有游客预约明清宫拍摄却误到清明上河图，需协助重新安排。",
+      "status": "verified",
+      "urls": [
+        "https://m.sohu.com/a/1084953940_121948396"
+      ]
+    },
+    "H04": {
+      "text": "该导演还说假期前夕片场预约密集，团队需要协调多个剧组和游客。",
+      "status": "verified",
+      "urls": [
+        "https://m.sohu.com/a/1084953940_121948396"
+      ]
+    }
+  },
+  "source_access": [
+    {
+      "source": "用户X账号与收藏",
+      "status": "没读到",
+      "reason": "未提供账号或授权入口，不使用X推文卡或虚构互动"
+    },
+    {
+      "source": "2026年事件相关实拍",
+      "status": "没读到",
+      "reason": "可重用的原始现场视频未获得，素材均为标注日期的情境或历史资料"
+    },
+    {
+      "source": "音视频素材原件",
+      "status": "待云端验证",
+      "reason": "本对话执行容器无法联网下载，须由Actions实际下载验证、抽帧检查"
+    }
+  ],
+  "assets": {
+    "phone.webm": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/GSMA_MISTT_Smartphone_(Android)_Educational_Video.webm",
+      "source_page": "https://commons.wikimedia.org/wiki/File:GSMA_MISTT_Smartphone_(Android)_Educational_Video.webm",
+      "recorded": "2022-01-17",
+      "license": "CC BY-SA 4.0",
+      "credit": "GSMA Foundation",
+      "usage": "手机使用的情境资料，不是新闻当事人"
+    },
+    "museum.webm": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/The_British_Museum-HD.webm",
+      "source_page": "https://commons.wikimedia.org/wiki/File:The_British_Museum-HD.webm",
+      "recorded": "2014-05",
+      "license": "CC BY 3.0",
+      "credit": "7Seven Films / Adam Russell",
+      "usage": "馆内资料，非瓷器掉落现场"
+    },
+    "hengdian.webm": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/2019%E5%B9%B41%E6%9C%881%E6%97%A5_%E6%98%9F%E5%A5%B3%E9%83%8E%E2%80%9C%E7%9F%B3%E6%A6%B4%E5%A7%90%E2%80%9D%E7%8E%B0%E8%BA%AB%E6%B5%99%E6%B1%9F%E6%A8%AA%E5%BA%97_%E4%B8%8E%E5%8D%83%E5%90%8D%E6%B8%B8%E5%AE%A2%E4%B8%80%E8%B5%B7%E6%AC%A2%E7%AC%91%E8%B7%A8%E5%B9%B4.webm",
+      "source_page": "https://commons.wikimedia.org/wiki/File:2019%E5%B9%B41%E6%9C%881%E6%97%A5_%E6%98%9F%E5%A5%B3%E9%83%8E%E2%80%9C%E7%9F%B3%E6%A6%B4%E5%A7%90%E2%80%9D%E7%8E%B0%E8%BA%AB%E6%B5%99%E6%B1%9F%E6%A8%AA%E5%BA%97_%E4%B8%8E%E5%8D%83%E5%90%8D%E6%B8%B8%E5%AE%A2%E4%B8%80%E8%B5%B7%E6%AC%A2%E7%AC%91%E8%B7%A8%E5%B9%B4.webm",
+      "recorded": "2019-01-01",
+      "license": "CC BY 3.0",
+      "credit": "中国新闻网",
+      "usage": "2019年横店历史资料，非2026年国庆拍短剧现场"
+    },
+    "hengdian_01.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Drama_filming_at_Hengdian_World_Studios.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Drama_filming_at_Hengdian_World_Studios.jpg",
+      "recorded": "2018-10-26",
+      "license": "CC BY-SA 4.0",
+      "credit": "Whisper of the heart",
+      "usage": "横店景区历史图片，非2026年国庆新闻现场"
+    },
+    "hengdian_02.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/12/Hengdian_World_Studios_003.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Hengdian_World_Studios_003.jpg",
+      "recorded": "2007-12-05",
+      "license": "CC BY 2.0",
+      "credit": "kanegen",
+      "usage": "横店景区历史图片，非2026年国庆新闻现场"
+    },
+    "hengdian_03.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Hengdian_World_Studios_017.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Hengdian_World_Studios_017.jpg",
+      "recorded": "2007-12",
+      "license": "CC BY 2.0",
+      "credit": "kanegen",
+      "usage": "横店景区历史图片，非2026年国庆新闻现场"
+    },
+    "hengdian_04.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Hengdian_World_Studios_011.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Hengdian_World_Studios_011.jpg",
+      "recorded": "2007-12",
+      "license": "CC BY 2.0",
+      "credit": "kanegen",
+      "usage": "横店景区历史图片，非2026年国庆新闻现场"
+    },
+    "hengdian_05.jpg": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Hengdian_World_Studios_001.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Hengdian_World_Studios_001.jpg",
+      "recorded": "2007-12",
+      "license": "CC BY 2.0",
+      "credit": "kanegen",
+      "usage": "横店景区历史图片，非2026年国庆新闻现场"
+    },
+    "phone_cover.jpg": {
+      "derive_frame": {
+        "asset": "phone.webm",
+        "at": 0.25,
+        "crop": "608:900:0:0"
+      }
+    },
+    "museum_cover.jpg": {
+      "derive_frame": {
+        "asset": "museum.webm",
+        "at": 7,
+        "crop": "1200:650:40:35"
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "00",
+      "type": "cover",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "短剧账单\n两年22万",
+      "text": "两年，二十二万！",
+      "factSource": "来源：R01",
+      "screenSource": "画面：新闻主题图，非事件现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "R01"
+      ],
+      "cover": [
+        {
+          "asset": "phone_cover.jpg",
+          "label": "短剧充值／示意"
+        },
+        {
+          "asset": "museum_cover.jpg",
+          "label": "博物馆／旧资料"
+        },
+        {
+          "asset": "hengdian_01.jpg",
+          "label": "横店／2018旧资料"
+        }
+      ]
+    },
+    {
+      "id": "01",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "老人看短剧\n花出22万",
+      "text": "你没听错，这不是买车，是一位老人看短剧的充值账单。",
+      "factSource": "来源：R01",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R01"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 0,
+        "end": 7.2,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover",
+      "note": "2022手机教学画面／仅示意"
+    },
+    {
+      "id": "02",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "别把旧新闻\n说成今天",
+      "text": "这事是《IT时报》九月下旬报道的，不是今天才发生。",
+      "factSource": "来源：R04",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R04"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 7.2,
+        "end": 14.4,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "03",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "22.58万元\n两年多时间",
+      "text": "家人统计，从二零二四年一月起，两年多花了二十二点五八万元。",
+      "factSource": "来源：R01",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R01"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 14.4,
+        "end": 21.6,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "04",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "一张账单\n看出什么",
+      "text": "我看到那张消费明细时，最惊讶的还不是总额。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 21.6,
+        "end": 28.8,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "05",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "4887笔\n365个剧场",
+      "text": "而是总共四千八百八十七笔订单，涉及三百六十五个剧场。",
+      "factSource": "来源：R02",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R02"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 28.8,
+        "end": 36,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover",
+      "note": "2022手机教学画面／仅示意"
+    },
+    {
+      "id": "06",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "一天29笔\n充值",
+      "text": "二零二五年十一月七日这一天，就付了二十九次钱。",
+      "factSource": "来源：R03",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R03"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 36,
+        "end": 43.2,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "07",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "一天花掉\n1466.3元",
+      "text": "从凌晨到晚上，合起来花了一千四百六十六块三毛。",
+      "factSource": "来源：R03",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R03"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 43.2,
+        "end": 50.4,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "08",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "小额充值\n容易忽略",
+      "text": "你想，三十九块九、六十九块九，单看一笔似乎不吓人。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 50.4,
+        "end": 57.6,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "09",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "积少成多\n数字吓人",
+      "text": "可是一笔一笔攒下来，竟然成了这样一个数字。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 57.6,
+        "end": 64.8,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "10",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "01 / 短剧消费",
+      "headline": "账单出处\n要讲清楚",
+      "text": "这些数字，是媒体依据家属整理的订单披露的。",
+      "factSource": "来源：R01、R02",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "fact_ids": [
+        "R01",
+        "R02"
+      ],
+      "media": {
+        "asset": "phone.webm",
+        "start": 64.8,
+        "end": 72,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover",
+      "note": "2022手机教学画面／仅示意"
+    },
+    {
+      "id": "11",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "消费争议\n不能乱定性",
+      "text": "要注意，这不意味着每一笔扣费都已经被认定是诈骗。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 72,
+        "end": 79.2,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "12",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "别把责任\n甩给老人",
+      "text": "更没必要反过来指责老人，觉得她怎么就没看出来。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 79.2,
+        "end": 86.4,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "13",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "查查账单\n比吵架管用",
+      "text": "我觉得更实际的，是陪家里人看一眼连续扣款记录。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 86.4,
+        "end": 93.6,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "14",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "有疑问\n先核实",
+      "text": "如果有不明白的付费项目，尽早找平台核对清楚。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 93.6,
+        "end": 100.8,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "15",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "01 / 短剧消费",
+      "headline": "下一件\n瓷碗受损",
+      "text": "说完这一件，再看大英博物馆，一只瓷碗出事了。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2022年手机资料／非涉事人",
+      "pause": 0.16,
+      "media": {
+        "asset": "phone.webm",
+        "start": 100.8,
+        "end": 108,
+        "crop": "608:900:0:0"
+      },
+      "fit": "cover"
+    },
+    {
+      "id": "16",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "一只瓷碗\n砸坏另一件",
+      "text": "一件清代瓷碗从展架掉下来，还砸坏了下面另一件瓷器。",
+      "factSource": "来源：M01",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 0,
+        "end": 7.4,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape",
+      "note": "2014博物馆旧视频／非事故现场"
+    },
+    {
+      "id": "17",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "10月4日\n博物馆事故",
+      "text": "事情发生在十月四日，地点是英国大英博物馆。",
+      "factSource": "来源：M01",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 7.4,
+        "end": 14.8,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "18",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "馆方确认\n两件受损",
+      "text": "十月八日，馆方回复记者，确认受损的是两件康熙时期器物。",
+      "factSource": "来源：M01",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 14.8,
+        "end": 22.2,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "19",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "一只碗\n一个小盒",
+      "text": "一只是碗，另一只是小盒子，都属于大维德爵士旧藏。",
+      "factSource": "来源：M01",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 22.2,
+        "end": 29.6,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "20",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "瓷碗落下\n殃及下层",
+      "text": "按照馆方说法，碗从架子上落下，砸到了底层架子。",
+      "factSource": "来源：M01",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 29.6,
+        "end": 37,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape",
+      "note": "2014博物馆旧视频／非事故现场"
+    },
+    {
+      "id": "21",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "现场照片\n让人心疼",
+      "text": "我看了报道里的现场照片，第一反应就是：怎么会这样？",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "museum.webm",
+        "start": 37,
+        "end": 44.4,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "22",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "器物受损\n原因待查",
+      "text": "但这件事有个关键区别：东西确实坏了，原因却还没查清。",
+      "factSource": "来源：M01、M02",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M01",
+        "M02"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 44.4,
+        "end": 51.8,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "23",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "支架是否故障\n尚无证据",
+      "text": "馆方说，架子和固定装置目前没显示故障迹象。",
+      "factSource": "来源：M02",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M02"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 51.8,
+        "end": 59.2,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "24",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "别替调查\n提前下结论",
+      "text": "注意，这不等于已经证明了绝对不存在其他问题。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "museum.webm",
+        "start": 59.2,
+        "end": 66.6,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "25",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "两件瓷器\n交由修复",
+      "text": "两件受损藏品，已经交给专业修复团队处理。",
+      "factSource": "来源：M03",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M03"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 66.6,
+        "end": 74,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape",
+      "note": "2014博物馆旧视频／非事故现场"
+    },
+    {
+      "id": "26",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "展品页面\n状态已变",
+      "text": "相关报道还提到，网上展品信息变成了不再展出。",
+      "factSource": "来源：M03",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "M03"
+      ],
+      "media": {
+        "asset": "museum.webm",
+        "start": 74,
+        "end": 81.4,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "27",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "接下来\n看调查结果",
+      "text": "至于为什么掉落，能修复到什么程度，得等后续消息。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "museum.webm",
+        "start": 81.4,
+        "end": 88.8,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "28",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "看证据\n别乱猜",
+      "text": "我更想看到一个清楚的事故说明，而不是各种猜测。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "museum.webm",
+        "start": 88.8,
+        "end": 96.2,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "29",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "02 / 博物馆瓷器",
+      "headline": "横店新玩法\n自己演戏",
+      "text": "好，最后一件换个轻松的，去横店当一回演员。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2014年馆内资料／非事故现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "museum.webm",
+        "start": 96.2,
+        "end": 103.6,
+        "crop": "1200:650:40:35"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "30",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "国庆去横店\n自己当演员",
+      "text": "这个国庆，有游客去横店，不是追星，而是想自己演一段。",
+      "factSource": "来源：H01",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H01"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 0,
+        "end": 7,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape",
+      "note": "2019年横店历史视频／非2026现场"
+    },
+    {
+      "id": "31",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "游客进组\n拍自己的戏",
+      "text": "十月八日的一篇采访，说的就是这种沉浸式拍短剧体验。",
+      "factSource": "来源：H01",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H01"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 7,
+        "end": 14,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "32",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "换装上镜\n临时进组",
+      "text": "选角色，换衣服，再跟着工作人员把一小段戏拍出来。",
+      "factSource": "来源：H01",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H01"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 14,
+        "end": 21,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "33",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "年轻游客\n想演反派",
+      "text": "挺有意思，年轻人不一定都抢主角，有人偏爱反派。",
+      "factSource": "来源：H02",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H02"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 21,
+        "end": 28,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "34",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "阿姨游客\n喜欢古装",
+      "text": "有些阿姨则喜欢古装角色，换上戏服就想过一把戏瘾。",
+      "factSource": "来源：H02",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H02"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 28,
+        "end": 35,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape",
+      "note": "2019年横店历史视频／非2026现场"
+    },
+    {
+      "id": "35",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "假期排期\n有点紧",
+      "text": "报道采访的导演张金泉说，假期前预约就已经很密集。",
+      "factSource": "来源：H04",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H04"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 35,
+        "end": 42,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "36",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "进组第一步\n走错片场",
+      "text": "还真有游客预约明清宫的戏，却跑错到了清明上河图。",
+      "factSource": "来源：H03",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H03"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 42,
+        "end": 49,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "37",
+      "type": "video",
+      "kind": "fact",
+      "chapter": "03 / 横店体验",
+      "headline": "拍戏之前\n先找对地方",
+      "text": "场景不一样，工作人员得重新接人、协调门票和拍摄。",
+      "factSource": "来源：H03",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "fact_ids": [
+        "H03"
+      ],
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 49,
+        "end": 56,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "38",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "旅游现场\n有点像片场",
+      "text": "原本出门玩，结果先体验了一遍剧组协调通告。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 56,
+        "end": 63,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape",
+      "note": "2019年横店历史视频／非2026现场"
+    },
+    {
+      "id": "39",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "旧资料画面\n不是本期现场",
+      "text": "这里用的是横店以前的实拍，别当成今年国庆当天的镜头。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：2019年横店活动／非本次现场",
+      "pause": 0.16,
+      "media": {
+        "asset": "hengdian.webm",
+        "start": 63,
+        "end": 70,
+        "crop": "620:310:10:10"
+      },
+      "fit": "landscape"
+    },
+    {
+      "id": "40",
+      "type": "image",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "看戏之外\n自己入戏",
+      "text": "我觉得比看别人演戏更有趣的，是自己也能参与一次。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：横店历史图片／非本次现场",
+      "pause": 0.16,
+      "asset": "hengdian_01.jpg",
+      "note": "横店2007—2018年历史资料，非本次现场"
+    },
+    {
+      "id": "41",
+      "type": "image",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "一段戏\n也要协调",
+      "text": "但真想拍出满意的片段，选场景和排时间都不能随便来。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：横店历史图片／非本次现场",
+      "pause": 0.16,
+      "asset": "hengdian_02.jpg",
+      "note": "横店2007—2018年历史资料，非本次现场"
+    },
+    {
+      "id": "42",
+      "type": "image",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "短剧这次\n换个角度",
+      "text": "从看短剧花钱，到去横店拍短剧，这两个话题还挺巧。",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：横店历史图片／非本次现场",
+      "pause": 0.16,
+      "asset": "hengdian_03.jpg",
+      "note": "横店2007—2018年历史资料，非本次现场"
+    },
+    {
+      "id": "43",
+      "type": "image",
+      "kind": "comment",
+      "chapter": "03 / 横店体验",
+      "headline": "如果是你\n会去演吗",
+      "text": "你会花钱体验一次拍摄，还是更愿意坐着看剧？",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：横店历史图片／非本次现场",
+      "pause": 0.16,
+      "asset": "hengdian_04.jpg",
+      "note": "横店2007—2018年历史资料，非本次现场"
+    },
+    {
+      "id": "44",
+      "type": "end",
+      "kind": "comment",
+      "chapter": "评论区 / 你来选",
+      "headline": "聊聊你的\n真实想法",
+      "text": "今天这三件事，你最想聊哪一件？",
+      "factSource": "来源：个人感受／编辑观点",
+      "screenSource": "画面：新闻主题图，非事件现场",
+      "pause": 0.4,
+      "question": "三条里，\n你最想聊哪条？",
+      "items": [
+        "短剧消费 · 博物馆瓷器",
+        "横店旅游 · 你怎么看"
+      ]
+    }
+  ]
+}
