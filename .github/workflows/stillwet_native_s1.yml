@@ -1,0 +1,94 @@
+name: Stillwet Native Gallery Replay S1
+on:
+  push:
+    branches:
+      - pilot/stillwet-native-20261009
+    paths:
+      - .github/workflows/stillwet_native_s1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-gallery-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - name: Install ffmpeg
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          fi
+          rustc --version
+          cargo --version
+          ffmpeg -version | head -1
+
+      - name: Sparse checkout of pinned upstream engine and preserved complete painting log
+        run: |
+          set -euo pipefail
+          mkdir original
+          cd original
+          git init -q
+          git remote add origin https://github.com/aliceisjustplaying/claude-paint.git
+          git sparse-checkout init --cone
+          git sparse-checkout set crates scripts .cargo archive/collection/studios/paint-studio-3be9e8/paintings/lua
+          git fetch --depth 1 --filter=blob:none origin 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
+          test -s archive/collection/studios/paint-studio-3be9e8/paintings/lua/painting.lua
+
+      - name: Compile original Rust physics engine
+        working-directory: original
+        run: |
+          set -euo pipefail
+          cargo build --release --locked -p easel
+
+      - name: Replay author's 94-chunk historical still life through the native oil engine
+        working-directory: original
+        run: |
+          set -euo pipefail
+          mkdir -p out/native_s1/frames
+          cp archive/collection/studios/paint-studio-3be9e8/paintings/lua/painting.lua out/native_s1/original_94_chunk_painting.lua
+          sha256sum out/native_s1/original_94_chunk_painting.lua > out/native_s1/source_sha256.txt
+          grep -c '^--@ chunk' out/native_s1/original_94_chunk_painting.lua
+          target/release/easel run out/native_s1/original_94_chunk_painting.lua \
+            --width 700 \
+            --out out/native_s1/original_finished_700.png \
+            --frames-every 120 \
+            --frames-dir out/native_s1/frames \
+            --frame-width 700 2>&1 | tee out/native_s1/native_render.log
+          test -s out/native_s1/original_finished_700.png
+          test -s out/native_s1/frames/frames.tsv
+
+      - name: Encode authoritative source replay using upstream tool
+        working-directory: original
+        run: |
+          set -euo pipefail
+          scripts/replay_clip out/native_s1/original_94_chunk_painting.lua out/native_s1/original_still_life_32s.mp4 \
+            --reuse --frames-dir out/native_s1/frames \
+            --length 32 --max-hold 8 --width 700 \
+            --sheet out/native_s1/contact_sheet.jpg 2>&1 | tee out/native_s1/video.log
+          ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate -of json out/native_s1/original_still_life_32s.mp4 > out/native_s1/video_specs.json
+          cat out/native_s1/video_specs.json
+          test -s out/native_s1/original_still_life_32s.mp4
+
+      - name: Upload original artwork, log and proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stillwet-native-gallery-s1
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            original/out/native_s1/original_94_chunk_painting.lua
+            original/out/native_s1/source_sha256.txt
+            original/out/native_s1/original_finished_700.png
+            original/out/native_s1/original_still_life_32s.mp4
+            original/out/native_s1/contact_sheet.jpg
+            original/out/native_s1/native_render.log
+            original/out/native_s1/video.log
+            original/out/native_s1/video_specs.json
+            original/out/native_s1/frames/frames.tsv
