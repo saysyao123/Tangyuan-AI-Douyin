@@ -207,3 +207,63 @@ tip:stroke({{582,565},{607,559},{637,561}},{pressure={0.52,0.10},ramps={0.15,0.3
 tip:reload(lemonSun,0.56)
 tip:stroke({{727,535},{746,528},{769,532}},{pressure={0.50,0.12},ramps={0.11,0.30},clip=lem2})
 print("S2C: shadows contact shelf, knife and minimal finish; wait for visual quality gate")
+
+
+--@ chunk 13
+-- GPT LOOK 03: solid jug but right face lost in lead white; cast shadows overly chunky.
+-- Avoid any more global work(jugBody). Paint only named hand-controlled local gestures.
+print("S2C before drying",drying(388,405),drying(472,448))
+print(wait(11*24*60))
+print("S2C after drying",drying(388,405),drying(472,448))
+
+--@ chunk 14
+-- Transparent no-white earthy veil, each deliberate vertical sweep freshly reloaded.
+shMild=pile{{"raw umber",1.2},{"yellow ochre",0.38},{"green earth",0.43},medium=0.83}
+shMedium=pile{{"raw umber",1.8},{"green earth",0.73},{"bone black",0.12},medium=0.84}
+shDark=pile{{"raw umber",2.1},{"green earth",0.65},{"bone black",0.29},medium=0.79}
+shadowBrush=brush("filbert",18)
+-- Broad clear passages, shifting from halftone to shadow at x440..480.
+for _, pass in ipairs({
+  {398,shMild,0.50},{410,shMild,0.57},{422,shMedium,0.47},
+  {437,shMedium,0.53},{451,shMedium,0.58},{463,shDark,0.49},
+  {473,shDark,0.55},{486,shDark,0.47}
+}) do
+ local x=pass[1]
+ shadowBrush:reload(pass[2],pass[3])
+ shadowBrush:stroke({{x-14,285},{x+2,350},{x+8,436},{x+3,521},{x-21,568}},
+   {pressure={0.62,0.28},ramps={0.14,0.31},clip=jugBody})
+end
+-- Smooth only the transition in a narrow half-tone zone; retain bristle direction elsewhere.
+local terminator=jugBody*rect(388,256,63,317):soften(22)
+blend(terminator,{angle=1.57,tool={kind="badger",width=16},clip=true})
+print("S2C: eight unique thin glaze sweeps on dry jug; not a region fill")
+
+--@ chunk 15
+-- A softer cast shadow underneath the jug and fruit, without stamp-like blobs.
+blend(ellipse(374,605,180,28):soften(27)*ledge,{angle=0.07,tool={kind="badger",width=22}})
+blend(ellipse(638,665,127,34):soften(27)*ledge,{angle=0.11,tool={kind="badger",width=20}})
+blend(ellipse(766,606,100,25):soften(20)*ledge,{angle=0.13,tool={kind="badger",width=16}})
+-- More nuanced citrus accents, follow its oval curvature in three grouped passes.
+sunTip=pile{{"chrome yellow",2.2},{"lead white",1.4},{"yellow ochre",0.21}}
+fruitGold=pile{{"yellow ochre",2.8},{"chrome yellow",0.67},{"raw umber",0.17}}
+fruitMark=brush("filbert",5)
+for _,path in ipairs({
+  {{563,609},{585,599},{610,596},{630,606}},
+  {{589,624},{624,616},{655,621},{684,628}},
+  {{712,569},{733,563},{759,561},{788,576}}
+}) do
+ fruitMark:reload(fruitGold,0.62)
+ fruitMark:stroke(path,{pressure={0.61,0.15},ramps={0.1,0.35},clip=lemons})
+end
+fruitMark:reload(sunTip,0.68)
+fruitMark:stroke({{576,574},{604,567},{631,573}},{pressure={0.48,0.10},ramps={0.08,0.43},clip=lem1})
+fruitMark:reload(sunTip,0.68)
+fruitMark:stroke({{722,543},{749,539},{774,550}},{pressure={0.49,0.11},ramps={0.11,0.37},clip=lem2})
+-- Define contact and opening, making a more credible vessel and balanced foreground.
+rimShadow=pile{{"raw umber",1.44},{"bone black",0.61},{"green earth",0.40},{"lead white",0.27}}
+rb=brush("filbert",5)
+rb:reload(rimShadow,0.67)
+rb:stroke({{320,209},{344,205},{368,207},{397,211},{418,215}},{pressure={0.50,0.11},ramps={0.13,0.28},clip=rim})
+rb:reload(jLightAccent,0.60)
+rb:stroke({{310,224},{350,233},{387,230},{429,222}},{pressure={0.46,0.14},ramps={0.18,0.33},clip=rim})
+print("S2C: final controlled finishing on physically dry canvas; no digital image replacement")
