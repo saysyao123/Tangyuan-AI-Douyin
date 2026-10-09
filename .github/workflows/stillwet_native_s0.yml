@@ -1,0 +1,113 @@
+name: Stillwet Native Engine S0
+on:
+  push:
+    branches:
+      - pilot/stillwet-native-20261009
+    paths:
+      - .github/workflows/stillwet_native_s0.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-engine-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustc --version
+          cargo --version
+          ffmpeg -version | head -1
+
+      - name: Checkout original engine pinned to audited commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none https://github.com/aliceisjustplaying/claude-paint.git original
+          cd original
+          git checkout --detach 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
+          git rev-parse HEAD
+
+      - name: Compile genuine Rust easel
+        shell: bash
+        working-directory: original
+        run: |
+          set -euo pipefail
+          cargo build --release --locked -p easel
+          test -x target/release/easel
+          target/release/easel help | head -18
+
+      - name: Construct logged native painting from author's three sample sittings
+        shell: bash
+        working-directory: original
+        run: |
+          set -euo pipefail
+          mkdir -p out/native/frames
+          {
+            echo '-- easel session "stillwet-native-s0"'
+            echo '--@ box giverny'
+            echo '--@ engine 4'
+            echo '--@ chunk 1'
+            cat paintings/sampler/p9_study.lua
+            echo
+            echo '--@ chunk 2'
+            cat paintings/sampler/p9_study2.lua
+            echo
+            echo '--@ chunk 3'
+            cat paintings/sampler/p9_study3.lua
+          } > out/native/official_sample.lua
+          wc -l out/native/official_sample.lua
+          sha256sum out/native/official_sample.lua > out/native/lua_sha256.txt
+
+      - name: Replay genuine paint simulation at preview resolution and record hand-time frames
+        shell: bash
+        working-directory: original
+        env:
+          EASEL_BOX: giverny
+        run: |
+          set -euo pipefail
+          target/release/easel run out/native/official_sample.lua \
+            --width 500 \
+            --out out/native/native_finished.png \
+            --frames-every 60 \
+            --frames-dir out/native/frames \
+            --frame-width 500 2>&1 | tee out/native/native_replay.log
+          test -s out/native/native_finished.png
+          test -s out/native/frames/frames.tsv
+          head -5 out/native/frames/frames.tsv
+
+      - name: Create MP4 from native replay frames with upstream encoder
+        shell: bash
+        working-directory: original
+        run: |
+          set -euo pipefail
+          scripts/replay_clip out/native/official_sample.lua out/native/native_timelapse.mp4 \
+            --reuse --frames-dir out/native/frames \
+            --length 24 --max-hold 4 --width 500 \
+            --sheet out/native/contact_sheet.jpg 2>&1 | tee out/native/video_replay.log
+          ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate -of json out/native/native_timelapse.mp4 > out/native/ffprobe.json
+          test -s out/native/native_timelapse.mp4
+          cat out/native/ffprobe.json
+
+      - name: Store original painting and verification records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stillwet-native-s0
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            original/out/native/official_sample.lua
+            original/out/native/lua_sha256.txt
+            original/out/native/native_finished.png
+            original/out/native/native_timelapse.mp4
+            original/out/native/contact_sheet.jpg
+            original/out/native/ffprobe.json
+            original/out/native/native_replay.log
+            original/out/native/video_replay.log
+            original/out/native/frames/frames.tsv
