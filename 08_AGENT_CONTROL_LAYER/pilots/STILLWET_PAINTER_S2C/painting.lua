@@ -133,3 +133,77 @@ for i=0,3 do
   fruitBrush:stroke({{708,yy+13},{739,yy+2},{773,yy+5},{808,yy+16}},{pressure={0.51,0.13},ramps={0.14,0.30},clip=lem2})
 end
 print("S2C: distinct dark, middle and light form notes on fruit; no flat yellow blocks")
+
+
+--@ chunk 9
+-- GPT LOOK 02: a very specific failure, as in original r16 journal:
+-- deep umber glaze at 1.62 coverage on setting white forms irregular black islands.
+-- No pretending this is improved; let it actually DRY before repairing tonality.
+print("LOOK02 before waiting",drying(430,405),drying(484,462),drying(629,615))
+print(wait(6*24*60))
+print("LOOK02 after waiting",drying(430,405),drying(484,462),drying(629,615))
+
+--@ chunk 10
+-- Redesign the jug from VALUE/FORM, not outline. Opaque midtones veil failed black islands,
+-- preserving some irregular salt-glaze variation under the paint.
+jRestoreLit=pile{{"lead white",7.4},{"yellow ochre",0.50},{"raw umber",0.14}}
+jRestoreHalf=pile{{"lead white",3.15},{"yellow ochre",0.55},{"raw umber",0.83},{"green earth",0.33}}
+jRestoreCore=pile{{"lead white",1.55},{"raw umber",1.12},{"green earth",0.51},{"bone black",0.13},{"yellow ochre",0.36}}
+-- Graded mixtures at each brush DIP, rather than mask-banded bands of opaque colors.
+work(jugBody,{hand="body",tool="filbert 13",coverage=2.25,angle=function(x,y) return 0.12+0.12*math.sin(y/190) end,
+ angle_jitter=0.21,curve={0.24,0.11},length={22,63},load=0.59,edge="soft",fill=true,clip=true,seed=210,
+ piles={
+ {jRestoreLit,function(x,y) return 1.0-smoothstep(310,475,x) end},
+ {jRestoreHalf,function(x,y) return 0.22+0.61*smoothstep(315,463,x) end},
+ {jRestoreCore,function(x,y) return 0.88*smoothstep(375,505,x) end}
+ }})
+-- Restrained clean badger on SHADOW HALF only: never drag dark across the light.
+local sh=jugBody*mask(function(x,y) return smoothstep(375,457,x)*smoothstep(255,321,y) end)
+blend(sh,{angle=1.47,tool={kind="badger",width=18},clip=true})
+print("S2C: restored value turning with graded piles; former dark glaze now controlled underpaint")
+
+--@ chunk 11
+-- Small shape-read corrections instead of another global wash.
+print(wait(4*24*60))
+print("dryness after repair",drying(368,409),drying(461,423))
+jSideGlow=pile{{"lead white",4.4},{"raw umber",0.76},{"yellow ochre",0.55},{"green earth",0.26}}
+jLightAccent=pile{{"lead white",6.0},{"yellow ochre",0.40}}
+local refl=jugBody*mask(function(x,y) return smoothstep(432,495,x)*smoothstep(455,532,y)*smoothstep(578,524,y) end)
+work(refl,{hand="scumble",tool="filbert 8",pile=jSideGlow,coverage=0.71,load=0.33,angle=1.6,length={16,38},clip=jugBody,edge="soft",seed=220})
+local upperLight=jugBody*mask(function(x,y) return (1-smoothstep(301,365,x))*(1-smoothstep(310,446,y)) end)
+work(upperLight,{hand="scumble",tool="filbert 6",pile=jLightAccent,coverage=0.51,load=0.26,angle=1.1,length={13,30},edge="soft",seed=221})
+-- Jug handle: the interior should read as opening, not scattered marks.
+handleShadow=pile{{"raw umber",2.1},{"bone black",0.65},{"green earth",0.18},{"lead white",0.43}}
+work(handle,{hand="body",tool="filbert 6",pile=jRestoreHalf,coverage=2.4,angle=1.36,length={12,37},edge="firm",fill=true,clip=true,seed=222})
+hb=brush("filbert",4)
+hb:reload(handleShadow,0.71)
+hb:stroke({{475,292},{507,297},{527,327},{531,364},{505,405}},{pressure={0.62,0.11},ramps={0.13,0.29},clip=handle})
+hb:reload(jRestoreLit,0.65)
+hb:stroke({{450,276},{502,279},{539,315},{545,367},{512,417}},{pressure={0.67,0.13},ramps={0.13,0.35},clip=handle})
+print("S2C: correct reflected light, functional handle rim and depth")
+
+--@ chunk 12
+-- Cast shadows and spare detail: connect painted objects to the stone shelf.
+contact=pile{{"raw umber",2.4},{"bone black",0.38},{"yellow ochre",0.3},{"lead white",0.67}}
+lightContact=pile{{"raw umber",1.3},{"yellow ochre",0.40},{"lead white",1.53},{"bone black",0.18}}
+local shelf=ledge-(jug+lemons):grow(2)
+work(ellipse(377,601,154,18):soften(16)*shelf,{hand="scumble",tool="filbert 8",pile=contact,coverage=1.3,angle=0.03,length={18,58},clip=shelf,seed=230})
+work(ellipse(629,664,96,19):soften(14)*shelf,{hand="scumble",tool="filbert 7",pile=contact,coverage=1.35,angle=0.05,length={15,48},clip=shelf,seed=231})
+work(ellipse(771,610,94,17):soften(13)*shelf,{hand="scumble",tool="filbert 7",pile=lightContact,coverage=1.2,angle=0.05,length={14,43},clip=shelf,seed=232})
+-- Short aged iron knife; planar blade and its wooden handle make a new material.
+blade=poly({{658,680},{703,678},{842,711},{849,727},{721,700}},true)
+grip=ribbon({{833,715},{880,731},{931,746}}, {20,20,22})
+steel=pile{{"lead white",1.8},{"bone black",0.44},{"raw umber",0.38},{"smalt",0.24}}
+wood=pile{{"raw umber",2.8},{"bone black",0.52},{"red earth",0.45}}
+work(blade,{hand="body",tool="filbert 5",pile=steel,coverage=2.0,angle=0.14,length={13,34},clip=true,fill=true,seed=233})
+work(grip,{hand="body",tool="filbert 7",pile=wood,coverage=1.8,angle=0.25,length={15,35},clip=true,fill=true,seed=234})
+small=brush("filbert",2.5)
+small:reload(jLightAccent,0.6)
+small:stroke({{697,675},{745,687},{814,705},{846,714}},{pressure={0.41,0.12},ramps={0.07,0.28},clip=blade})
+-- Don't overdecorate. Fresh rust + lemon highpoint as a few deliberate touches.
+tip=brush("filbert",3)
+tip:reload(lemonSun,0.56)
+tip:stroke({{582,565},{607,559},{637,561}},{pressure={0.52,0.10},ramps={0.15,0.34},clip=lem1})
+tip:reload(lemonSun,0.56)
+tip:stroke({{727,535},{746,528},{769,532}},{pressure={0.50,0.12},ramps={0.11,0.30},clip=lem2})
+print("S2C: shadows contact shelf, knife and minimal finish; wait for visual quality gate")
