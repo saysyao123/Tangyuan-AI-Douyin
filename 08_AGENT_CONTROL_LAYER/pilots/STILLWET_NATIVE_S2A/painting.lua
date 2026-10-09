@@ -106,3 +106,47 @@ work(cupFoot,{hand="detail",tool="filbert 5",pile=footTone,coverage=2.0,angle=0.
 -- The near rim of the cup catches a clear but slightly broken highlight.
 work((rimOuter-ellipse(557,466,118,26))*rect(420,465,280,40),{hand="detail",tool="filbert 3",pile=ivoryLit,coverage=3.1,angle=0.0,length={7,19},clip=true,seed=409})
 print("GPT painter S2A stage 3: after LOOK 02, neutralize shadow purple, lemon roundness and darker wall")
+
+
+--@ chunk 4
+-- GPT LOOK 03: True native oil canvas 600x750, lemon now volumetric and cup readable.
+-- Artistic critique: backdrop is too moss-green and overworked; tabletop empty,
+-- cup sides lack subtle modelling. Finish sparingly, not a global detail flood.
+wait(48*60)
+
+warmAir=pile({{"yellow ochre",1.6},{"carmine lake",0.17},{"cobalt violet",0.13},medium=0.80})
+farWall=backM-protectObjects
+work(farWall,{hand="glaze",tool="filbert 23",pile=warmAir,coverage=0.70,angle=0.03,length={95,190},load=0.35,seed=511})
+
+clothFold=pile({{"lead white",5.5},{"yellow ochre",0.95},{"ultramarine blue",0.33},{"cobalt violet",0.16}})
+clothLit=pile({{"lead white",12},{"yellow ochre",0.52}})
+linenFoldM=poly({{0,1027},{190,1000},{430,1024},{681,1050},{1000,1027},{1000,1062},{685,1081},{423,1057},{176,1034},{0,1057}},true):soften(35)
+work(linenFoldM,{hand="scumble",tool="filbert 9",pile=clothFold,coverage=1.1,load=0.23,angle=0.12,length={38,88},seed=512})
+work(rect(0,1056,1000,194):soften(80),{hand="glaze",tool="filbert 15",pile=clothLit,coverage=0.47,angle=0.0,load=0.26,length={68,140},seed=513})
+
+-- Gentle right-side modeling: ceramic is white, not uniform.
+cupHalfShadow=pile({{"lead white",7},{"cobalt blue",0.80},{"yellow ochre",0.30},{"cobalt violet",0.14}})
+cupWarm=pile({{"lead white",18},{"yellow ochre",0.48}})
+rightCurve=(cupBody*rect(584,484,102,413):soften(57))
+leftCurve=(cupBody*rect(441,503,92,320):soften(45))
+work(rightCurve,{hand="glaze",tool="filbert 7",pile=cupHalfShadow,coverage=2.2,angle=1.5,length={17,51},clip=true,seed=514})
+work(leftCurve,{hand="body",tool="filbert 5",pile=cupWarm,coverage=1.15,angle=1.50,length={17,47},clip=true,seed=515})
+-- Short cold brushwork on the side of the handle as it turns away from the light.
+work(cupHandle*rect(747,545,75,210):soften(28),{hand="detail",tool="filbert 4",pile=cupHalfShadow,coverage=1.6,angle=1.24,length={9,20},clip=true,seed=516})
+
+-- Finish the mouth with two controlled lines instead of an entire new layer.
+rimF=brush("filbert",3)
+rimF:reload(ivoryLit,0.8)
+rimF:stroke({{453,477},{510,492},{557,499},{620,489},{665,476}},{pressure={0.52,0.22}})
+rimF:reload(ivoryDark,0.35)
+rimF:stroke({{461,460},{512,448},{557,447},{621,452},{657,465}},{pressure={0.27,0.12}})
+
+-- Deliberate fine pigment texture on the fruit, followed by a few warm accents.
+fruitSkin=pile({{"cadmium yellow",1.2},{"yellow ochre",0.75},{"lead white",1.1}})
+stipple(lemonM,{pile=fruitSkin,width=1.7,coverage=1.4,pressure={0.15,0.38},dips={5,0.55,0.94},feather=0.8,clip=true,cluster=0.05,seed=517})
+lightTip=brush("filbert",3)
+lightTip:reload(lemonHighlight,0.75)
+for _,p in ipairs({{{199,875},{222,863},{252,861}},{{252,849},{284,849},{307,857}},{{363,881},{389,892}}}) do
+  lightTip:stroke(p,{pressure={0.62,0.18}})
+end
+print("GPT painter S2A stage 4: original engine final brush and glaze session; no reference image was used")
