@@ -74,3 +74,35 @@ lemonLit=pile({{"cadmium yellow",2.7},{"lead white",1.6},{"barium yellow",0.55}}
 work(lemonM*ellipse(334,944,134,73):soften(45),{hand="body",tool="filbert 7",pile=lemonShade,coverage=2.0,angle=0.3,length={10,35},clip=true,seed=311})
 work(lemonM*ellipse(253,860,135,75):soften(43),{hand="body",tool="filbert 6",pile=lemonLit,coverage=2.2,angle=0.2,length={11,30},clip=true,seed=312})
 print("GPT painter S2A stage 2: after LOOK 01, warm background, shaped cup, visible rim, modelled lemon")
+
+
+--@ chunk 3
+-- GPT LOOK 02: Cup is recognizable; warm olive-gray wall still too yellow,
+-- cast shadows are purple chunky dabs, lemon too flat. Correct tonal structure.
+wait(30*60)
+lowWall=pile({{"ultramarine blue",1.45},{"yellow ochre",1.55},{"viridian",0.55},{"carmine lake",0.17},{"lead white",0.40}})
+deepWall=pile({{"ultramarine blue",1.35},{"yellow ochre",1.4},{"viridian",0.58},{"cobalt violet",0.13},{"lead white",0.34}})
+-- Repaint shadowed wall in quieter, darker notes; protect cup and lemon.
+work((backM-protectObjects),{hand="body",tool="filbert 12",pile=lowWall,coverage=1.65,angle=0.08,length={34,105},load=0.48,clip=true,seed=401})
+work((backM*rect(0,0,1000,310):soften(180))-protectObjects,{hand="scumble",tool="filbert 14",pile=deepWall,coverage=1.0,angle=0.11,load=0.3,seed=402})
+
+-- Purple cast shadows from the last pass were too obvious.
+softShadow=pile({{"ultramarine blue",1},{"yellow ochre",1.1},{"viridian",0.30},{"lead white",1.8}})
+work(ellipse(573,915,205,34):soften(23),{hand="body",tool="filbert 10",pile=softShadow,coverage=2.5,angle=0,length={18,50},seed=403})
+work(ellipse(297,977,171,30):soften(20),{hand="body",tool="filbert 10",pile=softShadow,coverage=2.6,angle=0,length={15,45},seed=404})
+
+-- Lemon: deep near side, soft reflected middle tone, warm sunward highlight.
+lemonMiddle=pile({{"cadmium yellow",2},{"yellow ochre",0.55},{"lead white",0.65}})
+lemonDark=pile({{"yellow ochre",2.4},{"cadmium yellow",0.8},{"viridian",0.38},{"ultramarine blue",0.12}})
+lemonHighlight=pile({{"cadmium yellow",1.7},{"barium yellow",1.15},{"lead white",1.9}})
+work(lemonM,{hand="body",tool="filbert 7",pile=lemonMiddle,coverage=2.5,angle=0.3,length={13,33},fill=true,clip=true,seed=405})
+work(lemonM*ellipse(349,935,125,69):soften(30),{hand="body",tool="filbert 5",pile=lemonDark,coverage=2.2,angle=0.38,length={9,26},clip=true,seed=406})
+work(lemonM*ellipse(263,867,125,65):soften(35),{hand="body",tool="filbert 4",pile=lemonHighlight,coverage=2.3,angle=0.32,length={8,22},clip=true,seed=407})
+
+-- Cup foot gets a cooled lower plane, but its white highlights stay luminous.
+footTone=pile({{"lead white",4},{"cobalt blue",1.1},{"yellow ochre",0.28}})
+cupFoot=cupBody*rect(449,825,240,78):soften(22)
+work(cupFoot,{hand="detail",tool="filbert 5",pile=footTone,coverage=2.0,angle=0.0,length={9,23},clip=true,seed=408})
+-- The near rim of the cup catches a clear but slightly broken highlight.
+work((rimOuter-ellipse(557,466,118,26))*rect(420,465,280,40),{hand="detail",tool="filbert 3",pile=ivoryLit,coverage=3.1,angle=0.0,length={7,19},clip=true,seed=409})
+print("GPT painter S2A stage 3: after LOOK 02, neutralize shadow purple, lemon roundness and darker wall")
