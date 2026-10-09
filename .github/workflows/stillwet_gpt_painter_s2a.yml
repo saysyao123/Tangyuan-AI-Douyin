@@ -1,0 +1,100 @@
+name: Stillwet GPT Painter S2A
+on:
+  push:
+    branches:
+      - pilot/stillwet-native-20261009
+    paths:
+      - 08_AGENT_CONTROL_LAYER/pilots/STILLWET_NATIVE_S2A/painting.lua
+      - .github/workflows/stillwet_gpt_painter_s2a.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gpt-real-painter:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - name: Get current GPT authored painting log
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: project
+      - name: Toolchain and FFmpeg
+        run: |
+          set -euo pipefail
+          rustc --version
+          cargo --version
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -1
+      - name: Sparse checkout upstream physics engine at fixed revision
+        run: |
+          set -euo pipefail
+          mkdir original
+          cd original
+          git init -q
+          git remote add origin https://github.com/aliceisjustplaying/claude-paint.git
+          git sparse-checkout init --cone
+          git sparse-checkout set crates scripts .cargo
+          git fetch --depth 1 --filter=blob:none origin 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
+      - name: Compile original easel and stage genuine GPT painting log
+        run: |
+          set -euo pipefail
+          cd original
+          cargo build --release --locked -p easel
+          mkdir -p out/gpt_painter/frames
+          cp ../project/08_AGENT_CONTROL_LAYER/pilots/STILLWET_NATIVE_S2A/painting.lua out/gpt_painter/gpt_painting.lua
+          sha256sum out/gpt_painter/gpt_painting.lua > out/gpt_painter/lua_sha256.txt
+          grep -c '^--@ chunk' out/gpt_painter/gpt_painting.lua
+      - name: Recreate actual physical oil paint from GPT decisions
+        working-directory: original
+        env:
+          EASEL_BOX: giverny
+        run: |
+          set -euo pipefail
+          target/release/easel run out/gpt_painter/gpt_painting.lua \
+            --width 600 --out out/gpt_painter/canvas.png \
+            --frames-every 25 --frames-dir out/gpt_painter/frames \
+            --frame-width 600 2>&1 | tee out/gpt_painter/paint.log
+          test -s out/gpt_painter/canvas.png
+          test -s out/gpt_painter/frames/frames.tsv
+          wc -l out/gpt_painter/frames/frames.tsv
+      - name: Try original timelapse encoder (early strokes may be too sparse)
+        working-directory: original
+        run: |
+          set -u
+          scripts/replay_clip out/gpt_painter/gpt_painting.lua out/gpt_painter/painter_timelapse.mp4 \
+            --reuse --frames-dir out/gpt_painter/frames \
+            --length 24 --max-hold 24 --width 600 \
+            --sheet out/gpt_painter/contact_sheet.jpg > out/gpt_painter/video.log 2>&1
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            echo "intermediate-stage timelapse unavailable, expected until enough strokes; see video.log"
+            cat out/gpt_painter/video.log
+          else
+            ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate -of json out/gpt_painter/painter_timelapse.mp4 > out/gpt_painter/video_specs.json
+          fi
+          exit 0
+      - name: Upload actual observation frame and painting trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stillwet-gpt-painter-s2a-${{ github.run_number }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            original/out/gpt_painter/gpt_painting.lua
+            original/out/gpt_painter/lua_sha256.txt
+            original/out/gpt_painter/canvas.png
+            original/out/gpt_painter/paint.log
+            original/out/gpt_painter/contact_sheet.jpg
+            original/out/gpt_painter/painter_timelapse.mp4
+            original/out/gpt_painter/video.log
+            original/out/gpt_painter/video_specs.json
+            original/out/gpt_painter/frames/frames.tsv
