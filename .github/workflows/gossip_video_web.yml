@@ -46,7 +46,17 @@ jobs:
           event=json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
           raw=event.get('inputs',{}).get('episode_json','').strip()
           p=Path('gossip_video_workflow/examples/request.json')
-          p.write_text(json.dumps(json.loads(raw) if raw else json.loads(p.with_name('smoke.json').read_text()),ensure_ascii=False),encoding='utf8')
+          special_push = (
+              os.environ.get('GITHUB_EVENT_NAME') == 'push'
+              and '[render-gossip-2026-10-09]' in (event.get('head_commit') or {}).get('message', '')
+          )
+          if raw:
+              episode = json.loads(raw)
+          elif special_push:
+              episode = json.loads(p.with_name('episode_2026_10_09.json').read_text())
+          else:
+              episode = json.loads(p.with_name('smoke.json').read_text())
+          p.write_text(json.dumps(episode, ensure_ascii=False), encoding='utf8')
           PY
       - name: Export Chinese video and independent STT
         run: gossip_video_workflow/.venv/bin/python gossip_video_workflow/run.py --episode gossip_video_workflow/examples/request.json --stt
