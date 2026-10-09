@@ -1,0 +1,37 @@
+[
+  {
+    "id": "00",
+    "expected": "瑞幸回了三个问号。",
+    "heard": "瑞幸回了三個問號",
+    "similarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "01",
+    "expected": "网上在传，刘亦菲一下掉了好几个代言，瑞幸也被算了进去。",
+    "heard": "望商在船留意飛翼下掉了好幾個代言瑞幸也被算了進去",
+    "similarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "02",
+    "expected": "这个说法还没证实，品牌随后又发了她拿咖啡的宣传照。",
+    "heard": "這個說法還沒證實品牌隨後又發了他拿咖啡的宣傳照",
+    "similarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "03",
+    "expected": "至少瑞幸这边，跟传闻说的就对不上。",
+    "heard": "至少瑞姓這邊 跟傳聞說的就對不上",
+    "similarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "04",
+    "expected": "其他品牌有没有变化，还得看各家的消息。",
+    "heard": "其他品牌有沒有變化,還得看各家的消息。",
+    "similarity": 1.0,
+    "needsReview": false
+  }
+]
