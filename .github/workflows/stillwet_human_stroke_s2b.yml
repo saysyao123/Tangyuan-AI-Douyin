@@ -1,0 +1,94 @@
+name: Stillwet S2B Human Stroke Study
+on:
+  push:
+    branches:
+      - pilot/stillwet-native-20261009
+    paths:
+      - .github/workflows/stillwet_human_stroke_s2b.yml
+      - 08_AGENT_CONTROL_LAYER/pilots/STILLWET_HUMAN_STROKE_S2B/*.lua
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  same-start-human-stroke-comparison:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Checkout independent study instructions
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: project
+          sparse-checkout: 08_AGENT_CONTROL_LAYER/pilots/STILLWET_HUMAN_STROKE_S2B
+      - name: Setup video tooling
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            if ! timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg; then
+              timeout 90 sudo apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=12 update -qq
+              timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+            fi
+          fi
+          ffprobe -version | head -1
+          cargo --version
+      - name: Checkout original Stillwet oil engine at frozen source revision
+        run: |
+          set -euo pipefail
+          mkdir original
+          cd original
+          git init -q
+          git remote add origin https://github.com/aliceisjustplaying/claude-paint.git
+          git sparse-checkout init --cone
+          git sparse-checkout set crates scripts .cargo
+          git fetch --depth 1 --filter=blob:none origin 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
+      - name: Compile genuine oil paint engine only once
+        working-directory: original
+        run: |
+          set -euo pipefail
+          cargo build --release --locked -p easel
+          test -x target/release/easel
+      - name: Assemble matched A and B painter sessions
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_dir=project/08_AGENT_CONTROL_LAYER/pilots/STILLWET_HUMAN_STROKE_S2B
+          mkdir -p original/out/s2b/auto/frames original/out/s2b/guided/frames
+          cat "$source_dir/common.lua" "$source_dir/uniform.lua" > original/out/s2b/auto/painting.lua
+          cat "$source_dir/common.lua" "$source_dir/form_guided.lua" > original/out/s2b/guided/painting.lua
+          sha256sum "$source_dir/common.lua" > original/out/s2b/common_sha256.txt
+          grep -c '^--@ chunk' original/out/s2b/auto/painting.lua
+          grep -c '^--@ chunk' original/out/s2b/guided/painting.lua
+      - name: Execute native physics for both painter behaviors
+        working-directory: original
+        env:
+          EASEL_BOX: giverny
+        shell: bash
+        run: |
+          set -euo pipefail
+          for lane in auto guided; do
+            echo "== START: $lane =="
+            target/release/easel run "out/s2b/$lane/painting.lua" \
+              --width 560 --out "out/s2b/$lane/canvas.png" \
+              --frames-every 45 --frames-dir "out/s2b/$lane/frames" --frame-width 560 \
+              2>&1 | tee "out/s2b/$lane/painting_log.txt"
+            test -s "out/s2b/$lane/canvas.png"
+            test -s "out/s2b/$lane/frames/frames.tsv"
+            scripts/replay_clip "out/s2b/$lane/painting.lua" "out/s2b/$lane/timelapse_24s.mp4" \
+              --reuse --frames-dir "out/s2b/$lane/frames" --length 24 \
+              --max-hold 8 --width 560 --sheet "out/s2b/$lane/contact_sheet.jpg" \
+              2>&1 | tee "out/s2b/$lane/video_log.txt"
+            ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate \
+              -of json "out/s2b/$lane/timelapse_24s.mp4" > "out/s2b/$lane/specs.json"
+            cat "out/s2b/$lane/specs.json"
+          done
+      - name: Collect matched painter artifacts and reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stillwet-human-stroke-s2b
+          retention-days: 14
+          if-no-files-found: warn
+          path: original/out/s2b/
