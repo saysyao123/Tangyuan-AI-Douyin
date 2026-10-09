@@ -21,17 +21,11 @@ jobs:
           path: project
           sparse-checkout: 08_AGENT_CONTROL_LAYER/pilots/STILLWET_PAINTER_S2C
 
-      - name: Rust and video dependencies
+      - name: Verify Rust toolchain (video encoding deferred until after native painting)
         run: |
           set -euo pipefail
           cargo --version
-          if ! command -v ffmpeg >/dev/null 2>&1; then
-            if ! timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg; then
-              timeout 80 sudo apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=12 update -qq
-              timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
-            fi
-          fi
-          ffprobe -version | head -1
+          rustc --version
 
       - name: Frozen original paint engine from Alice's repository
         run: |
@@ -75,18 +69,6 @@ jobs:
           test -s out/s2c/canvas.png
           test -s out/s2c/frames/frames.tsv
 
-      - name: Original hand-time timelapse and contact sheet
-        working-directory: original
-        run: |
-          set -euo pipefail
-          scripts/replay_clip out/s2c/painting.lua out/s2c/timelapse_24s.mp4 \
-            --reuse --frames-dir out/s2c/frames \
-            --length 24 --max-hold 12 --width 700 \
-            --sheet out/s2c/contact_sheet.jpg 2>&1 | tee out/s2c/video.log
-          ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate -of json out/s2c/timelapse_24s.mp4 > out/s2c/specs.json
-          cat out/s2c/specs.json
-          wc -l out/s2c/frames/frames.tsv
-
       - name: Preserve real painter logs and picture
         if: always()
         uses: actions/upload-artifact@v4
@@ -98,9 +80,5 @@ jobs:
             original/out/s2c/painting.lua
             original/out/s2c/painting.sha256
             original/out/s2c/canvas.png
-            original/out/s2c/frames/frames.tsv
+            original/out/s2c/frames/
             original/out/s2c/paint.log
-            original/out/s2c/timelapse_24s.mp4
-            original/out/s2c/contact_sheet.jpg
-            original/out/s2c/video.log
-            original/out/s2c/specs.json
