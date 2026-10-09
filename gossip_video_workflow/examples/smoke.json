@@ -1,0 +1,87 @@
+{
+  "id": "web-smoke",
+  "language": "zh",
+  "edition": "流程自检",
+  "label": "云端导出测试",
+  "technical_demo": true,
+  "voice": "zf_001",
+  "voice_speed": 0.92,
+  "direction": "技术自检先写方向：沿用已验收的纸白、安全橙和整句字幕。首帧明确标技术样片，不使用假新闻或假人物。中间使用程序生成的测试视频不同区间，旁白在云端免费合成，音乐由旁白侧链压低。测试仅证明出片链路。",
+  "brief": "网页云端流程自检：中文逐句配音、字幕测时、React加GSAP逐帧、音乐自动压低、1080p和720p导出。不包含新闻。",
+  "facts": {},
+  "source_access": [
+    {
+      "source": "用户X收藏",
+      "status": "没读到",
+      "reason": "未提供账号和授权入口"
+    }
+  ],
+  "assets": {
+    "test.mp4": {
+      "generate": "testsrc2"
+    }
+  },
+  "rows": [
+    {
+      "id": "00",
+      "type": "cover",
+      "kind": "comment",
+      "chapter": "先检查能不能出片",
+      "headline": "网页操作，\n云端出片",
+      "text": "流程能跑通吗？",
+      "note": "技术样片\n不是新闻成片",
+      "factSource": "内容：技术流程自检",
+      "screenSource": "画面：本项目程序绘制",
+      "pause": 0.15
+    },
+    {
+      "id": "01",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "中文配音和字幕",
+      "headline": "先听人声，\n再看字幕",
+      "text": "字幕跟着旁白走，音乐也会自动压低。",
+      "factSource": "检查：实际配音时间线",
+      "screenSource": "画面：原创程序测试视频",
+      "media": {
+        "asset": "test.mp4",
+        "start": 0,
+        "end": 5,
+        "crop": "960:500:0:0"
+      }
+    },
+    {
+      "id": "02",
+      "type": "video",
+      "kind": "comment",
+      "chapter": "实际导出",
+      "headline": "成片和预览，\n一起导出",
+      "text": "成片、预览和封面，都在云端导出。",
+      "factSource": "检查：真实文件和编码参数",
+      "screenSource": "画面：原创程序测试视频不同区间",
+      "media": {
+        "asset": "test.mp4",
+        "start": 6,
+        "end": 11,
+        "crop": "960:500:0:0"
+      }
+    },
+    {
+      "id": "03",
+      "type": "end",
+      "kind": "comment",
+      "chapter": "人工复核",
+      "headline": "能出文件，\n还得看效果",
+      "text": "接下来，就看旁白听着顺不顺了。",
+      "question": "旁白听起来，\n顺不顺？",
+      "items": [
+        "技术自检",
+        "不是热点新闻"
+      ],
+      "factSource": "听感：需要人来试听",
+      "screenSource": "画面：本项目原创排版",
+      "pause": 0.3
+    }
+  ],
+  "model_revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218"
+}

@@ -1,0 +1,63 @@
+name: Chinese Gossip Video - Web Export
+on:
+  workflow_dispatch:
+    inputs:
+      episode_json:
+        description: 'Paste the verified Chinese episode JSON; empty runs the technical smoke sample'
+        required: false
+        default: ''
+        type: string
+  push:
+    branches: [main]
+    paths:
+      - 'gossip_video_workflow/runtime/**'
+      - 'gossip_video_workflow/run.py'
+      - 'gossip_video_workflow/install_browser.py'
+      - 'gossip_video_workflow/bootstrap.sh'
+      - 'gossip_video_workflow/requirements.txt'
+      - 'gossip_video_workflow/examples/smoke.json'
+      - '.github/workflows/gossip_video_web.yml'
+permissions:
+  contents: read
+concurrency:
+  group: gossip-video-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install OS dependencies
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg libsndfile1 libasound2t64 libnss3 libatk1.0-0 libatk-bridge2.0-0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libcups2
+      - name: Install free cloud runtime
+        run: bash gossip_video_workflow/bootstrap.sh
+      - name: Parse the web request without shell interpolation
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          event=json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+          raw=event.get('inputs',{}).get('episode_json','').strip()
+          p=Path('gossip_video_workflow/examples/request.json')
+          p.write_text(json.dumps(json.loads(raw) if raw else json.loads(p.with_name('smoke.json').read_text()),ensure_ascii=False),encoding='utf8')
+          PY
+      - name: Export Chinese video and independent STT
+        run: gossip_video_workflow/.venv/bin/python gossip_video_workflow/run.py --episode gossip_video_workflow/examples/request.json --stt
+      - name: Upload actual files and QA even if a later check fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chinese-video-delivery-${{ github.run_id }}
+          path: |
+            gossip_video_workflow/runs/*/delivery.zip
+            gossip_video_workflow/runs/*/output/**
+            gossip_video_workflow/runs/*/state.json
+          if-no-files-found: warn
+          retention-days: 30

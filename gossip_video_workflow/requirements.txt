@@ -1,0 +1,12 @@
+numpy==2.2.6
+Pillow==11.3.0
+soundfile==0.13.1
+fonttools==4.60.1
+kokoro==0.9.4
+misaki[zh]==0.9.4
+transformers==4.51.3
+huggingface-hub==0.36.0
+faster-whisper==1.2.1
+opencc-python-reimplemented==0.1.7
+pypinyin==0.55.0
+socksio==1.0.0

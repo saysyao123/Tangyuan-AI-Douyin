@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "language": "zh",
+  "duration": 12.823208333333332,
+  "encodedDuration": "12.833333",
+  "sha256": "1f4a306bbd30cfaf723504262f3b11954790e3585a8c940db7d7d4938ee05abb",
+  "sourceRangeOverlaps": 0,
+  "missingChineseGlyphs": 0,
+  "visualReview": "passed",
+  "humanListening": "pending",
+  "stt": "passed",
+  "exactDuplicatePairs": [],
+  "frozenSourceShots": [],
+  "ducking": "actual narration sidechain, threshold .05 / ratio 4 / attack 20ms / release 350ms",
+  "encodedLoudness": {
+    "input_i": "-16.34",
+    "input_tp": "-3.20",
+    "input_lra": "1.90",
+    "input_thresh": "-26.48",
+    "output_i": "-16.04",
+    "output_tp": "-3.01",
+    "output_lra": "1.20",
+    "output_thresh": "-26.17",
+    "normalization_type": "dynamic",
+    "target_offset": "0.04"
+  },
+  "voicedMusicGainMedianDb": -8.084077835083008,
+  "minEncodedAudioCorrelation": 0.999894885436149,
+  "automaticTechnicalChecks": "passed",
+  "visualReviewEvidence": {
+    "encodedSamplesAt2FPS": 26,
+    "contactPagesViewed": 1,
+    "transitionStripsViewed": 3,
+    "fullSizeFramesViewed": [
+      "cover",
+      "01"
+    ],
+    "reviewedBy": "assistant",
+    "reviewedOn": "2026-10-09"
+  }
+}

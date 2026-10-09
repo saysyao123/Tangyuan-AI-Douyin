@@ -1,0 +1,10 @@
+.venv/
+models/
+node_modules/
+runtime/node_modules/
+runtime/dist/
+runtime/public/
+runtime/timeline.json
+runs/
+__pycache__/
+*.pyc

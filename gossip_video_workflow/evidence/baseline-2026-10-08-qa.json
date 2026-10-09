@@ -1,0 +1,56 @@
+{
+  "edition": "2026-10-08",
+  "userTimezone": "Asia/Shanghai",
+  "language": "zh",
+  "durationSeconds": 193.4172083333332,
+  "sentences": 36,
+  "sourceFrameSamples": 96,
+  "footageSeconds": 175.15583333333322,
+  "captionMaxLines": 3,
+  "missingChineseGlyphs": 0,
+  "sourceClipOverlaps": 0,
+  "wholeVideoFrozenShots": 0,
+  "sourceExactCrossShotDuplicateSamples": 0,
+  "mixedSTTReviewFlags": 0,
+  "voice": "Kokoro-82M-v1.1-zh / zf_001; free, local, synthetic",
+  "voiceSpeed": 0.92,
+  "humanListeningCompleted": false,
+  "limitations": [
+    "Some documentary archive clips are low resolution.",
+    "Voice emotional naturalness still needs user listening."
+  ],
+  "checksRemaining": [],
+  "skillDeliveryCheck": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "Mix inputs/stem/master verified; listen to SFX audibility and verify this master was used in the final export",
+      "Audio stream exists; loudness, audibility and synchronization still need review",
+      "4.47s nearly still around 87.47s (s17); watch it: reading pause, or missing continuation? (hint only)"
+    ]
+  },
+  "encodedDurationSeconds": 193.433333,
+  "encodedAudio": {
+    "all36Matched": true,
+    "minCorrelation": 0.9998648328027793,
+    "integratedLUFS": "-16.05",
+    "truePeakDbTP": "-3.32"
+  },
+  "visualInspection": {
+    "finalMP4SamplesAt2FPS": 387,
+    "sampleContactPagesViewed": 4,
+    "transitionsViewedAt10FPS": 35,
+    "browserShotMidpointsViewed": 36,
+    "fullSizeFramesViewed": [
+      "cover",
+      "distress-phone",
+      "brand-response",
+      "couple-interview"
+    ],
+    "result": "No accidental text clipping, blank frame or broken image found. Sparse archive shots remain low resolution."
+  },
+  "pacingWarningReview": {
+    "shot": "s17",
+    "reason": "The original brand screenshot intentionally pauses for reading; it is not used as moving footage."
+  }
+}

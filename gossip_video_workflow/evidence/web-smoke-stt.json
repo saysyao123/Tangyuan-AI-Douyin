@@ -1,0 +1,30 @@
+[
+  {
+    "id": "00",
+    "expected": "流程能跑通吗？",
+    "heard": "流程能跑通嗎?",
+    "phoneticSimilarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "01",
+    "expected": "字幕跟着旁白走，音乐也会自动压低。",
+    "heard": "字幕跟著旁白走 音樂也會自動壓低",
+    "phoneticSimilarity": 0.975609756097561,
+    "needsReview": false
+  },
+  {
+    "id": "02",
+    "expected": "成片、预览和封面，都在云端导出。",
+    "heard": "成片、預覽和封面都在雲端倒出",
+    "phoneticSimilarity": 1.0,
+    "needsReview": false
+  },
+  {
+    "id": "03",
+    "expected": "接下来，就看旁白听着顺不顺了。",
+    "heard": "接下來就看龐白聽著順不順了",
+    "phoneticSimilarity": 0.975609756097561,
+    "needsReview": false
+  }
+]
