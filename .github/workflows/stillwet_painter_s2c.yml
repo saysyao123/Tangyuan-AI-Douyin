@@ -1,0 +1,106 @@
+name: Stillwet S2C Original GPT Studio
+on:
+  push:
+    branches:
+      - pilot/stillwet-native-20261009
+    paths:
+      - 08_AGENT_CONTROL_LAYER/pilots/STILLWET_PAINTER_S2C/painting.lua
+      - .github/workflows/stillwet_painter_s2c.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authentic-artist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - name: Checkout original GPT painter Lua from project
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: project
+          sparse-checkout: 08_AGENT_CONTROL_LAYER/pilots/STILLWET_PAINTER_S2C
+
+      - name: Rust and video dependencies
+        run: |
+          set -euo pipefail
+          cargo --version
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            if ! timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg; then
+              timeout 80 sudo apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=12 update -qq
+              timeout 100 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+            fi
+          fi
+          ffprobe -version | head -1
+
+      - name: Frozen original paint engine from Alice's repository
+        run: |
+          set -euo pipefail
+          mkdir original
+          cd original
+          git init -q
+          git remote add origin https://github.com/aliceisjustplaying/claude-paint.git
+          git sparse-checkout init --cone
+          git sparse-checkout set crates scripts .cargo
+          git fetch --depth 1 --filter=blob:none origin 8eeb9bec3ce146bcd15c37db447665391fb95bdd
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "8eeb9bec3ce146bcd15c37db447665391fb95bdd"
+
+      - name: Cache compiled Rust renderer between iterations
+        uses: actions/cache@v4
+        with:
+          path: |
+            original/target
+          key: stillwet-painter-s2c-rust-8eeb9bec3c-ubuntu24-${{ runner.arch }}
+
+      - name: Compile renderer and prepare artwork
+        run: |
+          set -euo pipefail
+          cd original
+          cargo build --release --locked -p easel
+          test -x target/release/easel
+          mkdir -p out/s2c/frames
+          cp ../project/08_AGENT_CONTROL_LAYER/pilots/STILLWET_PAINTER_S2C/painting.lua out/s2c/painting.lua
+          sha256sum out/s2c/painting.lua > out/s2c/painting.sha256
+          grep -c '^--@ chunk' out/s2c/painting.lua
+
+      - name: Paint using the original pigment physics (never image replacement)
+        working-directory: original
+        run: |
+          set -euo pipefail
+          timeout 1400 target/release/easel run out/s2c/painting.lua \
+            --width 700 --out out/s2c/canvas.png \
+            --frames-every 12 --frames-dir out/s2c/frames \
+            --frame-width 700 2>&1 | tee out/s2c/paint.log
+          test -s out/s2c/canvas.png
+          test -s out/s2c/frames/frames.tsv
+
+      - name: Original hand-time timelapse and contact sheet
+        working-directory: original
+        run: |
+          set -euo pipefail
+          scripts/replay_clip out/s2c/painting.lua out/s2c/timelapse_24s.mp4 \
+            --reuse --frames-dir out/s2c/frames \
+            --length 24 --max-hold 12 --width 700 \
+            --sheet out/s2c/contact_sheet.jpg 2>&1 | tee out/s2c/video.log
+          ffprobe -v error -show_entries format=duration,size:stream=codec_name,width,height,nb_frames,r_frame_rate -of json out/s2c/timelapse_24s.mp4 > out/s2c/specs.json
+          cat out/s2c/specs.json
+          wc -l out/s2c/frames/frames.tsv
+
+      - name: Preserve real painter logs and picture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stillwet-s2c-${{ github.run_number }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            original/out/s2c/painting.lua
+            original/out/s2c/painting.sha256
+            original/out/s2c/canvas.png
+            original/out/s2c/frames/frames.tsv
+            original/out/s2c/paint.log
+            original/out/s2c/timelapse_24s.mp4
+            original/out/s2c/contact_sheet.jpg
+            original/out/s2c/video.log
+            original/out/s2c/specs.json
