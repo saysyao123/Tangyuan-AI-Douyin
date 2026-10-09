@@ -37,3 +37,40 @@ work(cupHandle,{hand="body",pile=cupBase,coverage=1.5,angle=1.57,tool="filbert 1
 work(cupBody,{hand="body",pile=cupBase,coverage=1.8,angle=1.5,tool="filbert 15",length={25,75},fill=true,seed=215})
 work(lemonAll,{hand="body",pile=lemonBase,coverage=1.8,angle=0.15,tool="filbert 13",length={18,55},fill=true,seed=216})
 print("GPT painter S2A stage 1: compositional graphite, broad lay-in; look before planning next pass")
+
+
+--@ chunk 2
+-- GPT LOOK 01 (real 600x750 canvas): background unexpectedly purple, cup streaky,
+-- lemon flat. Rebalance color masses and build volumes; not a scripted next step.
+wait(24*60)
+protectObjects=(cupM+lemonAll):grow(9)
+neutralBackdrop=pile({{"yellow ochre",3.0},{"viridian",0.9},{"ultramarine blue",0.35},{"carmine lake",0.28},{"lead white",1.05}})
+neutralCloth=pile({{"lead white",6},{"yellow ochre",1.2},{"cobalt blue",0.52},{"viridian",0.12},{"carmine lake",0.14}})
+shadowPaint=pile({{"ultramarine blue",1.05},{"carmine lake",0.42},{"yellow ochre",0.60},{"lead white",1.7}})
+work(backM-protectObjects,{hand="body",tool="filbert 18",pile=neutralBackdrop,coverage=2.1,load=0.68,length={40,115},angle=0.14,edge="soft",fill=true,seed=301})
+work(tableM-protectObjects,{hand="body",tool="filbert 16",pile=neutralCloth,coverage=1.8,load=0.63,length={45,120},angle=0.0,edge="soft",fill=true,seed=302})
+work(ellipse(557,902,215,48):soften(27),{hand="scumble",tool="filbert 14",pile=shadowPaint,coverage=1.3,load=0.3,angle=0,seed=303})
+work(ellipse(295,967,166,42):soften(18),{hand="scumble",tool="filbert 12",pile=shadowPaint,coverage=1.2,load=0.32,angle=0,seed=304})
+
+-- Reunify the cup into a solid porcelain volume using small vertical marks.
+ivoryMid=pile({{"lead white",16},{"yellow ochre",0.35},{"cobalt blue",0.30}})
+ivoryDark=pile({{"lead white",5},{"cobalt blue",1.1},{"cobalt violet",0.25},{"yellow ochre",0.35}})
+ivoryLit=pile({{"lead white",23},{"yellow ochre",0.16}})
+work(cupHandle,{hand="body",tool="filbert 8",pile=ivoryDark,coverage=2.5,angle=1.5,length={13,40},fill=true,clip=true,seed=305})
+work(cupBody,{hand="body",tool="filbert 8",pile=ivoryMid,coverage=3.2,angle=1.52,length={12,38},fill=true,clip=true,seed=306})
+work(cupBody*rect(584,465,115,445):soften(62),{hand="body",tool="filbert 6",pile=ivoryDark,coverage=1.95,angle=1.50,length={10,28},clip=true,seed=307})
+work(cupBody*rect(449,471,122,385):soften(55),{hand="body",tool="filbert 6",pile=ivoryLit,coverage=2.0,angle=1.55,length={12,30},clip=true,seed=308})
+
+-- A visible elliptical mouth gives the viewer an unambiguous cup rather than a cylinder.
+rimInner=ellipse(557,461,113,25)
+rimOuter=ellipse(557,462,126,35)
+rimRing=rimOuter-rimInner
+work(rimInner,{hand="body",tool="filbert 5",pile=ivoryDark,coverage=3.0,angle=0,length={10,26},fill=true,clip=true,seed=309})
+work(rimRing,{hand="body",tool="filbert 4",pile=ivoryLit,coverage=3.8,angle=0,length={8,20},fill=true,clip=true,seed=310})
+
+-- Deliberate lemon modeling: darker lower-right, sunward upper-left.
+lemonShade=pile({{"cadmium yellow",2},{"yellow ochre",1.6},{"viridian",0.43},{"carmine lake",0.16}})
+lemonLit=pile({{"cadmium yellow",2.7},{"lead white",1.6},{"barium yellow",0.55}})
+work(lemonM*ellipse(334,944,134,73):soften(45),{hand="body",tool="filbert 7",pile=lemonShade,coverage=2.0,angle=0.3,length={10,35},clip=true,seed=311})
+work(lemonM*ellipse(253,860,135,75):soften(43),{hand="body",tool="filbert 6",pile=lemonLit,coverage=2.2,angle=0.2,length={11,30},clip=true,seed=312})
+print("GPT painter S2A stage 2: after LOOK 01, warm background, shaped cup, visible rim, modelled lemon")
