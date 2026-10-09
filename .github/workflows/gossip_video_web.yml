@@ -1,4 +1,5 @@
 name: Chinese Gossip Video - Web Export
+# Episode retry: Pexels licensed real-footage sources, 2026-10-09.
 on:
   workflow_dispatch:
     inputs:
