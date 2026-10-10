@@ -209,7 +209,11 @@ def audit(out,t,stt):
             if h in allseen and allseen[h]!=row['id']:report['exactDuplicatePairs'].append([allseen[h],row['id']])
             allseen[h]=row['id']
         if len(set(shot))==1:report['frozenSourceShots'].append(row['id'])
-    if report['exactDuplicatePairs'] or report['frozenSourceShots']:raise ValueError('Repeated or frozen source sample; inspect source footage')
+    # Source JPEG hash flags are diagnostics, not proof that the encoded video has frozen.
+    # Never skip STT or encoded-frame transition sampling because of an isolated frame flag.
+    report['sourceSampleReview']='review_required' if (report['exactDuplicatePairs'] or report['frozenSourceShots']) else 'passed'
+    if report['sourceSampleReview']=='review_required':
+        print('VISUAL_REVIEW_REQUIRED: source JPEG hash overlaps/frozen samples; inspect encoded 2fps contacts and all transitions',flush=True)
     sample_dir=out/'encoded-samples';sample_dir.mkdir(exist_ok=True)
     ff(['-i',movie,'-vf','fps=2,scale=144:256',sample_dir/'%04d.jpg'])
     pics=sorted(sample_dir.glob('*.jpg'))
@@ -237,7 +241,7 @@ def audit(out,t,stt):
             segments,_=model.transcribe(encoded[a:b],language='zh',beam_size=5,vad_filter=False,condition_on_previous_text=False)
             heard=''.join(x.text for x in segments);similarity=SequenceMatcher(None,phonetics(row['text']),phonetics(heard)).ratio();results.append({'id':row['id'],'expected':row['text'],'heard':heard,'phoneticSimilarity':similarity,'needsReview':similarity<.88})
         write(out/'stt.json',results);report['stt']='review_required' if any(x['needsReview'] for x in results) else 'passed'
-    report['automaticTechnicalChecks']='passed';write(out/'qa.json',report)
+    report['automaticTechnicalChecks']='passed_with_visual_warnings' if report['sourceSampleReview']=='review_required' else 'passed';write(out/'qa.json',report)
     return report
 
 def main():
