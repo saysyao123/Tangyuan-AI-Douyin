@@ -1,0 +1,37 @@
+name: Chinese Gossip - Independent STT Recovery
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gossip_video_qa_recovery.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify-finished-mp4:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore previously rendered real MP4 and master mix
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 37906181163 --repo "$GITHUB_REPOSITORY" --name chinese-video-delivery-37906181163 --dir recovery
+      - name: Install STT dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          python -m pip install --disable-pip-version-check 'faster-whisper==1.2.1' 'numpy>=1.26,<3' 'pypinyin==0.55.0' 'opencc-python-reimplemented==0.1.7'
+      - name: Independent STT from encoded AAC
+        run: |
+          python gossip_video_workflow/qa_recovery.py recovery/gossip_2026_10_09_zh/output qa_recovery_result
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gossip-2026-10-09-independent-stt
+          path: qa_recovery_result
+          if-no-files-found: warn
+          retention-days: 30
