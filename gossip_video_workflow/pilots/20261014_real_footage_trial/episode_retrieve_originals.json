@@ -1,0 +1,354 @@
+{
+  "id": "artemis-data-20261014-v2",
+  "language": "zh",
+  "edition": "2026.10.14",
+  "label": "热点实片实验",
+  "footer": "GPT文案 · 合成旁白 · 真实任务影像",
+  "voice": "zf_001",
+  "voice_speed": 0.92,
+  "model_revision": "01e7505bd6a7a2ac4975463114c3a7650a9f7218",
+  "editorial_review_complete": true,
+  "facts": {
+    "F1": {
+      "status": "verified",
+      "text": "2026年10月7日公开超过800GB任务科学资料，包括超过11000份全分辨率图像和视频、8.5小时观察录音及标注。",
+      "urls": [
+        "https://www.nasa.gov/blogs/missions/2026/10/07/nasa-releases-artemis-ii-lunar-science-data-images/"
+      ]
+    },
+    "F2": {
+      "status": "verified",
+      "text": "绕月观察在2026年4月6日进行，四人轮换窗边岗位拍摄、标注和记录。",
+      "urls": [
+        "https://www.nasa.gov/blogs/missions/2026/10/07/nasa-releases-artemis-ii-lunar-science-data-images/",
+        "https://science.nasa.gov/feature/artemis-ii-preliminary-lunar-science-report/"
+      ]
+    },
+    "F3": {
+      "status": "verified",
+      "text": "宇航员报告五次极弱撞击闪光；闪光来自岩石碎片撞月。所展示图是模拟月面视图上的标注，不是拍到闪光的照片。",
+      "urls": [
+        "https://science.nasa.gov/feature/artemis-ii-preliminary-lunar-science-report/"
+      ]
+    },
+    "F4": {
+      "status": "verified",
+      "text": "宇航员描述微弱棕、绿、蓝等色调；颜色及光照观察有助研究者理解地质、辨别地形及规划后续观测。",
+      "urls": [
+        "https://science.nasa.gov/feature/artemis-ii-preliminary-lunar-science-report/"
+      ]
+    },
+    "F5": {
+      "status": "verified",
+      "text": "地面控制室片为4月6日绕月最近点工作B-roll。",
+      "urls": [
+        "https://images.nasa.gov/details/jsc2026m000346"
+      ]
+    }
+  },
+  "assets": {
+    "flight.mp4": {
+      "url": "https://images-assets.nasa.gov/video/jsc2026m000073_ArtemisIIFlightDay6Highlights_NoLowerThirds/jsc2026m000073_ArtemisIIFlightDay6Highlights_NoLowerThirds~large.mp4",
+      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    },
+    "ground.mp4": {
+      "url": "https://images-assets.nasa.gov/video/jsc2026m000346/jsc2026m000346~large.mp4",
+      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    },
+    "annotation.jpg": {
+      "url": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/artemis/artemis-ii-prelimsci-report-/art002e016252_impactflash_annotation_cropped.jpg?w=3840&h=2160&fit=clip&crop=faces%2Cfocalpoint",
+      "credit": "NASA/CSA",
+      "role": "宇航员在模拟视图上的手写标注；非撞击闪光实拍"
+    },
+    "color-annotation.jpg": {
+      "url": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/artemis/artemis-ii-prelimsci-report-/art002e012180_1_2_3_Balancer.jpg?w=1920&fit=clip",
+      "credit": "NASA",
+      "role": "NASA月面增强色彩照片，不能等同肉眼饱和度"
+    }
+  },
+  "rows": [
+    {
+      "id": "00",
+      "type": "cover",
+      "kind": "fact",
+      "text": "绕月资料，公开了。",
+      "headline": "800GB绕月资料\n这次，能自己看",
+      "chapter": "资料开放",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F1"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 2403,
+        "end": 2404.9854583333336,
+        "crop": "1920:1080:0:0"
+      },
+      "note": "四月任务实拍 · 十月资料公开"
+    },
+    {
+      "id": "01",
+      "type": "video",
+      "kind": "fact",
+      "text": "十月七日，美国航天局把这趟任务的科学资料开放了。",
+      "headline": "十月的新消息\n四月的真实记录",
+      "chapter": "先说清时间",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F1"
+      ],
+      "media": {
+        "asset": "ground.mp4",
+        "start": 152,
+        "end": 157.192625,
+        "crop": "1920:800:0:0"
+      }
+    },
+    {
+      "id": "02",
+      "type": "video",
+      "kind": "fact",
+      "text": "一万一千多份照片和视频。",
+      "headline": "不只几张照片\n一万一千多份",
+      "chapter": "资料里有什么",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F1"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 1207,
+        "end": 1209.924625,
+        "crop": "1920:1080:0:0"
+      }
+    },
+    {
+      "id": "03",
+      "type": "video",
+      "kind": "fact",
+      "text": "再加八个半小时的观察录音，连宇航员的笔记都在里面。",
+      "headline": "照片之外\n还有声音和笔记",
+      "chapter": "记录怎么留下",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F1"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 627,
+        "end": 632.3608333333333,
+        "crop": "1920:910:0:170"
+      }
+    },
+    {
+      "id": "04",
+      "type": "video",
+      "kind": "comment",
+      "text": "但比数量更有意思的，是他们到底看到了什么。",
+      "headline": "我更想看的是\n他们看到了什么",
+      "chapter": "值得点开的细节",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [],
+      "media": {
+        "asset": "ground.mp4",
+        "start": 36,
+        "end": 40.305625,
+        "crop": "1920:800:0:0"
+      }
+    },
+    {
+      "id": "05",
+      "type": "video",
+      "kind": "fact",
+      "text": "这趟绕月发生在四月，眼前就是当时的舱内实拍。",
+      "headline": "这是当时的舱内\n不是十月新拍的",
+      "chapter": "回到四月六日",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F2"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 752,
+        "end": 756.9291666666667,
+        "crop": "1920:990:0:90"
+      }
+    },
+    {
+      "id": "06",
+      "type": "video",
+      "kind": "fact",
+      "text": "他们在舱里分工，拍照、做标注，把看到的细节记下来。",
+      "headline": "到窗边看一看\n把细节记下来",
+      "chapter": "宇航员也是观察者",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F2"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 802,
+        "end": 807.259125,
+        "crop": "1920:990:0:90"
+      }
+    },
+    {
+      "id": "07",
+      "type": "image",
+      "kind": "fact",
+      "text": "他们报告看见五次针尖一样的闪光，是小石块撞上月面，亮了一瞬间。",
+      "headline": "五次微弱闪光\n留下了观察标注",
+      "chapter": "不是闪光实拍",
+      "pause": 0.3,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "图像：NASA/CSA｜模拟视图上的宇航员标注",
+      "fact_ids": [
+        "F3"
+      ],
+      "asset": "annotation.jpg",
+      "note": "NASA/CSA平板标注示意图\n不是撞击闪光的实拍"
+    },
+    {
+      "id": "08",
+      "type": "video",
+      "kind": "fact",
+      "text": "还有个细节，月球并不只有灰色。",
+      "headline": "月球的颜色\n不只有灰色",
+      "chapter": "另一个发现",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F4"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 1243,
+        "end": 1246.307875,
+        "crop": "1920:1080:0:0"
+      }
+    },
+    {
+      "id": "09",
+      "type": "image",
+      "kind": "fact",
+      "text": "他们描述过很淡的棕色、绿色和蓝色。",
+      "headline": "很淡的颜色\n也是研究线索",
+      "chapter": "颜色来自观察描述",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "图像：NASA｜月面增强色彩照片",
+      "fact_ids": [
+        "F4"
+      ],
+      "note": "增强色彩照片｜真实色差很淡",
+      "asset": "color-annotation.jpg"
+    },
+    {
+      "id": "10",
+      "type": "video",
+      "kind": "fact",
+      "text": "颜色和光影，会帮研究者辨认月面的不同地形。",
+      "headline": "颜色与光影\n藏着地形信息",
+      "chapter": "为什么要做记录",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA/Rad Sinyak｜同任务地面评估室",
+      "fact_ids": [
+        "F4"
+      ],
+      "media": {
+        "asset": "ground.mp4",
+        "start": 104,
+        "end": 108.80308333333333,
+        "crop": "1920:800:0:0"
+      }
+    },
+    {
+      "id": "11",
+      "type": "video",
+      "kind": "comment",
+      "text": "所以我觉得，值得看的不只是哪张照片好看。",
+      "headline": "漂亮照片之后\n还有观察的过程",
+      "chapter": "我想看的另一层",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [],
+      "media": {
+        "asset": "ground.mp4",
+        "start": 61,
+        "end": 65.40458333333333,
+        "crop": "1920:800:0:0"
+      }
+    },
+    {
+      "id": "12",
+      "type": "video",
+      "kind": "fact",
+      "text": "你还能顺着照片、笔记和录音，看他们怎么一步步观察月球。",
+      "headline": "把三种记录对上\n看懂一次观察",
+      "chapter": "这批资料的价值",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [
+        "F1"
+      ],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 661,
+        "end": 666.4301666666667,
+        "crop": "1920:990:0:90"
+      }
+    },
+    {
+      "id": "13",
+      "type": "end",
+      "kind": "comment",
+      "text": "换成你，会先翻照片，还是先听他们当时的反应？",
+      "headline": "先看照片\n还是先听声音？",
+      "chapter": "留一个问题",
+      "pause": 0.16,
+      "factSource": "事实资料：NASA公开任务记录｜GPT编写",
+      "screenSource": "影像：NASA｜2026年4月6日任务实拍",
+      "fact_ids": [],
+      "media": {
+        "asset": "flight.mp4",
+        "start": 2475,
+        "end": 2479.682875,
+        "crop": "1920:1080:0:0"
+      },
+      "question": "你会先看照片，还是先听录音？"
+    }
+  ],
+  "direction": "复用gossip_video_workflow的纸白、安全橙、大标题和整句字幕。首句2秒内进入重点，用任务舱内真实动作而非静态封面。四月实拍/十月公开日期分开。撞击闪光仅用有清晰说明的平板标注图，不加虚构撞击动画。舱内头部关系不裁断，保持原镜头运动，不增加随意运镜。声线沿用zf_001速度0.92，按实际音频测时，原创BGM侧链压低。",
+  "brief": "近期资料公开话题试片。原定四无婚礼因未取得复用许可暂缓，选用有明确信息介绍使用依据的NASA任务资料。10月7日官方公开资料，10月9日Wired、10月11日The Verge持续报道。未证明其与四无婚礼有同量级中文热榜热度。正文由GPT按核实事实独立编写。评论阅读包括4月的同任务讨论，只作为观众提问参考，未冒充十月评论或网友共识。所用实拍为四月任务记录，并非本轮公开数据全部的新拍视频。",
+  "source_access": [
+    {
+      "source": "十月新闻相关Reddit贴",
+      "status": "已读取",
+      "note": "页面未返回可引用评论，不虚构评论"
+    },
+    {
+      "source": "同任务4月飞越视频讨论",
+      "status": "已读取",
+      "url": "https://www.reddit.com/r/ArtemisProgram/comments/1sl1c1r/no_flyby_videos/",
+      "note": "Immediate_Cat_254讨论希望观看从舱内转向窗外的第一人称画面；只用于观众需求参考"
+    }
+  ]
+}

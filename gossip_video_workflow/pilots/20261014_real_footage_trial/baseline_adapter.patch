@@ -1,0 +1,41 @@
+--- a/run.py
++++ b/run.py
+@@ -54,7 +54,7 @@
+             if not re.fullmatch(r'https://x\.com/[^/]+/status/\d+',t['url']):raise ValueError('Original X status URL required')
+             if t.get('highlight') and t['highlight'] not in t['original']:raise ValueError('Highlight must be part of original text')
+             if not t.get('translation'):raise ValueError('Chinese tweet translation required')
+-        if row['type']=='video':
++        if row.get('media'):
+             m=row['media'];a,b=m['start'],m['end']
+             if not (0<=a<b):raise ValueError('Invalid media range')
+             if not m.get('crop'):raise ValueError('Explicit crop required to remove source subtitles/station bugs')
+@@ -117,7 +117,9 @@
+ 
+ def prepare_visuals(e,base,cache,rows):
+     from fontTools.ttLib import TTFont
+-    public=RUNTIME/'public';shutil.rmtree(public,ignore_errors=True);public.mkdir()
++    public=RUNTIME/'public'
++    if public.exists():shutil.rmtree(public)
++    public.mkdir()
+     mapping={};access=[]
+     for name,item in e.get('assets',{}).items():
+         if not re.fullmatch(r'[a-zA-Z0-9_.-]+',name):raise ValueError('Unsafe asset filename')
+@@ -153,7 +155,7 @@
+             missing|={ch for ch in text if '\u4e00'<=ch<='\u9fff' and ord(ch) not in cmap}
+         if missing:raise ValueError('Missing Chinese glyphs: '+''.join(sorted(missing)))
+     for row in rows:
+-        if row['type']=='video':
++        if row.get('media'):
+             media=row['media'];p=mapping[media['asset']];duration=float(probe(p)['format']['duration'])
+             if media['end']>duration+.02:raise ValueError('Source range exceeds original movie')
+             folder=public/'frames'/str(row['id']);folder.mkdir(parents=True)
+--- a/runtime/film.jsx
++++ b/runtime/film.jsx
+@@ -6,6 +6,7 @@
+ const rows=timeline.rows;
+ function Highlight({text,quote}) {const i=quote?text.indexOf(quote):-1;return i<0?text:<>{text.slice(0,i)}<mark>{quote}</mark>{text.slice(i+quote.length)}</>;}
+ function Media({row}) {
++ if(row.media) return <img className={'footage '+(row.fit==='cover'?'people':'landscape')} data-media={row.id} src={`frames/${row.id}/0001.jpg`}/>;
+  if(row.type==='cover') return row.cover?.length?<div className="cover-grid">{row.cover.map((v,i)=><React.Fragment key={i}><img className={['wang','liu','couple'][i]} src={v.file}/><div className={'cover-label '+['wang-label','liu-label','couple-label'][i]}>{v.label}</div></React.Fragment>)}</div>:<div className="end-ledger"><p className="big-question">{row.note||'云端流程检查'}</p><p className="ledger-row">技术样片 · 非新闻成片</p></div>;
+  if(row.type==='end') return <div className="end-ledger"><p className="big-question">{row.question||'评论区，\n聊聊你的看法。'}</p>{(row.items||[]).map(v=><p className="ledger-row" key={v}>{v}</p>)}</div>;
+  if(row.type==='tweet')return <div className="tweet-stage"><div className="tweet-author">{row.tweet.author}</div><div className="tweet-original"><Highlight text={row.tweet.original} quote={row.tweet.highlight}/></div><div className="translation">{row.tweet.translation}</div><div className="tweet-link">{row.tweet.url}</div></div>;
