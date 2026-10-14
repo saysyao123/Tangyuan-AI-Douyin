@@ -1,0 +1,87 @@
+name: REA 2048 pilot
+on:
+  push:
+    branches:
+      - experiment/rea-2048-pilot-20261014
+    paths:
+      - rea_reverse_lab/**
+      - .github/workflows/rea_2048_pilot.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout experiment branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Obtain real pinned MIT 2048 reference
+        uses: actions/checkout@v4
+        with:
+          repository: gabrielecirulli/2048
+          ref: 478b6ec346e3787f589e4af751378d06ded4cbbc
+          path: rea_reverse_lab/upstream
+          persist-credentials: false
+      - name: Node compatible with REA
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Identity and environment
+        shell: bash
+        run: |
+          mkdir -p rea_reverse_lab/results
+          node --version | tee rea_reverse_lab/results/node-version.txt
+          git -C rea_reverse_lab/upstream rev-parse HEAD | tee rea_reverse_lab/results/upstream-commit.txt
+          sha256sum rea_reverse_lab/upstream/js/game_manager.js | tee rea_reverse_lab/results/upstream-sha256.txt
+          cp rea_reverse_lab/upstream/LICENSE.txt rea_reverse_lab/results/UPSTREAM_LICENSE.txt
+      - name: Run REA CLI and save actual Evidence
+        shell: bash
+        run: |
+          set +e
+          timeout 480s npx --yes rea-agents@6.4.0 analyze-javascript-application "$GITHUB_WORKSPACE/rea_reverse_lab/upstream" --json > rea_reverse_lab/results/rea-evidence.json 2> rea_reverse_lab/results/rea-stderr.log
+          r=$?
+          echo "$r" > rea_reverse_lab/results/rea-exit.txt
+          echo "REA_TOOL_EXIT=$r"
+          if [ "$r" = 0 ]; then
+            node rea_reverse_lab/02_evidence/summarize.mjs rea_reverse_lab/results/rea-evidence.json rea_reverse_lab/results/rea-summary.json
+            echo "$?" > rea_reverse_lab/results/rea-summary-exit.txt
+          fi
+          exit 0
+      - name: Differential test against original executable rules
+        shell: bash
+        run: |
+          set +e
+          UPSTREAM_2048=rea_reverse_lab/upstream node --test rea_reverse_lab/04_diff_tests/parity.test.mjs > rea_reverse_lab/results/diff-test.log 2>&1
+          r=$?
+          cat rea_reverse_lab/results/diff-test.log
+          echo "$r" > rea_reverse_lab/results/parity-exit.txt
+          exit 0
+      - name: Gate decisions based on actual outputs
+        shell: bash
+        run: |
+          r=$(cat rea_reverse_lab/results/rea-exit.txt)
+          s=$(cat rea_reverse_lab/results/rea-summary-exit.txt 2>/dev/null || echo 99)
+          t=$(cat rea_reverse_lab/results/parity-exit.txt)
+          {
+            echo "# P0 independent game engine reconstruction result"
+            echo "Pinned target: gabrielecirulli/2048 MIT @ 478b6ec346e3787f589e4af751378d06ded4cbbc"
+            echo "REA CLI exit: $r"
+            echo "REA evidence gate exit: $s"
+            echo "1240-pair behavioral differential exit: $t"
+            if [ "$r" = 0 ] && [ "$s" = 0 ] && [ "$t" = 0 ]; then
+              echo "P0_STATUS=PASS"
+            else
+              echo "P0_STATUS=NOT_PASSED"
+            fi
+          } | tee rea_reverse_lab/results/STATUS.md
+          [ "$r" = 0 ] && [ "$s" = 0 ] && [ "$t" = 0 ]
+      - name: Upload logs on success or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rea-2048-pilot-evidence
+          path: rea_reverse_lab/results/
+          retention-days: 14
