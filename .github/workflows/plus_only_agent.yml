@@ -1,0 +1,83 @@
+name: Plus-only Agent v0 (No Paid API)
+on:
+  workflow_dispatch:
+    inputs:
+      task_path:
+        description: 'Repository-relative task JSON path'
+        required: true
+        default: '09_AGENT_RUNTIME/examples/technical_smoke.json'
+        type: string
+      action:
+        description: 'Validate handoff or run a technical smoke render'
+        required: true
+        default: preflight
+        type: choice
+        options:
+          - preflight
+          - render
+  push:
+    branches: [main]
+    paths:
+      - '09_AGENT_RUNTIME/**'
+      - '.github/workflows/plus_only_agent.yml'
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check contract tests (stdlib only)
+        run: python -m unittest discover -s 09_AGENT_RUNTIME/tests -v
+        env:
+          PYTHONPATH: 09_AGENT_RUNTIME
+      - name: Preflight (no LLM API needed)
+        env:
+          TASK_PATH: ${{ inputs.task_path || '09_AGENT_RUNTIME/examples/technical_smoke.json' }}
+        run: python 09_AGENT_RUNTIME/plus_agent.py preflight --task "$TASK_PATH"
+      - name: Save proof even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plus-only-preflight-${{ github.run_id }}
+          path: 09_AGENT_RUNTIME/runs/latest_status.json
+          if-no-files-found: warn
+          retention-days: 7
+  render:
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'render'
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install known cloud video dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libsndfile1 libasound2t64 libnss3 libatk1.0-0 libatk-bridge2.0-0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libcups2
+          bash gossip_video_workflow/bootstrap.sh
+      - name: Render using original tested video engine
+        env:
+          TASK_PATH: ${{ inputs.task_path }}
+        run: gossip_video_workflow/.venv/bin/python 09_AGENT_RUNTIME/plus_agent.py render --task "$TASK_PATH"
+      - name: Save actual outputs and honest QA state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plus-only-render-${{ github.run_id }}
+          path: |
+            09_AGENT_RUNTIME/runs/latest_status.json
+            gossip_video_workflow/runs/*/delivery.zip
+            gossip_video_workflow/runs/*/state.json
+            gossip_video_workflow/runs/*/output/**
+          if-no-files-found: warn
+          retention-days: 14
