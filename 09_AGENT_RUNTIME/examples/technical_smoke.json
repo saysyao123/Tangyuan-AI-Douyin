@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "task_id": "plus_only_video_smoke_v0",
+  "task_type": "gossip_video",
+  "episode_path": "gossip_video_workflow/examples/smoke.json",
+  "intent": "technical_demo",
+  "source_rights_review_complete": false
+}
