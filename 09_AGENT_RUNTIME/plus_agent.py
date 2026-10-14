@@ -123,6 +123,13 @@ def inspect(status: dict[str, Any]) -> dict[str, Any]:
         status["missing"] = [str(x.relative_to(REPO)) for x in (state_path, qa_path, video_path) if not x.is_file()]
         return status
     state, qa = load_json(state_path), load_json(qa_path)
+    # A previous successful export must never validate a newly edited episode.
+    episode = load_json(REPO / status["episode_path"])
+    expected_hash = hashlib.sha256(json.dumps(episode, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+    if state.get("episodeHash") != expected_hash:
+        status["status"] = "stale_output"
+        status["reason"] = "render state belongs to a different episode revision"
+        return status
     if state.get("stage") != "exported_awaiting_review":
         status["status"] = "needs_investigation"
         status["reason"] = f"unexpected render stage {state.get('stage')}"
