@@ -59,6 +59,11 @@ jobs:
           cat rea_reverse_lab/results/diff-test.log
           echo "$r" > rea_reverse_lab/results/parity-exit.txt
           exit 0
+      - name: Produce downloadable standalone game demo
+        shell: bash
+        run: |
+          node rea_reverse_lab/demo/build_offline.mjs
+          cp rea_reverse_lab/demo/offline-2048.html rea_reverse_lab/results/PLAY_2048_OFFLINE.html
       - name: Gate decisions based on actual outputs
         shell: bash
         run: |
