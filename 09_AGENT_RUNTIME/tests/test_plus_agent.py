@@ -60,6 +60,16 @@ class PlusAgentTest(unittest.TestCase):
         with self.assertRaises(GateError):
             self.validate()
 
+    def test_inspect_rejects_stale_episode(self):
+        run = self.root / "gossip_video_workflow" / "runs" / "example"
+        (run / "output").mkdir(parents=True)
+        (run / "state.json").write_text(json.dumps({"stage": "exported_awaiting_review", "episodeHash": "old"}))
+        (run / "output" / "qa.json").write_text(json.dumps({"sha256": "fake"}))
+        (run / "output" / "final_1080p.mp4").write_bytes(b"placeholder")
+        with patch("plus_agent.REPO", self.root):
+            checked = inspect(self.validate())
+        self.assertEqual(checked["status"], "stale_output")
+
     def test_inspect_never_claims_render_from_preflight(self):
         with patch("plus_agent.REPO", self.root):
             checked = inspect(self.validate())
