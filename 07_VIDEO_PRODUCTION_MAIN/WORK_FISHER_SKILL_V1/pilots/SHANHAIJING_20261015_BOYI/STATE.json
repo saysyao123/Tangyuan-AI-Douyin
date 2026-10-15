@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "workflow": "WORK_FISHER_SKILL_V1",
   "project_id": "SHANHAIJING_20261015_BOYI",
-  "current_stage": "CHARACTER_REVIEW",
+  "current_stage": "VIDEO_PROMPT_READY_FOR_DOUBAO_FIRST_TEST",
   "book_source": "用户上传扫描PDF《山海经》，原书私有；GitHub 仅记PDF页21-22",
   "confirmed_creature": "猼訑",
   "alternate_creatures": [
@@ -14,32 +14,87 @@
   "target_duration_seconds": 15,
   "aspect_ratio": "9:16",
   "approvals": {
-    "script": false,
-    "characters": false,
-    "scenes": false
+    "script": true,
+    "characters": true,
+    "scenes": true,
+    "source": "2026-10-15 会话中用户认可故事方案、素材和画风，表示可以继续"
   },
   "assets": [
     {
       "asset_id": "C01",
-      "identity": "猼訑",
-      "state": "PROMPT_READY_IMAGE_NOT_GENERATED"
+      "name": "猼訑",
+      "state": "ACTUAL_IMAGE_GENERATED_AND_USER_APPROVED",
+      "source_filename": "九尾闭眸绒羊兽.png",
+      "note": "四耳九尾背上一双眼，尾数受遮挡需要视频检验"
     },
     {
-      "asset_id": "C01-V01",
-      "identity": "猼訑原始造型",
-      "state": "AWAITING_CONFIRMATION"
+      "asset_id": "C02",
+      "name": "阿石",
+      "state": "ACTUAL_IMAGE_GENERATED_AND_USER_APPROVED",
+      "source_filename": "希望之旅的小狸角色.png",
+      "note": "更换为拟人小狸兽"
+    },
+    {
+      "asset_id": "E01",
+      "name": "月夜石径",
+      "state": "ACTUAL_IMAGE_GENERATED_AND_USER_APPROVED",
+      "source_filename": "月下迷雾山林古道.png"
+    },
+    {
+      "asset_id": "E02",
+      "name": "坍塌洞口",
+      "state": "ACTUAL_IMAGE_GENERATED_AND_USER_APPROVED",
+      "source_filename": "月下坍塌的幽暗洞口.png"
+    },
+    {
+      "asset_id": "E03",
+      "name": "林间空地",
+      "state": "ACTUAL_IMAGE_GENERATED_AND_USER_APPROVED",
+      "source_filename": "月光下的雾隐森林秘境.png"
+    },
+    {
+      "asset_id": "P01",
+      "name": "短刀",
+      "state": "ACTUAL_IMAGE_GENERATED",
+      "source_filename": "复古野外匕首与皮革刀鞘.png"
+    },
+    {
+      "asset_id": "P02",
+      "name": "火把",
+      "state": "ACTUAL_IMAGE_GENERATED",
+      "source_filename": "手绘风格奇幻火炬cuntegn.png"
+    },
+    {
+      "asset_id": "C01-STATE01",
+      "name": "包扎后猼訑",
+      "state": "ACTUAL_IMAGE_GENERATED",
+      "source_filename": "九尾羊灵的温柔包扎.png"
     }
   ],
   "evidence": {
     "pdf_source_visually_inspected": true,
     "github_script_written": true,
-    "images_generated": false,
-    "images_reviewed": false,
-    "video_prompt_finalized": false,
+    "images_generated": true,
+    "images_reviewed": true,
+    "video_prompt_finalized": true,
     "video_generated": false,
     "video_qa_passed": false,
     "video_delivered": false,
-    "github_character_prompt_written": true
+    "github_character_prompt_written": true,
+    "github_assets_archived": false,
+    "github_p02_prompt_archived": true,
+    "prompts_01_03_04": "TEST_PACKAGE_DRAFTS_ONLY"
   },
-  "next_action": "等待用户确认剧本和首轮猼訑造型；仅执行原版Skill下一阶段"
+  "next_action": "由用户从本轮对话测试ZIP取得真实参考图片与P02视频提示词，在豆包按实际模型支持情况生成首条15秒竖版P02原始视频，发送回本对话接受逐镜质检；通过后再测试P01/P03/P04。",
+  "project_title": "山海经·不畏",
+  "format": "吉卜力风格取向的温暖手绘动画，小狸兽为拟人动物角色",
+  "target_total_duration_seconds": 60,
+  "episode_duration_seconds": 15,
+  "episodes": [
+    "P01_要夺来的勇气",
+    "P02_九尾背眼",
+    "P03_背后的灾祸",
+    "P04_真正的不畏"
+  ],
+  "first_test": "P02_九尾背眼"
 }
