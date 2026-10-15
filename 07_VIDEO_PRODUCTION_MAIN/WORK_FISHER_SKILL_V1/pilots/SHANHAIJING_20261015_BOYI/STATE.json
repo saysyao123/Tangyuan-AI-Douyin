@@ -32,13 +32,14 @@
   ],
   "evidence": {
     "pdf_source_visually_inspected": true,
-    "github_script_written": false,
+    "github_script_written": true,
     "images_generated": false,
     "images_reviewed": false,
     "video_prompt_finalized": false,
     "video_generated": false,
     "video_qa_passed": false,
-    "video_delivered": false
+    "video_delivered": false,
+    "github_character_prompt_written": true
   },
   "next_action": "等待用户确认剧本和首轮猼訑造型；仅执行原版Skill下一阶段"
 }
