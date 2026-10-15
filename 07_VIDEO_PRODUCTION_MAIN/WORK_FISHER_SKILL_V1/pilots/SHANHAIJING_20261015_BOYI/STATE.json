@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "workflow": "WORK_FISHER_SKILL_V1",
   "project_id": "SHANHAIJING_20261015_BOYI",
-  "current_stage": "P02_VIDEO_PROMPT_V2_READY_FOR_DOUBAO_TEST",
+  "current_stage": "P03_VIDEO_PROMPT_V2_READY_P02_VIDEO_NOT_YET_RECEIVED",
   "book_source": "用户上传扫描PDF《山海经》，原书私有；GitHub 仅记PDF页21-22",
   "confirmed_creature": "猼訑",
   "alternate_creatures": [
@@ -84,9 +84,10 @@
     "github_assets_archived": false,
     "github_p02_prompt_archived": true,
     "prompts_01_03_04": "TEST_PACKAGE_DRAFTS_ONLY",
-    "github_p02_prompt_v2_archived": true
+    "github_p02_prompt_v2_archived": true,
+    "github_p03_prompt_v2_archived": true
   },
-  "next_action": "把首帧关系图+两张角色三视图按V2列出的顺序上传豆包（若入口只支持首帧则单图）。复制V2五字段提示词生成P02原始15秒视频，回传MP4质检。",
+  "next_action": "Use P03 pack/first frame+two turnarounds to generate rockfall rescue. For continuity replace provisional first frame with actual last frame of P02 when user supplies it; then return MP4 for QA.",
   "project_title": "山海经·不畏",
   "format": "吉卜力风格取向的温暖手绘动画，小狸兽为拟人动物角色",
   "target_total_duration_seconds": 60,
@@ -106,5 +107,7 @@
     "initial_frame": "月下九尾林间相遇.png (首帧图，角色从该姿态开始)",
     "multi_view": "九尾灵羊角色设定图.png;阿拾狸猫冒险家设定集.png; 都是单一角色的三视图",
     "props": "no standalone prop references"
-  }
+  },
+  "video_prompt_p03_v2_path": "07_VIDEO_PRODUCTION_MAIN/WORK_FISHER_SKILL_V1/pilots/SHANHAIJING_20261015_BOYI/video_prompts/P03_ROCKFALL_RESCUE_15S_V2.md",
+  "p03_first_frame_status": "PROVISIONAL_REUSE_OF_P02_FIRST_IMAGE. Replace with actual last frame of rendered P02 once available; no new accurate rockfall first-frame has been generated."
 }
