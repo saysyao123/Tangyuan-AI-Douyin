@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WORK_FISHER_SKILL_V1",
+  "project_id": "SHANHAIJING_20261015_BOYI",
+  "current_stage": "CHARACTER_REVIEW",
+  "book_source": "用户上传扫描PDF《山海经》，原书私有；GitHub 仅记PDF页21-22",
+  "confirmed_creature": "猼訑",
+  "alternate_creatures": [
+    "旋龟",
+    "赤鱬"
+  ],
+  "script_file": "01_SCRIPT_15S.md",
+  "character_prompt_file": "02_CHARACTER_PROMPT_STAGE1.md",
+  "target_duration_seconds": 15,
+  "aspect_ratio": "9:16",
+  "approvals": {
+    "script": false,
+    "characters": false,
+    "scenes": false
+  },
+  "assets": [
+    {
+      "asset_id": "C01",
+      "identity": "猼訑",
+      "state": "PROMPT_READY_IMAGE_NOT_GENERATED"
+    },
+    {
+      "asset_id": "C01-V01",
+      "identity": "猼訑原始造型",
+      "state": "AWAITING_CONFIRMATION"
+    }
+  ],
+  "evidence": {
+    "pdf_source_visually_inspected": true,
+    "github_script_written": false,
+    "images_generated": false,
+    "images_reviewed": false,
+    "video_prompt_finalized": false,
+    "video_generated": false,
+    "video_qa_passed": false,
+    "video_delivered": false
+  },
+  "next_action": "等待用户确认剧本和首轮猼訑造型；仅执行原版Skill下一阶段"
+}
