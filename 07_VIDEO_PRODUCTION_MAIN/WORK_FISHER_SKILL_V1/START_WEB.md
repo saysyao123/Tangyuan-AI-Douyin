@@ -6,8 +6,9 @@
 1. `README.md` 与 `WORKFLOW.md`
 2. `original/korean-thriller-asset-to-video/SKILL.md`
 3. `original/korean-thriller-asset-to-video/references/video-contract.md`
-4. `SOURCE_MANIFEST.md`，核实原版参考文档是否齐全
-5. `QA.md` 与 `state/PROJECT_STATE_TEMPLATE.json`
+4. `original/korean-thriller-asset-to-video/references/image-assets.md`、`asset-continuity.md`、`worked-example.md`、`flashback-example.md`
+5. `SOURCE_MANIFEST.md`：核实原版参考文档是否齐全；当前缺完整50情绪原版时，加载 `derived/EMOTION_QUICK_INDEX_50.md` 作为明确标注的速查替代
+6. `QA.md` 与 `state/PROJECT_STATE_TEMPLATE.json`
 
 **优先规则**：这套 Work-Fisher Skill 是当前新视频生成项目的默认主方案。保持原版三阶段的导演逻辑、确认要求、资产编号、角色和场景一致性、A/B机位规则、Speaker声线、固定五字段；不得提前重构、把示例当成真实产物，或跳过应检视的图像。
 
