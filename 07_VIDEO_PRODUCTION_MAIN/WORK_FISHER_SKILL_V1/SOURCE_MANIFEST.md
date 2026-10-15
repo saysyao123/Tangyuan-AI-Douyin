@@ -13,12 +13,14 @@
 - `original/comfyui/【Work-Fisher】AI短剧制作全流程.json` — 已归档
 - `original/comfyui/安装说明.md` — 已归档
 
+## 原版参考完成项
+- `references/worked-example.md` — **已归档并验证 Git blob SHA 完全一致（LF 标准化）**
+- `references/flashback-example.md` — **已归档并验证 Git blob SHA 完全一致（LF 标准化）**
+
 ## 尚待逐字归档的原版参考
 - `references/emotion-performance-library.md` — 50种情绪及附录 A–C（源 SHA256: `656276b906554356972318ae5cc9dc0bdc92669926ab1b55a51484a6ad9ba332`）
-- `references/worked-example.md` — 三阶段样例（源 SHA256: `5b9f604c4f80c70152be3e545abfb832bea91271b8f38f7187c9f83ec08e0227`）
-- `references/flashback-example.md` — 快闪示例（源 SHA256: `f03c349a4072dea3c3392683e015592d6fc1292f756056a87e2a5b07a980bd96`）
 
-以上三份原版内容仍可从用户提供的原始 SKILL ZIP / 本轮会话复现包读取。**在逐字提交和实际 GitHub 核对之前，不得声称 7/7 完整归档。** 在新对话只读取 GitHub 时，若需要情绪库或样例的原文细节，必须获取原始 ZIP，不要自行补写并冒称原版。
+原版 Skill 的 **6/7 份 Markdown 已完成逐字归档并通过与本地源文本一致性核对**（换行统一为LF）。余下完整50情绪库尚未逐字归档。为保障 GitHub-only 新会话可操作，已提供 `derived/EMOTION_QUICK_INDEX_50.md`（50/50种情绪的原文速查短句，但**不是**含附录的完整原版）。需要肌肉、呼吸与附录详细规则时必须读取原始 ZIP，不得把派生索引称为完整原版。
 
 ## 运行真实性
 - 当前仅验证了设计稿、文件归档和 GitHub 访问。
