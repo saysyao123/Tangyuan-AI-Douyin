@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WORK_FISHER_SKILL_V1",
+  "is_template": true,
+  "source_book": null,
+  "project_id": "NEW_PROJECT_ID",
+  "current_stage": "SCRIPT_ANALYSIS",
+  "approvals": {
+    "characters": false,
+    "scenes": false
+  },
+  "assets": [],
+  "reference_images": [],
+  "shot_plan": {
+    "base_duration_seconds": 15,
+    "shot_count_min": 3,
+    "shot_count_max": 4,
+    "default_camera": "A",
+    "optional_camera": "B",
+    "actual_model": null,
+    "adaptation_notes": []
+  },
+  "evidence": {
+    "script_verified": false,
+    "images_reviewed": false,
+    "video_prompt_validated": false,
+    "video_rendered": false,
+    "video_playback_checked": false,
+    "delivered_file": null
+  },
+  "qa_notes": [],
+  "changes": []
+}
