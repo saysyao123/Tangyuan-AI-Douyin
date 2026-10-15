@@ -30,6 +30,15 @@ This repository addresses those problems with:
 - cross-song regression before promoting new rules;
 - post-publish data capture for production and content evaluation.
 
+## Default video generation workflow (2026-10-15)
+
+**Current primary route for NEW generative video, AI mini-drama and novel-to-video experiments: [Work-Fisher Skill V1](07_VIDEO_PRODUCTION_MAIN/WORK_FISHER_SKILL_V1/START_WEB.md).**  
+Chinese entry: [`07_VIDEO_PRODUCTION_MAIN/README.md`](07_VIDEO_PRODUCTION_MAIN/README.md).
+
+Start all new video-generation tests from the original `korean-thriller-asset-to-video` Skill: character prompts and approval → scene/prop prompts and approval → actual reference-image review → original 15-second shot/voice prompt → real generation and QA. Run baseline first, improve only based on actual results. **The selection of a primary workflow is a project decision, not proof that video rendering has passed.**
+
+Legacy MV R3 and gossip/news workflows remain intact as prior specialized, evidence-gated projects; do not delete them or silently override approvals in projects already underway. Existing rules and historical results remain available for controlled comparison.
+
 ## Current MV runtime
 
 The active R3 workflow uses a single production path:
