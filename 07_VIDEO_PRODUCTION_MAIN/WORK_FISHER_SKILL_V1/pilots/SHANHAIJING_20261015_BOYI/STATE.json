@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "workflow": "WORK_FISHER_SKILL_V1",
   "project_id": "SHANHAIJING_20261015_BOYI",
-  "current_stage": "VIDEO_PROMPT_READY_FOR_DOUBAO_FIRST_TEST",
+  "current_stage": "P02_VIDEO_PROMPT_V2_READY_FOR_DOUBAO_TEST",
   "book_source": "用户上传扫描PDF《山海经》，原书私有；GitHub 仅记PDF页21-22",
   "confirmed_creature": "猼訑",
   "alternate_creatures": [
@@ -83,9 +83,10 @@
     "github_character_prompt_written": true,
     "github_assets_archived": false,
     "github_p02_prompt_archived": true,
-    "prompts_01_03_04": "TEST_PACKAGE_DRAFTS_ONLY"
+    "prompts_01_03_04": "TEST_PACKAGE_DRAFTS_ONLY",
+    "github_p02_prompt_v2_archived": true
   },
-  "next_action": "由用户从本轮对话测试ZIP取得真实参考图片与P02视频提示词，在豆包按实际模型支持情况生成首条15秒竖版P02原始视频，发送回本对话接受逐镜质检；通过后再测试P01/P03/P04。",
+  "next_action": "把首帧关系图+两张角色三视图按V2列出的顺序上传豆包（若入口只支持首帧则单图）。复制V2五字段提示词生成P02原始15秒视频，回传MP4质检。",
   "project_title": "山海经·不畏",
   "format": "吉卜力风格取向的温暖手绘动画，小狸兽为拟人动物角色",
   "target_total_duration_seconds": 60,
@@ -96,5 +97,14 @@
     "P03_背后的灾祸",
     "P04_真正的不畏"
   ],
-  "first_test": "P02_九尾背眼"
+  "first_test": "P02_九尾背眼_V2",
+  "video_prompt_v2_path": "07_VIDEO_PRODUCTION_MAIN/WORK_FISHER_SKILL_V1/pilots/SHANHAIJING_20261015_BOYI/video_prompts/P02_NINE_TAILS_BACK_EYES_15S_V2_FIXED_EYES.md",
+  "locked_character_geometry": {
+    "boyi_back_eyes": "单独一对，永久固定于前背肩胛骨后缘、脊柱左右对称的位置；眼窝不滑动，仅瞳孔转动",
+    "boyi_ears": 4,
+    "boyi_tails": 9,
+    "initial_frame": "月下九尾林间相遇.png (首帧图，角色从该姿态开始)",
+    "multi_view": "九尾灵羊角色设定图.png;阿拾狸猫冒险家设定集.png; 都是单一角色的三视图",
+    "props": "no standalone prop references"
+  }
 }
