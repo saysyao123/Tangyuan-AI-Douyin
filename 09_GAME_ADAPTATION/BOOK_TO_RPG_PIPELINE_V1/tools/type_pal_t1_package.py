@@ -31,6 +31,9 @@ with ZipFile(downloads/'corresponding-source.zip','w',ZIP_DEFLATED) as z:
   add_tree(z,root/'projects/book-pilot-cinematic','projects/book-pilot-cinematic')
   z.write(os.environ['T15_CONFIG'],'book-rpg/cinematic-config.json')
   z.writestr('README-CINEMATIC-BUILD.md','# Current cinematic chapter and prior pilot\n\nInstall Node22.19+, pnpm10.17.1 and Pillow, then run `node book-rpg/tools/t15/build.mjs . output`. This builds original T1, prior T14 pilot and the independent cinematic chapter. Effective files: book-rpg/pilot-config.json and book-rpg/cinematic-config.json. Use /chapter/ for the current refined stage; /pilot/ preserves earlier progress. No EPUB/PAL commercial source files included.\n')
+ if os.environ.get('T16_CONFIG'):
+  z.write(os.environ['T16_CONFIG'],'book-rpg/night-config.json')
+  z.writestr('README-NIGHT-BUILD.md','Build all acts with node book-rpg/tools/t16/build.mjs . output after Node22.19+, pnpm10.17.1 and Pillow installation. /chapter/ continues the existing save; /night/ starts the second act without auto-overwriting quick-save. Configs: pilot-config.json, cinematic-config.json, night-config.json. EPUB/PAL commercial sources excluded.\n')
  z.writestr('README-T1-BUILD.md','''# Lantern Inn corresponding source\n\nType PAL upstream f98d0ddd89ebdee7b04502ee35de26ee82c6d246; GPL-3.0.\nContains the exact patched engine/editor and original assets used by this distribution.\n\nBuild with Node 22.19+ and Python 3:\n\n````\npython -m pip install pillow\nnpx --yes pnpm@10.17.1 install --frozen-lockfile\nnode book-rpg/tools/type_pal_t1_build.mjs . output\npython -m http.server 8080 --directory output\n````\n\nOpen http://localhost:8080. No PAL commercial asset files or external model API required.\nOriginal UI, title and cursor replace upstream PAL-derived defaults; Unifont notices are retained.\nScripts type_pal_t1_full.mts and type_pal_t1_art.ts must run through the editor Vite SSR module graph.\n''')
 if os.environ.get('T13_CONFIG'):
  with ZipFile(downloads/'corresponding-source.zip','a',ZIP_DEFLATED) as z:z.writestr('README-OPENING-BUILD.md','# Included opening pilot\n\nBuild both games with: `node book-rpg/tools/OPENING_BUILDER/build.mjs . output` after installing the dependencies described in README-T1-BUILD.md. Effective content is book-rpg/pilot-config.json. The EPUB is excluded.\n'.replace('OPENING_BUILDER','t14' if os.environ.get('T14_BUILD') else 't13'))
@@ -44,8 +47,8 @@ with ZipFile(downloads/'lantern-inn-static.zip','w',ZIP_DEFLATED) as z:
  for p in sorted(out.rglob('*')):
   if p.is_file() and p.parent!=downloads and p.name not in ['download-checksums.json','runtime-manifest.json']:
    rel=p.relative_to(out)
-   if str(rel) in ['index.html','help.html','pilot/index.html','chapter/index.html']:
-    prefix='../downloads/' if str(rel) in ['pilot/index.html','chapter/index.html'] else 'downloads/'
+   if str(rel) in ['index.html','help.html','pilot/index.html','chapter/index.html','night/index.html']:
+    prefix='../downloads/' if str(rel) in ['pilot/index.html','chapter/index.html','night/index.html'] else 'downloads/'
     html=p.read_text().replace('href="'+prefix,'href="https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/')
     z.writestr(str(rel),html)
    else:z.write(p,rel)

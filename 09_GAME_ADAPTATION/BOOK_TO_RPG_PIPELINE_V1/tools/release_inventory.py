@@ -41,8 +41,8 @@ def check(root, archive=None):
                 if set(sealed) != set(expected)|{'DOWNLOADS.md'}: raise ValueError('Static ZIP runtime set differs')
                 for n, h in expected.items():
                     data = z.read(n)
-                    if n in {'index.html','help.html','pilot/index.html','chapter/index.html'}:
-                        prefix='../downloads/' if n in {'pilot/index.html','chapter/index.html'} else 'downloads/'
+                    if n in {'index.html','help.html','pilot/index.html','chapter/index.html','night/index.html'}:
+                        prefix='../downloads/' if n in {'pilot/index.html','chapter/index.html','night/index.html'} else 'downloads/'
                         data = data.decode().replace('href="https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/','href="'+prefix).encode()
                     if digest(data)!=h: raise ValueError('Static ZIP runtime content differs: '+n)
     if archive:
