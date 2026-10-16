@@ -1,6 +1,6 @@
 # WORK 模式接力执行｜Type PAL 纯原创网页游戏 T1
 
-> **当前状态以 [CURRENT_STATUS.md](CURRENT_STATUS.md) 为准。** T1.2 基底任务正在实施，按 docs/T12_FOUNDATION_TASK.md 的新增问题继续；下方历史优先级不覆盖最新发布与验收。
+> **当前状态以 [CURRENT_STATUS.md](CURRENT_STATUS.md) 为准。** T1.2 基底已验收发布（Run 38891702378），结果与失败复盘见 evidence/T12_FOUNDATION_20261016/；下方历史优先级不覆盖最新发布与验收。
 
 
 日期：2026-10-16

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "input": "downloaded corresponding-source.zip extracted into a fresh directory",
+  "input_sha256": "1222252ac29b95f333bd01d8ef610bca77d6d92df3229f9947633fd91fa09eaa",
+  "package_manager": "pnpm 10.17.1",
+  "install": "frozen-lockfile, successful clean install",
+  "build": "node book-rpg/tools/type_pal_t1_build.mjs <extracted-source> <clean-output>",
+  "runtime_files": 155,
+  "missing": [],
+  "extra": [],
+  "changed": [],
+  "download_archives": "internal manifests, hashes and CRC verified separately; ZIP byte identity across rebuilds is not claimed"
+}

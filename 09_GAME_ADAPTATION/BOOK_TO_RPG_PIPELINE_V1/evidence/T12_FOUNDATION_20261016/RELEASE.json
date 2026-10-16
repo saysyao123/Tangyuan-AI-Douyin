@@ -1,0 +1,63 @@
+{
+  "release": "T1.2",
+  "date": "2026-10-16",
+  "status": "PUBLISHED",
+  "scope": "Reliability foundation; original pixel art, story, collision/battle rules, content22 and SAVE12 retained",
+  "code_commit": "845187167cd3ac89ac94ad112af0854852eb8c3e",
+  "upstream_commit": "f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "site_source_commit": "5ee09c9673b41431137c2b6c864e1a45e1b8a529",
+  "deployment": {
+    "id": "appgdep_6ad207476b7881919db2d93751ba1fc8",
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "title": "雾灯驿站 · 原创 Type PAL RPG",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_03547c7e4f388191989acb46ffce0818",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6ad1b7b5f0bc81919dcf871ecce85086",
+    "failure_message": null,
+    "env_set_revision": 0,
+    "updated_at": "2026-10-16T11:15:47.809989+00:00"
+  },
+  "ci": {
+    "run_id": 38891702378,
+    "url": "https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38891702378",
+    "job_id": 116942493891,
+    "artifact_id": 12042092552,
+    "conclusion": "success",
+    "new_unit_checks": 7,
+    "browser_reliability_checks": 16,
+    "story_regression_checks": 10,
+    "editor_regression_checks": 4,
+    "baseline_title_counterexamples": "2 failed on untouched upstream; passed after repair"
+  },
+  "verification": {
+    "runtime_files": 155,
+    "missing": [],
+    "extra": [],
+    "changed": [],
+    "download_zip_count": 3,
+    "download_checks": "CRC, per-ZIP inner inventory, outer SHA256, static runtime comparison",
+    "clean_source_rebuild": "PASS, 155 runtime files identical",
+    "deployment_archive": "PASS, exact full output inventory with only Site hosting manifest added"
+  },
+  "review": "Independent read-only source review accepted; actual test/deployment evidence collected separately",
+  "failed_runs": [
+    38890667520,
+    38891163098
+  ],
+  "limits": [
+    "CI Chromium and simulated 4x CPU only; Safari/Firefox and actual phone untested",
+    "60-second activity and two heap samples are not a long-term leak proof",
+    "draws counts successful engine presentation calls, not GPU/display frames",
+    "General upstream bitmap-cache lifetime issues not proven fully resolved"
+  ],
+  "next": [
+    "Original gameplay, skills/party/shop and audiovisual polish",
+    "Multi-actor presentation validation",
+    "T2 reusable IR to content22 compiler with two distinct original stories"
+  ],
+  "book_required": false
+}

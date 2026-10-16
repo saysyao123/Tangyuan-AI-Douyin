@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NATIVE_SAVE_VISIBLE_STATUS",
+    "PLAYER_BACKUP_DOWNLOAD",
+    "REJECT_MALFORMED_PRESERVES_SAVE",
+    "REJECT_WRONG_PROJECT_PRESERVES_SAVE",
+    "REJECT_EMPTY_PARTY_PRESERVES_SAVE",
+    "REJECT_MISSING_SCENE_PRESERVES_SAVE",
+    "REAL_IDB_TRANSACTION_ABORT_PRESERVES_PREVIOUS_PAYLOAD",
+    "SAVE_RETRY_AFTER_QUOTA_FAILURE",
+    "BACKUP_IMPORT_AND_NATIVE_F9_RESTORE",
+    "FIRST_FRAME_ADJACENT_RESTORE_SNAPS",
+    "LATE_OLD_LOAD_ERROR_DOES_NOT_OVERWRITE_NEW_SUCCESS",
+    "TOUCH_POINTER_CANCEL_STOPS_MOVEMENT",
+    "ACTIVE_ROUTE_60S_ENGINE_FRAMES_DRAW_CALLS_AND_MOVEMENT",
+    "ENGINE_STALL_VISIBLE_RECOVERY",
+    "RELOAD_RECOVERY_RETAINS_NATIVE_SAVE",
+    "REAL_RENDER_EXCEPTION_VISIBLE_RECOVERY"
+  ],
+  "metrics": {
+    "coldReadyMs": 838,
+    "activeRoute": {
+      "elapsedMs": 60087,
+      "moves": 236,
+      "engineFrames": 3606,
+      "successfulPresentationCalls": 3606,
+      "p95FrameMs": 18,
+      "p99FrameMs": 18.699999999953434,
+      "heapBefore": 31140148,
+      "heapAfter": 24870248
+    }
+  },
+  "errors": [],
+  "limits": [
+    "CI Chromium only; 4x CPU simulation is not user hardware.",
+    "60 seconds is an activity check, not proof against long-term memory leaks.",
+    "Fault injection only at public browser storage/Canvas/rAF boundaries; no world/flag injection."
+  ]
+}

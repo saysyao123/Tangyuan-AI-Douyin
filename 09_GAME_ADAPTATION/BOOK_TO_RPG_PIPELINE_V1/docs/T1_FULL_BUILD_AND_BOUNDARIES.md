@@ -1,5 +1,8 @@
 # T1 完整原创 Type PAL 网页原型：构建和边界
 
+> 最新 T1.2 的构建、验收和发布状态以 [CURRENT_STATUS.md](../CURRENT_STATUS.md) 为准。以下保留 T1 的构建与范围说明。
+
+
 固定上游：`IllegalCreed/type-pal@f98d0ddd89ebdee7b04502ee35de26ee82c6d246`，content22 / SAVE12，GPLv3。
 
 ## 实际制作内容

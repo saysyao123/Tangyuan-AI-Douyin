@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "archive_bytes": 66153569,
+  "archive_sha256": "064de5cfecd966db9a51562eaf3a88d891ce75a7a14bfddbcc84da0924722c66",
+  "archive_entries": 197,
+  "runtime_files": 155,
+  "inventory": "exact archive vs verified output, with only Site hosting manifest added",
+  "temporary_files": 0
+}

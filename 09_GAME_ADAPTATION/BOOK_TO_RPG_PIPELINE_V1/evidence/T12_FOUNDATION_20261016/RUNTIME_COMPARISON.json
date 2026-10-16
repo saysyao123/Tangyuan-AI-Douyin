@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "ci_runtime_files": 155,
+  "local_runtime_files": 155,
+  "missing": [],
+  "extra": [],
+  "changed": [],
+  "comparison": "full runtime inventory, including player shell, game, editor, content, licenses; download archives verified separately"
+}

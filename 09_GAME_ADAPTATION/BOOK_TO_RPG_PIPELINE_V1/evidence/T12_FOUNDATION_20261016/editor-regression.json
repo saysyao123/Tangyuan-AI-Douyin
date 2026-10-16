@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checks": [
+    "EXPLICIT_USER_CLICK_REAL_OPFS_PROJECT",
+    "NPC_EDIT_CANONICAL_COMMAND_AND_NATIVE_SAVE",
+    "BROWSER_CLOSE_REOPEN_SAME_FSA_DIRECTORY",
+    "MODIFIED_DIALOGUE_IN_REAL_REFORGE_PLAY"
+  ],
+  "workspaceId": "7bee2e56-a348-4a1a-bd3f-36d0eb25d98d",
+  "changedDialogue": "雾灯不会熄。阿笙，替晚归的人带回一束光。",
+  "errors": [],
+  "storage": "Real OPFS FileSystemDirectoryHandle; no OS picker interception; native official writeProject/save journal"
+}

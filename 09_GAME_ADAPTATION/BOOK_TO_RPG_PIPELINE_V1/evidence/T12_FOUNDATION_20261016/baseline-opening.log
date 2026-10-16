@@ -1,0 +1,65 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.7 [39m[90m/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge[39m
+
+ [31m❯[39m src/t12-opening.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 356[2mms[22m[39m
+[31m   [31m×[31m T12 title storage failure is contained, retains selection and permits retry[39m[32m 298[2mms[22m[39m
+[31m   [31m×[31m T12 repeated title selection does not duplicate in-flight IO[39m[32m 57[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/t12-opening.test.ts[2m > [22mT12 title storage failure is contained, retains selection and permits retry
+[31m[1mAssertionError[22m: expected [ 'A', 'AA', '旧的回忆', 'A', 'AA', …(7) ] to include '存档读取失败，请重试'[39m
+[36m [2m❯[22m src/t12-opening.test.ts:[2m142:97[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/t12-opening.test.ts[2m > [22mT12 repeated title selection does not duplicate in-flight IO
+[31m[1mAssertionError[22m: expected 2 to be 1 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m src/t12-opening.test.ts:[2m151:87[22m[39m
+    [90m149|[39m  [35mconst[39m gate[33m=[39m[35mnew[39m [33mPromise[39m[33m<[39m[33mSaveMeta[39m[][33m>[39m(resolve[33m=>[39m{release[33m=[39mresolve})
+    [90m150|[39m  const o=await opening({decorate:(real)=>({putSlot:real.putSlot.bind(r…
+    [90m151|[39m  await key(o.h,'ArrowUp');await key(o.h,'Enter');await key(o.h,'Enter'…
+    [90m   |[39m                                                                                       [31m^[39m
+    [90m152|[39m  release([]);await until(o.h,()=>o.snapshots.at(-1)?.phase==='load');a…
+    [90m153|[39m })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Unhandled Errors [49m[22m[31m⎯⎯⎯⎯⎯⎯[39m
+[31m[1m
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.[22m[39m
+
+[31m⎯⎯⎯⎯[39m[1m[41m Unhandled Rejection [49m[22m[31m⎯⎯⎯⎯⎯[39m
+[31m[1mError[22m: expected legal IO rejection[39m
+[36m [2m❯[22m Object.getThumb src/t12-opening.test.ts:[2m140:219[22m[39m
+
+[90m [2m❯[22m enterLoad src/opening-menu.ts:[2m126:38[22m[39m
+
+[31mThis error originated in "[1msrc/t12-opening.test.ts[22m" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.[39m
+[31mThe latest test that might've caused the error is "[1mT12 title storage failure is contained, retains selection and permits retry[22m". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.[39m
+[31m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m     Errors [22m [1m[31m1 error[39m[22m
+[2m   Start at [22m 11:07:55
+[2m   Duration [22m 1.76s[2m (transform 658ms, setup 0ms, import 593ms, tests 356ms, environment 685ms)[22m
+
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t12-opening.test.ts,title=Unhandled error,line=140,column=219::Error: expected legal IO rejection%0A ❯ Object.getThumb src/t12-opening.test.ts:140:219%0A ❯ enterLoad src/opening-menu.ts:126:38%0A%0AThis error originated in "src/t12-opening.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.%0AThe latest test that might've caused the error is "T12 title storage failure is contained, retains selection and permits retry". It might mean one of the following:%0A- The error was thrown, while Vitest was running this test.%0A- If the error occurred after the test had been completed, this was the last documented test before it was thrown.%0A
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t12-opening.test.ts,title=src/t12-opening.test.ts > T12 title storage failure is contained%2C retains selection and permits retry,line=142,column=97::AssertionError: expected [ 'A', 'AA', '旧的回忆', 'A', 'AA', …(7) ] to include '存档读取失败，请重试'%0A ❯ src/t12-opening.test.ts:142:97%0A%0A
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t12-opening.test.ts,title=src/t12-opening.test.ts > T12 repeated title selection does not duplicate in-flight IO,line=151,column=87::AssertionError: expected 2 to be 1 // Object.is equality%0A%0A- Expected%0A+ Received%0A%0A- 1%0A+ 2%0A%0A ❯ src/t12-opening.test.ts:151:87%0A%0A
