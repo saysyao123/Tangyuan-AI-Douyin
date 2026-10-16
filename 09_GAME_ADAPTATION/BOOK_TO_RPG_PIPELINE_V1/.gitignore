@@ -1,0 +1,11 @@
+dist/
+runs/
+node_modules/
+*.rar
+*.mkf
+*.dll
+*.exe
+*.avi
+*.mid
+*.midi
+*.rpg
