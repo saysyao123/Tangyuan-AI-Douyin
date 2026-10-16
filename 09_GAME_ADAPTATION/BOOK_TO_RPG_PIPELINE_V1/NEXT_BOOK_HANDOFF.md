@@ -2,6 +2,7 @@
 
 ## 操作入口
 1. 书籍文件/用户自有故事由**当前对话上传**，不要直接上传公共 GitHub。
+   本项目最终采用 **Type PAL Reforge 游戏网页 + Type PAL Editor 浏览器内容工作台**，先读 `docs/WEB_FIRST_PLATFORM_V2.md` 与 `docs/TYPE_PAL_DEEP_REVIEW_20261016.md`。
 2. 使用 `node tools/new_book_run.mjs <id> "作品标题"` 创建空白8阶段工作目录。
 3. 打开 `runs/<id>/STATUS.json`，从 S0 起依次完成各阶段。不允许先填 S7 为 PASS。
 4. 先阅读 START_WEB.md 和 docs/STAGES.md。原著事实与改编新增事项要有来源与专门标记。
