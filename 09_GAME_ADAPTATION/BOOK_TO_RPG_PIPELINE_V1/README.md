@@ -14,6 +14,12 @@
 - 下一阶段真实功能验收任务：[T1全原创可编辑网页RPG](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/25) 和 [T2书籍IR→content22编译器](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/26)。**保存/重开与独立静态部署仍未通过，不得误称成熟在线平台。**
 - 云端官方引擎可复现探针：`.github/workflows/book_rpg_type_pal_probe.yml`。真正编辑/保存/原创游戏/发布必须逐关验收，不能误称已完成。
 
+## T1 官方引擎原创工程实测进展（2026-10-16）
+
+✅ [原始证据](evidence/T1_ORIGINAL_TYPEPAL_CONTENT22_ENGINE_EDITOR_20261016.md)：已经将两份原创小说式测试故事编译为 Type PAL 真正 content22 / SAVE12 标准工程（每份20文件，全部原创合成色盘/瓦片/人物占位资源），官方校验全部通过；在 Chromium 中真正通过 Reforge 渲染第一份原创场景，并通过官方 React Editor 加载第一份工程、显示NPC与脚本。GitHub Actions [run 38855229699](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38855229699) 实际成功。
+
+⚠️ 当前未完成NPC端到端交互、编辑器修改保存与重开、多场景传送、任务物品、仙剑式战斗与结局、正式静态网页托管，因此不能宣布T1完成、也还不需要用户上传书籍。下阶段 [Issue #25](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/25) 仍保持打开。**[WORK_T1_CONTINUE.md](WORK_T1_CONTINUE.md)** 是 Work 模式的完整接力入口。
+
 ## 当前实际状态（2026-10-16）
 - ✅ 已有 `../PAL98_BOOK_RPG_BASELINE_V0_1/` 机制/人物/源码锚点研究。
 - ✅ V1 已具备固定阶段、输入输出清单、人工确认门禁、两部原创测试故事、纯 Node 测试、HTML 构建命令、GitHub Actions CI。
