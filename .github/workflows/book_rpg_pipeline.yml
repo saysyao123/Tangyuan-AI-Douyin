@@ -29,7 +29,10 @@ jobs:
         run: |
           node tools/pipeline.mjs validate examples/lantern-inn/game.json | tee validation.json
           node tools/pipeline.mjs build examples/lantern-inn/game.json dist/lantern-inn.html | tee build-output.json
+          node tools/pipeline.mjs validate examples/river-ledger/game.json | tee validation-river.json
+          node tools/pipeline.mjs build examples/river-ledger/game.json dist/river-ledger.html | tee build-river.json
           test -s dist/lantern-inn.html
+          test -s dist/river-ledger.html
           ! grep -q '/*__ENGINE__*/' dist/lantern-inn.html
           echo "PASS — story game package and browser HTML compiled" | tee STATUS.txt
       - name: Upload reproducible evidence and playable game
@@ -39,8 +42,8 @@ jobs:
           name: book-rpg-v1-playable-and-tests
           retention-days: 14
           path: |
-            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/dist/lantern-inn.html
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/dist/*.html
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/test-output.txt
-            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/validation.json
-            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/build-output.json
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/validation*.json
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/build*.json
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/STATUS.txt
