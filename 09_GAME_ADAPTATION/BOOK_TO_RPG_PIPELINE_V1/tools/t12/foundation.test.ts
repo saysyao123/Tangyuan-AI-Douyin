@@ -28,3 +28,10 @@ test('welcome edit survives extra stages and outer branches and fails closed if 
  expect(welcomeRow(flow).text).toBe('hello');welcomeRow(flow).text='changed';expect(quest.else[0]!.cue.rows[0]!.text).toBe('changed')
  expect(()=>welcomeRow({stages:[{body:[quest,quest]}]})).toThrow('唯一定位')
 })
+
+test('hidden and resumed gaps are excluded while visible stalls remain measured',()=>{
+ Object.defineProperty(document,'hidden',{value:false,configurable:true});const h=new RuntimeHealth();h.frame(100);h.frame(120)
+ Object.defineProperty(document,'hidden',{value:true,configurable:true});document.dispatchEvent(new Event('visibilitychange'));h.frame(5000)
+ Object.defineProperty(document,'hidden',{value:false,configurable:true});document.dispatchEvent(new Event('visibilitychange'));h.frame(10000);expect(h.snapshot().p99FrameMs).toBe(20)
+ h.frame(12000);expect(h.snapshot().p99FrameMs).toBe(2000);delete (document as {hidden?:boolean}).hidden
+})

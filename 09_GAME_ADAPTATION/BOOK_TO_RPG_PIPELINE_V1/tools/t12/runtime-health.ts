@@ -4,14 +4,17 @@ export class RuntimeHealth {
   private draws = 0
   private lastFrameAt = 0
   private intervals: number[] = []
+  private sampleAt = 0
+  constructor() { document.addEventListener('visibilitychange', () => { this.sampleAt = 0 }) }
   private fatalMessage: string | null = null
   private storage = { sequence: 0, state: 'idle', message: '' }
   get failed(): boolean { return this.fatalMessage !== null }
   frame(now: number): void {
-    if (this.lastFrameAt > 0 && now > this.lastFrameAt) {
-      this.intervals.push(now - this.lastFrameAt)
+    if (!document.hidden && this.sampleAt > 0 && now > this.sampleAt) {
+      this.intervals.push(now - this.sampleAt)
       if (this.intervals.length > 240) this.intervals.shift()
     }
+    this.sampleAt = document.hidden ? 0 : now
     this.frames += 1
     this.lastFrameAt = now
   }

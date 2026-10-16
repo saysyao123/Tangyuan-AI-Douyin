@@ -80,6 +80,12 @@ if marker not in source:
           const meta = buildMeta('quick', payload.world, '导入备份', c => lookupText(`name.${c.template}`, project.locale), Date.now(), count)
           await saveStore.putSlot(meta, payload, thumb)
           committedSavedTimes = count
+          try { await refreshSaveMetas() } catch (error) {
+            saveMetas = [...saveMetas.filter(m => m.slotId !== 'quick'), meta]
+            saveThumbs.get('quick')?.close()
+            saveThumbs.delete('quick')
+            console.warn('[save] 备份已导入，列表刷新失败:', error)
+          }
         })
         saveWriteQueue = scheduled.catch(() => undefined)
         await scheduled

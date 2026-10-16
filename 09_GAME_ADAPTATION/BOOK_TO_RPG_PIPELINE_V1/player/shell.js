@@ -1,5 +1,5 @@
 const frame=document.getElementById('game'),loading=document.getElementById('loading'),hint=document.getElementById('load-hint'),retry=document.getElementById('retry'),status=document.getElementById('save-status');
-const held=new Map();let started=performance.now(),lastState='',ready=false,lastFrames=-1,lastProgress=performance.now(),notice=-1;
+const held=new Map();let started=performance.now(),lastState='',ready=false,lastFrames=-1,lastDraws=-1,lastProgress=performance.now(),notice=-1;
 function key(k,type){try{frame.contentWindow.dispatchEvent(new KeyboardEvent(type,{key:k,bubbles:true,cancelable:true}))}catch{}}
 function releaseAll(){for(const k of new Set(held.values()))key(k,'keyup');held.clear();try{frame.contentWindow.dispatchEvent(new Event('blur'))}catch{}}
 function showRecovery(message){ready=false;releaseAll();loading.hidden=false;hint.textContent=message;retry.hidden=false}
@@ -11,7 +11,7 @@ for(const b of document.querySelectorAll('[data-key]')){
 }
 window.addEventListener('blur',releaseAll);window.addEventListener('pagehide',releaseAll);document.addEventListener('visibilitychange',()=>{releaseAll();lastProgress=performance.now()});
 document.getElementById('fullscreen').onclick=()=>{releaseAll();frame.requestFullscreen().then(()=>frame.contentWindow.focus()).catch(()=>{status.textContent='当前浏览器不支持全屏，可直接在页面内继续。'})};
-retry.onclick=()=>{releaseAll();ready=false;lastState='';lastFrames=-1;notice=-1;started=lastProgress=performance.now();loading.hidden=false;retry.hidden=true;hint.textContent='正在重新载入…已保存的进度可在载入后读取。';frame.src=frame.src};
+retry.onclick=()=>{releaseAll();ready=false;lastState='';lastFrames=-1;lastDraws=-1;notice=-1;started=lastProgress=performance.now();loading.hidden=false;retry.hidden=true;hint.textContent='正在重新载入…已保存的进度可在载入后读取。';frame.src=frame.src};
 frame.onload=()=>{releaseAll();lastProgress=performance.now();if(!document.hidden)frame.contentWindow.focus()};
 document.getElementById('backup').onclick=async()=>{
  try{if(!ready)throw Error('请等待游戏载入。');const text=await frame.contentWindow.tpPlayer.exportQuickSave();const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='lantern-inn-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='已导出上次保存的进度；当前未保存的操作不在备份中。'}catch(e){status.textContent='备份失败：'+e.message}
@@ -25,9 +25,9 @@ function update(){
   const win=frame.contentWindow,doc=win.document.documentElement;
   if(doc.dataset.bootError||doc.dataset.runtimeError){showRecovery('游戏暂时未能继续。重新载入后可读取已保存的进度，未保存的操作会丢失。');return}
   const s=win.__tpObserve?.readRuntime();if(!s){if(performance.now()-started>15000){hint.textContent='载入时间较长，可以继续等待或重试。';retry.hidden=false}return}
-  const now=performance.now();if(s.health.frames!==lastFrames){lastFrames=s.health.frames;lastProgress=now}
+  const now=performance.now();if(s.health.frames!==lastFrames&&s.health.draws!==lastDraws){lastFrames=s.health.frames;lastDraws=s.health.draws;lastProgress=now}
   if(!document.hidden&&now-lastProgress>8000){showRecovery('游戏画面已较长时间未更新。可重新载入后读取已保存的进度，未保存的操作会丢失。');return}
-  ready=true;loading.hidden=true;
+  ready=true;loading.hidden=true;retry.hidden=true;
   if(s.health.storage.sequence!==notice){notice=s.health.storage.sequence;if(s.health.storage.message)status.textContent=s.health.storage.message}
   const f=s.story.flags,stamp=JSON.stringify([s.sceneId,s.battleActive,f,s.story.party]);if(stamp===lastState)return;lastState=stamp;
   document.getElementById('place').textContent=s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';
