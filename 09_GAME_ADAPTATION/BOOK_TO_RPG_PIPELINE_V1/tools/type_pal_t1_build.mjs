@@ -18,4 +18,5 @@ await fs.cp(path.join(tools,'../player'),output,{recursive:true});
 await fs.copyFile(path.join(root,'LICENSE'),path.join(output,'LICENSE-TypePAL.txt'));
 await fs.cp(path.join(root,'packages/reforge/src/engine-chrome/assets/licenses'),path.join(output,'licenses'),{recursive:true});
 await fs.copyFile(path.join(root,'packages/reforge/src/engine-chrome/assets/PROVENANCE.md'),path.join(output,'ART_PROVENANCE.md'));
+const packed=spawnSync('python3',[path.join(tools,'type_pal_t1_package.py'),root,output,path.join(tools,'..')],{stdio:'inherit'});if(packed.status!==0)throw Error('packaging failed');
 console.log('STATIC_T1_BUILD_READY '+output);

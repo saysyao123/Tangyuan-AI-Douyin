@@ -91,11 +91,15 @@ p=root/'packages/editor/src/ui/ProjectPicker.tsx';s=p.read_text()
 if "import { newBrowserStory }" not in s:
  s="import { newBrowserStory } from '../core/t1-browser-workspace.js'\n"+s
 s=s.replace("seedBaseUrl = 'projects/pal'","seedBaseUrl = 'projects/book-lantern-inn'")
-s=s.replace("const createBlank = run('创建空白项目', newBlankProject)","const browserStory = run('创建浏览器工程', async () => newBrowserStory(seedBaseUrl, (done,total,phase) => setProgress({done,total,phase})))\n  const createBlank = run('创建空白项目', newBlankProject)")
-s=s.replace('<div className="picker-actions">','''<div className="picker-actions">
+if "const browserStory =" not in s:s=s.replace("const createBlank = run('创建空白项目', newBlankProject)","const browserStory = run('创建浏览器工程', async () => newBrowserStory(seedBaseUrl, (done,total,phase) => setProgress({done,total,phase})))\n  const createBlank = run('创建空白项目', newBlankProject)")
+if "onClick={browserStory}" not in s:s=s.replace('<div className="picker-actions">','''<div className="picker-actions">
               <DsPressable type="button" className="picker-act primary" onClick={browserStory}>
                 <span className="picker-act-t">创建浏览器工程</span>
                 <span className="picker-act-d">复制原创《雾灯驿站》到浏览器目录。保存后可关闭重开；清理网站数据会删除它，请用另存为备份。</span>
               </DsPressable>''')
 s=s.replace('从 PAL 开发快照创建本地项目','复制原创驿站到电脑文件夹').replace('当前快照仍随 E2E 持续完善，尚不是稳定用户种子。','需要你选择空文件夹并授权。保留标准 content22 工程。')
 p.write_text(s)
+
+# Replace unclassified default favicon with an original lamp icon.
+im=Image.new('RGBA',(32,32),'#101c27');d=ImageDraw.Draw(im);d.rectangle((15,4,17,28),fill=gold);d.rectangle((9,5,23,7),fill=gold);d.rectangle((19,10,27,22),fill=gold);d.rectangle((21,12,25,20),fill=light);im.save(root/'packages/reforge/public/favicon.ico')
+(root/'packages/editor/public/type-pal-editor-mark.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#101c27"/><path d="M16 5v23M10 7h14M23 8v4" stroke="#e6bb7c" stroke-width="2"/><rect x="19" y="12" width="8" height="10" fill="#e6bb7c"/></svg>')

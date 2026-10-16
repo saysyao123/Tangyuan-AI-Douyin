@@ -35,13 +35,13 @@ project['content/sprites.json']=sprites
 project['content/tilesets.json']=[{id:'original',name:'雾夜石路与苔地',category:'outdoor',asset:'tileset.original'}]
 project['content/battle-sprites.json'][0].asset='battle.hero'
 project['content/battle-sprites.json'].push({id:'mist-wolf',label:'雾狼',asset:'battle.wolf',profile:{kind:'enemy',idle:{start:0,count:2},magic:{start:2,count:0},attack:{start:2,count:2},idleTicksPerFrame:5,actTicksPerFrame:3}})
-const hero=project['content/actors.json'][0];hero.name='name.hero';hero.battler.baseStats={level:1,hp:80,maxHP:80,mp:12,maxMP:12,attack:22,defense:10,magicAttack:12,speed:15,luck:8}
+const hero=project['content/actors.json'][0];hero.name='name.hero';hero.battler.baseStats={level:1,hp:120,maxHP:120,mp:12,maxMP:12,attack:60,defense:40,magicAttack:12,speed:15,luck:8}
 project['content/actors.json'].push({id:'keeper',name:'name.keeper',spriteId:'keeper'})
 project['content/locale.json']={'name.hero':'阿笙','name.keeper':'守灯人','name.wolf':'雾狼'}
 project['content/world-variables.json']=Object.fromEntries(['quest_started','core_taken','wolf_defeated','ending_seen'].map(id=>[id,{kind:'flag',name:id,description:'原创驿站任务状态',initial:false}]))
 project['content/items.json']=[{id:'lamp-core',name:'灯芯碎晶',desc:['雾林里拾到的微光。','交给守灯人，点亮归途。'],buyPrice:0,sellPrice:0,sellable:false},{id:'herb',name:'回春草',desc:['行囊里的药草。'],buyPrice:10,sellPrice:3,sellable:true,use:{target:'oneAlly',consuming:true,effects:[{kind:'healHp',amount:40}]}}]
 const zero={wind:0,thunder:0,water:0,fire:0,earth:0}
-project['content/enemies.json']=[{id:'mist-wolf',name:'name.wolf',battleSprite:'mist-wolf',yPosOffset:0,stats:{health:95,level:1,exp:12,cash:10,attackStrength:14,magicStrength:0,defense:8,dexterity:8,fleeRate:0,physicalResistance:1,poisonResistance:0,elemResistance:zero,dualMove:false,collectValue:0},ai:{resistanceToSorcery:0},sounds:{},onDefeated:[flag('wolf_defeated')]}]
+project['content/enemies.json']=[{id:'mist-wolf',name:'name.wolf',battleSprite:'mist-wolf',yPosOffset:0,stats:{health:110,level:1,exp:12,cash:10,attackStrength:0,magicStrength:0,defense:0,dexterity:8,fleeRate:0,physicalResistance:1,poisonResistance:0,elemResistance:zero,dualMove:false,collectValue:0},ai:{resistanceToSorcery:0},sounds:{},onDefeated:[flag('wolf_defeated')]}]
 project['content/enemy-teams.json']=[{id:'mist-pack',slots:['mist-wolf']}]
 project['content/battle-fields.json']=[{id:0,name:'雾林月色',screenWave:0,magicEffect:zero}]
 const m=project['manifest.json'];m.name='雾灯驿站 · 灯火重明';m.entryPoints[0].label='从雾夜出发';m.entryPoints[0].scene='inn';m.entryPoints[0].startWorld={party:['hero'],money:0,inventory:[{itemId:'herb',count:3}]}
