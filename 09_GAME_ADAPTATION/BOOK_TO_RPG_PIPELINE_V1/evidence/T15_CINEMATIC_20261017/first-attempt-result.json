@@ -1,0 +1,633 @@
+{
+  "status": "FAIL",
+  "checks": [
+    "NATIVE_PURCHASE_AND_VISIBLE_SEVEN_TO_ONE_SHARING"
+  ],
+  "coverage": [
+    {
+      "label": "fair entrance",
+      "blackFraction": 0
+    },
+    {
+      "label": "market stall",
+      "blackFraction": 0
+    }
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n",
+  "state": {
+    "projectId": "book-pilot-cinematic",
+    "health": {
+      "frames": 484,
+      "draws": 484,
+      "lastFrameAt": 8554.300000000003,
+      "p95FrameMs": 18.20000000001164,
+      "p99FrameMs": 19.5,
+      "error": null,
+      "storage": {
+        "sequence": 2,
+        "state": "saved",
+        "message": "进度已保存到当前浏览器。"
+      }
+    },
+    "sceneId": "fair",
+    "story": {
+      "flags": {
+        "intro_seen": true,
+        "bought": true,
+        "shared": true,
+        "rumor_seen": true,
+        "stage_started": false,
+        "fire_ignited": false,
+        "fire_recalled": false,
+        "fire_cast": false,
+        "fire_dissolved": false,
+        "heart_stirred": false,
+        "watched": false,
+        "arrest_started": false,
+        "performer_down": false,
+        "officers_departed": false,
+        "backstage_seen": false,
+        "ending_seen": false,
+        "street_seen": false,
+        "stranger_seen": false,
+        "promise_seen": false,
+        "neighbor_seen": false,
+        "chapter_complete": false
+      },
+      "inventory": [],
+      "money": 5,
+      "party": [
+        {
+          "hp": 100,
+          "maxHP": 100
+        },
+        {
+          "hp": 100,
+          "maxHP": 100
+        }
+      ]
+    },
+    "position": {
+      "col": 32,
+      "row": 1,
+      "height": 0
+    },
+    "presentationPosition": {
+      "col": 32,
+      "row": 1,
+      "height": 0
+    },
+    "actors": [
+      {
+        "id": "entity:vendor",
+        "canonical": {
+          "col": 34,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 34,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:stage",
+        "canonical": {
+          "col": 36,
+          "row": 1,
+          "height": 0
+        },
+        "displayed": {
+          "col": 36,
+          "row": 1,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:backstage-gate",
+        "canonical": {
+          "col": 43,
+          "row": -6,
+          "height": 0
+        },
+        "displayed": {
+          "col": 43,
+          "row": -6,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:exit",
+        "canonical": {
+          "col": 26,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 26,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:rumor",
+        "canonical": {
+          "col": 31,
+          "row": 4,
+          "height": 0
+        },
+        "displayed": {
+          "col": 31,
+          "row": 4,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:theater",
+        "canonical": {
+          "col": 40,
+          "row": -12,
+          "height": 0
+        },
+        "displayed": {
+          "col": 40,
+          "row": -12,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:stage-performer",
+        "canonical": {
+          "col": 38,
+          "row": -12,
+          "height": 0
+        },
+        "displayed": {
+          "col": 38,
+          "row": -12,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-0",
+        "canonical": {
+          "col": 33,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 33,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-1",
+        "canonical": {
+          "col": 35,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 35,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-2",
+        "canonical": {
+          "col": 37,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 37,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-3",
+        "canonical": {
+          "col": 39,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 39,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-4",
+        "canonical": {
+          "col": 41,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 41,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      },
+      {
+        "id": "entity:audience-5",
+        "canonical": {
+          "col": 35,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 35,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-6",
+        "canonical": {
+          "col": 37,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 37,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-7",
+        "canonical": {
+          "col": 39,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 39,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-8",
+        "canonical": {
+          "col": 41,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 41,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-9",
+        "canonical": {
+          "col": 43,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 43,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      },
+      {
+        "id": "entity:audience-10",
+        "canonical": {
+          "col": 37,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 37,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-11",
+        "canonical": {
+          "col": 41,
+          "row": -5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 41,
+          "row": -5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-12",
+        "canonical": {
+          "col": 31,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 31,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-13",
+        "canonical": {
+          "col": 32,
+          "row": 3,
+          "height": 0
+        },
+        "displayed": {
+          "col": 32,
+          "row": 3,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-14",
+        "canonical": {
+          "col": 44,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 44,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      },
+      {
+        "id": "entity:audience-15",
+        "canonical": {
+          "col": 43,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 43,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-16",
+        "canonical": {
+          "col": 36,
+          "row": 7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 36,
+          "row": 7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-17",
+        "canonical": {
+          "col": 40,
+          "row": 7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 40,
+          "row": 7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-18",
+        "canonical": {
+          "col": 42,
+          "row": 6,
+          "height": 0
+        },
+        "displayed": {
+          "col": 42,
+          "row": 6,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:audience-19",
+        "canonical": {
+          "col": 34,
+          "row": 7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 34,
+          "row": 7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      },
+      {
+        "id": "entity:market-stall-0",
+        "canonical": {
+          "col": 28,
+          "row": -7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 28,
+          "row": -7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-stall-1",
+        "canonical": {
+          "col": 33,
+          "row": -7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 33,
+          "row": -7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-stall-2",
+        "canonical": {
+          "col": 28,
+          "row": 7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 28,
+          "row": 7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-lamp-0",
+        "canonical": {
+          "col": 27,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 27,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-lamp-1",
+        "canonical": {
+          "col": 35,
+          "row": -3,
+          "height": 0
+        },
+        "displayed": {
+          "col": 35,
+          "row": -3,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-lamp-2",
+        "canonical": {
+          "col": 43,
+          "row": -9,
+          "height": 0
+        },
+        "displayed": {
+          "col": 43,
+          "row": -9,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-tree",
+        "canonical": {
+          "col": 23,
+          "row": -1,
+          "height": 0
+        },
+        "displayed": {
+          "col": 23,
+          "row": -1,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:market-crate",
+        "canonical": {
+          "col": 33,
+          "row": -3,
+          "height": 0
+        },
+        "displayed": {
+          "col": 33,
+          "row": -3,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "party:child",
+        "canonical": {
+          "col": 33.75,
+          "row": 1,
+          "height": 0
+        },
+        "displayed": {
+          "col": 33.75,
+          "row": 1,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 3
+      }
+    ],
+    "facing": "left",
+    "dialogue": null,
+    "dialogueSlots": [],
+    "scriptRunning": false,
+    "presentationBusy": false,
+    "menuActive": false,
+    "battleActive": false,
+    "fadeBlack": 0,
+    "ditherActive": false
+  },
+  "errors": []
+}

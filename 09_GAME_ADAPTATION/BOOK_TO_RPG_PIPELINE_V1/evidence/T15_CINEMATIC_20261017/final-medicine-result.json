@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "checks": [
+    "MEDICINE_CHILD_AT_POT_AND_VISIBLE_BESIDE_NEIGHBOR"
+  ],
+  "coverage": [
+    {
+      "label": "courtyard revised arrival",
+      "blackFraction": 0
+    }
+  ],
+  "errors": [],
+  "resumedFrom": "38940074923 native stage/street SAVE12 checkpoints; passed unrelated scopes skipped"
+}

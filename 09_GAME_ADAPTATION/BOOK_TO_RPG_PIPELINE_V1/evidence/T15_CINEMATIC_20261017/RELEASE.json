@@ -1,0 +1,147 @@
+{
+  "status": "SCOPED_PASS_PUBLISHED",
+  "date": "2026-10-17",
+  "scope": "T1.5 first-two-chapter scenery and native cinematics; original T1 and prior T14 retained; not universal T2",
+  "playUrl": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/chapter/",
+  "previousPilotUrl": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/pilot/",
+  "maps": {
+    "fair": [
+      32,
+      28
+    ],
+    "backstage": [
+      24,
+      24
+    ],
+    "street": [
+      30,
+      24
+    ],
+    "courtyard": [
+      32,
+      26
+    ]
+  },
+  "evidence": {
+    "fullNewFlow": {
+      "run": 38940074923,
+      "commit": "6085823805f2014edc22583c53810820b01705f9",
+      "checks": 9,
+      "status": "PASS",
+      "laterVisualIssuesRecorded": true
+    },
+    "collapseCameraHomeFix": {
+      "run": 38940771024,
+      "commit": "86426e3668790bee2f57573a22bc4dc6cfcdcf2e",
+      "checks": 3,
+      "status": "PASS",
+      "observedBlackFractions": [
+        0,
+        0,
+        0
+      ]
+    },
+    "medicineFinal": {
+      "run": 38942172446,
+      "commit": "f9389e7b87e26b28d522588955e32a23f5d08eba",
+      "status": "PASS",
+      "companionCanonical": {
+        "col": 33,
+        "row": -2.25
+      },
+      "potCanonical": {
+        "col": 34,
+        "row": -3
+      },
+      "neighborCanonical": {
+        "col": 32,
+        "row": -1
+      },
+      "projectedChildNeighborSeparationPixels": 36,
+      "artifact": {
+        "id": 12063173921,
+        "name": "type-pal-t15-evidence",
+        "size_in_bytes": 1881011,
+        "url": "https://api.github.com/repos/saysyao123/Tangyuan-AI-Douyin/actions/artifacts/12063173921",
+        "archive_download_url": "https://api.github.com/repos/saysyao123/Tangyuan-AI-Douyin/actions/artifacts/12063173921/zip",
+        "expired": false,
+        "created_at": "2026-10-16T17:47:24Z",
+        "expires_at": "2027-01-14T17:45:49Z",
+        "updated_at": "2026-10-16T17:47:24Z",
+        "digest": "sha256:c43ea7f33de6a361fd2a4d82c8906c81b275e26323487b85f380bbbef5313ad3",
+        "workflow_run": {
+          "id": 38942172446,
+          "repository_id": 1334752673,
+          "head_repository_id": 1334752673,
+          "head_branch": "feature/book-rpg-typepal-t15-cinematic-20261017",
+          "head_sha": "f9389e7b87e26b28d522588955e32a23f5d08eba"
+        }
+      }
+    },
+    "failedRuns": [
+      38939704086,
+      38941303641
+    ],
+    "visualReviewPassWithLaterIssue": [
+      38940074923,
+      38941699334
+    ],
+    "approachAudit": {
+      "routes": 90,
+      "unitSegments": 280
+    },
+    "oldSuitesRerun": false
+  },
+  "integrity": {
+    "runtimeFiles": 433,
+    "byteIdenticalToLastCI": 381,
+    "privatePresentationDifferences": 52,
+    "newNativeProjectFiles": 65,
+    "privateCuesBound": 63,
+    "priorPilotNativeFilesMechanicallyIdentical": 54,
+    "deploymentArchiveAllFilesChecked": true,
+    "staticSingleFileLimitBytes": 26214400,
+    "privatePresentationVisualReview": "USER_PLAYTEST_PENDING"
+  },
+  "site": {
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_14c5c5962c8c819189d8a31ec06963ac",
+    "version_number": 7,
+    "source_commit": "92e7405614c5cf696d756007db0b47b71cf982e5",
+    "deployment_id": "appgdep_6ad263cfdf1c81919db5ab3d3ad320d6",
+    "status": "succeeded",
+    "audience": "existing owner-private unchanged",
+    "archive": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_000000004cf48209ab246eeaa5c449ab",
+      "content_hash": "sha256:def624adbc213a14ea9008074858afabd67a08300aaf69db0c9c9a1135dff5a0",
+      "size_bytes": 116899840,
+      "file_count": 439
+    }
+  },
+  "limits": [
+    "Only opening chapters 1–2; no third-chapter awakening",
+    "Reused background textures, limited animation frames; ordinary acrobatics remain dialogue",
+    "Chromium desktop CI only; no new mobile/Safari/Firefox/long-session claim",
+    "Public synthetic dialogue and private native text/mechanical binding are distinct evidence scopes"
+  ],
+  "failureNotes": "FAILURES_AND_LIMITS.md",
+  "design": "../../docs/T15_SCENERY_AND_CINEMATICS.md",
+  "downloads": [
+    {
+      "path": "corresponding-source.zip",
+      "bytes": 19669026,
+      "sha256": "874bbfb18def7ab5d84fafd66c43d349ce62ffd25244f22ccb27bb1869ec3f1d"
+    },
+    {
+      "path": "lantern-inn-project.zip",
+      "bytes": 5803443,
+      "sha256": "8cf367ce515ad78ce0b3a1da3ebe95a058b47adce11d4786d19496f68cf8d190"
+    },
+    {
+      "path": "lantern-inn-static.zip",
+      "bytes": 25234620,
+      "sha256": "5b082e5097a92796439bcfb19f599196c45d420dacd392ac9ccda6255077800c"
+    }
+  ]
+}

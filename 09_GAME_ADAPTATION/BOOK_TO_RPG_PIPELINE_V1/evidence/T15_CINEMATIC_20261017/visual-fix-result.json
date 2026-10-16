@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": [
+    "COLLAPSED_POSE_PERSISTS_DURING_DIALOGUE_AND_CARRIER_FOREGROUND",
+    "MEDICINE_FOCUS_CAMERA_AND_CROUCH_CLEAR_OF_DIALOGUE",
+    "EXPANDED_COURTYARD_END_FRAME_NO_BLACK_EDGE"
+  ],
+  "coverage": [
+    {
+      "label": "revised backstage",
+      "blackFraction": 0
+    },
+    {
+      "label": "courtyard revised arrival",
+      "blackFraction": 0
+    },
+    {
+      "label": "revised home doorway",
+      "blackFraction": 0
+    }
+  ],
+  "errors": [],
+  "resumedFrom": "38940074923 native stage/street SAVE12 checkpoints; passed unrelated scopes skipped"
+}

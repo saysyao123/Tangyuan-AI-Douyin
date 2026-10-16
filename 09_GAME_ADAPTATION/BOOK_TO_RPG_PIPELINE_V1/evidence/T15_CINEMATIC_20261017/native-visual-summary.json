@@ -1,0 +1,65 @@
+{
+  "run": 38940074923,
+  "samples": 1113,
+  "observations": {
+    "share-skewer": {
+      "samples": 25,
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "canonicalPositions": 1
+    },
+    "body-fire": {
+      "samples": 55,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "canonicalPositions": 1
+    },
+    "fireball": {
+      "samples": 26,
+      "frames": [
+        0
+      ],
+      "canonicalPositions": 14
+    },
+    "heart": {
+      "samples": 8,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "canonicalPositions": 1
+    },
+    "performer": {
+      "samples": 115,
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "canonicalPositions": 1
+    },
+    "carriers": {
+      "samples": 35,
+      "frames": [
+        9,
+        10,
+        11
+      ],
+      "canonicalPositions": 18
+    }
+  },
+  "scope": "Native draw frame/canonical position sampling, not invented screenshots. Later pose/camera fixes have separate evidence.",
+  "maxObservedRollingP95Ms": 29.39999999999418
+}

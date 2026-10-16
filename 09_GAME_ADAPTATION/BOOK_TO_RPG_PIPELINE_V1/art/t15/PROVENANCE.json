@@ -1,0 +1,27 @@
+{
+  "generator": "GPT image generation",
+  "created": "2026-10-16",
+  "commercial_reference_pixels_used": false,
+  "assets": [
+    {
+      "file": "rental.png",
+      "source": "generated_images/exec-f47fc02e-5574-4747-b248-c36c7ce811a9.png",
+      "prompt_summary": "透明背景、等距像素风、冬季贫寒的一层灰砖旧瓦房，褪色蓝门、暖窗、电表、少雪；无宫廷装饰",
+      "normalized_size": [
+        208,
+        144
+      ]
+    },
+    {
+      "file": "operative.png",
+      "source": "generated_images/exec-45f41ff8-1b66-4b99-b793-768a91499c11.png",
+      "prompt_summary": "透明背景、等距像素人物四向站姿，黑色冬季长外套，成年比例，SW/NW/NE/SE四格",
+      "normalized_frame_size": [
+        36,
+        56
+      ]
+    }
+  ],
+  "processing": "主体分离、统一256索引色、透明索引255，原生RLE；运行时步态与剧情姿势由tools/t15/art.ts制作",
+  "raw_sources": "私有Site book-cinematic/art-source；公开仓库仅归一化的原创资产"
+}
