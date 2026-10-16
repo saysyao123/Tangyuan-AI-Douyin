@@ -8,10 +8,13 @@
 - T1.3：人物四向/三帧重绘、独立双人开篇模板与私有书籍小阶段。新完整流程 Run38894355314（11项）通过；最终画面/旧屋顶反例 Run38895732925 通过；实际私有工程已官方校验与机制比对，私有对白排版等待用户试玩。新发布见 [T13 RELEASE](evidence/T13_OPENING_20261016/RELEASE.json)，失败经验见 [T13复盘](evidence/T13_OPENING_20261016/FAILURES_AND_LIMITS.md)。
 - T1.4：GPT原创冬景与人物、四斜向原生步态、真实队伍同伴/NPC显示平滑、头像与可读对白框、四场景归家开篇。新增范围分段通过，最终成功 Run38931605753；283个运行文件与CI路径一致，257个逐字节一致，26个仅私有文字呈现差异；私有工程54文件机制/二进制一致。发布及完整边界见 [T14 RELEASE](evidence/T14_POLISH_20261017/RELEASE.json)，原始对照见 [美术比较](docs/PAL98_ART_COMPARISON_20261017.md)。用户美术/私有对白观感验收待反馈。
 - T1.5：按原书开篇两章重读后重做地图尺度与景观，新增原生剧情演出；九项完整新章检查Run38940074923通过，镜头/倒地修正Run38940771024通过，锅旁站位与轮廓最终Run38942172446通过。433运行路径一致，381文件逐字节相同，52个私有呈现差异；新工程65文件机制/资产一致、63cue绑定。保留真实失败与画面复核发现，见 [T15 RELEASE](evidence/T15_CINEMATIC_20261017/RELEASE.json) 与 [失败复盘](evidence/T15_CINEMATIC_20261017/FAILURES_AND_LIMITS.md)。本轮只精修开篇，读者观感等待试玩反馈。
+- T1.6：第二幕雪夜觉醒（第3—5章小阶段）已发布。5张新图、51条私有cue；新增原生剧情12项Run38977914977、受影响画面Run38978451341、/night旧档任务栏反例Run38978669964分段通过。未重跑旧套件。509运行文件与最终CI路径一致，449字节一致，60仅私有呈现；原生工程101文件机制/资产一致。见 [T16发布](evidence/T16_NIGHT_20261017/RELEASE.json) 与 [失败复盘](evidence/T16_NIGHT_20261017/FAILURES_AND_LIMITS.md)。
 - T2 通用 IR→content22：尚未实现/验收。旧 pipeline.mjs 与轻量 HTML 只为参考测试夹具。
 - 已收到用户书籍，先做开篇短阶段内部测试；不得再次索书。原书与私有角色剧情不进入公开GitHub。EXE后置。
 
-当前精修试玩：https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/chapter/
+第二幕直接新开局：https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/night/
+
+当前精修/旧档续篇入口：https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/chapter/
 
 上一版对照与旧进度：https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/pilot/
 
@@ -19,7 +22,7 @@
 
 ## 当前开篇构建
 
-`node tools/t15/build.mjs <upstream> <output>`；私有内容用 `T15_CONFIG=<cinematic-config.json>`、`T14_CONFIG=<prior-pilot.json>`。公共CI默认使用原创脱敏配置，公开仓库不含书籍正文。下载源码包包含实际配置与当前T15及旧T14构建说明。
+`node tools/t16/build.mjs <upstream> <output>`；私有内容用T16_CONFIG、T15_CONFIG、T14_CONFIG分别指定三份配置。公开CI用合成对白，原书与私有对白不入公开仓库。下载源码包含实际配置与T16重建说明。旧完成档在/chapter/按F9读取，家门再次空格进入续篇；/night/直接第二幕新开局，不自动覆盖快速档，F5仍会主动覆盖同项目快速档。
 
 ## 唯一正式构建路线
 
@@ -40,8 +43,9 @@ T13_CONFIG=/private/config.json node tools/t13/build.mjs /absolute/type-pal /abs
 
 该模板只覆盖本次小阶段，不代表通用T2。独立projectId；两个游戏的进度分别保存。
 
-续作先读本页→docs/T15_STORY_STAGE_TASK.md→evidence/T15_CINEMATIC_20261017/RELEASE.json→对应失败经验，按未通过项继续。P0/旧首场景冒烟不重跑。引擎/恢复改动才回归受影响的原完整故事，作者入口改动才回归编辑保存重开。
+续作先读本页→docs/T16_NIGHT_AWAKENING_TASK.md→evidence/T16_NIGHT_20261017/RELEASE.json→对应失败经验，按未通过项继续。P0/旧首场景冒烟不重跑。引擎/恢复改动才回归受影响的原完整故事，作者入口改动才回归编辑保存重开。
 
 ## 后续优先级
 
-先收集用户对开篇移动、对白节奏、庙会密度与演出反馈，再决定下一阶段内容；本次不提前增加觉醒、战斗或全书转换。像素风与网页优先继续保留。长期内存泄漏、Safari/Firefox及真实手机未被本轮证明解决。勿将60秒CI活动测试当作全设备稳定承诺。
+用户确认问题为项目推进停止，本轮已实际推进第二幕。下一步精修雪街景观密度、室内布景和像素道具一致性，根据第二幕试玩反馈再确定后续剧情范围；不宣称全书完成。像素风与网页优先继续保留。长期内存泄漏、Safari/Firefox及真实手机未被本轮证明解决。勿将60秒CI活动测试当作全设备稳定承诺。
+

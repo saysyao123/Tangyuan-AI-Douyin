@@ -1,6 +1,6 @@
 # T1.6 第二幕：雪夜与觉醒
 
-状态：build allowed。用户确认卡住指项目推进，要求继续制作。单一Coding Owner Codex；独立只读reviewer直接核书/引擎，premise verified / design agree。
+状态：scoped pass / published。用户确认卡住指项目推进，要求继续制作。单一Coding Owner Codex；独立只读reviewer直接核书/引擎，premise verified / design agree。
 
 用户可见增量：已有前两章结束后，家门可继续进入室内、独行雪街、便利店、手心树纹、七抽与果实使用、吃面和两个歪雪人。直接体验入口是明确标注的新开局，旧快速存档不自动覆盖。保留原projectId、content22、SAVE12与旧/pilot/，不改通用T2，不扩写更多章节。
 
@@ -14,3 +14,6 @@
 | 队伍 | character.ts277–310保party/reserve；main.ts2722–2760预载后提交setParty | child暂存，独行保存重开保实例；等候NPC与重新入队互斥 |
 
 最强反例：旧完成档只能重复结尾；独行档丢同伴；可刷奖/负余额；返家出现两个child；果实只是网页按钮直接改游戏。这些均须原生行为定向验证。只新/受影响范围，不复跑T1–T15旧套件。冻结后集中截图，真实失败留痕。
+
+
+收口：新增原生流程12项38977914977、受影响视觉2项38978451341、/night原生旧档双向任务栏2项38978669964均通过。独立只读review最终accept。51条文本实际绑定，画面复核和边界见evidence/T16_NIGHT_20261017/。

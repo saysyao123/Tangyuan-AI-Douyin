@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NIGHT_TITLE_AND_FIRST_OBJECTIVE",
+    "NIGHT_ENTRY_SHELL_SWITCHES_BOTH_DIRECTIONS_WITH_NATIVE_SAVES"
+  ],
+  "errors": []
+}

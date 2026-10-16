@@ -16,7 +16,7 @@ def compare(a,b,at=''):
  if not isinstance(a,str):raise ValueError('Mechanical value difference '+at)
  # Text leaf whitelist, never IDs/references or script mechanics.
  leaf=at.rsplit('/',1)[-1]
- if not (leaf in {'label','name','title','text'} or '/locale.json/'in at or '/desc/'in at):raise ValueError('Non-presentation string difference '+at)
+ if not (leaf in {'label','name','title','text'} or '/locale.json/'in at or '/desc/'in at or ('/config.js/' in at and (leaf in {'headline','endHeadline','intro','eyebrow'} or '/quests/'in at or '/scenes/'in at))):raise ValueError('Non-presentation string difference '+at)
  return [at]
 a,b=files(public),files(private);assert a.keys()==b.keys();changed=[]
 for n in a:
@@ -36,5 +36,9 @@ for n in a:
  if sha(a[n])==sha(b[n]):continue
  allowed=n in {'pilot/index.html','pilot/config.js','chapter/index.html','chapter/config.js','night/index.html','night/config.js'}or ('/projects/book-pilot-'in n and n.endswith('.json'))
  assert allowed,'Untested runtime difference '+n
+ if n.endswith('/config.js'):
+  def parsecfg(p):
+   s=p.read_text();return json.loads(s[s.index('=')+1:].strip().removesuffix(';'))
+  compare(parsecfg(a[n]),parsecfg(b[n]),'/'+n)
  differences.append(n)
 print(json.dumps({'status':'PASS','projectFiles':len(files(public)),'privateTextLeafDifferences':len(changed),'nativeMechanicsAndBinaryAssetsIdentical':True,'runtimeFiles':len(a),'byteIdenticalRuntimeFiles':len(a)-len(differences),'privatePresentationFiles':differences,'privateCueBinding':len(cfg['text'])if cfg else 'separately supplied'},indent=2))

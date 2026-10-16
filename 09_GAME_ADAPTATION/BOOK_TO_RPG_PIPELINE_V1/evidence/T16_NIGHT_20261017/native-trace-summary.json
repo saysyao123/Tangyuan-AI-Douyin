@@ -1,0 +1,12 @@
+{
+  "samples": 1622,
+  "truckPositionSamples": 465,
+  "truckUniquePositions": 34,
+  "whiteHeartVisibleSamples": 20,
+  "finalVars": {
+    "emotion": 42,
+    "draws": 7
+  },
+  "finalScene": "snow-yard",
+  "readOnlyTraceFromRun": 38977914977
+}

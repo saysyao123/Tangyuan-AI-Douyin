@@ -1,0 +1,143 @@
+{
+  "status": "SCOPED_PASS_PUBLISHED",
+  "date": "2026-10-17",
+  "scope": "Second act chapters3–5 only; original T1 and T14 retained; no full-book or T2 claim",
+  "playUrl": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/night/",
+  "continueOldSave": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/chapter/",
+  "instructions": "旧完成档在chapter按F9，再到家门空格继续。night是第二幕新开局；F5主动覆盖同项目快速档。",
+  "evidence": {
+    "native": {
+      "run": 38977914977,
+      "commit": "d5b3b8d060c7a2bb418a613ea9b32e7768d9b500",
+      "checks": 12,
+      "status": "PASS"
+    },
+    "visual": {
+      "run": 38978451341,
+      "commit": "c3b5562819af131106a63db8982e93f6915d7ea7",
+      "checks": 2,
+      "status": "PASS"
+    },
+    "nightEntryRestore": {
+      "run": 38978669964,
+      "commit": "1f7884f22dd37e96a5dbad0a9d7565fc45f098ba",
+      "checks": 2,
+      "status": "PASS"
+    },
+    "oldSuitesRerun": false,
+    "independentReview": "accept; source-only, not substituted for CI"
+  },
+  "integrity": {
+    "status": "PASS",
+    "projectFiles": 101,
+    "privateTextLeafDifferences": 40,
+    "nativeMechanicsAndBinaryAssetsIdentical": true,
+    "runtimeFiles": 509,
+    "byteIdenticalRuntimeFiles": 449,
+    "privatePresentationFiles": [
+      "pilot/index.html",
+      "pilot/config.js",
+      "chapter/index.html",
+      "chapter/config.js",
+      "night/index.html",
+      "night/config.js",
+      "pilot/game/projects/book-pilot-opening/manifest.json",
+      "pilot/game/projects/book-pilot-opening/content/tilesets.json",
+      "pilot/game/projects/book-pilot-opening/content/items.json",
+      "pilot/game/projects/book-pilot-opening/content/locale.json",
+      "pilot/game/projects/book-pilot-opening/content/scenes/index.json",
+      "pilot/game/projects/book-pilot-opening/content/scenes/fair.json",
+      "pilot/game/projects/book-pilot-opening/content/scenes/street.json",
+      "pilot/game/projects/book-pilot-opening/content/scenes/courtyard.json",
+      "pilot/game/projects/book-pilot-opening/content/scenes/backstage.json",
+      "pilot/game/projects/book-pilot-opening/content/maps/index.json",
+      "pilot/game/projects/book-pilot-opening/content/maps/fair.json",
+      "pilot/game/projects/book-pilot-opening/content/maps/backstage.json",
+      "chapter/game/projects/book-pilot-cinematic/manifest.json",
+      "chapter/game/projects/book-pilot-cinematic/content/tilesets.json",
+      "chapter/game/projects/book-pilot-cinematic/content/items.json",
+      "chapter/game/projects/book-pilot-cinematic/content/locale.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/night-shop-room.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/index.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/fair.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/street.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/courtyard.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/mind-tree.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/backstage.json",
+      "chapter/game/projects/book-pilot-cinematic/content/scenes/home-room.json",
+      "chapter/game/projects/book-pilot-cinematic/content/maps/index.json",
+      "chapter/game/projects/book-pilot-cinematic/content/maps/fair.json",
+      "chapter/game/projects/book-pilot-cinematic/content/maps/backstage.json",
+      "editor/projects/book-pilot-cinematic/manifest.json",
+      "editor/projects/book-pilot-opening/manifest.json",
+      "editor/projects/book-pilot-cinematic/content/tilesets.json",
+      "editor/projects/book-pilot-cinematic/content/items.json",
+      "editor/projects/book-pilot-cinematic/content/locale.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/night-shop-room.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/index.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/fair.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/street.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/courtyard.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/mind-tree.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/backstage.json",
+      "editor/projects/book-pilot-cinematic/content/scenes/home-room.json",
+      "editor/projects/book-pilot-cinematic/content/maps/index.json",
+      "editor/projects/book-pilot-cinematic/content/maps/fair.json",
+      "editor/projects/book-pilot-cinematic/content/maps/backstage.json",
+      "editor/projects/book-pilot-opening/content/tilesets.json",
+      "editor/projects/book-pilot-opening/content/items.json",
+      "editor/projects/book-pilot-opening/content/locale.json",
+      "editor/projects/book-pilot-opening/content/scenes/index.json",
+      "editor/projects/book-pilot-opening/content/scenes/fair.json",
+      "editor/projects/book-pilot-opening/content/scenes/street.json",
+      "editor/projects/book-pilot-opening/content/scenes/courtyard.json",
+      "editor/projects/book-pilot-opening/content/scenes/backstage.json",
+      "editor/projects/book-pilot-opening/content/maps/index.json",
+      "editor/projects/book-pilot-opening/content/maps/fair.json",
+      "editor/projects/book-pilot-opening/content/maps/backstage.json"
+    ],
+    "privateCueBinding": 51,
+    "deploymentArchiveAllFilesChecked": true
+  },
+  "site": {
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_48b73664fc78819193ec391fcbb9337b",
+    "version_number": 8,
+    "source_commit": "fc7381e90a5b34685a06af4a483347937337ca72",
+    "deployment_id": "appgdep_6ad2acc3b50c8191aafdde5addc26755",
+    "status": "succeeded",
+    "audience": "existing owner-private unchanged",
+    "archive": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_0000000058bc8209864b944b50f6d1b3",
+      "content_hash": "sha256:8b106b61c9a9d46366b3f42975f9f4163fb8438deaceb46f20ea0fc9f8d6b323",
+      "size_bytes": 118507520,
+      "file_count": 515
+    }
+  },
+  "downloads": [
+    {
+      "path": "corresponding-source.zip",
+      "bytes": 19880809,
+      "sha256": "07340857005ca8d75b3deb69cec4fc3a9ca7ec1926b1e5fc6e0173d86ed5577a"
+    },
+    {
+      "path": "lantern-inn-static.zip",
+      "bytes": 25501017,
+      "sha256": "9fe7d8a9d68c4066a1258154db8811364cd5908dece776d0c29664780eb67c11"
+    },
+    {
+      "path": "lantern-inn-project.zip",
+      "bytes": 5930824,
+      "sha256": "16e49fd552820175e38d9097a82a6edc58064b1d8320b179f04318ea00ffb638"
+    }
+  ],
+  "limits": [
+    "Only five new scenes for chapters3–5",
+    "Visual density and private dialogue rhythm need user playtest; not commercial PAL art parity",
+    "Chromium desktop CI only; no new phone/Safari/Firefox/long-session claims",
+    "Finite income sampling ends42; not asserted original novel final balance",
+    "One unused config cue removed after CI; generated native runtime unchanged"
+  ],
+  "failureNotes": "FAILURES_AND_LIMITS.md"
+}
