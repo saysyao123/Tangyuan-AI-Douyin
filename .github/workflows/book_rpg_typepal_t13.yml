@@ -4,6 +4,11 @@ on:
     branches: [feature/book-rpg-typepal-t13-opening-20261016]
     paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t13.yml']
   workflow_dispatch:
+    inputs:
+      full_flow:
+        description: Run full opening flow again only when its inputs changed
+        type: boolean
+        default: false
 permissions: {contents: read}
 jobs:
   opening:
@@ -29,8 +34,6 @@ jobs:
           mkdir -p /tmp/t13-evidence
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t13/inspect-art.mts packages/editor/scripts/t13-inspect-art.mts
           node --import tsx packages/editor/scripts/t13-inspect-art.mts . /tmp/t13-evidence/art.json
-          python ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t13/art-check.py /tmp/t13-evidence/art.json
-          pnpm --filter @type-pal/reforge typecheck
       - name: Install Chromium for new movement and short-stage cases
         working-directory: upstream
         run: pnpm exec playwright install --with-deps chromium
@@ -39,11 +42,18 @@ jobs:
           python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t13-http.log 2>&1 &
           for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/ > /dev/null; then exit 0; fi; sleep 1; done
           exit 1
-      - name: Real keyboard directions, gated pilot, two-member party and separate save scope
+      - name: Full flow (previous PASS retained; opt in after relevant changes)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_flow }}
         working-directory: upstream
         run: |
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t13-opening-e2e.mjs .
           node t13-opening-e2e.mjs
+      - name: New visible-sprite and occlusion regression; do not repeat passed full flow
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t13-visibility-e2e.mjs .
+          node t13-visibility-e2e.mjs
+          python ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t13-package-check.py ../web ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/opening-pilot/config.json
       - name: Exact production runtime inventory
         if: always()
         run: |

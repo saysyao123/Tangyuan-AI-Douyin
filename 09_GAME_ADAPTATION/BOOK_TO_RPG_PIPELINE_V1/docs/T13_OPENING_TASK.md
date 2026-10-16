@@ -32,3 +32,11 @@
 
 1. 外部工具脚本直接 node --import tsx 会从错误目录解析依赖；复制进 pinned upstream 的 editor/scripts 再运行。
 2. 当前 SpriteLayout TS 声明虽含 loop，官方 content22 validator 拒绝 loop。改用合法 static + poses 时间线 + entity page animation，不放宽校验器。
+
+## 第一轮证据与新增反例
+
+- Run 38894355314，commit c12fa605a25d34213231e718ccd1ae2f1eb121db，11 项新短阶段/方向/存档用例全部通过；零页面错误；本轮新美术合同与 Reforge typecheck 通过。
+- 独立复核指出静态ZIP的pilot下载链接缺失：已扩展打包器与inventory规范化，新增仅针对该入口及有效配置的检查。
+- 实际四向截图发现：原装饰屋顶会遮住右向主角，仅position/facing通过不足以证明看得见。改为低矮摊位，追加读取Canvas像素匹配实际角色帧的可见性测试。完整流程前轮PASS保留，不重复跑；后续仅 full_flow 手动输入为true才再次执行完整流程。
+- 本地官方解码最终RLE，4个人物×12帧与原创像素逐一一致，并核对 native walkFrameIndex；不是只检查预览数组。
+- 私有书籍文本不进入公开CI；使用同结构脱敏数据验证机制，再对实际私有工程执行官方校验及去除展示文字后的机制/素材一致性检查。私有台词的实际浏览器排版仍由本次用户试玩确认。

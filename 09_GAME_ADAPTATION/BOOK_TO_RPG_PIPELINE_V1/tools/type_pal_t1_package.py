@@ -37,8 +37,9 @@ with ZipFile(downloads/'lantern-inn-static.zip','w',ZIP_DEFLATED) as z:
  for p in sorted(out.rglob('*')):
   if p.is_file() and p.parent!=downloads and p.name not in ['download-checksums.json','runtime-manifest.json']:
    rel=p.relative_to(out)
-   if str(rel) in ['index.html','help.html']:
-    html=p.read_text().replace('href="downloads/','href="https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/')
+   if str(rel) in ['index.html','help.html','pilot/index.html']:
+    prefix='../downloads/' if str(rel)=='pilot/index.html' else 'downloads/'
+    html=p.read_text().replace('href="'+prefix,'href="https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/')
     z.writestr(str(rel),html)
    else:z.write(p,rel)
  z.writestr('DOWNLOADS.md','# Separate source and content downloads\n\nComplete corresponding GPL source is offered alongside this distribution at:\nhttps://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/corresponding-source.zip\n\nCanonical content22 project:\nhttps://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/lantern-inn-project.zip\n\nGitHub source and reproducible build scripts:\nhttps://github.com/saysyao123/Tangyuan-AI-Douyin/tree/main/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1\n')
