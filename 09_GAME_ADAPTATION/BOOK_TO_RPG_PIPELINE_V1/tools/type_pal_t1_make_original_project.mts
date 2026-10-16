@@ -5,7 +5,12 @@
 */
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { buildBlankProject } from '../packages/editor/src/core/seed.ts'
+import { createServer } from 'vite'
+import { fileURLToPath } from 'node:url'
+
+const editorRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..')
+const vite=await createServer({root:editorRoot,configFile:path.join(editorRoot,'vite.config.ts'),server:{middlewareMode:true},appType:'custom'})
+const { buildBlankProject }=await vite.ssrLoadModule('/src/core/seed.ts')
 
 const [input,output] = process.argv.slice(2)
 if (!input || !output) throw new Error('Usage: tsx scripts/book_rpg_original_seed.mts GAME_JSON OUTPUT_DIR')
@@ -19,6 +24,7 @@ if (!Array.isArray(story.world?.scenes)||story.world.scenes.length===0||!Array.i
 const pkgId='book-'+story.id
 if (!/^[a-z0-9-]+$/.test(pkgId)) throw new Error('invalid id')
 const project=await buildBlankProject(pkgId)
+await vite.close()
 const manifest=project['manifest.json'] as any
 manifest.id=pkgId
 manifest.name=story.title
