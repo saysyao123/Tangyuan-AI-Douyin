@@ -10,6 +10,8 @@
 - [网页游戏制作平台 V2 完整架构](docs/WEB_FIRST_PLATFORM_V2.md)
 - [真实接入门禁与未验证风险](docs/TYPE_PAL_GATE_AND_COMPAT.md)
 - [官方 content22 适配制作提示](prompts/S4_TYPE_PAL_CANONICAL_ADAPTER.md)
+- ✅ **Type PAL 官方实测 T0 已通过**：[GitHub Actions 38853212658](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38853212658) — 源码/类型检查、真正 Reforge+Editor 生产构建、Chromium 编辑器项目选择与 Reforge 作者场景加载渲染（Canvas 1280×800）均PASS。见 [完整测试证据](evidence/TYPE_PAL_P0_BROWSER_VERIFIED_20261016.md)。
+- 下一阶段真实功能验收任务：[T1全原创可编辑网页RPG](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/25) 和 [T2书籍IR→content22编译器](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/26)。**保存/重开与独立静态部署仍未通过，不得误称成熟在线平台。**
 - 云端官方引擎可复现探针：`.github/workflows/book_rpg_type_pal_probe.yml`。真正编辑/保存/原创游戏/发布必须逐关验收，不能误称已完成。
 
 ## 当前实际状态（2026-10-16）
