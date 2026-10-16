@@ -1,0 +1,209 @@
+{
+  "format": "book-rpg-game-v1",
+  "id": "river-ledger",
+  "title": "渡口手札",
+  "rights": {
+    "source_kind": "original",
+    "status": "original_demo_only",
+    "note": "第二套完全原创故事数据，用来验证内容更换时无需改引擎"
+  },
+  "baseline": "PAL98_FREEZE_V0_1",
+  "sourceRefs": [
+    "original_demo:river-1"
+  ],
+  "player": {
+    "id": "azhou",
+    "name": "阿舟",
+    "maxHp": 32,
+    "maxMp": 9,
+    "attack": 8,
+    "defense": 2,
+    "position": [
+      2,
+      3
+    ]
+  },
+  "characters": [
+    {
+      "id": "azhou",
+      "name": "阿舟",
+      "personality": "执着的送信者",
+      "motivation": "渡河把手札送到对岸",
+      "combatRole": "短刀与求生",
+      "sourceRefs": [
+        "original_demo:river-1"
+      ]
+    },
+    {
+      "id": "boatman",
+      "name": "老船工",
+      "personality": "谨慎的船工",
+      "motivation": "保护船只",
+      "combatRole": "非战斗",
+      "sourceRefs": [
+        "original_demo:river-1"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "sealed_letter",
+      "name": "封缄手札",
+      "kind": "quest",
+      "description": "河岸失落的书信"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "river_beast",
+      "name": "河泽野兽",
+      "hp": 18,
+      "attack": 4,
+      "defense": 1,
+      "rewardGold": 8,
+      "rewardExp": 14,
+      "winFlag": "beast_defeated",
+      "sourceRefs": [
+        "original_demo:river-1"
+      ]
+    }
+  ],
+  "world": {
+    "startScene": "ferry",
+    "scenes": [
+      {
+        "id": "ferry",
+        "name": "夜渡码头",
+        "terrain": [
+          "###########",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "###########"
+        ],
+        "entities": [
+          {
+            "id": "boatman_npc",
+            "kind": "npc",
+            "x": 4,
+            "y": 3,
+            "name": "老船工",
+            "eventId": "boatman_request",
+            "completedEventId": "boatman_finish",
+            "completionFlag": "beast_defeated"
+          }
+        ],
+        "exits": [
+          {
+            "x": 9,
+            "y": 3,
+            "to": "reedbank",
+            "spawn": [
+              1,
+              3
+            ]
+          }
+        ],
+        "sourceRefs": [
+          "original_demo:river-1"
+        ]
+      },
+      {
+        "id": "reedbank",
+        "name": "芦苇河岸",
+        "terrain": [
+          "###########",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "###########"
+        ],
+        "entities": [
+          {
+            "id": "letter_find",
+            "kind": "item",
+            "x": 3,
+            "y": 2,
+            "itemId": "sealed_letter",
+            "name": "封缄手札"
+          },
+          {
+            "id": "beast",
+            "kind": "enemy",
+            "x": 5,
+            "y": 3,
+            "encounterId": "river_beast",
+            "name": "河泽野兽"
+          }
+        ],
+        "exits": [
+          {
+            "x": 1,
+            "y": 3,
+            "to": "ferry",
+            "spawn": [
+              8,
+              3
+            ]
+          }
+        ],
+        "sourceRefs": [
+          "original_demo:river-1"
+        ]
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "boatman_request",
+      "kind": "dialogue",
+      "text": "河岸那边有一封遗失的手札。去把它带回来，别忘了芦苇里还潜着野兽。",
+      "effects": [
+        {
+          "type": "set_flag",
+          "target": "letter_requested",
+          "value": true
+        }
+      ],
+      "sourceRefs": [
+        "original_demo:river-1"
+      ]
+    },
+    {
+      "id": "boatman_finish",
+      "kind": "ending",
+      "requires": [
+        {
+          "type": "flag",
+          "target": "beast_defeated",
+          "value": true
+        },
+        {
+          "type": "has_item",
+          "target": "sealed_letter",
+          "value": 1
+        }
+      ],
+      "text": "老船工收下手札，渡船终于能驶向天亮。",
+      "effects": [
+        {
+          "type": "set_ending",
+          "target": "letter_delivered"
+        }
+      ],
+      "failureText": "还需要找到手札，并安全清除河岸野兽。",
+      "sourceRefs": [
+        "original_demo:river-1"
+      ]
+    }
+  ],
+  "ending": {
+    "id": "letter_delivered",
+    "title": "一纸过江",
+    "text": "水面映着天光，一页旧字抵达了久等的人。"
+  }
+}
