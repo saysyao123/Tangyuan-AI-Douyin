@@ -1,0 +1,53 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.7 [39m[90m/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge[39m
+
+ [31m❯[39m src/t11-stability.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[32m 11[2mms[22m[39m
+[31m   [31m×[31m lost keyup on blur releases held and pending input[39m[32m 7[2mms[22m[39m
+[31m   [31m×[31m lost keyup on pagehide releases held and pending input[39m[32m 1[2mms[22m[39m
+[31m   [31m×[31m visibility loss releases keys without needing keyup[39m[32m 1[2mms[22m[39m
+   [32m✓[39m display interpolation stays within committed segment and leaves gameplay object intact[32m 1[2mms[22m[39m
+   [32m✓[39m scene transitions, teleport/load and interaction snap immediately[32m 0[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/t11-stability.test.ts[2m > [22mlost keyup on blur releases held and pending input
+[41m[1m FAIL [22m[49m src/t11-stability.test.ts[2m > [22mlost keyup on pagehide releases held and pending input
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m src/t11-stability.test.ts:[2m6:185[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/t11-stability.test.ts[2m > [22mvisibility loss releases keys without needing keyup
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m src/t11-stability.test.ts:[2m8:390[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 06:35:25
+[2m   Duration [22m 196ms[2m (transform 38ms, setup 0ms, import 53ms, tests 11ms, environment 0ms)[22m
+
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t11-stability.test.ts,title=src/t11-stability.test.ts > lost keyup on blur releases held and pending input,line=6,column=185::AssertionError: expected true to be false // Object.is equality%0A%0A- Expected%0A+ Received%0A%0A- false%0A+ true%0A%0A ❯ src/t11-stability.test.ts:6:185%0A%0A
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t11-stability.test.ts,title=src/t11-stability.test.ts > lost keyup on pagehide releases held and pending input,line=6,column=185::AssertionError: expected true to be false // Object.is equality%0A%0A- Expected%0A+ Received%0A%0A- false%0A+ true%0A%0A ❯ src/t11-stability.test.ts:6:185%0A%0A
+
+::error file=/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/upstream/packages/reforge/src/t11-stability.test.ts,title=src/t11-stability.test.ts > visibility loss releases keys without needing keyup,line=8,column=390::AssertionError: expected true to be false // Object.is equality%0A%0A- Expected%0A+ Received%0A%0A- false%0A+ true%0A%0A ❯ src/t11-stability.test.ts:8:390%0A%0A

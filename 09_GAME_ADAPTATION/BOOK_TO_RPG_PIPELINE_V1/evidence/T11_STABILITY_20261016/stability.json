@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "checks": [
+    "75_PERCENT_FEWER_BACKING_PIXELS",
+    "DISPLAY_SUBSTEPS_WITH_CANONICAL_LOGIC_UNCHANGED",
+    "LOST_KEYUP_BLUR_STOPS_MOVEMENT",
+    "RAPID_MENU_OPEN_CLOSE",
+    "SAVE_SPAM_LOAD_VALID_WORLD",
+    "PRODUCTION_MUTABLE_DEBUG_REMOVED",
+    "VISIBLE_LOADING_CLEARS_ON_READY",
+    "CONTINUOUS_FRAME_LOOP_SOAK_12S"
+  ],
+  "metrics": {
+    "baseline": {
+      "canvas": {
+        "width": 1280,
+        "height": 800,
+        "pixels": 1024000
+      },
+      "p95FrameIntervalMs": 16.700000000000273,
+      "meanFrameIntervalMs": 16.665811965811965,
+      "logicalPositions": 3,
+      "displayPositions": 3
+    },
+    "candidate": {
+      "canvas": {
+        "width": 640,
+        "height": 400,
+        "pixels": 256000
+      },
+      "p95FrameIntervalMs": 16.700000000000728,
+      "meanFrameIntervalMs": 16.664957264957266,
+      "logicalPositions": 2,
+      "displayPositions": 12
+    },
+    "soakFrames": 721
+  },
+  "errors": [],
+  "notes": [
+    "4x CPU throttling, headless CI Chromium; these timings are not a promise for user hardware.",
+    "Blur dispatch reproduces lost-keyup event handling; no game state injected.",
+    "Position interpolation is render-only; baseline comparison uses the same story and native 100ms simulation."
+  ]
+}

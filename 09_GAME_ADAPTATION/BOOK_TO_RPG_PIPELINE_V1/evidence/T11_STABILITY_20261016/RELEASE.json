@@ -1,0 +1,66 @@
+{
+  "release": "T1.1",
+  "date": "2026-10-16",
+  "status": "PUBLISHED",
+  "source_commit": "fa80b9c8a4667473adb72fd50e367f9ee40454a9",
+  "engine": "IllegalCreed/type-pal@f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "scope": "Pixel style retained; movement presentation, input lifecycle, save interaction and loading stability",
+  "site_source_commit": "839a201808752111db8b269f294b53ad9659b1a3",
+  "deployment": {
+    "id": "appgdep_6ad1c774960c81918202903ec0eb7009",
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "title": "雾灯驿站 · 原创 Type PAL RPG",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_1a3d4da04398819196f6a2863a6f0420",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6ad1b7b5f0bc81919dcf871ecce85086",
+    "failure_message": null,
+    "env_set_revision": 0,
+    "updated_at": "2026-10-16T06:43:27.312976+00:00"
+  },
+  "ci": {
+    "run_id": 38862020435,
+    "url": "https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38862020435",
+    "job_id": 116846230588,
+    "artifact_id": 12030135268,
+    "conclusion": "success",
+    "unit_checks": 18,
+    "stability_checks": 8,
+    "story_checks": 10,
+    "editor_checks": 4,
+    "artifact_retention_days": 90
+  },
+  "verification": {
+    "runtime_files_compared": 136,
+    "runtime_hash_differences": 0,
+    "downloads_zip_integrity": "PASS",
+    "downloads_sha256": "MATCH",
+    "archive_bytes": 68313389,
+    "archive_sha256": "cc14e4909fcb485b01ab2ab3e6747f716ad0d0c3806b1e6bc8c8ac22516a0e0d",
+    "archive_entries": 218
+  },
+  "failures": [
+    {
+      "run_id": 38861810593,
+      "reason": "runner missing rg; replaced log assertion with Python, preserved application assertions"
+    },
+    {
+      "stage": "first_archive_upload",
+      "reason": "invalid_archive; local inspection found truncated gzip; rebuilt same source with official helper and verified integrity"
+    }
+  ],
+  "limits": [
+    "No measured FPS increase; both versions near 60fps in CI",
+    "75% fewer backing pixels is not a 75% CPU/FPS gain",
+    "12 second soak does not prove absence of long term leaks",
+    "CI Chromium with 4x CPU throttle does not cover all devices"
+  ],
+  "not_in_scope": [
+    "T2 arbitrary-book compiler",
+    "Windows executable",
+    "commercial PAL assets"
+  ]
+}

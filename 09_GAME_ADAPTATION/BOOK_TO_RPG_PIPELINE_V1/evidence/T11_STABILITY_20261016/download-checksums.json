@@ -1,0 +1,17 @@
+[
+  {
+    "path": "corresponding-source.zip",
+    "bytes": 18949472,
+    "sha256": "e8052e6f4238038c71520a071a060e3da9858b4bb377064d8389e663e9d65481"
+  },
+  {
+    "path": "lantern-inn-project.zip",
+    "bytes": 5580645,
+    "sha256": "51da13cb96312ea52b160ce6e63d390499bcaab2d41c0118a348b8d9b8c0fe70"
+  },
+  {
+    "path": "lantern-inn-static.zip",
+    "bytes": 22277819,
+    "sha256": "54da252b8fee10641ba2003f110b37c05be096951e0f461fc3f7dc3ea5967867"
+  }
+]
