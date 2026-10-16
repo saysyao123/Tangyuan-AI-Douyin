@@ -2,6 +2,7 @@
   "format": "book-rpg-game-v1",
   "id": "river-ledger",
   "title": "渡口手札",
+  "introHint": "向老船工打听手札线索，前往芦苇河岸找信并击败野兽，再返回码头。",
   "rights": {
     "source_kind": "original",
     "status": "original_demo_only",
