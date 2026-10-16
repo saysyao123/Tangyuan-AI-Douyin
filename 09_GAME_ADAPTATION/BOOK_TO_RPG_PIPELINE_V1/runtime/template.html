@@ -22,7 +22,7 @@ footer{text-align:center;color:#abc1bc;font-size:12px;padding-top:15px}kbd{borde
 <p id="stats"></p><div id="battle" class="hidden"><h2 id="enemy-name"></h2><p id="enemy-hp"></p>
 <div class="buttons"><button data-battle="ATTACK">攻击</button><button data-battle="MAGIC">仙术</button><button data-battle="DEFEND">防御</button><button data-battle="FLEE">逃跑</button></div></div>
 <p class="meta">移动：<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 或 WASD。靠近人物或闪光物品按 <kbd>E</kbd>。靠近地图边缘出入口切换场景。</p>
-<p class="meta">提示：先与守灯人对话，去雾林找灯芯并战胜雾狼，然后回到驿站。</p>
+<p class="meta" id="instructions"></p>
 <p class="meta">本作品是原创最小试玩，验证内容编译流程；尚非仙剑98完整引擎或 Type PAL 正式适配。</p>
 </aside></div><footer>无需联网 · 单文件 HTML · 不含仙剑受保护素材</footer></main>
 <script>
@@ -31,7 +31,7 @@ const GAME_DATA=/*__DATA__*/;
 const $=id=>document.getElementById(id);
 const game=GAME_DATA;
 let state=GameRules.initial(game);
-$('title').textContent=game.title;
+$('title').textContent=game.title;$('instructions').textContent=game.introHint||'先与附近人物交谈，然后探索、获得物品并完成任务。';
 function paint(){
  const ctx=$('world').getContext('2d');ctx.clearRect(0,0,640,420);
  const s=game.world.scenes.find(x=>x.id===state.sceneId);$('scene-title').textContent=s.name;
