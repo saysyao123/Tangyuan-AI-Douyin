@@ -1,0 +1,168 @@
+{
+  "audit_date": "2026-10-16",
+  "method": "read-only source, shipped-content, existing screenshot/evidence and archive inspection; no old tests rerun; no new browser/device session",
+  "upstream_head": "f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "our_audited_main": "3371f251d0bab6a865715629a88f772597c0ebd1",
+  "site_source_commit": "839a201808752111db8b269f294b53ad9659b1a3",
+  "content": {
+    "scenes": 2,
+    "party_members": 1,
+    "actors": 2,
+    "enemies": 1,
+    "enemy_teams": 1,
+    "items": 2,
+    "skills": 0,
+    "initial_equipment": {},
+    "authored_scene_visual_layers": [
+      1,
+      1
+    ],
+    "scene_music": [
+      null,
+      null
+    ],
+    "music_assets": [
+      "music.original-victory"
+    ],
+    "sfx_assets": []
+  },
+  "release_inventory": {
+    "ci_listed_files": 136,
+    "site_game_editor_files": 163,
+    "missing_ci_files": [],
+    "changed_ci_files": [],
+    "extra_files": [
+      "editor/assets/.rsync-tmp/main-BkSKCZdu.js",
+      "editor/assets/.rsync-tmp/main-MfvLmBpd.js",
+      "editor/assets/.rsync-tmp/modules~battle-trial-host-XP3He2Iq.js",
+      "editor/assets/.rsync-tmp/modules~main-B_NwQTJM.js",
+      "editor/assets/.rsync-tmp/modules~main-Bl7Zs-lQ.js",
+      "editor/assets/.rsync-tmp/modules~main-C0Auzm2Q.js",
+      "editor/assets/.rsync-tmp/modules~main-C2q56uM9.js",
+      "editor/assets/.rsync-tmp/modules~main-C9FBOYzg.js",
+      "editor/assets/.rsync-tmp/modules~main-CGXieYDp.js",
+      "editor/assets/.rsync-tmp/modules~main-CgsgF7WS.js",
+      "editor/assets/.rsync-tmp/modules~main-ClgsVYl8.js",
+      "editor/assets/.rsync-tmp/modules~main-DgizUaOr.js",
+      "editor/assets/.rsync-tmp/modules~main-DmLvo98_.js",
+      "editor/assets/.rsync-tmp/modules~main-DywlBxDL.js",
+      "editor/assets/.rsync-tmp/modules~main-O7b_tGkv.js",
+      "editor/assets/.rsync-tmp/modules~main-RpEhI2yX.js",
+      "editor/assets/.rsync-tmp/modules~main-V3muQWHl.js",
+      "editor/assets/.rsync-tmp/modules~main-Xn9STX1w.js",
+      "editor/assets/.rsync-tmp/modules~main-b1B4_xtp.js",
+      "editor/assets/.rsync-tmp/modules~main-m73YrfoH.js",
+      "editor/assets/.rsync-tmp/modules~main~play-B59INuDB.js",
+      "editor/assets/.rsync-tmp/modules~main~play-BCxc-WaR.js",
+      "editor/assets/.rsync-tmp/modules~main~play-BF85Xw8f.js",
+      "editor/assets/.rsync-tmp/modules~main~play-El9jNIZ9.js",
+      "editor/assets/.rsync-tmp/modules~play-CQS2PQBl.js",
+      "editor/assets/.rsync-tmp/play-euo3bxwB.js",
+      "game/assets/.rsync-tmp/index-BKocmpzp.js"
+    ],
+    "extra_bytes": 3825212,
+    "deployment_archive_temporary_files": [
+      "dist/editor/assets/.rsync-tmp/modules~main-Bl7Zs-lQ.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-DgizUaOr.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-C0Auzm2Q.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-b1B4_xtp.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-C9FBOYzg.js",
+      "dist/editor/assets/.rsync-tmp/main-MfvLmBpd.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-CgsgF7WS.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-DmLvo98_.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-m73YrfoH.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-CGXieYDp.js",
+      "dist/editor/assets/.rsync-tmp/modules~play-CQS2PQBl.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-Xn9STX1w.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-DywlBxDL.js",
+      "dist/editor/assets/.rsync-tmp/play-euo3bxwB.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-C2q56uM9.js",
+      "dist/editor/assets/.rsync-tmp/modules~main~play-B59INuDB.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-ClgsVYl8.js",
+      "dist/editor/assets/.rsync-tmp/main-BkSKCZdu.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-RpEhI2yX.js",
+      "dist/editor/assets/.rsync-tmp/modules~main~play-BF85Xw8f.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-V3muQWHl.js",
+      "dist/editor/assets/.rsync-tmp/modules~main~play-BCxc-WaR.js",
+      "dist/editor/assets/.rsync-tmp/modules~battle-trial-host-XP3He2Iq.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-O7b_tGkv.js",
+      "dist/editor/assets/.rsync-tmp/modules~main-B_NwQTJM.js",
+      "dist/editor/assets/.rsync-tmp/modules~main~play-El9jNIZ9.js",
+      "dist/game/assets/.rsync-tmp/index-BKocmpzp.js"
+    ],
+    "static_zip_temporary_files": [
+      "editor/assets/.rsync-tmp/main-BkSKCZdu.js",
+      "editor/assets/.rsync-tmp/main-MfvLmBpd.js",
+      "editor/assets/.rsync-tmp/modules~battle-trial-host-XP3He2Iq.js",
+      "editor/assets/.rsync-tmp/modules~main-B_NwQTJM.js",
+      "editor/assets/.rsync-tmp/modules~main-Bl7Zs-lQ.js",
+      "editor/assets/.rsync-tmp/modules~main-C0Auzm2Q.js",
+      "editor/assets/.rsync-tmp/modules~main-C2q56uM9.js",
+      "editor/assets/.rsync-tmp/modules~main-C9FBOYzg.js",
+      "editor/assets/.rsync-tmp/modules~main-CGXieYDp.js",
+      "editor/assets/.rsync-tmp/modules~main-CgsgF7WS.js",
+      "editor/assets/.rsync-tmp/modules~main-ClgsVYl8.js",
+      "editor/assets/.rsync-tmp/modules~main-DgizUaOr.js",
+      "editor/assets/.rsync-tmp/modules~main-DmLvo98_.js",
+      "editor/assets/.rsync-tmp/modules~main-DywlBxDL.js",
+      "editor/assets/.rsync-tmp/modules~main-O7b_tGkv.js",
+      "editor/assets/.rsync-tmp/modules~main-RpEhI2yX.js",
+      "editor/assets/.rsync-tmp/modules~main-V3muQWHl.js",
+      "editor/assets/.rsync-tmp/modules~main-Xn9STX1w.js",
+      "editor/assets/.rsync-tmp/modules~main-b1B4_xtp.js",
+      "editor/assets/.rsync-tmp/modules~main-m73YrfoH.js",
+      "editor/assets/.rsync-tmp/modules~main~play-B59INuDB.js",
+      "editor/assets/.rsync-tmp/modules~main~play-BCxc-WaR.js",
+      "editor/assets/.rsync-tmp/modules~main~play-BF85Xw8f.js",
+      "editor/assets/.rsync-tmp/modules~main~play-El9jNIZ9.js",
+      "editor/assets/.rsync-tmp/modules~play-CQS2PQBl.js",
+      "editor/assets/.rsync-tmp/play-euo3bxwB.js",
+      "game/assets/.rsync-tmp/index-BKocmpzp.js"
+    ]
+  },
+  "existing_stability_metrics": {
+    "status": "PASS",
+    "checks": [
+      "75_PERCENT_FEWER_BACKING_PIXELS",
+      "DISPLAY_SUBSTEPS_WITH_CANONICAL_LOGIC_UNCHANGED",
+      "LOST_KEYUP_BLUR_STOPS_MOVEMENT",
+      "RAPID_MENU_OPEN_CLOSE",
+      "SAVE_SPAM_LOAD_VALID_WORLD",
+      "PRODUCTION_MUTABLE_DEBUG_REMOVED",
+      "VISIBLE_LOADING_CLEARS_ON_READY",
+      "CONTINUOUS_FRAME_LOOP_SOAK_12S"
+    ],
+    "metrics": {
+      "baseline": {
+        "canvas": {
+          "width": 1280,
+          "height": 800,
+          "pixels": 1024000
+        },
+        "p95FrameIntervalMs": 16.700000000000273,
+        "meanFrameIntervalMs": 16.665811965811965,
+        "logicalPositions": 3,
+        "displayPositions": 3
+      },
+      "candidate": {
+        "canvas": {
+          "width": 640,
+          "height": 400,
+          "pixels": 256000
+        },
+        "p95FrameIntervalMs": 16.700000000000728,
+        "meanFrameIntervalMs": 16.664957264957266,
+        "logicalPositions": 2,
+        "displayPositions": 12
+      },
+      "soakFrames": 721
+    },
+    "errors": [],
+    "notes": [
+      "4x CPU throttling, headless CI Chromium; these timings are not a promise for user hardware.",
+      "Blur dispatch reproduces lost-keyup event handling; no game state injected.",
+      "Position interpolation is render-only; baseline comparison uses the same story and native 100ms simulation."
+    ]
+  },
+  "qualification": "136 matching file hashes do not prove equality of full release inventory. Soak counter is the test-created rAF loop, not engine render counter."
+}
