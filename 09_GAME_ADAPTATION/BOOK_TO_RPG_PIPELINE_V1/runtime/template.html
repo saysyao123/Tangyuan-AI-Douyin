@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>书籍RPG制作线 · 原创试玩</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#132634;color:#f5efd9;font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}
+header{padding:24px 20px 10px;text-align:center}header small{color:#bfc1a5;letter-spacing:2px}h1{font-weight:750;letter-spacing:2px;color:#f6d7a0;font-size:29px;margin:0}
+main{max-width:980px;padding:0 16px 24px;margin:auto}.shell{display:grid;grid-template-columns:minmax(320px,2fr) minmax(240px,1fr);gap:14px}
+.panel{background:#1d3341;border:1px solid #415f65;border-radius:13px;padding:14px}#world{width:100%;height:auto;aspect-ratio:640/420;display:block;background:#172c34;border:1px solid #47605c;border-radius:10px}
+h2{margin:0 0 10px;color:#f4d08a;font-size:17px}#info{min-height:53px;background:#152b36;padding:12px;border-radius:8px;color:#f8e6c5}
+button{background:#37565e;border:1px solid #769e8e;border-radius:9px;color:white;padding:9px 12px;cursor:pointer;font:inherit}button:hover{background:#507779}button:focus-visible{outline:2px solid #f6cc86}
+.buttons{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.buttons button{flex:1}button.primary{background:#a77339;border-color:#e2bd80}
+.meta{font-size:13px;color:#a9c6c4}#battle{border-top:1px solid #557074;padding-top:9px;margin-top:9px}.hidden{display:none!important}
+.control{display:grid;grid-template-columns:repeat(3,48px);gap:5px;width:max-content;margin:12px auto}.control button{min-height:43px;padding:3px}.control [data-dir=up]{grid-column:2}.control [data-dir=left]{grid-column:1;grid-row:2}.control [data-dir=down]{grid-column:2;grid-row:2}.control [data-dir=right]{grid-column:3;grid-row:2}
+footer{text-align:center;color:#abc1bc;font-size:12px;padding-top:15px}kbd{border:1px solid #627476;padding:2px 5px;border-radius:4px}
+@media(max-width:720px){.shell{grid-template-columns:1fr}.panel{padding:10px}}
+</style></head><body>
+<header><small>BOOK → RPG / ORIGINAL PROTOTYPE</small><h1 id="title"></h1></header>
+<main><div class="shell"><section class="panel"><h2 id="scene-title"></h2><canvas id="world" width="640" height="420" aria-label="斜视角游戏地图"></canvas>
+<div class="control"><button data-dir="up">↑</button><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div>
+<div class="buttons"><button class="primary" id="interact">E · 调查 / 对话</button><button id="save">保存进度</button><button id="load">读取进度</button><button id="reset">重新开始</button></div></section>
+<aside class="panel"><h2>旅程纪事</h2><div id="info" role="status"></div>
+<p id="stats"></p><div id="battle" class="hidden"><h2 id="enemy-name"></h2><p id="enemy-hp"></p>
+<div class="buttons"><button data-battle="ATTACK">攻击</button><button data-battle="MAGIC">仙术</button><button data-battle="DEFEND">防御</button><button data-battle="FLEE">逃跑</button></div></div>
+<p class="meta">移动：<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 或 WASD。靠近人物或闪光物品按 <kbd>E</kbd>。靠近地图边缘出入口切换场景。</p>
+<p class="meta">提示：先与守灯人对话，去雾林找灯芯并战胜雾狼，然后回到驿站。</p>
+<p class="meta">本作品是原创最小试玩，验证内容编译流程；尚非仙剑98完整引擎或 Type PAL 正式适配。</p>
+</aside></div><footer>无需联网 · 单文件 HTML · 不含仙剑受保护素材</footer></main>
+<script>
+/*__ENGINE__*/
+const GAME_DATA=/*__DATA__*/;
+const $=id=>document.getElementById(id);
+const game=GAME_DATA;
+let state=GameRules.initial(game);
+$('title').textContent=game.title;
+function paint(){
+ const ctx=$('world').getContext('2d');ctx.clearRect(0,0,640,420);
+ const s=game.world.scenes.find(x=>x.id===state.sceneId);$('scene-title').textContent=s.name;
+ const iso=(x,y)=>({x:300+(x-y)*23,y:50+(x+y)*13});
+ for(let y=0;y<s.terrain.length;y++)for(let x=0;x<s.terrain[y].length;x++){
+   let p=iso(x,y),w=s.terrain[y][x]==='#';
+   ctx.beginPath();ctx.moveTo(p.x,p.y-13);ctx.lineTo(p.x+23,p.y);ctx.lineTo(p.x,p.y+13);ctx.lineTo(p.x-23,p.y);ctx.closePath();
+   ctx.fillStyle=w?'#536769':((x+y)%2?'#63906d':'#78a07a');ctx.fill();ctx.strokeStyle='#324b50';ctx.stroke();
+   if(w){ctx.fillStyle='#31494a';ctx.fillRect(p.x-13,p.y-17,26,13)}
+ }
+ for(const e of s.exits){let p=iso(e.x,e.y);ctx.fillStyle='#f9d589';ctx.beginPath();ctx.arc(p.x,p.y-5,6,0,Math.PI*2);ctx.fill()}
+ function token(x,y,name,color,r=11){let p=iso(x,y);ctx.fillStyle='rgba(0,0,0,.3)';ctx.beginPath();ctx.ellipse(p.x,p.y+6,11,4,0,0,2*Math.PI);ctx.fill();
+  ctx.fillStyle=color;ctx.beginPath();ctx.arc(p.x,p.y-9,r,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#eaddb0';ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle='#fff4cf';ctx.textAlign='center';ctx.font='12px sans-serif';ctx.fillText(name,p.x,p.y-24)}
+ for(const e of s.entities){if(state.cleared[e.id])continue;token(e.x,e.y,e.name||e.id,e.kind==='npc'?'#bba0c4':e.kind==='item'?'#ead26b':'#9d4e43')}
+ token(state.x,state.y,game.player.name,'#56bed0',12);
+ $('stats').textContent='生命 '+state.hp+'/'+game.player.maxHp+' · 灵力 '+state.mp+'/'+game.player.maxMp+' · 经验 '+state.experience+' · 银钱 '+state.gold+' · 背包 '+Object.entries(state.inventory).filter(([,v])=>v).map(([k,v])=>game.items.find(i=>i.id===k).name+'×'+v).join('、');
+ $('info').textContent=state.message||'探索中……';
+ $('battle').classList.toggle('hidden',!state.battle);
+ if(state.battle){const enemy=game.encounters.find(e=>e.id===state.battle.id);$('enemy-name').textContent='战斗：'+enemy.name;$('enemy-hp').textContent='敌方生命 '+state.battle.enemyHp+'/'+enemy.hp}
+ if(state.ending){$('info').textContent='【'+game.ending.title+'】'+game.ending.text}
+}
+function perform(action){state=GameRules.act(game,state,action);paint()}
+document.querySelectorAll('[data-dir]').forEach(e=>e.addEventListener('click',()=>perform({type:'MOVE',direction:e.dataset.dir})));
+document.querySelectorAll('[data-battle]').forEach(e=>e.addEventListener('click',()=>perform({type:e.dataset.battle})));
+document.addEventListener('keydown',e=>{const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right'};
+ if(!e.repeat&&map[e.key]){e.preventDefault();perform({type:'MOVE',direction:map[e.key]})}
+ else if(!e.repeat&&(e.key==='e'||e.key==='E'||e.key===' ')){e.preventDefault();perform({type:'INTERACT'})}});
+$('interact').addEventListener('click',()=>perform({type:'INTERACT'}));
+const key='bookrpg-save:'+game.id;
+$('save').addEventListener('click',()=>{try{localStorage.setItem(key,GameRules.snapshot(game,state));state.message='进度已保存';paint()}catch(e){state.message='保存失败：'+e.message;paint()}});
+$('load').addEventListener('click',()=>{try{const text=localStorage.getItem(key);if(!text)throw Error('还没有存档');state=GameRules.restore(game,text);state.message='进度已恢复';paint()}catch(e){state.message='读档失败：'+e.message;paint()}});
+$('reset').addEventListener('click',()=>{state=GameRules.initial(game);paint()});
+paint();
+</script></body></html>
