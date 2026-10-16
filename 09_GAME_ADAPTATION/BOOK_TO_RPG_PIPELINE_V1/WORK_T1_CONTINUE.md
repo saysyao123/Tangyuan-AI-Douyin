@@ -1,5 +1,8 @@
 # WORK 模式接力执行｜Type PAL 纯原创网页游戏 T1
 
+> **当前状态以 [CURRENT_STATUS.md](CURRENT_STATUS.md) 为准。** T1.2 基底任务正在实施，按 docs/T12_FOUNDATION_TASK.md 的新增问题继续；下方历史优先级不覆盖最新发布与验收。
+
+
 日期：2026-10-16
 
 > **最新 T1.1：保留像素风，已完成移动显示插值、失焦输入释放、低开销缓冲、加载反馈和编辑保存防连点。** 定向单测 18 项、真实浏览器稳定性 8 项，以及受改动影响的通关/编辑保存重开回归均通过；成功 Run 38862020435。完整 T1 既有验收继续有效，不重复 P0/单场景冒烟。最新交付与实测边界见 `evidence/T11_STABILITY_20261016/RELEASE.json`、`PERFORMANCE_SUMMARY.md`；失败经验见 `IMPLEMENTATION_NOTES.md`。下文保留历史，不得将历史“未测”当作现状。

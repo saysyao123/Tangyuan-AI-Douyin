@@ -1,5 +1,8 @@
 # 新书转经典 RPG — 网页端接力入口
 
+> **先读 [CURRENT_STATUS.md](CURRENT_STATUS.md)。** 无书续作优先按 T1.2 任务卡和最新发布记录处理基底；T1/T1.1 已通过的内容不重复测试。本页后续 S0–S7 仅在用户提供有权使用的书后进入，不应主动先索书。
+
+
 请使用已连接 GitHub 仓库 `saysyao123/Tangyuan-AI-Douyin`，读取本目录全部必读文件：
 1. README.md
 2. docs/STAGES.md

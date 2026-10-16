@@ -1,11 +1,12 @@
 /** Small authored-story shortcut over the official ScriptEditSession and native save. */
 import {useState,useRef} from 'react'
+import {welcomeRow} from './welcome-row.js'
 import {type ScriptEditSession,UpdateEntityBehaviorCommand} from '../core/script-editor.js'
 export function T1WelcomeEditor({session,onSave,onPlay}:{session:ScriptEditSession;onSave:()=>Promise<unknown>;onPlay:()=>void}){
  const saving=useRef(false);const [busy,setBusy]=useState(false)
  const [open,setOpen]=useState(false),[text,setText]=useState(''),[status,setStatus]=useState('')
  const behavior=()=>session.getState().scenes.find(s=>s.id==='inn')?.entities.find(e=>e.id==='keeper')?.behaviors?.trigger?.main
- function row(flow:any){return flow.stages[0].body[1].else[0].else[0].else[0].cue.rows[0]}
+ const row=welcomeRow
  function edit(){try{const b=behavior();if(!b)throw Error('未找到守灯人');setText(row(b.flow).text);setStatus('');setOpen(true)}catch{setStatus('剧情结构已改变，请使用完整剧本编辑器。');setOpen(true)}}
  async function apply(){if(saving.current)return;saving.current=true;setBusy(true);try{const b=behavior();if(!b||!text.trim())throw Error('对白不能为空');const flow=structuredClone(b.flow);row(flow).text=text;session.dispatch(new UpdateEntityBehaviorCommand({scene:'inn',entity:'keeper'},'trigger','main',{flow}));await onSave();setStatus(session.isDirty()?'保存尚未完成，请查看编辑器的错误提示。':'已保存，可以试玩。')}catch(e){setStatus(String(e))}finally{saving.current=false;setBusy(false)}}
  return <div style={{position:'fixed',right:18,bottom:18,zIndex:9000,fontFamily:'sans-serif'}}>

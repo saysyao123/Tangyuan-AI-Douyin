@@ -34,3 +34,13 @@ p=r/'packages/reforge/src/boot.ts';s=p.read_text()
 if 'dataset.bootError' not in s:s=s.replace("  console.error('[reforge]', e)","  document.documentElement.dataset.bootError = msg\n  console.error('[reforge]', e)")
 p.write_text(s)
 print('T11_STABILITY_PATCH_APPLIED')
+
+# A partial adapter must fail before it can be packaged.
+for relative, expected in {
+ 'packages/reforge/src/input.ts': ['T11_RELEASE_KEYS','this.held.clear(); this.pressed.clear()'],
+ 'packages/reforge/src/main.ts': ['T11_PRESENTATION','player: { pos: renderedPlayerPos','presentationPosition: Object.freeze','if (import.meta.env.DEV) {\n  ;(window as unknown as { __reforge'],
+ 'packages/reforge/src/boot.ts': ['dataset.bootError'],
+}.items():
+ text=(r/relative).read_text()
+ for anchor in expected:
+  if anchor not in text:raise RuntimeError('Incomplete T1.1 adapter: '+relative+' / '+anchor)

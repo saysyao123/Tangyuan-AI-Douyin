@@ -1,0 +1,51 @@
+import {chromium} from 'playwright';import assert from 'node:assert/strict';import fs from 'node:fs/promises';
+const origin=process.env.T1_URL??'http://127.0.0.1:6154',out='/tmp/t12-evidence';await fs.mkdir(out,{recursive:true});
+const browser=await chromium.launch();const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();
+const errors=[],checks=[],metrics={};page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());
+let game;
+async function state(){return game.evaluate(()=>window.__tpObserve.readRuntime())}
+async function ready(){await page.waitForFunction(()=>document.getElementById('loading').hidden,null,{timeout:45000});game=page.frames().find(f=>f.url().includes('/game/'));assert.ok(game);await game.waitForFunction(()=>window.__tpObserve?.readRuntime());}
+async function settle(){for(let i=0;i<70;i++){const s=await state();if(!s.scriptRunning&&!s.dialogue&&!s.battleActive)return;await game.locator('#screen').click();await page.keyboard.press('Space');await page.waitForTimeout(100)}throw Error('opening did not settle')}
+async function press(key){await game.locator('#screen').focus();await page.keyboard.press(key);await page.waitForTimeout(160)}
+async function move(key,ms=170){await game.locator('#screen').focus();await page.keyboard.down(key);await page.waitForTimeout(ms);await page.keyboard.up(key);await page.waitForTimeout(40)}
+async function save(){await press('F5');await game.waitForFunction(()=>window.__tpObserve.readRuntime().health.storage.state==='saved');}
+async function exported(){return game.evaluate(()=>window.tpPlayer.exportQuickSave())}
+try{
+ const cold=Date.now();await page.goto(origin+'/');await ready();metrics.coldReadyMs=Date.now()-cold;await settle();
+ await save();const original=JSON.parse(await exported());checks.push('NATIVE_SAVE_VISIBLE_STATUS');
+ // Export through the actual UI; read the downloaded file, not a fabricated payload.
+ const downloadEvent=page.waitForEvent('download');await page.getByRole('button',{name:'导出备份',exact:true}).click();const download=await downloadEvent;const backupPath=out+'/downloaded-save.json';await download.saveAs(backupPath);const backup=await fs.readFile(backupPath,'utf8');assert.deepEqual(JSON.parse(backup),original);checks.push('PLAYER_BACKUP_DOWNLOAD');
+ for(const [name,bad] of [['malformed','{'],['wrong-project',JSON.stringify({...original,projectId:'other-project'})],['empty-party',JSON.stringify({...original,world:{...original.world,party:[]}})],['missing-scene',JSON.stringify({...original,position:{...original.position,sceneId:'missing-scene'}})]]){
+  await page.getByLabel('导入进度备份').setInputFiles({name:name+'.json',mimeType:'application/json',buffer:Buffer.from(bad)});
+  await page.waitForFunction(()=>document.getElementById('save-status').textContent.includes('导入失败'));
+  assert.deepEqual(JSON.parse(await exported()),original);checks.push('REJECT_'+name.toUpperCase().replaceAll('-','_')+'_PRESERVES_SAVE');
+ }
+ // Fail the real native transaction, after its first store write. Atomic abort must preserve all old stores.
+ await game.evaluate(()=>{const put=IDBObjectStore.prototype.put;window.restorePut=()=>{IDBObjectStore.prototype.put=put};IDBObjectStore.prototype.put=function(...args){if(this.name==='payload')throw new DOMException('quota test','QuotaExceededError');return put.apply(this,args)}});
+ await move('ArrowDown');await press('F5');await page.waitForFunction(()=>document.getElementById('save-status').textContent.includes('保存失败'));
+ assert.deepEqual(JSON.parse(await exported()),original);await game.evaluate(()=>window.restorePut());checks.push('REAL_IDB_TRANSACTION_ABORT_PRESERVES_PREVIOUS_PAYLOAD');
+ await save();assert.notDeepEqual(JSON.parse(await exported()).position,original.position);checks.push('SAVE_RETRY_AFTER_QUOTA_FAILURE');
+ await page.getByLabel('导入进度备份').setInputFiles({name:'restore.json',mimeType:'application/json',buffer:Buffer.from(backup)});await page.waitForFunction(()=>document.getElementById('save-status').textContent.includes('备份已导入'));
+ await press('F9');await game.waitForFunction(pos=>JSON.stringify(window.__tpObserve.readRuntime().position)===JSON.stringify(pos),original.position.pos);
+ assert.equal((await state()).story.money,original.world.money);checks.push('BACKUP_IMPORT_AND_NATIVE_F9_RESTORE');
+ // Adjacent same-scene restore must snap on its very first restored observation.
+ const beforeAdjacent=(await state()).position;await game.locator('#screen').focus();await page.keyboard.down('ArrowDown');await game.waitForFunction(p=>JSON.stringify(window.__tpObserve.readRuntime().position)!==JSON.stringify(p),beforeAdjacent);await page.keyboard.up('ArrowDown');const adjacent=(await state()).position;assert.ok(Math.abs(adjacent.col-original.position.pos.col)+Math.abs(adjacent.row-original.position.pos.row)<=1.01);const samples=await game.evaluate(()=>new Promise(resolve=>{const rows=[];window.dispatchEvent(new KeyboardEvent('keydown',{key:'F9'}));window.dispatchEvent(new KeyboardEvent('keyup',{key:'F9'}));function sample(){const s=window.__tpObserve.readRuntime();rows.push({p:s.position,v:s.presentationPosition});if(rows.length<25)requestAnimationFrame(sample);else resolve(rows)}requestAnimationFrame(sample)}));
+ const restored=samples.find(s=>JSON.stringify(s.p)===JSON.stringify(original.position.pos));assert.ok(restored);assert.deepEqual(restored.v,restored.p);checks.push('FIRST_FRAME_ADJACENT_RESTORE_SNAPS');
+ // A late failed F9 must not overwrite the newer successful load status.
+ await game.evaluate(()=>{const get=IDBObjectStore.prototype.get;let first=true;window.restoreGet=()=>{IDBObjectStore.prototype.get=get};IDBObjectStore.prototype.get=function(...args){if(this.name==='payload'&&first){first=false;const req={result:undefined,error:null,onsuccess:null,onerror:null};setTimeout(()=>{req.error=new DOMException('late IO test','UnknownError');req.onerror?.()},700);return req}return get.apply(this,args)}});
+ await press('F9');await press('F9');await page.waitForTimeout(1000);assert.equal((await state()).health.storage.state,'loaded');await game.evaluate(()=>window.restoreGet());checks.push('LATE_OLD_LOAD_ERROR_DOES_NOT_OVERWRITE_NEW_SUCCESS');
+ // Pointer cancellation exercises the actual parent toolbar event lifecycle.
+ await page.setViewportSize({width:800,height:1000});const button=page.locator('.mobile-controls [data-key="ArrowDown"]');const box=await button.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.waitForTimeout(180);await button.dispatchEvent('pointercancel',{pointerId:1});await page.mouse.up();await page.waitForTimeout(200);const stopped=(await state()).position;await page.waitForTimeout(400);assert.deepEqual((await state()).position,stopped);checks.push('TOUCH_POINTER_CANCEL_STOPS_MOVEMENT');await page.setViewportSize({width:1440,height:1000});
+ // Actual engine counters + real movement for >=60s under 4x simulated CPU load.
+ const cdp=await context.newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});const start=await state(),heapBefore=await cdp.send('Performance.getMetrics');let moves=0;const began=Date.now();let previous=start.position;
+ while(Date.now()-began<60000){for(const key of ['ArrowDown','ArrowUp']){await move(key,140);const s=await state();if(JSON.stringify(s.position)!==JSON.stringify(previous))moves++;previous=s.position;assert.ok(s.health.frames>=start.health.frames);assert.equal(s.health.error,null)}}
+ const end=await state();assert.ok(moves>30);assert.ok(end.health.frames-start.health.frames>300);assert.ok(end.health.draws-start.health.draws>300);metrics.activeRoute={elapsedMs:Date.now()-began,moves,engineFrames:end.health.frames-start.health.frames,successfulPresentationCalls:end.health.draws-start.health.draws,p95FrameMs:end.health.p95FrameMs,p99FrameMs:end.health.p99FrameMs,heapBefore:heapBefore.metrics.find(m=>m.name==='JSHeapUsedSize')?.value,heapAfter:(await cdp.send('Performance.getMetrics')).metrics.find(m=>m.name==='JSHeapUsedSize')?.value};await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});checks.push('ACTIVE_ROUTE_60S_ENGINE_FRAMES_DRAW_CALLS_AND_MOVEMENT');
+ await page.screenshot({path:out+'/foundation-player.png'});
+ // Stop actual engine scheduling. Parent recovery must notice despite its own timers continuing.
+ await game.evaluate(()=>{window.requestAnimationFrame=()=>0});await page.waitForFunction(()=>!document.getElementById('retry').hidden,null,{timeout:15000});assert.ok((await page.locator('#load-hint').innerText()).includes('未更新'));checks.push('ENGINE_STALL_VISIBLE_RECOVERY');
+ await page.getByRole('button',{name:'重新载入',exact:true}).click();await ready();await settle();await press('F9');assert.deepEqual((await state()).position,original.position.pos);checks.push('RELOAD_RECOVERY_RETAINS_NATIVE_SAVE');
+ // Throw at a real Canvas drawing boundary. This must stop cleanly with a recovery panel.
+ await game.evaluate(()=>{const fill=CanvasRenderingContext2D.prototype.fillRect;let once=true;CanvasRenderingContext2D.prototype.fillRect=function(...args){if(once){once=false;throw Error('T12 expected rendering failure')}return fill.apply(this,args)}});
+ await page.waitForFunction(()=>!document.getElementById('retry').hidden);assert.ok(await game.locator('#runtime-recovery').isVisible());checks.push('REAL_RENDER_EXCEPTION_VISIBLE_RECOVERY');
+ assert.deepEqual(errors,[]);await fs.writeFile(out+'/foundation.json',JSON.stringify({status:'PASS',checks,metrics,errors,limits:['CI Chromium only; 4x CPU simulation is not user hardware.','60 seconds is an activity check, not proof against long-term memory leaks.','Fault injection only at public browser storage/Canvas/rAF boundaries; no world/flag injection.']},null,2));console.log('T12_FOUNDATION=PASS '+JSON.stringify({checks,metrics}));
+}catch(e){await page.screenshot({path:out+'/FAIL-foundation.png'}).catch(()=>{});await fs.writeFile(out+'/foundation.json',JSON.stringify({status:'FAIL',error:String(e),checks,metrics,errors,state:await state().catch(()=>null)},null,2));console.error('T12_FOUNDATION=FAIL '+e);process.exitCode=1}finally{await context.close();await browser.close()}

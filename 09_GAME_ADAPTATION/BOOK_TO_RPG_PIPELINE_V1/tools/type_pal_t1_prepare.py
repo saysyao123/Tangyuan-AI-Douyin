@@ -105,6 +105,7 @@ im=Image.new('RGBA',(32,32),'#101c27');d=ImageDraw.Draw(im);d.rectangle((15,4,17
 (root/'packages/editor/public/type-pal-editor-mark.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#101c27"/><path d="M16 5v23M10 7h14M23 8v4" stroke="#e6bb7c" stroke-width="2"/><rect x="19" y="12" width="8" height="10" fill="#e6bb7c"/></svg>')
 # One-sentence NPC edit shortcut dispatches a real canonical editor command, then official save.
 shutil.copyfile(Path(__file__).parent/'T1WelcomeEditor.tsx',root/'packages/editor/src/ui/T1WelcomeEditor.tsx')
+shutil.copyfile(Path(__file__).parent/'t12/welcome-row.ts',root/'packages/editor/src/ui/welcome-row.ts')
 p=root/'packages/editor/src/ui/App.tsx';s=p.read_text()
 if "import { T1WelcomeEditor }" not in s:s="import { T1WelcomeEditor } from './T1WelcomeEditor.js'\n"+s
 if '<T1WelcomeEditor ' not in s:s=s.replace('<EditorAppHeader\n','''{state.manifest.id === 'book-lantern-inn' ? <T1WelcomeEditor session={scriptSession} onSave={save} onPlay={() => openSceneTrial()} /> : null}

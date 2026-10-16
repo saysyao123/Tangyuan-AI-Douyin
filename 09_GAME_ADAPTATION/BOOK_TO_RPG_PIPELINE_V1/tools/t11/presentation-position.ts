@@ -3,6 +3,7 @@ import type {GridPos} from '@type-pal/content'
 export class PresentationPosition {
  private scene='';private target:GridPos|null=null;private from:GridPos|null=null;private began=0
  constructor(private readonly duration=80){}
+ reset():void{this.scene='';this.target=null;this.from=null;this.began=0}
  sample(scene:string,pos:GridPos,now:number,enabled=true):{pos:GridPos;moving:boolean}{
   const copy=()=>({...pos})
   if(!enabled||scene!==this.scene||!this.target||!this.from||Math.abs(pos.col-this.target.col)+Math.abs(pos.row-this.target.row)>1.01||pos.height!==this.target.height){this.scene=scene;this.target=copy();this.from=copy();this.began=now;return {pos:copy(),moving:false}}

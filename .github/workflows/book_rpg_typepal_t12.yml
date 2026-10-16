@@ -1,0 +1,89 @@
+name: Type PAL T1.2 reliable foundation
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t12-foundation-20261016]
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**'
+      - '.github/workflows/book_rpg_typepal_t12.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: New title IO counterexamples against untouched upstream
+        working-directory: upstream
+        run: |
+          mkdir -p /tmp/t12-evidence
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t12/opening.test.ts packages/reforge/src/t12-opening.test.ts
+          if node node_modules/vitest/vitest.mjs run --root packages/reforge src/t12-opening.test.ts > /tmp/t12-evidence/baseline-opening.log 2>&1; then
+            echo 'Original title unexpectedly passes the new IO counterexamples'; exit 1
+          fi
+          python3 -c "from pathlib import Path; s=Path('/tmp/t12-evidence/baseline-opening.log').read_text(); assert '2 failed' in s, s"
+      - name: Build candidate with checked pinned adapters and clean output
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_build.mjs upstream "$PWD/web"
+      - name: New foundation unit checks and scoped type checks
+        working-directory: upstream
+        run: |
+          set -o pipefail
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t12/foundation.test.ts packages/reforge/src/t12-foundation.test.ts
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t12/welcome-row.ts packages/reforge/src/welcome-row.ts
+          node node_modules/vitest/vitest.mjs run --root packages/reforge src/t12-foundation.test.ts src/t12-opening.test.ts | tee /tmp/t12-evidence/foundation-unit.log
+          pnpm --filter @type-pal/reforge typecheck
+          pnpm --filter @type-pal/editor typecheck
+          python3 ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t12-release-inventory.py | tee /tmp/t12-evidence/release-counterexamples.log
+          python3 ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/release_inventory.py check ../web | tee /tmp/t12-evidence/release-check.json
+      - name: Install Chromium for new failure and activity cases
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve production files only
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t12-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Storage abort, backup, adjacent restore, native rendering failure, real engine activity
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t12-foundation-e2e.mjs .
+          node t12-foundation-e2e.mjs
+      - name: Affected full-story regression after restore and presentation boundary changes
+        working-directory: upstream
+        env: {T1_URL: 'http://127.0.0.1:6154', T1_EVIDENCE: /tmp/t12-evidence/story}
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-static-e2e.mjs .
+          node t1-static-e2e.mjs
+      - name: Affected editor regression after semantic dialogue binding change
+        working-directory: upstream
+        env: {T1_URL: 'http://127.0.0.1:6154', T1_EVIDENCE: /tmp/t12-evidence/editor}
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-editor-e2e.mjs .
+          node t1-editor-e2e.mjs
+      - name: Save exact whole-output runtime inventory
+        if: always()
+        run: |
+          cp web/runtime-manifest.json /tmp/t12-evidence/runtime-manifest.json
+          cp web/download-checksums.json /tmp/t12-evidence/download-checksums.json
+          cp /tmp/t12-http.log /tmp/t12-evidence/http.log || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: type-pal-t12-evidence
+          path: /tmp/t12-evidence/
+          retention-days: 90
