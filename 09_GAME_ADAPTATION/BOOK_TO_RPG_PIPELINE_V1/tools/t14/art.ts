@@ -32,8 +32,8 @@ export async function buildPolishedArt(packFile:string){
   for(let y=0;y<16;y++)for(let x=0;x<32;x++){
    if(Math.abs((x-15.5)/16)+Math.abs((y-7.5)/8)>1)continue
    const n=(x*13+y*31+id*47)%101,band=Math.floor((y+id%3)/4),seam=(x+(band%2)*5+id%5)%10===0||(y+id%3)%4===0
-   let c=id<12?(seam?48:49+n%4):id<22?(56+n%2):(n<76?54+n%2:49+n%2)
-   if(id>=22&&n>93)c=56+n%2
+   let c=id<12?(seam?48:49+n%4):id<22?(56+n%2):(n<88?54:55)
+   if(id>=22&&n>98)c=50
    f.pixels[y*32+x]=c;f.opaque[y*32+x]=1
   }tiles.push(f)
  }

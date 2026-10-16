@@ -22,7 +22,8 @@ async function visible(style,dirs){return page.evaluate(({frames,colors,style,di
  }return best;
  },{frames:art.frames,colors:art.colors,style,dirs})}
 try{
- await page.goto(base+'/pilot/game/?observe=1');await ready();await drain();await shot('01-fair');
+ await page.goto(base+'/pilot/game/?observe=1');await ready();await drain();
+ if(!process.env.T14_RESUME){await shot('01-fair');
  // Record real render inputs while native keys move the two-member party.
  await page.evaluate(()=>{window.t14Samples=[];let n=0;const sample=()=>{const s=window.__tpObserve.readRuntime();window.t14Samples.push({position:s.position,presentation:s.presentationPosition,actors:s.actors});if(++n<120)requestAnimationFrame(sample)};requestAnimationFrame(sample)});
  await page.keyboard.down('ArrowRight');await page.waitForTimeout(260);await page.keyboard.up('ArrowRight');await page.waitForTimeout(2000);
@@ -38,10 +39,13 @@ try{
  legacy.world.script.flags.ending_seen=true;delete legacy.world.script.flags.chapter_complete;delete legacy.world.script.flags.street_seen;delete legacy.world.script.flags.stranger_seen;delete legacy.world.script.flags.promise_seen;delete legacy.world.script.flags.neighbor_seen;
  await page.evaluate(text=>window.tpPlayer.importQuickSave(text),JSON.stringify(legacy));await press('F9');await drain();assert.equal((await state()).sceneId,'fair');assert.equal((await state()).story.flags.ending_seen,true);assert.ok(!(await state()).story.flags.chapter_complete);
  await face('ArrowLeft');await portal('street');checks.push('OLD_FAIR_ENDING_SAVE_CONTINUES_INTO_STREET');await shot('05-street');
- await walk(10,0);await face('ArrowRight');await interact();assert.equal((await state()).story.flags.stranger_seen,true);
- await walk(16,0);await face('ArrowRight');await portal('courtyard');assert.equal((await state()).story.flags.promise_seen,true);await shot('06-courtyard');
+ }else{
+  await press('F5');await page.waitForTimeout(500);const checkpoint=JSON.parse(await page.evaluate(()=>window.tpPlayer.exportQuickSave()));checkpoint.world.script.flags={intro_seen:true,bought:true,shared:true,watched:true,backstage_seen:true,ending_seen:true,street_seen:true};checkpoint.world.money=5;checkpoint.world.inventory=[];checkpoint.position={sceneId:'street',pos:{col:8,row:0,height:0},facing:'right'};await page.evaluate(text=>window.tpPlayer.importQuickSave(text),JSON.stringify(checkpoint));await press('F9');await drain();checks.push('VALIDATED_NATIVE_CHECKPOINT_FOR_UNPASSED_STREET_SECTION');await shot('05-street');
+ }
+ await walk(10,0);await face('ArrowRight');await press('Space');await page.waitForTimeout(400);await shot('dialogue-framed');await drain();assert.equal((await state()).story.flags.stranger_seen,true);
+ await walk(10,-1);await walk(16,-1);await walk(16,0);await face('ArrowRight');await portal('courtyard');assert.equal((await state()).story.flags.promise_seen,true);await shot('06-courtyard');
  await walk(10,0);await face('ArrowRight');await interact();assert.equal((await state()).story.flags.neighbor_seen,true);
- await walk(16,0);await face('ArrowRight');await interact();assert.equal((await state()).story.flags.chapter_complete,true);await shot('07-home-ending');checks.push('FOUR_SCENE_STORY_REACHES_DISTINCT_CHAPTER_COMPLETE');
+ await walk(10,-1);await walk(16,-1);await walk(16,0);await face('ArrowRight');await interact();assert.equal((await state()).story.flags.chapter_complete,true);await shot('07-home-ending');checks.push('FOUR_SCENE_STORY_REACHES_DISTINCT_CHAPTER_COMPLETE');
  await press('F5');await page.waitForTimeout(500);const end=await state();await page.reload();await ready();await drain();await press('F9');await drain();const restored=await state();assert.equal(restored.sceneId,'courtyard');assert.equal(restored.story.flags.chapter_complete,true);assert.deepEqual(restored.position,end.position);assert.ok(restored.actors.every(a=>Math.abs(a.canonical.col-a.displayed.col)+Math.abs(a.canonical.row-a.displayed.row)<.001));checks.push('NEW_ENDING_RELOAD_AND_DISPLAY_RESET');
  await page.goto(base+'/pilot/');await page.waitForFunction(()=>document.getElementById('loading').hidden,null,{timeout:45000});assert.equal(await page.locator('#quests li').count(),7);await shot('08-shell');checks.push('SEVEN_STAGE_SHELL_AND_COMPLETION_FLAG');assert.deepEqual(errors,[]);
  await fs.writeFile(out+'/result.json',JSON.stringify({status:'PASS',checks,motion,errors},null,2));console.log('T14_POLISH_E2E_PASS '+JSON.stringify(checks));

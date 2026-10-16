@@ -10,7 +10,7 @@ const vite=await createServer({root:editor,configFile:path.join(editor,'vite.con
 let p:any,art:any
 try{p=await (await vite.ssrLoadModule('/src/core/seed.ts')).buildBlankProject('book-pilot-opening');art=await (await vite.ssrLoadModule('/scripts/t14-art.ts')).buildPolishedArt(artFile)}finally{await vite.close()}
 const pos=(col:number,row:number)=>({col,row,height:0})
-const d=(key:string,actor?:string)=>({kind:'dialog',cue:{slot:actor?'bottom':'narration',identity:actor?{kind:'actor',actor,portrait:{kind:'default',side:'right'}}:{kind:'narration'},rows:[{text:cfg.text[key]}]}})
+const d=(key:string,actor?:string)=>({kind:'dialog',cue:{slot:'bottom',identity:actor?{kind:'actor',actor,portrait:{kind:'default',side:'right'}}:{kind:'narration'},rows:[{text:cfg.text[key]}]}})
 const flag=(name:string)=>({kind:'setFlag',flag:name,value:true})
 const is=(name:string)=>({kind:'flag',flag:name,is:true})
 const branch=(name:string,yes:any[],no:any[]=[])=>({kind:'branch',cond:is(name),then:yes,else:no})

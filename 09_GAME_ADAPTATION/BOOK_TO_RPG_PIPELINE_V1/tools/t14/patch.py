@@ -31,3 +31,31 @@ if 'T14_MOTION_OBSERVER' not in s:
  s=s.replace(anchor,anchor+'\n      actors: worldPresentation.motionSnapshot(), // T14_MOTION_OBSERVER')
 p.write_text(s)
 print('T14_DISPLAY_ONLY_MOTION_PATCH_APPLIED')
+
+# Optional pilot theme: keep native PAL dialogue style untouched for other projects.
+p=root/'packages/reforge/src/dialog/dialog-box.ts';s=p.read_text()
+if 'T14_FRAMED_DIALOGUE' not in s:
+ def change(old,new):
+  global s
+  if s.count(old)!=1:raise RuntimeError('T14 dialogue anchor: '+old[:80])
+  s=s.replace(old,new,1)
+ change('    private readonly scroll?: BoxTiles,','    private readonly scroll?: BoxTiles,\n    private readonly framed = false, // T14_FRAMED_DIALOGUE')
+ change('    const maxRight = MAX_RIGHT',"    const maxRight = this.framed ? (hasPortrait && slot === 'bottom' ? 232 : 304) : MAX_RIGHT")
+ change('    // 该段话的头像(若有):spec §3 位置,bottom 右 / top 左。',"""    if (this.framed && (slotId === 'bottom' || slotId === 'top')) {
+      const y = slotId === 'bottom' ? 102 : 2
+      this.ctx.save()
+      this.ctx.fillStyle = '#172630'
+      this.ctx.fillRect(2, y, 316, 94)
+      this.ctx.strokeStyle = '#b9a582'
+      this.ctx.strokeRect(3.5, y + 1.5, 313, 91)
+      this.ctx.restore()
+    }
+    // 该段话的头像(若有):spec §3 位置,bottom 右 / top 左。""")
+ change('        maxChars: limit,',"        maxChars: limit,\n        ...(this.framed ? { forceRgba: [239, 233, 213] as [number, number, number] } : {}),")
+ p.write_text(s)
+p=root/'packages/reforge/src/main.ts';s=p.read_text()
+if 'T14_DIALOGUE_THEME' not in s:
+ old='    menuAssets.scroll,\n  )'
+ if s.count(old)!=1:raise RuntimeError('T14 dialogue constructor anchor')
+ s=s.replace(old,old.replace('\n  )',"\n    project.manifest.id === 'book-pilot-opening', // T14_DIALOGUE_THEME\n  )"))
+ p.write_text(s)

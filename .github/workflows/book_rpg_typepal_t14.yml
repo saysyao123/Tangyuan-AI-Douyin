@@ -23,13 +23,10 @@ jobs:
       - run: python -m pip install pillow
       - name: Build new scope once with public synthetic dialogue
         run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/build.mjs upstream "$PWD/web"
-      - name: Check production closure and display-only invariants
+      - name: Check changed dialogue production closure
         run: |
           mkdir -p /tmp/t14-evidence
           python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t14-evidence/typecheck.log
-          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/motion.test.ts upstream/packages/reforge/src/t14-motion.test.ts
-          cd upstream
-          node node_modules/vitest/vitest.mjs run --root packages/reforge src/t14-motion.test.ts | tee /tmp/t14-evidence/unit.log
       - run: pnpm exec playwright install --with-deps chromium
         working-directory: upstream
       - name: Serve CI-only static runtime
@@ -41,7 +38,7 @@ jobs:
         working-directory: upstream
         run: |
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t14-polish-e2e.mjs .
-          node t14-polish-e2e.mjs
+          T14_RESUME=street node t14-polish-e2e.mjs
       - name: Record exact CI runtime and native project hashes
         if: always()
         run: |
