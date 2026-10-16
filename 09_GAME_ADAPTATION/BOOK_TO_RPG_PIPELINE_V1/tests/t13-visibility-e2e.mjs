@@ -15,9 +15,9 @@ async function visible(style,dirs){return page.evaluate(({frames,colors,style,di
  }return best;
  },{frames:art.frames,colors:art.colors,style,dirs})}
 try{
- await page.goto('http://127.0.0.1:6154/pilot/game/?observe=1');await page.waitForFunction(()=>window.__tpObserve?.readRuntime(),null,{timeout:45000});await drain();
+ await page.goto('http://127.0.0.1:6154/pilot/game/?observe=1');await page.waitForFunction(()=>window.__tpObserve?.readRuntime(),null,{timeout:45000});await drain();await walk(8,0);await walk(8,6);
  for(const [key,dir,facing] of [['ArrowUp',2,'up'],['ArrowLeft',1,'left'],['ArrowDown',0,'down'],['ArrowRight',3,'right']]){
-  await walk(8,-1);await page.keyboard.down(key);await page.waitForTimeout(80);await page.keyboard.up(key);await page.waitForTimeout(220);assert.equal((await state()).facing,facing);
+  await walk(8,6);await page.keyboard.down(key);await page.waitForTimeout(80);await page.keyboard.up(key);await page.waitForTimeout(220);assert.equal((await state()).facing,facing);
   const hero=await visible('hero',[dir]),child=await visible('child',[0,1,2,3]);evidence.push({facing,position:(await state()).position,heroMatch:hero,childMatch:child});await page.screenshot({path:out+'/visible-'+facing+'.png'});assert.ok(hero>.98,'Rendered '+facing+' hero is hidden or wrong frame: '+hero);assert.ok(child>.98,'Rendered companion missing: '+child);
  }
  await walk(13,1);await page.keyboard.down('ArrowRight');await page.waitForTimeout(25);await page.keyboard.up('ArrowRight');await page.waitForTimeout(220);const score=await visible('hero',[3]);assert.ok(score>.98,'Roof occludes right-facing hero: '+score);evidence.push({case:'previous-roof-occlusion',score});await page.screenshot({path:out+'/visible-former-roof.png'});
