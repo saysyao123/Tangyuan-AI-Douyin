@@ -4,8 +4,10 @@
 
 ## 当前实际状态（2026-10-16）
 - ✅ 已有 `../PAL98_BOOK_RPG_BASELINE_V0_1/` 机制/人物/源码锚点研究。
-- ✅ V1 已具备固定阶段、输入输出清单、人工确认门禁、原创示例游戏、纯 Node 测试、HTML 构建命令、GitHub Actions CI。
+- ✅ V1 已具备固定阶段、输入输出清单、人工确认门禁、两部原创测试故事、纯 Node 测试、HTML 构建命令、GitHub Actions CI。
 - ⏳ 用户上传的仙剑98文件尚未完成跨引擎实际游玩验证；全部战斗/脚本/数值真值尚未冻结。
+- ✅ 2026-10-16 实证：GitHub Actions [run 38851723543](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38851723543)，Node 17/17 + Python 2/2 PASS，两份原创游戏内容包分别编译为 HTML，并完成真实 Chromium 剧情通关冒烟测试（存储采用模拟实现）。完整范围见 [evidence/V1_VERIFIED_EXECUTION_20261016.md](evidence/V1_VERIFIED_EXECUTION_20261016.md)。
+- ✅ 可使用 `node tools/new_book_run.mjs slug "书名"` 一键建立 S0–S7 空白阶段文件夹和 STATUS.json（所有阶段从 NOT_STARTED 开始）。
 - ⏳ 还没有上传第一本新书，尚未证明 AI 自动提取长篇小说及 Type PAL 内容包导入。
 - ⚠️ V1 试玩是 **自有内容独立参考运行器**，仅测试「故事数据→互动浏览器游戏」管线，不冒充 Type PAL 或全部仙剑机制已完整实现。
 
@@ -18,6 +20,7 @@
 node --test tests/*.test.mjs
 node tools/pipeline.mjs validate examples/lantern-inn/game.json
 node tools/pipeline.mjs build examples/lantern-inn/game.json dist/lantern-inn.html
+node tools/pipeline.mjs build examples/river-ledger/game.json dist/river-ledger.html
 ```
 
 网页浏览器直接打开生成的 `dist/lantern-inn.html`。方向键/WASD移动，E/空格互动；战斗使用按钮；浏览器保存/读档。
@@ -40,3 +43,6 @@ node tools/pipeline.mjs build examples/lantern-inn/game.json dist/lantern-inn.ht
 
 ## 文档与代码
 `START_WEB.md` 接力；`docs/` 研究/制作合同；`prompts/` 阶段产出提示；`examples/` 虚构原创样本；`src/rules.mjs` 可测试规则内核；`runtime/template.html` 演示界面；`tools/pipeline.mjs` 构建/验证；`tests/` 自动测试。机制研究主文件仍由前期研究分支保存，避免多源真值。
+
+## 《仙剑98》用户原始资源研究补充
+- 本轮只读检查上传的 RAR，发现 160 种脚本操作码取值（含 0xFFFF）、43557条8字节脚本、5077候选事件对象、13514消息索引。汇总见 [evidence/PAL98_UPLOAD_STATIC_AUDIT_20261016.md](evidence/PAL98_UPLOAD_STATIC_AUDIT_20261016.md)，工具为 [tools/pal98_audit.py](tools/pal98_audit.py)。原数据从未进入公开仓库。
