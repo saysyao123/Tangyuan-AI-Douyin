@@ -25,6 +25,8 @@ jobs:
           node-version: '22'
       - name: Run real test suite
         run: node --test tests/*.test.mjs | tee test-output.txt
+      - name: Validate sample-only MKF structure audit without original game files
+        run: python3 -m unittest discover -s tests -p 'test_pal98_audit.py' -v 2>&1 | tee python-test-output.txt
       - name: Validate content and build offline HTML
         run: |
           node tools/pipeline.mjs validate examples/lantern-inn/game.json | tee validation.json
@@ -44,6 +46,7 @@ jobs:
           path: |
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/dist/*.html
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/test-output.txt
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/python-test-output.txt
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/validation*.json
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/build*.json
             09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/STATUS.txt
