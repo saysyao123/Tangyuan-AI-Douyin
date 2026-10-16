@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import os from 'node:os'
 import {spawnSync} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
 const tools=path.dirname(fileURLToPath(import.meta.url)),book=path.resolve(tools,'../..'),root=path.resolve(process.argv[2]),out=path.resolve(process.argv[3])
@@ -10,9 +11,9 @@ const prep=spawnSync('python3',[path.join(book,'tools/t14/prepare_art.py'),path.
 for(const [src,dst]of[['art.ts','t15-art.ts'],['opening.mts','t15-opening.mts']])await fs.copyFile(path.join(tools,src),path.join(root,'packages/editor/scripts',dst))
 run(['--import','tsx','packages/editor/scripts/t15-opening.mts',root,path.join(root,'projects/book-pilot-cinematic'),config,path.join(root,'t14-artpack.json'),path.join(root,'t15-artpack.json')])
 run(['--import','tsx','packages/editor/scripts/check-project.mts','projects/book-pilot-cinematic'])
-await fs.rm(path.join(root,'packages/reforge/dist'),{recursive:true,force:true})
-run([path.join(root,'packages/reforge/node_modules/vite/bin/vite.js'),'build','--base','./'],path.join(root,'packages/reforge'),{VITE_PROJECT_ID:'book-pilot-cinematic'})
-await fs.cp(path.join(root,'packages/reforge/dist'),path.join(out,'chapter/game'),{recursive:true});await fs.rm(path.join(out,'chapter/game/soundfont.sf3'),{force:true})
+const cleanRuntime=await fs.mkdtemp(path.join(os.tmpdir(),'t15-runtime-'))
+run([path.join(root,'packages/reforge/node_modules/vite/bin/vite.js'),'build','--base','./','--outDir',cleanRuntime,'--emptyOutDir'],path.join(root,'packages/reforge'),{VITE_PROJECT_ID:'book-pilot-cinematic'})
+await fs.rm(path.join(out,'chapter/game'),{recursive:true,force:true});await fs.cp(cleanRuntime,path.join(out,'chapter/game'),{recursive:true});await fs.rm(cleanRuntime,{recursive:true,force:true});await fs.rm(path.join(out,'chapter/game/soundfont.sf3'),{force:true})
 for(const dst of ['chapter/game','editor'])await fs.cp(path.join(root,'projects/book-pilot-cinematic'),path.join(out,dst,'projects/book-pilot-cinematic'),{recursive:true})
 for(const name of ['index.html','style.css','shell.js'])await fs.copyFile(path.join(out,'pilot',name),path.join(out,'chapter',name))
 const cfg=JSON.parse(await fs.readFile(config,'utf8'));let html=await fs.readFile(path.join(out,'chapter/index.html'),'utf8');html=html.replace(/<title>.*?<\/title>/,'<title>'+cfg.title+'</title>').replace(/<small>.*?<\/small>/,'<small>'+cfg.title+'</small>').replaceAll('projects/book-pilot-opening','projects/book-pilot-cinematic').replace('开篇试玩','剧情演出').replace('<nav>','<nav><a href="../pilot/">上一版对照</a>');await fs.writeFile(path.join(out,'chapter/index.html'),html)
