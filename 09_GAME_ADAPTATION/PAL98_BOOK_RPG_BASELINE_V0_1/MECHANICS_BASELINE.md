@@ -8,6 +8,7 @@
 
 | 模块 | 学到且优先保留的规则 | 证据 |
 |---|---|---|
+| 明雷敌人 | 原作地图中可见敌人，玩家可避让或接触进入战斗，不默认替换为随机暗雷 | Steam社区版本差异资料；B script.c/play.c NPC追逐和碰触机制（本包待运行确认） |
 | 世界场景 | 斜视角场景、瓦片和遮挡、地图/进出场景、碰撞检查 | B map.c,scene.c,global.h SCENE |
 | 玩家操作 | 方向移动与NPC交互、位置触发、角色跟随 | B play.c,scene.c |
 | NPC | triggerScript和autoScript、朝向和动画帧、出现/消失与脚本绑定 | B global.h EVENTOBJECT,script.c |
