@@ -2,6 +2,16 @@
 
 > 项目核心：完整学习《仙剑98》经典玩法，让 **其他书籍** 变成可运行的故事游戏；先不改变核心玩法、不复用仙剑受版权保护的原始资产。
 
+## 网页优先路线（2026-10-16 更新）
+
+**正式游戏运行和可视化编辑目标统一迁向 [Type PAL Reforge + Editor](docs/WEB_FIRST_PLATFORM_V2.md)**。以浏览器创建/修改/试玩/保存原创书籍 RPG；此前原创轻量 HTML 只保留为内容编译测试夹具，不是新书游戏的正式引擎。
+
+- [Type PAL 官方项目与代码审计](docs/TYPE_PAL_DEEP_REVIEW_20261016.md)
+- [网页游戏制作平台 V2 完整架构](docs/WEB_FIRST_PLATFORM_V2.md)
+- [真实接入门禁与未验证风险](docs/TYPE_PAL_GATE_AND_COMPAT.md)
+- [官方 content22 适配制作提示](prompts/S4_TYPE_PAL_CANONICAL_ADAPTER.md)
+- 云端官方引擎可复现探针：`.github/workflows/book_rpg_type_pal_probe.yml`。真正编辑/保存/原创游戏/发布必须逐关验收，不能误称已完成。
+
 ## 当前实际状态（2026-10-16）
 - ✅ 已有 `../PAL98_BOOK_RPG_BASELINE_V0_1/` 机制/人物/源码锚点研究。
 - ✅ V1 已具备固定阶段、输入输出清单、人工确认门禁、两部原创测试故事、纯 Node 测试、HTML 构建命令、GitHub Actions CI。
