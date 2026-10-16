@@ -10,7 +10,7 @@ export const GameRules = (() => {
     const result={version:1,gameId:game.id,sceneId:game.world.startScene,
       x:game.player.position[0],y:game.player.position[1], hp:game.player.maxHp,
       mp:game.player.maxMp,gold:0,experience:0,flags:{},inventory:{},cleared:{},
-      battle:null,ending:null,message:'靠近守灯人，按 E 对话。',history:[]};
+      battle:null,ending:null,message:'探索地图，靠近人物按 E 对话或调查。',history:[]};
     return result;
   }
   function met(s,req=[]){return req.every(r => r.type==='flag' ? !!s.flags[r.target]===!!r.value
@@ -56,7 +56,7 @@ export const GameRules = (() => {
       if(!s.battle.enemyHp){resolveWin(game,s);return s}
       const harm=Math.max(1,enemy.attack-game.player.defense-(a.type==='DEFEND'?3:0));
       s.hp=Math.max(0,s.hp-harm);
-      put(s,(a.type==='DEFEND'?'你采取防御姿态。':'你造成 '+damage+' 点伤害。')+' 雾狼反击造成 '+harm+' 点伤害。');
+      put(s,(a.type==='DEFEND'?'你采取防御姿态。':'你造成 '+damage+' 点伤害。')+' '+enemy.name+'反击造成 '+harm+' 点伤害。');
       if(s.hp===0){s.hp=game.player.maxHp;s.mp=game.player.maxMp;s.battle=null;s.sceneId=game.world.startScene;s.x=game.player.position[0];s.y=game.player.position[1];put(s,'力竭后被送回驿站，恢复了状态。')}
       return s;
     }
