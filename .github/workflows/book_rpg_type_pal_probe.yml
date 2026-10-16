@@ -1,0 +1,112 @@
+name: Type PAL upstream web editor / Reforge P0 probe
+on:
+  push:
+    branches:
+      - feature/type-pal-web-platform-p0-20261016
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/docs/TYPE_PAL_*'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/docs/WEB_FIRST_PLATFORM_V2.md'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/prompts/S4_TYPE_PAL_CANONICAL_ADAPTER.md'
+      - '.github/workflows/book_rpg_type_pal_probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate-official-web-editor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: project
+      - name: Checkout fixed official Type PAL source (GPLv3)
+        uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          fetch-depth: 1
+          persist-credentials: false
+          path: upstream
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+      - name: Verify pinned upstream revision and canonical contract
+        working-directory: upstream
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          grep -q 'CONTENT_VERSION = 22' packages/content/src/character.ts
+          grep -q 'CURRENT_PROJECT_MINIMUM_SAVE_VERSION = 12' packages/content/src/character.ts
+          echo 'PIN_AND_CONTENT_22_SAVE_12=PASS'
+      - name: Install upstream workspace dependencies
+        working-directory: upstream
+        run: pnpm install --frozen-lockfile
+      - name: Official content typecheck
+        working-directory: upstream
+        run: pnpm --filter @type-pal/content typecheck
+      - name: Build real browser game Reforge
+        working-directory: upstream
+        run: pnpm --filter @type-pal/reforge build
+      - name: Build real browser Editor
+        working-directory: upstream
+        run: pnpm --filter @type-pal/editor build
+      - name: Verify output entrypoints
+        working-directory: upstream
+        run: |
+          test -s packages/reforge/dist/index.html
+          test -s packages/editor/dist/index.html
+          test -s packages/editor/dist/play.html
+          echo 'EDITOR_AND_REFORGE_BUILD=PASS'
+      - name: Install headless Chromium for direct editor smoke
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start the actual React editor without original PAL content
+        working-directory: upstream
+        shell: bash
+        run: |
+          (pnpm --dir packages/editor exec vite --host 127.0.0.1 --port 6011 --strictPort > /tmp/type-pal-editor.log 2>&1 &)
+          for i in {1..45}; do
+            if curl --fail --silent http://127.0.0.1:6011/ > /dev/null; then echo 'EDITOR_HTTP_UP=PASS'; exit 0; fi
+            sleep 1
+          done
+          cat /tmp/type-pal-editor.log
+          exit 1
+      - name: Browser smoke — live editor ProjectPicker
+        working-directory: upstream
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          import assert from 'node:assert/strict';
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1280,height:800}});
+          const errors=[];
+          page.on('pageerror', e=>errors.push(e.message));
+          const response=await page.goto('http://127.0.0.1:6011/?picker',{waitUntil:'networkidle',timeout:60000});
+          assert.equal(response.status(),200);
+          await page.getByText('type-pal 编辑器').first().waitFor({timeout:30000});
+          await page.getByText('新建空白项目').first().waitFor({timeout:15000});
+          await page.getByText('打开项目').first().waitFor({timeout:15000});
+          assert.deepEqual(errors,[],'Browser page JS errors: '+JSON.stringify(errors));
+          console.log('BROWSER_EDITOR_PROJECT_PICKER=PASS');
+          console.log('EDITOR_ENTRY_LINKS=新建空白项目,打开项目');
+          await browser.close();
+          JS
+      - name: Print P0 verification contract
+        if: always()
+        run: |
+          echo 'P0 checked: upstream pinned content22/SAVE12, package typecheck, both production web builds, real Chromium UI smoke'
+          echo 'NOT CHECKED: clean asset new game project, FSA roundtrip save/load, book-to-content22 exporter, static hosting, licensed publication'
+      - name: Upload only text evidence; never publish upstream asset binaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-pal-web-probe-text-evidence
+          retention-days: 14
+          path: /tmp/type-pal-editor.log
+          if-no-files-found: ignore
