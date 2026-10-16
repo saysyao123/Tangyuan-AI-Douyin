@@ -1,0 +1,46 @@
+name: Book-to-RPG V1 contract and offline game
+on:
+  push:
+    branches:
+      - research/pal98-book-rpg-baseline-20261016
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**'
+      - '.github/workflows/book_rpg_pipeline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-and-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: 09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run real test suite
+        run: node --test tests/*.test.mjs | tee test-output.txt
+      - name: Validate content and build offline HTML
+        run: |
+          node tools/pipeline.mjs validate examples/lantern-inn/game.json | tee validation.json
+          node tools/pipeline.mjs build examples/lantern-inn/game.json dist/lantern-inn.html | tee build-output.json
+          test -s dist/lantern-inn.html
+          ! grep -q '/*__ENGINE__*/' dist/lantern-inn.html
+          echo "PASS — story game package and browser HTML compiled" | tee STATUS.txt
+      - name: Upload reproducible evidence and playable game
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-rpg-v1-playable-and-tests
+          retention-days: 14
+          path: |
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/dist/lantern-inn.html
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/test-output.txt
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/validation.json
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/build-output.json
+            09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/STATUS.txt
