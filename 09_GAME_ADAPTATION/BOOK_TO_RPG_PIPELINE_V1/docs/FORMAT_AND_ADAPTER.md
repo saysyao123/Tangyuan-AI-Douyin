@@ -1,5 +1,7 @@
 # 内容合同 V1：引擎无关，禁止假装已经接入 Type PAL
 
+> V2重要更新：**正式制作转向 Type PAL Reforge + Editor 浏览器平台**。此文档仅定义历史V1夹具，正式 S4 官方适配要求见 [WEB_FIRST_PLATFORM_V2.md](WEB_FIRST_PLATFORM_V2.md) 与 [TYPE_PAL_GATE_AND_COMPAT.md](TYPE_PAL_GATE_AND_COMPAT.md)。
+
 目标是稳定的原创“故事内容包”，内有 id/source、playable角色、二维场景地图、NPC/怪物/物品、events、战斗定义与结局。由工具检查引用；当前示例 `examples/lantern-inn/game.json`。
 
 ## 与上游关系

@@ -11,7 +11,9 @@
 8. prompts/S1_SOURCE_ANALYSIS.md、prompts/S2_GAME_DIRECTOR.md、prompts/S3_CONTENT_COMPILER.md
 9. 上层 `../PAL98_BOOK_RPG_BASELINE_V0_1/` 的研究资料。
 
-**项目目标**：给定用户有权使用的小说/书籍，保留仙剑98式的经典RPG机制，将**书籍内容**按阶段转化成全新的可玩游戏。不要把目标切回“复刻仙剑”，不要随意重设计游戏机制。
+**项目目标**：给定用户有权使用的小说/书籍，保留仙剑98式的经典RPG机制，将**书籍内容**按阶段转化成全新的可玩游戏。**最终作品必须以浏览器网页呈现，并优先进入 Type PAL Reforge + Editor 官方内容工程**。不要把目标切回“复刻仙剑”，不要随意重设计游戏机制。
+
+**新版必读（先于S4）**：`docs/TYPE_PAL_DEEP_REVIEW_20261016.md`、`docs/WEB_FIRST_PLATFORM_V2.md`、`docs/TYPE_PAL_GATE_AND_COMPAT.md` 和 `prompts/S4_TYPE_PAL_CANONICAL_ADAPTER.md`。
 
 **收到书后的执行纪律**：
 - S0权利与输入识别→S1章节、事实、人际关系与章节证据→S2游戏导演的可玩节拍和人物技能映射→S3原创/授权资源与一致性清单→S4内容包编译与引用校验→S5游戏引擎适配、构建→S6真实试玩/自动回归→S7交付与下一轮迭代。
@@ -25,5 +27,5 @@
 **收到书之后的第一轮应产出**：S0 rights/source manifest、S1 chapter-index/fact-ledger/character-links、S2 首个故事弧最小可玩关卡设计，连同版权风险清单和门禁状态。按照阶段仅输出必要结果，不生成过多不可验收的文档。
 
 **不可混淆**：
-- `node tools/pipeline.mjs build` 为原创轻量试玩内核，仅证明输入与游戏演示可连接；
-- 把整本书变成原版复杂度的 RPG、Type PAL/Reforge 正式内容适配，以及真实用户《仙剑98》参考运行，目前都不是已验收事实。
+- `node tools/pipeline.mjs build` 为原创轻量试玩内核/数据测试夹具，仅证明输入与演示可连接，**不可作为新书正式 Type PAL 游戏交付**；
+- 把整本书变成原版复杂度的 RPG、Type PAL/Reforge 正式内容适配，以及真实用户《仙剑98》参考运行，目前都不是已验收事实。官方 Type PAL 网页编译、项目选择页/场景冒烟测试须看本轮实际 GitHub CI，不能由演示代码推断。
