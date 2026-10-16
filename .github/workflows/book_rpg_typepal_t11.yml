@@ -40,7 +40,7 @@ jobs:
             echo 'Lost-keyup baseline unexpectedly passed'; exit 1
           fi
           cat /tmp/t11-evidence/baseline-unit.log
-          rg '3 failed' /tmp/t11-evidence/baseline-unit.log
+          python3 -c "from pathlib import Path; assert '3 failed' in Path('/tmp/t11-evidence/baseline-unit.log').read_text()"
       - name: Build patched candidate; input and render unit checks
         run: |
           node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_build.mjs upstream "$PWD/web/candidate"
