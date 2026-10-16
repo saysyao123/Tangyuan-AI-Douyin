@@ -19,7 +19,7 @@ export async function buildCinematicArt(oldPackFile:string,newPackFile:string){
  const bow=blank(64,56);for(let y=0;y<performer.height;y++)for(let x=0;x<performer.width;x++)if(performer.opaque[y*performer.width+x])dot(bow,x+14+(y<32?Math.round((32-y)/8):0),y+(y<32?4:0),performer.pixels[y*performer.width+x]);fallen.push(bow)
  art['performer-action']=await gz(fallen)
  const carriers:F[]=[]
- for(let dir=0;dir<4;dir++)for(let phase=0;phase<3;phase++){const f=blank(76,60);const body=fallen[2];for(let y=0;y<body.height;y++)for(let x=0;x<body.width;x++)if(body.opaque[y*body.width+x])dot(f,12+x,Math.round((y-30)*.7)+24,body.pixels[y*body.width+x]);paste(f,walk(people[dir],dir,phase),0,3);paste(f,walk(people[dir],dir,phase===1?2:phase===2?1:0),40,3);carriers.push(f)}
+ for(let dir=0;dir<4;dir++)for(let phase=0;phase<3;phase++){const f=blank(76,60);paste(f,walk(people[dir],dir,phase),0,3);paste(f,walk(people[dir],dir,phase===1?2:phase===2?1:0),40,3);const body=fallen[2];for(let y=0;y<body.height;y++)for(let x=0;x<body.width;x++)if(body.opaque[y*body.width+x])dot(f,12+x,Math.round((y-30)*.7)+24,body.pixels[y*body.width+x]);carriers.push(f)}
  art.carriers=await gz(carriers)
  const crouch=(old.sprites.child as any[]).map(dec).flatMap((a:F)=>[0,1,2].map(()=>{const f=blank(a.width,a.height);for(let y=0;y<a.height;y++)for(let x=0;x<a.width;x++)if(a.opaque[y*a.width+x])dot(f,x,Math.min(a.height-3,Math.round(y*.72)+10),a.pixels[y*a.width+x]);return f}));art['child-crouch']=await gz(crouch)
  const red=color(255,110,35),orange=color(255,185,61),blue=color(85,184,219),white=color(245,236,203),coal=color(48,55,60),wood=color(107,84,62),brick=color(133,121,105),leaf=color(82,112,76)

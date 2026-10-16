@@ -1,0 +1,908 @@
+{
+  "version": 12,
+  "projectId": "book-pilot-cinematic",
+  "contentVersion": 22,
+  "world": {
+    "script": {
+      "flags": {
+        "intro_seen": true,
+        "bought": true,
+        "shared": true,
+        "rumor_seen": true,
+        "stage_started": true,
+        "fire_ignited": true,
+        "fire_recalled": true,
+        "fire_cast": true,
+        "fire_dissolved": true,
+        "heart_stirred": true,
+        "watched": true,
+        "arrest_started": false,
+        "performer_down": false,
+        "officers_departed": false,
+        "backstage_seen": false,
+        "ending_seen": false,
+        "street_seen": false,
+        "stranger_seen": false,
+        "promise_seen": false,
+        "neighbor_seen": false,
+        "chapter_complete": false
+      },
+      "vars": {},
+      "entityState": {
+        "fair": {
+          "share-skewer": 0,
+          "body-fire": 0,
+          "fireball": 0,
+          "heart": 0,
+          "stage-performer": 0
+        }
+      },
+      "behaviors": {
+        "scenes": {
+          "fair": {
+            "onEnter": {
+              "cursor": {
+                "hook": "main",
+                "at": {
+                  "kind": "stage",
+                  "stage": "main"
+                }
+              }
+            }
+          }
+        },
+        "entities": {
+          "fair": {
+            "vendor": {
+              "trigger": {
+                "cursor": {
+                  "behavior": "main",
+                  "at": {
+                    "kind": "stage",
+                    "stage": "main"
+                  }
+                }
+              }
+            },
+            "stage": {
+              "trigger": {
+                "cursor": {
+                  "behavior": "main",
+                  "at": {
+                    "kind": "stage",
+                    "stage": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "entityPos": {
+        "fair": {
+          "approach-vendor-probe": {
+            "col": 33,
+            "row": 0,
+            "height": 0
+          },
+          "share-skewer": {
+            "col": 32,
+            "row": 2,
+            "height": 0
+          },
+          "approach-stage-probe": {
+            "col": 36,
+            "row": 0,
+            "height": 0
+          },
+          "fireball": {
+            "col": 37,
+            "row": -7,
+            "height": 1
+          },
+          "vendor": {
+            "col": 34,
+            "row": 0,
+            "height": 0
+          },
+          "stage": {
+            "col": 36,
+            "row": 1,
+            "height": 0
+          },
+          "backstage-gate": {
+            "col": 43,
+            "row": -6,
+            "height": 0
+          },
+          "exit": {
+            "col": 26,
+            "row": 2,
+            "height": 0
+          },
+          "rumor": {
+            "col": 31,
+            "row": 4,
+            "height": 0
+          },
+          "theater": {
+            "col": 40,
+            "row": -12,
+            "height": 0
+          },
+          "stage-performer": {
+            "col": 42.5,
+            "row": -12,
+            "height": 0
+          },
+          "body-fire": {
+            "col": 40,
+            "row": -12,
+            "height": 0
+          },
+          "heart": {
+            "col": 37,
+            "row": -6,
+            "height": 0
+          },
+          "audience-0": {
+            "col": 33,
+            "row": 5,
+            "height": 0
+          },
+          "audience-1": {
+            "col": 35,
+            "row": 5,
+            "height": 0
+          },
+          "audience-2": {
+            "col": 37,
+            "row": 5,
+            "height": 0
+          },
+          "audience-3": {
+            "col": 39,
+            "row": 5,
+            "height": 0
+          },
+          "audience-4": {
+            "col": 41,
+            "row": 5,
+            "height": 0
+          },
+          "audience-5": {
+            "col": 35,
+            "row": 2,
+            "height": 0
+          },
+          "audience-6": {
+            "col": 37,
+            "row": 2,
+            "height": 0
+          },
+          "audience-7": {
+            "col": 39,
+            "row": 2,
+            "height": 0
+          },
+          "audience-8": {
+            "col": 41,
+            "row": 2,
+            "height": 0
+          },
+          "audience-9": {
+            "col": 43,
+            "row": 2,
+            "height": 0
+          },
+          "audience-10": {
+            "col": 37,
+            "row": -2,
+            "height": 0
+          },
+          "audience-11": {
+            "col": 41,
+            "row": -5,
+            "height": 0
+          },
+          "audience-12": {
+            "col": 31,
+            "row": 5,
+            "height": 0
+          },
+          "audience-13": {
+            "col": 32,
+            "row": 3,
+            "height": 0
+          },
+          "audience-14": {
+            "col": 44,
+            "row": 0,
+            "height": 0
+          },
+          "audience-15": {
+            "col": 43,
+            "row": -2,
+            "height": 0
+          },
+          "audience-16": {
+            "col": 36,
+            "row": 7,
+            "height": 0
+          },
+          "audience-17": {
+            "col": 40,
+            "row": 7,
+            "height": 0
+          },
+          "audience-18": {
+            "col": 42,
+            "row": 6,
+            "height": 0
+          },
+          "audience-19": {
+            "col": 34,
+            "row": 7,
+            "height": 0
+          },
+          "market-stall-0": {
+            "col": 28,
+            "row": -7,
+            "height": 0
+          },
+          "market-stall-1": {
+            "col": 33,
+            "row": -7,
+            "height": 0
+          },
+          "market-stall-2": {
+            "col": 28,
+            "row": 7,
+            "height": 0
+          },
+          "market-lamp-0": {
+            "col": 27,
+            "row": -2,
+            "height": 0
+          },
+          "market-lamp-1": {
+            "col": 35,
+            "row": -3,
+            "height": 0
+          },
+          "market-lamp-2": {
+            "col": 43,
+            "row": -9,
+            "height": 0
+          },
+          "market-tree": {
+            "col": 23,
+            "row": -1,
+            "height": 0
+          },
+          "market-crate": {
+            "col": 33,
+            "row": -3,
+            "height": 0
+          },
+          "approach-vendor-0-0": {
+            "col": 32,
+            "row": -2,
+            "height": 0
+          },
+          "approach-vendor-0-1": {
+            "col": 32,
+            "row": -1,
+            "height": 0
+          },
+          "approach-vendor-0-2": {
+            "col": 32,
+            "row": 0,
+            "height": 0
+          },
+          "approach-vendor-0-3": {
+            "col": 32,
+            "row": 1,
+            "height": 0
+          },
+          "approach-vendor-0-4": {
+            "col": 32,
+            "row": 2,
+            "height": 0
+          },
+          "approach-vendor-1-0": {
+            "col": 33,
+            "row": -2,
+            "height": 0
+          },
+          "approach-vendor-1-1": {
+            "col": 33,
+            "row": -1,
+            "height": 0
+          },
+          "approach-vendor-1-2": {
+            "col": 33,
+            "row": 0,
+            "height": 0
+          },
+          "approach-vendor-1-3": {
+            "col": 33,
+            "row": 1,
+            "height": 0
+          },
+          "approach-vendor-1-4": {
+            "col": 33,
+            "row": 2,
+            "height": 0
+          },
+          "approach-vendor-2-0": {
+            "col": 34,
+            "row": -2,
+            "height": 0
+          },
+          "approach-vendor-2-1": {
+            "col": 34,
+            "row": -1,
+            "height": 0
+          },
+          "approach-vendor-2-3": {
+            "col": 34,
+            "row": 1,
+            "height": 0
+          },
+          "approach-vendor-2-4": {
+            "col": 34,
+            "row": 2,
+            "height": 0
+          },
+          "approach-vendor-3-0": {
+            "col": 35,
+            "row": -2,
+            "height": 0
+          },
+          "approach-vendor-3-1": {
+            "col": 35,
+            "row": -1,
+            "height": 0
+          },
+          "approach-vendor-3-2": {
+            "col": 35,
+            "row": 0,
+            "height": 0
+          },
+          "approach-vendor-3-3": {
+            "col": 35,
+            "row": 1,
+            "height": 0
+          },
+          "approach-vendor-4-0": {
+            "col": 36,
+            "row": -2,
+            "height": 0
+          },
+          "approach-vendor-4-1": {
+            "col": 36,
+            "row": -1,
+            "height": 0
+          },
+          "approach-vendor-4-2": {
+            "col": 36,
+            "row": 0,
+            "height": 0
+          },
+          "approach-vendor-4-4": {
+            "col": 36,
+            "row": 2,
+            "height": 0
+          },
+          "approach-stage-0-0": {
+            "col": 34,
+            "row": -1,
+            "height": 0
+          },
+          "approach-stage-0-2": {
+            "col": 34,
+            "row": 1,
+            "height": 0
+          },
+          "approach-stage-0-3": {
+            "col": 34,
+            "row": 2,
+            "height": 0
+          },
+          "approach-stage-0-4": {
+            "col": 34,
+            "row": 3,
+            "height": 0
+          },
+          "approach-stage-1-0": {
+            "col": 35,
+            "row": -1,
+            "height": 0
+          },
+          "approach-stage-1-1": {
+            "col": 35,
+            "row": 0,
+            "height": 0
+          },
+          "approach-stage-1-2": {
+            "col": 35,
+            "row": 1,
+            "height": 0
+          },
+          "approach-stage-1-4": {
+            "col": 35,
+            "row": 3,
+            "height": 0
+          },
+          "approach-stage-2-0": {
+            "col": 36,
+            "row": -1,
+            "height": 0
+          },
+          "approach-stage-2-1": {
+            "col": 36,
+            "row": 0,
+            "height": 0
+          },
+          "approach-stage-2-3": {
+            "col": 36,
+            "row": 2,
+            "height": 0
+          },
+          "approach-stage-2-4": {
+            "col": 36,
+            "row": 3,
+            "height": 0
+          },
+          "approach-stage-3-0": {
+            "col": 37,
+            "row": -1,
+            "height": 0
+          },
+          "approach-stage-3-1": {
+            "col": 37,
+            "row": 0,
+            "height": 0
+          },
+          "approach-stage-3-2": {
+            "col": 37,
+            "row": 1,
+            "height": 0
+          },
+          "approach-stage-3-4": {
+            "col": 37,
+            "row": 3,
+            "height": 0
+          },
+          "approach-stage-4-0": {
+            "col": 38,
+            "row": -1,
+            "height": 0
+          },
+          "approach-stage-4-1": {
+            "col": 38,
+            "row": 0,
+            "height": 0
+          },
+          "approach-stage-4-2": {
+            "col": 38,
+            "row": 1,
+            "height": 0
+          },
+          "approach-stage-4-3": {
+            "col": 38,
+            "row": 2,
+            "height": 0
+          },
+          "approach-stage-4-4": {
+            "col": 38,
+            "row": 3,
+            "height": 0
+          }
+        }
+      }
+    },
+    "entityLifecycles": {},
+    "party": [
+      {
+        "id": "hero",
+        "template": "hero",
+        "level": 1,
+        "hp": 100,
+        "maxHP": 100,
+        "mp": 0,
+        "maxMP": 0,
+        "attack": 10,
+        "defense": 5,
+        "magicAttack": 5,
+        "speed": 10,
+        "luck": 10,
+        "exp": 0,
+        "equipment": {},
+        "tags": []
+      },
+      {
+        "id": "child",
+        "template": "child",
+        "level": 1,
+        "hp": 100,
+        "maxHP": 100,
+        "mp": 0,
+        "maxMP": 0,
+        "attack": 10,
+        "defense": 5,
+        "magicAttack": 5,
+        "speed": 10,
+        "luck": 10,
+        "exp": 0,
+        "equipment": {},
+        "tags": []
+      }
+    ],
+    "money": 5,
+    "learnedSkills": {
+      "hero": [],
+      "child": []
+    },
+    "inventory": []
+  },
+  "position": {
+    "sceneId": "fair",
+    "pos": {
+      "col": 37,
+      "row": -6,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "sceneRuntime": {
+    "fair": {
+      "entities": {
+        "vendor": {
+          "facing": "right",
+          "motion": {}
+        },
+        "stage": {
+          "facing": "right",
+          "motion": {}
+        },
+        "backstage-gate": {
+          "facing": "right",
+          "motion": {}
+        },
+        "exit": {
+          "facing": "right",
+          "motion": {}
+        },
+        "rumor": {
+          "facing": "right",
+          "motion": {}
+        },
+        "theater": {
+          "facing": "right",
+          "motion": {}
+        },
+        "stage-performer": {
+          "facing": "right",
+          "motion": {}
+        },
+        "body-fire": {
+          "facing": "right",
+          "motion": {}
+        },
+        "fireball": {
+          "facing": "down",
+          "motion": {}
+        },
+        "heart": {
+          "facing": "right",
+          "motion": {}
+        },
+        "share-skewer": {
+          "facing": "right",
+          "fixedFrame": 2,
+          "motion": {
+            "explicitAnimation": 2
+          }
+        },
+        "audience-0": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-1": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-2": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-3": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-4": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-5": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-6": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-7": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-8": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-9": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-10": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-11": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-12": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-13": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-14": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-15": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-16": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-17": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-18": {
+          "facing": "right",
+          "motion": {}
+        },
+        "audience-19": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-stall-0": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-stall-1": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-stall-2": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-lamp-0": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-lamp-1": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-lamp-2": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-tree": {
+          "facing": "right",
+          "motion": {}
+        },
+        "market-crate": {
+          "facing": "right",
+          "motion": {}
+        },
+        "approach-vendor-probe": {
+          "motion": {}
+        },
+        "approach-vendor-0-0": {
+          "motion": {}
+        },
+        "approach-vendor-0-1": {
+          "motion": {}
+        },
+        "approach-vendor-0-2": {
+          "motion": {}
+        },
+        "approach-vendor-0-3": {
+          "motion": {}
+        },
+        "approach-vendor-0-4": {
+          "motion": {}
+        },
+        "approach-vendor-1-0": {
+          "motion": {}
+        },
+        "approach-vendor-1-1": {
+          "motion": {}
+        },
+        "approach-vendor-1-2": {
+          "motion": {}
+        },
+        "approach-vendor-1-3": {
+          "motion": {}
+        },
+        "approach-vendor-1-4": {
+          "motion": {}
+        },
+        "approach-vendor-2-0": {
+          "motion": {}
+        },
+        "approach-vendor-2-1": {
+          "motion": {}
+        },
+        "approach-vendor-2-3": {
+          "motion": {}
+        },
+        "approach-vendor-2-4": {
+          "motion": {}
+        },
+        "approach-vendor-3-0": {
+          "motion": {}
+        },
+        "approach-vendor-3-1": {
+          "motion": {}
+        },
+        "approach-vendor-3-2": {
+          "motion": {}
+        },
+        "approach-vendor-3-3": {
+          "motion": {}
+        },
+        "approach-vendor-4-0": {
+          "motion": {}
+        },
+        "approach-vendor-4-1": {
+          "motion": {}
+        },
+        "approach-vendor-4-2": {
+          "motion": {}
+        },
+        "approach-vendor-4-4": {
+          "motion": {}
+        },
+        "approach-stage-probe": {
+          "motion": {}
+        },
+        "approach-stage-0-0": {
+          "motion": {}
+        },
+        "approach-stage-0-2": {
+          "motion": {}
+        },
+        "approach-stage-0-3": {
+          "motion": {}
+        },
+        "approach-stage-0-4": {
+          "motion": {}
+        },
+        "approach-stage-1-0": {
+          "motion": {}
+        },
+        "approach-stage-1-1": {
+          "motion": {}
+        },
+        "approach-stage-1-2": {
+          "motion": {}
+        },
+        "approach-stage-1-4": {
+          "motion": {}
+        },
+        "approach-stage-2-0": {
+          "motion": {}
+        },
+        "approach-stage-2-1": {
+          "motion": {}
+        },
+        "approach-stage-2-3": {
+          "motion": {}
+        },
+        "approach-stage-2-4": {
+          "motion": {}
+        },
+        "approach-stage-3-0": {
+          "motion": {}
+        },
+        "approach-stage-3-1": {
+          "motion": {}
+        },
+        "approach-stage-3-2": {
+          "motion": {}
+        },
+        "approach-stage-3-4": {
+          "motion": {}
+        },
+        "approach-stage-4-0": {
+          "motion": {}
+        },
+        "approach-stage-4-1": {
+          "motion": {}
+        },
+        "approach-stage-4-2": {
+          "motion": {}
+        },
+        "approach-stage-4-3": {
+          "motion": {}
+        },
+        "approach-stage-4-4": {
+          "motion": {}
+        }
+      },
+      "automatic": {},
+      "chaseClaims": [],
+      "actions": [
+        {
+          "entity": "body-fire",
+          "base": {
+            "binding": {
+              "sprite": "body-fire",
+              "action": "loop",
+              "loop": true
+            },
+            "source": "automatic",
+            "awaited": false,
+            "stepIndex": 5,
+            "elapsedInStepMs": 66.60000000000036,
+            "finished": false
+          }
+        },
+        {
+          "entity": "fireball",
+          "base": {
+            "binding": {
+              "sprite": "fireball",
+              "action": "loop",
+              "loop": true
+            },
+            "source": "automatic",
+            "awaited": false,
+            "stepIndex": 0,
+            "elapsedInStepMs": 0,
+            "finished": false
+          }
+        },
+        {
+          "entity": "heart",
+          "base": {
+            "binding": {
+              "sprite": "heart",
+              "action": "loop",
+              "loop": true
+            },
+            "source": "automatic",
+            "awaited": false,
+            "stepIndex": 4,
+            "elapsedInStepMs": 50,
+            "finished": false
+          }
+        }
+      ]
+    }
+  }
+}
