@@ -26,6 +26,10 @@
 ### 失败及修正经验
 最初直接`tsx` import官方`seed.ts`：经过其依赖 `engine-chrome/registry.ts` 遇到`import.meta.glob is not a function`。已改为编辑器目录启动 Vite Server，`ssrLoadModule('/src/core/seed.ts')`，上游官方原始资源生成器成功执行。以后不要重用失败的tsx直接import路径。
 
+## 2026-10-16 补充：官方 Editor 已成功打开真实原创工程
+
+正式成功 GitHub Run 38855229699：`ORIGINAL_PROJECT_IN_OFFICIAL_EDITOR=PASS`，Chromium编辑器显示雾灯驿站、场景start、守灯人和脚本面板。Reforge原生界面同时已渲染。证据归档 `evidence/T1_ORIGINAL_TYPEPAL_CONTENT22_ENGINE_EDITOR_20261016.md`，两项目合法原创ZIP与浏览器截图已提供给用户。**下一步不要重复跑已经通过的P0/T1首场景加载，而应完成真实NPC按键交互、S5剧情任务战斗、FSA修改保存与重开、独立静态网页发布。**
+
 ## 核心文件
 - `tools/type_pal_t1_make_original_project.mts`：T1首版正规工程转化器，目前只映射一个场景、一位NPC、事件首段对白、主角属性及原生合成素材；**不能宣称支持多场景/道具/战斗/结局**。
 - `.github/workflows/book_rpg_typepal_t1.yml`：官方源码 checkout → pnpm依赖 → 两份原创工程 → 官方校验 → 浏览器真正 Reforge Canvas → 编辑器载入冒烟，原生工程产物上传 artifacts。
