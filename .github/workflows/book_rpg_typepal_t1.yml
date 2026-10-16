@@ -39,9 +39,9 @@ jobs:
         working-directory: upstream
         shell: bash
         run: |
-          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_make_original_project.mts scripts/book_rpg_original_seed.mts
-          pnpm exec tsx scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/lantern-inn/game.json projects/book-lantern-inn | tee /tmp/t1-lantern-create.log
-          pnpm exec tsx scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/river-ledger/game.json projects/book-river-ledger | tee /tmp/t1-river-create.log
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_make_original_project.mts packages/editor/scripts/book_rpg_original_seed.mts
+          pnpm exec tsx packages/editor/scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/lantern-inn/game.json projects/book-lantern-inn | tee /tmp/t1-lantern-create.log
+          pnpm exec tsx packages/editor/scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/river-ledger/game.json projects/book-river-ledger | tee /tmp/t1-river-create.log
           node --input-type=module <<'JS'
           import fs from 'node:fs';
           import assert from 'node:assert/strict';
