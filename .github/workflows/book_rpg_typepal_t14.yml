@@ -1,0 +1,53 @@
+name: Type PAL T14 art motion and complete opening
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t14-polish-20261017]
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t14.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  polish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build new scope once with public synthetic dialogue
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/build.mjs upstream "$PWD/web"
+      - name: Check production closure and display-only invariants
+        run: |
+          mkdir -p /tmp/t14-evidence
+          python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t14-evidence/typecheck.log
+          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/motion.test.ts upstream/packages/reforge/src/t14-motion.test.ts
+          cd upstream
+          node node_modules/vitest/vitest.mjs run --root packages/reforge src/t14-motion.test.ts | tee /tmp/t14-evidence/unit.log
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve CI-only static runtime
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t14-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/pilot/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Native imported-art motion and four-scene continuation checks
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t14-polish-e2e.mjs .
+          node t14-polish-e2e.mjs
+      - name: Record exact CI runtime and native project hashes
+        if: always()
+        run: |
+          cp web/runtime-manifest.json /tmp/t14-evidence/runtime-manifest.json
+          cp -r upstream/projects/book-pilot-opening /tmp/t14-evidence/public-project
+          cp /tmp/t14-http.log /tmp/t14-evidence/http.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t14-evidence, path: /tmp/t14-evidence/, retention-days: 90}

@@ -22,13 +22,15 @@ with ZipFile(downloads/'corresponding-source.zip','w',ZIP_DEFLATED) as z:
  add_tree(z,root/'patches','patches')
  z.write(root/'data/raw/unifont-cn.bdf','data/raw/unifont-cn.bdf')
  add_tree(z,root/'projects/book-lantern-inn','projects/book-lantern-inn')
- for name in ['tools','player','tests']:add_tree(z,book/name,'book-rpg/'+name)
+ for name in ['tools','player','tests','art']:add_tree(z,book/name,'book-rpg/'+name)
  if os.environ.get('T13_CONFIG'):
   add_tree(z,root/'projects/book-pilot-opening','projects/book-pilot-opening')
   z.write(os.environ['T13_CONFIG'],'book-rpg/pilot-config.json')
  z.writestr('README-T1-BUILD.md','''# Lantern Inn corresponding source\n\nType PAL upstream f98d0ddd89ebdee7b04502ee35de26ee82c6d246; GPL-3.0.\nContains the exact patched engine/editor and original assets used by this distribution.\n\nBuild with Node 22.19+ and Python 3:\n\n````\npython -m pip install pillow\nnpx --yes pnpm@10.17.1 install --frozen-lockfile\nnode book-rpg/tools/type_pal_t1_build.mjs . output\npython -m http.server 8080 --directory output\n````\n\nOpen http://localhost:8080. No PAL commercial asset files or external model API required.\nOriginal UI, title and cursor replace upstream PAL-derived defaults; Unifont notices are retained.\nScripts type_pal_t1_full.mts and type_pal_t1_art.ts must run through the editor Vite SSR module graph.\n''')
 if os.environ.get('T13_CONFIG'):
- with ZipFile(downloads/'corresponding-source.zip','a',ZIP_DEFLATED) as z:z.writestr('README-OPENING-BUILD.md','# Included opening pilot\n\nBuild both games with: `node book-rpg/tools/t13/build.mjs . output` after installing the dependencies described in README-T1-BUILD.md. Effective content is book-rpg/pilot-config.json. The EPUB is excluded.\n')
+ with ZipFile(downloads/'corresponding-source.zip','a',ZIP_DEFLATED) as z:z.writestr('README-OPENING-BUILD.md','# Included opening pilot\n\nBuild both games with: `node book-rpg/tools/OPENING_BUILDER/build.mjs . output` after installing the dependencies described in README-T1-BUILD.md. Effective content is book-rpg/pilot-config.json. The EPUB is excluded.\n'.replace('OPENING_BUILDER','t14' if os.environ.get('T14_BUILD') else 't13'))
+if os.environ.get('T14_BUILD'):
+ with ZipFile(downloads/'corresponding-source.zip','a',ZIP_DEFLATED) as z:z.writestr('README-T14-BUILD.md','Build: node book-rpg/tools/t14/build.mjs . output. Node22.19+, pnpm10.17.1, Python3 + Pillow required. Uses book-rpg/pilot-config.json. Original PAL and EPUB files excluded.\n')
 seal_zip(downloads/'lantern-inn-project.zip','PROJECT-MANIFEST.json')
 seal_zip(downloads/'corresponding-source.zip','SOURCE-MANIFEST.json')
 # Keep source/project ZIPs alongside the static ZIP, avoiding recursively nested archives.

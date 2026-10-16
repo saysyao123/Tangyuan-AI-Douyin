@@ -35,7 +35,7 @@ function update(){
   document.getElementById('place').textContent=config?(config.scenes[s.sceneId]??s.sceneId):s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';
   const done=config?config.flags.map(id=>f[id]):[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));
   document.getElementById('health').textContent=config?'零钱 '+s.story.money:'体力 '+s.story.party[0].hp+'/'+s.story.party[0].maxHP;
-  document.querySelector('h1').innerHTML=config?(f.ending_seen?config.endHeadline:config.headline):f.ending_seen?'灯火<em><br>重明。</em>':'把灯火<br><em>带回家。</em>';
+  document.querySelector('h1').innerHTML=config?(f[config.completionFlag??'ending_seen']?config.endHeadline:config.headline):f.ending_seen?'灯火<em><br>重明。</em>':'把灯火<br><em>带回家。</em>';
  }catch{showRecovery('暂时无法连接游戏。可重新载入后读取已保存的进度，未保存的操作会丢失。')}
 }
 setInterval(update,250);update();

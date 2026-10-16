@@ -9,6 +9,8 @@ run(['--import','tsx','packages/editor/scripts/check-project.mts','projects/book
 if(process.env.T1_STABILITY!=='0'){const patched=spawnSync('python3',[path.join(tools,'t11/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('stability patch failed')}
 if(process.env.T1_STABILITY!=='0'&&process.env.T1_FOUNDATION!=='0'){const patched=spawnSync('python3',[path.join(tools,'t12/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('foundation patch failed')}
 
+if(process.env.T1_POLISH==='1'){const patched=spawnSync('python3',[path.join(tools,'t14/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('polish patch failed')}
+
 await fs.rm(output,{recursive:true,force:true});await fs.mkdir(output,{recursive:true});
 const vite=path.join(root,'packages/editor/node_modules/vite/bin/vite.js');
 for(const app of ['reforge','editor'])await fs.rm(path.join(root,'packages',app,'dist'),{recursive:true,force:true});
