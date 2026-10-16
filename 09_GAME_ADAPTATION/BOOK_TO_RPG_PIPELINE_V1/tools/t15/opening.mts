@@ -62,7 +62,7 @@ const courtyard={id:'courtyard',mapId:'courtyard',entry:{pos:pos(27,1),facing:'r
 // Resolve any legal interaction-side start through explicit native waypoints. Hidden
 // spatial probes are author content, not a new runtime API or a global player variable.
 function normalizeInteraction(scene:any,id:string,goal:[number,number],extraBlocked:string[]=[]){
- const npc=scene.entities.find((e:any)=>e.id===id),probe='approach-'+id+'-probe',zones:any[]=[],blocked=new Set([npc.pos.col+','+npc.pos.row,...extraBlocked]);let choose:any[]=[]
+ const npc=scene.entities.find((e:any)=>e.id===id),probe='approach-'+id+'-probe',zones:any[]=[],blocked=new Set([...scene.entities.filter((e:any)=>e.collide&&!e.hidden).map((e:any)=>e.pos.col+','+e.pos.row),...extraBlocked]);let choose:any[]=[]
  const key=(p:number[])=>p.join(',')
  function pathFrom(start:number[]){const q=[start],prev=new Map<string,string|null>([[key(start),null]]);for(let i=0;i<q.length;i++){const at=q[i];if(key(at)===key(goal)){const route:number[][]=[];let k=key(at);while(prev.get(k)!==null){route.push(k.split(',').map(Number));k=prev.get(k)!}return route.reverse()}for(const [dc,dr]of [[1,0],[-1,0],[0,1],[0,-1]]){const next=[at[0]+dc,at[1]+dr],k=key(next);if(Math.abs(next[0]-npc.pos.col)>4||Math.abs(next[1]-npc.pos.row)>4||blocked.has(k)||prev.has(k))continue;prev.set(k,key(at));q.push(next)}}throw Error('No local actor-safe route '+id)}
  for(let dc=-2;dc<=2;dc++)for(let dr=-2;dr<=2;dr++){if(!dc&&!dr)continue;const start=[npc.pos.col+dc,npc.pos.row+dr];if(blocked.has(key(start)))continue;const zone='approach-'+id+'-'+(dc+2)+'-'+(dr+2);zones.push({id:zone,pos:pos(start[0],start[1]),zone:true});choose=[{kind:'branch',cond:{kind:'entitiesNear',from:target(scene.id,probe),to:target(scene.id,zone),range:.01},then:pathFrom(start).map(([c,r])=>party(c,r)),else:choose}]}
@@ -70,6 +70,7 @@ function normalizeInteraction(scene:any,id:string,goal:[number,number],extraBloc
  scene.entities.push({id:probe,pos:pos(goal[0],goal[1]),zone:true},...zones)
 }
 normalizeInteraction(fair,'vendor',[32,1])
+normalizeInteraction(fair,'stage',[35,0])
 normalizeInteraction(street,'stranger',[29,-2])
 normalizeInteraction(courtyard,'neighbor',[33,-1],['34,-3'])
 const scenes=[fair,backstage,street,courtyard],dimensions:any={fair:[32,28],backstage:[24,24],street:[30,24],courtyard:[30,26]}
