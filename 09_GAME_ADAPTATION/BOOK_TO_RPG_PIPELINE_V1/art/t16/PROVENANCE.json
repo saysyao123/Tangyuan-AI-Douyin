@@ -1,0 +1,14 @@
+{
+  "kind": "GPT-generated-original-art",
+  "created": "2026-10-16",
+  "raw_sha256": "5fdf224906ac490ce4f0fcfbdc184e660edf4ded2fe7441099b8b00413d252d0",
+  "prompt_summary": "Original isometric pixel RPG winter-night cargo truck, humble late-night convenience storefront, modest bed and CRT television; transparent isolated props; coherent muted teal and warm amber palette. No extracted commercial game artwork.",
+  "normalization": "tools/t16/import_art.py selects connected components; shared 256-colour indexed palette and transparent index255; native RLE through Vite SSR",
+  "runtime_assets": [
+    "truck",
+    "night-shop",
+    "bed",
+    "television"
+  ],
+  "other_assets": "Original authored pixel effects, snowmen, floor tiles, terminals, pose variants and native procedural WAV in tools/t16/art.mts and opening.mts."
+}

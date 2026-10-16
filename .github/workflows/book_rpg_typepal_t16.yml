@@ -34,16 +34,21 @@ jobs:
           python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t16-http.log 2>&1 &
           for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
           exit 1
-      - name: Play only the new second act and old-save continuation
+      - name: Check revised artwork from passed native checkpoints and shell switching
         working-directory: upstream
         run: |
-          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t16-night-e2e.mjs .
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t16-visual-e2e.mjs .
           mkdir -p book-rpg-tests
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-*.native-save.json book-rpg-tests/
-          node t16-night-e2e.mjs
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t16-*.native-save.json book-rpg-tests/
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t16-shell-e2e.mjs .
+          node t16-visual-e2e.mjs
+          mv /tmp/t16-evidence/result.json /tmp/t16-evidence/visual-result.json
+          node t16-shell-e2e.mjs
       - name: Record exact CI runtime and native project hashes
         if: always()
         run: |
+          cp -r web /tmp/t16-evidence/runtime-public
           cp web/runtime-manifest.json /tmp/t16-evidence/runtime-manifest.json
           cp -r upstream/projects/book-pilot-cinematic /tmp/t16-evidence/public-project
           cp /tmp/t16-http.log /tmp/t16-evidence/http.log
