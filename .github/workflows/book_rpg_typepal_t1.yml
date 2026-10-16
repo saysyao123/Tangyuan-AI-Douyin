@@ -1,0 +1,126 @@
+name: Book RPG T1 canonical original-content Type PAL probe
+on:
+  push:
+    branches:
+      - feature/book-rpg-typepal-t1-original-20261016
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_make_original_project.mts'
+      - '.github/workflows/book_rpg_typepal_t1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-original:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: book-rpg
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          fetch-depth: 1
+          persist-credentials: false
+          path: upstream
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+      - name: Install pinned official Type PAL deps
+        working-directory: upstream
+        run: pnpm install --frozen-lockfile
+      - name: Generate two fully original canonical projects from two story packages
+        working-directory: upstream
+        shell: bash
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_make_original_project.mts scripts/book_rpg_original_seed.mts
+          pnpm exec tsx scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/lantern-inn/game.json projects/book-lantern-inn | tee /tmp/t1-lantern-create.log
+          pnpm exec tsx scripts/book_rpg_original_seed.mts ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/examples/river-ledger/game.json projects/book-river-ledger | tee /tmp/t1-river-create.log
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import assert from 'node:assert/strict';
+          for(const id of ['book-lantern-inn','book-river-ledger']){
+            const p='projects/'+id+'/';
+            const m=JSON.parse(fs.readFileSync(p+'manifest.json'));
+            const catalog=JSON.parse(fs.readFileSync(p+'assets/index.json'));
+            const actors=JSON.parse(fs.readFileSync(p+'content/actors.json'));
+            const scene=JSON.parse(fs.readFileSync(p+'content/scenes/start.json'));
+            assert.equal(m.contentVersion,22); assert.equal(m.minimumSaveVersion,12);
+            assert.equal(m.id,id); assert.equal(actors.length,2);
+            assert.equal(scene.entities[0].id,'npc-welcome');
+            assert.ok(Object.values(catalog.assets).every(x=>x.origin.kind==='generated'),'All assets must be generated');
+            for(const asset of Object.values(catalog.assets)){assert.ok(fs.existsSync(p+asset.path),'Missing '+asset.path)}
+            console.log('ORIGINAL_CANONICAL_PROJECT_CHECK=PASS '+id);
+          }
+          JS
+      - name: Native Type PAL canonical project check
+        working-directory: upstream
+        shell: bash
+        run: |
+          pnpm check:content "$(pwd)/projects/book-lantern-inn" | tee /tmp/t1-native-check.txt
+          pnpm check:content "$(pwd)/projects/book-river-ledger" | tee -a /tmp/t1-native-check.txt
+      - name: Install real Chromium
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start native Reforge with original book project
+        working-directory: upstream
+        shell: bash
+        run: |
+          (VITE_PROJECT_ID=book-lantern-inn pnpm --dir packages/reforge exec vite --host 127.0.0.1 --port 6054 --strictPort > /tmp/t1-reforge.log 2>&1 &)
+          for i in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:6054/projects/book-lantern-inn/manifest.json > /dev/null; then
+              echo 'NATIVE_ORIGINAL_PROJECT_HTTP=PASS';exit 0;fi
+            sleep 1
+          done
+          cat /tmp/t1-reforge.log;exit 1
+      - name: Real browser renders own game project (no PAL assets)
+        working-directory: upstream
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright';
+          import assert from 'node:assert/strict';
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1280,height:800}});
+          const errs=[];page.on('pageerror',e=>errs.push(e.message));
+          const r=await page.goto('http://127.0.0.1:6054/',{waitUntil:'domcontentloaded',timeout:60000});
+          assert.equal(r.status(),200);
+          await page.locator('#screen').waitFor({timeout:30000});
+          await page.waitForTimeout(3000);
+          const data=await page.evaluate(()=>{
+            const c=document.getElementById('screen');const arr=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+            let count=0; for(let i=0;i<arr.length;i+=640){if(arr[i]+arr[i+1]+arr[i+2]>0)count++}
+            return {nonBlackSamples:count,w:c.width,h:c.height}
+          });
+          assert.ok(data.nonBlackSamples>30,'Blank canvas '+JSON.stringify(data));
+          assert.deepEqual(errs,[],'Runtime errors '+JSON.stringify(errs));
+          await page.screenshot({path:'/tmp/t1-original-reforge.png'});
+          console.log('ORIGINAL_TYPE_PAL_BROWSER_RENDER=PASS '+JSON.stringify(data));
+          await browser.close();
+          JS
+      - name: Publish narrow, accurate test boundary
+        if: always()
+        run: |
+          echo 'T1 partial proof: original generated canonical content22 assets, real Reforge canvas, two project packages.'
+          echo 'Not tested: authored edit/save/reopen in UI, NPC actual interaction, battles, end, release-ready browser hosting.'
+      - name: Upload generated legal original project artifacts and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-pal-t1-original-projects
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            upstream/projects/book-lantern-inn/
+            upstream/projects/book-river-ledger/
+            upstream/book-t1-reports/
+            /tmp/t1-original-reforge.png
+            /tmp/t1-*-create.log
+            /tmp/t1-native-check.txt
+            /tmp/t1-reforge.log
