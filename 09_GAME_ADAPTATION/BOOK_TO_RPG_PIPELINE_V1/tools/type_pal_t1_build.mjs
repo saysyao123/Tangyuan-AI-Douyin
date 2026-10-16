@@ -16,7 +16,9 @@ await fs.cp(path.join(root,'packages/editor/dist'),path.join(output,'editor'),{r
 for(const base of ['game','editor'])await fs.cp(path.join(root,'projects/book-lantern-inn'),path.join(output,base,'projects/book-lantern-inn'),{recursive:true});
 await fs.cp(path.join(tools,'../player'),output,{recursive:true});
 await fs.copyFile(path.join(root,'LICENSE'),path.join(output,'LICENSE-TypePAL.txt'));
+for(const f of ['spessasynth_processor.min.js','favicon.ico'])await fs.copyFile(path.join(root,'packages/reforge/public',f),path.join(output,f));
 await fs.cp(path.join(root,'packages/reforge/src/engine-chrome/assets/licenses'),path.join(output,'licenses'),{recursive:true});
+await fs.copyFile(path.join(root,'packages/reforge/public/soundfont-LICENSE.txt'),path.join(output,'licenses/TimGM6mb.txt'));
 await fs.copyFile(path.join(root,'packages/reforge/src/engine-chrome/assets/PROVENANCE.md'),path.join(output,'ART_PROVENANCE.md'));
 const packed=spawnSync('python3',[path.join(tools,'type_pal_t1_package.py'),root,output,path.join(tools,'..')],{stdio:'inherit'});if(packed.status!==0)throw Error('packaging failed');
 console.log('STATIC_T1_BUILD_READY '+output);

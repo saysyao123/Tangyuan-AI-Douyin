@@ -5,6 +5,7 @@ on:
     paths:
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_*'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t1-browser-workspace.ts'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/T1WelcomeEditor.tsx'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-*'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/player/**'
       - '.github/workflows/book_rpg_typepal_t1_full.yml'

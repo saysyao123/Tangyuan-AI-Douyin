@@ -103,3 +103,24 @@ p.write_text(s)
 # Replace unclassified default favicon with an original lamp icon.
 im=Image.new('RGBA',(32,32),'#101c27');d=ImageDraw.Draw(im);d.rectangle((15,4,17,28),fill=gold);d.rectangle((9,5,23,7),fill=gold);d.rectangle((19,10,27,22),fill=gold);d.rectangle((21,12,25,20),fill=light);im.save(root/'packages/reforge/public/favicon.ico')
 (root/'packages/editor/public/type-pal-editor-mark.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#101c27"/><path d="M16 5v23M10 7h14M23 8v4" stroke="#e6bb7c" stroke-width="2"/><rect x="19" y="12" width="8" height="10" fill="#e6bb7c"/></svg>')
+# One-sentence NPC edit shortcut dispatches a real canonical editor command, then official save.
+shutil.copyfile(Path(__file__).parent/'T1WelcomeEditor.tsx',root/'packages/editor/src/ui/T1WelcomeEditor.tsx')
+p=root/'packages/editor/src/ui/App.tsx';s=p.read_text()
+if "import { T1WelcomeEditor }" not in s:s="import { T1WelcomeEditor } from './T1WelcomeEditor.js'\n"+s
+if '<T1WelcomeEditor ' not in s:s=s.replace('<EditorAppHeader\n','''{state.manifest.id === 'book-lantern-inn' ? <T1WelcomeEditor session={scriptSession} onSave={save} onPlay={() => openSceneTrial()} /> : null}
+      <EditorAppHeader\n''',1)
+p.write_text(s)
+# Native settlement requires explicit music roles even for a music-free opening.
+# Newly composed MIDI phrase; separate GPL2 TimGM6mb bank is bundled with its notice.
+import struct
+track=bytearray(b'\x00\xff\x51\x03\x07\xa1\x20\x00\xc0\x0a')
+for note in [60,64,67,72,71,67,76,72]:track.extend(bytes([0,0x90,note,58,96,0x80,note,0]))
+track.extend(b'\x00\xff\x2f\x00')
+midi=b'MThd'+struct.pack('>IHHH',6,0,1,96)+b'MTrk'+struct.pack('>I',len(track))+track
+for id,kind,rel,data,media in [
+ ('music.original-victory','music','assets/generated/audio/victory.mid',midi,'audio/midi'),
+ ('soundfont.timgm','soundfont','assets/runtime/timgm6mb.sf2',(root/'packages/reforge/public/soundfont.sf3').read_bytes(),'audio/sf2')]:
+ p=project/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data);catalog['assets'][id]={'kind':kind,'path':rel,'mediaType':media,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'label':id,'origin':{'kind':'generated'} if kind=='music' else {'kind':'licensed','ref':'SOUNDFONT_LICENSE.txt'}}
+(project/'assets/index.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n')
+p=project/'manifest.json';manifest=json.loads(p.read_text());manifest['assets']['roles'].update({'audio.defaultBattleMusic':'music.original-victory','audio.openingMenuMusic':'music.original-victory','audio.bossVictoryMusic':'music.original-victory','audio.normalVictoryMusic':'music.original-victory','audio.midiSoundfont':'soundfont.timgm'});p.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+shutil.copyfile(root/'packages/reforge/public/soundfont-LICENSE.txt',project/'SOUNDFONT_LICENSE.txt')
