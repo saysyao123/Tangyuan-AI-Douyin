@@ -1,0 +1,87 @@
+{
+  "status": "FAIL",
+  "error": "Error: drain timeout {\"projectId\":\"book-lantern-inn\",\"sceneId\":\"forest\",\"story\":{\"flags\":{\"quest_started\":true,\"core_taken\":true,\"wolf_defeated\":false,\"ending_seen\":false},\"inventory\":[{\"itemId\":\"herb\",\"count\":3},{\"itemId\":\"lamp-core\",\"count\":1}],\"money\":0,\"party\":[{\"hp\":109,\"maxHP\":120}]},\"position\":{\"col\":14,\"row\":0,\"height\":0},\"facing\":\"right\",\"dialogue\":null,\"dialogueSlots\":[{\"dialogueId\":\"__script\",\"cueIndex\":0,\"slot\":\"bottom\",\"pageIndex\":0,\"pageCount\":1,\"pageStartedAtMs\":2205.199999999997,\"phase\":\"retained\",\"speaker\":null,\"rowTextIds\":[\"雾狼压低身体，堵住了回程。\\n战斗中方向键选择指令，空格确认。\"],\"pageTextIds\":[\"雾狼压低身体，堵住了回程。\\n战斗中方向键选择指令，空格确认。\"],\"pageText\":\"雾狼压低身体，堵住了回程。\\n战斗中方向键选择指令，空格确认。\",\"presentationId\":3,\"active\":false,\"visibleText\":\"雾狼压低身体，堵住了回程。\\n战斗中方向键选择指令，空格确认。\",\"portraitAsset\":null}],\"scriptRunning\":true,\"presentationBusy\":true,\"menuActive\":false,\"battleActive\":true,\"fadeBlack\":0,\"ditherActive\":false}",
+  "state": {
+    "projectId": "book-lantern-inn",
+    "sceneId": "forest",
+    "story": {
+      "flags": {
+        "quest_started": true,
+        "core_taken": true,
+        "wolf_defeated": false,
+        "ending_seen": false
+      },
+      "inventory": [
+        {
+          "itemId": "herb",
+          "count": 3
+        },
+        {
+          "itemId": "lamp-core",
+          "count": 1
+        }
+      ],
+      "money": 0,
+      "party": [
+        {
+          "hp": 109,
+          "maxHP": 120
+        }
+      ]
+    },
+    "position": {
+      "col": 14,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right",
+    "dialogue": null,
+    "dialogueSlots": [
+      {
+        "dialogueId": "__script",
+        "cueIndex": 0,
+        "slot": "bottom",
+        "pageIndex": 0,
+        "pageCount": 1,
+        "pageStartedAtMs": 2205.199999999997,
+        "phase": "retained",
+        "speaker": null,
+        "rowTextIds": [
+          "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。"
+        ],
+        "pageTextIds": [
+          "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。"
+        ],
+        "pageText": "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。",
+        "presentationId": 3,
+        "active": false,
+        "visibleText": "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。",
+        "portraitAsset": null
+      }
+    ],
+    "scriptRunning": true,
+    "presentationBusy": true,
+    "menuActive": false,
+    "battleActive": true,
+    "fadeBlack": 0,
+    "ditherActive": false
+  },
+  "checks": [
+    "NPC_KEYBOARD_QUEST_START",
+    "SCENE_PORTAL_BOTH_MAPS",
+    "PHYSICAL_ITEM_IN_NATIVE_INVENTORY",
+    "F5_CLOSE_REOPEN_F9_REAL_INDEXEDDB",
+    "BATTLE_SCREEN_SEEN"
+  ],
+  "transcript": [
+    "雾灯驿站",
+    "天黑以后，山路只剩最后一点灯火。\n方向键走动，靠近人物后按空格交谈。",
+    "山道的灯熄了。雾林里还有一枚灯芯，\n能替我找回来吗？",
+    "往右上方的路牌走，按空格进入雾林。\n先存个档吧，F5 保存，F9 读取。",
+    "石缝里透出一点蓝光。获得：灯芯碎晶\n。",
+    "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。"
+  ],
+  "errors": [
+    "工程 \"book-lantern-inn\" 缺资源角色 \"audio.bossVictoryMusic\""
+  ]
+}

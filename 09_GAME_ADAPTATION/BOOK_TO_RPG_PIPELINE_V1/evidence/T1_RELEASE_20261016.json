@@ -1,0 +1,46 @@
+{
+  "status": "T1_ORIGINAL_WEB_RPG_PASS",
+  "date": "2026-10-16",
+  "title": "雾灯驿站 · 灯火重明",
+  "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site",
+  "audience": "owner-private",
+  "engine": "IllegalCreed/type-pal",
+  "engine_sha": "f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "contentVersion": 22,
+  "minimumSaveVersion": 12,
+  "verified_source_commit": "3f56b2255987babc9a9c05e3168df07c2906ad71",
+  "github_pass_run": 38857559015,
+  "evidence_archive_run": 38858007838,
+  "evidence_artifact_id": 12028535078,
+  "native_deployment": {
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "id": "appgdep_6ad1bc5b60bc819188ad790c864c79e3",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_c378274590448191ab55d787142bf94d",
+    "status": "succeeded",
+    "source_commit": "b1e963456cfe1b25b71555a540c9416cbf1427fe"
+  },
+  "runtime_exact_file_hash_matches": 136,
+  "downloads": [
+    {
+      "path": "corresponding-source.zip",
+      "bytes": 18943164,
+      "sha256": "a6efbf01fd75c830832ba3e016dfb4935bd45338f4db8924a7e5555b724d4a89"
+    },
+    {
+      "path": "lantern-inn-static.zip",
+      "bytes": 21096974,
+      "sha256": "10f397f824b7e6a2728be6f9f8810e191b94e0603d2b3afd075aaf9d6c3e646e"
+    },
+    {
+      "path": "lantern-inn-project.zip",
+      "bytes": 5580645,
+      "sha256": "7ef7478d00a411bea3745752b83bd57bdc0f7c174baa1e670c6197f1fad9cc38"
+    }
+  ],
+  "boundaries": [
+    "原生 Type PAL 短篇，两场景至结局。不是任意书籍编译器。",
+    "官方编辑器 OPFS 真实浏览器目录修改保存→完整浏览器关闭重开→Reforge显示修改已验证；原生OS文件夹选取需要用户自己授权，未自动代测。",
+    "真实通关在普通静态服务器上验证；生产发布由 Sites 返回 succeeded，生产登录会话未重复整条通关。",
+    "源码、工程、静态网页 ZIP 并列提供；没有新增付费 API，也没有书籍或 PAL 商业美术/音乐。"
+  ]
+}
