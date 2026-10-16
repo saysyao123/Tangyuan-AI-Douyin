@@ -27,7 +27,7 @@
 - 低配PC：较重的依赖安装、构建与脚本自动测试由 GitHub Actions 执行；浏览器负责可视编辑和验收。免费的公网静态托管视公开仓库/GitHub Pages的使用条件；不承诺不限量资源或自动扩缩容。
 
 ## 分段验收目标（与原S0–S7兼容）
-- **T0 上游浏览器源码固定与构建**：pin commit、源目录许可审计，云端执行 package typecheck、editor/reforge build，必要时非版权页面的浏览器冒烟。新增 `evidence/TYPE_PAL_P0_*.md`。
+- **T0 上游浏览器源码固定与构建：PASS（2026-10-16）**：固定SHA、官方content typecheck、Reforge和Editor构建、Chromium打开编辑器、上游e2e-own工程加载并渲染Canvas。对应 [实际云端run 38853212658](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/38853212658)，见 `evidence/TYPE_PAL_P0_BROWSER_VERIFIED_20261016.md`。这仅证明官方开发测试环境的网页两端运行，不证明独立原创内容的编辑保存闭环。
 - **T1 无仙剑素材的独立工程**：创建一位原创主角、原创地图、NPC交互、一个明雷怪物、基本战斗、存档；由 Type PAL Editor 打开/保存/重开、Reforge真正试玩，截图+日志。**不能拿projects/demo/e2e-own直接宣称原创版权全部清理**。
 - **T2 AI游戏编译器**：把已有 `examples/lantern-inn/game.json` 映射为 content22全部所需文件，角色/地图/事件/资源引用闭包，连续两次相同输入产物完全相同；创建脚本fail-loud且不破坏保存后的人工修改。
 - **T3 网页端作者编辑闭环**：浏览器 UI 修改一次NPC台词/地图，再保存、重新打开、试玩看到修改，回归测试；不依赖重复运行生成器覆盖用户编辑。
