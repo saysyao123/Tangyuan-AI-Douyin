@@ -1,0 +1,37 @@
+name: Type PAL T1 archive existing PASS evidence (no gameplay rerun)
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t1-original-20261016]
+    paths: ['.github/workflows/book_rpg_typepal_t1_archive.yml']
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  archive-pass:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: type-pal-t1-full-original
+          run-id: 38857559015
+          github-token: ${{ github.token }}
+          path: previous
+      - name: Preserve only successful evidence and exact runtime file hashes
+        run: |
+          mkdir evidence
+          cp -r previous/tmp/t1-evidence/. evidence/
+          python3 - <<'PY'
+          import json,pathlib,hashlib
+          p=pathlib.Path('previous/home/runner/work/Tangyuan-AI-Douyin/Tangyuan-AI-Douyin/t1-dist')
+          out={str(f.relative_to(p)):hashlib.sha256(f.read_bytes()).hexdigest() for group in ['game','editor'] for f in (p/group).rglob('*') if f.is_file()}
+          pathlib.Path('evidence/runtime-sha256.json').write_text(json.dumps(out,indent=2)+'\n')
+          for name in ['gameplay','editor']:
+           obj=json.loads(pathlib.Path('evidence/'+name+'.json').read_text());assert obj['status']=='PASS'
+          print('ARCHIVED_EXISTING_T1_PASS_WITHOUT_RERUN')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: type-pal-t1-pass-evidence-only
+          path: evidence/
+          retention-days: 90
