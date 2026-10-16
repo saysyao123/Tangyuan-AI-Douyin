@@ -1,4 +1,6 @@
 const frame=document.getElementById('game'),loading=document.getElementById('loading'),hint=document.getElementById('load-hint'),retry=document.getElementById('retry'),status=document.getElementById('save-status');
+const config=window.PILOT_CONFIG;
+if(config){document.querySelector('.eyebrow').textContent=config.eyebrow;document.querySelector('.intro').textContent=config.intro;document.querySelector('h1').innerHTML=config.headline;document.getElementById('quests').replaceChildren(...config.quests.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));}
 const held=new Map();let started=performance.now(),lastState='',ready=false,lastFrames=-1,lastDraws=-1,lastProgress=performance.now(),notice=-1;
 function key(k,type){try{frame.contentWindow.dispatchEvent(new KeyboardEvent(type,{key:k,bubbles:true,cancelable:true}))}catch{}}
 function releaseAll(){for(const k of new Set(held.values()))key(k,'keyup');held.clear();try{frame.contentWindow.dispatchEvent(new Event('blur'))}catch{}}
@@ -14,7 +16,7 @@ document.getElementById('fullscreen').onclick=()=>{releaseAll();frame.requestFul
 retry.onclick=()=>{releaseAll();ready=false;lastState='';lastFrames=-1;lastDraws=-1;notice=-1;started=lastProgress=performance.now();loading.hidden=false;retry.hidden=true;hint.textContent='正在重新载入…已保存的进度可在载入后读取。';frame.src=frame.src};
 frame.onload=()=>{releaseAll();lastProgress=performance.now();if(!document.hidden)frame.contentWindow.focus()};
 document.getElementById('backup').onclick=async()=>{
- try{if(!ready)throw Error('请等待游戏载入。');const text=await frame.contentWindow.tpPlayer.exportQuickSave();const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='lantern-inn-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='已导出上次保存的进度；当前未保存的操作不在备份中。'}catch(e){status.textContent='备份失败：'+e.message}
+ try{if(!ready)throw Error('请等待游戏载入。');const text=await frame.contentWindow.tpPlayer.exportQuickSave();const url=URL.createObjectURL(new Blob([text],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=config?'opening-pilot-save.json':'lantern-inn-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='已导出上次保存的进度；当前未保存的操作不在备份中。'}catch(e){status.textContent='备份失败：'+e.message}
 };
 document.getElementById('restore').onchange=async e=>{
  const file=e.target.files[0];e.target.value='';if(!file)return;
@@ -30,10 +32,10 @@ function update(){
   ready=true;loading.hidden=true;retry.hidden=true;
   if(s.health.storage.sequence!==notice){notice=s.health.storage.sequence;if(s.health.storage.message)status.textContent=s.health.storage.message}
   const f=s.story.flags,stamp=JSON.stringify([s.sceneId,s.battleActive,f,s.story.party]);if(stamp===lastState)return;lastState=stamp;
-  document.getElementById('place').textContent=s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';
-  const done=[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));
-  document.getElementById('health').textContent='体力 '+s.story.party[0].hp+'/'+s.story.party[0].maxHP;
-  document.querySelector('h1').innerHTML=f.ending_seen?'灯火<em><br>重明。</em>':'把灯火<br><em>带回家。</em>';
+  document.getElementById('place').textContent=config?(config.scenes[s.sceneId]??s.sceneId):s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';
+  const done=config?config.flags.map(id=>f[id]):[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));
+  document.getElementById('health').textContent=config?'零钱 '+s.story.money:'体力 '+s.story.party[0].hp+'/'+s.story.party[0].maxHP;
+  document.querySelector('h1').innerHTML=config?(f.ending_seen?config.endHeadline:config.headline):f.ending_seen?'灯火<em><br>重明。</em>':'把灯火<br><em>带回家。</em>';
  }catch{showRecovery('暂时无法连接游戏。可重新载入后读取已保存的进度，未保存的操作会丢失。')}
 }
 setInterval(update,250);update();

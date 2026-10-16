@@ -20,15 +20,53 @@ function tile(id:number){const f=frame(32,16);for(let y=0;y<16;y++)for(let x=0;x
  if(id===7)c=y%5===0?10:12
  f.dot(x,y,c)
  }return f}
-function person(dir:number,pose:number,keeper=false){const f=frame(24,36);f.ellipse(12,33,8,2,1)
- const left=pose===1?1:0,right=pose===2?1:0
- f.rect(8,25,4,8-left,22);f.rect(14,25,4,8-right,22);f.rect(7,32-left,5,2,10);f.rect(14,32-right,5,2,10)
- f.rect(6,14,13,13,keeper?13:23);f.rect(7,18,12,4,keeper?14:24);f.rect(6,25,13,2,36)
- f.rect(4,16+left,3,11,keeper?12:22);f.rect(19,16+right,3,11,keeper?12:22);f.rect(4,26+left,3,3,42);f.rect(19,26+right,3,3,42)
- f.rect(8,5,10,9,42);f.rect(7,4,12,4,keeper?44:10);f.rect(8,3,10,3,keeper?45:10);f.rect(7,7,2,4,keeper?44:10)
- if(dir===2)f.rect(8,6,10,7,keeper?44:10);else{f.dot(dir===1?10:12,9,0);if(dir===0)f.dot(16,9,0)}
- if(keeper)f.rect(10,12,7,4,46);else{f.rect(8,14,10,2,40);f.rect(17,15,3,12,41)}
- return f}
+// Content22 direction order: down, left, up, right. Each uses idle / left / right step.
+// Side views have a projecting nose and toe; the back has no face or coat buttons.
+export function person(dir:number,pose:number,style:'hero'|'keeper'|'child'|'guard'='hero'){
+ const f=frame(24,36),keeper=style==='keeper',child=style==='child',guard=style==='guard'
+ const coat=guard?22:child?46:keeper?13:23,lit=guard?23:child?47:keeper?14:24
+ const hair=keeper?44:10,scarf=child?35:guard?22:40,skin=42
+ f.ellipse(12,33,8,2,1)
+ const stride=pose===1?-2:pose===2?2:0
+ if(dir===1||dir===3){
+  // Author left; mirror the complete character for right, retaining the same foot anchor.
+  f.rect(11+stride,25,3,7,22);f.rect(8+stride,31,6,2,10)
+  f.rect(11-stride,24,4,8,23);f.rect(8-stride,31,7,2,10)
+  f.rect(9,15,8,11,coat);f.rect(8,17,3,8,lit);f.rect(9,25,9,2,36)
+  f.rect(8,6,9,8,skin);f.rect(5,9,4,3,skin);f.dot(7,9,0)
+  f.rect(8,3,9,4,hair);f.rect(14,6,4,8,hair);f.rect(7,5,4,2,hair)
+  f.rect(9,14,8,2,scarf);f.rect(15,15,3,7,child?34:41)
+  f.rect(12+stride,17,4,9,coat);f.rect(12+stride,25,3,3,skin)
+  if(keeper)f.rect(7,12,5,3,46)
+  if(dir===3){const pixels=f.pixels.slice(),opaque=f.opaque.slice();for(let y=0;y<36;y++)for(let x=0;x<24;x++){f.pixels[y*24+x]=pixels[y*24+23-x];f.opaque[y*24+x]=opaque[y*24+23-x]}}
+ }else{
+  const back=dir===2,leftLift=pose===1?1:0,rightLift=pose===2?1:0
+  f.rect(8,24,4,8-leftLift,22);f.rect(14,24,4,8-rightLift,22)
+  f.rect(7+(pose===1?-1:0),31-leftLift,5,2,10);f.rect(14+(pose===2?1:0),31-rightLift,5,2,10)
+  f.rect(6,15,13,12,coat);f.rect(7,17,11,6,lit);f.rect(6,25,13,2,36)
+  f.rect(4,16+rightLift,3,10,coat);f.rect(19,16+leftLift,3,10,coat)
+  f.rect(4,25+rightLift,3,3,skin);f.rect(19,25+leftLift,3,3,skin)
+  f.rect(7,5,12,9,skin);f.rect(7,3,12,4,hair);f.rect(6,6,3,6,hair);f.rect(18,6,2,6,hair)
+  if(back){f.rect(8,6,10,8,hair);f.rect(7,14,12,2,scarf);f.rect(11,17,2,8,coat);f.rect(14,15,3,5,child?34:41)}
+  else{f.dot(10,9,0);f.dot(16,9,0);f.rect(12,11,2,1,18);f.rect(8,14,10,2,scarf);f.rect(16,15,3,9,child?34:41);f.rect(12,18,1,6,22);f.dot(13,19,15);f.dot(13,22,15)}
+  if(keeper&&!back)f.rect(9,12,8,3,46)
+ }
+ if(child){const pixels=f.pixels.slice(),opaque=f.opaque.slice();f.pixels.fill(0);f.opaque.fill(0);for(let y=0;y<36;y++)for(let x=0;x<24;x++)if(opaque[y*24+x])f.dot(Math.round(12+(x-12)*.82),Math.round(34+(y-34)*.8),pixels[y*24+x])}
+ return f
+}
+export function wolfFrame(dir:number,pose:number){
+ const f=frame(40,48),stride=pose===1?-2:pose===2?2:0;f.ellipse(20,44,17,3,1)
+ if(dir===1||dir===3){
+  f.ellipse(22,29,13,9,23);f.rect(14+stride,33,4,9,22);f.rect(27-stride,33,4,9,22)
+  f.ellipse(10,23,8,8,24);f.rect(2,24,10,5,25);f.rect(6,13,4,8,22);f.rect(11,16,4,6,23);f.dot(7,23,20);f.line(32,28,38,20,24)
+  if(dir===3){const p=f.pixels.slice(),o=f.opaque.slice();for(let y=0;y<48;y++)for(let x=0;x<40;x++){f.pixels[y*40+x]=p[y*40+39-x];f.opaque[y*40+x]=o[y*40+39-x]}}
+ }else{
+  f.ellipse(20,29,10,12,23);f.rect(12,34,4,8-(pose===1?2:0),22);f.rect(24,34,4,8-(pose===2?2:0),22)
+  if(dir===0){f.ellipse(20,23,10,9,24);f.rect(10,11,5,10,22);f.rect(25,11,5,10,22);f.rect(16,26,8,7,25);f.dot(14,22,20);f.dot(26,22,20);f.rect(18,30,4,2,0)}
+  else{f.ellipse(20,18,8,7,24);f.rect(12,9,4,9,22);f.rect(24,9,4,9,22);f.rect(18,29,4,12,24)}
+ }return f
+}
+export function previewFrames(){return ['hero','keeper','child','guard'].flatMap(style=>[0,1,2,3].flatMap(dir=>[0,1,2].map(pose=>({style,dir,pose,...person(dir,pose,style as 'hero')})))).concat([0,1,2,3].flatMap(dir=>[0,1,2].map(pose=>({style:'wolf',dir,pose,...wolfFrame(dir,pose)}))))}
 function prop(kind:string,pose=0){const f=frame(kind==='house'?96:kind==='tree'?64:40,kind==='house'?90:kind==='tree'?86:48),cx=f.width/2
  if(kind==='tree'){
  f.ellipse(cx,81,23,4,1);f.rect(cx-3,45,6,35,36);f.rect(cx,49,3,28,37)
@@ -45,6 +83,13 @@ function prop(kind:string,pose=0){const f=frame(kind==='house'?96:kind==='tree'?
  f.ellipse(cx,43,12,3,1);for(let y=0;y<26;y++){const half=y<12?y/2:(26-y)/2;f.rect(cx-half,12+y,half*2+1,1,y<18?25:24)}f.line(cx,13,cx-3,32,27);f.dot(cx-12,15,20);f.dot(cx+10,22,20)
  }else if(kind==='sign'){
  f.rect(cx-2,19,4,26,37);f.rect(cx-14,9,27,15,36);f.rect(cx-12,11,23,10,38);f.line(cx-7,16,cx+7,16,8);f.line(cx+3,13,cx+7,16,8);f.line(cx+3,19,cx+7,16,8)
+ }else if(kind==='stall'){
+ f.rect(3,22,34,19,37);f.rect(2,16,36,7,40);f.rect(4,14,32,3,41);f.rect(5,23,2,20,36);f.rect(33,23,2,20,36)
+ for(let x=9;x<32;x+=7){f.rect(x,26,1,12,39);for(let y=24;y<35;y+=4)f.rect(x-1,y,3,3,40)}
+ }else if(kind==='stage'){
+ f.rect(1,32,38,11,36);f.rect(2,33,36,3,18);f.rect(3,7,3,25,37);f.rect(34,7,3,25,37);f.rect(3,5,34,5,40);f.rect(7,10,5,17,34);f.rect(28,10,5,17,34)
+ }else if(kind==='flame'){
+ f.ellipse(cx,43,12,3,1);f.ellipse(cx+pose-1,30-pose,8,12,18);f.ellipse(cx,31-pose,5,10,20);f.ellipse(cx,34,3,6,26);f.line(cx-6,21,cx-9,14,19);f.line(cx+3,21,cx+6,9,20)
  }else if(kind==='wolf'){
  f.ellipse(cx,44,17,3,1);f.ellipse(cx+1,29,14,9,23);f.ellipse(cx-11,23,8,8,24);f.rect(cx-17,24,10,5,25);f.rect(cx-10,13,4,8,22);f.rect(cx-5,16,4,6,23);f.dot(cx-13,23,20)
  f.rect(cx-7,34,4,8-pose,22);f.rect(cx+8,34,4,8+pose,22);f.line(cx+12,28,cx+18,20,24);f.line(cx-17,28,cx-14,29,9)
@@ -54,9 +99,11 @@ export async function buildOriginalArt(){
  const assets:any={palette}
  assets.tiles=await gz(Array.from({length:8},(_,i)=>tile(i)))
  assets.hero=await gz([0,1,2,3].flatMap(d=>[0,1,2].map(p=>person(d,p))))
- assets.keeper=await gz([0,1,2,3].flatMap(d=>[0,1,2].map(p=>person(d,p,true))))
- for(const kind of ['tree','house','lantern','core','sign'])assets[kind]=await gz([prop(kind)])
- assets.wolf=await gz([0,1,2,3].flatMap(()=>[0,1,2].map(p=>prop('wolf',p%2))))
+ for(const style of ['child','guard'] as const)assets[style]=await gz([0,1,2,3].flatMap(d=>[0,1,2].map(p=>person(d,p,style))))
+ assets.keeper=await gz([0,1,2,3].flatMap(d=>[0,1,2].map(p=>person(d,p,'keeper'))))
+ for(const kind of ['tree','house','lantern','core','sign','stall','stage','flame'])assets[kind]=await gz([prop(kind)])
+ assets.flame=await gz([0,1,2].map(p=>prop('flame',p)))
+ assets.wolf=await gz([0,1,2,3].flatMap(d=>[0,1,2].map(p=>wolfFrame(d,p))))
  assets.fighter=await gz(Array.from({length:10},(_,i)=>battle(person(1,i%3),i)))
  assets.enemy=await gz(Array.from({length:4},(_,i)=>battle(prop('wolf',i%2))))
  const cursors=encodeSpriteChunk(Array.from({length:3},(_,i)=>{const f=frame(10,10);for(let y=2;y<8;y++)for(let x=2;x<8-Math.abs(y-5);x++)f.dot(x+i%2,y,20);return f}))

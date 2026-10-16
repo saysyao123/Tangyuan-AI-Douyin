@@ -1,0 +1,54 @@
+name: Type PAL directional art and opening stage
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t13-opening-20261016]
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t13.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  opening:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build synthetic opening fixture; no uploaded book in public CI
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t13/build.mjs upstream "$PWD/web"
+      - name: Direction artwork contract and affected type checks
+        working-directory: upstream
+        run: |
+          mkdir -p /tmp/t13-evidence
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t13/inspect-art.mts packages/editor/scripts/t13-inspect-art.mts
+          node --import tsx packages/editor/scripts/t13-inspect-art.mts . /tmp/t13-evidence/art.json
+          python ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t13/art-check.py /tmp/t13-evidence/art.json
+          pnpm --filter @type-pal/reforge typecheck
+      - name: Install Chromium for new movement and short-stage cases
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve production output
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t13-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Real keyboard directions, gated pilot, two-member party and separate save scope
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t13-opening-e2e.mjs .
+          node t13-opening-e2e.mjs
+      - name: Exact production runtime inventory
+        if: always()
+        run: |
+          cp web/runtime-manifest.json /tmp/t13-evidence/runtime-manifest.json
+          cp /tmp/t13-http.log /tmp/t13-evidence/http.log || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t13-evidence, path: /tmp/t13-evidence/, retention-days: 90}
