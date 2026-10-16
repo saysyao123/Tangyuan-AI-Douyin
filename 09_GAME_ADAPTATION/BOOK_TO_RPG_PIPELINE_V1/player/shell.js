@@ -1,0 +1,6 @@
+const frame=document.getElementById('game');
+function key(k,type){frame.contentWindow.dispatchEvent(new KeyboardEvent(type,{key:k,bubbles:true,cancelable:true}));}
+for(const b of document.querySelectorAll('[data-key]')){b.addEventListener('pointerdown',e=>{e.preventDefault();frame.contentWindow.focus();key(b.dataset.key,'keydown');b.setPointerCapture(e.pointerId)});for(const event of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(event,()=>key(b.dataset.key,'keyup'))}
+document.getElementById('fullscreen').onclick=()=>frame.requestFullscreen();
+frame.onload=()=>{frame.contentWindow.focus()};
+setInterval(()=>{try{const s=frame.contentWindow.__tpObserve?.readRuntime();if(!s)return;const f=s.story.flags;document.getElementById('place').textContent=s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';const done=[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));document.getElementById('health').textContent='体力 '+s.story.party[0].hp+'/'+s.story.party[0].maxHP;if(f.ending_seen)document.querySelector('h1').innerHTML='灯火<em><br>重明。</em>'}catch{}},300);

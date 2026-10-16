@@ -1,0 +1,66 @@
+name: Type PAL T1 full original static game and authoring
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t1-original-20261016]
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_*'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t1-browser-workspace.ts'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-*'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/player/**'
+      - '.github/workflows/book_rpg_typepal_t1_full.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-original:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build full canonical story, original chrome, independent production player and editor
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_build.mjs upstream "$PWD/t1-dist"
+      - name: Install browser for new end-to-end requirements
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve only built static output (no Vite, no extracted assets)
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory t1-dist > /tmp/t1-static-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Keyboard-only full story, real battle, native save-close-reopen-load
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-static-e2e.mjs ./t1-static-e2e.mjs
+          node t1-static-e2e.mjs
+      - name: Actual browser directory authoring (no picker interception)
+        if: always()
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-editor-e2e.mjs ./t1-editor-e2e.mjs
+          node t1-editor-e2e.mjs
+      - name: Upload playable static bundle, project and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-pal-t1-full-original
+          retention-days: 30
+          path: |
+            t1-dist/
+            upstream/projects/book-lantern-inn/
+            upstream/t1-chrome-receipt.json
+            /tmp/t1-evidence/
+            /tmp/t1-static-http.log
