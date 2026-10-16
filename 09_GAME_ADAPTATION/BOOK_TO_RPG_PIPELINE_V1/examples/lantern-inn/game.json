@@ -2,6 +2,7 @@
   "format": "book-rpg-game-v1",
   "id": "lantern-inn",
   "title": "雾灯驿站",
+  "introHint": "先与守灯人对话，去雾林取灯芯并击败雾狼，再返回驿站。",
   "rights": {
     "source_kind": "original",
     "status": "original_demo_only",
