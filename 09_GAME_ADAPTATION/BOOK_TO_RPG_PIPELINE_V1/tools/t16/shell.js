@@ -1,5 +1,5 @@
 const frame=document.getElementById('game'),loading=document.getElementById('loading'),hint=document.getElementById('load-hint'),retry=document.getElementById('retry'),status=document.getElementById('save-status');
-const baseConfig=window.PILOT_CONFIG;let config=baseConfig;let showingNight=false;
+const baseConfig=window.PILOT_CONFIG;let config=window.NIGHT_ENTRY&&baseConfig.night?{...baseConfig,...baseConfig.night}:baseConfig;let showingNight=!!window.NIGHT_ENTRY;
 if(config){document.querySelector('.eyebrow').textContent=config.eyebrow;document.querySelector('.intro').textContent=config.intro;document.querySelector('h1').innerHTML=config.headline;document.getElementById('quests').replaceChildren(...config.quests.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));}
 const held=new Map();let started=performance.now(),lastState='',ready=false,lastFrames=-1,lastDraws=-1,lastProgress=performance.now(),notice=-1;
 function key(k,type){try{frame.contentWindow.dispatchEvent(new KeyboardEvent(type,{key:k,bubbles:true,cancelable:true}))}catch{}}
@@ -31,7 +31,7 @@ function update(){
   if(!document.hidden&&now-lastProgress>8000){showRecovery('游戏画面已较长时间未更新。可重新载入后读取已保存的进度，未保存的操作会丢失。');return}
   ready=true;loading.hidden=true;retry.hidden=true;
   if(s.health.storage.sequence!==notice){notice=s.health.storage.sequence;if(s.health.storage.message)status.textContent=s.health.storage.message}
-  const f=s.story.flags;const night=!!(window.NIGHT_ENTRY||f.night_started);if(night!==showingNight&&baseConfig.night){config=night?{...baseConfig,...baseConfig.night}:baseConfig;showingNight=night;document.querySelector('.eyebrow').textContent=config.eyebrow;document.querySelector('.intro').textContent=config.intro;document.getElementById('quests').replaceChildren(...config.quests.map(text=>{const li=document.createElement('li');li.textContent=text;return li}))}
+  const f=s.story.flags;const night=!!f.night_started;if(night!==showingNight&&baseConfig.night){config=night?{...baseConfig,...baseConfig.night}:baseConfig;showingNight=night;document.title=config.title;document.querySelector('.brand small').textContent=config.title;document.querySelector('.eyebrow').textContent=config.eyebrow;document.querySelector('.intro').textContent=config.intro;document.getElementById('quests').replaceChildren(...config.quests.map(text=>{const li=document.createElement('li');li.textContent=text;return li}))}
   const vars=s.story.vars??{},stamp=JSON.stringify([s.sceneId,s.battleActive,f,vars,s.story.money,s.story.party]);if(stamp===lastState)return;lastState=stamp;
   document.getElementById('place').textContent=config?(config.scenes[s.sceneId]??s.sceneId):s.battleActive?'雾林 · 回合战斗':s.sceneId==='inn'?'雾灯驿站':'雾林小道';
   const done=config?config.flags.map(id=>f[id]):[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));
