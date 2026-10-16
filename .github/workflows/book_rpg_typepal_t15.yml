@@ -1,0 +1,50 @@
+name: Type PAL T15 chapter scenery and native cinematics
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t15-cinematic-20261017]
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t15.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  polish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build new scope once with public synthetic dialogue
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t15/build.mjs upstream "$PWD/web"
+      - name: Check changed dialogue production closure
+        run: |
+          mkdir -p /tmp/t15-evidence
+          python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t15-evidence/typecheck.log
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve CI-only static runtime
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t15-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Native first-two-chapter cinema and scenery checks
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-cinematic-e2e.mjs .
+          node t15-cinematic-e2e.mjs
+      - name: Record exact CI runtime and native project hashes
+        if: always()
+        run: |
+          cp web/runtime-manifest.json /tmp/t15-evidence/runtime-manifest.json
+          cp -r upstream/projects/book-pilot-cinematic /tmp/t15-evidence/public-project
+          cp /tmp/t15-http.log /tmp/t15-evidence/http.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t15-evidence, path: /tmp/t15-evidence/, retention-days: 90}

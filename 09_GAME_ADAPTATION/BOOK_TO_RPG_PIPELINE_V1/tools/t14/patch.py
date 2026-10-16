@@ -54,7 +54,7 @@ if 'T14_FRAMED_DIALOGUE' not in s:
  change('        maxChars: limit,',"        maxChars: limit,\n        ...(this.framed ? { forceRgba: [239, 233, 213] as [number, number, number] } : {}),")
  p.write_text(s)
 p=root/'packages/reforge/src/main.ts';s=p.read_text()
-if 'T14_DIALOGUE_THEME' not in s:
+if 'T14_DIALOGUE_THEME' not in s and 'T15_DIALOGUE_THEME' not in s:
  old='    menuAssets.scroll,\n  )'
  if s.count(old)!=1:raise RuntimeError('T14 dialogue constructor anchor')
  s=s.replace(old,old.replace('\n  )',"\n    project.manifest.id === 'book-pilot-opening', // T14_DIALOGUE_THEME\n  )"))
