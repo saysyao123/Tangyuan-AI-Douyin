@@ -6,6 +6,8 @@ await fs.copyFile(path.join(tools,'type_pal_t1_art.ts'),path.join(root,'packages
 run(['--import','tsx','packages/editor/scripts/type_pal_t1_full.mts','projects/book-lantern-inn']);
 const py=spawnSync('python3',[path.join(tools,'type_pal_t1_prepare.py'),root],{stdio:'inherit'});if(py.status!==0)throw Error('prepare failed');
 run(['--import','tsx','packages/editor/scripts/check-project.mts','projects/book-lantern-inn']);
+if(process.env.T1_STABILITY!=='0'){const patched=spawnSync('python3',[path.join(tools,'t11/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('stability patch failed')}
+
 await fs.rm(output,{recursive:true,force:true});await fs.mkdir(output,{recursive:true});
 const vite=path.join(root,'packages/editor/node_modules/vite/bin/vite.js');
 run([vite,'build','--base','./'],path.join(root,'packages/reforge'),{VITE_PROJECT_ID:'book-lantern-inn'});

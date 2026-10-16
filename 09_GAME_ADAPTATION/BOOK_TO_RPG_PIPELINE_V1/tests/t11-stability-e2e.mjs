@@ -1,0 +1,26 @@
+import {chromium} from 'playwright';import assert from 'node:assert/strict';import fs from 'node:fs/promises';
+const origin='http://127.0.0.1:6154',out='/tmp/t11-evidence';await fs.mkdir(out,{recursive:true});const browser=await chromium.launch();const context=await browser.newContext({viewport:{width:1440,height:960}});const errors=[],checks=[],metrics={};let page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+const state=()=>page.evaluate(()=>window.__tpObserve?.readRuntime());
+async function settle(){for(let i=0;i<70;i++){const s=await state();if(s&&!s.scriptRunning&&!s.dialogue&&!s.battleActive)return;await page.keyboard.press('Space');await page.waitForTimeout(100)}throw Error('Could not settle opening')}
+async function open(url){await page.goto(url);await page.waitForFunction(()=>window.__tpObserve?.readRuntime(),null,{timeout:45000});await settle()}
+async function sample(){return page.evaluate(()=>new Promise(resolve=>{const values=[];let last=performance.now();function tick(t){const s=window.__tpObserve.readRuntime();values.push({dt:t-last,c:s.position.row,v:(s.presentationPosition??s.position).row});last=t;if(values.length<120)requestAnimationFrame(tick);else resolve(values)}requestAnimationFrame(tick)}))}
+try{
+ const cdp=await context.newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
+ for(const variant of ['baseline','candidate']){
+  await open(origin+'/'+variant+'/game/?observe=1');await page.keyboard.down('ArrowDown');const samples=await sample();await page.keyboard.up('ArrowDown');
+  const delta=samples.slice(3).map(x=>x.dt).sort((a,b)=>a-b),p95=delta[Math.floor(delta.length*.95)];const physical=await page.locator('#screen').evaluate(c=>({width:c.width,height:c.height,pixels:c.width*c.height}));
+  metrics[variant]={canvas:physical,p95FrameIntervalMs:p95,meanFrameIntervalMs:delta.reduce((a,b)=>a+b,0)/delta.length,logicalPositions:new Set(samples.map(x=>x.c)).size,displayPositions:new Set(samples.map(x=>Math.round(x.v*1000))).size};
+ }
+ assert.equal(metrics.candidate.canvas.pixels,metrics.baseline.canvas.pixels/4);assert.ok(metrics.candidate.displayPositions>metrics.candidate.logicalPositions*1.7,'must visibly interpolate native logical ticks');checks.push('75_PERCENT_FEWER_BACKING_PIXELS','DISPLAY_SUBSTEPS_WITH_CANONICAL_LOGIC_UNCHANGED');
+ // Lost keyup reproducer: real keydown, window blur event, no keyup until after the assertion.
+ await open(origin+'/candidate/game/?observe=1');await page.keyboard.down('ArrowDown');await page.waitForTimeout(160);await page.evaluate(()=>window.dispatchEvent(new Event('blur')));await page.waitForTimeout(100);const stopped=(await state()).position;await page.waitForTimeout(600);assert.deepEqual((await state()).position,stopped);await page.keyboard.up('ArrowDown');checks.push('LOST_KEYUP_BLUR_STOPS_MOVEMENT');
+ // UI transitions and rapid saves retain a valid world and a readable native slot.
+ for(let i=0;i<12;i++){await page.keyboard.press('Escape');await page.waitForTimeout(60)}assert.equal((await state()).menuActive,false);checks.push('RAPID_MENU_OPEN_CLOSE');
+ const saved=(await state()).position;for(let i=0;i<8;i++){await page.keyboard.press('F5');await page.waitForTimeout(40)}await page.waitForTimeout(1300);await page.keyboard.down('ArrowUp');await page.waitForTimeout(220);await page.keyboard.up('ArrowUp');await page.keyboard.press('F9');await page.waitForTimeout(1000);assert.deepEqual((await state()).position,saved);checks.push('SAVE_SPAM_LOAD_VALID_WORLD');
+ assert.equal(await page.evaluate(()=>typeof window.__reforge),'undefined');checks.push('PRODUCTION_MUTABLE_DEBUG_REMOVED');
+ // Open player shell. Keyboard-accessible toolbar save and pointer cancel use actual UI events.
+ await page.goto(origin+'/candidate/');const f=page.frames().find(f=>f.url().includes('/game/'));await page.waitForFunction(()=>document.getElementById('loading').hidden,null,{timeout:45000});assert.ok(f);checks.push('VISIBLE_LOADING_CLEARS_ON_READY');
+ await page.getByRole('button',{name:'保存进度',exact:true}).focus();await page.keyboard.press('Enter');await page.waitForTimeout(600);await page.screenshot({path:out+'/player-t11.png'});
+ const frames=await f.evaluate(()=>new Promise(resolve=>{let n=0;const started=performance.now();function tick(){n++;if(performance.now()-started<12000)requestAnimationFrame(tick);else resolve(n)}requestAnimationFrame(tick)}));metrics.soakFrames=frames;assert.ok(frames>60);checks.push('CONTINUOUS_FRAME_LOOP_SOAK_12S');assert.deepEqual(errors,[]);
+ await fs.writeFile(out+'/stability.json',JSON.stringify({status:'PASS',checks,metrics,errors,notes:['4x CPU throttling, headless CI Chromium; these timings are not a promise for user hardware.','Blur dispatch reproduces lost-keyup event handling; no game state injected.','Position interpolation is render-only; baseline comparison uses the same story and native 100ms simulation.']},null,2));console.log('T11_STABILITY=PASS '+JSON.stringify({checks,metrics}));
+}catch(e){await page.screenshot({path:out+'/FAIL-stability.png'}).catch(()=>{});await fs.writeFile(out+'/stability.json',JSON.stringify({status:'FAIL',error:String(e),checks,metrics,errors,state:await state().catch(()=>null)},null,2));console.error('T11_STABILITY=FAIL '+e);process.exitCode=1}finally{await context.close();await browser.close()}

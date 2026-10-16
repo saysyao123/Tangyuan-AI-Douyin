@@ -1,0 +1,88 @@
+name: Type PAL T1.1 fluidity and stability regression
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t11-stability-20261016]
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**'
+      - '.github/workflows/book_rpg_typepal_t11.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stability:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build unpatched baseline for comparable performance and input reproduction
+        run: T1_STABILITY=0 node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_build.mjs upstream "$PWD/web/baseline"
+      - name: Prove original lost-keyup defect before repair
+        working-directory: upstream/packages/reforge
+        run: |
+          mkdir -p /tmp/t11-evidence
+          cp ../../../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t11/{presentation-position.ts,stability.test.ts} src/
+          mv src/stability.test.ts src/t11-stability.test.ts
+          if node ../../node_modules/vitest/vitest.mjs run src/t11-stability.test.ts > /tmp/t11-evidence/baseline-unit.log 2>&1; then
+            echo 'Lost-keyup baseline unexpectedly passed'; exit 1
+          fi
+          cat /tmp/t11-evidence/baseline-unit.log
+          rg '3 failed' /tmp/t11-evidence/baseline-unit.log
+      - name: Build patched candidate; input and render unit checks
+        run: |
+          node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/type_pal_t1_build.mjs upstream "$PWD/web/candidate"
+          cd upstream/packages/reforge
+          node ../../node_modules/vitest/vitest.mjs run src/t11-stability.test.ts src/input.keyboard-boundaries.test.ts | tee /tmp/t11-evidence/patched-unit.log
+      - name: Install Chromium for targeted stability checks
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve only static baseline and candidate
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t11-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/candidate/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: 4x CPU-throttled comparison, input, save bursts, loading and continuous frame checks
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t11-stability-e2e.mjs .
+          node t11-stability-e2e.mjs
+      - name: Story regression after engine presentation/input change
+        working-directory: upstream
+        env: {T1_URL: 'http://127.0.0.1:6154/candidate', T1_EVIDENCE: /tmp/t11-evidence/story}
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-static-e2e.mjs .
+          node t1-static-e2e.mjs
+      - name: NPC save/reopen regression after save-button concurrency change
+        working-directory: upstream
+        env: {T1_URL: 'http://127.0.0.1:6154/candidate', T1_EVIDENCE: /tmp/t11-evidence/editor}
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t1-editor-e2e.mjs .
+          node t1-editor-e2e.mjs
+      - name: Record exact tested runtime hashes
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib,json,hashlib
+          root=pathlib.Path('web/candidate')
+          data={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for group in ['game','editor'] for p in (root/group).rglob('*') if p.is_file()}
+          pathlib.Path('/tmp/t11-evidence/runtime-sha256.json').write_text(json.dumps(data,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: type-pal-t11-evidence
+          path: /tmp/t11-evidence/
+          retention-days: 90
