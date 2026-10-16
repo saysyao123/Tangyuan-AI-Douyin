@@ -1,0 +1,209 @@
+{
+  "format": "book-rpg-game-v1",
+  "id": "lantern-inn",
+  "title": "雾灯驿站",
+  "rights": {
+    "source_kind": "original",
+    "status": "original_demo_only",
+    "note": "原创虚构样本，无仙剑角色或资源"
+  },
+  "baseline": "PAL98_FREEZE_V0_1",
+  "sourceRefs": [
+    "original_demo:chapter-1"
+  ],
+  "player": {
+    "id": "asong",
+    "name": "阿笙",
+    "maxHp": 28,
+    "maxMp": 12,
+    "attack": 7,
+    "defense": 2,
+    "position": [
+      2,
+      3
+    ]
+  },
+  "characters": [
+    {
+      "id": "asong",
+      "name": "阿笙",
+      "personality": "沉着的年轻旅人",
+      "motivation": "找回失落的灯火",
+      "combatRole": "剑术/辅助",
+      "sourceRefs": [
+        "original_demo:chapter-1"
+      ]
+    },
+    {
+      "id": "keeper",
+      "name": "守灯人",
+      "personality": "谨慎而温暖",
+      "motivation": "守护驿站",
+      "combatRole": "非战斗",
+      "sourceRefs": [
+        "original_demo:chapter-1"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "lamp_core",
+      "name": "灯芯",
+      "kind": "quest",
+      "description": "可让山道灯重新燃烧的碎晶"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "mist_wolf",
+      "name": "雾狼",
+      "hp": 15,
+      "attack": 5,
+      "defense": 1,
+      "rewardGold": 10,
+      "rewardExp": 12,
+      "winFlag": "wolf_defeated",
+      "sourceRefs": [
+        "original_demo:chapter-1"
+      ]
+    }
+  ],
+  "world": {
+    "startScene": "inn",
+    "scenes": [
+      {
+        "id": "inn",
+        "name": "雾灯驿站",
+        "terrain": [
+          "###########",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "###########"
+        ],
+        "entities": [
+          {
+            "id": "keeper_npc",
+            "kind": "npc",
+            "x": 4,
+            "y": 3,
+            "name": "守灯人",
+            "eventId": "keeper_start",
+            "completedEventId": "keeper_finish",
+            "completionFlag": "wolf_defeated"
+          }
+        ],
+        "exits": [
+          {
+            "x": 9,
+            "y": 3,
+            "to": "forest",
+            "spawn": [
+              1,
+              3
+            ]
+          }
+        ],
+        "sourceRefs": [
+          "original_demo:chapter-1"
+        ]
+      },
+      {
+        "id": "forest",
+        "name": "雾林小道",
+        "terrain": [
+          "###########",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "#.........#",
+          "###########"
+        ],
+        "entities": [
+          {
+            "id": "core_shard",
+            "kind": "item",
+            "x": 3,
+            "y": 2,
+            "itemId": "lamp_core",
+            "name": "灯芯碎晶"
+          },
+          {
+            "id": "wolf",
+            "kind": "enemy",
+            "x": 5,
+            "y": 3,
+            "encounterId": "mist_wolf",
+            "name": "雾狼"
+          }
+        ],
+        "exits": [
+          {
+            "x": 1,
+            "y": 3,
+            "to": "inn",
+            "spawn": [
+              8,
+              3
+            ]
+          }
+        ],
+        "sourceRefs": [
+          "original_demo:chapter-1"
+        ]
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "keeper_start",
+      "kind": "dialogue",
+      "text": "雾林里的灯熄灭了。替我们带回灯芯，也要小心山道上的雾狼。",
+      "effects": [
+        {
+          "type": "set_flag",
+          "target": "quest_started",
+          "value": true
+        }
+      ],
+      "sourceRefs": [
+        "original_demo:chapter-1"
+      ]
+    },
+    {
+      "id": "keeper_finish",
+      "kind": "ending",
+      "requires": [
+        {
+          "type": "flag",
+          "target": "wolf_defeated",
+          "value": true
+        },
+        {
+          "type": "has_item",
+          "target": "lamp_core",
+          "value": 1
+        }
+      ],
+      "text": "灯芯重新点亮驿站。守灯人向你道谢，雾夜终于有了归途。",
+      "effects": [
+        {
+          "type": "set_ending",
+          "target": "lights_return"
+        }
+      ],
+      "failureText": "先从雾林取回灯芯，并设法击退雾狼。",
+      "sourceRefs": [
+        "original_demo:chapter-1"
+      ]
+    }
+  ],
+  "ending": {
+    "id": "lights_return",
+    "title": "灯火重明",
+    "text": "雾散之后，新的路在清晨展开。"
+  }
+}
