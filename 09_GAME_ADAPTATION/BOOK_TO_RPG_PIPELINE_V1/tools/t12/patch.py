@@ -144,3 +144,15 @@ if '// T12_OPENING_IO' not in source:
 elif 'staged.values()' not in source:
     raise RuntimeError('Incomplete opening IO patch')
 print('T12_CHECKED_FOUNDATION_PATCH_APPLIED')
+
+# Use the same bounded, order-preserving chunk strategy already used by upstream editor.
+path = root / 'packages/reforge/vite.config.ts'
+source = path.read_text()
+if '// T12_RUNTIME_CHUNKS' not in source:
+    source = once(source, 'export default {', """export default {
+  // T12_RUNTIME_CHUNKS
+  build: { rolldownOptions: { output: {
+    strictExecutionOrder: true,
+    codeSplitting: { groups: [{ name: 'runtime', test: /\\.[cm]?[jt]sx?(?:\\?|$)/, entriesAware: true, maxSize: 500_000 }] },
+  } } },""")
+    path.write_text(source)

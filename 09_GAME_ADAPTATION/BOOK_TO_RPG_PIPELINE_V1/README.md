@@ -26,7 +26,7 @@
 
 ⚠️ 当前未完成NPC端到端交互、编辑器修改保存与重开、多场景传送、任务物品、仙剑式战斗与结局、正式静态网页托管，因此不能宣布T1完成、也还不需要用户上传书籍。下阶段 [Issue #25](https://github.com/saysyao123/Tangyuan-AI-Douyin/issues/25) 仍保持打开。**[WORK_T1_CONTINUE.md](WORK_T1_CONTINUE.md)** 是 Work 模式的完整接力入口。
 
-## 当前实际状态（2026-10-16）
+## 历史记录：早期 V1 与首场景阶段
 - ✅ 已有 `../PAL98_BOOK_RPG_BASELINE_V0_1/` 机制/人物/源码锚点研究。
 - ✅ V1 已具备固定阶段、输入输出清单、人工确认门禁、两部原创测试故事、纯 Node 测试、HTML 构建命令、GitHub Actions CI。
 - ⏳ 用户上传的仙剑98文件尚未完成跨引擎实际游玩验证；全部战斗/脚本/数值真值尚未冻结。
@@ -35,7 +35,7 @@
 - ⏳ 还没有上传第一本新书，尚未证明 AI 自动提取长篇小说及 Type PAL 内容包导入。
 - ⚠️ V1 试玩是 **自有内容独立参考运行器**，仅测试「故事数据→互动浏览器游戏」管线，不冒充 Type PAL 或全部仙剑机制已完整实现。
 
-## 最简入口
+## 历史轻量运行器入口（仅测试夹具）
 1. 下一次用户交书：读取 **[START_WEB.md](START_WEB.md)**，严格按照 S0 → S7 逐阶段执行。
 2. 查看 [阶段合同](docs/STAGES.md)、[机制真值表](docs/MECHANICS_AND_GAPS.md)、[人物/编剧规范](docs/CHARACTER_AND_STORY.md)、[QA](docs/QA.md)。
 3. 本次原创样本：`examples/lantern-inn/game.json`。执行：
