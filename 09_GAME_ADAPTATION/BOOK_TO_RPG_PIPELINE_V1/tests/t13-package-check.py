@@ -7,6 +7,8 @@ with ZipFile(root/'downloads/lantern-inn-static.zip') as z:
  html=z.read('pilot/index.html').decode()
  assert 'href="https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/lantern-inn-project.zip"' in html
  assert 'href="../downloads/' not in html
+ assert z.getinfo('pilot/game/projects/book-pilot-opening/manifest.json')
+ assert (root/'downloads/lantern-inn-static.zip').stat().st_size<=26214400,'Static hosting file limit'
  assert not any(n.lower().endswith('.epub') for n in z.namelist())
 with ZipFile(root/'downloads/corresponding-source.zip') as z:
  assert json.loads(z.read('book-rpg/pilot-config.json'))==json.loads(config.read_text())

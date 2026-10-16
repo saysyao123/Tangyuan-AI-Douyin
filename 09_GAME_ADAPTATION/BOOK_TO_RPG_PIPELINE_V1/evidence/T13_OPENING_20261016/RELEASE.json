@@ -1,0 +1,88 @@
+{
+  "status": "DELIVERED_OWNER_PRIVATE",
+  "upstream": "IllegalCreed/type-pal@f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "source_candidate": "a25b3c76898203e0d4908a668213c0cb1e4708a3",
+  "full_flow_run": 38894355314,
+  "visibility_run": 38895732925,
+  "visibility_job": 116955627356,
+  "full_flow_artifact": 12042853759,
+  "visibility_artifact": 12043448762,
+  "new_full_flow_checks": 11,
+  "visible_hero_opaque_match": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "visible_companion_min_match": 0.9821428571428571,
+  "old_roof_counterexample_match": 0.4349442379182156,
+  "corrected_roof_position_match": 1,
+  "runtime_files": 243,
+  "same_shared_runtime_files": 221,
+  "private_presentation_files": 22,
+  "private_project_mechanics_comparison": "PASS,34 files, event/flag/geometry/native actor IDs/binary assets unchanged after removing display fields",
+  "final_rle_decode": "PASS,4 characters x12 frames, official decoder and walkFrameIndex",
+  "private_native_content22_validation": "PASS,2 scenes/2 maps/16 assets",
+  "private_effective_dialogue_check": "PASS,all configured lines found in generated native scenes",
+  "downloads": "3 ZIPs, CRC + inner inventories + SHA256 checked; static pilot download URL checked directly",
+  "source_rebuild": "Clean corresponding-source extraction rebuilt244 runtime files with pinned pnpm10.17.1. Final packaging-only correction removed1 unused soundfont; build wrapper updated for the same removal. Full source rebuild not repeated after this packaging-only change.",
+  "browser_limit": "Public CI uses synthetic authored text. Private novel dialogue layout was not directly browser-tested; await user playtest. Gameplay, engine and sprites identical, native project mechanics compared.",
+  "not_repeated": [
+    "P0 smoke",
+    "T1 complete original story suite",
+    "T11 stability suite",
+    "T12 foundation suite",
+    "Full new pilot flow after its first PASS"
+  ],
+  "not_claimed": [
+    "Full-book adaptation",
+    "General T2 compiler complete",
+    "All NPCs automatically turn",
+    "Preservation of a pre-populated original-game save was browser-tested",
+    "Global lint/static quality gate zero diagnostics"
+  ],
+  "ci_infrastructure_notes": "Actions/pnpm emitted platform Node deprecation notices; scoped Reforge typecheck had no diagnostics.",
+  "independent_review": "Read-only non-author review accepted final four-direction contract, stage flow, private boundary, static ZIP fix, and pixel counterexample. Packaging-only size-limit correction accepted by the same non-author review.",
+  "excluded_unused_ci_asset": "pilot/game/soundfont.sf3",
+  "post_ci_changes": [
+    "Remove unreferenced opening soundfont copy to meet static hosting limit",
+    "Fail packaging if any output file exceeds26214400 bytes",
+    "Targeted static ZIP effective config, URL, CRC/inventory and size checks repeated after packaging change only"
+  ],
+  "initial_deployment_failure": {
+    "id": "appgdep_6ad20f31d0d081919ade858c1a0d5ac7",
+    "reason": "static ZIP28555501 bytes exceeds26214400 byte single-file platform limit"
+  },
+  "static_zip_final_bytes": 22997894,
+  "archive": {
+    "bytes": 69778566,
+    "sha256": "78a7a79b77e7ed8748f5de0178d9a23df629e5de039274fccccf7d99fc8d6d2a",
+    "entries": 309
+  },
+  "private_site_source_commit": "91cb0cc55feb277beabeedde3728c2f2e017c371",
+  "downloads_manifest": [
+    {
+      "path": "lantern-inn-static.zip",
+      "bytes": 22997894,
+      "sha256": "3ff4d421026c91bcabf6632fca2d76464b248be74159030cd82b069f2e4b6102"
+    },
+    {
+      "path": "corresponding-source.zip",
+      "bytes": 19131985,
+      "sha256": "588de831a9faa4c76d454dd53cf3e69448a705d5adfe0b7beab8ffbbbecfe48f"
+    },
+    {
+      "path": "lantern-inn-project.zip",
+      "bytes": 5604657,
+      "sha256": "53f1f96b9cda7682a6534ca1c0db8d597102a617f348479ddc3820f4a9e6a452"
+    }
+  ],
+  "deployment": {
+    "id": "appgdep_6ad21065a9e08191a855d174f66f4d72",
+    "status": "succeeded",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_998275cbdf3c8191a08982a7cf16f737",
+    "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site",
+    "pilot_url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/pilot/",
+    "private_owner_only_verified": true
+  }
+}

@@ -44,5 +44,8 @@ with ZipFile(downloads/'lantern-inn-static.zip','w',ZIP_DEFLATED) as z:
    else:z.write(p,rel)
  z.writestr('DOWNLOADS.md','# Separate source and content downloads\n\nComplete corresponding GPL source is offered alongside this distribution at:\nhttps://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/corresponding-source.zip\n\nCanonical content22 project:\nhttps://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/downloads/lantern-inn-project.zip\n\nGitHub source and reproducible build scripts:\nhttps://github.com/saysyao123/Tangyuan-AI-Douyin/tree/main/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1\n')
 seal_zip(downloads/'lantern-inn-static.zip','runtime-manifest.json')
+if os.environ.get('T13_CONFIG'):
+ oversized=[str(p.relative_to(out)) for p in out.rglob('*') if p.is_file() and p.stat().st_size>26214400]
+ if oversized:raise ValueError('Static hosting single-file limit 26214400 bytes: '+', '.join(oversized))
 receipts=[{'path':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in downloads.glob('*.zip')]
 (out/'download-checksums.json').write_text(json.dumps(receipts,indent=2)+'\n');print('DOWNLOAD_PACKAGES_READY',json.dumps(receipts))

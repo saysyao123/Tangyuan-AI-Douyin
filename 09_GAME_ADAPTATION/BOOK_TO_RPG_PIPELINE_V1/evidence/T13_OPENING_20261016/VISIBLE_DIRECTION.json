@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "evidence": [
+    {
+      "facing": "up",
+      "position": {
+        "col": 8,
+        "row": 5,
+        "height": 0
+      },
+      "heroMatch": 1,
+      "childMatch": 0.9821428571428571
+    },
+    {
+      "facing": "left",
+      "position": {
+        "col": 7,
+        "row": 6,
+        "height": 0
+      },
+      "heroMatch": 1,
+      "childMatch": 1
+    },
+    {
+      "facing": "down",
+      "position": {
+        "col": 8,
+        "row": 7,
+        "height": 0
+      },
+      "heroMatch": 1,
+      "childMatch": 1
+    },
+    {
+      "facing": "right",
+      "position": {
+        "col": 9,
+        "row": 6,
+        "height": 0
+      },
+      "heroMatch": 1,
+      "childMatch": 1
+    },
+    {
+      "case": "previous-roof-occlusion",
+      "score": 1
+    },
+    {
+      "case": "old-roof-counterexample",
+      "score": 0.4349442379182156
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NATIVE_TWO_MEMBER_PARTY",
+    "FOUR_REAL_KEY_DIRECTIONS_AND_IDLE_SCREENSHOTS",
+    "EXIT_GATED_BEFORE_STORY",
+    "PERFORMANCE_GATED_BEFORE_PURCHASE",
+    "NATIVE_PURCHASE_NO_REPEAT_CHARGE",
+    "SHARE_CONSUMES_ITEM_AND_PERFORMANCE_COMPLETES",
+    "NATIVE_PORTAL_AND_BACKSTAGE_DISCOVERY",
+    "PILOT_SAVE_REOPEN_RESTORES_NATIVE_STATE",
+    "RETURN_EXIT_ENDING_NO_REPEAT_MUTATION",
+    "SAVE_SCOPE_ISOLATED_FROM_ORIGINAL_GAME",
+    "CONFIGURED_PILOT_SHELL_READY"
+  ],
+  "directions": [
+    {
+      "facing": "up",
+      "from": {
+        "col": 10,
+        "row": 0,
+        "height": 0
+      },
+      "to": {
+        "col": 10,
+        "row": -3,
+        "height": 0
+      }
+    },
+    {
+      "facing": "left",
+      "from": {
+        "col": 10,
+        "row": -3,
+        "height": 0
+      },
+      "to": {
+        "col": 9,
+        "row": -3,
+        "height": 0
+      }
+    },
+    {
+      "facing": "down",
+      "from": {
+        "col": 9,
+        "row": -3,
+        "height": 0
+      },
+      "to": {
+        "col": 9,
+        "row": -1,
+        "height": 0
+      }
+    },
+    {
+      "facing": "right",
+      "from": {
+        "col": 9,
+        "row": -1,
+        "height": 0
+      },
+      "to": {
+        "col": 11,
+        "row": -1,
+        "height": 0
+      }
+    }
+  ],
+  "errors": []
+}

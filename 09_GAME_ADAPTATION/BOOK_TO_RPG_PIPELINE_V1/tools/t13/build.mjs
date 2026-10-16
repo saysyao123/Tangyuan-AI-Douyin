@@ -13,6 +13,8 @@ run(['--import','tsx','packages/editor/scripts/t13-opening.mts',root,path.join(r
 run(['--import','tsx','packages/editor/scripts/check-project.mts','projects/book-pilot-opening'])
 run([path.join(root,'packages/editor/node_modules/vite/bin/vite.js'),'build','--base','./'],path.join(root,'packages/reforge'),{VITE_PROJECT_ID:'book-pilot-opening'})
 await fs.cp(path.join(root,'packages/reforge/dist'),path.join(out,'pilot/game'),{recursive:true})
+// Opening has no MIDI/soundfont catalog entries; remove the unused public fallback copy.
+await fs.rm(path.join(out,'pilot/game/soundfont.sf3'),{force:true})
 await fs.cp(path.join(root,'projects/book-pilot-opening'),path.join(out,'pilot/game/projects/book-pilot-opening'),{recursive:true})
 await fs.cp(path.join(root,'projects/book-pilot-opening'),path.join(out,'editor/projects/book-pilot-opening'),{recursive:true})
 for(const name of ['index.html','style.css','shell.js'])await fs.copyFile(path.join(out,name),path.join(out,'pilot',name))

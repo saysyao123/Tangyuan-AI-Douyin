@@ -1,5 +1,7 @@
 # WORK 模式接力执行｜Type PAL 纯原创网页游戏 T1
 
+> **T1.3续作：已收到用户书籍并制作私有开篇切片，四向人物修复与新增11项流程/最终画面反例通过。先看 CURRENT_STATUS.md、docs/T13_OPENING_TASK.md 和 evidence/T13_OPENING_20261016/；不要再索书，也不要重复旧套件。私有对白排版由用户试玩确认。**
+
 > **当前状态以 [CURRENT_STATUS.md](CURRENT_STATUS.md) 为准。** T1.2 基底已验收发布（Run 38891702378），结果与失败复盘见 evidence/T12_FOUNDATION_20261016/；下方历史优先级不覆盖最新发布与验收。
 
 
