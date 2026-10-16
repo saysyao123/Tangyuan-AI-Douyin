@@ -38,7 +38,7 @@ jobs:
         working-directory: upstream
         run: |
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t14-polish-e2e.mjs .
-          T14_RESUME=street node t14-polish-e2e.mjs
+          T14_RESUME=street-exit node t14-polish-e2e.mjs
       - name: Record exact CI runtime and native project hashes
         if: always()
         run: |

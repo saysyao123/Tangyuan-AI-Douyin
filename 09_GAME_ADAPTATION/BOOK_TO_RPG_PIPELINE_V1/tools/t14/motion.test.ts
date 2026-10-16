@@ -15,6 +15,7 @@ describe('display-only actor tracks',()=>{
   a.begin();a.sample('party:child',p(9),20);a.end();a.begin();expect(a.sample('entity:guard',p(10.5),30).pos.col).toBe(10.5);a.end()
   a.reset();a.begin();expect(a.sample('party:child',p(8),40).pos.col).toBe(8);a.end()
  })
+ it('explicit NPC placement snaps even within a single grid cell',()=>{const a=new ActorPresentation();a.begin();a.sample('entity:officer',p(1),0,false);a.end();a.begin();expect(a.sample('entity:officer',p(1.5),20,false).pos.col).toBe(1.5);a.end()})
  it('exposes immutable copies of the actual draw inputs',()=>{
   const a=new ActorPresentation();a.begin();a.sample('party:child',p(1),0);a.record('party:child',p(1),p(.75),true,7);const s=a.snapshot();expect(Object.isFrozen(s[0]?.displayed)).toBe(true);expect(s[0]?.frame).toBe(7);expect(()=>{(s[0]!.canonical as {col:number}).col=99}).toThrow()
  })
