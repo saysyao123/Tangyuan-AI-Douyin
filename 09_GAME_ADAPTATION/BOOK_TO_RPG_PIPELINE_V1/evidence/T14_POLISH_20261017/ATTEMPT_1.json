@@ -1,0 +1,285 @@
+{
+  "status": "FAIL",
+  "checks": [
+    "REAL_FOLLOWER_INTERMEDIATE_DRAW_AND_SETTLEMENT",
+    "FOUR_IMPORTED_ART_VIEW_CAPTURES",
+    "OLD_FAIR_ENDING_SAVE_CONTINUES_INTO_STREET"
+  ],
+  "error": "Error: walk blocked {\"col\":16,\"row\":0,\"state\":{\"projectId\":\"book-pilot-opening\",\"health\":{\"frames\":2947,\"draws\":2947,\"lastFrameAt\":49694.80000000002,\"p95FrameMs\":17,\"p99FrameMs\":17.29999999998836,\"error\":null,\"storage\":{\"sequence\":4,\"state\":\"loaded\",\"message\":\"已读取快速存档。\"}},\"sceneId\":\"street\",\"story\":{\"flags\":{\"intro_seen\":true,\"bought\":true,\"shared\":true,\"watched\":true,\"backstage_seen\":true,\"rumor_seen\":false,\"ending_seen\":true,\"street_seen\":true,\"stranger_seen\":true},\"inventory\":[],\"money\":5,\"party\":[{\"hp\":100,\"maxHP\":100},{\"hp\":100,\"maxHP\":100}]},\"position\":{\"col\":11,\"row\":0,\"height\":0},\"presentationPosition\":{\"col\":11,\"row\":0,\"height\":0},\"actors\":[{\"id\":\"entity:fair-return\",\"canonical\":{\"col\":6,\"row\":0,\"height\":0},\"displayed\":{\"col\":6,\"row\":0,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:stranger\",\"canonical\":{\"col\":12,\"row\":0,\"height\":0},\"displayed\":{\"col\":12,\"row\":0,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:home-road\",\"canonical\":{\"col\":18,\"row\":0,\"height\":0},\"displayed\":{\"col\":18,\"row\":0,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:street-house\",\"canonical\":{\"col\":15,\"row\":-5,\"height\":0},\"displayed\":{\"col\":15,\"row\":-5,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:street-gate\",\"canonical\":{\"col\":21,\"row\":-5,\"height\":0},\"displayed\":{\"col\":21,\"row\":-5,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:street-tree\",\"canonical\":{\"col\":7,\"row\":-7,\"height\":0},\"displayed\":{\"col\":7,\"row\":-7,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"entity:street-lamp\",\"canonical\":{\"col\":12,\"row\":-4,\"height\":0},\"displayed\":{\"col\":12,\"row\":-4,\"height\":0},\"moving\":false,\"frame\":0},{\"id\":\"party:child\",\"canonical\":{\"col\":8,\"row\":0,\"height\":0},\"displayed\":{\"col\":8,\"row\":0,\"height\":0},\"moving\":false,\"frame\":9}],\"facing\":\"right\",\"dialogue\":null,\"dialogueSlots\":[],\"scriptRunning\":false,\"presentationBusy\":false,\"menuActive\":false,\"battleActive\":false,\"fadeBlack\":0,\"ditherActive\":false}}",
+  "state": {
+    "projectId": "book-pilot-opening",
+    "health": {
+      "frames": 2949,
+      "draws": 2949,
+      "lastFrameAt": 49728.20000000001,
+      "p95FrameMs": 17,
+      "p99FrameMs": 17.29999999998836,
+      "error": null,
+      "storage": {
+        "sequence": 4,
+        "state": "loaded",
+        "message": "已读取快速存档。"
+      }
+    },
+    "sceneId": "street",
+    "story": {
+      "flags": {
+        "intro_seen": true,
+        "bought": true,
+        "shared": true,
+        "watched": true,
+        "backstage_seen": true,
+        "rumor_seen": false,
+        "ending_seen": true,
+        "street_seen": true,
+        "stranger_seen": true
+      },
+      "inventory": [],
+      "money": 5,
+      "party": [
+        {
+          "hp": 100,
+          "maxHP": 100
+        },
+        {
+          "hp": 100,
+          "maxHP": 100
+        }
+      ]
+    },
+    "position": {
+      "col": 11,
+      "row": 0,
+      "height": 0
+    },
+    "presentationPosition": {
+      "col": 11,
+      "row": 0,
+      "height": 0
+    },
+    "actors": [
+      {
+        "id": "entity:fair-return",
+        "canonical": {
+          "col": 6,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 6,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:stranger",
+        "canonical": {
+          "col": 12,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 12,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:home-road",
+        "canonical": {
+          "col": 18,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 18,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-house",
+        "canonical": {
+          "col": 15,
+          "row": -5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 15,
+          "row": -5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-gate",
+        "canonical": {
+          "col": 21,
+          "row": -5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 21,
+          "row": -5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-tree",
+        "canonical": {
+          "col": 7,
+          "row": -7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 7,
+          "row": -7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-lamp",
+        "canonical": {
+          "col": 12,
+          "row": -4,
+          "height": 0
+        },
+        "displayed": {
+          "col": 12,
+          "row": -4,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "party:child",
+        "canonical": {
+          "col": 8,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 8,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      }
+    ],
+    "facing": "right",
+    "dialogue": null,
+    "dialogueSlots": [],
+    "scriptRunning": false,
+    "presentationBusy": false,
+    "menuActive": false,
+    "battleActive": false,
+    "fadeBlack": 0,
+    "ditherActive": false
+  },
+  "motion": [
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 9,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    },
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 8.897499999999855,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    },
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 8.75,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    },
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 8.617499999999927,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    },
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 8.409999999999854,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    },
+    {
+      "id": "party:child",
+      "canonical": {
+        "col": 8,
+        "row": 0,
+        "height": 0
+      },
+      "displayed": {
+        "col": 8.192499999999928,
+        "row": 0,
+        "height": 0
+      },
+      "moving": true,
+      "frame": 11
+    }
+  ],
+  "errors": []
+}

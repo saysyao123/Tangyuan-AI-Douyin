@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "nativeRLE": [
+    {
+      "id": "hero",
+      "width": 36,
+      "height": 56,
+      "frames": 12,
+      "uniqueFrames": 12
+    },
+    {
+      "id": "child",
+      "width": 32,
+      "height": 44,
+      "frames": 12,
+      "uniqueFrames": 12
+    },
+    {
+      "id": "merchant",
+      "width": 36,
+      "height": 56,
+      "frames": 1,
+      "uniqueFrames": 1
+    },
+    {
+      "id": "stage",
+      "width": 128,
+      "height": 100,
+      "frames": 1,
+      "uniqueFrames": 1
+    },
+    {
+      "id": "house",
+      "width": 128,
+      "height": 112,
+      "frames": 1,
+      "uniqueFrames": 1
+    },
+    {
+      "id": "tree",
+      "width": 72,
+      "height": 88,
+      "frames": 1,
+      "uniqueFrames": 1
+    }
+  ],
+  "source": "Official shared parseSpriteChunk on final compressed project assets"
+}

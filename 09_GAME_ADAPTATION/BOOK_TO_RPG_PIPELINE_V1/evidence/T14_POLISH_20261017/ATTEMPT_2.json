@@ -1,0 +1,229 @@
+{
+  "status": "FAIL",
+  "checks": [
+    "VALIDATED_NATIVE_CHECKPOINT_FOR_UNPASSED_STREET_SECTION"
+  ],
+  "error": "TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.",
+  "state": {
+    "projectId": "book-pilot-opening",
+    "health": {
+      "frames": 883,
+      "draws": 883,
+      "lastFrameAt": 16876.300000000003,
+      "p95FrameMs": 19.30000000000291,
+      "p99FrameMs": 22.5,
+      "error": null,
+      "storage": {
+        "sequence": 4,
+        "state": "loaded",
+        "message": "已读取快速存档。"
+      }
+    },
+    "sceneId": "street",
+    "story": {
+      "flags": {
+        "intro_seen": true,
+        "bought": true,
+        "shared": true,
+        "watched": true,
+        "backstage_seen": true,
+        "ending_seen": true,
+        "street_seen": true,
+        "stranger_seen": true
+      },
+      "inventory": [],
+      "money": 5,
+      "party": [
+        {
+          "hp": 100,
+          "maxHP": 100
+        },
+        {
+          "hp": 100,
+          "maxHP": 100
+        }
+      ]
+    },
+    "position": {
+      "col": 17,
+      "row": 0,
+      "height": 0
+    },
+    "presentationPosition": {
+      "col": 17,
+      "row": 0,
+      "height": 0
+    },
+    "actors": [
+      {
+        "id": "entity:fair-return",
+        "canonical": {
+          "col": 6,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 6,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:stranger",
+        "canonical": {
+          "col": 12,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 12,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:home-road",
+        "canonical": {
+          "col": 18,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 18,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-house",
+        "canonical": {
+          "col": 15,
+          "row": -5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 15,
+          "row": -5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-gate",
+        "canonical": {
+          "col": 21,
+          "row": -5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 21,
+          "row": -5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-tree",
+        "canonical": {
+          "col": 7,
+          "row": -7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 7,
+          "row": -7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:street-lamp",
+        "canonical": {
+          "col": 12,
+          "row": -4,
+          "height": 0
+        },
+        "displayed": {
+          "col": 12,
+          "row": -4,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "party:child",
+        "canonical": {
+          "col": 16,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 16,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      }
+    ],
+    "facing": "right",
+    "dialogue": {
+      "dialogueId": "__script",
+      "cueIndex": 0,
+      "slot": "bottom",
+      "pageIndex": 0,
+      "pageCount": 1,
+      "pageStartedAtMs": 6656.5,
+      "phase": "waiting-input",
+      "speaker": "name.child",
+      "rowTextIds": [
+        "要是我也能变得很厉害，就能保护你了。"
+      ],
+      "pageTextIds": [
+        "要是我也能变得很厉害，就能保护你了。"
+      ],
+      "pageText": "要是我也能变得很厉害，就能\n保护你了。"
+    },
+    "dialogueSlots": [
+      {
+        "dialogueId": "__script",
+        "cueIndex": 0,
+        "slot": "bottom",
+        "pageIndex": 0,
+        "pageCount": 1,
+        "pageStartedAtMs": 6656.5,
+        "phase": "waiting-input",
+        "speaker": "name.child",
+        "rowTextIds": [
+          "要是我也能变得很厉害，就能保护你了。"
+        ],
+        "pageTextIds": [
+          "要是我也能变得很厉害，就能保护你了。"
+        ],
+        "pageText": "要是我也能变得很厉害，就能\n保护你了。",
+        "presentationId": 6,
+        "active": true,
+        "visibleText": "要是我也能变得很厉害，就能\n保护你了。",
+        "portraitAsset": "portrait.child"
+      }
+    ],
+    "scriptRunning": true,
+    "presentationBusy": true,
+    "menuActive": false,
+    "battleActive": false,
+    "fadeBlack": 0,
+    "ditherActive": false
+  },
+  "motion": [],
+  "errors": []
+}

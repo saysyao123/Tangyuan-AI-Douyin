@@ -1,0 +1,61 @@
+{
+  "status": "DEPLOYED_PRIVATE",
+  "date": "2026-10-17",
+  "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/pilot/",
+  "site": {
+    "project_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "version_id": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_e76e5524a22c8191a0b3a5a336b56363",
+    "version": 6,
+    "deployment_id": "appgdep_6ad25135c4248191b1018951037eb23b",
+    "source_commit": "dd6523b4613fc2701c880555377638536cdafc2c",
+    "status": "succeeded",
+    "audience": "owner-only, unchanged"
+  },
+  "upstream": "IllegalCreed/type-pal@f98d0ddd89ebdee7b04502ee35de26ee82c6d246",
+  "tested_commit": "6a4d47414c1bb0d6d86a11b59eff0d1f75a77bcf",
+  "ci": {
+    "first_new_art_motion_legacy_scope": {
+      "run": 38930405574,
+      "scope": "PASS: four imported views via native canvas pixel match; follower intermediate draw positions; old fair ending SAVE12 continues to street",
+      "overall": "FAIL: later test walked directly into colliding NPC"
+    },
+    "framed_dialogue": {
+      "run": 38931108760,
+      "scope": "PASS: framed text, stranger conversation",
+      "overall": "FAIL: test waited for portal before advancing its preceding dialogue"
+    },
+    "remaining_continuation": {
+      "run": 38931605753,
+      "status": "PASS",
+      "scope": "Only remaining street exit, courtyard, separate chapter completion, save/reopen display reset and seven-stage shell"
+    }
+  },
+  "checks": {
+    "new_motion_units": 3,
+    "new_npc_placement_unit": 1,
+    "production_closure_typecheck": "PASS",
+    "changed_actor_dialogue_lint_format": "PASS zero diagnostics",
+    "native_content_validation": "PASS 4 scenes, 4 maps, 54 project files",
+    "private_config_binding": "PASS 42 used dialogue keys",
+    "public_private_mechanical_binary_equivalence": "PASS",
+    "runtime_paths": 283,
+    "byte_identical_to_CI": 257,
+    "private_presentation_differences": 26,
+    "deployment_archive_inventory": "PASS",
+    "static_single_file_limit": 26214400,
+    "independent_code_review": "accept"
+  },
+  "limits": [
+    "User aesthetic review and private dialogue line-by-line visual acceptance pending",
+    "Full-repository static gate not claimed: unavailable commercial PAL project fixtures cause test-import diagnostics",
+    "Current chapter is fixed template, not T2 general compiler or full-book game",
+    "Extra decorative followers and native moving-NPC cinematic E2E not included in this scope",
+    "Map composition and bespoke frame animation still less detailed than PAL98"
+  ],
+  "suites_not_repeated": [
+    "P0",
+    "T1 original full suite",
+    "T11",
+    "T12"
+  ]
+}
