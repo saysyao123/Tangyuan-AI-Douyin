@@ -22,7 +22,7 @@ if 'T18_NATIVE_NAVIGATION' not in s:
     if (pointNavigationEnabled && activeScene.scene.id === 'home-room' && isBlockedAt(activeScene.map,player.pos)) {
       const pixel = gridToPixel(player.pos)
       if (pixel.x >= 208 && pixel.x <= 560 && pixel.y >= 144 && pixel.y <= 240) {
-        const safe = nearestStandable(player.pos,pos => !isBlocked(pos),pointCanStep)
+        const safe = nearestStandable(player.pos,pos => pointCanStep(pos,pos),pointCanStep)
         if (safe) { player.pos = safe; renderedPlayerPos = {...safe}; trail = seedFormationTrail(safe, facing); displayPosition.reset(); worldPresentation.resetMotion(); deriveFollowers(); updateCamera(); showToast('已将落在家具内的旧档位置移到旁边空地，剧情进度保留。') }
         else showToast('当前位置被家具挡住，未找到安全落点；请保留备份后反馈此存档。')
       }

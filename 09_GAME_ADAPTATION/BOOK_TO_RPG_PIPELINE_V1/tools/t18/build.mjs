@@ -12,6 +12,6 @@ for(const sub of['chapter/game','editor']){const p=path.join(out,sub,'projects/b
 for(const sub of['chapter','night']){const p=path.join(out,sub,'index.html');let s=await fs.readFile(p,'utf8');s=s.replace('方向键 走动','点击地面 自动绕路 · 点击物件 靠近交互 · 方向键 走动');await fs.writeFile(p,s)}
 const configs={T13_CONFIG:process.env.T14_CONFIG??path.join(book,'pilot-config.json'),T15_CONFIG:process.env.T15_CONFIG??path.join(book,'cinematic-config.json'),T16_CONFIG:process.env.T16_CONFIG??path.join(book,'night-config.json')}
 for(const[k,v]of Object.entries(configs))try{await fs.access(v)}catch{configs[k]=path.join(book,'examples',k==='T13_CONFIG'?'complete-opening':k==='T15_CONFIG'?'cinematic-opening':'night-awakening','config.json')}
-run('python3',[path.join(book,'tools/type_pal_t1_package.py'),root,out,book],root,{...configs,T14_BUILD:'1',T17_BUILD:'1'})
+run('python3',[path.join(book,'tools/type_pal_t1_package.py'),root,out,book],root,{...configs,T14_BUILD:'1',T17_BUILD:'1',T18_BUILD:'1'})
 run('python3',[path.join(book,'tools/release_inventory.py'),'check',out])
 console.log('T18_NAVIGATION_ENVIRONMENT_READY')

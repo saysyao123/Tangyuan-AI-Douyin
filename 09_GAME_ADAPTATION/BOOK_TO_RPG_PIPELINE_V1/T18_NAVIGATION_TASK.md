@@ -31,3 +31,5 @@ bounded四向BFS共用原生terrain sweep/body sweep；点击地面绕障、点�
 - 不能把用户卡点直接归因新增家具：静态检查与authored bypass反证。
 - 点路不能仅用sameGrid：原生动态人物有连续body sweep；分数坐标需要通过正常partial步对齐。
 - 旧档恢复除了逻辑位置，还需同步显示脚点、队形与镜头。
+
+- 首轮CI 39004516077：构建/类型/合同通过；旧档恢复、fraction靠近、键盘取消通过；出门目标未命中。截图显示测试点在门牌透明脚部附近，原矩形hit选到餐桌。修复为可见像素alpha命中 + 可点击脚边marker；鼠标测试点击显式marker。并收紧safe free为零位移native连续sweep，排NPC半格重叠。

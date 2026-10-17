@@ -1,9 +1,15 @@
 import type { Facing, GridPos } from '@type-pal/content'
 
 const STEPS: readonly [Facing, number, number][] = [
-  ['right', 1, 0], ['down', 0, 1], ['left', -1, 0], ['up', 0, -1],
+  ['right', 1, 0],
+  ['down', 0, 1],
+  ['left', -1, 0],
+  ['up', 0, -1],
 ]
-export interface NavigationStep { pos: GridPos; direction: Facing }
+export interface NavigationStep {
+  pos: GridPos
+  direction: Facing
+}
 
 /** Bounded four-axis search. The caller supplies the SAME swept terrain/occupancy rule as walking. */
 export function navigationPath(
@@ -30,8 +36,13 @@ export function navigationPath(
       return result.reverse()
     }
     for (const [direction, dc, dr] of STEPS) {
-      const next = (value: number, direction: number) => direction > 0 ? Math.floor(value + 1e-6) + 1 : Math.ceil(value - 1e-6) - 1
-      const pos = { ...from, col: dc ? next(current.pos.col, dc) : current.pos.col, row: dr ? next(current.pos.row, dr) : current.pos.row }
+      const next = (value: number, direction: number) =>
+        direction > 0 ? Math.floor(value + 1e-6) + 1 : Math.ceil(value - 1e-6) - 1
+      const pos = {
+        ...from,
+        col: dc ? next(current.pos.col, dc) : current.pos.col,
+        row: dr ? next(current.pos.row, dr) : current.pos.row,
+      }
       const id = key(pos)
       if (seen.has(id) || !canStep(current.pos, pos)) continue
       seen.add(id)
@@ -49,12 +60,22 @@ export function nearestStandable(
 ): GridPos | null {
   for (let radius = 0; radius <= 4; radius++) {
     const candidates: GridPos[] = []
-    for (let dc = -radius; dc <= radius; dc++) for (let dr = -radius; dr <= radius; dr++) {
-      if (Math.max(Math.abs(dc), Math.abs(dr)) !== radius) continue
-      candidates.push({ ...from, col: Math.round(from.col) + dc, row: Math.round(from.row) + dr })
-    }
-    candidates.sort((a, b) => Math.hypot(a.col-from.col,a.row-from.row)-Math.hypot(b.col-from.col,b.row-from.row))
-    for (const pos of candidates) if (free(pos) && STEPS.some(([,dc,dr]) => canStep(pos,{...pos,col:pos.col+dc,row:pos.row+dr}))) return pos
+    for (let dc = -radius; dc <= radius; dc++)
+      for (let dr = -radius; dr <= radius; dr++) {
+        if (Math.max(Math.abs(dc), Math.abs(dr)) !== radius) continue
+        candidates.push({ ...from, col: Math.round(from.col) + dc, row: Math.round(from.row) + dr })
+      }
+    candidates.sort(
+      (a, b) =>
+        Math.hypot(a.col - from.col, a.row - from.row) -
+        Math.hypot(b.col - from.col, b.row - from.row),
+    )
+    for (const pos of candidates)
+      if (
+        free(pos) &&
+        STEPS.some(([, dc, dr]) => canStep(pos, { ...pos, col: pos.col + dc, row: pos.row + dr }))
+      )
+        return pos
   }
   return null
 }

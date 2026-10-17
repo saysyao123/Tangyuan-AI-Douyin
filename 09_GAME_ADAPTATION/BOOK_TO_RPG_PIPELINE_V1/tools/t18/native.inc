@@ -44,11 +44,16 @@
     return pointDirection
   }
   function pointHit(x: number, y: number): EntityDef | undefined {
-    return activeScene.scene.entities.filter(pointInteractable).filter(e => {
+    const entities = activeScene.scene.entities.filter(pointInteractable)
+    // Explicit foot markers remain selectable even when the authored sprite has transparent feet.
+    const marker = entities.find(e => { const p=gridToPixel(e.pos); return Math.abs(x-p.x)<=5 && Math.abs(y-p.y-5)<=4 })
+    if (marker) return marker
+    return entities.filter(e => {
       const pixel = gridToPixel(e.pos), definition = activeScene.entitySpriteDefs.get(e.id)
-      const frame = definition ? spriteCache.get(project.assetResolver, definition.asset)?.frames[0] : undefined
-      const width = Math.min(frame?.width ?? 28, 70), height = Math.min(frame?.height ?? 32, 72)
-      return x >= pixel.x-width/2 && x <= pixel.x+width/2 && y >= pixel.y-height+7 && y <= pixel.y+11
+      const frame = definition ? spriteCache.get(project.assetResolver, definition.asset)?.frames[worldPresentation.renderedEntityFrame(e.id) ?? 0] : undefined
+      if (!frame) return false
+      const localX=Math.floor(x-pixel.x+Math.floor(frame.width/2)),localY=Math.floor(y-pixel.y+frame.height-7)
+      return localX>=0 && localY>=0 && localX<frame.width && localY<frame.height && frame.opaque[localY*frame.width+localX]!==0
     }).sort((a,b) => gridToPixel(b.pos).y-gridToPixel(a.pos).y)[0]
   }
   if (pointNavigationEnabled) {
