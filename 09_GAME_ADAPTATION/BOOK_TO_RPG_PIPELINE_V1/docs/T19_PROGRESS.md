@@ -86,3 +86,15 @@
 - Playwright访问本地HTTP及file协议均遭 `ERR_BLOCKED_BY_ADMINISTRATOR`；仅JS语法检查通过，浏览器截图/交互没有通过。容器无完整固定版Type PAL源码与node_modules、GitHub在容器侧DNS失败，因此未执行原生编码器、游戏构建、SAVE12或寻路测试。
 - 当前状态：**P0完成、P1视觉方向获批准、P2局部素材结构预检通过、P2-A旧屋实景与P2-B动态均待精修、P2-C原生可玩验收未执行、P3–P5未开始。**
 - 下一最小任务：恢复已验收T18的固定上游工作区，在现有home-room真320×200入场镜头里只替换墙脚/地板及一个代表道具后实测，再把已有双主角动作做逐帧足部/重心修正。勿重跑无关剧情，不扩九图，不覆盖正式Site。
+
+
+---
+
+## 2026-10-17｜P2工作包02：原生RLE编码两角色完全比对通过，P2美术/可玩门仍未通过
+
+- P1 V2审美方向继续保持锁定，未重新解释为已接入的游戏精灵。
+- 新包 `T19_P2_WORKPACKAGE_02_20261017.zip`：包含与已批准角色一致的4方向站姿基础、小腿局部修整的每向三姿势、两份**真实原生格式gzip RLE**文件（3199/2289B）、独立 Node/Python 双实现、42项静态结构QA结果和离线逐帧查看器。
+- 从Type PAL固定源 `packages/shared/src/rle-encode.ts` 移植精灵RLE编码，与第二种语言独立编码**逐字节一致**（裸chunk：成人9640B、孩童6418B）。双角色解码像素与opaque掩码完全一致。此项为**格式级通过**，非native runtime验证。
+- 拼装的同视角旧屋样品像贴纸、审美回退：**REJECTED**；作品已移到ZIP `evidence/rejected_experiments`，不可用作正式资产。新步态缺反摆臂和真实重心变化：**NOT_PASSED**。
+- 原生运行仍未执行（本环境缺固定上游checkout与node_modules，网络DNS失败）；当前Playwright本地导航被策略阻断，只有JS语法检查，无真实浏览器验证。继续保留T18正式Site/机制。
+- 详见 [T19_P2_WORKBENCH_02.md](T19_P2_WORKBENCH_02.md)。下一步先在带固定上游的GitHub Actions环境导入一处**真正精修的旧屋材质**与一个已手工修正方向动画；再按影响做定向游戏测试。**未达到P2验收，不进入P3/P4。**
