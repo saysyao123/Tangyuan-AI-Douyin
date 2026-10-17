@@ -59,9 +59,19 @@
 阶段门：
 - **S0 基线与设计：** 开源比较、四场景任务/关键互动/路径和美术设计锁定；文档归档；
 - **S1 可选导航原型：** 浏览器真实加载、控件逐级引导、地图目标静态可达、原Shell/存档/剧情不变；
-- **S2 美术高保真可玩样板：** 先`street`真实高质量多层资产与互动再扩三图（不能重做低质T21几何贴图）；
+- **S2 美术高保真可玩样板：** 先以**第一幕开局`fair`同机位画面**做可玩高保真样板，随后`backstage`、`street`、`courtyard`；保留旧街G0真实相机证据，不重做低质T21几何贴图；
 - **S3 第一幕四图全面美术和NPC动作完成：** 游戏实际画面通过人眼审美确认，场景交互/寻路/性能正确；
 - **S4 回合制独立验证与第一幕完整试玩：** 先跑隔离战斗B1，再跑从庙会到归家无旧档连续游玩、修所有卡点，正式的战斗只在原剧情需要时加入；
 - **S5 正式私有网页发布：** 在不更改Site访问范围下发布审美+剧情+路径同时合格版本，交独立回退SHA和对应源/QA。私人配置不进入public repo。
 
 **严禁将S1功能试样表示成S3/S5交付**。S2的高品质可玩画面和最后真实第一幕连续试玩是目前未完成的核心。
+
+
+## 2026-10-17｜本轮实际执行结果（与最终目标分开）
+
+- 已启动分支 `feature/t23-act1-jrpg-art-guide-battle-20261017`，建立可选`journey-guide.js`以及不修改原 `shell.js` / `config.js` / native game 的`apply_guide.py`。**S1 已通过真实浏览器测试**：按钮0→1→2→收起、恢复页任务列表/导航/聚焦控件、引擎`fair`实际Draw>0且0页面错误。
+- 真实四地图`collision`和`scene`在`tests/t23-map-reachability.mjs`中通过：`fair`4、`backstage`1、`street`3、`courtyard`4，合计**12个**剧情/进出口对象有可达相邻格（不是“完整路径剧情”通过）。
+- 成功 [CI Run39036471050](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39036471050)；正式原站点未覆盖。测试版单独发布在`t23-journey-preview`，固定SHA `58c592fefaeb3cbd00ea16aea3aa5b32d03d0d32`，地址：https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/58c592fefaeb3cbd00ea16aea3aa5b32d03d0d32/chapter/index.html；外部CDN验证[Run39036577465](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39036577465)通过。
+- 此前两次真实失败保留：首次CI Workflow YAML含错误的内联表达式，导致无job；第二轮unit test只接受“镜头”一词但实际在视口内正确反馈为“当前画面”；第三轮UI首击被尚未建立的sceneKey reset吞掉。均定点修正后才通过，不把失败截图当成功。
+- 高标准**第一幕新美术：本轮尚未制作出可验收的原生高品质场景**；分辨率/遮挡的原型尚未运行；整体四图艺术门保持`NOT_PASSED`。回合制仅形成源代码对照及隔离验证契约，未制造新战斗。
+- **下一最小可见目标改为`fair`首屏**而不是继续仅研究`street`：原版网页不变，依据实际游戏庙会截图和批准的精细像素参考做完整戏台/摊位/通行区层级母版→native渲染/点击实测→用户美术验收，再推广到后台/旧街/小院。由于本轮整体目标升级为玩家能看见的第一幕，这优先级调整替代旧T20只先做街道的工艺优先，并保留街道原G0资料以备复用。
