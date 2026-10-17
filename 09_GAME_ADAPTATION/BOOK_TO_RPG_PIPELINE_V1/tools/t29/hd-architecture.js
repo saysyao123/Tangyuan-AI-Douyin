@@ -6,9 +6,8 @@
   'use strict';
   const screen=document.getElementById('screen');if(!screen)return;
   const houses={
-    street:[{col:23,row:-1,width:360},{col:30,row:-8,width:360},{col:37,row:-15,width:360}],
-    courtyard:[{col:25,row:-5,width:310},{col:32,row:-12,width:335},{col:40,row:-16,width:345},
-      {col:28,row:-2,width:310},{col:35,row:-9,width:320},{col:43,row:-13,width:345}]
+    street:[{col:23,row:-1,width:730},{col:30,row:-8,width:730},{col:37,row:-15,width:730}],
+    courtyard:[{col:28,row:-2,width:705},{col:35,row:-9,width:705},{col:43,row:-13,width:705}]
   };
   const art=new Image();art.decoding='async';art.src='./hd-house.png';
   const layer=document.createElement('canvas');layer.id='t29-hd-architecture';
