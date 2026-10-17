@@ -1,0 +1,56 @@
+name: Type PAL T17 display repair and continuous acts
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t17-display-20261017]
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t17.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  polish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build new scope once with public synthetic dialogue
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t17/build.mjs upstream "$PWD/web"
+      - name: Check changed dialogue production closure
+        run: |
+          mkdir -p /tmp/t17-evidence
+          python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t17-evidence/typecheck.log
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve CI-only static runtime
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t17-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Verify changed scene layouts and direct act continuation
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t17-display-e2e.mjs .
+          mkdir -p book-rpg-tests
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-*.native-save.json book-rpg-tests/
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t16-*.native-save.json book-rpg-tests/
+          node t17-display-e2e.mjs
+      - name: Record exact CI runtime and native project hashes
+        if: always()
+        run: |
+          cp -r web /tmp/t17-evidence/runtime-public
+          cp web/runtime-manifest.json /tmp/t17-evidence/runtime-manifest.json
+          cp -r upstream/projects/book-pilot-cinematic /tmp/t17-evidence/public-project
+          cp /tmp/t17-http.log /tmp/t17-evidence/http.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t17-evidence, path: /tmp/t17-evidence/, retention-days: 90}
+
+
