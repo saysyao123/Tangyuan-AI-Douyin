@@ -21,7 +21,7 @@ try{
   await page.close()
  }
  assert.equal(failures.length,0,'no pageerrors')
- const meta=JSON.parse(await fs.readFile('web/t19-preview/T19_PREVIEW.json','utf8'))
+ const meta=JSON.parse(await fs.readFile('../web/t19-preview/T19_PREVIEW.json','utf8'))
  assert.equal(meta.storyCollisionSaveChanges,false)
  assert.equal(meta.assetId,'night.noodle-table')
  const report={status:'PASS',scope:'T18 base vs isolated T19 replacement single meal-table; PUBLIC fixture only',screens,failures,meta,
