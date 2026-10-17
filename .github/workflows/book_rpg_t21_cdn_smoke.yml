@@ -16,6 +16,7 @@ jobs:
           BASE="https://raw.githack.com/saysyao123/Tangyuan-AI-Douyin/t21-playtest-web"
           curl -fsSL --retry 3 --max-time 25 "$BASE/index.html" -o /tmp/index.html
           grep -q '雾灯驿站' /tmp/index.html
+          grep -Fq 'src="./game/?observe=1"' /tmp/index.html
           curl -fsSL --retry 3 --max-time 25 "$BASE/game/index.html" -o /tmp/game.html
           grep -q 'id="screen"' /tmp/game.html
           curl -fsSL --retry 3 --max-time 25 "$BASE/game/projects/book-pilot-cinematic/content/scenes/street.json" -o /tmp/street.json
