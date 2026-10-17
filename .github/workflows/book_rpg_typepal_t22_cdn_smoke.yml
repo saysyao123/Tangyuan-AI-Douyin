@@ -1,0 +1,40 @@
+name: T22 verify restored T18 original UI external URL
+on:
+  push:
+    branches: ['feature/t22-original-web-layout-restore-20261017']
+    paths: ['.github/workflows/book_rpg_typepal_t22_cdn_smoke.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  external-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Validate immutable CDN T18 shell and gameplay files
+        env:
+          BASE: "https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/c15819079f1e98e577a8ee74d63b4f45a5093477"
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/index.html" -o /tmp/chapter.html
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/style.css" -o /tmp/chapter.css
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/shell.js" -o /tmp/shell.js
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/config.js" -o /tmp/config.js
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/game/index.html" -o /tmp/game.html
+          curl -fsSL --retry 2 --max-time 35 "$BASE/art-review/index.html" -o /tmp/review.html
+          curl -fsSL --retry 2 --max-time 35 "$BASE/art-review/game/projects/book-pilot-cinematic/content/scenes/street.json" -o /tmp/art-street.json
+          curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/game/projects/book-pilot-cinematic/content/scenes/street.json" -o /tmp/old-street.json
+          grep -q 'id="quests"' /tmp/chapter.html
+          grep -q 'id="objective"' /tmp/chapter.html
+          grep -q 'id="focus-game"' /tmp/chapter.html
+          grep -q 'T17_GAME_VIEWPORT' /tmp/chapter.css
+          cmp /tmp/chapter.html /tmp/review.html
+          python3 - <<'PY'
+          import json
+          a=json.load(open('/tmp/old-street.json'))
+          b=json.load(open('/tmp/art-street.json'))
+          old={x['id']:x for x in a['entities']}
+          new={x['id']:x for x in b['entities']}
+          assert old.keys()==new.keys()
+          assert sum(old[k].get('sprite')!=new[k].get('sprite') for k in old)==3
+          print('T22_EXTERNAL_RESTORED_UI_AND_ISOLATED_ART_PASS')
+          PY
