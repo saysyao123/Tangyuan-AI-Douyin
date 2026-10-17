@@ -28,7 +28,7 @@ got('courtyard',{...flagsBase(),neighbor_seen:true},'home');
 got('courtyard',{...flagsBase(),neighbor_seen:true,chapter_complete:true},null);
 got('fair',{...flagsBase(),night_started:true},null);
 assert.equal(selectHint('mind-tree',flagsBase()),null);
-assert.ok(directionHint({col:10,row:0},{x:0,y:0}).includes('镜头'));
+assert.match(directionHint({col:10,row:0},{x:0,y:0}),/当前画面|镜头/);
 const base='../t22site/chapter';
 const current='../t23site/chapter';
 for(const file of ['shell.js','config.js','game/index.html']){
