@@ -1,0 +1,60 @@
+name: T21 published first-act route and SAVE12 QA
+on:
+  push:
+    branches: ['feature/t21-act1-playable-rebuild-20261017']
+    paths: ['.github/workflows/book_rpg_t21_route_smoke.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  story-route:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t21-playtest-web
+          path: site
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - name: Install original test harness
+        working-directory: upstream
+        run: pnpm install --frozen-lockfile
+      - name: Mount currently published T21 public game in prior test URL
+        run: |
+          mkdir -p site/chapter
+          cp -a site/game site/chapter/game
+          rm -rf upstream/projects/book-pilot-cinematic
+          cp -a site/game/projects/book-pilot-cinematic upstream/projects/book-pilot-cinematic
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-visual-fix-e2e.mjs upstream/t15-visual-fix-e2e.mjs
+          mkdir -p upstream/book-rpg-tests
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-stage.native-save.json upstream/book-rpg-tests/
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json upstream/book-rpg-tests/
+      - name: Install Chromium
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve only published T21 site
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory site >/tmp/t21route.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Test old stage/backstage and street/courtyard/home route with new art
+        working-directory: upstream
+        run: node t15-visual-fix-e2e.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t21-published-first-act-story-route-qa
+          path: /tmp/t15-evidence/
+          retention-days: 30
