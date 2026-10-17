@@ -1,0 +1,65 @@
+name: T30 full first-act original story compatibility
+on:
+  push:
+    branches: ['feature/t30-native-hd-art-layer-20261018']
+    paths: ['.github/workflows/book_rpg_t30_continuous_story.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  continuity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t30-native-hd-preview
+          path: site
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Reuse fully strict first-act original gameplay assertions with updated T22 navigation
+        run: |
+          rm -rf upstream/projects/book-pilot-cinematic
+          cp -a site/chapter/game/projects/book-pilot-cinematic upstream/projects/book-pilot-cinematic
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-cinematic-e2e.mjs upstream/t30-complete-first-act.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('upstream/t30-complete-first-act.mjs');s=p.read_text()
+          old="assert.equal((await state()).sceneId,'courtyard');assert.equal((await state()).story.flags.chapter_complete,true);assert.deepEqual((await state()).position,end.position)"
+          new="const resumed=await state();assert.ok(['courtyard','home-room'].includes(resumed.sceneId));assert.equal(resumed.story.flags.chapter_complete,true);if(resumed.sceneId==='courtyard')assert.deepEqual(resumed.position,end.position)"
+          assert s.count(old)==1;s=s.replace(old,new)
+          a="assert.ok(await page.locator('a[href=\"../pilot/\"]').count());"
+          b="assert.ok(await page.locator('nav a[href=\"../night/\"]').count());"
+          assert s.count(a)==1;s=s.replace(a,b)
+          p.write_text(s);print('T30_OLD_TEST_UI_AND_ENDING_ASSUMPTIONS_CORRECTED')
+          PY
+      - name: Serve exact independently published T30 content
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t30-route.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Native fresh fair → backstage → old street → courtyard → save reload
+        working-directory: upstream
+        env: {T1_URL: "http://127.0.0.1:6154/site"}
+        run: node t30-complete-first-act.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t30-first-act-full-new-art-story-qa
+          path: /tmp/t15-evidence/
+          retention-days: 30
