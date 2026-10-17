@@ -1,0 +1,86 @@
+name: T22 restore prior webpage state and visual A/B
+on:
+  push:
+    branches: ['feature/t22-original-web-layout-restore-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t22-shell-regression-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t22_restore_ui.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 29
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Produce exactly the original T18 PUBLIC fixture site and shell
+        run: node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web"
+      - name: Recover prior T18 site structure and isolate discarded T21 art
+        run: |
+          mkdir -p site
+          cp -a web/. site/
+          mkdir -p site/art-review
+          cp -a web/chapter/. site/art-review/
+          mkdir -p /tmp/t22-evidence
+          # T21 experimental art changes only the duplicate /art-review game.
+          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t21/art_native.py upstream/projects/book-pilot-cinematic /tmp/t22-evidence
+          rm -rf site/art-review/game/projects/book-pilot-cinematic
+          cp -a upstream/projects/book-pilot-cinematic site/art-review/game/projects/book-pilot-cinematic
+          # Primary /chapter/ and /night/ remain exactly T18, including old assets.
+          for f in index.html style.css shell.js config.js; do
+            cmp "web/chapter/$f" "site/chapter/$f"
+            cmp "web/chapter/$f" "site/art-review/$f"
+          done
+          test -s site/chapter/game/projects/book-pilot-cinematic/content/scenes/street.json
+          test -s site/art-review/game/projects/book-pilot-cinematic/content/scenes/street.json
+          touch site/.nojekyll
+      - name: Install playwright Chromium
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start isolated local HTTP service for original plus review
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t22-local-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t22-local-http.log
+          exit 1
+      - name: Real browser full webpage regression, not just canvas
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t22-shell-regression-e2e.mjs ./
+          node t22-shell-regression-e2e.mjs
+      - name: Collect complete public test website and QA
+        if: always()
+        run: |
+          mkdir -p /tmp/t22-evidence
+          cp /tmp/t22-local-http.log /tmp/t22-evidence/http.log 2>/dev/null || true
+          if test -d site/chapter; then cd site && zip -qr /tmp/t22-evidence/T22_T18_UI_RESTORED_PLAYTEST_SITE.zip .; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: t22-t18-original-ui-and-art-a-b, path: /tmp/t22-evidence/, retention-days: 30}
+      - name: Publish verified restored site separately from T18 and T21
+        if: success()
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site
+          git init -q
+          git config user.name "T22 Playtest Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t22-restored-preview
+          git add -A
+          git commit -qm "T22 public T18 original page and separate T21 art review"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t22-restored-preview --force
