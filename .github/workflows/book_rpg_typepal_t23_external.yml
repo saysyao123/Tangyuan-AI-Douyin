@@ -1,0 +1,28 @@
+name: T23 live website external smoke check
+on:
+  push:
+    branches: ['feature/t23-act1-jrpg-art-guide-battle-20261017']
+    paths: ['.github/workflows/book_rpg_typepal_t23_external.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  cdn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Verify actual T23 website, original UI, guide and native game files
+        env:
+          BASE: "https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/58c592fefaeb3cbd00ea16aea3aa5b32d03d0d32"
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 2 --max-time 30 "$BASE/chapter/" -o /tmp/chapter.html
+          curl -fsSL --retry 2 --max-time 30 "$BASE/chapter/journey-guide.js" -o /tmp/guide.js
+          curl -fsSL --retry 2 --max-time 30 "$BASE/chapter/config.js" -o /tmp/config.js
+          curl -fsSL --retry 2 --max-time 30 "$BASE/chapter/game/index.html" -o /tmp/game.html
+          grep -q 'id="quests"' /tmp/chapter.html
+          grep -q 'id="objective"' /tmp/chapter.html
+          grep -q 'id="focus-game"' /tmp/chapter.html
+          grep -q 'journey-guide.js' /tmp/chapter.html
+          grep -q '旅途提示' /tmp/guide.js
+          grep -q 'id="screen"' /tmp/game.html
+          echo T23_EXTERNAL_JRPG_ORIGINAL_SHELL_PASS
