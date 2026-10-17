@@ -10,8 +10,21 @@ try{
  await page.goto(base);
  await page.waitForFunction(()=>{
   const f=document.getElementById('game')?.contentWindow;
-  return document.getElementById('loading')?.hidden && f?.__tpObserve?.readRuntime()?.health?.draws>0&&f?.__t24ArtProbe?.read()?.paintCount>8
+  return document.getElementById('loading')?.hidden && f?.__tpObserve?.readRuntime()?.health?.draws>0&&f?.__t24ArtProbe?.read()?.frame>8
  },null,{timeout:60000});
+ // A modal original opening dialogue intentionally suppresses environmental
+ // treatment. Advance native dialogue before checking the visual layer.
+ await page.locator('#game').focus();
+ for(let i=0;i<180;i++){
+  const state=await page.evaluate(()=>document.getElementById('game').contentWindow.__tpObserve.readRuntime());
+  if(!state.dialogue&&!state.scriptRunning&&!state.presentationBusy)break;
+  if(state.dialogue)await page.keyboard.press('Space');
+  else await page.waitForTimeout(110);
+ }
+ await page.waitForFunction(()=>{
+  const f=document.getElementById('game')?.contentWindow;
+  return !!f?.__t24ArtProbe?.read()?.paintCount
+ },null,{timeout:30000});
  const overlay=page.frameLocator('#game').locator('#t24-atmosphere');
  assert.equal(await overlay.count(),1);
  const state=await page.evaluate(()=>document.getElementById('game').contentWindow.__t24ArtProbe.read());
