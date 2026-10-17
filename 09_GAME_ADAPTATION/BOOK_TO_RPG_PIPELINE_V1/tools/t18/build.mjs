@@ -13,7 +13,7 @@ for(const n of['opening.mts','art.mts'])await fs.copyFile(path.join(here,n),path
 run(process.execPath,['--import','tsx','packages/editor/scripts/t18-opening.mts',root,path.join(root,'projects/book-pilot-cinematic'),path.join(root,'t18-artpack.json')])
 run(process.execPath,['--import','tsx','packages/editor/scripts/check-project.mts','projects/book-pilot-cinematic'])
 for(const sub of['chapter/game','editor']){const p=path.join(out,sub,'projects/book-pilot-cinematic');await fs.rm(p,{recursive:true,force:true});await fs.cp(path.join(root,'projects/book-pilot-cinematic'),p,{recursive:true})}
-for(const sub of['chapter','night']){const p=path.join(out,sub,'index.html');let s=await fs.readFile(p,'utf8');s=s.replace('方向键 走动','点击地面 自动绕路 · 点击物件 靠近交互 · 方向键 走动');await fs.writeFile(p,s)}
+for(const sub of['chapter','night']){const p=path.join(out,sub,'index.html');let s=await fs.readFile(p,'utf8');if(!s.includes('点击地面 <b>绕路</b>'))s=s.replace('方向键 <b>走动</b>','点击地面 <b>绕路</b> · 点击物件 <b>交互</b>　方向键 <b>走动</b>');await fs.writeFile(p,s)}
 const configs={T13_CONFIG:process.env.T14_CONFIG??path.join(book,'pilot-config.json'),T15_CONFIG:process.env.T15_CONFIG??path.join(book,'cinematic-config.json'),T16_CONFIG:process.env.T16_CONFIG??path.join(book,'night-config.json')}
 for(const[k,v]of Object.entries(configs))try{await fs.access(v)}catch{configs[k]=path.join(book,'examples',k==='T13_CONFIG'?'complete-opening':k==='T15_CONFIG'?'cinematic-opening':'night-awakening','config.json')}
 run('python3',[path.join(book,'tools/type_pal_t1_package.py'),root,out,book],root,{...configs,T14_BUILD:'1',T17_BUILD:'1',T18_BUILD:'1'})

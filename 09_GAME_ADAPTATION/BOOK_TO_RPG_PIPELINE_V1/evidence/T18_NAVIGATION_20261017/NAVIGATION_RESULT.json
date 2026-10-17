@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checks": [
+    "OLD_ROOM_FURNITURE_TRAP_RECOVERS_WITH_PROGRESS_AND_INPUT",
+    "FRACTIONAL_NATIVE_POSITION_CLICK_APPROACHES_NPC_AND_INTERACTS",
+    "KEYBOARD_CANCELS_POINT_ROUTE",
+    "CLICK_ROUTE_STORE_RETURN_WASH_NOT_WRONG_COURTYARD_TARGET",
+    "POST_FRUIT_CHECKPOINT_MEAL_AND_ROOM_YARD_CLICK_PATH",
+    "BLUR_CANCELS_WITHOUT_HELD_KEY_LEAK"
+  ],
+  "errors": [],
+  "scope": "New native pointer navigation, enriched room/street/store/yard routes; no old lottery/item/battle suites"
+}

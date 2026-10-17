@@ -1,0 +1,55 @@
+{
+  "status": "released",
+  "date": "2026-10-17",
+  "scope": "T18 native pointer navigation, bounded second-act room save recovery and original environment composition",
+  "repository": "saysyao123/Tangyuan-AI-Douyin",
+  "site": {
+    "projectId": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086",
+    "versionId": "appgprj_6ad1b7b5f0bc81919dcf871ecce85086~appgver_0f3afc9fd5b88191aa2a1c916dd37661",
+    "deploymentId": "appgdep_6ad305163d0c81918c0e135368beca56",
+    "sourceCommit": "572c19dfe44bcf35da8b8ccf5e76781ae71c135e",
+    "status": "succeeded",
+    "url": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site",
+    "playUrl": "https://lantern-inn-typepal-t1.ardentfern6.chatgpt.site/chapter/",
+    "access": "owner-private preserved"
+  },
+  "testedCode": {
+    "navigationCommit": "32f2573a1066ace088bd9e869442943581ee0e67",
+    "environmentCommit": "d6190544b8ac234c2f123f381e838f1bf5ce7743",
+    "nativeEngineExecutableUnchangedBetweenTheseRuns": true
+  },
+  "evidence": {
+    "firstFailureRun": 39004516077,
+    "navigationRun": 39004754229,
+    "navigationChecks": 6,
+    "environmentRun": 39005192149,
+    "environmentChecks": 3,
+    "environmentArtifactId": 12090732158,
+    "pageErrors": 0,
+    "changedProductionClosureTypecheck": "PASS",
+    "nativeSweepFractionalContract": "PASS",
+    "oldUnrelatedSuitesRerun": false
+  },
+  "integrity": {
+    "nativeProjectFiles": 109,
+    "privateTextLeafDifferences": 40,
+    "privateCueBindings": 51,
+    "runtimeFiles": 525,
+    "byteIdenticalToCI": 465,
+    "privatePresentationDifferences": 60,
+    "sourceAndNativeBinaryMechanicsMatch": true,
+    "downloadPackages": 3,
+    "archiveInventoryChecked": true
+  },
+  "assets": {
+    "newTypes": 6,
+    "decorativePlacements": 17,
+    "mode": "built-in image_gen",
+    "promptRecord": "../../art/t18/GENERATION_PROMPT.md"
+  },
+  "limits": [
+    "User's exact stuck save was not supplied; the same reported incident is not claimed reproduced.",
+    "Verified canonical native SAVE12 fixtures and a formerly legal position trapped by new furniture; no story flags/currency/inventory rewritten for recovery.",
+    "No claim of whole-book completion, cross-map navigation, long-duration leak absence or all-mobile/Safari/Firefox validation."
+  ]
+}

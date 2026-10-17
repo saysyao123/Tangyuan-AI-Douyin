@@ -1,0 +1,293 @@
+{
+  "status": "FAIL",
+  "checks": [
+    "OLD_ROOM_FURNITURE_TRAP_RECOVERS_WITH_PROGRESS_AND_INPUT",
+    "FRACTIONAL_NATIVE_POSITION_CLICK_APPROACHES_NPC_AND_INTERACTS",
+    "KEYBOARD_CANCELS_POINT_ROUTE"
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'home-room'\n- 'night-road'\n",
+  "state": {
+    "projectId": "book-pilot-cinematic",
+    "health": {
+      "frames": 185,
+      "draws": 185,
+      "lastFrameAt": 3521.9000000000087,
+      "p95FrameMs": 19.09999999999127,
+      "p99FrameMs": 20.80000000000291,
+      "error": null,
+      "storage": {
+        "sequence": 4,
+        "state": "loaded",
+        "message": "已读取快速存档。"
+      }
+    },
+    "camera": {
+      "x": 192,
+      "y": 128
+    },
+    "navigation": {
+      "active": false,
+      "target": null,
+      "route": []
+    },
+    "sceneId": "home-room",
+    "story": {
+      "flags": {
+        "intro_seen": false,
+        "bought": false,
+        "shared": false,
+        "rumor_seen": false,
+        "stage_started": false,
+        "fire_ignited": false,
+        "fire_recalled": false,
+        "fire_cast": false,
+        "fire_dissolved": false,
+        "heart_stirred": false,
+        "watched": false,
+        "arrest_started": false,
+        "performer_down": false,
+        "officers_departed": false,
+        "backstage_seen": false,
+        "ending_seen": false,
+        "street_seen": false,
+        "stranger_seen": false,
+        "promise_seen": false,
+        "neighbor_seen": false,
+        "chapter_complete": true,
+        "night_started": true,
+        "errand_started": true,
+        "pendant_seen": true,
+        "collision_seen": false,
+        "awakened": false,
+        "driver_fled": false,
+        "noodles_bought": false,
+        "returned_home": false,
+        "tree_seen": false,
+        "income_seen": false,
+        "shop_seen": false,
+        "fruit_won": false,
+        "fruit_used": false,
+        "after_fruit_seen": false,
+        "noodles_eaten": false,
+        "snowman_large": false,
+        "snowman_small": false,
+        "night_complete": false
+      },
+      "vars": {
+        "emotion": 0,
+        "draws": 0
+      },
+      "inventory": [],
+      "money": 5,
+      "party": [
+        {
+          "hp": 100,
+          "maxHP": 100
+        }
+      ]
+    },
+    "position": {
+      "col": 26,
+      "row": 4,
+      "height": 0
+    },
+    "presentationPosition": {
+      "col": 26,
+      "row": 4,
+      "height": 0
+    },
+    "actors": [
+      {
+        "id": "entity:child-wait",
+        "canonical": {
+          "col": 28,
+          "row": 2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 28,
+          "row": 2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 9
+      },
+      {
+        "id": "entity:memory",
+        "canonical": {
+          "col": 25,
+          "row": -3,
+          "height": 0
+        },
+        "displayed": {
+          "col": 25,
+          "row": -3,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:room-door",
+        "canonical": {
+          "col": 23,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 23,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:washbasin",
+        "canonical": {
+          "col": 31,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 31,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:meal-table",
+        "canonical": {
+          "col": 25,
+          "row": 5,
+          "height": 0
+        },
+        "displayed": {
+          "col": 25,
+          "row": 5,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:room-yard",
+        "canonical": {
+          "col": 33,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 33,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:room-lamp",
+        "canonical": {
+          "col": 22,
+          "row": 0,
+          "height": 0
+        },
+        "displayed": {
+          "col": 22,
+          "row": 0,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:room-bedside",
+        "canonical": {
+          "col": 26,
+          "row": -1,
+          "height": 0
+        },
+        "displayed": {
+          "col": 26,
+          "row": -1,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:room-television",
+        "canonical": {
+          "col": 28,
+          "row": -4,
+          "height": 0
+        },
+        "displayed": {
+          "col": 28,
+          "row": -4,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:kitchen-cupboard",
+        "canonical": {
+          "col": 19,
+          "row": 4,
+          "height": 0
+        },
+        "displayed": {
+          "col": 19,
+          "row": 4,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:moonlit-room-window",
+        "canonical": {
+          "col": 20,
+          "row": -2,
+          "height": 0
+        },
+        "displayed": {
+          "col": 20,
+          "row": -2,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      },
+      {
+        "id": "entity:winter-coat-by-wall",
+        "canonical": {
+          "col": 28,
+          "row": -7,
+          "height": 0
+        },
+        "displayed": {
+          "col": 28,
+          "row": -7,
+          "height": 0
+        },
+        "moving": false,
+        "frame": 0
+      }
+    ],
+    "facing": "left",
+    "dialogue": null,
+    "dialogueSlots": [],
+    "scriptRunning": false,
+    "presentationBusy": false,
+    "confirmation": null,
+    "menuActive": false,
+    "battleActive": false,
+    "fadeBlack": 0,
+    "ditherActive": false
+  },
+  "errors": []
+}

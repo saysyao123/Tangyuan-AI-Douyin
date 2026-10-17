@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "nativeFiles": 109,
+  "privateTextLeafDifferences": 40,
+  "privateCueBindings": 51,
+  "runtimeFiles": 525,
+  "byteIdenticalRuntimeFiles": 465,
+  "privatePresentationFiles": 60,
+  "archiveChecked": true,
+  "nativeExecutableIdenticalToNavigationRun39004754229": true,
+  "sceneStoryEntitiesUnchanged": true,
+  "newDecorations": 17
+}

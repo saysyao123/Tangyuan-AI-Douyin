@@ -17,6 +17,7 @@ const placements:Record<string,[string,string,number,number,number,number][]>= {
 }
 for(const [sceneId,entries]of Object.entries(placements)){
  const scene=await read('content/scenes/'+sceneId+'.json'),map=await read('content/maps/'+sceneId+'.json')
+ const managed=new Set(entries.map(([id])=>id));scene.entities=scene.entities.filter((e:any)=>!managed.has(e.id))
  for(const[id,sprite,x,y]of entries){const pos={col:(x/16+y/8)/2,row:(y/8-x/16)/2,height:0},entity={id,label:id,pos,sprite,facing:'right',collide:false};const at=scene.entities.findIndex((e:any)=>e.id===id);if(at<0)scene.entities.push(entity);else scene.entities[at]=entity}
  for(let b=0;b<map.height*2;b++)for(let k=0;k<map.width;k++){const x=(2*k+b%2)*16,y=b*8
   for(const[,,px,py,w,h]of entries)if(w&&Math.abs(x-px)<w&&y>=py-h&&y<=py)map.collision[b][k]=1
