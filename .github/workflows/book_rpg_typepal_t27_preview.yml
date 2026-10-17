@@ -1,0 +1,125 @@
+name: T27 original site plus approved lead cast playable first-act preview
+on:
+  push:
+    branches: ['feature/t27-act1-character-integration-preview-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t26/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t26/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t26-approved-characters-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t27_preview.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  leads-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t23-journey-preview
+          path: original
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python3 -m pip install pillow
+      - name: Build the approved V2 hero and child independently of original T23 site
+        run: |
+          cp -a original candidate
+          mkdir -p /tmp/t26-evidence
+          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t26/build_approved_leads.py candidate/chapter/game/projects/book-pilot-cinematic /tmp/t26-evidence
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          o=Path('original');n=Path('candidate')
+          old=list(p.relative_to(o) for p in o.rglob('*') if p.is_file())
+          mod=[str(p) for p in old if (o/p).read_bytes()!=(n/p).read_bytes()]
+          expected={'chapter/game/projects/book-pilot-cinematic/assets/index.json',
+                    'chapter/game/projects/book-pilot-cinematic/assets/generated/sprites/hero.rle',
+                    'chapter/game/projects/book-pilot-cinematic/assets/generated/sprites/child.rle'}
+          assert set(mod)==expected,mod
+          print('T26_DIFFERENTIAL_CONTENTS_ONLY_TWO_SPRITES_AND_ASSET_HASH_PASS')
+          PY
+      - name: Check unmodified native Type PAL game schema
+        run: |
+          rm -rf upstream/projects/book-pilot-cinematic
+          cp -a candidate/chapter/game/projects/book-pilot-cinematic upstream/projects/book-pilot-cinematic
+          cd upstream
+          node --import tsx packages/editor/scripts/check-project.mts projects/book-pilot-cinematic
+      - name: Playwright browser
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve source and candidate at identical origins
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t26-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/candidate/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t26-http.log
+          exit 1
+      - name: Four-scene real native character integration test
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t26-approved-characters-e2e.mjs .
+          mkdir -p book-rpg-tests
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
+          node t26-approved-characters-e2e.mjs
+      - name: Collect immutable evidence and self-contained optional test package
+        if: always()
+        run: |
+          mkdir -p /tmp/t26-evidence
+          cp /tmp/t26-http.log /tmp/t26-evidence/ 2>/dev/null || true
+          if test -d candidate/chapter; then cd candidate && zip -qr /tmp/t26-evidence/T26_V2_LEADS_FIRST_ACT_TEST.zip .; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t26-original-approved-lead-pixel-art-game-evidence
+          path: /tmp/t26-evidence/
+          retention-days: 30
+      - name: Replay affected native first-act routes and existing SAVE12 scenes
+        working-directory: upstream
+        env:
+          T1_URL: http://127.0.0.1:6154/candidate
+        run: |
+          rm -rf projects/book-pilot-cinematic
+          cp -a ../candidate/chapter/game/projects/book-pilot-cinematic projects/book-pilot-cinematic
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-visual-fix-e2e.mjs .
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-stage.native-save.json book-rpg-tests/
+          node t15-visual-fix-e2e.mjs
+      - name: Save regression evidence and self-contained test website
+        if: always()
+        run: |
+          mkdir -p /tmp/t26-evidence
+          if test -d /tmp/t15-evidence; then cp /tmp/t15-evidence/result.json /tmp/t26-evidence/T27_ROUTE_RESULT.json 2>/dev/null || true; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t27-published-first-act-regression-evidence
+          path: |
+            /tmp/t26-evidence/
+            /tmp/t15-evidence/result.json
+          retention-days: 30
+      - name: Publish isolated T27 preview only after route checks
+        if: success()
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd candidate
+          git init -q
+          git config user.name "T27 Playtest Build"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t27-act1-playtest
+          git add -A
+          git commit -qm "T27 original T23 game plus approved first-act lead characters"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t27-act1-playtest --force
+          echo "T27 public synthetic-story PREVIEW published, visual art signoff pending."
