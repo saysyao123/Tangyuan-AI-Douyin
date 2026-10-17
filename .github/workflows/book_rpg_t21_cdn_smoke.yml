@@ -1,0 +1,27 @@
+name: T21 external preview URL smoke check
+on:
+  push:
+    branches: ['feature/t21-act1-playable-rebuild-20261017']
+    paths: ['.github/workflows/book_rpg_t21_cdn_smoke.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - name: Check public URL resolves HTML and built JS
+        run: |
+          set -euo pipefail
+          BASE="https://raw.githack.com/saysyao123/Tangyuan-AI-Douyin/t21-playtest-web"
+          curl -fsSL --retry 3 --max-time 25 "$BASE/index.html" -o /tmp/index.html
+          grep -q '雾灯驿站' /tmp/index.html
+          curl -fsSL --retry 3 --max-time 25 "$BASE/game/index.html" -o /tmp/game.html
+          grep -q 'id="screen"' /tmp/game.html
+          curl -fsSL --retry 3 --max-time 25 "$BASE/game/projects/book-pilot-cinematic/content/scenes/street.json" -o /tmp/street.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/street.json'))
+          assert any(x.get('sprite')=='t21-street-house-0' for x in d['entities'])
+          print('T21_PUBLIC_PLAYTEST_URL_HTTP_PASS')
+          PY
