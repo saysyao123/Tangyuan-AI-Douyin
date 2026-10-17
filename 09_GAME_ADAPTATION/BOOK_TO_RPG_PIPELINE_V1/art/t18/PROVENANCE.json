@@ -1,0 +1,9 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-10-17",
+  "asset": "environment-atlas.png",
+  "originalGeneration": "exec-e8a8f8ee-b1f5-4782-b7f7-21e74dfa3664.png",
+  "prompt": "Original transparent 3x2 dimetric pixel RPG prop atlas: wooden cupboard with bowls/jars, moonlit window with faded curtains, winter coat rack, snow-covered leafless tree, stacked snow-capped firewood, warm stone courtyard lantern. Muted earthy wood and blue-gray snow, crisp pixels, no text, characters or copied game assets.",
+  "processing": "Mechanical cell extraction, nearest-neighbor size normalization and mapping to existing project palette; checked-in six indexed PNGs are authoritative build inputs. Raw atlas included only in private corresponding source.",
+  "license": "Original generated assets released with this project under GPL-3.0."
+}

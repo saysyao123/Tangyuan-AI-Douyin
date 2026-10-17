@@ -1,0 +1,59 @@
+name: Type PAL T18 native navigation and room recovery
+on:
+  push:
+    branches: [feature/book-rpg-typepal-t18-navigation-20261017]
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/**', '.github/workflows/book_rpg_typepal_t18.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  navigation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build exact new native runtime with public fixture text
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web"
+      - name: Check only changed production closure and navigation contract
+        run: |
+          mkdir -p /tmp/t18-evidence
+          python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t18-evidence/typecheck.log
+          mkdir -p upstream/book-rpg/tools/t18 upstream/book-rpg/tests
+          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/navigation.ts upstream/book-rpg/tools/t18/
+          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t18-navigation.mts upstream/book-rpg/tests/
+          cd upstream
+          node --import tsx book-rpg/tests/t18-navigation.mts | tee /tmp/t18-evidence/navigation-contract.log
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve CI-only runtime
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t18-http.log 2>&1 &
+          for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Verify actual pointer navigation and affected second-act room routes
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t18-navigation-e2e.mjs .
+          mkdir -p book-rpg-tests
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t16-solo.native-save.json book-rpg-tests/
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t18-fruit-used.native-save.json book-rpg-tests/
+          node t18-navigation-e2e.mjs
+      - name: Record exact runtime and native source project
+        if: always()
+        run: |
+          mkdir -p /tmp/t18-evidence
+          cp -r web /tmp/t18-evidence/runtime-public
+          cp -r upstream/projects/book-pilot-cinematic /tmp/t18-evidence/public-project
+          cp /tmp/t18-http.log /tmp/t18-evidence/http.log || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t18-evidence, path: /tmp/t18-evidence/, retention-days: 90}

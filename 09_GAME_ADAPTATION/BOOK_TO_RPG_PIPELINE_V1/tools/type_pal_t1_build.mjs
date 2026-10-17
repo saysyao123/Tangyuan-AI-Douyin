@@ -15,6 +15,8 @@ if(process.env.T1_CINEMATIC==='1'){const patched=spawnSync('python3',[path.join(
 
 if(process.env.T1_NIGHT==='1'){const patched=spawnSync('python3',[path.join(tools,'t16/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('night observation patch failed')}
 
+if(process.env.T1_NAVIGATION==='1'){const patched=spawnSync('python3',[path.join(tools,'t18/patch.py'),root],{stdio:'inherit'});if(patched.status!==0)throw Error('navigation patch failed')}
+
 await fs.rm(output,{recursive:true,force:true});await fs.mkdir(output,{recursive:true});
 const vite=path.join(root,'packages/editor/node_modules/vite/bin/vite.js');
 for(const app of ['reforge','editor'])await fs.rm(path.join(root,'packages',app,'dist'),{recursive:true,force:true});
