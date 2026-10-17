@@ -34,14 +34,14 @@ jobs:
           python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t17-http.log 2>&1 &
           for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
           exit 1
-      - name: Verify changed scene layouts and direct act continuation
+      - name: Verify only added viewport-fit correction
         working-directory: upstream
         run: |
-          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t17-display-e2e.mjs .
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t17-ui-e2e.mjs .
           mkdir -p book-rpg-tests
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-*.native-save.json book-rpg-tests/
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t16-*.native-save.json book-rpg-tests/
-          node t17-display-e2e.mjs
+          node t17-ui-e2e.mjs
       - name: Record exact CI runtime and native project hashes
         if: always()
         run: |
