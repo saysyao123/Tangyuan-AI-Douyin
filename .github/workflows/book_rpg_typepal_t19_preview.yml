@@ -1,0 +1,56 @@
+name: T19 isolated P2 old-room single-asset preview
+on:
+  push:
+    branches: ['feature/t19-p2-preview-native-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t19/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t19-room-preview-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t19_preview.yml'
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  native-room-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 23
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {repository: IllegalCreed/type-pal, ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246, path: upstream, persist-credentials: false}
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - name: Install pinned upstream
+        run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Build unchanged T18 PUBLIC fixture runtime (no old regression tests)
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web"
+      - name: Overlay one draft art asset in isolated runtime only
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t19/isolated_preview.mjs "$PWD/web"
+      - name: Install Chromium for focused native-entry screenshots
+        run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Start temporary HTTP service
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory web >/tmp/t19-preview-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/t19-preview/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t19-preview-http.log
+          exit 1
+      - name: Original entry camera and P2 overlay targeted e2e
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t19-room-preview-e2e.mjs ./t19-room-preview-e2e.mjs
+          node t19-room-preview-e2e.mjs
+      - name: Save inspectable T19-only preview and source
+        if: always()
+        run: |
+          mkdir -p /tmp/t19-p2-evidence
+          cp -r web/t19-generated /tmp/t19-p2-evidence/generated 2>/dev/null || true
+          cp web/t19-preview/T19_PREVIEW.json /tmp/t19-p2-evidence/ 2>/dev/null || true
+          cp /tmp/t19-preview-http.log /tmp/t19-p2-evidence/ 2>/dev/null || true
+          if test -d web/t19-preview; then cd web && zip -qr /tmp/t19-p2-evidence/t19-preview-runtime.zip t19-preview; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: type-pal-t19-p2-isolated-room, path: /tmp/t19-p2-evidence/, retention-days: 30}
