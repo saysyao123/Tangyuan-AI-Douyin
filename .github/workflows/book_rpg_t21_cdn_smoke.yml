@@ -13,7 +13,7 @@ jobs:
       - name: Check public URL resolves HTML and built JS
         run: |
           set -euo pipefail
-          BASE="https://raw.githack.com/saysyao123/Tangyuan-AI-Douyin/t21-playtest-web"
+          BASE="https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/8a20520318681bf0626667d433e2042ed0ca06b6"
           curl -fsSL --retry 3 --max-time 25 "$BASE/index.html" -o /tmp/index.html
           grep -q '雾灯驿站' /tmp/index.html
           grep -Fq 'src="./game/?observe=1"' /tmp/index.html
