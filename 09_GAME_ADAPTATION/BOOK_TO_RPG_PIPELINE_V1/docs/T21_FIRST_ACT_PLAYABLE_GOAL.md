@@ -53,3 +53,12 @@
 - QA证据为上述构建运行的`t21-first-act-test-game-and-qa` artifact，含四张来自真正Type PAL画面的`ACT1-fair/backstage/street/courtyard.png`和`T21_BROWSER_QA.json`、11个原生sprite PNG、RLE替换manifest、自包含网页ZIP；30天CI保留期。公共合成剧情，不包含私人原书对白。
 - **注意：技术可以试玩 ≠ 最终项目完成。** 实际截图显示建筑纹理仍较块状、路面花纹机械重复、照明/空间与获准高细节参考差距显著，故T21高标准美术验收明确`NOT_PASSED`。它是给用户测试交互与版本连续性的首个公开技术预览，而不是已通过审美的重制正式版。真正后续必须实现高分辨率分层展现，仍不得改剧情和逻辑地图。
 - 正式第一幕原入口和四场景剧情未改，`main`稳定游戏与 owner-private Site 均未更新；不得把公开CDN测试链接标为正式Site。
+
+
+## 2026-10-17｜已发布测试版本的第一幕剧情路线补验 PASS
+
+- 使用**已经发布到独立预览分支的同一游戏文件**重新运行早已确定的两个SAVE12剧本检查点，未重新打包或临时注入新版剧情。GitHub Actions [Run39023407636](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39023407636) 成功。
+- Stage → Backstage：表演者倒下姿态保持，官差/抬人演出前后层次、剧情状态通过。
+- Street → Courtyard → Home：药锅附近孩童位置符合原行为，邻居互动、章节完成与场景归家通过，场景黑边覆盖率三处均为`0`。
+- 证据artifact `12097686712` 为`t21-published-first-act-story-route-qa`：result.json、短录屏webm及四张相关的运行画面。在对话中另交付`T21_FIRST_ACT_ROUTE_QA_20261017.zip`。
+- **测试边界**：是两个已授权SAVE12中途检查点的连续剧情路线回归，不代表从新游戏零存档完整跑通从庙会购买到最终归家；对全程美术与主角四向步态也没有提供通过证据。审美标准仍是`NOT_PASSED`，最终目标尚未完成。
