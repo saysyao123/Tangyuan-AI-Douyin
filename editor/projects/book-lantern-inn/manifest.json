@@ -1,0 +1,54 @@
+{
+  "id": "book-lantern-inn",
+  "name": "雾灯驿站 · 灯火重明",
+  "contentVersion": 22,
+  "minimumSaveVersion": 12,
+  "defaultEntryId": "new-game",
+  "entryPoints": [
+    {
+      "id": "new-game",
+      "label": "从雾夜出发",
+      "scene": "inn",
+      "startWorld": {
+        "party": [
+          "hero"
+        ],
+        "money": 0,
+        "inventory": [
+          {
+            "itemId": "herb",
+            "count": 3
+          }
+        ]
+      }
+    }
+  ],
+  "content": {
+    "actors": "content/actors.json",
+    "skills": "content/skills.json",
+    "items": "content/items.json",
+    "locale": "content/locale.json",
+    "sprites": "content/sprites.json",
+    "battleSprites": "content/battle-sprites.json",
+    "tilesets": "content/tilesets.json",
+    "stamps": "content/stamps.json",
+    "scenes": "content/scenes/",
+    "maps": "content/maps/index.json",
+    "sharedScripts": "content/shared-scripts.json",
+    "worldVariables": "content/world-variables.json",
+    "enemies": "content/enemies.json",
+    "enemyTeams": "content/enemy-teams.json",
+    "battleFields": "content/battle-fields.json"
+  },
+  "assets": {
+    "catalog": "assets/index.json",
+    "roles": {
+      "visual.standardColorTable": "color.project-standard",
+      "audio.defaultBattleMusic": "music.original-victory",
+      "audio.openingMenuMusic": "music.original-victory",
+      "audio.bossVictoryMusic": "music.original-victory",
+      "audio.normalVictoryMusic": "music.original-victory",
+      "audio.midiSoundfont": "soundfont.timgm"
+    }
+  }
+}

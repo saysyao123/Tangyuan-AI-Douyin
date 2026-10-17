@@ -1,0 +1,282 @@
+{
+  "id": "backstage",
+  "mapId": "backstage",
+  "entry": {
+    "pos": {
+      "col": 8,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "return",
+      "label": "返回小集",
+      "pos": {
+        "col": 6,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "fair",
+                      "pos": {
+                        "col": 16,
+                        "row": 0,
+                        "height": 0
+                      },
+                      "facing": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "guard",
+      "label": "看守",
+      "pos": {
+        "col": 12,
+        "row": 0,
+        "height": 0
+      },
+      "actor": "guard",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "faceEntityToParty",
+                      "target": {
+                        "scene": "backstage",
+                        "entity": "guard"
+                      }
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "backstage_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "guard",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "请走左边的路，别在这里停留。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "侧院里，几名看守挡住了表演者。\n人群安静下来，空气忽然紧绷。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "怎么回事？我们只是想问问表演的事。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "guard",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这里正在处理事务，请离开。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "事情有些反常。先带小满离开这里。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "backstage_seen",
+                          "value": true
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "沿左边路牌回小集，再往左走到出口。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "performer",
+      "pos": {
+        "col": 14,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "performer",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "guard2",
+      "pos": {
+        "col": 15,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "officer",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "curtain",
+      "pos": {
+        "col": 16,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "gate",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "lamp3",
+      "pos": {
+        "col": 7,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "down",
+      "collide": true
+    }
+  ]
+}
