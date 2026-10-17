@@ -1,0 +1,113 @@
+name: T25 first-act high-detail native environment renderer
+on:
+  push:
+    branches: ['feature/t25-native-highdetail-environment-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t25-hd-visual-native-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t25_hdenv.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  art-compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 29
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python3 -m pip install pillow
+      - name: Build identical original T18 before modifying renderer
+        run: node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web-t18"
+      - name: Install only 2D environment render patch in isolated upstream copy
+        run: |
+          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/patch-renderer.py upstream
+          node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web-t25"
+          cp -a web-t18 web-t25/_source_baseline
+          mkdir -p /tmp/t25-evidence
+      - name: Verify no Type PAL content/script/save changes
+        run: |
+          python3 - <<'PY'
+          import filecmp, pathlib
+          a=pathlib.Path('web-t18/chapter/game/projects/book-pilot-cinematic')
+          b=pathlib.Path('web-t25/chapter/game/projects/book-pilot-cinematic')
+          for p in (a/'content').rglob('*'):
+           if p.is_file():
+            assert p.read_bytes()==(b/p.relative_to(a)).read_bytes(),str(p)
+          for name in ['index.html','style.css','shell.js','config.js']:
+           assert (pathlib.Path('web-t18/chapter')/name).read_bytes()==(pathlib.Path('web-t25/chapter')/name).read_bytes(),name
+          print('T25_STORY_SAVE_AND_SHELL_BYTE_IDENTITY_PASS')
+          PY
+      - name: Browser
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start artifact service
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t25-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/web-t25/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t25-http.log
+          exit 1
+      - name: Real four-scene native browser visual parity
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t25-hd-visual-native-e2e.mjs ./
+          mkdir -p book-rpg-tests
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
+          ln -s ../web-t18 ./web-t18
+          ln -s ../web-t25 ./web-t25
+          node t25-hd-visual-native-e2e.mjs
+      - name: Compute exact image difference to detect no-op art
+        if: success()
+        run: |
+          python3 - <<'PY'
+          from PIL import Image, ImageChops, ImageStat
+          from pathlib import Path
+          import json
+          p=Path('/tmp/t25-evidence'); data={}
+          for scene in ['fair','backstage','street','courtyard']:
+           a=Image.open(p/f't18-{scene}.png').convert('RGB')
+           b=Image.open(p/f't25-{scene}.png').convert('RGB')
+           assert a.size==b.size
+           diff=ImageChops.difference(a,b)
+           hist=diff.convert('L').histogram()
+           changed=sum(hist[9:])/sum(hist)
+           mean=sum(ImageStat.Stat(diff).mean)/3
+           data[scene]={'diffPixelsAbove9':round(changed,4),'meanDiff':round(mean,2)}
+           assert changed>.04, 'T25 environment change visually too small '+scene
+          (p/'VISUAL_DIFF.json').write_text(json.dumps(data,indent=2))
+          print('T25_VISUAL_NONTRIVIAL_DIFF_PASS',data)
+          PY
+      - name: Save immutable preview and QA
+        if: always()
+        run: |
+          mkdir -p /tmp/t25-evidence
+          cp /tmp/t25-http.log /tmp/t25-evidence/ 2>/dev/null || true
+          if test -d web-t25/chapter; then cd web-t25 && zip -qr /tmp/t25-evidence/T25_FIRST_ACT_NATIVE_HD_TEST.zip . -x './_source_baseline/*'; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: t25-first-act-hd-native-visual-evidence, path: /tmp/t25-evidence/, retention-days: 30}
+      - name: Publish new game test in separate branch only
+        if: success()
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd web-t25
+          rm -rf _source_baseline
+          git init -q
+          git config user.name "T25 Game Visual CI"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t25-hdenv-preview
+          git add -A
+          git commit -qm "T25 native Type PAL high resolution painter, first-act review"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t25-hdenv-preview --force
