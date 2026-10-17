@@ -84,7 +84,11 @@
   button.addEventListener('click',()=>{
     const s=safeState();
     if(!s)return;
-    level=(level+1)%3;settle();
+    // Initialize the scene-key first even if the first interval hasn't fired.
+    // Otherwise the first click is discarded by settle()'s scene-change reset.
+    settle();
+    level=(level+1)%3;
+    settle();
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)marker.hidden=true});
   setInterval(settle,400);
