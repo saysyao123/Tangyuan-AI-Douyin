@@ -60,8 +60,8 @@
       "kind": "sprite",
       "path": "assets/generated/sprites/hero.rle",
       "mediaType": "application/vnd.type-pal.rle",
-      "bytes": 3419,
-      "sha256": "2bc1c0a3a0b91e8e7e1466191141cc92b103df2f42cd63fc2815b3e966c35f8e",
+      "bytes": 2812,
+      "sha256": "aedca2dccc11e2229cab2d33cd4524f56c910253e665ae72a6ba40a0904a70ea",
       "origin": {
         "kind": "generated"
       },
@@ -82,8 +82,8 @@
       "kind": "sprite",
       "path": "assets/generated/sprites/child.rle",
       "mediaType": "application/vnd.type-pal.rle",
-      "bytes": 2307,
-      "sha256": "1a5d6616bef3108f0875fd4cedc6308a39650f000a333ebb52dd116c50027731",
+      "bytes": 2169,
+      "sha256": "8b5aeb38ca2c04c3a109577b1c584d8a88150fa67005972d2f59810db28a8845",
       "origin": {
         "kind": "generated"
       },
