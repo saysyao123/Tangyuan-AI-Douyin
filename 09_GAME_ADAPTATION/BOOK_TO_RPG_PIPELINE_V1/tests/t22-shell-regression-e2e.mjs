@@ -41,6 +41,14 @@ try{
   assert.ok(await page.locator('#focus-game').count(),label+' missing original game focus control');
   const frame=page.frameLocator('iframe');
   await frame.locator('#screen').waitFor({timeout:60000});
+  // Real readiness: original shell's loading overlay must disappear and the
+  // native gameplay scene must have produced at least one render frame.
+  await page.waitForFunction(()=>{
+   const shell=document.getElementById('loading');
+   const s=document.getElementById('game')?.contentWindow?.__tpObserve?.readRuntime();
+   return shell?.hidden && s?.sceneId==='fair' && s?.health?.draws>0;
+  },null,{timeout:50000});
+  await page.waitForTimeout(300);
   await page.screenshot({path:out+'/'+label+'-FULL-PAGE.png',fullPage:true});
   await frame.locator('#screen').screenshot({path:out+'/'+label+'-GAME.png'});
   assert.deepEqual(errs,[],label+' page errors');
