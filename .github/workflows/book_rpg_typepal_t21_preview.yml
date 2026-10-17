@@ -1,0 +1,91 @@
+name: T21 first-act art rebuild and independent browser test
+on:
+  push:
+    branches: ['feature/t21-act1-playable-rebuild-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t21/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t21-first-act-native-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t21_preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: book-rpg, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python -m pip install pillow
+      - name: Reuse T18 native engine and accepted first-act scripts
+        run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web"
+      - name: Make four-scene architecture art (visual-only)
+        run: |
+          mkdir -p /tmp/t21-evidence
+          python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t21/art_native.py upstream/projects/book-pilot-cinematic /tmp/t21-evidence
+          cd upstream
+          node --import tsx packages/editor/scripts/check-project.mts projects/book-pilot-cinematic
+          cd ..
+          rm -rf web/chapter/game/projects/book-pilot-cinematic
+          cp -a upstream/projects/book-pilot-cinematic web/chapter/game/projects/book-pilot-cinematic
+      - name: Construct separately deployable test page
+        run: |
+          mkdir -p site/game
+          cp -a web/chapter/game/. site/game/
+          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t21/test_page.html site/index.html
+          touch site/.nojekyll
+          test -s site/game/projects/book-pilot-cinematic/assets/index.json
+      - name: Install browser only for affected first-act art and scenes
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Serve independent preview only
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory site >/tmp/t21-local-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t21-local-http.log
+          exit 1
+      - name: Native public fixture four-scene targeted browser QA
+        working-directory: upstream
+        run: |
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t21-first-act-native-e2e.mjs ./
+          mkdir -p book-rpg-tests
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
+          node t21-first-act-native-e2e.mjs
+      - name: Save evidence and self-contained static game
+        if: always()
+        run: |
+          mkdir -p /tmp/t21-evidence
+          cp /tmp/t21-local-http.log /tmp/t21-evidence/http.log 2>/dev/null || true
+          if test -d site/game; then cd site && zip -qr /tmp/t21-evidence/T21_FIRST_ACT_TEST_SITE.zip .; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t21-first-act-test-game-and-qa
+          path: /tmp/t21-evidence/
+          retention-days: 30
+      - name: Publish ONLY verified site to an isolated GitHub branch
+        if: success()
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site
+          git init -q
+          git config user.name "T21 Playtest Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t21-playtest-web
+          git add -A
+          git commit -qm "T21 first act isolated public synthetic fixture"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t21-playtest-web --force
+          echo "Isolated preview pushed. Actual live CDN availability must be checked separately."
