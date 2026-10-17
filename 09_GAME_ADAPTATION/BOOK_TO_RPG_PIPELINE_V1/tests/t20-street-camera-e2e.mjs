@@ -16,6 +16,15 @@ page.on('pageerror',e=>pageErrors.push(e.message))
 try{
  await page.goto('http://127.0.0.1:6154/chapter/game/?observe=1')
  await page.waitForFunction(()=>window.tpPlayer&&window.__tpObserve?.readRuntime(),null,{timeout:60000})
+ // New-game T18 intro is modal; F9 is intentionally ignored while dialogue runs.
+ // Dismiss the PUBLIC synthetic intro first; do not replay full first-act flow.
+ for(let i=0;i<120;i++){
+  const current=await page.evaluate(()=>window.__tpObserve.readRuntime())
+  if(!current.scriptRunning&&!current.dialogue&&!current.presentationBusy)break
+  if(current.dialogue)await page.keyboard.press('Space')
+  else await page.waitForTimeout(70)
+ }
+ await page.waitForFunction(()=>{const s=window.__tpObserve.readRuntime();return !s.scriptRunning&&!s.dialogue&&!s.presentationBusy},null,{timeout:15000})
  await page.evaluate(text=>window.tpPlayer.importQuickSave(text),raw)
  await page.keyboard.press('F9')
  await page.waitForFunction(()=>window.__tpObserve?.readRuntime()?.sceneId==='street',null,{timeout:50000})
@@ -38,5 +47,5 @@ try{
  assert.deepEqual(pageErrors,[])
  await fs.writeFile(out+'/REPORT.json',JSON.stringify(report,null,2))
  console.log('T20_STREET_BASELINE_CAPTURED',JSON.stringify({camera:s.camera,anchors,pageErrors}))
-}catch(e){await page.screenshot({path:out+'/FAIL.png'}).catch(()=>{});await fs.writeFile(out+'/FAIL.json',JSON.stringify({error:String(e),pageErrors}));throw e}
+}catch(e){await page.screenshot({path:out+'/FAIL.png'}).catch(()=>{});const at=await page.evaluate(()=>window.__tpObserve?.readRuntime()).catch(()=>null);await fs.writeFile(out+'/FAIL.json',JSON.stringify({error:String(e),pageErrors,sceneId:at?.sceneId,dialogue:!!at?.dialogue,scriptRunning:!!at?.scriptRunning,position:at?.position},null,2));throw e}
 finally{await browser.close()}
