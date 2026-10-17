@@ -5,6 +5,7 @@ on:
     paths:
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t23/**'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t23-optional-journey-guide-e2e.mjs'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t23-map-reachability.mjs'
       - '.github/workflows/book_rpg_typepal_t23_guide.yml'
   workflow_dispatch:
 permissions: {contents: write}
@@ -41,6 +42,11 @@ jobs:
           cmp t22site/chapter/shell.js t23site/chapter/shell.js
           cmp t22site/chapter/config.js t23site/chapter/config.js
           cmp t22site/chapter/game/index.html t23site/chapter/game/index.html
+      - name: Original collision map route accessibility (4 scenes / 12 exits and interactions)
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t23-map-reachability.mjs ./t23-map-reachability.mjs
+          node t23-map-reachability.mjs
       - name: Install browser
         working-directory: upstream
         run: pnpm exec playwright install --with-deps chromium
