@@ -21,7 +21,7 @@ async function run(which,id){
  const page=await browser.newPage({viewport:{width:1400,height:950}});
  page.on('pageerror',e=>errors.push(which+'/'+id+': '+e.message));
  try{
-  await page.goto('http://127.0.0.1:6154/'+which+'/chapter/game/?observe=1');
+  await page.goto('http://127.0.0.1:6154/web-'+which+'/chapter/game/?observe=1');
   await page.waitForFunction(()=>window.tpPlayer&&window.__tpObserve?.readRuntime(),null,{timeout:60000});
   await closeOpening(page);
   const scene=JSON.parse(await fs.readFile('../web-'+which+'/chapter/game/projects/book-pilot-cinematic/content/scenes/'+id+'.json','utf8'));
