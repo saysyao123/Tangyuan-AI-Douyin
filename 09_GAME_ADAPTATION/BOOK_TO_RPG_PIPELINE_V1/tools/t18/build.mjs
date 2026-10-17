@@ -2,7 +2,11 @@ import fs from'node:fs/promises';import path from'node:path';import{spawnSync}fr
 const here=path.dirname(fileURLToPath(import.meta.url)),book=path.resolve(here,'../..'),root=path.resolve(process.argv[2]),out=path.resolve(process.argv[3])
 function run(cmd,args,cwd=root,env={}){const r=spawnSync(cmd,args,{cwd,stdio:'inherit',env:{...process.env,...env}});if(r.status!==0)throw Error('T18 failed '+args[0])}
 // Apply before any runtime bundle is built. Earlier idempotent patches retain this addition.
-if(process.env.T18_CONTENT_ONLY==='1')run('python3',[path.join(here,'patch.py'),root])
+if(process.env.T18_CONTENT_ONLY==='1'){
+ run('python3',[path.join(here,'patch.py'),root])
+ for(const n of['art.mts','opening.mts'])await fs.copyFile(path.join(book,'tools/t17',n),path.join(root,'packages/editor/scripts/t17-'+n))
+ run(process.execPath,['--import','tsx','packages/editor/scripts/t17-opening.mts',root,path.join(root,'projects/book-pilot-cinematic')])
+}
 else run(process.execPath,[path.join(book,'tools/t17/build.mjs'),root,out],root,{T1_NAVIGATION:'1'})
 run('python3',[path.join(here,'prepare_art.py'),book,path.join(root,'projects/book-pilot-cinematic'),path.join(root,'t18-artpack.json')])
 for(const n of['opening.mts','art.mts'])await fs.copyFile(path.join(here,n),path.join(root,'packages/editor/scripts/t18-'+n))

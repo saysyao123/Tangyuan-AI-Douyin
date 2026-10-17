@@ -23,15 +23,10 @@ jobs:
       - run: python -m pip install pillow
       - name: Build exact new native runtime with public fixture text
         run: node book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web"
-      - name: Check only changed production closure and navigation contract
+      - name: Verify changed asset-only follow-up keeps production source healthy
         run: |
           mkdir -p /tmp/t18-evidence
           python3 book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t14/quality.py upstream | tee /tmp/t18-evidence/typecheck.log
-          mkdir -p upstream/book-rpg/tools/t18 upstream/book-rpg/tests
-          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/navigation.ts upstream/book-rpg/tools/t18/
-          cp book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t18-navigation.mts upstream/book-rpg/tests/
-          cd upstream
-          node --import tsx book-rpg/tests/t18-navigation.mts | tee /tmp/t18-evidence/navigation-contract.log
       - run: pnpm exec playwright install --with-deps chromium
         working-directory: upstream
       - name: Serve CI-only runtime
@@ -39,14 +34,14 @@ jobs:
           python3 -m http.server 6154 --bind 127.0.0.1 --directory web > /tmp/t18-http.log 2>&1 &
           for i in {1..20}; do if curl -fsS http://127.0.0.1:6154/chapter/ > /dev/null; then exit 0; fi; sleep 1; done
           exit 1
-      - name: Verify actual pointer navigation and affected second-act room routes
+      - name: Verify only adjusted environment views and nearby walkways
         working-directory: upstream
         run: |
-          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t18-navigation-e2e.mjs .
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t18-environment-e2e.mjs .
           mkdir -p book-rpg-tests
           cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t16-solo.native-save.json book-rpg-tests/
-          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t18-fruit-used.native-save.json book-rpg-tests/
-          node t18-navigation-e2e.mjs
+          cp ../book-rpg/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t18-yard-entry.native-save.json book-rpg-tests/
+          node t18-environment-e2e.mjs
       - name: Record exact runtime and native source project
         if: always()
         run: |

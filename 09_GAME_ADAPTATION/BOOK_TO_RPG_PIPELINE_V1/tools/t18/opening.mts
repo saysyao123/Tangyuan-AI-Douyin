@@ -4,16 +4,16 @@ import {createHash}from'node:crypto'
 import {createServer}from'vite'
 const [root,project,pack]=process.argv.slice(2).map(p=>path.resolve(p)),read=async(p:string)=>JSON.parse(await fs.readFile(path.join(project,p),'utf8')),write=async(p:string,v:any)=>fs.writeFile(path.join(project,p),Buffer.isBuffer(v)?v:JSON.stringify(v,null,2)+'\n')
 const vite=await createServer({root:path.join(root,'packages/editor'),configFile:path.join(root,'packages/editor/vite.config.ts'),server:{middlewareMode:true},appType:'custom'});let art:any
-try{art=await(await vite.ssrLoadModule('/scripts/t18-art.mts')).environmentArt(pack)}finally{await vite.close()}
+try{art=await(await vite.ssrLoadModule('/scripts/t18-art.mts')).environmentArt(pack,project)}finally{await vite.close()}
 const catalog=await read('assets/index.json'),sprites=await read('content/sprites.json')
-for(const[id,bytes]of Object.entries(art)as[string,Buffer][]){const asset='environment.'+id,rel='assets/generated/sprites/'+id+'.rle';await write(rel,bytes);catalog.assets[asset]={kind:'sprite',path:rel,mediaType:'application/vnd.type-pal.rle',bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),origin:{kind:'generated'},label:id};if(!sprites.some((s:any)=>s.id===id))sprites.push({id,label:id,asset,layout:{kind:'static'}})}
+for(const[id,bytes]of Object.entries(art)as[string,Buffer][]){const tile=id==='night-tiles',asset=tile?'night.night-tiles':'environment.'+id,rel='assets/generated/'+(tile?'tilesets/':'sprites/')+id+'.rle';await write(rel,bytes);catalog.assets[asset]={kind:tile?'tileset':'sprite',path:rel,mediaType:'application/vnd.type-pal.rle',bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),origin:{kind:'generated'},label:id};if(!tile&&!sprites.some((s:any)=>s.id===id))sprites.push({id,label:id,asset,layout:{kind:'static'}})}
 await write('assets/index.json',catalog);await write('content/sprites.json',sprites)
 const placements:Record<string,[string,string,number,number,number,number][]>= {
- 'home-room':[['kitchen-cupboard','cupboard',240,184,18,8],['moonlit-room-window','moon-window',352,144,0,0],['winter-coat-by-wall','coat-rack',560,168,12,8]],
- 'night-road':[['road-west-winter-tree','winter-tree',224,160,12,8],['road-east-winter-tree','winter-tree',1024,208,12,8],['store-firewood','snow-wood',1008,288,20,8],['road-warm-lantern','stone-lantern',832,240,11,8]],
+ 'home-room':[['kitchen-cupboard','cupboard',240,184,18,8],['moonlit-room-window','moon-window',352,168,0,0],['winter-coat-by-wall','coat-rack',560,168,12,8]],
+ 'night-road':[['road-west-winter-tree','winter-tree',352,224,12,8],['road-east-winter-tree','winter-tree',976,320,12,8],['store-firewood','snow-wood',912,320,20,8],['home-firewood','snow-wood',384,304,20,8],['road-warm-lantern','stone-lantern',448,320,11,8],['road-store-lantern','stone-lantern',800,320,11,8]],
  'courtyard':[['court-winter-tree','winter-tree',224,176,12,8],['court-firewood','snow-wood',832,256,20,8]],
- 'snow-yard':[['yard-west-tree','winter-tree',224,160,12,8],['yard-east-tree','winter-tree',768,192,12,8],['yard-stone-lantern','stone-lantern',608,304,11,8],['yard-woodpile','snow-wood',704,304,20,8]],
- 'night-shop-room':[['shop-stock-cupboard','cupboard',240,176,18,8],['shop-moon-window','moon-window',368,144,0,0]],
+ 'snow-yard':[['yard-west-tree','winter-tree',288,208,12,8],['yard-east-tree','winter-tree',560,232,12,8],['yard-stone-lantern','stone-lantern',320,288,11,8],['yard-woodpile','snow-wood',544,304,20,8]],
+ 'night-shop-room':[['shop-stock-cupboard','cupboard',240,176,18,8],['shop-moon-window','moon-window',368,168,0,0]],
 }
 for(const [sceneId,entries]of Object.entries(placements)){
  const scene=await read('content/scenes/'+sceneId+'.json'),map=await read('content/maps/'+sceneId+'.json')
