@@ -1,0 +1,55 @@
+name: T31 inspect license-cleared higher-resolution scene assets
+on:
+  push:
+    branches: ['feature/t31-licensed-hd-art-candidates-20261018']
+    paths: ['.github/workflows/book_rpg_t31_hd_assets_review.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  compare-assets:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: SpriteCook/spritecook-free-game-assets
+          ref: master
+          path: library
+          persist-credentials: false
+      - run: python3 -m pip install pillow
+      - name: Confirm clear CC0 release and extract real building alpha/size/footprint
+        run: |
+          set -e
+          grep -Ei '(CC0|Public Domain)' library/LICENSE
+          mkdir -p /tmp/t31-license-art
+          python3 - <<'PY'
+          from PIL import Image, ImageDraw, ImageFont
+          from pathlib import Path
+          import json, math, hashlib, shutil
+          repo=Path('library/examples/isometric-buildings')
+          files=sorted(repo.glob('building[0-9]*.png'),key=lambda x:int(x.stem.replace('building','')))
+          assert len(files)>=12,'missing real asset candidates'
+          pages=[]; data=[]
+          w,h=1400,math.ceil(len(files)/4)*300
+          canvas=Image.new('RGB',(w,h),'#303a42');draw=ImageDraw.Draw(canvas)
+          for i,src in enumerate(files):
+           im=Image.open(src).convert('RGBA')
+           box=im.getchannel('A').getbbox()
+           assert box is not None,src.name
+           bbox=im.crop(box)
+           bbox.thumbnail((330,258),Image.Resampling.LANCZOS)
+           px=i%4*350+(350-bbox.width)//2
+           py=i//4*300+16
+           canvas.paste(bbox,(px,py),bbox)
+           draw.text((i%4*350+12,i//4*300+270),f'{src.stem}: {im.width}x{im.height}',fill='white')
+           data.append({'name':src.name,'size_bytes':src.stat().st_size,'dimensions':[im.width,im.height],'alpha_bbox':box,'sha256':hashlib.sha256(src.read_bytes()).hexdigest()})
+          canvas.save('/tmp/t31-license-art/CONTACT_SHEET.jpg',quality=92)
+          Path('/tmp/t31-license-art/MANIFEST.json').write_text(json.dumps(data,indent=2))
+          shutil.copy2(repo/'LICENSE.txt','/tmp/t31-license-art/PACK_LICENSE.txt')
+          print('T31_HD_SOURCE_LICENSE_AND_BOUNDINGBOX_QA_PASS',len(data))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: t31-spritecook-cc0-isometric-asset-study
+          path: /tmp/t31-license-art/
+          retention-days: 30
