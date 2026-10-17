@@ -1,5 +1,7 @@
 # WORK 模式接力执行｜Type PAL 纯原创网页游戏 T1
 
+> **T1.7：场景显示修复、第一幕→第二幕自动连续试玩已发布。统一/chapter/；第一幕家门对白后同次交互进入第二幕，旧完成档入口保留。先读CURRENT_STATUS.md、docs/T17_DISPLAY_AND_CONTINUITY.md及evidence/T17_DISPLAY_20261017/。7项受影响原生检查及最终4项窗口尺寸检查通过；保留全绿但画面缩小的人工反例记录。不要重跑旧完整套件，书已收到。**
+
 > **T1.6 已发布：恢复项目推进，第3—5章雪夜觉醒第二幕可玩。先读 CURRENT_STATUS.md、docs/T16_NIGHT_AWAKENING_TASK.md、evidence/T16_NIGHT_20261017/。新开局/night/；旧完成档/chapter/ F9后家门继续。12项原生新流程、受影响视觉和/night旧档任务栏反例分段通过，禁止重跑已通过项。书已收到，不再索书；下方T1–T15为历史。**
 
 > **T1.5：地图尺度、旧院景观与原生动态故事已精修。先看 CURRENT_STATUS.md、docs/T15_STORY_STAGE_TASK.md 和 evidence/T15_CINEMATIC_20261017/。新入口 /chapter/，旧 /pilot/ 与其存档保留；完整新章与最后视觉修正分段验证通过。按真实失败检查点续作，禁止重跑旧P0/T1/T11/T12/T14套件。书已收到，不再索书；本阶段仅覆盖开篇两章。**

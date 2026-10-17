@@ -1,0 +1,29 @@
+{
+  "sourceFixture": "tests/fixtures/t16-solo.native-save.json",
+  "nativeReadAndResaveRun": 38996982442,
+  "oldPreservedHidden": {
+    "road-house-0": {
+      "col": 26,
+      "row": -8,
+      "height": 0
+    },
+    "road-house-1": {
+      "col": 34,
+      "row": -14,
+      "height": 0
+    }
+  },
+  "newVisible": {
+    "west-street-cottage": {
+      "col": 30,
+      "row": -2,
+      "height": 0
+    },
+    "east-street-cottage": {
+      "col": 38,
+      "row": -10,
+      "height": 0
+    }
+  },
+  "mechanism": "All are actual F5-exported SAVE12 endpoints, no state injection."
+}

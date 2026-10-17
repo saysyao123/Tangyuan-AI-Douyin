@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "checks": [
+    "VISIBLE_FIRST_ACT_CONTINUOUS_ENTRY",
+    "FRESH_ROOM_NEW_BED_AND_TELEVISION_LAYOUT",
+    "ACTUAL_OLD_SOLO_COORDINATES_DO_NOT_OVERRIDE_NEW_VISIBLE_DECOR",
+    "AFFECTED_ROAD_TO_STORE_REMAINS_REACHABLE",
+    "ONE_HOME_INTERACTION_CONTINUES_FIRST_ACT_TO_SECOND_WITHOUT_RELOAD",
+    "CONTINUOUS_SAVE_REOPEN_AND_NEW_ROOM_FURNITURE_PATH",
+    "ACTUAL_OLD_FINAL_SAVE_PROGRESS_AND_ROOM_RECOVERED"
+  ],
+  "errors": [],
+  "scope": "Changed display layouts, direct act transition and actual old saves only; lottery/items and old suites not rerun"
+}

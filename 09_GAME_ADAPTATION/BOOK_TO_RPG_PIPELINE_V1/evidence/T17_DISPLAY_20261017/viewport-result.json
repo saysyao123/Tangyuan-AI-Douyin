@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "checks": [
+    "CHAPTER_FULL_VIEW_1440x960",
+    "NIGHT_FULL_VIEW_1440x960",
+    "CHAPTER_FULL_VIEW_1366x768",
+    "NIGHT_FULL_VIEW_1366x768"
+  ],
+  "errors": [],
+  "bounds": [
+    {
+      "route": "chapter",
+      "width": 1440,
+      "height": 960,
+      "game": {
+        "x": 65.796875,
+        "y": 151.6875,
+        "width": 998.40625,
+        "height": 624
+      }
+    },
+    {
+      "route": "night",
+      "width": 1440,
+      "height": 960,
+      "game": {
+        "x": 65.796875,
+        "y": 151.6875,
+        "width": 998.40625,
+        "height": 624
+      }
+    },
+    {
+      "route": "chapter",
+      "width": 1366,
+      "height": 768,
+      "game": {
+        "x": 90.59375,
+        "y": 151.6875,
+        "width": 874.796875,
+        "height": 546.734375
+      }
+    },
+    {
+      "route": "night",
+      "width": 1366,
+      "height": 768,
+      "game": {
+        "x": 90.59375,
+        "y": 151.6875,
+        "width": 874.796875,
+        "height": 546.734375
+      }
+    }
+  ]
+}

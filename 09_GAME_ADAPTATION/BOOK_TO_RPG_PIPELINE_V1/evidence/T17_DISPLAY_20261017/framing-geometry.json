@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "oracle": "WorldCamera PARTY_OX160/OY112; spriteBlitRect frame-foot +7; native script positions at steady frame; manual CI PNGs also inspected",
+  "cases": [
+    {
+      "entity": "room-bedside",
+      "camera": [
+        224,
+        96
+      ],
+      "frameRect": [
+        384,
+        135,
+        96,
+        72
+      ],
+      "fullFrameVisibleFraction": 1.0
+    },
+    {
+      "entity": "room-television",
+      "camera": [
+        224,
+        96
+      ],
+      "frameRect": [
+        484,
+        135,
+        56,
+        64
+      ],
+      "fullFrameVisibleFraction": 1.0
+    },
+    {
+      "entity": "west-street-cottage",
+      "camera": [
+        320,
+        128
+      ],
+      "frameRect": [
+        440,
+        131,
+        144,
+        100
+      ],
+      "fullFrameVisibleFraction": 1.0
+    },
+    {
+      "entity": "west-courtyard-house",
+      "camera": [
+        256,
+        112
+      ],
+      "frameRect": [
+        408,
+        115,
+        144,
+        100
+      ],
+      "fullFrameVisibleFraction": 1.0
+    }
+  ]
+}
