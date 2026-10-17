@@ -1,0 +1,38 @@
+name: T27 public playable webpage external verification
+on:
+  push:
+    branches: ['feature/t27-act1-character-integration-preview-20261017']
+    paths: ['.github/workflows/book_rpg_t27_external_cdn.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - name: Check live chapter page and native approved-character bytes
+        env:
+          BASE: "https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/9fb5986a17951b829512655f1b43fd3f69f7b7fb"
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/index.html" -o /tmp/index.html
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/shell.js" -o /tmp/shell.js
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/journey-guide.js" -o /tmp/guide.js
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/game/index.html" -o /tmp/native.html
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/game/projects/book-pilot-cinematic/assets/generated/sprites/hero.rle" -o /tmp/hero.rle
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/game/projects/book-pilot-cinematic/assets/generated/sprites/child.rle" -o /tmp/child.rle
+          curl -fsSL --retry 3 --max-time 35 "$BASE/chapter/game/projects/book-pilot-cinematic/assets/index.json" -o /tmp/assets.json
+          grep -q 'id="quests"' /tmp/index.html
+          grep -q 'id="objective"' /tmp/index.html
+          grep -q 'id="focus-game"' /tmp/index.html
+          grep -q 'journey-guide.js' /tmp/index.html
+          grep -q 'id="screen"' /tmp/native.html
+          python3 - <<'PY'
+          import hashlib,json,gzip,struct
+          cat=json.load(open('/tmp/assets.json'))['assets']
+          for role in ['hero','child']:
+           b=open('/tmp/'+role+'.rle','rb').read()
+           assert hashlib.sha256(b).hexdigest()==cat['sprite.'+role]['sha256']
+           assert struct.unpack_from('<H',gzip.decompress(b))[0]==12
+          print('T27_PUBLIC_WEB_AND_NEW_CHARACTERS_SHA_PASS')
+          PY
