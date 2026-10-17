@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Validate immutable CDN T18 shell and gameplay files
         env:
-          BASE: "https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/c15819079f1e98e577a8ee74d63b4f45a5093477"
+          BASE: "https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/d263e480be7861a2af47f184219625f548c9c662"
         run: |
           set -euo pipefail
           curl -fsSL --retry 2 --max-time 35 "$BASE/chapter/index.html" -o /tmp/chapter.html
