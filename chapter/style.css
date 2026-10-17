@@ -7,3 +7,13 @@
 .next-step{margin:20px 0;padding:14px;border:1px solid #665d48;background:#15232b}.next-step strong{color:#d9c28e}.next-step p{font-size:14px;line-height:1.7;color:#d5dddf}.next-step button{border:1px solid #69756d;background:transparent;color:#d5dddf;padding:7px 12px;cursor:pointer}
 /* T17_GAME_VIEWPORT */
 main{align-items:start;padding-top:24px}.stage{width:100%;max-width:min(100%,calc((100svh - 220px)*1.6));justify-self:center}nav{flex-wrap:wrap;justify-content:flex-end}@media(max-width:1000px){.stage{max-width:100%}}
+
+/* T23_JRPG_OPT_IN_GUIDE — no changes to original shell layout */
+.t23-guide{margin-top:11px;border-top:1px solid #65543d;padding-top:10px}
+.t23-guide-button{font:inherit;font-size:12px;letter-spacing:.02em;border:1px solid #88704f;color:#dec6a2;background:transparent;padding:6px 11px;border-radius:3px;cursor:pointer}
+.t23-guide-button:hover,.t23-guide-button:focus-visible{background:#403a2e;outline:1px solid #c7a770}
+.t23-guide p{color:#cabda5;font-size:12px;line-height:1.8;margin:9px 0 0}
+.t23-guide-marker{position:fixed;width:16px;height:16px;border:2px solid #f9d68b;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;box-shadow:0 0 0 3px #291f19aa,0 0 12px #f9cd65a8;animation:t23-guide-breathe 1.2s ease-in-out infinite}
+.t23-guide-marker[hidden]{display:none}
+@keyframes t23-guide-breathe{50%{opacity:.55;scale:1.13}}
+@media(prefers-reduced-motion:reduce){.t23-guide-marker{animation:none}}
