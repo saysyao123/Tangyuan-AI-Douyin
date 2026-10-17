@@ -1,0 +1,75 @@
+name: T23 classic JRPG optional guidance in restored Type PAL site
+on:
+  push:
+    branches: ['feature/t23-act1-jrpg-art-guide-battle-20261017']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t23/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t23-optional-journey-guide-e2e.mjs'
+      - '.github/workflows/book_rpg_typepal_t23_guide.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  first-act-guide:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t22-restored-preview
+          path: t22site
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - name: Install existing Type PAL browser test dependencies
+        working-directory: upstream
+        run: pnpm install --frozen-lockfile
+      - name: Preserve T18 shell and add *only* opt-in route clues
+        run: |
+          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t23/apply_guide.py t22site t23site
+          test -s t23site/chapter/journey-guide.js
+          cmp t22site/chapter/shell.js t23site/chapter/shell.js
+          cmp t22site/chapter/config.js t23site/chapter/config.js
+          cmp t22site/chapter/game/index.html t23site/chapter/game/index.html
+      - name: Install browser
+        working-directory: upstream
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Start local Type PAL restored shell service
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t23-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/t23site/chapter/ >/dev/null; then exit 0; fi; sleep 1; done
+          cat /tmp/t23-http.log
+          exit 1
+      - name: Actual running chapter and optional hint QA
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t23-optional-journey-guide-e2e.mjs ./t23-optional-journey-guide-e2e.mjs
+          node t23-optional-journey-guide-e2e.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t23-optional-jrpg-guide-and-original-ui-evidence
+          path: /tmp/t23-evidence/
+          retention-days: 30
+      - name: Publish strictly independent public example only after QA
+        if: success()
+        env: {PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}}
+        run: |
+          cd t23site
+          git init -q
+          git config user.name "T23 Pilot CI"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t23-journey-preview
+          git add -A
+          git commit -qm "T23 restored T18 webpage with optional first-act adventure hints"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t23-journey-preview --force
