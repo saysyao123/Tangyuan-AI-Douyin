@@ -28,3 +28,12 @@
 1. 候选高精度雪夜传统木屋PNG(独立透明素材)已通过原生生图得到，当前在对话文件`a_detailed_isometric_3d_pixel_art_style_illustrati.png`。**图片不在GitHub正式内容目录，不能声称已接入。** 必须先与现有street/courtyard室外民居位置和透视核对，正确分层遮挡后才能进入测试版本；不能把整张海报作为底图。
 2. 庙会正式戏台与摊位、后台结构与旧街小院、4图NPC动作和主角完整步态是下一真实美术核心；不要回头重复T24滤镜/T25程序砖路失败路线。
 3. 只在实际游戏截图可验证环境精细度、角色足点/遮挡、真实逐幕通关后再发布为最终版。不覆盖正式Site；如需直接覆盖ChatGPT Site，另需站点编辑授权。
+
+
+## 2026-10-18 新增关键验收：真正从零开始第一幕完整通关 PASS
+
+- 完整从庙会开局（不使用关卡中途保存）→买并分享点心→观看火焰/法术演出→后台倒地/抬走→返回庙会→旧街陌生人→小院邻居/药锅→归家→存档重开→旧项目存档隔离→原T22网页控制检查，**完整自动化跑通**。
+- 不是只跑T26四图截图或T27两个中途SAVE12定点检查；专门用已发布`t27-act1-playtest`实体文件与未修改`t23-journey-preview`在同一CI条件下各跑一遍，比较9项真实剧情断言及错误。
+- [Run39049063585](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39049063585) **PASS**（T23原版与T27更新版均PASS，9/9剧情及技术检查一致）；artifacts `t27-uninterrupted-first-act-baseline-comparison`（真实首幕分段截图、native video/trace、checkpoint及各自result.json）。
+- 首次新E2E失败`Run39048400015`是原T15脚本认为第一幕结尾读档仍在`courtyard`，但T18以上真实恢复是`home-room`；下一对照运行`Run39048772565`显示T23原版本身也没有旧 `../pilot/` HTML链接，因为早已替换为 `../night/`。最终测试只修正这两个**历史断言**，不放松购买/法术/移动/剧情/存档这些核心断言。已写成回归工作流`.github/workflows/book_rpg_t27_continuity_parity.yml`。
+- **重要限制不变：** 仅能证明这批视觉与角色素材没有破坏已存在的可玩性；**四场景整体环境的高精细艺术目标仍未通过**，不能标注整幕艺术终稿完成。公开网页链接只称阶段性可玩版本；不覆盖正式ChatGPT Site。
