@@ -1,0 +1,120 @@
+[
+  {
+    "id": "treat",
+    "name": "甜果串",
+    "desc": [
+      "一份给同行小伙伴的点心。"
+    ],
+    "buyPrice": 5,
+    "sellPrice": 0,
+    "sellable": false
+  },
+  {
+    "id": "noodles",
+    "name": "红烧牛肉面",
+    "desc": [
+      "带回家的两包热汤面。"
+    ],
+    "buyPrice": 5,
+    "sellPrice": 0,
+    "sellable": false
+  },
+  {
+    "id": "cleansing-fruit",
+    "name": "洗髓果实",
+    "desc": [
+      "从剧情第七次抽取获得。",
+      "使用后驱散寒意与虚弱，推进第二幕。"
+    ],
+    "buyPrice": 0,
+    "sellPrice": 0,
+    "sellable": false,
+    "use": {
+      "target": "scene",
+      "consuming": true,
+      "effects": [
+        {
+          "kind": "itemPrivateScript",
+          "script": {
+            "id": "use",
+            "label": "服用果实",
+            "body": [
+              {
+                "kind": "branch",
+                "cond": {
+                  "kind": "flag",
+                  "flag": "fruit_used",
+                  "is": true
+                },
+                "then": [
+                  {
+                    "kind": "clearDialog"
+                  },
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "slot": "bottom",
+                      "identity": {
+                        "kind": "actor",
+                        "actor": "hero",
+                        "portrait": {
+                          "kind": "default",
+                          "side": "right"
+                        }
+                      },
+                      "rows": [
+                        {
+                          "text": "身体已经记住了这股暖意。"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "clearDialog"
+                  }
+                ],
+                "else": [
+                  {
+                    "kind": "setFlag",
+                    "flag": "fruit_used",
+                    "value": true
+                  },
+                  {
+                    "kind": "increaseHpMp",
+                    "delta": 20,
+                    "pools": "hp"
+                  },
+                  {
+                    "kind": "clearDialog"
+                  },
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "slot": "bottom",
+                      "identity": {
+                        "kind": "actor",
+                        "actor": "hero",
+                        "portrait": {
+                          "kind": "default",
+                          "side": "right"
+                        }
+                      },
+                      "rows": [
+                        {
+                          "text": "果实入口化成暖流。寒意退去，长久缠着你的虚弱感，像终于松开了一道枷锁。"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "clearDialog"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

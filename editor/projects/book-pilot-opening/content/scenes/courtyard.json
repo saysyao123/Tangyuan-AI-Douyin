@@ -1,0 +1,521 @@
+{
+  "id": "courtyard",
+  "mapId": "courtyard",
+  "entry": {
+    "pos": {
+      "col": 8,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "street-return",
+      "label": "返回旧街",
+      "pos": {
+        "col": 6,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "street",
+                      "pos": {
+                        "col": 16,
+                        "row": 0,
+                        "height": 0
+                      },
+                      "facing": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "neighbor",
+      "label": "院里邻居",
+      "pos": {
+        "col": 12,
+        "row": 0,
+        "height": 0
+      },
+      "actor": "neighbor",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "neighbor_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "炉火有人看着，你们放心回去。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "回来了？外头冷，快进屋暖和暖和。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这锅里煮的是什么？闻着有点甜，能尝一口吗？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这是给老人熬的药，不能随便吃。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "说得对。馋了就回家吃饭，药可不是糖水。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "neighbor_seen",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "medicine",
+      "label": "药炉",
+      "pos": {
+        "col": 13,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "pot",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "药锅咕嘟作响，细小的热气消失在冬夜里。"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "home",
+      "label": "回家",
+      "pos": {
+        "col": 18,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "chapter_complete",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "先把今天记下来吧。明天的事，明天一起面对。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "neighbor_seen",
+                            "is": true
+                          },
+                          "then": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "回家吃点热的吧。我想吃面。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "好。关上门，今天就到这里。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "chapter_complete",
+                              "value": true
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "这一夜，奇异的火光仍没有答案。\n但在变化到来之前，他们还有一盏能一起回去的灯。\n开篇完成。可保存进度，继续探索四个场景。"
+                                  }
+                                ]
+                              }
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "先和院里的邻居打声招呼。"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "home-house",
+      "pos": {
+        "col": 18,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "house",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "courtyard-tree",
+      "pos": {
+        "col": 8,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "tree",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "courtyard-gate",
+      "pos": {
+        "col": 21,
+        "row": 4,
+        "height": 0
+      },
+      "sprite": "gate",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "home-lamp",
+      "pos": {
+        "col": 17,
+        "row": -4,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "down",
+      "collide": true
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "slot": "bottom",
+                      "identity": {
+                        "kind": "narration"
+                      },
+                      "rows": [
+                        {
+                          "text": "穿过旧街，小院里飘出一股药香。\n炉上还留着火，门窗透出暖色。"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

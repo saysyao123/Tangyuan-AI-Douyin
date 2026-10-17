@@ -1,0 +1,667 @@
+{
+  "id": "snow-yard",
+  "mapId": "snow-yard",
+  "entry": {
+    "pos": {
+      "col": 27,
+      "row": 1,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "snow-large",
+      "label": "堆大雪人",
+      "pos": {
+        "col": 32,
+        "row": -1,
+        "height": 0
+      },
+      "sprite": "snow-pile",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "snowman_large",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "两个雪人还并肩站着。可以按 F5 保存这一刻。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 31,
+                            "row": -1,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你把松雪拢成大球，又歪歪地叠了两层。怎么看，都不像那些漂亮的雪雕。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 350
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "snow-yard",
+                            "entity": "snow-large"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "snow-yard",
+                            "entity": "big-finished"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "snowman_large",
+                          "value": true
+                        },
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "all",
+                            "of": [
+                              {
+                                "kind": "flag",
+                                "flag": "snowman_large",
+                                "is": true
+                              },
+                              {
+                                "kind": "flag",
+                                "flag": "snowman_small",
+                                "is": true
+                              }
+                            ]
+                          },
+                          "then": [
+                            {
+                              "kind": "moveParty",
+                              "to": {
+                                "col": 30,
+                                "row": 0,
+                                "height": 0
+                              },
+                              "speed": "normal"
+                            },
+                            {
+                              "kind": "setPartyFacing",
+                              "facing": "right"
+                            },
+                            {
+                              "kind": "cameraPan",
+                              "dx": 2,
+                              "dy": 0,
+                              "frames": 12
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "雪越下越密。院里两个歪歪扭扭、一大一小的雪人紧紧挨着。世界很冷，家人却在身旁。第二幕完成。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "cameraSnap"
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "night_complete",
+                              "value": true
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "再把旁边那一个也堆好吧。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "snow-small",
+      "label": "堆小雪人",
+      "pos": {
+        "col": 34,
+        "row": -1,
+        "height": 0
+      },
+      "sprite": "snow-pile",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "snowman_small",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "两个雪人还并肩站着。可以按 F5 保存这一刻。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 34,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "她认真地补上小雪人的脸，把它往大雪人身边挪了一点。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 350
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "snow-yard",
+                            "entity": "snow-small"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "snow-yard",
+                            "entity": "small-finished"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "snowman_small",
+                          "value": true
+                        },
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "all",
+                            "of": [
+                              {
+                                "kind": "flag",
+                                "flag": "snowman_large",
+                                "is": true
+                              },
+                              {
+                                "kind": "flag",
+                                "flag": "snowman_small",
+                                "is": true
+                              }
+                            ]
+                          },
+                          "then": [
+                            {
+                              "kind": "moveParty",
+                              "to": {
+                                "col": 30,
+                                "row": 0,
+                                "height": 0
+                              },
+                              "speed": "normal"
+                            },
+                            {
+                              "kind": "setPartyFacing",
+                              "facing": "right"
+                            },
+                            {
+                              "kind": "cameraPan",
+                              "dx": 2,
+                              "dy": 0,
+                              "frames": 12
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "雪越下越密。院里两个歪歪扭扭、一大一小的雪人紧紧挨着。世界很冷，家人却在身旁。第二幕完成。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "cameraSnap"
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "night_complete",
+                              "value": true
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "再把旁边那一个也堆好吧。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "big-finished",
+      "label": "big-finished",
+      "pos": {
+        "col": 32,
+        "row": -1,
+        "height": 0
+      },
+      "sprite": "snow-big",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "small-finished",
+      "label": "small-finished",
+      "pos": {
+        "col": 34,
+        "row": -1,
+        "height": 0
+      },
+      "sprite": "snow-small",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "yard-home",
+      "label": "回屋",
+      "pos": {
+        "col": 25,
+        "row": 3,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "home-room"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "yard-rental",
+      "label": "yard-rental",
+      "pos": {
+        "col": 29,
+        "row": -8,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-wall",
+      "label": "yard-wall",
+      "pos": {
+        "col": 37,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "wall",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-snow",
+      "label": "yard-snow",
+      "pos": {
+        "col": 34,
+        "row": 14,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "yard-west-tree",
+      "label": "yard-west-tree",
+      "pos": {
+        "col": 22,
+        "row": 4,
+        "height": 0
+      },
+      "sprite": "winter-tree",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-east-tree",
+      "label": "yard-east-tree",
+      "pos": {
+        "col": 32,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "winter-tree",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-stone-lantern",
+      "label": "yard-stone-lantern",
+      "pos": {
+        "col": 28,
+        "row": 8,
+        "height": 0
+      },
+      "sprite": "stone-lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-woodpile",
+      "label": "yard-woodpile",
+      "pos": {
+        "col": 36,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "snow-wood",
+      "facing": "right",
+      "collide": false
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "setAmbience",
+                    "ambience": "winter-night"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

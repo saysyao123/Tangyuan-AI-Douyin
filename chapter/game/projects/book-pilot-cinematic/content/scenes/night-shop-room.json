@@ -1,0 +1,353 @@
+{
+  "id": "night-shop-room",
+  "mapId": "night-shop-room",
+  "entry": {
+    "pos": {
+      "col": 25,
+      "row": 2,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "shopkeeper",
+      "label": "购买两包面 · 5元",
+      "pos": {
+        "col": 29,
+        "row": -1,
+        "height": 0
+      },
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "noodles_bought",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "shopkeeper",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "两包面已经拿好了。该沿雪路回家了。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "hasMoney",
+                            "atLeast": 5
+                          },
+                          "then": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "老板，红烧牛肉面。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "giveMoney",
+                              "delta": -5
+                            },
+                            {
+                              "kind": "giveItem",
+                              "itemId": "noodles",
+                              "count": 2
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "noodles_bought",
+                              "value": true
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "便利店老板看着你脸上的血污，话到嘴边又咽了回去。你递出五元，从货架取了两包。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "兜里还差五元。先检查一下行囊。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default",
+      "actor": "shopkeeper"
+    },
+    {
+      "id": "shop-exit",
+      "label": "离开便利店",
+      "pos": {
+        "col": 23,
+        "row": 5,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "night-road",
+                      "pos": {
+                        "col": 40,
+                        "row": -9,
+                        "height": 0
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "shelf-1",
+      "label": "shelf-1",
+      "pos": {
+        "col": 24,
+        "row": -6,
+        "height": 0
+      },
+      "sprite": "shop-shelf",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "shelf-2",
+      "label": "shelf-2",
+      "pos": {
+        "col": 32,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "shop-shelf",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "shop-lamp",
+      "label": "shop-lamp",
+      "pos": {
+        "col": 31,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "store-back-shelf",
+      "label": "store-back-shelf",
+      "pos": {
+        "col": 27,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "shop-shelf",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "store-side-shelf",
+      "label": "store-side-shelf",
+      "pos": {
+        "col": 31,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "shop-shelf",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "shop-stock-cupboard",
+      "label": "shop-stock-cupboard",
+      "pos": {
+        "col": 18.5,
+        "row": 3.5,
+        "height": 0
+      },
+      "sprite": "cupboard",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "shop-moon-window",
+      "label": "shop-moon-window",
+      "pos": {
+        "col": 22,
+        "row": -1,
+        "height": 0
+      },
+      "sprite": "moon-window",
+      "facing": "right",
+      "collide": false
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "setAmbience",
+                    "ambience": "night-indoor"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

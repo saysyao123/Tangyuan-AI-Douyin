@@ -1,0 +1,1525 @@
+{
+  "id": "night-road",
+  "mapId": "night-road",
+  "entry": {
+    "pos": {
+      "col": 30,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "snow-thoughts",
+      "label": "沿雪路往便利店",
+      "pos": {
+        "col": 35,
+        "row": -3,
+        "height": 0
+      },
+      "collide": false,
+      "zone": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "collision_seen",
+                        "is": true
+                      },
+                      "then": [],
+                      "else": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "细雪落在领口。你想起生病时她递来的一杯热水。没有血缘，多一个可以相依为命的妹妹，又有什么不好？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 35,
+                            "row": -3,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "setPartyFacing",
+                          "facing": "up"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "身后的风声忽然被撕开。两束车灯照亮雪幕，刹车的尖响来得太迟。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playSound",
+                          "asset": "night.brake"
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "to": {
+                            "col": 38,
+                            "row": -6,
+                            "height": 0
+                          },
+                          "speed": "fast"
+                        },
+                        {
+                          "kind": "setEntityPos",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "pos": {
+                            "col": 38,
+                            "row": -6,
+                            "height": 0
+                          }
+                        },
+                        {
+                          "kind": "shakeScreen",
+                          "frames": 7,
+                          "level": 2
+                        },
+                        {
+                          "kind": "setActorAppearance",
+                          "actor": "hero",
+                          "spriteId": "hero-invisible"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playEntityAction",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "sprite": "hero-night-pose",
+                          "action": "collapse",
+                          "loop": false,
+                          "wait": true
+                        },
+                        {
+                          "kind": "setEntityFrame",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "frame": 2
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "你被撞离了人行道。世界像慢了下来——你想看清记忆里父母的脸，却什么也没有。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "seed"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "颈间的硬壳化作细灰。一点星辰顺着暖流进入身体，最后落向手心。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 500
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "seed"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "white-heart"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playSound",
+                          "asset": "night.heartbeat"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 850
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "咚。咚。咚。心底熄灭的白火重新燃起，那种久别重逢的喜悦，和白天舞台前的感觉一样。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "white-heart"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "awakened",
+                          "value": true
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "to": {
+                            "col": 37,
+                            "row": -3,
+                            "height": 0
+                          },
+                          "speed": "slow"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "driver",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "糟了……不该疲劳驾驶的。车有保险，先过去看看人怎么样。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setActorAppearance",
+                          "actor": "hero",
+                          "spriteId": "hero-blood"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你摊上大事了！"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "driver",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这、这怎么还能站起来……！"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "to": {
+                            "col": 43,
+                            "row": 3,
+                            "height": 0
+                          },
+                          "speed": "run"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "driver_fled",
+                          "value": true
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你想到后台被带走的表演者，又想到独自在家的她。身体竟不疼了，可这件事不能让人发现。先把面买回去。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "collision_seen",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "touch",
+            "range": 3
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "road-shop",
+      "label": "进入便利店",
+      "pos": {
+        "col": 42,
+        "row": -10,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "collision_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "loadScene",
+                          "scene": "night-shop-room"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "细雪落在领口。你想起生病时她递来的一杯热水。没有血缘，多一个可以相依为命的妹妹，又有什么不好？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 35,
+                            "row": -3,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "setPartyFacing",
+                          "facing": "up"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "身后的风声忽然被撕开。两束车灯照亮雪幕，刹车的尖响来得太迟。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playSound",
+                          "asset": "night.brake"
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "to": {
+                            "col": 38,
+                            "row": -6,
+                            "height": 0
+                          },
+                          "speed": "fast"
+                        },
+                        {
+                          "kind": "setEntityPos",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "truck"
+                          },
+                          "pos": {
+                            "col": 38,
+                            "row": -6,
+                            "height": 0
+                          }
+                        },
+                        {
+                          "kind": "shakeScreen",
+                          "frames": 7,
+                          "level": 2
+                        },
+                        {
+                          "kind": "setActorAppearance",
+                          "actor": "hero",
+                          "spriteId": "hero-invisible"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playEntityAction",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "sprite": "hero-night-pose",
+                          "action": "collapse",
+                          "loop": false,
+                          "wait": true
+                        },
+                        {
+                          "kind": "setEntityFrame",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "frame": 2
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "你被撞离了人行道。世界像慢了下来——你想看清记忆里父母的脸，却什么也没有。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "seed"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "颈间的硬壳化作细灰。一点星辰顺着暖流进入身体，最后落向手心。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 500
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "seed"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "white-heart"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "playSound",
+                          "asset": "night.heartbeat"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 850
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "咚。咚。咚。心底熄灭的白火重新燃起，那种久别重逢的喜悦，和白天舞台前的感觉一样。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "white-heart"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "awakened",
+                          "value": true
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "state": 1
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "to": {
+                            "col": 37,
+                            "row": -3,
+                            "height": 0
+                          },
+                          "speed": "slow"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "driver",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "糟了……不该疲劳驾驶的。车有保险，先过去看看人怎么样。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "injured"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setActorAppearance",
+                          "actor": "hero",
+                          "spriteId": "hero-blood"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你摊上大事了！"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "driver",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这、这怎么还能站起来……！"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "moveEntity",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "to": {
+                            "col": 43,
+                            "row": 3,
+                            "height": 0
+                          },
+                          "speed": "run"
+                        },
+                        {
+                          "kind": "setEntityState",
+                          "target": {
+                            "scene": "night-road",
+                            "entity": "driver"
+                          },
+                          "state": 0
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "driver_fled",
+                          "value": true
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你想到后台被带走的表演者，又想到独自在家的她。身体竟不疼了，可这件事不能让人发现。先把面买回去。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "collision_seen",
+                          "value": true
+                        },
+                        {
+                          "kind": "loadScene",
+                          "scene": "night-shop-room"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "road-home",
+      "label": "回家",
+      "pos": {
+        "col": 27,
+        "row": 1,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "noodles_bought",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "loadScene",
+                          "scene": "home-room"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "还没买到面，她在屋里等着呢。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "truck",
+      "label": "truck",
+      "pos": {
+        "col": 46,
+        "row": -16,
+        "height": 0
+      },
+      "sprite": "truck",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "injured",
+      "label": "injured",
+      "pos": {
+        "col": 35,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "hero-night-pose",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "driver",
+      "label": "driver",
+      "pos": {
+        "col": 43,
+        "row": -9,
+        "height": 0
+      },
+      "sprite": "visitor",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "seed",
+      "label": "seed",
+      "pos": {
+        "col": 35,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "seed-light",
+      "facing": "right",
+      "collide": false,
+      "hidden": true,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "seed-light",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "white-heart",
+      "label": "white-heart",
+      "pos": {
+        "col": 35,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "white-heart",
+      "facing": "right",
+      "collide": false,
+      "hidden": true,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "white-heart",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "shop-facade",
+      "label": "shop-facade",
+      "pos": {
+        "col": 46,
+        "row": -12,
+        "height": 0
+      },
+      "sprite": "night-shop",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "road-lamp-0",
+      "label": "road-lamp-0",
+      "pos": {
+        "col": 29,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-lamp-1",
+      "label": "road-lamp-1",
+      "pos": {
+        "col": 37,
+        "row": -10,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-lamp-2",
+      "label": "road-lamp-2",
+      "pos": {
+        "col": 41,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-house-0",
+      "label": "road-house-0",
+      "pos": {
+        "col": 31,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "road-house-1",
+      "label": "road-house-1",
+      "pos": {
+        "col": 39,
+        "row": -9,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "road-snow-0-0",
+      "label": "road-snow-0-0",
+      "pos": {
+        "col": 22,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "road-snow-0-1",
+      "label": "road-snow-0-1",
+      "pos": {
+        "col": 34,
+        "row": 14,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "road-snow-1-0",
+      "label": "road-snow-1-0",
+      "pos": {
+        "col": 32,
+        "row": -8,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "road-snow-1-1",
+      "label": "road-snow-1-1",
+      "pos": {
+        "col": 44,
+        "row": 4,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "road-snow-2-0",
+      "label": "road-snow-2-0",
+      "pos": {
+        "col": 42,
+        "row": -18,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "road-snow-2-1",
+      "label": "road-snow-2-1",
+      "pos": {
+        "col": 54,
+        "row": -6,
+        "height": 0
+      },
+      "sprite": "snowfall",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "snowfall",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    },
+    {
+      "id": "tracks",
+      "label": "tracks",
+      "pos": {
+        "col": 36,
+        "row": -8,
+        "height": 0
+      },
+      "sprite": "footprints",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "west-street-cottage",
+      "label": "west-street-cottage",
+      "pos": {
+        "col": 30,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "street-cottage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "east-street-cottage",
+      "label": "east-street-cottage",
+      "pos": {
+        "col": 38,
+        "row": -10,
+        "height": 0
+      },
+      "sprite": "street-cottage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "lit-storefront",
+      "label": "lit-storefront",
+      "pos": {
+        "col": 46,
+        "row": -12,
+        "height": 0
+      },
+      "sprite": "street-store",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-west-winter-tree",
+      "label": "road-west-winter-tree",
+      "pos": {
+        "col": 25,
+        "row": 3,
+        "height": 0
+      },
+      "sprite": "winter-tree",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-east-winter-tree",
+      "label": "road-east-winter-tree",
+      "pos": {
+        "col": 50.5,
+        "row": -10.5,
+        "height": 0
+      },
+      "sprite": "winter-tree",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "store-firewood",
+      "label": "store-firewood",
+      "pos": {
+        "col": 48.5,
+        "row": -8.5,
+        "height": 0
+      },
+      "sprite": "snow-wood",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "home-firewood",
+      "label": "home-firewood",
+      "pos": {
+        "col": 31,
+        "row": 7,
+        "height": 0
+      },
+      "sprite": "snow-wood",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-warm-lantern",
+      "label": "road-warm-lantern",
+      "pos": {
+        "col": 34,
+        "row": 6,
+        "height": 0
+      },
+      "sprite": "stone-lantern",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "road-store-lantern",
+      "label": "road-store-lantern",
+      "pos": {
+        "col": 45,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "stone-lantern",
+      "facing": "right",
+      "collide": false
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "setAmbience",
+                    "ambience": "winter-night"
+                  },
+                  {
+                    "kind": "branch",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "collision_seen",
+                      "is": true
+                    },
+                    "then": [
+                      {
+                        "kind": "setEntityPos",
+                        "target": {
+                          "scene": "night-road",
+                          "entity": "truck"
+                        },
+                        "pos": {
+                          "col": 38,
+                          "row": -6,
+                          "height": 0
+                        }
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "night-road",
+                          "entity": "truck"
+                        },
+                        "state": 1
+                      }
+                    ],
+                    "else": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

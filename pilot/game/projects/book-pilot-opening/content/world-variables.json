@@ -1,0 +1,74 @@
+{
+  "intro_seen": {
+    "kind": "flag",
+    "name": "intro_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "bought": {
+    "kind": "flag",
+    "name": "bought",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "shared": {
+    "kind": "flag",
+    "name": "shared",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "watched": {
+    "kind": "flag",
+    "name": "watched",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "backstage_seen": {
+    "kind": "flag",
+    "name": "backstage_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "rumor_seen": {
+    "kind": "flag",
+    "name": "rumor_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "ending_seen": {
+    "kind": "flag",
+    "name": "ending_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "street_seen": {
+    "kind": "flag",
+    "name": "street_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "stranger_seen": {
+    "kind": "flag",
+    "name": "stranger_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "promise_seen": {
+    "kind": "flag",
+    "name": "promise_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "neighbor_seen": {
+    "kind": "flag",
+    "name": "neighbor_seen",
+    "description": "开篇短阶段进度",
+    "initial": false
+  },
+  "chapter_complete": {
+    "kind": "flag",
+    "name": "chapter_complete",
+    "description": "开篇短阶段进度",
+    "initial": false
+  }
+}

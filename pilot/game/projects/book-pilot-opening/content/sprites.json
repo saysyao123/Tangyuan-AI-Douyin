@@ -1,0 +1,178 @@
+[
+  {
+    "id": "hero",
+    "label": "hero",
+    "asset": "sprite.hero",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "keeper",
+    "label": "keeper",
+    "asset": "sprite.keeper",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "child",
+    "label": "child",
+    "asset": "sprite.child",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "guard",
+    "label": "guard",
+    "asset": "sprite.guard",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "merchant",
+    "label": "merchant",
+    "asset": "sprite.merchant",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "officer",
+    "label": "officer",
+    "asset": "sprite.officer",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stranger",
+    "label": "stranger",
+    "asset": "sprite.stranger",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "neighbor",
+    "label": "neighbor",
+    "asset": "sprite.neighbor",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "performer",
+    "label": "performer",
+    "asset": "sprite.performer",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "visitor",
+    "label": "visitor",
+    "asset": "sprite.visitor",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "house",
+    "label": "house",
+    "asset": "sprite.house",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "gate",
+    "label": "gate",
+    "asset": "sprite.gate",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "pot",
+    "label": "pot",
+    "asset": "sprite.pot",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "lantern",
+    "label": "lantern",
+    "asset": "sprite.lantern",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "sign",
+    "label": "sign",
+    "asset": "sprite.sign",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stall",
+    "label": "stall",
+    "asset": "sprite.stall",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stage",
+    "label": "stage",
+    "asset": "sprite.stage",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "flame",
+    "label": "flame",
+    "asset": "sprite.flame",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "flicker": {
+        "label": "火光",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 180
+          },
+          {
+            "frame": 1,
+            "durationMs": 180
+          },
+          {
+            "frame": 2,
+            "durationMs": 180
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "tree",
+    "label": "tree",
+    "asset": "sprite.tree",
+    "layout": {
+      "kind": "static"
+    }
+  }
+]

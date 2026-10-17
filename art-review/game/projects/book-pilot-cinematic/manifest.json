@@ -1,0 +1,56 @@
+{
+  "id": "book-pilot-cinematic",
+  "name": "冬日小集 · 异火与归途",
+  "contentVersion": 22,
+  "minimumSaveVersion": 12,
+  "defaultEntryId": "new-game",
+  "entryPoints": [
+    {
+      "id": "new-game",
+      "label": "开始短阶段",
+      "scene": "fair",
+      "startWorld": {
+        "party": [
+          "hero",
+          "child"
+        ],
+        "money": 10,
+        "inventory": []
+      }
+    },
+    {
+      "id": "second-night",
+      "label": "第二幕 · 雪夜（新开局）",
+      "scene": "home-room",
+      "startWorld": {
+        "party": [
+          "hero",
+          "child"
+        ],
+        "money": 5,
+        "inventory": []
+      }
+    }
+  ],
+  "content": {
+    "actors": "content/actors.json",
+    "skills": "content/skills.json",
+    "items": "content/items.json",
+    "locale": "content/locale.json",
+    "sprites": "content/sprites.json",
+    "battleSprites": "content/battle-sprites.json",
+    "tilesets": "content/tilesets.json",
+    "stamps": "content/stamps.json",
+    "scenes": "content/scenes/",
+    "maps": "content/maps/index.json",
+    "sharedScripts": "content/shared-scripts.json",
+    "worldVariables": "content/world-variables.json",
+    "ambiences": "content/ambiences.json"
+  },
+  "assets": {
+    "catalog": "assets/index.json",
+    "roles": {
+      "visual.standardColorTable": "color.project-standard"
+    }
+  }
+}

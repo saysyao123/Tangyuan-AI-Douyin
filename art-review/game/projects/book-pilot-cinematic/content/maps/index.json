@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "maps": [
+    {
+      "id": "fair",
+      "name": "冬日小集",
+      "path": "content/maps/fair.json"
+    },
+    {
+      "id": "backstage",
+      "name": "舞台侧院",
+      "path": "content/maps/backstage.json"
+    },
+    {
+      "id": "street",
+      "name": "归家旧街",
+      "path": "content/maps/street.json"
+    },
+    {
+      "id": "courtyard",
+      "name": "冬夜小院",
+      "path": "content/maps/courtyard.json"
+    },
+    {
+      "id": "home-room",
+      "name": "旧平房 · 屋内",
+      "path": "content/maps/home-room.json"
+    },
+    {
+      "id": "night-road",
+      "name": "雪夜人行道",
+      "path": "content/maps/night-road.json"
+    },
+    {
+      "id": "night-shop-room",
+      "name": "仍亮着灯的便利店",
+      "path": "content/maps/night-shop-room.json"
+    },
+    {
+      "id": "mind-tree",
+      "name": "手心树纹 · 意识空间",
+      "path": "content/maps/mind-tree.json"
+    },
+    {
+      "id": "snow-yard",
+      "name": "小院 · 两个雪人",
+      "path": "content/maps/snow-yard.json"
+    }
+  ]
+}

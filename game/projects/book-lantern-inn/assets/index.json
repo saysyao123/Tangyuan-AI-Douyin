@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "assets": {
+    "color.project-standard": {
+      "kind": "color-table",
+      "path": "assets/generated/colors/project-standard.json",
+      "mediaType": "application/json",
+      "bytes": 10243,
+      "sha256": "8e14092eb9617c3d4ccda41edffde6c8c2ed55c9fd429cc9c007116be814d871",
+      "label": "color.project-standard",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "tileset.original": {
+      "kind": "tileset",
+      "path": "assets/generated/tilesets/original.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 575,
+      "sha256": "b10c4618ee1f6888b6b4b4319be49168d872596d4ed9e14ce315ce606341b23d",
+      "label": "tileset.original",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.hero": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/hero.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 646,
+      "sha256": "ed322b9b5ded513ca3d64ca19f0264836da23d7b35a5a9aa4b9d485a55eaab9f",
+      "label": "sprite.hero",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.keeper": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/keeper.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 663,
+      "sha256": "895f18b254da696518db6d3dde5a01aaf5d08da70855e3881bcaf59f061c3460",
+      "label": "sprite.keeper",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.wolf": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/wolf.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 748,
+      "sha256": "fd5726aad11b0c11520fb22df0ec66c078b17c22d79dd34e479bf406fffe1668",
+      "label": "sprite.wolf",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.tree": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/tree.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 451,
+      "sha256": "22f80efea0d3cb462fdfc0cd82fe45993c7c1ca8a8fef9cc10ac44b27314783a",
+      "label": "sprite.tree",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.house": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/house.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 378,
+      "sha256": "ff1252fe82594fa33535d5e190dc8fb23b4429feee6efc08165bfee8b612247a",
+      "label": "sprite.house",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.lantern": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/lantern.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 132,
+      "sha256": "323555e3f67a99787f327abb6156a2ec2766b60252c3bbcf3710aa5d9659c188",
+      "label": "sprite.lantern",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.core": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/core.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 170,
+      "sha256": "56b2a43fd604317a63fb345e0af60adf7f6e35a3f56c54cc480b69c28d9b1209",
+      "label": "sprite.core",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.sign": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/sign.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 83,
+      "sha256": "58b45c2d5e17cafa1aefb4ea254c991bc58a784b8d7fa3cac3bf4aad857a0781",
+      "label": "sprite.sign",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "battle.hero": {
+      "kind": "battle-sprite",
+      "path": "assets/generated/battle-sprites/hero.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 544,
+      "sha256": "7542be39eecf6906ac1b7fef541d6b306d24e19ab9a5c4ad978e3c92264231cf",
+      "label": "battle.hero",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "battle.wolf": {
+      "kind": "battle-sprite",
+      "path": "assets/generated/battle-sprites/wolf.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 351,
+      "sha256": "4bf38208ef27a57bc45cd9a55b059a59fc817ca5be0c9a4f25dfbc755cb04b8d",
+      "label": "battle.wolf",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "background.forest": {
+      "kind": "battle-background",
+      "path": "assets/generated/backgrounds/forest.png",
+      "mediaType": "image/png",
+      "bytes": 2610,
+      "sha256": "81a5caa99e4ede544391d185109997979451e7346a8f222aabc030dfe1b351de",
+      "label": "原创雾林月色",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "music.original-victory": {
+      "kind": "music",
+      "path": "assets/generated/audio/victory.mid",
+      "mediaType": "audio/midi",
+      "bytes": 100,
+      "sha256": "db7235d4bef93631080b5cefb063e5cd98b94cfd15f86900de9ccf0006012ab8",
+      "label": "music.original-victory",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "soundfont.timgm": {
+      "kind": "soundfont",
+      "path": "assets/runtime/timgm6mb.sf2",
+      "mediaType": "audio/sf2",
+      "bytes": 5969788,
+      "sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+      "label": "soundfont.timgm",
+      "origin": {
+        "kind": "licensed",
+        "ref": "SOUNDFONT_LICENSE.txt"
+      }
+    }
+  }
+}
