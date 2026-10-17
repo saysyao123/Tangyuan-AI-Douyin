@@ -27,6 +27,12 @@ jobs:
           ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
           path: upstream
           persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: feature/t25-native-highdetail-environment-20261017
+          path: patch
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with: {version: 10.17.1, run_install: false}
       - uses: actions/setup-node@v4
@@ -36,8 +42,8 @@ jobs:
       - run: python3 -m pip install pillow
       - name: Install native rendering patch with picture assets replacing rejected T25 geometry
         run: |
-          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t30/hd-world.ts source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/hd-world.ts
-          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/patch-renderer.py upstream
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t30/hd-world.ts patch/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/hd-world.ts
+          python3 patch/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/patch-renderer.py upstream
           node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web-t30"
       - name: Preserve exact T27 site, store, controls and native content
         run: |
