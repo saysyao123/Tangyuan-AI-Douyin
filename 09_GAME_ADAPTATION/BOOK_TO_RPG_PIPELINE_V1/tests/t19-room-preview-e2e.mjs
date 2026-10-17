@@ -17,6 +17,22 @@ try{
   assert.equal(state.sceneId,'home-room')
   assert.ok(state.actors.some(a=>a.id==='entity:meal-table'),'canonical story meal-table entity must be present')
   await page.locator('#screen').screenshot({path:folder+'/'+name+'.png'})
+  if(name==='T19-preview'){
+   const table=state.actors.find(a=>a.id==='entity:meal-table')
+   const x=16*(table.canonical.col-table.canonical.row)-state.camera.x
+   const y=8*(table.canonical.col+table.canonical.row)-state.camera.y+5
+   assert.ok(x>1&&x<319&&y>1&&y<199,'meal table click marker must be in real camera')
+   const box=await page.locator('#screen').boundingBox()
+   await page.mouse.click(box.x+x*box.width/320,box.y+y*box.height/200)
+   await page.waitForFunction(()=>{
+    const s=window.__tpObserve.readRuntime()
+    return Boolean(s.dialogue||s.scriptRunning)
+   },null,{timeout:12000})
+   const hit=await page.evaluate(()=>window.__tpObserve.readRuntime())
+   assert.equal(hit.sceneId,'home-room','clicking the table must not load a different scene')
+   screens.push({name:'T19-table-pointer',clickPixel:[x,y],dialogue:!!hit.dialogue,scriptRunning:!!hit.scriptRunning})
+   await page.locator('#screen').screenshot({path:folder+'/T19-table-interaction.png'})
+  }
   screens.push({name,sceneId:state.sceneId,actors:state.actors.length,story:state.story})
   await page.close()
  }
