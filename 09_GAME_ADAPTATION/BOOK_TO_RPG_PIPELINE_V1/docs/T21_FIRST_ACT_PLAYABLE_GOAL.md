@@ -14,7 +14,7 @@
 - 开发分支：`feature/t21-act1-playable-rebuild-20261017`。
 - 公共网页预览发布分支：`t21-playtest-web`，**独立测试版，与正式Site完全隔离**。
 - 测试入口：`https://raw.githack.com/saysyao123/Tangyuan-AI-Douyin/t21-playtest-web/index.html`；这个地址是第三方用于小范围测试的GitHub源文件CDN，临时测试，不作为商业正式部署。
-- CI `39022693667` 通过固定TypePAL重构、native `check-project` 与Chromium测试：四图均能从SAVE12定向恢复并渲染，合计12个原创新建筑/戏台/摊位静态素材，11个装饰性entity外观替换（请以真实manifest数字为准），没有更改实体ID、脚点、地图阻挡或剧本结构。测试详情见CI artifact `t21-first-act-test-game-and-qa`。
+- CI `39022693667` 通过固定TypePAL重构、native `check-project` 与Chromium测试：四图均能从SAVE12定向恢复并渲染，合计11个原创新建筑/戏台/摊位静态素材，11个装饰性entity外观替换（fair 4、backstage 1、street 3、courtyard 3），没有更改实体ID、脚点、地图阻挡或剧本结构。测试详情见CI artifact `t21-first-act-test-game-and-qa`。
 - GitHub Actions `39022936137` 对外部`raw.githack.com`地址进行了HTML、game入口与`street.json` HTTP成功验证；地址iframe相对路径后续修为`./game/`，应做更新后的二次外网回归。
 - 公共测试版只使用允许公开的合成示例对白，不包含私有原书具体台词；后续私有正式部署必须单独在有授权素材的环境做同版等价验证。
 - **本次技术测试通过不等于最终目标完成。** 审视真实浏览器截图后可见，当前新建建筑虽然比旧程序方盒有结构，但场景墙地、光影、纹理密度和NPC整体仍明显差于用户批准参考图，**审美正式验收FAIL/待重制**。不要把RLE/项目结构通过归入视觉通过。
@@ -43,3 +43,13 @@
 `G0(native base)=PASS`, `G1(native four-scene structural art pass)=TECH_PASS but ART_FAIL`, `G2(HD layered visuals)=NOT_STARTED`, `G3(full first-act continuous play)=NOT_YET_VERIFIED on T21`, `G4(visual user signoff and final page)=NOT_STARTED`.
 
 后续恢复该项目要**直接处理美术落地差距**，勿再次复盘已通过RLE编码、旧存档读档阻塞、单件餐桌通路或重新生成错误酒馆城镇。
+
+
+## 2026-10-17｜确切可打开的网页测试构建（仍不是美术终稿）
+
+- 已经发布了`t21-playtest-web`独立分支。网页构建基准 commit `8a20520318681bf0626667d433e2042ed0ca06b6`。
+- **公开试玩地址（固定SHA CDN）**：https://rawcdn.githack.com/saysyao123/Tangyuan-AI-Douyin/8a20520318681bf0626667d433e2042ed0ca06b6/index.html
+- 源码构建与四张图实际浏览器检查：[Actions 39023002674](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39023002674) `PASS`；外部固定SHA URL 的index、`./game/`入口、旧街新资产JSON HTTP验证：[Actions 39023267364](https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/39023267364) `PASS`。此前用于变更中的分支CDN检查 `39023186701` 因旧缓存读取到错误iframe路径，已通过SHA固定版规避，不隐藏失败。
+- QA证据为上述构建运行的`t21-first-act-test-game-and-qa` artifact，含四张来自真正Type PAL画面的`ACT1-fair/backstage/street/courtyard.png`和`T21_BROWSER_QA.json`、11个原生sprite PNG、RLE替换manifest、自包含网页ZIP；30天CI保留期。公共合成剧情，不包含私人原书对白。
+- **注意：技术可以试玩 ≠ 最终项目完成。** 实际截图显示建筑纹理仍较块状、路面花纹机械重复、照明/空间与获准高细节参考差距显著，故T21高标准美术验收明确`NOT_PASSED`。它是给用户测试交互与版本连续性的首个公开技术预览，而不是已通过审美的重制正式版。真正后续必须实现高分辨率分层展现，仍不得改剧情和逻辑地图。
+- 正式第一幕原入口和四场景剧情未改，`main`稳定游戏与 owner-private Site 均未更新；不得把公开CDN测试链接标为正式Site。
