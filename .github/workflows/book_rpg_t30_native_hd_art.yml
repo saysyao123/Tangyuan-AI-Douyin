@@ -1,0 +1,109 @@
+name: T30 native image-backed first-act buildings (no pasted DOM overlay)
+on:
+  push:
+    branches: ['feature/t30-native-hd-art-layer-20261018']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t30/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t30-native-art-e2e.mjs'
+      - '.github/workflows/book_rpg_t30_native_hd_art.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  first-act-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t27-act1-playtest
+          path: candidate
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - run: python3 -m pip install pillow
+      - name: Install native rendering patch with picture assets replacing rejected T25 geometry
+        run: |
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t30/hd-world.ts source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/hd-world.ts
+          python3 source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t25/patch-renderer.py upstream
+          node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t18/build.mjs upstream "$PWD/web-t30"
+      - name: Preserve exact T27 site, store, controls and native content
+        run: |
+          cp -a candidate site
+          cp -a web-t30/chapter/game/. site/chapter/game/
+          rm -rf site/chapter/game/projects/book-pilot-cinematic
+          cp -a candidate/chapter/game/projects/book-pilot-cinematic site/chapter/game/projects/book-pilot-cinematic
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t29/hd-house.png site/chapter/game/t30-hd-house.png
+          for f in index.html style.css shell.js config.js journey-guide.js; do
+            cmp candidate/chapter/$f site/chapter/$f
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          a=Path('candidate/chapter/game/projects/book-pilot-cinematic/content')
+          b=Path('site/chapter/game/projects/book-pilot-cinematic/content')
+          assert all(p.read_bytes()==(b/p.relative_to(a)).read_bytes() for p in a.rglob('*') if p.is_file())
+          print('T30_NATIVE_GAME_CONTENT_AND_SHELL_IDENTICAL')
+          PY
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve actual T27 and native T30
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t30-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Compare both exact scene snapshots and actor position
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t30-native-art-e2e.mjs .
+          mkdir -p book-rpg-tests
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
+          node t30-native-art-e2e.mjs
+      - name: Validate image has changed materially
+        run: |
+          python3 - <<'PY'
+          from PIL import Image,ImageChops
+          import json
+          d={}
+          for sc in ['street','courtyard']:
+           a=Image.open('/tmp/t30-evidence/candidate-'+sc+'.png').convert('RGB')
+           b=Image.open('/tmp/t30-evidence/site-'+sc+'.png').convert('RGB')
+           assert a.size==b.size
+           h=ImageChops.difference(a,b).convert('L').histogram()
+           frac=sum(h[12:])/sum(h)
+           d[sc]=round(frac,4)
+           assert frac>.03,(sc,frac)
+          open('/tmp/t30-evidence/PIXEL_DIFF.json','w').write(json.dumps(d,indent=2))
+          print('T30_NATIVE_NEW_ASSETS_VISIBLY_RENDERED_PASS',d)
+          PY
+      - name: Package isolated first-act game
+        if: always()
+        run: |
+          if test -d site/chapter; then cd site && zip -qr /tmp/t30-evidence/T30_REAL_NATIVE_HD_FIRST_ACT.zip .; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: t30-native-hd-architecture-visual-qa, path: /tmp/t30-evidence/, retention-days: 30}
+      - name: Publish only independently validated native first-act preview
+        if: success()
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site
+          git init -q
+          git config user.name "T30 Native Art CI"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -qb t30-native-hd-preview
+          git add -A
+          git commit -qm "T30 first act native detailed picture-based buildings, preserves T27 game"
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t30-native-hd-preview --force
