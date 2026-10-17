@@ -1,0 +1,933 @@
+[
+  {
+    "id": "hero",
+    "label": "hero",
+    "asset": "sprite.hero",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "keeper",
+    "label": "keeper",
+    "asset": "sprite.keeper",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "child",
+    "label": "child",
+    "asset": "sprite.child",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "guard",
+    "label": "guard",
+    "asset": "sprite.guard",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "merchant",
+    "label": "merchant",
+    "asset": "sprite.merchant",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "officer",
+    "label": "officer",
+    "asset": "sprite.officer",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stranger",
+    "label": "stranger",
+    "asset": "sprite.stranger",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "neighbor",
+    "label": "neighbor",
+    "asset": "sprite.neighbor",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "performer",
+    "label": "performer",
+    "asset": "sprite.performer",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "visitor",
+    "label": "visitor",
+    "asset": "sprite.visitor",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "lantern",
+    "label": "lantern",
+    "asset": "sprite.lantern",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "sign",
+    "label": "sign",
+    "asset": "sprite.sign",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stall",
+    "label": "stall",
+    "asset": "sprite.stall",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stage",
+    "label": "stage",
+    "asset": "sprite.stage",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "pot",
+    "label": "pot",
+    "asset": "sprite.pot",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "tree",
+    "label": "tree",
+    "asset": "sprite.tree",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "rental",
+    "label": "rental",
+    "asset": "sprite.rental",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "operative",
+    "label": "operative",
+    "asset": "sprite.operative",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "performer-action",
+    "label": "performer-action",
+    "asset": "sprite.performer-action",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "walk": {
+        "label": "walk",
+        "steps": [
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 0,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      },
+      "collapse": {
+        "label": "collapse",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 200
+          },
+          {
+            "frame": 1,
+            "durationMs": 200
+          },
+          {
+            "frame": 2,
+            "durationMs": 200
+          }
+        ]
+      },
+      "bow": {
+        "label": "bow",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 200
+          },
+          {
+            "frame": 5,
+            "durationMs": 200
+          },
+          {
+            "frame": 0,
+            "durationMs": 200
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "carriers",
+    "label": "carriers",
+    "asset": "sprite.carriers",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "child-crouch",
+    "label": "child-crouch",
+    "asset": "sprite.child-crouch",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "body-fire",
+    "label": "body-fire",
+    "asset": "sprite.body-fire",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "fireball",
+    "label": "fireball",
+    "asset": "sprite.fireball",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "heart",
+    "label": "heart",
+    "asset": "sprite.heart",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "steam",
+    "label": "steam",
+    "asset": "sprite.steam",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "needle",
+    "label": "needle",
+    "asset": "sprite.needle",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "skewer",
+    "label": "skewer",
+    "asset": "sprite.skewer",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "wall",
+    "label": "wall",
+    "asset": "sprite.wall",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "vegetables",
+    "label": "vegetables",
+    "asset": "sprite.vegetables",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "crate",
+    "label": "crate",
+    "asset": "sprite.crate",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "truck",
+    "label": "truck",
+    "asset": "night.truck",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "night-shop",
+    "label": "night-shop",
+    "asset": "night.night-shop",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "bed",
+    "label": "bed",
+    "asset": "night.bed",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "television",
+    "label": "television",
+    "asset": "night.television",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "hero-blood",
+    "label": "hero-blood",
+    "asset": "night.hero-blood",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "hero-invisible",
+    "label": "hero-invisible",
+    "asset": "night.hero-invisible",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "hero-night-pose",
+    "label": "hero-night-pose",
+    "asset": "night.hero-night-pose",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "collapse": {
+        "label": "倒地",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 180
+          },
+          {
+            "frame": 1,
+            "durationMs": 180
+          },
+          {
+            "frame": 2,
+            "durationMs": 180
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "seed-light",
+    "label": "seed-light",
+    "asset": "night.seed-light",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "white-heart",
+    "label": "white-heart",
+    "asset": "night.white-heart",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 100
+          },
+          {
+            "frame": 1,
+            "durationMs": 100
+          },
+          {
+            "frame": 2,
+            "durationMs": 100
+          },
+          {
+            "frame": 3,
+            "durationMs": 100
+          },
+          {
+            "frame": 4,
+            "durationMs": 100
+          },
+          {
+            "frame": 5,
+            "durationMs": 100
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "snowfall",
+    "label": "snowfall",
+    "asset": "night.snowfall",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "loop": {
+        "label": "loop",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 130
+          },
+          {
+            "frame": 1,
+            "durationMs": 130
+          },
+          {
+            "frame": 2,
+            "durationMs": 130
+          },
+          {
+            "frame": 3,
+            "durationMs": 130
+          },
+          {
+            "frame": 4,
+            "durationMs": 130
+          },
+          {
+            "frame": 5,
+            "durationMs": 130
+          },
+          {
+            "frame": 6,
+            "durationMs": 130
+          },
+          {
+            "frame": 7,
+            "durationMs": 130
+          }
+        ],
+        "loopFrom": 0
+      }
+    }
+  },
+  {
+    "id": "draw-wheel",
+    "label": "draw-wheel",
+    "asset": "night.draw-wheel",
+    "layout": {
+      "kind": "static"
+    },
+    "poses": {
+      "roll": {
+        "label": "转动并减速",
+        "steps": [
+          {
+            "frame": 0,
+            "durationMs": 70
+          },
+          {
+            "frame": 1,
+            "durationMs": 88
+          },
+          {
+            "frame": 2,
+            "durationMs": 106
+          },
+          {
+            "frame": 3,
+            "durationMs": 124
+          },
+          {
+            "frame": 4,
+            "durationMs": 142
+          },
+          {
+            "frame": 5,
+            "durationMs": 160
+          },
+          {
+            "frame": 4,
+            "durationMs": 178
+          },
+          {
+            "frame": 3,
+            "durationMs": 196
+          },
+          {
+            "frame": 2,
+            "durationMs": 214
+          },
+          {
+            "frame": 1,
+            "durationMs": 232
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "income-terminal",
+    "label": "income-terminal",
+    "asset": "night.income-terminal",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "star-terminal",
+    "label": "star-terminal",
+    "asset": "night.star-terminal",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "tree-mark",
+    "label": "tree-mark",
+    "asset": "night.tree-mark",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "pendant",
+    "label": "pendant",
+    "asset": "night.pendant",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "noodle-table",
+    "label": "noodle-table",
+    "asset": "night.noodle-table",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "shop-shelf",
+    "label": "shop-shelf",
+    "asset": "night.shop-shelf",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "snowman",
+    "label": "snowman",
+    "asset": "night.snowman",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "snow-pile",
+    "label": "snow-pile",
+    "asset": "night.snow-pile",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "snow-big",
+    "label": "snow-big",
+    "asset": "night.snow-big",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "snow-small",
+    "label": "snow-small",
+    "asset": "night.snow-small",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "footprints",
+    "label": "footprints",
+    "asset": "night.footprints",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "street-cottage",
+    "label": "street-cottage",
+    "asset": "display.street-cottage",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "street-store",
+    "label": "street-store",
+    "asset": "display.street-store",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "cupboard",
+    "label": "cupboard",
+    "asset": "environment.cupboard",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "moon-window",
+    "label": "moon-window",
+    "asset": "environment.moon-window",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "coat-rack",
+    "label": "coat-rack",
+    "asset": "environment.coat-rack",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "winter-tree",
+    "label": "winter-tree",
+    "asset": "environment.winter-tree",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "snow-wood",
+    "label": "snow-wood",
+    "asset": "environment.snow-wood",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "stone-lantern",
+    "label": "stone-lantern",
+    "asset": "environment.stone-lantern",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-street-house-0",
+    "label": "t21-street-house-0",
+    "asset": "sprite.t21-street-house-0",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-street-house-1",
+    "label": "t21-street-house-1",
+    "asset": "sprite.t21-street-house-1",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-street-house-2",
+    "label": "t21-street-house-2",
+    "asset": "sprite.t21-street-house-2",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-yard-house-0",
+    "label": "t21-yard-house-0",
+    "asset": "sprite.t21-yard-house-0",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-yard-house-1",
+    "label": "t21-yard-house-1",
+    "asset": "sprite.t21-yard-house-1",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-yard-house-2",
+    "label": "t21-yard-house-2",
+    "asset": "sprite.t21-yard-house-2",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-stall-0",
+    "label": "t21-stall-0",
+    "asset": "sprite.t21-stall-0",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-stall-1",
+    "label": "t21-stall-1",
+    "asset": "sprite.t21-stall-1",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-stall-2",
+    "label": "t21-stall-2",
+    "asset": "sprite.t21-stall-2",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-theater",
+    "label": "t21-theater",
+    "asset": "sprite.t21-theater",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "t21-backstage-wall",
+    "label": "t21-backstage-wall",
+    "asset": "sprite.t21-backstage-wall",
+    "layout": {
+      "kind": "static"
+    }
+  }
+]

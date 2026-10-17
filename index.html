@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>雾灯驿站｜第一幕美术重制试玩</title>
+<style>
+:root{color-scheme:dark;--gold:#e7bc75;--sky:#9cb2c6;--shadow:#090d13;--line:#6c5540}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 52% 0%,#26303a,#0a1018 66%,#080b0f);color:#f4ebdf;font-family:"Microsoft Yahei","PingFang SC",sans-serif}
+header{max-width:1400px;margin:0 auto;padding:26px 26px 16px;display:flex;align-items:end;gap:16px;flex-wrap:wrap}
+h1{font:700 clamp(21px,2.4vw,32px)/1.2 Georgia,"SimSun",serif;letter-spacing:.11em;margin:0}
+.subtitle{color:#d2b38b;font-size:13px;margin:6px 0 0}
+.mark{font-size:11px;letter-spacing:.12em;padding:7px 12px;border:1px solid #5c665f;color:#a8cfb3;background:#17322c;border-radius:25px}
+main{max-width:1400px;margin:auto;padding:0 26px 32px}
+.game-viewport{aspect-ratio:8/5;position:relative;background:#151718;border:2px solid #59452d;box-shadow:0 0 0 5px #0d151c,0 30px 80px #000a;overflow:hidden}
+iframe{width:100%;height:100%;border:none;display:block;background:#111}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:linear-gradient(#111923ea,#0b0b13e8);z-index:3;padding:30px}
+.overlay[hidden]{display:none}.overlay-inner{max-width:520px}
+.crest{font-size:12px;color:var(--gold);letter-spacing:.32em}
+.overlay h2{font:700 clamp(24px,3vw,39px) Georgia,"SimSun",serif;margin:16px 0}
+.overlay p{line-height:1.8;color:#b8b6af;font-size:14px}
+button{font:inherit;cursor:pointer;border:1px solid #a88755;background:#433424;color:#f6e4c2;padding:12px 25px;border-radius:4px}
+button:hover{background:#715237}
+.hint{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin:22px 0;color:#bcc2ca;font-size:13px}
+kbd{font-size:12px;background:#20272c;border:1px solid #3b454a;border-radius:4px;padding:2px 6px;color:#ecd7b6}
+.small{color:#91a3ad;font-size:12px;line-height:1.7}
+@media(max-width:700px){header,main{padding-left:9px;padding-right:9px}.hint{font-size:11px;gap:8px}.game-viewport{border-width:1px}.overlay p{font-size:12px}.overlay{padding:10px}}
+</style></head><body>
+<header><div><h1>雾灯驿站 · 第一幕</h1><p class="subtitle">原生 Type PAL · 像素场景重制 / 独立审美测试版</p></div><span class="mark">T21 · GAME PREVIEW</span></header>
+<main>
+<div class="game-viewport" id="play">
+<iframe id="native-game" src="./game/?observe=1" allow="autoplay" title="第一幕 Type PAL 游戏" loading="eager"></iframe>
+<div class="overlay" id="curtain"><div class="overlay-inner"><div class="crest">✦ · FIRST CHAPTER · ✦</div><h2>灯火未熄，旧梦将启</h2><p>庙会 → 后台 → 旧街 → 小院。沿原来的故事路线探索。本页面运行真实游戏引擎与场景资源，并保留原有行走、触发与存档机制。</p>
+<button id="start" type="button">进入第一幕</button><p class="small">建议使用电脑键盘与鼠标。第一次加载可能需要数秒。</p></div></div>
+</div>
+<div class="hint"><span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 行走 · <kbd>Space</kbd> 交互/继续 · <kbd>F5</kbd> 存档 · <kbd>F9</kbd> 读档</span>
+<span>也可点击地面寻路、点击物件互动</span></div>
+<p class="small">此链接是独立的公开测试构建，使用合成示例对白保护原书内容；它不是原正式 Site，也不包含私人原文。美术效果需要以实际游玩及截图验收为准。</p>
+</main>
+<script>
+const frame=document.getElementById('native-game'),overlay=document.getElementById('curtain');
+document.getElementById('start').addEventListener('click',()=>{overlay.hidden=true;frame.contentWindow.focus();frame.focus()});
+document.addEventListener('keydown',e=>{
+ if(overlay.hidden && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Space','F5','F9'].includes(e.key)){
+  frame.contentWindow?.focus(); // real keyboard focus on same-origin native iframe
+ }
+});
+</script>
+</body></html>
