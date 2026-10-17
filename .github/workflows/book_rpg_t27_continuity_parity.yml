@@ -47,7 +47,12 @@ jobs:
           after="const resumed=await state();assert.ok(['courtyard','home-room'].includes(resumed.sceneId),'unexpected saved first-act end scene '+resumed.sceneId);assert.equal(resumed.story.flags.chapter_complete,true);if(resumed.sceneId==='courtyard')assert.deepEqual(resumed.position,end.position)"
           assert s.count(before)==1, 'original test has changed: stop instead of overriding'
           p.write_text(s.replace(before,after))
-          print('T27_T15_LEGACY_END_SCENE_ASSERTION_ONLY_UPDATED')
+          # T16 replaced the obsolete /pilot/ navigation entry with /night/.
+          old_link="assert.ok(await page.locator('a[href=\"../pilot/\"]').count());"
+          new_link="assert.ok(await page.locator('nav a[href=\"../night/\"]').count());"
+          assert s.count(old_link)==1, 'legacy UI assertion did not match'
+          p.write_text(s.replace(old_link,new_link))
+          print('T27_T15_LEGACY_END_SCENE_AND_NAV_ASSERTIONS_UPDATED')
           PY
           rm -rf upstream/projects/book-pilot-cinematic
           cp -a candidate/chapter/game/projects/book-pilot-cinematic upstream/projects/book-pilot-cinematic
