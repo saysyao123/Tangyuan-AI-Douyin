@@ -1,0 +1,59 @@
+name: T27 complete first-act fresh-game playthrough
+on:
+  push:
+    branches: ['feature/t27-act1-character-integration-preview-20261017']
+    paths: ['.github/workflows/book_rpg_t27_fresh_first_act.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  new-game:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: t27-act1-playtest
+          path: candidate
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - name: Install Type PAL test harness only
+        run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - name: Mount exact published T27 art and Type PAL project for path assertions
+        run: |
+          rm -rf upstream/projects/book-pilot-cinematic
+          cp -a candidate/chapter/game/projects/book-pilot-cinematic upstream/projects/book-pilot-cinematic
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-cinematic-e2e.mjs upstream/t15-cinematic-e2e.mjs
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve only the published T27 build
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t27-fresh-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/candidate/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Fresh fair to home uninterrupted Type PAL full first-act QA
+        working-directory: upstream
+        env:
+          T1_URL: http://127.0.0.1:6154/candidate
+        run: node t15-cinematic-e2e.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t27-published-first-act-fresh-playthrough
+          path: |
+            /tmp/t15-evidence/
+            /tmp/t27-fresh-http.log
+          retention-days: 30
