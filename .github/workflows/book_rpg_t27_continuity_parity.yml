@@ -46,7 +46,7 @@ jobs:
           before="assert.equal((await state()).sceneId,'courtyard');assert.equal((await state()).story.flags.chapter_complete,true);assert.deepEqual((await state()).position,end.position)"
           after="const resumed=await state();assert.ok(['courtyard','home-room'].includes(resumed.sceneId),'unexpected saved first-act end scene '+resumed.sceneId);assert.equal(resumed.story.flags.chapter_complete,true);if(resumed.sceneId==='courtyard')assert.deepEqual(resumed.position,end.position)"
           assert s.count(before)==1, 'original test has changed: stop instead of overriding'
-          p.write_text(s.replace(before,after))
+          s=s.replace(before,after)
           # T16 replaced the obsolete /pilot/ navigation entry with /night/.
           old_link="assert.ok(await page.locator('a[href=\"../pilot/\"]').count());"
           new_link="assert.ok(await page.locator('nav a[href=\"../night/\"]').count());"
