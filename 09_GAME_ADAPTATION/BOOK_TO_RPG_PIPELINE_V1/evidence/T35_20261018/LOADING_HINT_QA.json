@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NORMAL_IMAGE_WAIT_SHOWS_LOADING_WITHOUT_FALSE_CONNECTION_ERROR",
+    "SLOW_WAIT_OFFERS_OPTIONAL_RETRY_THEN_ENTERS_HD_GAME",
+    "REAL_ASSET_FAILURE_KEEPS_RECOVERY_AND_RETRY_ENTERS_HD"
+  ],
+  "errors": [],
+  "scope": "Only final parent loading hints; all engine bytes and T35 seven previously passed checks reused."
+}

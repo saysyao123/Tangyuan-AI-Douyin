@@ -1,0 +1,125 @@
+{
+  "phase": "T35_OLD_ART_FLASH_FIXED_AND_PUBLISHED",
+  "projectComplete": false,
+  "userFeedback": {
+    "acceptedHome": "2026-10-18 17:56 Asia/Shanghai: 当前室内已经OK、效果挺好",
+    "firstAct": "2026-10-18: 第一幕效果还不错；开场和中途出现旧画面，需要避免",
+    "latest": "2026-10-18 21:55 Asia/Shanghai: 额度恢复，接着目标继续完成"
+  },
+  "sourceCommit": "86deabaad98afd7ce48cd9f11433bf64e7f92815",
+  "sourceBranch": "feature/t35-no-legacy-flash-20261018",
+  "engineRuntimeCommit": "1bbfc1585815c211c92c0550aff1efb0600fb9a3",
+  "runtimeCommit": "d437cf8c64e80ba54cd526b6ec9278ecb45f2bf4",
+  "runtimeBranch": "t35-no-flash-final",
+  "sitesSourceCommit": "3fe04b1d81bfd84be7f2031637855a45122a8444",
+  "siteId": "appgprj_6ad427757a608191a95a42cc68b1f19b",
+  "siteVersionId": "appgprj_6ad427757a608191a95a42cc68b1f19b~appgver_a0951f6b871081919bee6ec6afe865c1",
+  "deploymentId": "appgdep_6ad4d19c50708191947c987cb94041a2",
+  "deploymentStatus": "succeeded",
+  "deploymentAt": "2026-10-18T14:03:43.783452+00:00",
+  "urls": {
+    "firstAct": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/chapter/",
+    "review": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/review/",
+    "acceptedRoom": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/night/"
+  },
+  "cause": [
+    "Lazy HD image loading returned false and implicitly rendered original native scene until required images were ready",
+    "First-use target scenes needed additional unique image sets; switch committed before image readiness",
+    "Wave layer rendering bypassed HD path",
+    "Parent early-document catch mislabeled normal loading as connection failure"
+  ],
+  "changes": [
+    "Await image decode alongside existing native scene preparation; commit only after both complete",
+    "Preloading target scene does not alter current scene presentation state",
+    "No implicit legacy fallback for supported scenes; explicit art=baseline QA switch retained",
+    "Wave background and foreground use same HD renderer",
+    "Parent normal wait, optional slow wait retry, real failure recovery are distinct"
+  ],
+  "qa": {
+    "engineRun": 39122828856,
+    "engine": {
+      "status": "PASS",
+      "checks": [
+        "SHIPPED_COLD_START_LEGACY_FLASH_REPRODUCED_WITH_DELAYED_IMAGE",
+        "COLD_START_WAIT_SCREEN_THEN_DECODED_HD_WITH_ZERO_LEGACY_FRAMES",
+        "FIRST_BACKSTAGE_ENTRY_PREPARES_DECODED_ART_BEFORE_NATIVE_COMMIT",
+        "LAYERED_WAVE_BACKGROUND_AND_FOREGROUND_RETAIN_HD_ART",
+        "SAVE_PREFLIGHT_ROOM_ART_READY_BEFORE_RESTORE_NO_LEGACY_FRAME",
+        "WARM_RELOAD_AND_NATIVE_SAVE_REOPEN_RETAIN_STATE",
+        "FAILED_IMAGE_NEVER_SHOWS_LEGACY_ART_AND_RETRY_RECOVERS"
+      ],
+      "evidence": [
+        {
+          "case": "previous-cold",
+          "beforeRuntime": true,
+          "legacyFrames": 45
+        },
+        {
+          "case": "site-cold",
+          "beforeRuntime": false,
+          "legacyFrames": 0
+        },
+        {
+          "case": "candidate-before-reload",
+          "frames": 1098,
+          "legacyFrames": 0
+        },
+        {
+          "case": "candidate-final",
+          "frames": 90,
+          "legacyFrames": 0
+        }
+      ],
+      "errors": [],
+      "scope": "Only cold/slow/failed image loading, real first-use scene commit, layered wave rendering and save restore. Accepted art, full story and unrelated prior tests reused."
+    },
+    "loadingHintRun": 39133926081,
+    "loadingHints": {
+      "status": "PASS",
+      "checks": [
+        "NORMAL_IMAGE_WAIT_SHOWS_LOADING_WITHOUT_FALSE_CONNECTION_ERROR",
+        "SLOW_WAIT_OFFERS_OPTIONAL_RETRY_THEN_ENTERS_HD_GAME",
+        "REAL_ASSET_FAILURE_KEEPS_RECOVERY_AND_RETRY_ENTERS_HD"
+      ],
+      "errors": [],
+      "scope": "Only final parent loading hints; all engine bytes and T35 seven previously passed checks reused."
+    },
+    "nativeProjectFilesUnchanged": 109,
+    "allAcceptedRasterBytesRetained": 203,
+    "testedGameFilesByteIdentical": 338,
+    "actualScreenshotsManuallyReviewed": true,
+    "typecheck": "PASS",
+    "reusedFullFreshStory": 39088306145,
+    "reusedT34WorldAndBackstage": 39119246651,
+    "reusedRoomIdentity": 39115653713,
+    "reusedPortraitEngines": [
+      39093310372,
+      39093766720
+    ]
+  },
+  "delivery": {
+    "gameFiles": 338,
+    "inventory": 950,
+    "zipBytes": 136291908,
+    "zipSHA256": "d89fe80e54bfaa200b6d614a4b98c57aa673bc991ee251650544ff54e5d7beb4",
+    "relativeLinks": "PASS",
+    "localDownloadHashes": "PASS",
+    "libraryFileId": "libfile_d6571348fae8819190a237bbbdd2d4a8",
+    "libraryVersion": 4,
+    "libraryFileIdVersion": "file_00000000a1a881f59129092c6638a4d2"
+  },
+  "testIteration": {
+    "initialRun": 39122473307,
+    "result": "FAIL in baseline reproduction assertion; production code built and typechecked",
+    "correction": "Initial draw spy only counted HTMLCanvasElement sources. Count all non-HD image sources; the same delayed published build reproduced 45 visible legacy frames. No acceptance condition removed."
+  },
+  "limits": [
+    "This turn tests Linux CI Chromium; no new physical phone or Safari app claim",
+    "Prior unrelated full story and accepted art tests reused, not rerun",
+    "Deployed exact tested engine; no second browser replay of production domain",
+    "Original formal Site and GitHub main retained; same isolated owner-private audience",
+    "Known WebKit private/ephemeral Blob thumbnail limitation retained",
+    "Public synthetic dialogue remains; no private book text published",
+    "Overall project not declared complete; awaiting user verification of current online repair"
+  ]
+}

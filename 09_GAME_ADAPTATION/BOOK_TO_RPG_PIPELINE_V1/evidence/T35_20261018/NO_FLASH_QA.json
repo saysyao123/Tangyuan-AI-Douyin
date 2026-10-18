@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checks": [
+    "SHIPPED_COLD_START_LEGACY_FLASH_REPRODUCED_WITH_DELAYED_IMAGE",
+    "COLD_START_WAIT_SCREEN_THEN_DECODED_HD_WITH_ZERO_LEGACY_FRAMES",
+    "FIRST_BACKSTAGE_ENTRY_PREPARES_DECODED_ART_BEFORE_NATIVE_COMMIT",
+    "LAYERED_WAVE_BACKGROUND_AND_FOREGROUND_RETAIN_HD_ART",
+    "SAVE_PREFLIGHT_ROOM_ART_READY_BEFORE_RESTORE_NO_LEGACY_FRAME",
+    "WARM_RELOAD_AND_NATIVE_SAVE_REOPEN_RETAIN_STATE",
+    "FAILED_IMAGE_NEVER_SHOWS_LEGACY_ART_AND_RETRY_RECOVERS"
+  ],
+  "evidence": [
+    {
+      "case": "previous-cold",
+      "beforeRuntime": true,
+      "legacyFrames": 45
+    },
+    {
+      "case": "site-cold",
+      "beforeRuntime": false,
+      "legacyFrames": 0
+    },
+    {
+      "case": "candidate-before-reload",
+      "frames": 1098,
+      "legacyFrames": 0
+    },
+    {
+      "case": "candidate-final",
+      "frames": 90,
+      "legacyFrames": 0
+    }
+  ],
+  "errors": [],
+  "scope": "Only cold/slow/failed image loading, real first-use scene commit, layered wave rendering and save restore. Accepted art, full story and unrelated prior tests reused."
+}
