@@ -1,0 +1,119 @@
+name: T36 second act style integration
+on:
+  push:
+    branches: ['feature/t36-second-act-style-20261018']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t32/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t36-*-e2e.mjs'
+      - '.github/workflows/book_rpg_t36_second_act.yml'
+  workflow_dispatch:
+permissions: {contents: write, actions: read}
+jobs:
+  integrate-and-play:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: 146298ede54a65025ab7a794b49ab53c4bf3ae92
+          path: candidate
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: d437cf8c64e80ba54cd526b6ec9278ecb45f2bf4
+          path: previous
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - name: Materialize verified original art bytes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64,hashlib,json
+          root=Path('source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t32')
+          manifest=json.loads((root/'ART_MANIFEST.json').read_text())
+          for name,sha in manifest['files'].items():
+            p=root/name
+            if not p.exists():p.write_bytes(base64.b64decode((root/(name+'.b64')).read_text()))
+            assert hashlib.sha256(p.read_bytes()).hexdigest()==sha,name
+          print('ORIGINAL_HD_BYTES_VERIFIED',len(manifest['files']))
+          PY
+      - name: Build visual-only native patch and retain exact existing game
+        run: |
+          node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/build.mjs upstream candidate site
+          node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t35/patch-loading-shell.mjs site
+      - name: Typecheck changed renderer in shipped source
+        working-directory: upstream/packages/reforge
+        run: pnpm typecheck
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve isolated candidate and unchanged T30 control
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t32-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Keep proven story, map and shell bytes unchanged
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          a=Path('candidate/chapter/game/projects/book-pilot-cinematic')
+          b=Path('site/chapter/game/projects/book-pilot-cinematic')
+          files=[p for p in a.rglob('*') if p.is_file()]
+          assert len(files)>30
+          for p in files:assert p.read_bytes()==(b/p.relative_to(a)).read_bytes(),p
+          print('NATIVE_PROJECT_BYTES_UNCHANGED',len(files))
+          import json,hashlib
+          old=Path('previous/chapter/game/t32-art')
+          for p in old.glob('*.webp'):assert p.read_bytes()==(Path('site/chapter/game/t32-art')/p.name).read_bytes(),p
+          assert Path('source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/room-world.ts').read_bytes()==Path('upstream/packages/reforge/src/room-world.ts').read_bytes()
+          print('ALL_ACCEPTED_T34_RASTER_BYTES_RETAINED',len(list(old.glob('*.webp'))))
+          PY
+      - name: Only four changed second-act scenes and affected interactions/actions/save
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t36-night-style-e2e.mjs .
+          node t36-night-style-e2e.mjs
+      - name: Collect corresponding evidence and candidate package
+        if: always()
+        run: |
+          mkdir -p /tmp/t36-evidence/story
+          if test -d site; then
+            mkdir -p site/t36-evidence
+            cp -a /tmp/t36-evidence/. site/t36-evidence/
+            cd site && zip -qr /tmp/T36_SECOND_ACT_CANDIDATE.zip .
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t36-second-act-style
+          path: |
+            /tmp/t36-evidence/
+            /tmp/T36_SECOND_ACT_CANDIDATE.zip
+          retention-days: 30
+      - name: Publish isolated review branch after technical tests; art gate remains pending review
+        if: success()
+        env: {PUSH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'}
+        run: |
+          cd site
+          git init -q
+          git config user.name 'T32 Integration CI'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -qb t36-night-candidate
+          git add -A
+          git commit -qm 'T36 second act artwork; original story and accepted first act retained'
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t36-night-candidate --force

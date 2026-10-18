@@ -7,7 +7,8 @@ import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 import {ROOM_VIEW,drawRoomGround,drawRoomForeground} from './room-world.js';
 import {worldEnvironmentFiles,drawBackstageWalls,paintEnvironmentGround} from './world-environment.js';
-const act=new Set(['fair','backstage','street','courtyard','home-room']);
+import {nightScenes,nightArtFiles,nightView,drawNightGround,nightSprite} from './night-world.js';
+const act=new Set(['fair','backstage','street','courtyard','home-room',...nightScenes]);
 const images=new Map<string,HTMLImageElement>();
 const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
 const filenames=['house','stage','stall','backstage','back-panel','back-panel-window','crate-indoor','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood',...portraits.map(role=>'portrait-'+role)];
@@ -33,7 +34,7 @@ function img(key:string){return decoded.has(key)?images.get(key):undefined}
 function requiredArt(scene:string){
  const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-mat'];
  const extra=scene==='home-room'?roomFiles:scene==='fair'?[...Array.from({length:24},(_,i)=>`crowd-${Math.floor(i/4)}-${i%4}`)]:scene==='backstage'?['action-carriers-unique-0','action-carriers-unique-1',...['a','b','c'].flatMap(role=>Array.from({length:12},(_,i)=>`sub-${role}-${Math.floor(i/3)}-${i%3}`)),...Array.from({length:4},(_,i)=>`crowd-0-${i}`)]:[];
- return [...new Set([...filenames,...extra,...(scene==='home-room'?[]:worldEnvironmentFiles),
+ return [...new Set([...filenames,...extra,...(nightScenes.has(scene)?nightArtFiles:[]),...(scene==='home-room'?[]:worldEnvironmentFiles),
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
   ...['merchant','neighbor','stranger','visitor','operative','performer'].flatMap(role=>Array.from({length:4},(_,i)=>`npc-${role}-${i}`)),
   ...Array.from({length:12},(_,i)=>`guard-${Math.floor(i/3)}-${i%3}`),
@@ -63,14 +64,17 @@ export function renderArtWaiting(ctx:CanvasRenderingContext2D,scene:string){
  * The source is 4x dense; it must never use its physical size as a UI size.
  * Scene restriction also preserves original portraits outside the first act.
  */
-export function firstActPortrait(asset:string){
+export function firstActPortrait(asset:string,speaker?:string){
  if(!act.has(activeScene)||new URLSearchParams(location.search).get('art')==='baseline')return undefined;
+ if(speaker==='name.driver')return img('v36-portrait-driver');
+ if(speaker==='name.shopkeeper')return img('v36-portrait-keeper');
  const role=asset.startsWith('portrait.')?asset.slice(9):'';
  return portraits.includes(role)?img('portrait-'+role):undefined;
 }
 export function roomViewActive(scene:string){return scene==='home-room'&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline'}
 export function presentationView(scene:string,camera:Camera){
  if(roomViewActive(scene))return ROOM_VIEW;
+ if(nightScenes.has(scene)&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline')return nightView(scene,camera);
  if(['fair','backstage','street','courtyard'].includes(scene)&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline')return {scale:.8,camera:{x:camera.x-40,y:camera.y-(['street','courtyard'].includes(scene)?60:scene==='backstage'?45:25)}};
  return {scale:1,camera};
 }
@@ -85,6 +89,7 @@ export function renderHDForeground(ctx:CanvasRenderingContext2D,scene:string,cam
 let floor:{scene:string,map:IsometricMapContent<number|null>,canvas:HTMLCanvasElement,x:number,y:number}|undefined;
 export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:IsometricMapContent<number|null>,room:CellRect,camera:Camera){
  if(scene==='home-room'){drawRoomGround(ctx,camera,img);return}
+ if(nightScenes.has(scene)){drawNightGround(ctx,scene,camera,img);return}
  if(!floor||floor.scene!==scene||floor.map!==map){
   const tiles=projectMapTilesInView(map,room,new Set());
   const x=Math.min(...tiles.map(t=>t.centerX))-17,y=Math.min(...tiles.map(t=>t.centerY))-9;
@@ -132,6 +137,7 @@ const npcKeys=new Set(['merchant','neighbor','stranger','visitor','operative','p
 const direction:Record<string,number>={down:0,left:1,up:2,right:3};
 export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):SpriteDraw[]{
  return sprites.map(s=>{
+  const night=nightSprite(scene,s,img);if(night)return night;
   if(scene==='home-room'&&['moonlit-room-window','winter-coat-by-wall','room-door','room-yard'].includes(s.artId??''))return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-wall')return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-curtain'){
@@ -151,8 +157,8 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
    const selected=mapping[s.artKey!]!;key=(scene==='home-room'?'':'v34-')+selected[0];w=selected[1];foot=.94;
    if(scene==='backstage'&&s.artKey==='crate')key='crate-indoor';
   }
-  if(!prop&&(s.artKey==='hero'||s.artKey==='child')){
-   key=`lead-${s.artKey}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;
+  if(!prop&&(s.artKey==='hero'||s.artKey==='hero-blood'||s.artKey==='child')){
+   key=`lead-${s.artKey==='hero-blood'?'hero':s.artKey}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;
    h=s.frame.height;foot=1;
   }
   if(!prop&&s.artKey==='child-crouch'){key='action-child-crouch';h=s.frame.height;foot=1}
@@ -174,7 +180,7 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
    if(!prop&&((s.artKey??'').startsWith('performer')||npcKeys.has(s.artKey??'')||['hero','child','operative','child-crouch','carriers'].includes(s.artKey??''))){
     c.fillStyle='rgba(10,16,28,.25)';c.beginPath();c.ellipse(s.worldX-camera.x,s.worldY-camera.y+6,Math.min(width*.27,15),2.1,0,0,Math.PI*2);c.fill();
    }
-   c.drawImage(source,x,y,width,height);c.restore();
+   c.drawImage(source,x,y,width,height);if(s.artKey==='hero-blood'){c.fillStyle='#652f29';c.beginPath();c.ellipse(x+width*.67,y+height*.55,width*.035,height*.025,0,0,Math.PI*2);c.fill()}c.restore();
   }};
  });
 }

@@ -1,0 +1,635 @@
+{
+  "method": "Built-in image_gen using approved room/street and hero style references; RGBA alpha bbox atlas extraction. Driver 4-view/3-phase walking atlas retains native timing. Accepted assets unchanged.",
+  "newAssets": [
+    {
+      "file": "v36-storefront.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        30,
+        51,
+        589,
+        624
+      ],
+      "pixels": [
+        559,
+        573
+      ],
+      "sha256": "7246b6b365c2e184b4092a942f5fd70e5008ba0259d4434c3bc668e636541941"
+    },
+    {
+      "file": "v36-truck.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        593,
+        161,
+        1059,
+        621
+      ],
+      "pixels": [
+        466,
+        460
+      ],
+      "sha256": "ecf25deb380046a24248e5528a23c9d1ad9269f52ac31a3e1c5bf0cbfecc71d2"
+    },
+    {
+      "file": "v36-snow-big.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        1087,
+        191,
+        1438,
+        624
+      ],
+      "pixels": [
+        351,
+        433
+      ],
+      "sha256": "67870d1239e5af09fe19aafbb3ae4c7c1a3dddcd3b695d187200e87df1ad1b2f"
+    },
+    {
+      "file": "v36-snow-small.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        111,
+        708,
+        395,
+        1012
+      ],
+      "pixels": [
+        284,
+        304
+      ],
+      "sha256": "87045318420153d928a324064f9f55933ba6dd2fc93eea142fbe35b6f00a5626"
+    },
+    {
+      "file": "v36-snow-pile.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        496,
+        725,
+        1017,
+        1036
+      ],
+      "pixels": [
+        521,
+        311
+      ],
+      "sha256": "f12b70c16a7c1822a9e807625a9e2fe516e53c8cb874f8fdbc081a62e920d0ce"
+    },
+    {
+      "file": "v36-tracks.webp",
+      "source": "exec-a1424357-19f2-4a8e-9b03-a77204c8e0a8.png",
+      "crop": [
+        1092,
+        709,
+        1389,
+        1037
+      ],
+      "pixels": [
+        297,
+        328
+      ],
+      "sha256": "eb7f463afbd530b57f0f7b5eed4771e6053c63cbe9d031f1862e8a2ebbdb3853"
+    },
+    {
+      "file": "v36-shop-left.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        21,
+        68,
+        550,
+        504
+      ],
+      "pixels": [
+        529,
+        436
+      ],
+      "sha256": "4ee3a17b14e6f4479ddc3a361945e95c3a5ac17bc04f54e0edb1f59a207ce591"
+    },
+    {
+      "file": "v36-shop-right.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        574,
+        68,
+        1041,
+        504
+      ],
+      "pixels": [
+        467,
+        436
+      ],
+      "sha256": "c3c5102c35134bacc9931beef1e649fd9ec130d6d1adb33623439a2606f64296"
+    },
+    {
+      "file": "v36-shelf-a.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        1091,
+        94,
+        1420,
+        544
+      ],
+      "pixels": [
+        329,
+        450
+      ],
+      "sha256": "817ad1e3d61688700417a1b4296217a1a22a69dcb9007d9b62c06c2cac74988e"
+    },
+    {
+      "file": "v36-counter.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        68,
+        589,
+        522,
+        1030
+      ],
+      "pixels": [
+        454,
+        441
+      ],
+      "sha256": "de8548ec731596f233e1b21b351851a1c192504841e1e2687076c90c6cb44f29"
+    },
+    {
+      "file": "v36-shelf-b.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        642,
+        562,
+        969,
+        1015
+      ],
+      "pixels": [
+        327,
+        453
+      ],
+      "sha256": "9a3544f450efc98b89908ff16eb6aa56d53bf022dc1ef1e2d2d95d8fbbb21ae9"
+    },
+    {
+      "file": "v36-fridge.webp",
+      "source": "exec-a4442e89-1f48-42b3-ad3b-cd014d6f2073.png",
+      "crop": [
+        1165,
+        544,
+        1385,
+        1007
+      ],
+      "pixels": [
+        220,
+        463
+      ],
+      "sha256": "d957cb0924ffbef628be360ae1e3534f9d4b751636334388e06384820900f42b"
+    },
+    {
+      "file": "v36-driver-0.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        111,
+        11,
+        327,
+        390
+      ],
+      "pixels": [
+        216,
+        379
+      ],
+      "sha256": "c7f9ec707c2ea3219e6a2e942fbcb22e0a599b69c668da441e31c17ccb17f6ac"
+    },
+    {
+      "file": "v36-driver-1.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        488,
+        11,
+        633,
+        392
+      ],
+      "pixels": [
+        145,
+        381
+      ],
+      "sha256": "3f7f4bae7494a1522e38e3099fde409a0f846c35e7f3989bf5ac870b2fdd6f18"
+    },
+    {
+      "file": "v36-driver-2.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        787,
+        11,
+        996,
+        389
+      ],
+      "pixels": [
+        209,
+        378
+      ],
+      "sha256": "188fd7543a1506760026da43ba5abea9ae2ed80d0ac19439fdaa83351a0f186d"
+    },
+    {
+      "file": "v36-driver-3.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        1153,
+        11,
+        1295,
+        391
+      ],
+      "pixels": [
+        142,
+        380
+      ],
+      "sha256": "3ae5b954eef20703e114140fccc6ebaa4115f43dc4bdd96ae9692f22fdfc80b8"
+    },
+    {
+      "file": "v36-keeper-0.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        130,
+        396,
+        305,
+        772
+      ],
+      "pixels": [
+        175,
+        376
+      ],
+      "sha256": "2638ab13c5a748bb594fd80de90179ff57c5f7b965de51d74636d4f5fb3f698b"
+    },
+    {
+      "file": "v36-keeper-1.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        476,
+        397,
+        624,
+        771
+      ],
+      "pixels": [
+        148,
+        374
+      ],
+      "sha256": "ef827741cec21b1b297f4557452d1cd0894b3bd5281427bff92e86fb46ce5312"
+    },
+    {
+      "file": "v36-keeper-2.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        806,
+        396,
+        969,
+        768
+      ],
+      "pixels": [
+        163,
+        372
+      ],
+      "sha256": "7237a7e09c5213774f48ae278e32e9f805c4a02d81a12c9ccd39b572b370925c"
+    },
+    {
+      "file": "v36-keeper-3.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        1161,
+        396,
+        1303,
+        768
+      ],
+      "pixels": [
+        142,
+        372
+      ],
+      "sha256": "05295357f9afbf7bea06a6f279e6134956b0d351d382432beaf49b43c5676168"
+    },
+    {
+      "file": "v36-hero-down.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        65,
+        789,
+        368,
+        1051
+      ],
+      "pixels": [
+        303,
+        262
+      ],
+      "sha256": "0c943b8df413b7fbd8d113e8455f82c0781075a083cbce6adcc0d045415ebffe"
+    },
+    {
+      "file": "v36-hero-rise.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        428,
+        770,
+        671,
+        1072
+      ],
+      "pixels": [
+        243,
+        302
+      ],
+      "sha256": "a54054600b7605ddd47d82f977673bd266c0120f85775f917febfb75d5551654"
+    },
+    {
+      "file": "v36-portrait-driver.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        716,
+        772,
+        1084,
+        1072
+      ],
+      "pixels": [
+        368,
+        300
+      ],
+      "sha256": "fce615db48507b09b2d72f12ee89ce5726d4a54f336dbbb6f173cc8f81679af4"
+    },
+    {
+      "file": "v36-portrait-keeper.webp",
+      "source": "exec-dfd60d0d-3b45-43d6-923e-c63e867270d3.png",
+      "crop": [
+        1095,
+        774,
+        1429,
+        1072
+      ],
+      "pixels": [
+        334,
+        298
+      ],
+      "sha256": "0cfa00856bb0582375553939f750df97fccbf250d0579062bb244457312ff10c"
+    },
+    {
+      "file": "v36-mind-tree.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        12,
+        14,
+        600,
+        601
+      ],
+      "pixels": [
+        588,
+        587
+      ],
+      "sha256": "b147711dffdca73807b043def581d2faab491dfda6d4aa86ce7e926a97e61c3b"
+    },
+    {
+      "file": "v36-draw-basin.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        596,
+        223,
+        950,
+        599
+      ],
+      "pixels": [
+        354,
+        376
+      ],
+      "sha256": "2971d0bc10a6228aff02363c4fcf6c54e6e5e16c08198e11a03594eb8a5122ee"
+    },
+    {
+      "file": "v36-income-book.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        1094,
+        207,
+        1403,
+        593
+      ],
+      "pixels": [
+        309,
+        386
+      ],
+      "sha256": "0cc8a64fccbf4731816596c097b5eaa7d6c55be92d1b24705ce7ae8e36fb874f"
+    },
+    {
+      "file": "v36-star-orb.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        137,
+        634,
+        386,
+        1064
+      ],
+      "pixels": [
+        249,
+        430
+      ],
+      "sha256": "c8b6ee864f21e39eb8b9127a1142bd1ccc4dc14f2bd0169cf87d08cb02cb9d67"
+    },
+    {
+      "file": "v36-fruit.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        576,
+        695,
+        938,
+        1025
+      ],
+      "pixels": [
+        362,
+        330
+      ],
+      "sha256": "66510fa67461df929875c371684e0d5368a0da69ffac4ef8de042e53e9c3fd87"
+    },
+    {
+      "file": "v36-white-flame.webp",
+      "source": "exec-c7e4e3f2-e28e-49d7-a252-62ebf75c0d9f.png",
+      "crop": [
+        1125,
+        667,
+        1382,
+        1043
+      ],
+      "pixels": [
+        257,
+        376
+      ],
+      "sha256": "7003efc2c15b3f78d8c588b7f1cc12f32f903b12e132a9e2c97d6a31214c50d5"
+    },
+    {
+      "file": "v36-driver-walk-0-0.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        137,
+        9,
+        342,
+        360
+      ],
+      "pixels": [
+        205,
+        351
+      ],
+      "sha256": "c674419b05c2879a4b7be20a1dd127bde0fe9f84f76118339623b48a06a72d4c"
+    },
+    {
+      "file": "v36-driver-walk-0-1.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        440,
+        10,
+        644,
+        361
+      ],
+      "pixels": [
+        204,
+        351
+      ],
+      "sha256": "2086784add9b17ddc11da48cfa4b5788108d7d9e21c0680b026918dd647e7f4a"
+    },
+    {
+      "file": "v36-driver-walk-0-2.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        743,
+        9,
+        947,
+        360
+      ],
+      "pixels": [
+        204,
+        351
+      ],
+      "sha256": "42e93916ffe64508855218765c62a0d3fe67ee491b4d9fa2a977ac5c26aa714a"
+    },
+    {
+      "file": "v36-driver-walk-1-0.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        139,
+        365,
+        318,
+        714
+      ],
+      "pixels": [
+        179,
+        349
+      ],
+      "sha256": "b66a5f6525a92d98c6d25f8620ea24e7a3801794d3fe433aef4ea8d65dcf316b"
+    },
+    {
+      "file": "v36-driver-walk-1-1.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        458,
+        365,
+        623,
+        716
+      ],
+      "pixels": [
+        165,
+        351
+      ],
+      "sha256": "7cf9676fc3279401795ea464ae8e90981697cdbffe39fad62e9e84d06fd480da"
+    },
+    {
+      "file": "v36-driver-walk-1-2.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        767,
+        365,
+        960,
+        713
+      ],
+      "pixels": [
+        193,
+        348
+      ],
+      "sha256": "e987493bdc6c8e4d5275272545c80613a6d5172401d522af95225c3dd6093ba4"
+    },
+    {
+      "file": "v36-driver-walk-2-0.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        129,
+        725,
+        332,
+        1070
+      ],
+      "pixels": [
+        203,
+        345
+      ],
+      "sha256": "c17bb18541bba500a8f4dc200a30c3d65fdae34e42ea22206b985e1588261014"
+    },
+    {
+      "file": "v36-driver-walk-2-1.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        440,
+        725,
+        643,
+        1071
+      ],
+      "pixels": [
+        203,
+        346
+      ],
+      "sha256": "be82b046dcda8010527d0ab7ff8df29d5cb99482459b270021d44d9c6ba27d0b"
+    },
+    {
+      "file": "v36-driver-walk-2-2.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        749,
+        725,
+        946,
+        1071
+      ],
+      "pixels": [
+        197,
+        346
+      ],
+      "sha256": "e45f368c296ccdffe8500e87b1b28e1914b8307f5a3c0d397a22995de6217170"
+    },
+    {
+      "file": "v36-driver-walk-3-0.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        128,
+        1077,
+        321,
+        1423
+      ],
+      "pixels": [
+        193,
+        346
+      ],
+      "sha256": "015796bd11a10ca744669bb886f9a781b25b7d9a1b688b9c5da1a0b66225e3e5"
+    },
+    {
+      "file": "v36-driver-walk-3-1.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        456,
+        1077,
+        626,
+        1425
+      ],
+      "pixels": [
+        170,
+        348
+      ],
+      "sha256": "45be72e3b94bfd2ae72d63d6f85324872a37820b12775441df8cd24fe2d7df85"
+    },
+    {
+      "file": "v36-driver-walk-3-2.webp",
+      "source": "exec-5bb133ed-7568-46e8-8f69-2d93e1403471.png",
+      "crop": [
+        741,
+        1076,
+        953,
+        1423
+      ],
+      "pixels": [
+        212,
+        347
+      ],
+      "sha256": "1cd0231dffda81c86f713ec6a7ab76dac4af5548491a32e59462cdaa83a0ddaa"
+    }
+  ]
+}
