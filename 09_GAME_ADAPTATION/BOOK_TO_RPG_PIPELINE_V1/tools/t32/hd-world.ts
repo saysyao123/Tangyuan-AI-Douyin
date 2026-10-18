@@ -7,7 +7,7 @@ import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 import {ROOM_VIEW,drawRoomGround,drawRoomForeground} from './room-world.js';
 import {worldEnvironmentFiles,drawBackstageWalls,paintEnvironmentGround} from './world-environment.js';
-import {nightScenes,nightArtFiles,nightView,drawNightGround,nightSprite} from './night-world.js';
+import {nightScenes,nightArtFiles,nightView,drawNightGround,nightSprite,nightFrame} from './night-world.js';
 const act=new Set(['fair','backstage','street','courtyard','home-room',...nightScenes]);
 const images=new Map<string,HTMLImageElement>();
 const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
@@ -17,6 +17,7 @@ const decoded=new Set<string>();
 const assetJobs=new Map<string,Promise<void>>();
 const sceneJobs=new Map<string,Promise<void>>();
 const sceneStatus=new Map<string,'loading'|'ready'|'error'>();
+export function prepareArtFrame(scene:string,sprites:readonly SpriteDraw[]){nightFrame(scene,sprites)}
 export function usesFirstActArt(scene:string){return act.has(scene)&&new URLSearchParams(location.search).get('art')!=='baseline'}
 function loadImage(key:string):Promise<void>{
  const existing=assetJobs.get(key);if(existing)return existing;

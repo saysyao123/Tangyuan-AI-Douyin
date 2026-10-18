@@ -16,13 +16,14 @@ patch('render.ts','export interface SpriteDraw {\n  frame: RleFrame','''export i
   artId?: string
   artKey?: string
   artFrame?: number
+  artStep?: number
   artFacing?: string
   drawHD?: (ctx: CanvasRenderingContext2D, camera: Camera) => void
   frame: RleFrame''')
 patch('render.ts',"            : () => this.ctx.drawImage(image, x, y),","            : sprite.drawHD ? () => sprite.drawHD!(this.ctx, camera) : () => this.ctx.drawImage(image, x, y),")
 patch('world-scene-presentation.ts',"  'map' | 'room' | 'palette' | 'tiles' | 'renderer' | 'rendererForWave'\n>","  'map' | 'room' | 'palette' | 'tiles' | 'renderer' | 'rendererForWave'\n> & Partial<Pick<ActiveScene<Renderer>, 'scene'>>")
 patch('world-scene-presentation.ts','      sprites.push({\n        frame,\n        worldX: pixel.x,','''      sprites.push({
-        artId: entity.id, artKey: definition?.id, artFrame: frameIndex, artFacing: entity.facing,
+        artId: entity.id, artKey: definition?.id, artFrame: frameIndex, artStep: gait, artFacing: entity.facing,
         frame,
         worldX: pixel.x,''')
 patch('world-scene-presentation.ts','sprites.push(partySprite(leaderFrame, input.player.pos, pixel, input.player.layer, 0, true))','sprites.push({...partySprite(leaderFrame, input.player.pos, pixel, input.player.layer, 0, true), artKey: leaderDefinition.id, artFrame: leaderFrameIndex, artFacing: input.player.facing})')
@@ -37,11 +38,12 @@ patch('world-scene-presentation.ts','''        partySprite(
           frame, displayed.pos, gridToPixel(displayed.pos), input.player.layer, partyIndex, true,
         ), artKey: visual.def.id, artFrame: frameIndex, artFacing: follower.facing},''')
 patch('world-scene-presentation.ts','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n        sceneId: input.scene.scene?.id,\n')
-patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, presentationView, renderHDForeground, usesFirstActArt, renderArtWaiting } from './hd-world.js'")
+patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, presentationView, renderHDForeground, usesFirstActArt, renderArtWaiting, prepareArtFrame } from './hd-world.js'")
 patch('render-scene.ts',"  layers?: import('./render.js').RenderLayerOpts\n","  layers?: import('./render.js').RenderLayerOpts\n  sceneId?: string\n  preserveFrame?: boolean\n")
 patch('render-scene.ts','  renderer.clear()\n','  if (!args.preserveFrame) renderer.clear()\n')
 patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, layers)\n','''  if (args.sceneId && usesFirstActArt(args.sceneId)) {
     if (firstActReady(args.sceneId)) {
+      if (!layers?.skipCover) prepareArtFrame(args.sceneId, sprites)
       const view = presentationView(args.sceneId, camera)
       ctx.scale(view.scale, view.scale)
       if (!layers?.skipBase) {
@@ -107,3 +109,6 @@ patch('main.ts', "ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.r
 # Preserve native synchronous input capture: start native prepare before awaiting art.
 patch('main.ts', '    return scenePreparation.prepare(sceneId, worldView, spawn, useActorOverrides, scriptState)', '''    const nativePlan = scenePreparation.prepare(sceneId, worldView, spawn, useActorOverrides, scriptState)
     return Promise.all([nativePlan, prepareFirstActArt(sceneId)]).then(([plan]) => plan)''')
+
+# T36 soft interaction rings in the four newly styled scenes, same native targets.
+patch('main.ts', "['home-room','fair','backstage','street','courtyard'].includes(activeScene.scene.id)", "['home-room','fair','backstage','street','courtyard','night-road','night-shop-room','mind-tree','snow-yard'].includes(activeScene.scene.id)")

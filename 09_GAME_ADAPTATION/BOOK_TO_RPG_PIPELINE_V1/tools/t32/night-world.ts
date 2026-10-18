@@ -3,7 +3,9 @@ import type {Camera,SpriteDraw} from './render.js';
 type GetImage=(key:string)=>HTMLImageElement|undefined;
 export const nightScenes=new Set(['night-road','night-shop-room','mind-tree','snow-yard']);
 export const nightArtFiles=['storefront','truck','snow-big','snow-small','snow-pile','tracks','shop-left','shop-right','shelf-a','counter','shelf-b','fridge',...['driver','keeper'].flatMap(k=>Array.from({length:4},(_,i)=>k+'-'+i)),'hero-down','hero-rise','portrait-driver','portrait-keeper','mind-tree','draw-basin','income-book','star-orb','fruit','white-flame',...Array.from({length:12},(_,i)=>`driver-walk-${Math.floor(i/3)}-${i%3}`)].map(k=>'v36-'+k);
-export function nightView(scene:string,camera:Camera){return scene==='night-shop-room'?{scale:.60,camera:{x:205,y:10}}:{scale:.8,camera:{x:camera.x-40,y:camera.y-(scene==='mind-tree'?45:60)}}}
+let accidentFocus=false;
+export function nightFrame(scene:string,sprites:readonly SpriteDraw[]){accidentFocus=scene==='night-road'&&sprites.some(s=>['injured','driver','seed','white-heart'].includes(s.artId??''))}
+export function nightView(scene:string,camera:Camera){return scene==='night-shop-room'?{scale:.60,camera:{x:205,y:10}}:{scale:.8,camera:{x:camera.x-40,y:camera.y-(scene==='mind-tree'?45:scene==='night-road'&&accidentFocus?-12:60)}}}
 let floor:{scene:string,canvas:HTMLCanvasElement}|undefined;
 export function drawNightGround(ctx:CanvasRenderingContext2D,scene:string,camera:Camera,get:GetImage){
  if(!floor||floor.scene!==scene){const canvas=document.createElement('canvas');canvas.width=2560;canvas.height=1280;const c=canvas.getContext('2d')!;c.scale(2,2);c.imageSmoothingEnabled=true;
@@ -36,7 +38,7 @@ export function nightSprite(scene:string,s:SpriteDraw,get:GetImage):SpriteDraw|u
  if(!nightScenes.has(scene))return undefined;
  const none=()=>({...s,drawHD:()=>{}});
  if(['road-house-0','road-house-1','shop-facade'].includes(s.artId??''))return none();
- if(scene==='night-shop-room'&&['shop-moon-window','shop-lamp'].includes(s.artId??''))return none();
+ if(scene==='night-shop-room'&&['shop-moon-window','shop-lamp','shop-stock-cupboard'].includes(s.artId??''))return none();
  if(s.artKey==='snowfall'){return {...s,drawHD:(c,camera)=>{const p=s.artFrame??0;c.save();c.fillStyle='rgba(222,236,248,.42)';for(let i=0;i<70;i++){const x=s.worldX-camera.x-160+(i*83+p*2)%320,y=s.worldY-camera.y-200+(i*47+p*4)%200;c.fillRect(x,y,i%5===0?.65:.35,i%5===0?1:.45)}c.restore()}}}
  const props:Record<string,[string,number,number?]>={
   'west-street-cottage':['v34-house-0',184,.84],'east-street-cottage':['v34-house-1',184,.84],'lit-storefront':['v36-storefront',162,.94],truck:['v36-truck',112,.96],tracks:['v36-tracks',45,.9],
@@ -47,7 +49,7 @@ export function nightSprite(scene:string,s:SpriteDraw,get:GetImage):SpriteDraw|u
   'snow-large':['v36-snow-pile',40,.96],'snow-small':['v36-snow-pile',32,.96],'big-finished':['v36-snow-big',38,.96],'small-finished':['v36-snow-small',28,.96],
  };
  let prop=props[s.artId??''],key=prop?.[0],w=prop?.[1]??0,h=0,foot=prop?.[2]??1;
- if(s.artId==='driver'){key=`v36-driver-walk-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;h=s.frame.height}
+ if(s.artId==='driver'){key=`v36-driver-walk-${direction[s.artFacing??'down']??0}-${(s.artStep??1)%3}`;h=s.frame.height}
  if(s.artId==='shopkeeper'){key=`v36-keeper-${direction[s.artFacing??'down']??0}`;h=s.frame.height}
  if(s.artKey==='hero-night-pose'){key=(s.artFrame??0)===0?'lead-hero-3-0':(s.artFrame??0)===1?'v36-hero-rise':'v36-hero-down';h=(s.artFrame??0)===0?44:40;w=0}
  if(['seed-light','white-heart'].includes(s.artKey??'')){key='v36-white-flame';w=s.artKey==='seed-light'?15:25;foot=.98}
