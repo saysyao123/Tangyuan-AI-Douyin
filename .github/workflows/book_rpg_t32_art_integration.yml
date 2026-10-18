@@ -1,0 +1,115 @@
+name: T32 first act high detail art integration and complete playthrough
+on:
+  push:
+    branches: ['feature/t32-act1-art-integration-20261018']
+    paths:
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t32/**'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-art-e2e.mjs'
+      - '.github/workflows/book_rpg_t32_art_integration.yml'
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  integrate-and-play:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with:
+          repository: saysyao123/Tangyuan-AI-Douyin
+          ref: 146298ede54a65025ab7a794b49ab53c4bf3ae92
+          path: candidate
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: IllegalCreed/type-pal
+          ref: f98d0ddd89ebdee7b04502ee35de26ee82c6d246
+          path: upstream
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with: {version: 10.17.1, run_install: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: pnpm install --frozen-lockfile
+        working-directory: upstream
+      - name: Materialize verified original art bytes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64,hashlib,json
+          root=Path('source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t32')
+          manifest=json.loads((root/'ART_MANIFEST.json').read_text())
+          for name,sha in manifest['files'].items():
+            p=root/name
+            if not p.exists():p.write_bytes(base64.b64decode((root/(name+'.b64')).read_text()))
+            assert hashlib.sha256(p.read_bytes()).hexdigest()==sha,name
+          print('ORIGINAL_HD_BYTES_VERIFIED',len(manifest['files']))
+          PY
+      - name: Build visual-only native patch and retain exact existing game
+        run: node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/build.mjs upstream candidate site
+      - name: Typecheck changed renderer in shipped source
+        working-directory: upstream/packages/reforge
+        run: pnpm typecheck
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: upstream
+      - name: Serve isolated candidate and unchanged T30 control
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t32-http.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
+          exit 1
+      - name: Four real scenes, same camera, actual native canvas and original webpage
+        working-directory: upstream
+        run: |
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-art-e2e.mjs .
+          mkdir -p book-rpg-tests
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
+          node t32-art-e2e.mjs
+      - name: Reuse established full fresh-gameplay assertions only on new integration
+        run: |
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t15-cinematic-e2e.mjs upstream/t32-complete-first-act.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('upstream/t32-complete-first-act.mjs');s=p.read_text()
+          old="assert.equal((await state()).sceneId,'courtyard');assert.equal((await state()).story.flags.chapter_complete,true);assert.deepEqual((await state()).position,end.position)"
+          new="const resumed=await state();assert.ok(['courtyard','home-room'].includes(resumed.sceneId));assert.equal(resumed.story.flags.chapter_complete,true);if(resumed.sceneId==='courtyard')assert.deepEqual(resumed.position,end.position)"
+          assert s.count(old)==1;s=s.replace(old,new)
+          a="assert.ok(await page.locator('a[href=\"../pilot/\"]').count());"
+          b="assert.ok(await page.locator('nav a[href=\"../night/\"]').count());"
+          assert s.count(a)==1;s=s.replace(a,b);p.write_text(s)
+          PY
+      - name: Fresh fair to backstage to street to courtyard to home, native effects and SAVE12
+        working-directory: upstream
+        env: {T1_URL: 'http://127.0.0.1:6154/site'}
+        run: node t32-complete-first-act.mjs
+      - name: Collect corresponding evidence and candidate package
+        if: always()
+        run: |
+          mkdir -p /tmp/t32-evidence/story
+          cp -a /tmp/t15-evidence/. /tmp/t32-evidence/story/ || true
+          if test -d site; then
+            mkdir -p site/t32-evidence
+            cp -a /tmp/t32-evidence/. site/t32-evidence/
+            cd site && zip -qr /tmp/T32_FIRST_ACT_CANDIDATE.zip .
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: t32-first-act-art-and-playthrough
+          path: |
+            /tmp/t32-evidence/
+            /tmp/T32_FIRST_ACT_CANDIDATE.zip
+          retention-days: 30
+      - name: Publish isolated review branch after technical tests; art gate remains pending review
+        if: success()
+        env: {PUSH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'}
+        run: |
+          cd site
+          git init -q
+          git config user.name 'T32 Integration CI'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -qb t32-art-candidate
+          git add -A
+          git commit -qm 'T32 four-scene original HD art candidate; human art acceptance pending'
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t32-art-candidate --force
