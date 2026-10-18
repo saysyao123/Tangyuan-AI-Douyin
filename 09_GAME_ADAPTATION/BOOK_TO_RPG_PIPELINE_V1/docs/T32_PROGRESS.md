@@ -1,3 +1,5 @@
+> 最新进度请先读 [T34_PROGRESS.md](T34_PROGRESS.md)。用户已于 2026-10-18 17:56（Asia/Shanghai）认可 T33 室内，当前按该标准完成第一幕四景美术更新；以下内容为当时的历史记录。
+
 > 最新续作状态：请先读 [T33_PROGRESS.md](T33_PROGRESS.md) 与 [T33 RELEASE](../evidence/T33_20261018/RELEASE.json)。以下 T32 记录保留为历史。
 
 # T32 唯一续作状态｜R2 第一幕美术验收版已发布

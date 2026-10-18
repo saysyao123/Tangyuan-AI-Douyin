@@ -1,0 +1,77 @@
+{
+  "phase": "T34_FOUR_SCENE_STYLE_REVIEW_PUBLISHED",
+  "projectComplete": false,
+  "artUserAcceptance": {
+    "homeRoom": "ACCEPTED_BY_USER_2026_10_18_17_56_ASIA_SHANGHAI",
+    "fourRevisedScenes": "PENDING"
+  },
+  "sourceCommit": "c4756cd70b4f1ca657be30a14486813951be6b75",
+  "runtimeCommit": "e3de3a907e6cb6b1be93887524c14ee76081310d",
+  "sourceBranch": "feature/t34-world-style-20261018",
+  "runtimeBranch": "t34-world-candidate",
+  "sitesSourceCommit": "d97f8c4896e1b0ecc691f68c446e8e9ade26a6a1",
+  "siteId": "appgprj_6ad427757a608191a95a42cc68b1f19b",
+  "siteVersionId": "appgprj_6ad427757a608191a95a42cc68b1f19b~appgver_d6f9594bcb9481919e568ffbb4101fbd",
+  "deploymentId": "appgdep_6ad4a1a8e280819192b922b66c25f13e",
+  "deploymentStatus": "succeeded",
+  "deploymentAt": "2026-10-18T10:38:55.715095+00:00",
+  "urls": {
+    "firstAct": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/chapter/",
+    "review": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/review/",
+    "acceptedRoom": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/night/"
+  },
+  "changes": [
+    "Three modest rental house variants and three market stall variants; weathered walnut, plaster/brick/tile, restrained light and natural snow",
+    "Complete backstage plaster/wood walls and floor cover original action routes; old scenes/maps not regenerated",
+    "Low readable courtyard/street walls, corrected object-specific atlas cuts, matching medicine stove, tree, garden, firewood, signs, lamps and crates",
+    "Six native-timed red-fire/blue-light phases and six fireball phases, original entity routes and 48x64 /32x36 footprints",
+    "Uniform 0.8 outdoor presentation with shared pointer inverse and per-scene framing; accepted home and all 171 prior raster bytes retained"
+  ],
+  "qa": {
+    "finalRun": 39119246651,
+    "worldChecks": 13,
+    "backstageChecks": 2,
+    "pageErrors": 0,
+    "typecheck": "PASS",
+    "actualScreenshotsManuallyReviewed": true,
+    "reusedFullFirstAct": 39088306145,
+    "reusedPortraitEngines": [
+      39093310372,
+      39093766720
+    ],
+    "reusedRoomAndIdentity": 39115653713
+  },
+  "deliveryChecks": {
+    "testedGameFilesByteIdentical": 338,
+    "chapterShellFilesUnchanged": 5,
+    "nativeProjectFilesUnchanged": 109,
+    "priorRasterHashesRetained": 171,
+    "homeActualScreenshotRetained": true,
+    "relativeLinks": "PASS",
+    "localDownloadHashes": "PASS",
+    "runtimeInventoryFiles": 940,
+    "completeWebZipBytes": 130069294,
+    "completeWebZipSha256": "27859cb2d3f3c5e514f0549f7dfb441172f38a6db070d32fc207c19b1e44a105"
+  },
+  "visualReviewIteration": {
+    "initialRun": 39118321825,
+    "technicalStatus": "PASS",
+    "visualFindings": [
+      "High divider hid lower halves of nearby characters",
+      "Grid atlas crop included neighboring wall-post fragment",
+      "Medicine entity still bound to old raster",
+      "House roofs needed higher framing; original coarse flame needed consistent detail"
+    ],
+    "resolution": "Reduced wall via image edit, extracted all prop objects by connected alpha bounds, corrected stove binding and view framing, added native-timed flame display images; reran only affected scope"
+  },
+  "limits": [
+    "Final four-scene user aesthetic acceptance remains pending; no blanket project-complete claim",
+    "T34 affected checks used Linux CI Chromium, not a physical phone or Safari application",
+    "Known WebKit private/ephemeral Blob thumbnail storage limitation retained",
+    "Published-domain browser replay not repeated; exact 338 tested game files deployed",
+    "Public synthetic dialogue project retained; no private book text published",
+    "Same isolated owner-private Site; original formal Site and GitHub main untouched",
+    "Native editor preview still uses original small-frame art; full HD drawing code and final raster assets are in corresponding-source ZIP"
+  ],
+  "artBrief": "art/t32/T34_ART_BRIEF.md"
+}
