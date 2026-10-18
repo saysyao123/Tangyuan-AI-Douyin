@@ -6,6 +6,7 @@ import type {IsometricMapContent} from '@type-pal/content';
 import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 import {ROOM_VIEW,drawRoomGround,drawRoomForeground} from './room-world.js';
+import {worldEnvironmentFiles,drawBackstageWalls,paintEnvironmentGround} from './world-environment.js';
 const act=new Set(['fair','backstage','street','courtyard','home-room']);
 const images=new Map<string,HTMLImageElement>();
 const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
@@ -20,7 +21,7 @@ export function firstActReady(scene:string){
  if(!act.has(scene)||new URLSearchParams(location.search).get('art')==='baseline')return false;
  const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-mat'];
  const extra=scene==='home-room'?roomFiles:scene==='fair'?[...Array.from({length:24},(_,i)=>`crowd-${Math.floor(i/4)}-${i%4}`)]:scene==='backstage'?['action-carriers-unique-0','action-carriers-unique-1',...['a','b','c'].flatMap(role=>Array.from({length:12},(_,i)=>`sub-${role}-${Math.floor(i/3)}-${i%3}`)),...Array.from({length:4},(_,i)=>`crowd-0-${i}`)]:[];
- const all=[...filenames,...extra,
+ const all=[...filenames,...extra,...(scene==='home-room'?[]:worldEnvironmentFiles),
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
   ...['merchant','neighbor','stranger','visitor','operative','performer'].flatMap(role=>Array.from({length:4},(_,i)=>`npc-${role}-${i}`)),
   ...Array.from({length:12},(_,i)=>`guard-${Math.floor(i/3)}-${i%3}`),
@@ -37,11 +38,16 @@ export function firstActPortrait(asset:string){
  return portraits.includes(role)?img('portrait-'+role):undefined;
 }
 export function roomViewActive(scene:string){return scene==='home-room'&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline'}
+export function presentationView(scene:string,camera:Camera){
+ if(roomViewActive(scene))return ROOM_VIEW;
+ if(['fair','backstage','street','courtyard'].includes(scene)&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline')return {scale:.8,camera:{x:camera.x-40,y:camera.y-25}};
+ return {scale:1,camera};
+}
 export function artScreenPoint(scene:string,camera:Camera,x:number,y:number){
- const v=roomViewActive(scene)?ROOM_VIEW:{scale:1,camera};return {x:(x-v.camera.x)*v.scale,y:(y-v.camera.y)*v.scale};
+ const v=presentationView(scene,camera);return {x:(x-v.camera.x)*v.scale,y:(y-v.camera.y)*v.scale};
 }
 export function artWorldPoint(scene:string,camera:Camera,x:number,y:number){
- const v=roomViewActive(scene)?ROOM_VIEW:{scale:1,camera};return {x:x/v.scale+v.camera.x,y:y/v.scale+v.camera.y};
+ const v=presentationView(scene,camera);return {x:x/v.scale+v.camera.x,y:y/v.scale+v.camera.y};
 }
 export function roomView(){return ROOM_VIEW}
 export function renderHDForeground(ctx:CanvasRenderingContext2D,scene:string,camera:Camera){if(scene==='home-room')drawRoomForeground(ctx,camera,img)}
@@ -55,7 +61,7 @@ export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:Iso
   const canvas=document.createElement('canvas');canvas.width=(right-x)*4;canvas.height=(bottom-y)*4;
   const c=canvas.getContext('2d')!;c.scale(4,4);c.translate(-x,-y);
   function material(c:CanvasRenderingContext2D,kind:string,span:number){
-   const texture=img('terrain-'+kind)!;
+   const texture=img(kind==='wood'?'room-floor':'v34-'+kind)!;
    const corners=[[x,y],[right,y],[x,bottom],[right,bottom]];
    const us=corners.map(([a,b])=>a!/2+b!),vs=corners.map(([a,b])=>b!-a!/2);
    c.save();c.transform(1,.5,-1,.5,0,0);
@@ -63,21 +69,22 @@ export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:Iso
     for(let u=Math.floor(Math.min(...us)/span)*span;u<Math.max(...us);u+=span)c.drawImage(texture,u,v,span,span);
    c.restore();
   }
-  material(c,'snow',192);
+  material(c,'snow',224);
   for(const kind of ['stone','earth','wood']){
    const selected=tiles.filter(t=>(t.tileId>=22?'snow':t.tileId>=12?'earth':'stone')===kind);
    if(kind!=='wood'&&!selected.length)continue;
    if(kind==='wood'&&scene!=='backstage')continue;
    const layer=document.createElement('canvas');layer.width=canvas.width;layer.height=canvas.height;
    const l=layer.getContext('2d')!;l.scale(4,4);l.translate(-x,-y);
-   material(l,kind,kind==='stone'?48:kind==='wood'?64:128);
-   l.globalCompositeOperation='destination-in';l.filter='blur(2px)';l.fillStyle='white';l.beginPath();
+   material(l,kind,kind==='stone'?80:kind==='wood'?160:192);
+   l.globalCompositeOperation='destination-in';l.filter='blur(3px)';l.fillStyle='white';l.beginPath();
    if(kind==='wood'){
     // Actual authored backstage dressing floor under the existing actor route.
-    l.moveTo(400,205);l.lineTo(511,147);l.lineTo(643,217);l.lineTo(526,278);l.closePath();
+    l.moveTo(400,184);l.lineTo(528,120);l.lineTo(752,232);l.lineTo(752,304);l.lineTo(400,304);l.closePath();
    }else for(const t of selected){const a=t.centerX,b=t.centerY;l.moveTo(a,b-8.2);l.lineTo(a+16.3,b);l.lineTo(a,b+8.2);l.lineTo(a-16.3,b);l.closePath()}
    l.fill();l.filter='none';c.drawImage(layer,x,y,layer.width/4,layer.height/4);
   }
+  paintEnvironmentGround(c,scene);
   floor={scene,map,canvas,x,y};
  }
  ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(floor.canvas,floor.x-camera.x,floor.y-camera.y,floor.canvas.width/4,floor.canvas.height/4);ctx.restore();
@@ -85,10 +92,10 @@ export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:Iso
 type Prop={key:string,w:number,foot?:number,depth?:number,dx?:number};
 const byScene:Record<string,Record<string,Prop>>={
  'home-room':{'room-bedside':{key:'room-bed',w:96,foot:.97},'room-television':{key:'room-tv',w:56,foot:.97},'meal-table':{key:'room-meal',w:80,foot:.97},washbasin:{key:'room-basin',w:36,foot:.98},'kitchen-cupboard':{key:'room-cupboard',w:48,foot:.98},'room-lamp':{key:'room-lamp',w:44,foot:.98}},
- fair:{theater:{key:'stage',w:174,foot:.87,depth:-38},'market-stall-0':{key:'stall',w:84},'market-stall-1':{key:'stall',w:84},'market-stall-2':{key:'stall',w:84},'market-tree':{key:'tree',w:94}},
+ fair:{theater:{key:'v34-stage',w:174,foot:.87,depth:-38},'market-stall-0':{key:'v34-stall-0',w:84},'market-stall-1':{key:'v34-stall-1',w:84},'market-stall-2':{key:'v34-stall-2',w:84},'market-tree':{key:'v34-tree',w:94}},
  backstage:{'rear-curtain':{key:'backstage',w:280,foot:.583,depth:-65,dx:-165},'rear-wall':{key:'wall',w:112}},
- street:{'street-rental-0':{key:'house',w:184,foot:.84},'street-rental-1':{key:'house',w:184,foot:.84},'street-rental-2':{key:'house',w:184,foot:.84},'street-tree':{key:'tree',w:93},'street-tree-2':{key:'tree',w:93},'street-wall':{key:'wall',w:110}},
- courtyard:{'west-courtyard-house':{key:'house',w:184,foot:.84},'middle-courtyard-house':{key:'house',w:184,foot:.84},'home-courtyard-house':{key:'house',w:184,foot:.84},'yard-wall':{key:'wall',w:112},'yard-wall-2':{key:'wall',w:112},'court-winter-tree':{key:'tree',w:103},'medicine':{key:'stove',w:40,foot:.96}}
+ street:{'street-rental-0':{key:'v34-house-0',w:184,foot:.84},'street-rental-1':{key:'v34-house-1',w:184,foot:.84},'street-rental-2':{key:'v34-house-2',w:184,foot:.84},'street-tree':{key:'v34-tree',w:93},'street-tree-2':{key:'v34-tree',w:93},'street-wall':{key:'v34-wall',w:110}},
+ courtyard:{'west-courtyard-house':{key:'v34-house-1',w:184,foot:.84},'middle-courtyard-house':{key:'v34-house-0',w:184,foot:.84},'home-courtyard-house':{key:'v34-house-2',w:184,foot:.84},'yard-wall':{key:'v34-wall',w:112},'yard-wall-2':{key:'v34-wall',w:112},'court-winter-tree':{key:'v34-tree',w:103},'medicine':{key:'stove',w:40,foot:.96}}
 };
 const npcKeys=new Set(['merchant','neighbor','stranger','visitor','operative','performer-action']);
 const direction:Record<string,number>={down:0,left:1,up:2,right:3};
@@ -97,12 +104,7 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
   if(scene==='home-room'&&['moonlit-room-window','winter-coat-by-wall','room-door','room-yard'].includes(s.artId??''))return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-wall')return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-curtain'){
-   const panel=img('back-panel'),windowPanel=img('back-panel-window');if(!panel||!windowPanel)return s;
-   return {...s,sortOffset:-100,drawHD:(c,camera)=>{
-    const A={x:400,y:205},B={x:511,y:147},C={x:643,y:217};
-    const wall=(source:HTMLImageElement,a:typeof A,b:typeof A)=>{c.save();c.imageSmoothingEnabled=true;c.transform((b.x-a.x)/source.naturalWidth,(b.y-a.y)/source.naturalWidth,0,65/source.naturalHeight,a.x-camera.x,a.y-camera.y-65);c.drawImage(source,0,0);c.restore()};
-    wall(panel,A,B);wall(windowPanel,B,C);
-   }};
+   return {...s,sortOffset:-100,drawHD:(c,camera)=>drawBackstageWalls(c,camera,img)};
   }
   const prop=s.artId?byScene[scene]?.[s.artId]:undefined;
   let key=prop?.key,w=prop?.w,h=0,foot=prop?.foot??.94;
@@ -115,7 +117,7 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
   if(!prop&&s.artKey==='operative'){key=`guard-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;h=s.frame.height;foot=1}
   if(!prop&&['lantern','sign','crate','vegetables','snow-wood'].includes(s.artKey??'')){
    const mapping:Record<string,[string,number]>={lantern:['lamp',20],sign:['sign',24],crate:['crate',28],vegetables:['garden',48],'snow-wood':['wood',48]};
-   const selected=mapping[s.artKey!]!;key=selected[0];w=selected[1];foot=.94;
+   const selected=mapping[s.artKey!]!;key=(scene==='home-room'?'':'v34-')+selected[0];w=selected[1];foot=.94;
    if(scene==='backstage'&&s.artKey==='crate')key='crate-indoor';
   }
   if(!prop&&(s.artKey==='hero'||s.artKey==='child')){

@@ -1,0 +1,37 @@
+{
+  "generator": "Built-in image_gen",
+  "mode": "Five new environment atlases and one stage style edit",
+  "approvedReference": "T33 room actual screenshot accepted by user 2026-10-18 17:56 Asia/Shanghai",
+  "rawSources": {
+    "houses": "exec-a529f4ce-973d-45a0-8939-7f2b03725a31.png",
+    "stalls": "exec-65864201-d527-42e8-b34d-2173fa156272.png",
+    "stage": "exec-6964ff63-ead0-46c4-96a3-8d8bbc3632e9.png",
+    "panels": "exec-9f14dfe7-9b6e-48ab-9360-599dae8d39ac.png",
+    "terrain": "exec-3bd0c23b-7e16-4f44-ae1f-056d552a759e.png",
+    "props": "exec-26b9f963-52e8-445f-a052-14c9f11cff74.png"
+  },
+  "extraction": "Atlas cell slices, original alpha retained, WebP quality94; no hand-painted or geometric substitutes",
+  "preserved": "All T33 room, hero, key NPC, crowd, subordinate and animation raster bytes unchanged",
+  "newAssets": [
+    "v34-house-0.webp",
+    "v34-house-1.webp",
+    "v34-house-2.webp",
+    "v34-stall-0.webp",
+    "v34-stall-1.webp",
+    "v34-stall-2.webp",
+    "v34-stage.webp",
+    "v34-back-left.webp",
+    "v34-back-right.webp",
+    "v34-snow.webp",
+    "v34-stone.webp",
+    "v34-earth.webp",
+    "v34-lamp.webp",
+    "v34-sign.webp",
+    "v34-wall.webp",
+    "v34-tree.webp",
+    "v34-stove.webp",
+    "v34-garden.webp",
+    "v34-wood.webp",
+    "v34-crate.webp"
+  ]
+}

@@ -9,6 +9,7 @@ def patch(name,a,b):
  p=pkg/name;s=p.read_text();assert s.count(a)==1,(name,a[:80],s.count(a));p.write_text(s.replace(a,b))
 shutil.copy2(here/'hd-world.ts',pkg/'hd-world.ts')
 shutil.copy2(here/'room-world.ts',pkg/'room-world.ts')
+shutil.copy2(here/'world-environment.ts',pkg/'world-environment.ts')
 patch('render.ts','export interface SpriteDraw {\n  frame: RleFrame','''export interface SpriteDraw {
   /** T32 visual metadata; never persisted or used by simulation/hit testing. */
   artId?: string
@@ -35,10 +36,10 @@ patch('world-scene-presentation.ts','''        partySprite(
           frame, displayed.pos, gridToPixel(displayed.pos), input.player.layer, partyIndex, true,
         ), artKey: visual.def.id, artFrame: frameIndex, artFacing: follower.facing},''')
 patch('world-scene-presentation.ts','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n        sceneId: input.scene.scene?.id,\n')
-patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, roomView, renderHDForeground } from './hd-world.js'")
+patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, presentationView, renderHDForeground } from './hd-world.js'")
 patch('render-scene.ts',"  layers?: import('./render.js').RenderLayerOpts\n","  layers?: import('./render.js').RenderLayerOpts\n  sceneId?: string\n")
 patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, layers)\n','''  if (args.sceneId && !layers && firstActReady(args.sceneId)) {
-    const view = args.sceneId === 'home-room' ? roomView() : {scale: 1, camera}
+    const view = presentationView(args.sceneId, camera)
     ctx.scale(view.scale, view.scale)
     renderer.renderScene(map, room, view.camera, [], {skipCover: true})
     renderHDGround(ctx, args.sceneId, map, room, view.camera)
@@ -77,4 +78,4 @@ patch('main.ts', "const p=gridToPixel(step.pos);ctx.fillStyle='#e7bd7970';ctx.fi
 patch('main.ts', "ctx.strokeStyle='#efca86';ctx.beginPath();ctx.ellipse(p.x-camera.x,p.y-camera.y,5,2.5,0,0,Math.PI*2);ctx.stroke()", "const screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y);ctx.strokeStyle='#efca86';ctx.beginPath();ctx.ellipse(screen.x,screen.y,5,2.5,0,0,Math.PI*2);ctx.stroke()")
 
 # Softer room interaction cues retain the original targets and hover labels.
-patch('main.ts', "ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)", "if(activeScene.scene.id==='home-room'){ctx.strokeStyle='#e7bd7988';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(x,y,1.7,.8,0,0,Math.PI*2);ctx.stroke()}else{ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)}")
+patch('main.ts', "ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)", "if(['home-room','fair','backstage','street','courtyard'].includes(activeScene.scene.id)){ctx.strokeStyle='#e7bd7988';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(x,y,1.7,.8,0,0,Math.PI*2);ctx.stroke()}else{ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)}")
