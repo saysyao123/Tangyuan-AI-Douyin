@@ -1,0 +1,50 @@
+{
+  "phase": "T32_FIRST_ACT_REVIEW_DELIVERED",
+  "projectComplete": false,
+  "artUserAcceptance": "PENDING",
+  "site": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/chapter/",
+  "review": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/review/",
+  "siteProjectId": "appgprj_6ad427757a608191a95a42cc68b1f19b",
+  "siteVersionId": "appgprj_6ad427757a608191a95a42cc68b1f19b~appgver_15530e7236248191ab2100879925ce9a",
+  "deploymentId": "appgdep_6ad42bdbd8648191a14767bd048f00b1",
+  "deploymentStatus": "succeeded",
+  "sourceCommit": "28cd43928c869862be67bb944cae800d00b89f3f",
+  "runtimeCommit": "e4e667dee5c24647c4125c8864e52a39dec91415",
+  "sitesSourceCommit": "bcb9fc68cacbceccedd05716057a06639e30b27d",
+  "fullFreshStory": {
+    "run": 39088306145,
+    "status": "PASS",
+    "checks": 9,
+    "checkpointUsed": false
+  },
+  "finalAffectedBackstage": {
+    "run": 39088848286,
+    "status": "PASS",
+    "checks": 2
+  },
+  "fourScenes": {
+    "status": "PASS_NATIVE_RENDER_AND_INTERNAL_REVIEW",
+    "canvas": "1280x800",
+    "pageErrors": 0,
+    "p95Ms": [
+      21.8,
+      23.9,
+      20.8,
+      25.6
+    ]
+  },
+  "deliveryChecks": {
+    "testedChapterFilesByteIdentical": 228,
+    "runtimeInventoryFiles": 786,
+    "originalSiteUnchanged": true,
+    "mainUnchanged": true
+  },
+  "rollback": "146298ede54a65025ab7a794b49ab53c4bf3ae92",
+  "limitations": [
+    "User art acceptance remains pending.",
+    "Native dialogue portraits retained.",
+    "Public synthetic dialogue fixture; private book text not published.",
+    "Published-domain browser replay not repeated; deployed chapter bytes equal the Chromium-tested runtime.",
+    "Physical phone, Safari and Firefox not tested."
+  ]
+}
