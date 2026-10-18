@@ -10,3 +10,6 @@ Built-in image_gen was used. User explicitly accepted the T33 home at 2026-10-18
 6. Environment props: eight separate objects in 4x2 transparent atlas, same isometric angle and material style: dim amber lantern post; blank wood sign; low plaster/brick/tile snow-capped boundary wall; leafless winter persimmon tree; hot black coal stove with medicine pot/kettle and no painted steam/snow; winter vegetable bed; covered split woodpile; outdoor crates and ceramic jar. No people, labels or ground rectangles.
 
 Only mechanical atlas slicing and WebP encoding were used after generation. Genuine generated alpha was retained. Image file and SHA256 inventory is ART_MANIFEST.json; raw-output identities and extraction record are T34_ASSET_PROVENANCE.json. Source raster data for all 171 prior assets are unchanged. Ordinary crowd and principal models remain separate.
+
+7. Visual-review correction: lower the generated plaster divider to one third its wall height, retain 2:1 base axis/material and true alpha.
+8. Effect atlas: six transparent phases each of a delicate open red/amber flame wreath with blue lower light, and matching fireball moving lower-left. Keep central character readable, preserve original native footprints/frame timing/entity route.

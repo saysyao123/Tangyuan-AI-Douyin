@@ -40,7 +40,7 @@ export function firstActPortrait(asset:string){
 export function roomViewActive(scene:string){return scene==='home-room'&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline'}
 export function presentationView(scene:string,camera:Camera){
  if(roomViewActive(scene))return ROOM_VIEW;
- if(['fair','backstage','street','courtyard'].includes(scene)&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline')return {scale:.8,camera:{x:camera.x-40,y:camera.y-25}};
+ if(['fair','backstage','street','courtyard'].includes(scene)&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline')return {scale:.8,camera:{x:camera.x-40,y:camera.y-(['street','courtyard'].includes(scene)?60:scene==='backstage'?45:25)}};
  return {scale:1,camera};
 }
 export function artScreenPoint(scene:string,camera:Camera,x:number,y:number){
@@ -95,7 +95,7 @@ const byScene:Record<string,Record<string,Prop>>={
  fair:{theater:{key:'v34-stage',w:174,foot:.87,depth:-38},'market-stall-0':{key:'v34-stall-0',w:84},'market-stall-1':{key:'v34-stall-1',w:84},'market-stall-2':{key:'v34-stall-2',w:84},'market-tree':{key:'v34-tree',w:94}},
  backstage:{'rear-curtain':{key:'backstage',w:280,foot:.583,depth:-65,dx:-165},'rear-wall':{key:'wall',w:112}},
  street:{'street-rental-0':{key:'v34-house-0',w:184,foot:.84},'street-rental-1':{key:'v34-house-1',w:184,foot:.84},'street-rental-2':{key:'v34-house-2',w:184,foot:.84},'street-tree':{key:'v34-tree',w:93},'street-tree-2':{key:'v34-tree',w:93},'street-wall':{key:'v34-wall',w:110}},
- courtyard:{'west-courtyard-house':{key:'v34-house-1',w:184,foot:.84},'middle-courtyard-house':{key:'v34-house-0',w:184,foot:.84},'home-courtyard-house':{key:'v34-house-2',w:184,foot:.84},'yard-wall':{key:'v34-wall',w:112},'yard-wall-2':{key:'v34-wall',w:112},'court-winter-tree':{key:'v34-tree',w:103},'medicine':{key:'stove',w:40,foot:.96}}
+ courtyard:{'west-courtyard-house':{key:'v34-house-1',w:184,foot:.84},'middle-courtyard-house':{key:'v34-house-0',w:184,foot:.84},'home-courtyard-house':{key:'v34-house-2',w:184,foot:.84},'yard-wall':{key:'v34-wall',w:112},'yard-wall-2':{key:'v34-wall',w:112},'court-winter-tree':{key:'v34-tree',w:103},'medicine':{key:'v34-stove',w:40,foot:.96}}
 };
 const npcKeys=new Set(['merchant','neighbor','stranger','visitor','operative','performer-action']);
 const direction:Record<string,number>={down:0,left:1,up:2,right:3};
@@ -127,13 +127,15 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
   if(!prop&&s.artKey==='child-crouch'){key='action-child-crouch';h=s.frame.height;foot=1}
   if(!prop&&s.artKey==='performer-action'){key=`action-performer-${s.artFrame??0}`;h=s.frame.height;foot=1}
   if(!prop&&s.artKey==='carriers'){key=`action-carriers-unique-${(s.artFrame??0)%2}`;h=s.frame.height;foot=1}
+  const nativeEffect=scene==='fair'&&['body-fire','fireball'].includes(s.artKey??'');
+  if(nativeEffect){key=`v34-${s.artKey}-${(s.artFrame??0)%6}`;h=s.frame.height;w=s.frame.width;foot=1}
   if(scene==='fair'&&s.artId==='rumor'){key=`crowd-3-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
   if(scene==='fair'&&s.artId?.startsWith('audience-')){const i=Number(s.artId.slice(9));const role=s.artKey==='child'?4+(Math.floor(i/5)%2):i%4;key=`crowd-${role}-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
   if(scene==='backstage'&&s.artId==='silent-witness'){key=`crowd-0-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
   if(scene==='backstage'&&['operative-2','operative-3','operative-4'].includes(s.artId??'')){const role=({'operative-2':'a','operative-3':'b','operative-4':'c'} as Record<string,string>)[s.artId!]!;key=`sub-${role}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;h=s.frame.height;w=0;foot=1}
   if(!key)return s;
   const source=img(key);if(!source)return s;
-  if(w)h=source.naturalHeight*w/source.naturalWidth;else w=source.naturalWidth*h/source.naturalHeight;
+  if(!nativeEffect){if(w)h=source.naturalHeight*w/source.naturalWidth;else w=source.naturalWidth*h/source.naturalHeight;}
   const width=w!,height=h;
   return {...s,sortOffset:prop?.depth??s.sortOffset,drawHD:(c,camera)=>{
    const x=s.worldX-camera.x-width*.5+(prop?.dx??0),y=s.worldY-camera.y-height*foot+7;

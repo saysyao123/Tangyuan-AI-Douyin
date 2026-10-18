@@ -1,7 +1,7 @@
 /** T34 raster environment composition, display only; no authored scene/motion/save mutation. */
 import type {Camera} from './render.js';
 type GetImage=(key:string)=>HTMLImageElement|undefined;
-export const worldEnvironmentFiles=[...Array.from({length:3},(_,i)=>`v34-house-${i}`),...Array.from({length:3},(_,i)=>`v34-stall-${i}`),'v34-stage','v34-back-left','v34-back-right','v34-snow','v34-stone','v34-earth',...['lamp','sign','wall','tree','stove','garden','wood','crate'].map(k=>'v34-'+k),'room-floor'];
+export const worldEnvironmentFiles=[...Array.from({length:3},(_,i)=>`v34-house-${i}`),...Array.from({length:3},(_,i)=>`v34-stall-${i}`),'v34-stage','v34-back-left','v34-back-right','v34-snow','v34-stone','v34-earth',...['lamp','sign','wall','tree','stove','garden','wood','crate'].map(k=>'v34-'+k),'room-floor',...['body-fire','fireball'].flatMap(k=>Array.from({length:6},(_,i)=>`v34-${k}-${i}`))];
 export function drawBackstageWalls(ctx:CanvasRenderingContext2D,camera:Camera,get:GetImage){
  const left=get('v34-back-left'),right=get('v34-back-right');if(!left||!right)return;
  const A={x:400,y:184},B={x:528,y:120},C={x:752,y:232};
