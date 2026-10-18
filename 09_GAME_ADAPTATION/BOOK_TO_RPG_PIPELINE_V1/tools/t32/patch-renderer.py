@@ -43,3 +43,6 @@ patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, laye
   } else renderer.renderScene(map, room, camera, sprites, layers)
 ''')
 print('T32_DISPLAY_ONLY_PATCH_APPLIED')
+
+# Preserve 320x200 logic and native coordinates, increase only physical paint density.
+p=pkg/'main.ts';s=p.read_text();anchor="const WORLD_SCALE = new URLSearchParams(location.search).get('quality') === 'sharp' ? 4 : 2";assert anchor in s;s=s.replace(anchor,'const WORLD_SCALE = 4');p.write_text(s)

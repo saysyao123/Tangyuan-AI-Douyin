@@ -1,8 +1,29 @@
 {
   "status": "ORIGINAL_ART_INTEGRATION_PENDING_REAL_SCREEN_REVIEW",
   "files": {
+    "action-carriers-0.webp": "6562aab35cb8637f0904160796f294858b05ef42e3e1c365c3eb0bf2f1b24e4f",
+    "action-carriers-1.webp": "88c9fd2bdb1126f8495d323ddeb567c2b84e8136ab0fe9f498141f6a4e66c033",
+    "action-child-crouch.webp": "d57fc56443658465130d5fc3c2115b888b3c7fff3dec6a5ea195936fee14b7cf",
+    "action-performer-1.webp": "5c6c8b42d4baee0aafb5715805fc282cafca3d5465bec2d6f8516ace55897132",
+    "action-performer-2.webp": "25192141e7c5abb241616e311fcb9e1acc6d99301bfc216cca7e38b52b5f263d",
+    "action-performer-stagger.webp": "3d41611d46d4fcbd968d3cf051b720a7f025ebd69d8d680c095aaf8f6fdfc97e",
     "backstage.webp": "e9a50df3feb250bd547faf5179d37ae33c97fcfd2e48b9c45297cd54a384eedc",
+    "crate.webp": "56f0c78c006b23e2b33481937dddcb0cfc7291a5d5a7819aaf49f1559e5d3154",
+    "garden.webp": "0295dc3e8097e4b21086d7d2ff383ab40dd304c19975ed67593e66c78e2ce982",
+    "guard-0-0.webp": "e0575d626c4ebdce3a51c3abd6d8b3fe18746ee765bab92fbb566814b4cd011b",
+    "guard-0-1.webp": "6b3d05cea2c7ad273bdd2278c6a5956a97475631c01ea7a61b0d4d6c82b3c61b",
+    "guard-0-2.webp": "62df2da43ce16c4ab90b01d0bfc7a68e55e5cffa95ec0aae5872ff984e81c8c2",
+    "guard-1-0.webp": "070d772b78a08870e277e247e4e104c40739e19db01acb43fb0f4f53082e602b",
+    "guard-1-1.webp": "d9a64fc0f3374983b033e6a953a2760e0d55ad67b7f89775c835819528e2a53e",
+    "guard-1-2.webp": "0d98beb6b672371b005bd87771fa823628fa403920196c49fff369b25875c314",
+    "guard-2-0.webp": "7c17fdfd612db7e02c2265627e9452e34a6a12b9b64a9823fc82d768f27f3dbc",
+    "guard-2-1.webp": "53367cc77971a201bd34f4a787747f6be6817b8fc957866b7da131a41688a774",
+    "guard-2-2.webp": "c64014cd8b1dc7a18934a386ce2c26eb464421374bda50cc7b84cfe2b6f78216",
+    "guard-3-0.webp": "6b03ae3dc087e683a016a1a19364e7fa44798eb2e6e93e914167d2d9ca383b56",
+    "guard-3-1.webp": "95961a94005727f531c235fa949b4762e2f38c29d707a9cdd9685c710d6c37e9",
+    "guard-3-2.webp": "049030defdf5bad8a02f35f7a9c709eb66c8f959714ab2d817000a2e5b92640a",
     "house.webp": "0a828a09421fd643ea290afb19b6431fd5d758557affd1f0bdda37c14e1bfa01",
+    "lamp.webp": "1fa2b8ff2b1c5f66d287dc24067b2f0234f89a8f9191eecddc58c8600f4b61a7",
     "lead-child-0-0.webp": "05ab03a7e4154fdb4ddfdc05b1dd7b4ee8a3bdf25fb588681189746a8f222e51",
     "lead-child-0-1.webp": "8142d81d74a041d8f9a13ab88cd8f3821215c940cc181a88b4f4cd4181bf4029",
     "lead-child-0-2.webp": "7a24035daa2d28ebe20ddfab09e64bf7cbe2ed1e9573e435337a76bfbc209be1",
@@ -51,6 +72,8 @@
     "npc-visitor-1.webp": "1b82939d396fcde5e5289349745646424531087b6c06db6822b0071d873bbee6",
     "npc-visitor-2.webp": "30a51b9b4e50b7ba4fe700af27e834925e781e256b60970395173188cd1b92d4",
     "npc-visitor-3.webp": "21f24412a94941909d9b22ec963d4330343ba0644f3a795d476027f042e87f3d",
+    "sign.webp": "aa732ac117c74e56fcd369e4f2ace31af603079011cd6da8d96dd090bf3103ff",
+    "skewer.webp": "c66cab751f4ce6aa5ba7eeb1b078141aa3b8b0cc9859c0df459849893c9c86cf",
     "stage.webp": "e8a41db87b530cefb02fd3bf7ad767cc90e662dfb293d8f0c547e03059a2a410",
     "stall.webp": "adf2bc2626e221e5d40cddc9fb338568cb1cee3f29381e618e3e876f95c45691",
     "stove.webp": "d5e11dbd05cc7c4f60f01c5697489db49bda51597c8eed84748de5670f20917d",
@@ -58,7 +81,8 @@
     "terrain-stone.webp": "bcd82447f8934dafa2e0254e6bf33ea0dcd68827ad97b0660aa5650dc62da51e",
     "terrain-wood.webp": "3fade41c6ff3ecb495caa74d365140cf100ba88a93305fd04b2cf4fad37dc972",
     "tree.webp": "d5e5f444d205f28259f04a1f848cda478934727d04660e171733349bbbb6c2d1",
-    "wall.webp": "610ee695742904a34ced451d6e87a6def0a5a78af096932e4343dff32c1a6886"
+    "wall.webp": "610ee695742904a34ced451d6e87a6def0a5a78af096932e4343dff32c1a6886",
+    "wood.webp": "e8da3f208dcda11f7c1d4a44a54aa6d2dbf76fa07abeee9e93024b6909bd509c"
   },
   "license": "Original GPT generated art released under GPL-3.0 with this project. Type PAL remains GPL-3.0.",
   "input_house_sha256": "731ca755461a47874bbe033118efceb9632fa2bd9082b4ab1d9dab609398222b",
@@ -72,6 +96,7 @@
     "PATH": "PENDING",
     "STORY": "PENDING_NEW_INTEGRATION",
     "WEB": "PENDING",
-    "USER": "PENDING"
+    "USER": "PENDING",
+    "format": "LOCAL_BUILD_AND_TYPES_PASS"
   }
 }

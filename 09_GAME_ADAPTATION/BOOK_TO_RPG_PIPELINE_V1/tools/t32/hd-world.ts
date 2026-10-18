@@ -7,7 +7,7 @@ import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 const act=new Set(['fair','backstage','street','courtyard']);
 const images=new Map<string,HTMLImageElement>();
-const filenames=['house','stage','stall','backstage','wall','tree','stove','terrain-snow','terrain-stone','terrain-wood'];
+const filenames=['house','stage','stall','backstage','wall','tree','stove','terrain-snow','terrain-stone','terrain-wood','lamp','sign','crate','garden','wood'];
 function img(key:string){
  let v=images.get(key);if(!v){v=new Image();v.decoding='async';v.src=new URL(`./t32-art/${key}.webp`,window.location.href).href;images.set(key,v)}
  return v.complete&&v.naturalWidth>0?v:undefined;
@@ -60,12 +60,17 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
    key=`npc-${s.artKey==='performer-action'?'performer':s.artKey}-${direction[s.artFacing??'down']??0}`;
    h=s.frame.height;foot=1;
   }
+  if(!prop&&s.artKey==='operative'){key=`guard-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;h=s.frame.height;foot=1}
+  if(!prop&&['lantern','sign','crate','vegetables','snow-wood'].includes(s.artKey??'')){
+   const mapping:Record<string,[string,number]>={lantern:['lamp',20],sign:['sign',24],crate:['crate',28],vegetables:['garden',48],'snow-wood':['wood',48]};
+   const selected=mapping[s.artKey!]!;key=selected[0];w=selected[1];foot=.94;
+  }
   if(!prop&&(s.artKey==='hero'||s.artKey==='child')){
    key=`lead-${s.artKey}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;
    h=s.frame.height;foot=1;
   }
   if(!prop&&s.artKey==='child-crouch'){key='action-child-crouch';h=s.frame.height;foot=1}
-  if(!prop&&s.artKey==='performer-action'&&(s.artFrame??0)>0){key=`action-performer-${Math.min(s.artFrame??0,2)}`;h=s.frame.height;foot=1}
+  if(!prop&&s.artKey==='performer-action'&&[1,2,5].includes(s.artFrame??0)){key=`action-performer-${s.artFrame===2?2:1}`;h=s.frame.height;foot=1}
   if(!prop&&s.artKey==='carriers'){key=`action-carriers-${(s.artFrame??0)%2}`;h=s.frame.height;foot=1}
   if(!key)return s;
   const source=img(key);if(!source)return s;

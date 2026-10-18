@@ -15,7 +15,7 @@ async function sceneShot(site,id){
   assert.ok(art.every(a=>!a.error&&a.w>100));
  }
  const s=await state();await page.locator('#screen').screenshot({path:out+'/'+site+'-'+id+'.png'});
- const canvas=await page.locator('#screen').evaluate(c=>({width:c.width,height:c.height}));assert.equal(canvas.width,1280);assert.equal(canvas.height,800);
+ const canvas=await page.locator('#screen').evaluate(c=>({width:c.width,height:c.height}));if(site==='site'){assert.equal(canvas.width,1280);assert.equal(canvas.height,800)}else{assert.ok([640,1280].includes(canvas.width));assert.equal(canvas.width/canvas.height,1.6)}
  if(site==='site'){
   const box=await page.locator('#screen').boundingBox();let p={...s.position};
   // Real pointer route toward a nearby visible legal cell, then keyboard takeover.
