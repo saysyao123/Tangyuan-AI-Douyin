@@ -26,3 +26,9 @@
 Run39093310372 中 Chromium / Firefox 各五项 PASS；WebKit 头像显示与摊主对话 PASS，但在导入原生存档时，缩略图 Blob 的 IndexedDB 写入被临时隐私会话拒绝。因此该运行未发布。
 
 这是实际观察到的上游限制，见 WebKit #156347 与 Playwright #42795（https://bugs.webkit.org/show_bug.cgi?id=156347 ，https://github.com/microsoft/playwright/issues/42795）。后续使用正常持久会话验证 WebKit；不修改数据库、缩略图格式或 SAVE12，不用存储模拟掩盖失败。沿用已通过的 Chromium / Firefox 截图和 JSON，逐字节比较新构建 chapter，避免重复它们的通过测试。隐私模式存档限制仍保留在交付边界。
+
+## 当前实际结果
+
+R2 WebKit 正常持久会话和后台倒地/抬走/读档已在 Run39093766720 全部通过；Chromium/Firefox 复用 Run39093310372 的各五项通过记录，并验证新构建的238个chapter文件逐字节一致。三引擎本轮均零pageerror。
+
+新版已更新到同一隔离试玩站，最终用户审美仍待确认。新整站包含当前审查页、第一幕数据下载和正确帮助说明；根目录历史T31说明已标成历史，旧示例另留历史入口。当前代码、版本、限制和部署 ID 见 RELEASE.json。
