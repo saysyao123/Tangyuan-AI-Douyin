@@ -5,7 +5,8 @@
 import type {IsometricMapContent} from '@type-pal/content';
 import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
-const act=new Set(['fair','backstage','street','courtyard']);
+import {ROOM_VIEW,drawRoomGround,drawRoomForeground} from './room-world.js';
+const act=new Set(['fair','backstage','street','courtyard','home-room']);
 const images=new Map<string,HTMLImageElement>();
 const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
 const filenames=['house','stage','stall','backstage','back-panel','back-panel-window','crate-indoor','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood',...portraits.map(role=>'portrait-'+role)];
@@ -17,7 +18,9 @@ function img(key:string){
 export function firstActReady(scene:string){
  activeScene=scene;
  if(!act.has(scene)||new URLSearchParams(location.search).get('art')==='baseline')return false;
- const all=[...filenames,
+ const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-memento','room-mat'];
+ const extra=scene==='home-room'?roomFiles:scene==='fair'?[...Array.from({length:24},(_,i)=>`crowd-${Math.floor(i/4)}-${i%4}`)]:scene==='backstage'?['action-carriers-unique-0','action-carriers-unique-1',...['a','b','c'].flatMap(role=>Array.from({length:12},(_,i)=>`sub-${role}-${Math.floor(i/3)}-${i%3}`)),...Array.from({length:4},(_,i)=>`crowd-0-${i}`)]:[];
+ const all=[...filenames,...extra,
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
   ...['merchant','neighbor','stranger','visitor','operative','performer'].flatMap(role=>Array.from({length:4},(_,i)=>`npc-${role}-${i}`)),
   ...Array.from({length:12},(_,i)=>`guard-${Math.floor(i/3)}-${i%3}`),
@@ -33,8 +36,18 @@ export function firstActPortrait(asset:string){
  const role=asset.startsWith('portrait.')?asset.slice(9):'';
  return portraits.includes(role)?img('portrait-'+role):undefined;
 }
+export function roomViewActive(scene:string){return scene==='home-room'&&activeScene===scene&&document.documentElement.dataset.t32Art==='ready'&&new URLSearchParams(location.search).get('art')!=='baseline'}
+export function artScreenPoint(scene:string,camera:Camera,x:number,y:number){
+ const v=roomViewActive(scene)?ROOM_VIEW:{scale:1,camera};return {x:(x-v.camera.x)*v.scale,y:(y-v.camera.y)*v.scale};
+}
+export function artWorldPoint(scene:string,camera:Camera,x:number,y:number){
+ const v=roomViewActive(scene)?ROOM_VIEW:{scale:1,camera};return {x:x/v.scale+v.camera.x,y:y/v.scale+v.camera.y};
+}
+export function roomView(){return ROOM_VIEW}
+export function renderHDForeground(ctx:CanvasRenderingContext2D,scene:string,camera:Camera){if(scene==='home-room')drawRoomForeground(ctx,camera,img)}
 let floor:{scene:string,map:IsometricMapContent<number|null>,canvas:HTMLCanvasElement,x:number,y:number}|undefined;
 export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:IsometricMapContent<number|null>,room:CellRect,camera:Camera){
+ if(scene==='home-room'){drawRoomGround(ctx,camera,img);return}
  if(!floor||floor.scene!==scene||floor.map!==map){
   const tiles=projectMapTilesInView(map,room,new Set());
   const x=Math.min(...tiles.map(t=>t.centerX))-17,y=Math.min(...tiles.map(t=>t.centerY))-9;
@@ -71,6 +84,7 @@ export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:Iso
 }
 type Prop={key:string,w:number,foot?:number,depth?:number,dx?:number};
 const byScene:Record<string,Record<string,Prop>>={
+ 'home-room':{'room-bedside':{key:'room-bed',w:96,foot:.97},'room-television':{key:'room-tv',w:56,foot:.97},'meal-table':{key:'room-meal',w:80,foot:.97},washbasin:{key:'room-basin',w:36,foot:.98},'kitchen-cupboard':{key:'room-cupboard',w:48,foot:.98},'room-lamp':{key:'room-lamp',w:44,foot:.98},memory:{key:'room-memento',w:16,foot:.98}},
  fair:{theater:{key:'stage',w:174,foot:.87,depth:-38},'market-stall-0':{key:'stall',w:84},'market-stall-1':{key:'stall',w:84},'market-stall-2':{key:'stall',w:84},'market-tree':{key:'tree',w:94}},
  backstage:{'rear-curtain':{key:'backstage',w:280,foot:.583,depth:-65,dx:-165},'rear-wall':{key:'wall',w:112}},
  street:{'street-rental-0':{key:'house',w:184,foot:.84},'street-rental-1':{key:'house',w:184,foot:.84},'street-rental-2':{key:'house',w:184,foot:.84},'street-tree':{key:'tree',w:93},'street-tree-2':{key:'tree',w:93},'street-wall':{key:'wall',w:110}},
@@ -80,6 +94,7 @@ const npcKeys=new Set(['merchant','neighbor','stranger','visitor','operative','p
 const direction:Record<string,number>={down:0,left:1,up:2,right:3};
 export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):SpriteDraw[]{
  return sprites.map(s=>{
+  if(scene==='home-room'&&['moonlit-room-window','winter-coat-by-wall','room-door','room-yard'].includes(s.artId??''))return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-wall')return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-curtain'){
    const panel=img('back-panel'),windowPanel=img('back-panel-window');if(!panel||!windowPanel)return s;
@@ -109,7 +124,11 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
   }
   if(!prop&&s.artKey==='child-crouch'){key='action-child-crouch';h=s.frame.height;foot=1}
   if(!prop&&s.artKey==='performer-action'){key=`action-performer-${s.artFrame??0}`;h=s.frame.height;foot=1}
-  if(!prop&&s.artKey==='carriers'){key=`action-carriers-${(s.artFrame??0)%2}`;h=s.frame.height;foot=1}
+  if(!prop&&s.artKey==='carriers'){key=`action-carriers-unique-${(s.artFrame??0)%2}`;h=s.frame.height;foot=1}
+  if(scene==='fair'&&s.artId==='rumor'){key=`crowd-3-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
+  if(scene==='fair'&&s.artId?.startsWith('audience-')){const i=Number(s.artId.slice(9));const role=s.artKey==='child'?4+(Math.floor(i/5)%2):i%4;key=`crowd-${role}-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
+  if(scene==='backstage'&&s.artId==='silent-witness'){key=`crowd-0-${direction[s.artFacing??'down']??0}`;h=s.frame.height;w=0;foot=1}
+  if(scene==='backstage'&&['operative-2','operative-3','operative-4'].includes(s.artId??'')){const role=({'operative-2':'a','operative-3':'b','operative-4':'c'} as Record<string,string>)[s.artId!]!;key=`sub-${role}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;h=s.frame.height;w=0;foot=1}
   if(!key)return s;
   const source=img(key);if(!source)return s;
   if(w)h=source.naturalHeight*w/source.naturalWidth;else w=source.naturalWidth*h/source.naturalHeight;

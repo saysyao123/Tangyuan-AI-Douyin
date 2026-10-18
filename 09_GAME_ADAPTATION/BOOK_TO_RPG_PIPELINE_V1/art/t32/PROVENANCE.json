@@ -46,5 +46,23 @@
       "Complementary orthographic walnut backstage wall with closed door, window, timber beam/posts, cup shelf and towels; no floor or perspective",
       "Same stacked rope-bound crates and jar with all indoor snow removed, unchanged isometric footprint"
     ]
+  },
+  "t33_20261018": {
+    "scope": "Requested home-room reconstruction and exclusive hero/key NPC appearance",
+    "reference": "User-approved modern winter home image from 2026-10-17, used as style/material/structure reference only",
+    "generation": "Built-in image_gen, detailed painted-pixel domestic walls, furniture, floor, six original crowd identities in four directions; three distinct subordinate walk atlases; carrier composite preserves lead guard and replaces duplicated partner with subordinate A",
+    "processing": "Alpha component extraction, same-foot padding and proportional WebP encoding. Missing crowd SE direction was generated explicitly, not claimed from the incomplete 3-row result.",
+    "roomView": "Uniform 0.54 overview, fixed presentation camera (128,-72); pointer inverse uses same transform. Native simulation and SAVE12 positions unchanged.",
+    "preservedAssets": "All 98 previously integrated raster files remain byte-identical.",
+    "reservedBindings": {
+      "hero": "party only",
+      "child": "party or child-wait same character, never ordinary audience",
+      "merchant": "vendor only in fair",
+      "neighbor": "neighbor only",
+      "stranger": "stranger only",
+      "performer": "stage/backstage same actor, never audience",
+      "guard": "lead guard or his continuation in carrier composite, never subordinate-2/3/4"
+    },
+    "ordinaryBindings": "audience-0..19 and rumor use six dedicated crowd models; silent-witness uses crowd0; operative-2/3/4 each own separate model"
   }
 }
