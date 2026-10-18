@@ -1,0 +1,609 @@
+{
+  "id": "backstage",
+  "mapId": "backstage",
+  "entry": {
+    "pos": {
+      "col": 26,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "return",
+      "label": "返回小集",
+      "pos": {
+        "col": 24,
+        "row": 1,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "fair",
+                      "pos": {
+                        "col": 41,
+                        "row": -5,
+                        "height": 0
+                      },
+                      "facing": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "performer",
+      "label": "performer",
+      "pos": {
+        "col": 29,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "performer-action",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "guard",
+      "label": "看守",
+      "pos": {
+        "col": 34,
+        "row": -4,
+        "height": 0
+      },
+      "sprite": "operative",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "operative-2",
+      "label": "operative-2",
+      "pos": {
+        "col": 33,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "operative",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "operative-3",
+      "label": "operative-3",
+      "pos": {
+        "col": 32,
+        "row": -9,
+        "height": 0
+      },
+      "sprite": "operative",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "operative-4",
+      "label": "operative-4",
+      "pos": {
+        "col": 34,
+        "row": -8,
+        "height": 0
+      },
+      "sprite": "operative",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "needle",
+      "label": "needle",
+      "pos": {
+        "col": 30,
+        "row": -4,
+        "height": 1
+      },
+      "sprite": "needle",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "carriers",
+      "label": "carriers",
+      "pos": {
+        "col": 29,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "carriers",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "rear-curtain",
+      "label": "rear-curtain",
+      "pos": {
+        "col": 32,
+        "row": -11,
+        "height": 0
+      },
+      "sprite": "stage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "rear-crate",
+      "label": "rear-crate",
+      "pos": {
+        "col": 27,
+        "row": -6,
+        "height": 0
+      },
+      "sprite": "crate",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "rear-crate-2",
+      "label": "rear-crate-2",
+      "pos": {
+        "col": 28,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "crate",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "rear-wall",
+      "label": "rear-wall",
+      "pos": {
+        "col": 23,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "t21-backstage-wall",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "silent-witness",
+      "label": "silent-witness",
+      "pos": {
+        "col": 25,
+        "row": 3,
+        "height": 0
+      },
+      "sprite": "merchant",
+      "facing": "right",
+      "collide": false
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "branch",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "backstage_seen",
+                      "is": true
+                    },
+                    "then": [],
+                    "else": [
+                      {
+                        "kind": "setFlag",
+                        "flag": "arrest_started",
+                        "value": true
+                      },
+                      {
+                        "kind": "cameraPan",
+                        "dx": 3,
+                        "dy": -1,
+                        "frames": 12
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "narration"
+                          },
+                          "rows": [
+                            {
+                              "text": "帘后没有谢幕的热闹。几名黑衣人围了上来，杂技团的人停下了手里的活。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "guard"
+                        },
+                        "to": {
+                          "col": 30,
+                          "row": -4,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-2"
+                        },
+                        "to": {
+                          "col": 30,
+                          "row": -6,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-3"
+                        },
+                        "to": {
+                          "col": 30,
+                          "row": -7,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-4"
+                        },
+                        "to": {
+                          "col": 32,
+                          "row": -5,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "needle"
+                        },
+                        "state": 1
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "needle"
+                        },
+                        "to": {
+                          "col": 29,
+                          "row": -5,
+                          "height": 1
+                        },
+                        "speed": "run"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "needle"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "playEntityAction",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "performer"
+                        },
+                        "sprite": "performer-action",
+                        "action": "collapse",
+                        "loop": false,
+                        "wait": true
+                      },
+                      {
+                        "kind": "setEntityFrame",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "performer"
+                        },
+                        "frame": 2
+                      },
+                      {
+                        "kind": "setFlag",
+                        "flag": "performer_down",
+                        "value": true
+                      },
+                      {
+                        "kind": "wait",
+                        "ms": 500
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "actor",
+                            "actor": "child",
+                            "portrait": {
+                              "kind": "default",
+                              "side": "right"
+                            }
+                          },
+                          "rows": [
+                            {
+                              "text": "为什么把他弄倒？我们还想找他学这个呢！"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "actor",
+                            "actor": "guard",
+                            "portrait": {
+                              "kind": "default",
+                              "side": "right"
+                            }
+                          },
+                          "rows": [
+                            {
+                              "text": "这场火焰表演没有报备。我们带他回去问话，你们离开这里。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "actor",
+                            "actor": "hero",
+                            "portrait": {
+                              "kind": "default",
+                              "side": "right"
+                            }
+                          },
+                          "rows": [
+                            {
+                              "text": "真是查手续，为什么先把人放倒？先别争，带她出去。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "performer"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "guard"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-2"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "carriers"
+                        },
+                        "state": 1
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "carriers"
+                        },
+                        "to": {
+                          "col": 39,
+                          "row": -3,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "carriers"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-3"
+                        },
+                        "to": {
+                          "col": 39,
+                          "row": -5,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-3"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "moveEntity",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-4"
+                        },
+                        "to": {
+                          "col": 39,
+                          "row": -4,
+                          "height": 0
+                        },
+                        "speed": "fast"
+                      },
+                      {
+                        "kind": "setEntityState",
+                        "target": {
+                          "scene": "backstage",
+                          "entity": "operative-4"
+                        },
+                        "state": 0
+                      },
+                      {
+                        "kind": "setFlag",
+                        "flag": "officers_departed",
+                        "value": true
+                      },
+                      {
+                        "kind": "setFlag",
+                        "flag": "backstage_seen",
+                        "value": true
+                      },
+                      {
+                        "kind": "cameraSnap"
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "narration"
+                          },
+                          "rows": [
+                            {
+                              "text": "黑衣人带着昏迷的年轻人离开。没人拦，也没人开口。刚才那些消失的视频，忽然有了另一种解释。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "clearDialog"
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "narration"
+                          },
+                          "rows": [
+                            {
+                              "text": "沿左侧路牌返回集市，再走入口那边离开。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "clearDialog"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

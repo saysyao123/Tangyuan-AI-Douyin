@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NATIVE_PURCHASE_AND_VISIBLE_SEVEN_TO_ONE_SHARING",
+    "FIRE_IGNITE_RECALL_FLIGHT_DISSOLVE_HEART_AND_SAFE_SAVE",
+    "BACKSTAGE_APPROACH_COLLAPSE_TRANSFER_AND_DEPARTURE",
+    "STRANGER_REACTION_PARTY_WALK_AWAY_AND_PROMISE",
+    "MEDICINE_CROUCH_WALK_AWAY_AND_CHAPTER_END",
+    "ACTUAL_NATIVE_ANIMATION_FRAMES_AND_CANONICAL_MOTION",
+    "CINEMATIC_END_SAVE_REOPEN_RESTORES_SCENE_AND_FLAGS",
+    "PREVIOUS_PILOT_AND_SAVE_SCOPE_PRESERVED",
+    "CINEMATIC_SHELL_AND_PREVIOUS_VERSION_LINK"
+  ],
+  "coverage": [
+    {
+      "label": "fair entrance",
+      "blackFraction": 0
+    },
+    {
+      "label": "market stall",
+      "blackFraction": 9.765625e-7
+    },
+    {
+      "label": "after performance",
+      "blackFraction": 0
+    },
+    {
+      "label": "backstage after exit",
+      "blackFraction": 0.0000087890625
+    },
+    {
+      "label": "street arrival",
+      "blackFraction": 0
+    },
+    {
+      "label": "courtyard arrival",
+      "blackFraction": 9.765625e-7
+    },
+    {
+      "label": "home doorway",
+      "blackFraction": 0
+    }
+  ],
+  "errors": []
+}

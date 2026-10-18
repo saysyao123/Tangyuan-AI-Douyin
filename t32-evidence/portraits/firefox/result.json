@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "browser": "firefox",
+  "checks": [
+    "EIGHT_ORIGINAL_PORTRAITS_DECODED",
+    "ACTUAL_VENDOR_AND_LEADS_FIXED_FOOTPRINT",
+    "ACTUAL_GUARD_DIALOGUE_AND_REVISED_INTERIOR",
+    "ACTUAL_STRANGER_DIALOGUE",
+    "ACTUAL_NEIGHBOR_DIALOGUE"
+  ],
+  "decoded": [
+    {
+      "role": "hero",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "child",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "merchant",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "neighbor",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "stranger",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "visitor",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "officer",
+      "w": 256,
+      "h": 288
+    },
+    {
+      "role": "performer",
+      "w": 256,
+      "h": 288
+    }
+  ],
+  "dialogues": [
+    {
+      "asset": "portrait.child",
+      "scene": "fair",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    },
+    {
+      "asset": "portrait.hero",
+      "scene": "fair",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    },
+    {
+      "asset": "portrait.merchant",
+      "scene": "fair",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    },
+    {
+      "asset": "portrait.officer",
+      "scene": "backstage",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    },
+    {
+      "asset": "portrait.stranger",
+      "scene": "street",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    },
+    {
+      "asset": "portrait.neighbor",
+      "scene": "courtyard",
+      "slot": "bottom",
+      "draw": {
+        "x": 238,
+        "y": 108,
+        "width": 64,
+        "height": 72,
+        "sourceWidth": 256,
+        "sourceHeight": 288
+      }
+    }
+  ],
+  "errors": [],
+  "scope": "Only newly changed portraits and backstage dressing. Actual first-act six speaking identities tested via native interactions. Visitor and performer assets decoded, no new dialogue invented. Prior full-story acceptance reused."
+}

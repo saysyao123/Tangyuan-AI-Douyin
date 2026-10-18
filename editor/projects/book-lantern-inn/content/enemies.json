@@ -1,0 +1,41 @@
+[
+  {
+    "id": "mist-wolf",
+    "name": "name.wolf",
+    "battleSprite": "mist-wolf",
+    "yPosOffset": 0,
+    "stats": {
+      "health": 110,
+      "level": 1,
+      "exp": 12,
+      "cash": 10,
+      "attackStrength": 0,
+      "magicStrength": 0,
+      "defense": 0,
+      "dexterity": 8,
+      "fleeRate": 0,
+      "physicalResistance": 1,
+      "poisonResistance": 0,
+      "elemResistance": {
+        "wind": 0,
+        "thunder": 0,
+        "water": 0,
+        "fire": 0,
+        "earth": 0
+      },
+      "dualMove": false,
+      "collectValue": 0
+    },
+    "ai": {
+      "resistanceToSorcery": 0
+    },
+    "sounds": {},
+    "onDefeated": [
+      {
+        "kind": "setFlag",
+        "flag": "wolf_defeated",
+        "value": true
+      }
+    ]
+  }
+]

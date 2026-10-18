@@ -1,0 +1,14 @@
+[
+  {
+    "id": "original",
+    "name": "冬日小集 · 异火与归途",
+    "category": "outdoor",
+    "asset": "tileset.original"
+  },
+  {
+    "id": "night-ground",
+    "name": "夜雪与旧木地板",
+    "category": "outdoor",
+    "asset": "night.night-tiles"
+  }
+]
