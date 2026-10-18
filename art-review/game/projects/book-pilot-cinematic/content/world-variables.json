@@ -1,0 +1,248 @@
+{
+  "intro_seen": {
+    "kind": "flag",
+    "name": "intro_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "bought": {
+    "kind": "flag",
+    "name": "bought",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "shared": {
+    "kind": "flag",
+    "name": "shared",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "rumor_seen": {
+    "kind": "flag",
+    "name": "rumor_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "stage_started": {
+    "kind": "flag",
+    "name": "stage_started",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "fire_ignited": {
+    "kind": "flag",
+    "name": "fire_ignited",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "fire_recalled": {
+    "kind": "flag",
+    "name": "fire_recalled",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "fire_cast": {
+    "kind": "flag",
+    "name": "fire_cast",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "fire_dissolved": {
+    "kind": "flag",
+    "name": "fire_dissolved",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "heart_stirred": {
+    "kind": "flag",
+    "name": "heart_stirred",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "watched": {
+    "kind": "flag",
+    "name": "watched",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "arrest_started": {
+    "kind": "flag",
+    "name": "arrest_started",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "performer_down": {
+    "kind": "flag",
+    "name": "performer_down",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "officers_departed": {
+    "kind": "flag",
+    "name": "officers_departed",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "backstage_seen": {
+    "kind": "flag",
+    "name": "backstage_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "ending_seen": {
+    "kind": "flag",
+    "name": "ending_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "street_seen": {
+    "kind": "flag",
+    "name": "street_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "stranger_seen": {
+    "kind": "flag",
+    "name": "stranger_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "promise_seen": {
+    "kind": "flag",
+    "name": "promise_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "neighbor_seen": {
+    "kind": "flag",
+    "name": "neighbor_seen",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "chapter_complete": {
+    "kind": "flag",
+    "name": "chapter_complete",
+    "description": "开篇演出进度",
+    "initial": false
+  },
+  "night_started": {
+    "kind": "flag",
+    "name": "night_started",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "errand_started": {
+    "kind": "flag",
+    "name": "errand_started",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "pendant_seen": {
+    "kind": "flag",
+    "name": "pendant_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "collision_seen": {
+    "kind": "flag",
+    "name": "collision_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "awakened": {
+    "kind": "flag",
+    "name": "awakened",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "driver_fled": {
+    "kind": "flag",
+    "name": "driver_fled",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "noodles_bought": {
+    "kind": "flag",
+    "name": "noodles_bought",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "returned_home": {
+    "kind": "flag",
+    "name": "returned_home",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "tree_seen": {
+    "kind": "flag",
+    "name": "tree_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "income_seen": {
+    "kind": "flag",
+    "name": "income_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "shop_seen": {
+    "kind": "flag",
+    "name": "shop_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "fruit_won": {
+    "kind": "flag",
+    "name": "fruit_won",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "fruit_used": {
+    "kind": "flag",
+    "name": "fruit_used",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "after_fruit_seen": {
+    "kind": "flag",
+    "name": "after_fruit_seen",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "noodles_eaten": {
+    "kind": "flag",
+    "name": "noodles_eaten",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "snowman_large": {
+    "kind": "flag",
+    "name": "snowman_large",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "snowman_small": {
+    "kind": "flag",
+    "name": "snowman_small",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "night_complete": {
+    "kind": "flag",
+    "name": "night_complete",
+    "description": "第二幕剧情进度",
+    "initial": false
+  },
+  "emotion": {
+    "kind": "number",
+    "name": "emotion",
+    "description": "第二幕原生数值",
+    "initial": 0
+  },
+  "draws": {
+    "kind": "number",
+    "name": "draws",
+    "description": "第二幕原生数值",
+    "initial": 0
+  }
+}

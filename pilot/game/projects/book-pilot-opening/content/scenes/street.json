@@ -1,0 +1,437 @@
+{
+  "id": "street",
+  "mapId": "street",
+  "entry": {
+    "pos": {
+      "col": 8,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "fair-return",
+      "label": "返回集市",
+      "pos": {
+        "col": 6,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "fair",
+                      "pos": {
+                        "col": 8,
+                        "row": 0,
+                        "height": 0
+                      },
+                      "facing": "right"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "stranger",
+      "label": "路边青年",
+      "pos": {
+        "col": 12,
+        "row": 0,
+        "height": 0
+      },
+      "actor": "stranger",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "stranger_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "stranger",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "天冷，别在外面耽搁太久。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "stranger",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "刚从集市出来？舞台那边出了什么事？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "人太多，没看清。我们还要赶回家。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "stranger",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这样啊。路上小心。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "stranger_seen",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "home-road",
+      "label": "通往小院",
+      "pos": {
+        "col": 18,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "stranger_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "promise_seen",
+                            "is": true
+                          },
+                          "then": [],
+                          "else": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "要是我也能变得很厉害，就能保护你了。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "先把自己照顾好。路还长，我们一起走。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "promise_seen",
+                              "value": true
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "loadScene",
+                          "scene": "courtyard",
+                          "pos": {
+                            "col": 8,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "facing": "right"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "有人在前面问路，我们先过去看看。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "street-house",
+      "pos": {
+        "col": 15,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "house",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "street-gate",
+      "pos": {
+        "col": 21,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "gate",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "street-tree",
+      "pos": {
+        "col": 7,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "tree",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "street-lamp",
+      "pos": {
+        "col": 12,
+        "row": -4,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "down",
+      "collide": true
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "branch",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "street_seen",
+                      "is": true
+                    },
+                    "then": [],
+                    "else": [
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "narration"
+                          },
+                          "rows": [
+                            {
+                              "text": "集市的喧闹渐渐退到身后。\n雪沿着旧街墙根堆起，远处还有零星灯火。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "setFlag",
+                        "flag": "street_seen",
+                        "value": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

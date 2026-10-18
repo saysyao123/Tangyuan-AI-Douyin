@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "scenes": [
+    {
+      "id": "fair",
+      "name": "冬日小集",
+      "path": "content/scenes/fair.json"
+    },
+    {
+      "id": "backstage",
+      "name": "舞台侧院",
+      "path": "content/scenes/backstage.json"
+    },
+    {
+      "id": "street",
+      "name": "归家旧街",
+      "path": "content/scenes/street.json"
+    },
+    {
+      "id": "courtyard",
+      "name": "冬夜小院",
+      "path": "content/scenes/courtyard.json"
+    },
+    {
+      "id": "home-room",
+      "name": "旧平房 · 屋内",
+      "path": "content/scenes/home-room.json"
+    },
+    {
+      "id": "night-road",
+      "name": "雪夜人行道",
+      "path": "content/scenes/night-road.json"
+    },
+    {
+      "id": "night-shop-room",
+      "name": "仍亮着灯的便利店",
+      "path": "content/scenes/night-shop-room.json"
+    },
+    {
+      "id": "mind-tree",
+      "name": "手心树纹 · 意识空间",
+      "path": "content/scenes/mind-tree.json"
+    },
+    {
+      "id": "snow-yard",
+      "name": "小院 · 两个雪人",
+      "path": "content/scenes/snow-yard.json"
+    }
+  ]
+}

@@ -1,0 +1,841 @@
+{
+  "version": 1,
+  "assets": {
+    "color.project-standard": {
+      "kind": "color-table",
+      "path": "assets/generated/colors/project-standard.json",
+      "mediaType": "application/json",
+      "bytes": 11018,
+      "sha256": "eb7d5b454ae3c3a421919e129e7de891fa4d78dc27d54b8dea147c99969b0ef4",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "color.project-standard"
+    },
+    "tileset.generated.starter": {
+      "kind": "tileset",
+      "path": "assets/generated/tilesets/starter.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 263,
+      "sha256": "d764cca87d1c35442df8826b29a293b4e4d165685115ceaa6af9740ef15764e0",
+      "label": "起始地形",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "sprite.generated.starter": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/starter.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 212,
+      "sha256": "aacc2508ae13d498bd32323e695c34ef19d05ec67815b3826aff53dc64d45d2c",
+      "label": "占位主角",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "battle-sprite.generated.starter": {
+      "kind": "battle-sprite",
+      "path": "assets/generated/battle-sprites/starter.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 195,
+      "sha256": "81199cc518b6800fae32dfed3c933fe951af47c4bbc1bee3eef44d33ddd0e10c",
+      "label": "占位主角战斗形象",
+      "origin": {
+        "kind": "generated"
+      }
+    },
+    "tileset.original": {
+      "kind": "tileset",
+      "path": "assets/generated/tilesets/original.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1973,
+      "sha256": "25de5dddfe2813aa7a09739e7bc3b61706b71b004024ba4bcb645d5fa5c77644",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "tileset.original"
+    },
+    "sprite.hero": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/hero.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2812,
+      "sha256": "aedca2dccc11e2229cab2d33cd4524f56c910253e665ae72a6ba40a0904a70ea",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.hero"
+    },
+    "sprite.keeper": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/keeper.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 663,
+      "sha256": "895f18b254da696518db6d3dde5a01aaf5d08da70855e3881bcaf59f061c3460",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.keeper"
+    },
+    "sprite.child": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/child.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2169,
+      "sha256": "8b5aeb38ca2c04c3a109577b1c584d8a88150fa67005972d2f59810db28a8845",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.child"
+    },
+    "sprite.guard": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/guard.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 627,
+      "sha256": "a0a7071071869c3399700bcb23ccce0cb385e532323706c58a5a24ec68b08d27",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.guard"
+    },
+    "sprite.merchant": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/merchant.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 730,
+      "sha256": "7f11a0c57dbe971647043789644dcc0a9e0badad9083f0347de06b2c1b69707a",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.merchant"
+    },
+    "sprite.officer": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/officer.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 618,
+      "sha256": "f3411383089b7377487030518a342db11d836857467e505e451fd71709094456",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.officer"
+    },
+    "sprite.stranger": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/stranger.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 629,
+      "sha256": "919e32771cf14236025be10a9682bd792e37631007a951438d84d3c2793df8d2",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.stranger"
+    },
+    "sprite.neighbor": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/neighbor.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 698,
+      "sha256": "6f093cd7213eb9decc899c4f975293b68c51326c694378c5ff23c67c586c9610",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.neighbor"
+    },
+    "sprite.performer": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/performer.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 629,
+      "sha256": "9c6e43e3f748da1f2d38d915164c4fdf773e1280547ca7421d2af5624a38c0fb",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.performer"
+    },
+    "sprite.visitor": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/visitor.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 691,
+      "sha256": "0506e7ccd66e3f19c542c3590baa655381a345b8254aac382fb118755ea588a5",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.visitor"
+    },
+    "sprite.lantern": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/lantern.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 132,
+      "sha256": "323555e3f67a99787f327abb6156a2ec2766b60252c3bbcf3710aa5d9659c188",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.lantern"
+    },
+    "sprite.sign": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/sign.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 83,
+      "sha256": "58b45c2d5e17cafa1aefb4ea254c991bc58a784b8d7fa3cac3bf4aad857a0781",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.sign"
+    },
+    "sprite.stall": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/stall.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2933,
+      "sha256": "7878120ebc1152e0ab4304365b9e6431cddeb6a9dd65a456067d062a5ad3a5c4",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.stall"
+    },
+    "sprite.stage": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/stage.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 6863,
+      "sha256": "4ad8241b7585b1cc27838f3452480c636a1db066dbe85736ac805a34f697d838",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.stage"
+    },
+    "sprite.pot": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/pot.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 707,
+      "sha256": "1e415eb886b5e804bfef954baa7872cd606a6ec62e73147eff696cbf56c7bf12",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.pot"
+    },
+    "sprite.tree": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/tree.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1824,
+      "sha256": "7b053f003be3f06e386c844e32d5279366d1c52bbf4664a943cec237cb91a605",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.tree"
+    },
+    "sprite.rental": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/rental.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 14074,
+      "sha256": "7028615f666d1c3244bd4474b320c335f04f855a9941066723868e240c6710c1",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.rental"
+    },
+    "sprite.operative": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/operative.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2670,
+      "sha256": "4c280d3f0bc0302efd3041fcac198e4e23fdce1bcac0c54544349f9a7ede971e",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.operative"
+    },
+    "sprite.performer-action": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/performer-action.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1185,
+      "sha256": "f2576b07bd72186a864372d58a9f109190c184164f07dc1b81568cb207832d6b",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.performer-action"
+    },
+    "sprite.carriers": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/carriers.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 3777,
+      "sha256": "d2bb77d3d11d0b1aff689bddf603b336a3b42f879f39ba73186290efca704866",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.carriers"
+    },
+    "sprite.child-crouch": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/child-crouch.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 409,
+      "sha256": "30f3379a2d815a7a33dec0fab4ac449e40029d722777053dcd459fa96a9ec4c9",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.child-crouch"
+    },
+    "sprite.body-fire": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/body-fire.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1674,
+      "sha256": "caa8614ee46528e044c94b2142260b4b178e68550e16fe800fd07acd4c5f4f8d",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.body-fire"
+    },
+    "sprite.fireball": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/fireball.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 224,
+      "sha256": "fca3417fcc3f49206d53cf7409689e3f456d17c776dfec1510f234a13b7ac06d",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.fireball"
+    },
+    "sprite.heart": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/heart.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 540,
+      "sha256": "65cb255ef0e82765512ed80479b3554726ac41a1e3bd70348ba64e8f77253dcd",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.heart"
+    },
+    "sprite.steam": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/steam.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 149,
+      "sha256": "bb602c713485c485f8dec328290e66507e317b86ff8e311d0104a6404a76bc53",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.steam"
+    },
+    "sprite.needle": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/needle.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 35,
+      "sha256": "151ac84b3778c078526ab5388b251b80dfa379f0ae9ef46775a68a2ec9b0cbea",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.needle"
+    },
+    "sprite.skewer": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/skewer.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 75,
+      "sha256": "49162078b091bc13c16d8d9034fcdfd1466eed8ea81169873372cade30479137",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.skewer"
+    },
+    "sprite.wall": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/wall.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 170,
+      "sha256": "f0c9e7295d7659d18f8dbe5bf7bd9a6f5c6f6df4c64472490a68cdd322b17c20",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.wall"
+    },
+    "sprite.vegetables": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/vegetables.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 204,
+      "sha256": "855225f5a9303589253e5a86c12cd668262cdabcabae427bb7f419bd0064b6c0",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.vegetables"
+    },
+    "sprite.crate": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/crate.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 68,
+      "sha256": "75dc49b79f3961a484689e80854b645676285ff57e9d33331d19cb30094117d1",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "sprite.crate"
+    },
+    "portrait.hero": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/hero.png",
+      "mediaType": "image/png",
+      "bytes": 3525,
+      "sha256": "7ad9c329fa16967a577c7d088fb1ce764ea778d316ccfdabda496d2b767fdd22",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.hero"
+    },
+    "portrait.child": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/child.png",
+      "mediaType": "image/png",
+      "bytes": 3713,
+      "sha256": "167ab692df6ec50903ac53d62cb2cf91bc26689e7c9567084e8e21f991b58ee2",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.child"
+    },
+    "portrait.merchant": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/merchant.png",
+      "mediaType": "image/png",
+      "bytes": 3493,
+      "sha256": "c5200665819ecb8e620f651999eeb1df0e49a13842a64a6fd81e89501cd1d7fd",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.merchant"
+    },
+    "portrait.officer": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/officer.png",
+      "mediaType": "image/png",
+      "bytes": 3136,
+      "sha256": "ca6c2bbd129e15ef89a70f8efb661723139ba3fb0aecb28a0f6dd74ad8eaabe0",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.officer"
+    },
+    "portrait.stranger": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/stranger.png",
+      "mediaType": "image/png",
+      "bytes": 3129,
+      "sha256": "f93b9b77e07b28cda62d0b20e359e7c3818e229360e85bf2cda1bb80e08d342f",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.stranger"
+    },
+    "portrait.neighbor": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/neighbor.png",
+      "mediaType": "image/png",
+      "bytes": 3376,
+      "sha256": "416eb52f2cd764836cf9595f9bc928b9de1f6df02e5dc58a8de00b08d093d84e",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.neighbor"
+    },
+    "portrait.performer": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/performer.png",
+      "mediaType": "image/png",
+      "bytes": 2951,
+      "sha256": "cbf102b56b0127b4b453e06c63eba9432600db16c48760e5dd10af1791b77875",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.performer"
+    },
+    "portrait.visitor": {
+      "kind": "portrait",
+      "path": "assets/generated/portraits/visitor.png",
+      "mediaType": "image/png",
+      "bytes": 3422,
+      "sha256": "b24df5be3fc5a165c2252f1a58ce0a42b4af46b9220c1d85d8793756082fa670",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "portrait.visitor"
+    },
+    "night.truck": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/truck.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 7920,
+      "sha256": "5c343e6aaa1588abb6a235d343ed9e506fec28503926199324a7cbd40b9c5176",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "truck"
+    },
+    "night.night-shop": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/night-shop.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 14892,
+      "sha256": "7fad7a18d1640c5d272830fd7cc3f4b1b593aa2e97df7e87a05950c29dd97e21",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "night-shop"
+    },
+    "night.bed": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/bed.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 3206,
+      "sha256": "ddbef20bd69ca12491a69804d6fc1ef32ccc93d51bc8c7aed0777d3b07271eb5",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "bed"
+    },
+    "night.television": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/television.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2051,
+      "sha256": "8865c0ce4cf463c3c259e5e92bb5039e8537b1ba760447653a0646ac9c6c04c0",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "television"
+    },
+    "night.hero-blood": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/hero-blood.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 3420,
+      "sha256": "d2dfc9590a1ed269f7abc01ee8876da9ff2b77f94cf99222f2c75f5e9c8540e7",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "hero-blood"
+    },
+    "night.hero-invisible": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/hero-invisible.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 26,
+      "sha256": "20e21c906dca8dc1cd26442ae5fb9b226608ec8a0e681fb99521796d1afd3309",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "hero-invisible"
+    },
+    "night.hero-night-pose": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/hero-night-pose.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1094,
+      "sha256": "19111d600b4808d1482f7cdbed7647aa8e62dbb73617e7605e5de19f1458b583",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "hero-night-pose"
+    },
+    "night.seed-light": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/seed-light.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 151,
+      "sha256": "d660406b2d167703b567eb8077153bbef2c1a98cae8d907cb790aa182396571b",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "seed-light"
+    },
+    "night.white-heart": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/white-heart.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 756,
+      "sha256": "1ade834b00f381c9d5dd73c3422a557da68e07c9a0d7b8f44b344cd63877ae10",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "white-heart"
+    },
+    "night.snowfall": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snowfall.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 320,
+      "sha256": "4ba29f034ef62be3520727095438ea2ef39a7d409695000aef3690c6688b5392",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snowfall"
+    },
+    "night.night-tiles": {
+      "kind": "tileset",
+      "path": "assets/generated/tilesets/night-tiles.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 617,
+      "sha256": "1dd7449509aab8f057a337d1de05ae92e0cb56ded00b520de2fb1aa9ccc31c8a",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "night-tiles"
+    },
+    "night.draw-wheel": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/draw-wheel.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1073,
+      "sha256": "ebe823596c5670e041726b9b3b9cb71e57ff21e05045592157013b6dfb86d112",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "draw-wheel"
+    },
+    "night.income-terminal": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/income-terminal.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 79,
+      "sha256": "b3598d1e8c357953f5deef228e97b096076aa17ca984d5d0fd56b0f0f77ccb75",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "income-terminal"
+    },
+    "night.star-terminal": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/star-terminal.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 119,
+      "sha256": "56e93438b960e342dce852b4d6b7119efd5e2954df2fa1dbec2977a77e54101f",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "star-terminal"
+    },
+    "night.tree-mark": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/tree-mark.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 170,
+      "sha256": "908ccbd2b6573625dab13a5adcbe564b20f30cc4ed519bf767c2c3baeecafe22",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "tree-mark"
+    },
+    "night.pendant": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/pendant.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 104,
+      "sha256": "47463340676512eba9a83906ee34cd04f3c007b3fba67fd1ed19503e72ec5c9f",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "pendant"
+    },
+    "night.noodle-table": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/noodle-table.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 166,
+      "sha256": "22496713e564336b0489d886a5d2ea9329f830bd265f7ea1959aa5da541fe7cd",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "noodle-table"
+    },
+    "night.shop-shelf": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/shop-shelf.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 149,
+      "sha256": "713f7478b5e63dc0459bd5064cd03b01cc9d98960e3b8c2975c229024faf0c47",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "shop-shelf"
+    },
+    "night.snowman": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snowman.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 424,
+      "sha256": "1253390c66a3e2ad205662eba7b72fd5ab9756809f94d023aab17452b3a280f7",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snowman"
+    },
+    "night.snow-pile": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snow-pile.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 114,
+      "sha256": "f35bc6b3b84d97f5fd160261c3649339cc4b4157b2a5f4b2868eac7e03f33e1b",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snow-pile"
+    },
+    "night.snow-big": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snow-big.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 254,
+      "sha256": "93430cd47eec7018540d1e5b2eee70392c35d1a49a9c455ec94de019d878fdfa",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snow-big"
+    },
+    "night.snow-small": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snow-small.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 222,
+      "sha256": "5e52b6e55307b564f0519252b9041b08163fde659f95f07a627a6046c2d3b24f",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snow-small"
+    },
+    "night.footprints": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/footprints.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 50,
+      "sha256": "aa74b06226f12cb7f3510b52174e3f1f819595c35ddfc324ba79bf89e2f157a8",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "footprints"
+    },
+    "night.brake": {
+      "kind": "sound",
+      "path": "assets/generated/sounds/brake.wav",
+      "mediaType": "audio/wav",
+      "bytes": 48554,
+      "sha256": "75da145ea4ee40f43570d6ae2e3b2a78caaf3f000928c01ee3549536939ccd03",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "brake"
+    },
+    "night.heartbeat": {
+      "kind": "sound",
+      "path": "assets/generated/sounds/heartbeat.wav",
+      "mediaType": "audio/wav",
+      "bytes": 37530,
+      "sha256": "d307a9c7ef5ecb14edccb27ae3404726d67bf8a793e437ba91c13c51bb2869c2",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "heartbeat"
+    },
+    "display.street-cottage": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/street-cottage.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 7054,
+      "sha256": "dec7ab05f39da63dc3eb73d4b0c84d070f7a53ca0400e95f36ca20a84d9b9393",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "street-cottage"
+    },
+    "display.street-store": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/street-store.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 9235,
+      "sha256": "ecda700fc26f709cbd68aa6d15db738a376cc31478b8558653388c65ea62ec3d",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "street-store"
+    },
+    "environment.cupboard": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/cupboard.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1902,
+      "sha256": "81b3a754b7848e0d43cb06812d6f69899c8b0322ebc99d172de407c60591e14d",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "cupboard"
+    },
+    "environment.moon-window": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/moon-window.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2602,
+      "sha256": "cde0e92650ed79bf1a252f1a24c648d56e278ba7efc214cc85090a14d7a4dfb2",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "moon-window"
+    },
+    "environment.coat-rack": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/coat-rack.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1087,
+      "sha256": "3e5882e78c88a35c31453fdaf94b5bc73a02589e8b4fc30247977b8ec1229fb0",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "coat-rack"
+    },
+    "environment.winter-tree": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/winter-tree.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 2150,
+      "sha256": "afaee1c9b378682022ac01108ff7a03ad1a07de19a415c654257d180ab372e74",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "winter-tree"
+    },
+    "environment.snow-wood": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/snow-wood.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1453,
+      "sha256": "fb96dfbe79c3c2c819fe183bbaa9616875e90cdf81d88d91269edebf30d57d79",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "snow-wood"
+    },
+    "environment.stone-lantern": {
+      "kind": "sprite",
+      "path": "assets/generated/sprites/stone-lantern.rle",
+      "mediaType": "application/vnd.type-pal.rle",
+      "bytes": 1082,
+      "sha256": "12202210296378560fc03f3e50fce437df0ae4354e88ae602e5716957cba767c",
+      "origin": {
+        "kind": "generated"
+      },
+      "label": "stone-lantern"
+    }
+  }
+}

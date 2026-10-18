@@ -1,0 +1,33 @@
+[
+  {
+    "id": "lamp-core",
+    "name": "灯芯碎晶",
+    "desc": [
+      "雾林里拾到的微光。",
+      "交给守灯人，点亮归途。"
+    ],
+    "buyPrice": 0,
+    "sellPrice": 0,
+    "sellable": false
+  },
+  {
+    "id": "herb",
+    "name": "回春草",
+    "desc": [
+      "行囊里的药草。"
+    ],
+    "buyPrice": 10,
+    "sellPrice": 3,
+    "sellable": true,
+    "use": {
+      "target": "oneAlly",
+      "consuming": true,
+      "effects": [
+        {
+          "kind": "healHp",
+          "amount": 40
+        }
+      ]
+    }
+  }
+]

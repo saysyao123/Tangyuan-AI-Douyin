@@ -1,0 +1,700 @@
+{
+  "id": "mind-tree",
+  "mapId": "mind-tree",
+  "entry": {
+    "pos": {
+      "col": 25,
+      "row": 1,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "income",
+      "label": "收入记录",
+      "pos": {
+        "col": 21,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "income-terminal",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "actor",
+                          "actor": "hero",
+                          "portrait": {
+                            "kind": "default",
+                            "side": "right"
+                          }
+                        },
+                        "rows": [
+                          {
+                            "text": "收入记录（节选）：便利店老板 +131、+27、+5……司机、路人和家人也留下了数字。原来让别人产生负面情绪，就会获得这里的收入。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "setFlag",
+                      "flag": "income_seen",
+                      "value": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "star-shop",
+      "label": "购物商店 · 果实1000",
+      "pos": {
+        "col": 29,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "star-terminal",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "只有星辰果实亮着，售价1000。当前余额不足；其他商品仍隐在雾里。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "setFlag",
+                      "flag": "shop_seen",
+                      "value": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "lottery",
+      "label": "抽奖中心 · 每次100",
+      "pos": {
+        "col": 30,
+        "row": 3,
+        "height": 0
+      },
+      "sprite": "draw-wheel",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "fruit_won",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "这轮七次抽取已经结束，奖励不会再次发放。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "all",
+                            "of": [
+                              {
+                                "kind": "flag",
+                                "flag": "income_seen",
+                                "is": true
+                              },
+                              {
+                                "kind": "flag",
+                                "flag": "shop_seen",
+                                "is": true
+                              }
+                            ]
+                          },
+                          "then": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "抽一次需要100点。本段按故事顺序演出六次落空和第七次奖励。要开始这一次吗？"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "confirm",
+                              "onYes": [
+                                {
+                                  "kind": "branch",
+                                  "cond": {
+                                    "kind": "var",
+                                    "var": "emotion",
+                                    "op": ">=",
+                                    "value": 100
+                                  },
+                                  "then": [
+                                    {
+                                      "kind": "addVar",
+                                      "var": "emotion",
+                                      "delta": -100
+                                    },
+                                    {
+                                      "kind": "playEntityAction",
+                                      "target": {
+                                        "scene": "mind-tree",
+                                        "entity": "lottery"
+                                      },
+                                      "sprite": "draw-wheel",
+                                      "action": "roll",
+                                      "loop": false,
+                                      "wait": true
+                                    },
+                                    {
+                                      "kind": "branch",
+                                      "cond": {
+                                        "kind": "var",
+                                        "var": "draws",
+                                        "op": "<",
+                                        "value": 6
+                                      },
+                                      "then": [
+                                        {
+                                          "kind": "addVar",
+                                          "var": "draws",
+                                          "delta": 1
+                                        },
+                                        {
+                                          "kind": "setEntityFrame",
+                                          "target": {
+                                            "scene": "mind-tree",
+                                            "entity": "lottery"
+                                          },
+                                          "frame": 6
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        },
+                                        {
+                                          "kind": "dialog",
+                                          "cue": {
+                                            "slot": "bottom",
+                                            "identity": {
+                                              "kind": "actor",
+                                              "actor": "hero",
+                                              "portrait": {
+                                                "kind": "default",
+                                                "side": "right"
+                                              }
+                                            },
+                                            "rows": [
+                                              {
+                                                "text": "谢谢参与。你盯着转盘，有点不敢相信这么神奇的系统也会落空。"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        }
+                                      ],
+                                      "else": [
+                                        {
+                                          "kind": "addVar",
+                                          "var": "draws",
+                                          "delta": 1
+                                        },
+                                        {
+                                          "kind": "setEntityFrame",
+                                          "target": {
+                                            "scene": "mind-tree",
+                                            "entity": "lottery"
+                                          },
+                                          "frame": 7
+                                        },
+                                        {
+                                          "kind": "giveItem",
+                                          "itemId": "cleansing-fruit",
+                                          "count": 1
+                                        },
+                                        {
+                                          "kind": "setFlag",
+                                          "flag": "fruit_won",
+                                          "value": true
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        },
+                                        {
+                                          "kind": "dialog",
+                                          "cue": {
+                                            "slot": "bottom",
+                                            "identity": {
+                                              "kind": "narration"
+                                            },
+                                            "rows": [
+                                              {
+                                                "text": "迷雾散去，一枚红色果实停在指针下。洗髓果实已存入原生物品栏。"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        },
+                                        {
+                                          "kind": "dialog",
+                                          "cue": {
+                                            "slot": "bottom",
+                                            "identity": {
+                                              "kind": "narration"
+                                            },
+                                            "rows": [
+                                              {
+                                                "text": "按 Esc 打开原生菜单：物品 → 使用 → 洗髓果实。使用会消耗这一枚果实。"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "kind": "clearDialog"
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "else": [
+                                    {
+                                      "kind": "clearDialog"
+                                    },
+                                    {
+                                      "kind": "dialog",
+                                      "cue": {
+                                        "slot": "bottom",
+                                        "identity": {
+                                          "kind": "narration"
+                                        },
+                                        "rows": [
+                                          {
+                                            "text": "余额不足100，不能继续抽取。"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "kind": "clearDialog"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "onNo": []
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "这是掌心树纹映出的意识空间。靠近三个光标按空格查看；方向键选择，空格确认，Esc取消。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "fruit-help",
+      "label": "如何使用果实",
+      "pos": {
+        "col": 25,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "tree-mark",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "按 Esc 打开原生菜单：物品 → 使用 → 洗髓果实。使用会消耗这一枚果实。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "mind-exit",
+      "label": "离开意识空间",
+      "pos": {
+        "col": 20,
+        "row": 5,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "fruit_used",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "after_fruit_seen",
+                            "is": true
+                          },
+                          "then": [],
+                          "else": [
+                            {
+                              "kind": "addVar",
+                              "var": "emotion",
+                              "delta": 1
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "after_fruit_seen",
+                              "value": true
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "收入记录里又多了一行：问路青年 +1。过了这么久，他竟还记着白天那句玩笑。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ],
+                      "else": []
+                    },
+                    {
+                      "kind": "loadScene",
+                      "scene": "home-room"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "mind-heart",
+      "label": "mind-heart",
+      "pos": {
+        "col": 27,
+        "row": -4,
+        "height": 0
+      },
+      "sprite": "white-heart",
+      "facing": "right",
+      "collide": false,
+      "hidden": false,
+      "pages": [
+        {
+          "id": "default",
+          "label": "环境",
+          "animation": {
+            "sprite": "white-heart",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default",
+      "zBias": 6
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "setAmbience",
+                    "ambience": "mind-night"
+                  },
+                  {
+                    "kind": "clearDialog"
+                  },
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "slot": "bottom",
+                      "identity": {
+                        "kind": "narration"
+                      },
+                      "rows": [
+                        {
+                          "text": "这是掌心树纹映出的意识空间。靠近三个光标按空格查看；方向键选择，空格确认，Esc取消。"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "clearDialog"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

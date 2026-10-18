@@ -1,0 +1,26 @@
+{
+  "quest_started": {
+    "kind": "flag",
+    "name": "quest_started",
+    "description": "原创驿站任务状态",
+    "initial": false
+  },
+  "core_taken": {
+    "kind": "flag",
+    "name": "core_taken",
+    "description": "原创驿站任务状态",
+    "initial": false
+  },
+  "wolf_defeated": {
+    "kind": "flag",
+    "name": "wolf_defeated",
+    "description": "原创驿站任务状态",
+    "initial": false
+  },
+  "ending_seen": {
+    "kind": "flag",
+    "name": "ending_seen",
+    "description": "原创驿站任务状态",
+    "initial": false
+  }
+}
