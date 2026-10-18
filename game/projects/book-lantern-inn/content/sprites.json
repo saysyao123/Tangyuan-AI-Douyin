@@ -1,0 +1,69 @@
+[
+  {
+    "id": "hero",
+    "asset": "sprite.hero",
+    "label": "hero",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "keeper",
+    "asset": "sprite.keeper",
+    "label": "keeper",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "wolf",
+    "asset": "sprite.wolf",
+    "label": "wolf",
+    "layout": {
+      "kind": "directional",
+      "framesPerDir": 3
+    }
+  },
+  {
+    "id": "tree",
+    "asset": "sprite.tree",
+    "label": "tree",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "house",
+    "asset": "sprite.house",
+    "label": "house",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "lantern",
+    "asset": "sprite.lantern",
+    "label": "lantern",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "core",
+    "asset": "sprite.core",
+    "label": "core",
+    "layout": {
+      "kind": "static"
+    }
+  },
+  {
+    "id": "sign",
+    "asset": "sprite.sign",
+    "label": "sign",
+    "layout": {
+      "kind": "static"
+    }
+  }
+]

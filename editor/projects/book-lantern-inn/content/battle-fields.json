@@ -1,0 +1,15 @@
+[
+  {
+    "id": 0,
+    "name": "雾林月色",
+    "screenWave": 0,
+    "magicEffect": {
+      "wind": 0,
+      "thunder": 0,
+      "water": 0,
+      "fire": 0,
+      "earth": 0
+    },
+    "background": "background.forest"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "maps": [
+    {
+      "id": "fair",
+      "name": "冬日小集",
+      "path": "content/maps/fair.json"
+    },
+    {
+      "id": "backstage",
+      "name": "舞台侧院",
+      "path": "content/maps/backstage.json"
+    },
+    {
+      "id": "street",
+      "name": "归家旧街",
+      "path": "content/maps/street.json"
+    },
+    {
+      "id": "courtyard",
+      "name": "冬夜小院",
+      "path": "content/maps/courtyard.json"
+    }
+  ]
+}

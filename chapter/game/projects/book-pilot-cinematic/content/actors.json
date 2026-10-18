@@ -1,0 +1,100 @@
+[
+  {
+    "id": "hero",
+    "name": "name.hero",
+    "spriteId": "hero",
+    "battler": {
+      "baseStats": {
+        "level": 1,
+        "hp": 100,
+        "maxHP": 100,
+        "mp": 0,
+        "maxMP": 0,
+        "attack": 10,
+        "defense": 5,
+        "magicAttack": 5,
+        "speed": 10,
+        "luck": 10
+      },
+      "initialEquipment": {},
+      "initialMagic": [],
+      "battleSprite": "starter-fighter"
+    },
+    "portraits": {
+      "default": "portrait.hero"
+    }
+  },
+  {
+    "id": "child",
+    "name": "name.child",
+    "spriteId": "child",
+    "battler": {
+      "baseStats": {
+        "level": 1,
+        "hp": 100,
+        "maxHP": 100,
+        "mp": 0,
+        "maxMP": 0,
+        "attack": 10,
+        "defense": 5,
+        "magicAttack": 5,
+        "speed": 10,
+        "luck": 10
+      },
+      "initialEquipment": {},
+      "initialMagic": [],
+      "battleSprite": "starter-fighter"
+    },
+    "portraits": {
+      "default": "portrait.child"
+    }
+  },
+  {
+    "id": "vendor",
+    "name": "name.vendor",
+    "spriteId": "merchant",
+    "portraits": {
+      "default": "portrait.merchant"
+    }
+  },
+  {
+    "id": "guard",
+    "name": "name.guard",
+    "spriteId": "operative",
+    "portraits": {
+      "default": "portrait.officer"
+    }
+  },
+  {
+    "id": "stranger",
+    "name": "name.stranger",
+    "spriteId": "stranger",
+    "portraits": {
+      "default": "portrait.stranger"
+    }
+  },
+  {
+    "id": "neighbor",
+    "name": "name.neighbor",
+    "spriteId": "neighbor",
+    "portraits": {
+      "default": "portrait.neighbor"
+    }
+  },
+  {
+    "id": "driver",
+    "name": "name.driver",
+    "spriteId": "visitor",
+    "portraits": {
+      "default": "portrait.merchant"
+    }
+  },
+  {
+    "id": "shopkeeper",
+    "name": "name.shopkeeper",
+    "spriteId": "merchant",
+    "portraits": {
+      "default": "portrait.merchant"
+    }
+  }
+]

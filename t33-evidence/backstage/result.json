@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "checks": [
+    "AFFECTED_BACKSTAGE_COLLAPSE_CARRIERS_AND_DEPARTURE",
+    "AFFECTED_BACKSTAGE_SAVE_REOPEN"
+  ],
+  "errors": [],
+  "scope": "Only the final backstage wall alignment change. Complete fresh first act was already proved by Run39088306145; maps/story/collision/input remain byte-identical."
+}

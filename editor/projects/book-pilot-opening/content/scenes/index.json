@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "scenes": [
+    {
+      "id": "fair",
+      "name": "冬日小集",
+      "path": "content/scenes/fair.json"
+    },
+    {
+      "id": "backstage",
+      "name": "舞台侧院",
+      "path": "content/scenes/backstage.json"
+    },
+    {
+      "id": "street",
+      "name": "归家旧街",
+      "path": "content/scenes/street.json"
+    },
+    {
+      "id": "courtyard",
+      "name": "冬夜小院",
+      "path": "content/scenes/courtyard.json"
+    }
+  ]
+}
