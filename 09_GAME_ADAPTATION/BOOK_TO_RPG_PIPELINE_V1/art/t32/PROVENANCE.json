@@ -1,0 +1,18 @@
+{
+  "mode": "Built-in GPT imagegen",
+  "date": "2026-10-18",
+  "style_reference": "User approved T19 P1 V2 scene and two leads; T31 house asset from handoff",
+  "generated_sets": [
+    "Chinese winter stage, stalls, backstage, wall, tree, stove",
+    "Snow, stone and wood terrain materials",
+    "Six actual NPC identities in four directions",
+    "Two approved lead designs in four directions and three poses",
+    "Native performer collapse/carry/child crouch actions",
+    "Existing sign, lamp, crate, garden and wood props",
+    "Security operative four-direction gait",
+    "Performer standing/walking/bowing poses"
+  ],
+  "processing": "Mechanical alpha-connected sprite extraction, uniform foot anchored canvases, native frame mapping, WebP encoding. No commercial game raster source.",
+  "license": "GPL-3.0 with this project",
+  "unchanged_simulation": "Original native frames, maps, story, collision, input and SAVE12 payloads remain unchanged; art metadata only lives in painter."
+}
