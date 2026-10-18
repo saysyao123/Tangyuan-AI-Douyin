@@ -7,12 +7,15 @@ import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 const act=new Set(['fair','backstage','street','courtyard']);
 const images=new Map<string,HTMLImageElement>();
-const filenames=['house','stage','stall','backstage','back-panel','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood'];
+const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
+const filenames=['house','stage','stall','backstage','back-panel','back-panel-window','crate-indoor','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood',...portraits.map(role=>'portrait-'+role)];
+let activeScene='';
 function img(key:string){
  let v=images.get(key);if(!v){v=new Image();v.decoding='async';v.src=new URL(`./t32-art/${key}.webp`,window.location.href).href;images.set(key,v)}
  return v.complete&&v.naturalWidth>0?v:undefined;
 }
 export function firstActReady(scene:string){
+ activeScene=scene;
  if(!act.has(scene)||new URLSearchParams(location.search).get('art')==='baseline')return false;
  const all=[...filenames,
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
@@ -20,6 +23,15 @@ export function firstActReady(scene:string){
   ...Array.from({length:12},(_,i)=>`guard-${Math.floor(i/3)}-${i%3}`),
   ...Array.from({length:6},(_,i)=>`action-performer-${i}`),'action-carriers-0','action-carriers-1','action-child-crouch'];
  const ready=all.map(img).every(Boolean);document.documentElement.dataset.t32Art=ready?'ready':'loading';return ready;
+}
+/** Keep native dialogue identities, slots, text layout and 64x72 logical footprint.
+ * The source is 4x dense; it must never use its physical size as a UI size.
+ * Scene restriction also preserves original portraits outside the first act.
+ */
+export function firstActPortrait(asset:string){
+ if(!act.has(activeScene)||new URLSearchParams(location.search).get('art')==='baseline')return undefined;
+ const role=asset.startsWith('portrait.')?asset.slice(9):'';
+ return portraits.includes(role)?img('portrait-'+role):undefined;
 }
 let floor:{scene:string,map:IsometricMapContent<number|null>,canvas:HTMLCanvasElement,x:number,y:number}|undefined;
 export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:IsometricMapContent<number|null>,room:CellRect,camera:Camera){
@@ -70,11 +82,11 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
  return sprites.map(s=>{
   if(scene==='backstage'&&s.artId==='rear-wall')return {...s,drawHD:()=>{}};
   if(scene==='backstage'&&s.artId==='rear-curtain'){
-   const panel=img('back-panel');if(!panel)return s;
+   const panel=img('back-panel'),windowPanel=img('back-panel-window');if(!panel||!windowPanel)return s;
    return {...s,sortOffset:-100,drawHD:(c,camera)=>{
     const A={x:400,y:205},B={x:511,y:147},C={x:643,y:217};
-    const wall=(a:typeof A,b:typeof A)=>{c.save();c.imageSmoothingEnabled=true;c.transform((b.x-a.x)/panel.naturalWidth,(b.y-a.y)/panel.naturalWidth,0,65/panel.naturalHeight,a.x-camera.x,a.y-camera.y-65);c.drawImage(panel,0,0);c.restore()};
-    wall(A,B);wall(B,C);
+    const wall=(source:HTMLImageElement,a:typeof A,b:typeof A)=>{c.save();c.imageSmoothingEnabled=true;c.transform((b.x-a.x)/source.naturalWidth,(b.y-a.y)/source.naturalWidth,0,65/source.naturalHeight,a.x-camera.x,a.y-camera.y-65);c.drawImage(source,0,0);c.restore()};
+    wall(panel,A,B);wall(windowPanel,B,C);
    }};
   }
   const prop=s.artId?byScene[scene]?.[s.artId]:undefined;
@@ -89,6 +101,7 @@ export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):Sprit
   if(!prop&&['lantern','sign','crate','vegetables','snow-wood'].includes(s.artKey??'')){
    const mapping:Record<string,[string,number]>={lantern:['lamp',20],sign:['sign',24],crate:['crate',28],vegetables:['garden',48],'snow-wood':['wood',48]};
    const selected=mapping[s.artKey!]!;key=selected[0];w=selected[1];foot=.94;
+   if(scene==='backstage'&&s.artKey==='crate')key='crate-indoor';
   }
   if(!prop&&(s.artKey==='hero'||s.artKey==='child')){
    key=`lead-${s.artKey}-${direction[s.artFacing??'down']??0}-${(s.artFrame??0)%3}`;

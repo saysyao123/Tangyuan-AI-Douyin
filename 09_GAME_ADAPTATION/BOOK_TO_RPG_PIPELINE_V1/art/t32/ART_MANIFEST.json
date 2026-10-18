@@ -1,5 +1,5 @@
 {
-  "status": "ORIGINAL_ART_INTEGRATION_PENDING_REAL_SCREEN_REVIEW",
+  "status": "T32_R2_PORTRAITS_AND_BACKSTAGE_AWAITING_AFFECTED_QA",
   "files": {
     "action-carriers-0.webp": "6562aab35cb8637f0904160796f294858b05ef42e3e1c365c3eb0bf2f1b24e4f",
     "action-carriers-1.webp": "88c9fd2bdb1126f8495d323ddeb567c2b84e8136ab0fe9f498141f6a4e66c033",
@@ -88,7 +88,17 @@
     "terrain-wood.webp": "3fade41c6ff3ecb495caa74d365140cf100ba88a93305fd04b2cf4fad37dc972",
     "tree.webp": "9299262d52d0053d57795768f64b728b655223912bdfcc654fe7fc9c959a21b8",
     "wall.webp": "c566cb7d3adae47cdcd275b3b7f12edd0f836ab5f6aec86025b25ac533f79406",
-    "wood.webp": "e8da3f208dcda11f7c1d4a44a54aa6d2dbf76fa07abeee9e93024b6909bd509c"
+    "wood.webp": "e8da3f208dcda11f7c1d4a44a54aa6d2dbf76fa07abeee9e93024b6909bd509c",
+    "portrait-hero.webp": "0755ce5802aaa57fe401295e81498b6fdb850549f17724ae00d58398d4613e3b",
+    "portrait-child.webp": "adee250aa9d29cff95982e6347413e87fcf881f2ff6f35f2c97b993fe87b6cc8",
+    "portrait-merchant.webp": "26f14ee51fde19411a14fa3c8dd4a557cddb5cc8a00c882efc6e4be4278da89c",
+    "portrait-neighbor.webp": "f1e5fac0ed04538bec8dfd3380289e78fa3bbf5b29d0e048bd0061b98590745f",
+    "portrait-stranger.webp": "834b749ccf7b597c78398e8863016479f9425c7f341f9670f6ebd20c7acfab8e",
+    "portrait-visitor.webp": "3c32aea7e43c31e43869ffa4918f2250002452b0930f9eb5f52eb3a6ae0a49b4",
+    "portrait-officer.webp": "11b10a9dd6877f073cc965347501417ee2a18ed9d64eec51ff515487fae2c415",
+    "portrait-performer.webp": "2317153fbb685acaef0945fbb19b3511558dc482e64121a134b56b8ddc9f32ae",
+    "back-panel-window.webp": "237db7da946880ad23086a5e35acc0ca7edbd217b3cca3f0b510cfa16d3a70a5",
+    "crate-indoor.webp": "c7f12314274c31cad9ec59effa5c97e10a521af97762b6ee68c0a04074f9ac9b"
   },
   "license": "Original GPT generated art released under GPL-3.0 with this project. Type PAL remains GPL-3.0.",
   "input_house_sha256": "731ca755461a47874bbe033118efceb9632fa2bd9082b4ab1d9dab609398222b",
@@ -103,6 +113,7 @@
     "STORY": "PENDING_NEW_INTEGRATION",
     "WEB": "PENDING",
     "USER": "PENDING",
-    "format": "LOCAL_BUILD_AND_TYPES_PASS"
+    "format": "LOCAL_BUILD_AND_TYPES_PASS",
+    "portraitIntegration": "Implemented; awaiting actual dialogue screenshots and native fixed-size draw verification."
   }
 }

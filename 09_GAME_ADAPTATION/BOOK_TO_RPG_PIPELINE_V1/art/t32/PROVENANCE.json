@@ -14,5 +14,37 @@
   ],
   "processing": "Mechanical alpha-connected sprite extraction, uniform foot anchored canvases, native frame mapping, WebP encoding. No commercial game raster source.",
   "license": "GPL-3.0 with this project",
-  "unchanged_simulation": "Original native frames, maps, story, collision, input and SAVE12 payloads remain unchanged; art metadata only lives in painter."
+  "unchanged_simulation": "Original native frames, maps, story, collision, input and SAVE12 payloads remain unchanged; art metadata only lives in painter.",
+  "r2_20261018": {
+    "scope": "Display-only portraits and backstage wall/indoor crates",
+    "tool": "Built-in image_gen, identity-preserve and precise-object-edit",
+    "inputs": [
+      "T32 existing eight world sprites",
+      "T32 back-panel.webp",
+      "T32 crate.webp"
+    ],
+    "outputs": [
+      "portrait-hero.webp",
+      "portrait-child.webp",
+      "portrait-merchant.webp",
+      "portrait-neighbor.webp",
+      "portrait-stranger.webp",
+      "portrait-visitor.webp",
+      "portrait-officer.webp",
+      "portrait-performer.webp",
+      "back-panel-window.webp",
+      "crate-indoor.webp"
+    ],
+    "invariants": [
+      "Existing identities and winter clothing",
+      "64x72 logical portrait footprint",
+      "Native scene/entity IDs, positions, collision and SAVE12 unchanged"
+    ],
+    "processing": "Alpha connected-component extraction, proportional resize to padded 256x288, WebP encoding; no procedural substitute for artwork",
+    "prompts": [
+      "Eight existing characters, same identity, head and chest, transparent 4x2 atlas, warm amber/cool blue, detailed painted pixel RPG style",
+      "Complementary orthographic walnut backstage wall with closed door, window, timber beam/posts, cup shelf and towels; no floor or perspective",
+      "Same stacked rope-bound crates and jar with all indoor snow removed, unchanged isometric footprint"
+    ]
+  }
 }

@@ -6,6 +6,7 @@ on:
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t32/**'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/art/t32/**'
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-art-e2e.mjs'
+      - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-portraits-e2e.mjs'
       - '.github/workflows/book_rpg_t32_art_integration.yml'
   workflow_dispatch:
 permissions: {contents: write}
@@ -58,20 +59,31 @@ jobs:
       - name: Typecheck changed renderer in shipped source
         working-directory: upstream/packages/reforge
         run: pnpm typecheck
-      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
         working-directory: upstream
       - name: Serve isolated candidate and unchanged T30 control
         run: |
           python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t32-http.log 2>&1 &
           for i in {1..30}; do if curl -fsS http://127.0.0.1:6154/site/chapter/game/ >/dev/null; then exit 0; fi; sleep 1; done
           exit 1
-      - name: Four real scenes, same camera, actual native canvas and original webpage
+      - name: Keep proven story, map and shell bytes unchanged
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          a=Path('candidate/chapter/game/projects/book-pilot-cinematic')
+          b=Path('site/chapter/game/projects/book-pilot-cinematic')
+          files=[p for p in a.rglob('*') if p.is_file()]
+          assert len(files)>30
+          for p in files:assert p.read_bytes()==(b/p.relative_to(a)).read_bytes(),p
+          print('NATIVE_PROJECT_BYTES_UNCHANGED',len(files))
+          PY
+      - name: Newly changed portraits and room through real dialogue in three browser engines
         working-directory: upstream
         run: |
-          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-art-e2e.mjs .
-          mkdir -p book-rpg-tests
-          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json book-rpg-tests/
-          node t32-art-e2e.mjs
+          cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-portraits-e2e.mjs .
+          for engine in chromium firefox webkit; do
+            T1_URL=http://127.0.0.1:6154/site T32_BROWSER=$engine node t32-portraits-e2e.mjs
+          done
       - name: Only affected backstage alignment, native collapse, carrying and save reopen
         working-directory: upstream
         env: {T1_URL: 'http://127.0.0.1:6154/site'}

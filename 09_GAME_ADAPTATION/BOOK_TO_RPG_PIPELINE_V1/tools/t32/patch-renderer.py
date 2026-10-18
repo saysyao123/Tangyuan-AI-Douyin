@@ -44,5 +44,22 @@ patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, laye
 ''')
 print('T32_DISPLAY_ONLY_PATCH_APPLIED')
 
+# First-act high-density portraits are display overrides; content assets and
+# dialogue cues stay byte-identical, and the original image remains fallback.
+patch('dialog/dialog-box.ts',"import { advanceCue, type DialogueState } from '../dialogue.js'", "import { advanceCue, type DialogueState } from '../dialogue.js'\nimport { firstActPortrait } from '../hd-world.js'")
+patch('dialog/dialog-box.ts', '''      const px = pos.portrait.x - portraitImg.width / 2
+      const py = pos.portrait.y - portraitImg.height / 2
+      this.ctx.drawImage(portraitImg, px, py)''', '''      const hd = cue?.portrait ? firstActPortrait(cue.portrait.asset) : undefined
+      const width = hd ? 64 : portraitImg.width
+      const height = hd ? 72 : portraitImg.height
+      const px = pos.portrait.x - width / 2
+      const py = pos.portrait.y - height / 2
+      if (hd) {
+        this.ctx.save()
+        this.ctx.imageSmoothingEnabled = true
+        this.ctx.drawImage(hd, px, py, width, height)
+        this.ctx.restore()
+      } else this.ctx.drawImage(portraitImg, px, py)''')
+
 # Preserve 320x200 logic and native coordinates, increase only physical paint density.
 p=pkg/'main.ts';s=p.read_text();anchor="const WORLD_SCALE = new URLSearchParams(location.search).get('quality') === 'sharp' ? 4 : 2";assert anchor in s;s=s.replace(anchor,'const WORLD_SCALE = 4');p.write_text(s)
