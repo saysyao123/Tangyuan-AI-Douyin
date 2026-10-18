@@ -1,0 +1,29 @@
+[
+  {
+    "id": "hero",
+    "name": "name.hero",
+    "spriteId": "hero",
+    "battler": {
+      "baseStats": {
+        "level": 1,
+        "hp": 120,
+        "maxHP": 120,
+        "mp": 12,
+        "maxMP": 12,
+        "attack": 60,
+        "defense": 40,
+        "magicAttack": 12,
+        "speed": 15,
+        "luck": 8
+      },
+      "initialEquipment": {},
+      "initialMagic": [],
+      "battleSprite": "starter-fighter"
+    }
+  },
+  {
+    "id": "keeper",
+    "name": "name.keeper",
+    "spriteId": "keeper"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "scenes": [
+    {
+      "id": "inn",
+      "name": "雾灯驿站",
+      "path": "content/scenes/inn.json"
+    },
+    {
+      "id": "forest",
+      "name": "雾林小道",
+      "path": "content/scenes/forest.json"
+    }
+  ]
+}

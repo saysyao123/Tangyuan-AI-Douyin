@@ -1,0 +1,772 @@
+{
+  "id": "fair",
+  "mapId": "fair",
+  "entry": {
+    "pos": {
+      "col": 10,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "vendor",
+      "label": "点心摊",
+      "pos": {
+        "col": 12,
+        "row": 0,
+        "height": 0
+      },
+      "actor": "vendor",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "faceEntityToParty",
+                      "target": {
+                        "scene": "fair",
+                        "entity": "vendor"
+                      }
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "bought",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "vendor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "你已经买过了。慢慢吃，别着急。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "vendor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "一份甜果串，五枚零钱。\n请拿好，别挤到人多的地方。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "giveMoney",
+                          "delta": -5
+                        },
+                        {
+                          "kind": "giveItem",
+                          "itemId": "treat",
+                          "count": 1
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "bought",
+                          "value": true
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "获得甜果串，花费 5 枚零钱。\n向右上方走，到红色小舞台按空格。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "stage",
+      "label": "小舞台",
+      "pos": {
+        "col": 15,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "watched",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "舞台已经谢幕。右侧路牌通向侧院。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "bought",
+                            "is": true
+                          },
+                          "then": [
+                            {
+                              "kind": "branch",
+                              "cond": {
+                                "kind": "flag",
+                                "flag": "shared",
+                                "is": true
+                              },
+                              "then": [],
+                              "else": [
+                                {
+                                  "kind": "loseItem",
+                                  "itemId": "treat",
+                                  "count": 1
+                                },
+                                {
+                                  "kind": "setFlag",
+                                  "flag": "shared",
+                                  "value": true
+                                },
+                                {
+                                  "kind": "dialog",
+                                  "cue": {
+                                    "slot": "bottom",
+                                    "identity": {
+                                      "kind": "actor",
+                                      "actor": "child",
+                                      "portrait": {
+                                        "kind": "default",
+                                        "side": "right"
+                                      }
+                                    },
+                                    "rows": [
+                                      {
+                                        "text": "分着吃才好！点心已经吃完，去看表演吧。"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "小舞台上的表演即将结束。\n一束暖光掠过人群，转眼又收回幕后。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "shakeScreen",
+                              "frames": 5,
+                              "level": 1
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "刚才的光……怎么会让我觉得熟悉？"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "watched",
+                              "value": true
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "我们从右侧的路牌去侧院看看。"
+                                  }
+                                ]
+                              }
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "先去中间的摊主那里买点心呀。"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "backstage-gate",
+      "label": "侧门",
+      "pos": {
+        "col": 18,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "watched",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "loadScene",
+                          "scene": "backstage",
+                          "pos": {
+                            "col": 8,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "facing": "right"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "表演还没结束，先去小舞台看看。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "exit",
+      "label": "离开小集",
+      "pos": {
+        "col": 6,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "backstage_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "ending_seen",
+                            "is": true
+                          },
+                          "then": [],
+                          "else": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "天色暗了，我们回去。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "好，下次再来。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "ending_seen",
+                              "value": true
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "loadScene",
+                          "scene": "street",
+                          "pos": {
+                            "col": 8,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "facing": "right"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "还没看完呢，先去舞台吧。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "rumor",
+      "label": "闲谈",
+      "pos": {
+        "col": 10,
+        "row": 3,
+        "height": 0
+      },
+      "sprite": "visitor",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "有人说最近夜空里常出现奇光。\n也许只是冬天里的错觉。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "setFlag",
+                      "flag": "rumor_seen",
+                      "value": true
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "theater",
+      "pos": {
+        "col": 18,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "stage",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "lamp1",
+      "pos": {
+        "col": 8,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "lamp2",
+      "pos": {
+        "col": 18,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "lantern",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "stall",
+      "pos": {
+        "col": 12,
+        "row": -6,
+        "height": 0
+      },
+      "sprite": "stall",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "winter-tree",
+      "pos": {
+        "col": 19,
+        "row": -7,
+        "height": 0
+      },
+      "sprite": "tree",
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "stage-fire",
+      "pos": {
+        "col": 16,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "flame",
+      "facing": "down",
+      "collide": true,
+      "pages": [
+        {
+          "id": "default",
+          "label": "火光",
+          "animation": {
+            "sprite": "flame",
+            "action": "flicker",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default"
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "开场",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "branch",
+                    "cond": {
+                      "kind": "flag",
+                      "flag": "intro_seen",
+                      "is": true
+                    },
+                    "then": [],
+                    "else": [
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "narration"
+                          },
+                          "rows": [
+                            {
+                              "text": "冬日小集。阿笙带着小满来逛集市。\n方向键走动，靠近人物或路牌按空格。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "dialog",
+                        "cue": {
+                          "slot": "bottom",
+                          "identity": {
+                            "kind": "actor",
+                            "actor": "child",
+                            "portrait": {
+                              "kind": "default",
+                              "side": "right"
+                            }
+                          },
+                          "rows": [
+                            {
+                              "text": "先买点心，再去看舞台吧。\n右前方是摊主，背包里有十枚零钱。"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "kind": "setFlag",
+                        "flag": "intro_seen",
+                        "value": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

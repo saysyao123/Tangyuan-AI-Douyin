@@ -1,0 +1,42 @@
+{
+  "id": "book-pilot-opening",
+  "name": "冬日小集 · 归途篇",
+  "contentVersion": 22,
+  "minimumSaveVersion": 12,
+  "defaultEntryId": "new-game",
+  "entryPoints": [
+    {
+      "id": "new-game",
+      "label": "开始短阶段",
+      "scene": "fair",
+      "startWorld": {
+        "party": [
+          "hero",
+          "child"
+        ],
+        "money": 10,
+        "inventory": []
+      }
+    }
+  ],
+  "content": {
+    "actors": "content/actors.json",
+    "skills": "content/skills.json",
+    "items": "content/items.json",
+    "locale": "content/locale.json",
+    "sprites": "content/sprites.json",
+    "battleSprites": "content/battle-sprites.json",
+    "tilesets": "content/tilesets.json",
+    "stamps": "content/stamps.json",
+    "scenes": "content/scenes/",
+    "maps": "content/maps/index.json",
+    "sharedScripts": "content/shared-scripts.json",
+    "worldVariables": "content/world-variables.json"
+  },
+  "assets": {
+    "catalog": "assets/index.json",
+    "roles": {
+      "visual.standardColorTable": "color.project-standard"
+    }
+  }
+}

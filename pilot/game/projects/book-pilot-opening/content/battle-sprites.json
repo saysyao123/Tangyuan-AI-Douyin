@@ -1,0 +1,24 @@
+[
+  {
+    "id": "starter-fighter",
+    "label": "占位主角战斗形象",
+    "asset": "battle-sprite.generated.starter",
+    "profile": {
+      "kind": "player-fighter",
+      "frames": {
+        "idle": 0,
+        "dying": 1,
+        "dead": 2,
+        "defend": 3,
+        "hurt": 4,
+        "preMagic": 5,
+        "magic": 6,
+        "attackWindup": 7,
+        "attackRush": 8,
+        "attackStrike": 9
+      },
+      "castEffectBase": 15,
+      "attackEffectBase": 0
+    }
+  }
+]

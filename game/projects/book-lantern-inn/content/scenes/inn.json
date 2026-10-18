@@ -1,0 +1,443 @@
+{
+  "id": "inn",
+  "mapId": "inn",
+  "entry": {
+    "pos": {
+      "col": 10,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "keeper",
+      "label": "keeper",
+      "pos": {
+        "col": 12,
+        "row": 0,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "faceEntityToParty",
+                      "target": {
+                        "scene": "inn",
+                        "entity": "keeper"
+                      }
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "ending_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "keeper"
+                            },
+                            "rows": [
+                              {
+                                "text": "灯还亮着。累了就在这里歇一会儿。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "increaseHpMp",
+                          "delta": 999
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "all",
+                            "of": [
+                              {
+                                "kind": "flag",
+                                "flag": "wolf_defeated",
+                                "is": true
+                              },
+                              {
+                                "kind": "hasItem",
+                                "itemId": "lamp-core",
+                                "atLeast": 1
+                              }
+                            ]
+                          },
+                          "then": [
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "keeper"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "灯芯回来了，雾狼也退了。你听，山道上已经有人在往家走。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "loseItem",
+                              "itemId": "lamp-core",
+                              "count": 1
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "ending_seen",
+                              "value": true
+                            },
+                            {
+                              "kind": "giveMoney",
+                              "delta": 20
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "灯火重明"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "阿笙把灯挂上檐角。雾还没有散，但晚归的人，终于看见了家的方向。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "第一章 · 完\n你已完成原创试玩。可继续探索，或按 F5 留下这段归途。"
+                                  }
+                                ]
+                              }
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "branch",
+                              "cond": {
+                                "kind": "flag",
+                                "flag": "quest_started",
+                                "is": true
+                              },
+                              "then": [
+                                {
+                                  "kind": "dialog",
+                                  "cue": {
+                                    "identity": {
+                                      "kind": "actor",
+                                      "actor": "keeper"
+                                    },
+                                    "rows": [
+                                      {
+                                        "text": "灯芯在蓝色碎晶旁；别忘了击退守在路口的雾狼。受伤就用回春草。"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "kind": "increaseHpMp",
+                                  "delta": 999
+                                }
+                              ],
+                              "else": [
+                                {
+                                  "kind": "dialog",
+                                  "cue": {
+                                    "identity": {
+                                      "kind": "actor",
+                                      "actor": "keeper"
+                                    },
+                                    "rows": [
+                                      {
+                                        "text": "山道的灯熄了。雾林里还有一枚灯芯，能替我找回来吗？"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "kind": "dialog",
+                                  "cue": {
+                                    "identity": {
+                                      "kind": "actor",
+                                      "actor": "keeper"
+                                    },
+                                    "rows": [
+                                      {
+                                        "text": "往右上方的路牌走，按空格进入雾林。先存个档吧，F5 保存，F9 读取。"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "kind": "setFlag",
+                                  "flag": "quest_started",
+                                  "value": true
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互页",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default",
+      "actor": "keeper"
+    },
+    {
+      "id": "forest-gate",
+      "label": "forest-gate",
+      "pos": {
+        "col": 16,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "quest_started",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "loadScene",
+                          "scene": "forest",
+                          "pos": {
+                            "col": 8,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "facing": "right"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "雾林前路不明。先和檐下的守灯人说几句话。"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互页",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "decor-0",
+      "sprite": "house",
+      "pos": {
+        "col": 10,
+        "row": -4,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-1",
+      "sprite": "lantern",
+      "pos": {
+        "col": 13,
+        "row": -3,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-2",
+      "sprite": "lantern",
+      "pos": {
+        "col": 10,
+        "row": 3,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-3",
+      "sprite": "tree",
+      "pos": {
+        "col": 6,
+        "row": -3,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-4",
+      "sprite": "tree",
+      "pos": {
+        "col": 7,
+        "row": 4,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-5",
+      "sprite": "tree",
+      "pos": {
+        "col": 18,
+        "row": -1,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "初到驿站",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "first",
+            "stages": [
+              {
+                "id": "first",
+                "body": [
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "identity": {
+                        "kind": "narration"
+                      },
+                      "rows": [
+                        {
+                          "text": "雾灯驿站"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "identity": {
+                        "kind": "narration"
+                      },
+                      "rows": [
+                        {
+                          "text": "天黑以后，山路只剩最后一点灯火。\n方向键走动，靠近人物后按空格交谈。"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "next": "quiet"
+              },
+              {
+                "id": "quiet",
+                "body": []
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
