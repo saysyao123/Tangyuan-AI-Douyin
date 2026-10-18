@@ -22,11 +22,12 @@ document.getElementById('restore').onchange=async e=>{
  const file=e.target.files[0];e.target.value='';if(!file)return;
  try{if(!ready)throw Error('请等待游戏载入。');if(file.size>5000000)throw Error('备份文件过大。');if(!confirm('将用所选备份覆盖快速存档；当前画面暂不改变。确认后可按“读取进度”恢复。'))return;await frame.contentWindow.tpPlayer.importQuickSave(await file.text());status.textContent='备份已导入快速存档。请按“读取进度”恢复。'}catch(error){status.textContent='导入失败，原存档保留：'+error.message}
 };
+function showBootWaiting(){ready=false;loading.hidden=false;const slow=performance.now()-started>15000;hint.textContent=slow?'载入时间较长，可以继续等待或重试。':'正在载入场景与人物素材，请稍候。';retry.hidden=!slow}
 function update(){
  try{
   const win=frame.contentWindow,doc=win.document.documentElement;
-  if(doc.dataset.bootError||doc.dataset.runtimeError){showRecovery('游戏暂时未能继续。重新载入后可读取已保存的进度，未保存的操作会丢失。');return}
-  const s=win.__tpObserve?.readRuntime();if(!s){if(performance.now()-started>15000){hint.textContent='载入时间较长，可以继续等待或重试。';retry.hidden=false}return}
+  if(doc?.dataset.bootError||doc?.dataset.runtimeError){showRecovery('游戏暂时未能继续。重新载入后可读取已保存的进度，未保存的操作会丢失。');return}
+  const s=win.__tpObserve?.readRuntime();if(!s){showBootWaiting();return}
   const now=performance.now();if(s.health.frames!==lastFrames&&s.health.draws!==lastDraws){lastFrames=s.health.frames;lastDraws=s.health.draws;lastProgress=now}
   if(!document.hidden&&now-lastProgress>8000){showRecovery('游戏画面已较长时间未更新。可重新载入后读取已保存的进度，未保存的操作会丢失。');return}
   ready=true;loading.hidden=true;retry.hidden=true;
@@ -37,7 +38,7 @@ function update(){
   const done=config?config.flags.map(id=>f[id]):[f.quest_started,s.sceneId==='forest'||f.core_taken||f.wolf_defeated,f.core_taken,f.wolf_defeated,f.ending_seen];document.querySelectorAll('#quests li').forEach((li,i)=>li.classList.toggle('done',!!done[i]));
   document.getElementById('health').textContent=config?'零钱 '+s.story.money+(f.tree_seen?' · 情绪 '+(vars.emotion??0)+' · 抽取 '+(vars.draws??0)+'/7':''):'体力 '+s.story.party[0].hp+'/'+s.story.party[0].maxHP;
   const objective=document.getElementById('objective');if(objective){const next=(showingNight?baseConfig.nightObjectives:baseConfig.firstObjectives).find(step=>!f[step.until]);objective.textContent=next?next.text:'本幕已完成。按 F5 保存，或继续在场景里看看。';}document.querySelector('h1').innerHTML=config?(f[config.completionFlag??'ending_seen']?config.endHeadline:config.headline):f.ending_seen?'灯火<em><br>重明。</em>':'把灯火<br><em>带回家。</em>';
- }catch{showRecovery('暂时无法连接游戏。可重新载入后读取已保存的进度，未保存的操作会丢失。')}
+ }catch{if(!ready&&performance.now()-started<15000)showBootWaiting();else showRecovery('暂时无法连接游戏。可重新载入后读取已保存的进度，未保存的操作会丢失。')}
 }
 setInterval(update,250);update();
 
