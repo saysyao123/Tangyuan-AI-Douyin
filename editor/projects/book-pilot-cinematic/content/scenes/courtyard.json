@@ -1,0 +1,2326 @@
+{
+  "id": "courtyard",
+  "mapId": "courtyard",
+  "entry": {
+    "pos": {
+      "col": 27,
+      "row": 1,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "street-return",
+      "label": "返回旧街",
+      "pos": {
+        "col": 25,
+        "row": 2,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "street",
+                      "pos": {
+                        "col": 36,
+                        "row": -9,
+                        "height": 0
+                      },
+                      "facing": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "neighbor",
+      "label": "院里邻居",
+      "pos": {
+        "col": 32,
+        "row": -1,
+        "height": 0
+      },
+      "facing": "right",
+      "collide": true,
+      "actor": "neighbor",
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "setEntityPosRelParty",
+                      "target": {
+                        "scene": "courtyard",
+                        "entity": "approach-neighbor-probe"
+                      },
+                      "dcol": 0,
+                      "drow": 0
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "entitiesNear",
+                        "from": {
+                          "scene": "courtyard",
+                          "entity": "approach-neighbor-probe"
+                        },
+                        "to": {
+                          "scene": "courtyard",
+                          "entity": "approach-neighbor-4-4"
+                        },
+                        "range": 0.01
+                      },
+                      "then": [
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": 1,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": -1,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "entitiesNear",
+                            "from": {
+                              "scene": "courtyard",
+                              "entity": "approach-neighbor-probe"
+                            },
+                            "to": {
+                              "scene": "courtyard",
+                              "entity": "approach-neighbor-4-3"
+                            },
+                            "range": 0.01
+                          },
+                          "then": [
+                            {
+                              "kind": "moveParty",
+                              "to": {
+                                "col": 33,
+                                "row": 0,
+                                "height": 0
+                              },
+                              "speed": "normal"
+                            },
+                            {
+                              "kind": "moveParty",
+                              "to": {
+                                "col": 33,
+                                "row": -1,
+                                "height": 0
+                              },
+                              "speed": "normal"
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "branch",
+                              "cond": {
+                                "kind": "entitiesNear",
+                                "from": {
+                                  "scene": "courtyard",
+                                  "entity": "approach-neighbor-probe"
+                                },
+                                "to": {
+                                  "scene": "courtyard",
+                                  "entity": "approach-neighbor-4-2"
+                                },
+                                "range": 0.01
+                              },
+                              "then": [
+                                {
+                                  "kind": "moveParty",
+                                  "to": {
+                                    "col": 33,
+                                    "row": -1,
+                                    "height": 0
+                                  },
+                                  "speed": "normal"
+                                }
+                              ],
+                              "else": [
+                                {
+                                  "kind": "branch",
+                                  "cond": {
+                                    "kind": "entitiesNear",
+                                    "from": {
+                                      "scene": "courtyard",
+                                      "entity": "approach-neighbor-probe"
+                                    },
+                                    "to": {
+                                      "scene": "courtyard",
+                                      "entity": "approach-neighbor-4-1"
+                                    },
+                                    "range": 0.01
+                                  },
+                                  "then": [
+                                    {
+                                      "kind": "moveParty",
+                                      "to": {
+                                        "col": 33,
+                                        "row": -2,
+                                        "height": 0
+                                      },
+                                      "speed": "normal"
+                                    },
+                                    {
+                                      "kind": "moveParty",
+                                      "to": {
+                                        "col": 33,
+                                        "row": -1,
+                                        "height": 0
+                                      },
+                                      "speed": "normal"
+                                    }
+                                  ],
+                                  "else": [
+                                    {
+                                      "kind": "branch",
+                                      "cond": {
+                                        "kind": "entitiesNear",
+                                        "from": {
+                                          "scene": "courtyard",
+                                          "entity": "approach-neighbor-probe"
+                                        },
+                                        "to": {
+                                          "scene": "courtyard",
+                                          "entity": "approach-neighbor-3-4"
+                                        },
+                                        "range": 0.01
+                                      },
+                                      "then": [
+                                        {
+                                          "kind": "moveParty",
+                                          "to": {
+                                            "col": 33,
+                                            "row": 0,
+                                            "height": 0
+                                          },
+                                          "speed": "normal"
+                                        },
+                                        {
+                                          "kind": "moveParty",
+                                          "to": {
+                                            "col": 33,
+                                            "row": -1,
+                                            "height": 0
+                                          },
+                                          "speed": "normal"
+                                        }
+                                      ],
+                                      "else": [
+                                        {
+                                          "kind": "branch",
+                                          "cond": {
+                                            "kind": "entitiesNear",
+                                            "from": {
+                                              "scene": "courtyard",
+                                              "entity": "approach-neighbor-probe"
+                                            },
+                                            "to": {
+                                              "scene": "courtyard",
+                                              "entity": "approach-neighbor-3-3"
+                                            },
+                                            "range": 0.01
+                                          },
+                                          "then": [
+                                            {
+                                              "kind": "moveParty",
+                                              "to": {
+                                                "col": 33,
+                                                "row": -1,
+                                                "height": 0
+                                              },
+                                              "speed": "normal"
+                                            }
+                                          ],
+                                          "else": [
+                                            {
+                                              "kind": "branch",
+                                              "cond": {
+                                                "kind": "entitiesNear",
+                                                "from": {
+                                                  "scene": "courtyard",
+                                                  "entity": "approach-neighbor-probe"
+                                                },
+                                                "to": {
+                                                  "scene": "courtyard",
+                                                  "entity": "approach-neighbor-3-2"
+                                                },
+                                                "range": 0.01
+                                              },
+                                              "then": [],
+                                              "else": [
+                                                {
+                                                  "kind": "branch",
+                                                  "cond": {
+                                                    "kind": "entitiesNear",
+                                                    "from": {
+                                                      "scene": "courtyard",
+                                                      "entity": "approach-neighbor-probe"
+                                                    },
+                                                    "to": {
+                                                      "scene": "courtyard",
+                                                      "entity": "approach-neighbor-3-1"
+                                                    },
+                                                    "range": 0.01
+                                                  },
+                                                  "then": [
+                                                    {
+                                                      "kind": "moveParty",
+                                                      "to": {
+                                                        "col": 33,
+                                                        "row": -1,
+                                                        "height": 0
+                                                      },
+                                                      "speed": "normal"
+                                                    }
+                                                  ],
+                                                  "else": [
+                                                    {
+                                                      "kind": "branch",
+                                                      "cond": {
+                                                        "kind": "entitiesNear",
+                                                        "from": {
+                                                          "scene": "courtyard",
+                                                          "entity": "approach-neighbor-probe"
+                                                        },
+                                                        "to": {
+                                                          "scene": "courtyard",
+                                                          "entity": "approach-neighbor-3-0"
+                                                        },
+                                                        "range": 0.01
+                                                      },
+                                                      "then": [
+                                                        {
+                                                          "kind": "moveParty",
+                                                          "to": {
+                                                            "col": 33,
+                                                            "row": -2,
+                                                            "height": 0
+                                                          },
+                                                          "speed": "normal"
+                                                        },
+                                                        {
+                                                          "kind": "moveParty",
+                                                          "to": {
+                                                            "col": 33,
+                                                            "row": -1,
+                                                            "height": 0
+                                                          },
+                                                          "speed": "normal"
+                                                        }
+                                                      ],
+                                                      "else": [
+                                                        {
+                                                          "kind": "branch",
+                                                          "cond": {
+                                                            "kind": "entitiesNear",
+                                                            "from": {
+                                                              "scene": "courtyard",
+                                                              "entity": "approach-neighbor-probe"
+                                                            },
+                                                            "to": {
+                                                              "scene": "courtyard",
+                                                              "entity": "approach-neighbor-2-4"
+                                                            },
+                                                            "range": 0.01
+                                                          },
+                                                          "then": [
+                                                            {
+                                                              "kind": "moveParty",
+                                                              "to": {
+                                                                "col": 33,
+                                                                "row": 1,
+                                                                "height": 0
+                                                              },
+                                                              "speed": "normal"
+                                                            },
+                                                            {
+                                                              "kind": "moveParty",
+                                                              "to": {
+                                                                "col": 33,
+                                                                "row": 0,
+                                                                "height": 0
+                                                              },
+                                                              "speed": "normal"
+                                                            },
+                                                            {
+                                                              "kind": "moveParty",
+                                                              "to": {
+                                                                "col": 33,
+                                                                "row": -1,
+                                                                "height": 0
+                                                              },
+                                                              "speed": "normal"
+                                                            }
+                                                          ],
+                                                          "else": [
+                                                            {
+                                                              "kind": "branch",
+                                                              "cond": {
+                                                                "kind": "entitiesNear",
+                                                                "from": {
+                                                                  "scene": "courtyard",
+                                                                  "entity": "approach-neighbor-probe"
+                                                                },
+                                                                "to": {
+                                                                  "scene": "courtyard",
+                                                                  "entity": "approach-neighbor-2-3"
+                                                                },
+                                                                "range": 0.01
+                                                              },
+                                                              "then": [
+                                                                {
+                                                                  "kind": "moveParty",
+                                                                  "to": {
+                                                                    "col": 33,
+                                                                    "row": 0,
+                                                                    "height": 0
+                                                                  },
+                                                                  "speed": "normal"
+                                                                },
+                                                                {
+                                                                  "kind": "moveParty",
+                                                                  "to": {
+                                                                    "col": 33,
+                                                                    "row": -1,
+                                                                    "height": 0
+                                                                  },
+                                                                  "speed": "normal"
+                                                                }
+                                                              ],
+                                                              "else": [
+                                                                {
+                                                                  "kind": "branch",
+                                                                  "cond": {
+                                                                    "kind": "entitiesNear",
+                                                                    "from": {
+                                                                      "scene": "courtyard",
+                                                                      "entity": "approach-neighbor-probe"
+                                                                    },
+                                                                    "to": {
+                                                                      "scene": "courtyard",
+                                                                      "entity": "approach-neighbor-2-1"
+                                                                    },
+                                                                    "range": 0.01
+                                                                  },
+                                                                  "then": [
+                                                                    {
+                                                                      "kind": "moveParty",
+                                                                      "to": {
+                                                                        "col": 33,
+                                                                        "row": -2,
+                                                                        "height": 0
+                                                                      },
+                                                                      "speed": "normal"
+                                                                    },
+                                                                    {
+                                                                      "kind": "moveParty",
+                                                                      "to": {
+                                                                        "col": 33,
+                                                                        "row": -1,
+                                                                        "height": 0
+                                                                      },
+                                                                      "speed": "normal"
+                                                                    }
+                                                                  ],
+                                                                  "else": [
+                                                                    {
+                                                                      "kind": "branch",
+                                                                      "cond": {
+                                                                        "kind": "entitiesNear",
+                                                                        "from": {
+                                                                          "scene": "courtyard",
+                                                                          "entity": "approach-neighbor-probe"
+                                                                        },
+                                                                        "to": {
+                                                                          "scene": "courtyard",
+                                                                          "entity": "approach-neighbor-2-0"
+                                                                        },
+                                                                        "range": 0.01
+                                                                      },
+                                                                      "then": [
+                                                                        {
+                                                                          "kind": "moveParty",
+                                                                          "to": {
+                                                                            "col": 33,
+                                                                            "row": -3,
+                                                                            "height": 0
+                                                                          },
+                                                                          "speed": "normal"
+                                                                        },
+                                                                        {
+                                                                          "kind": "moveParty",
+                                                                          "to": {
+                                                                            "col": 33,
+                                                                            "row": -2,
+                                                                            "height": 0
+                                                                          },
+                                                                          "speed": "normal"
+                                                                        },
+                                                                        {
+                                                                          "kind": "moveParty",
+                                                                          "to": {
+                                                                            "col": 33,
+                                                                            "row": -1,
+                                                                            "height": 0
+                                                                          },
+                                                                          "speed": "normal"
+                                                                        }
+                                                                      ],
+                                                                      "else": [
+                                                                        {
+                                                                          "kind": "branch",
+                                                                          "cond": {
+                                                                            "kind": "entitiesNear",
+                                                                            "from": {
+                                                                              "scene": "courtyard",
+                                                                              "entity": "approach-neighbor-probe"
+                                                                            },
+                                                                            "to": {
+                                                                              "scene": "courtyard",
+                                                                              "entity": "approach-neighbor-1-4"
+                                                                            },
+                                                                            "range": 0.01
+                                                                          },
+                                                                          "then": [
+                                                                            {
+                                                                              "kind": "moveParty",
+                                                                              "to": {
+                                                                                "col": 32,
+                                                                                "row": 1,
+                                                                                "height": 0
+                                                                              },
+                                                                              "speed": "normal"
+                                                                            },
+                                                                            {
+                                                                              "kind": "moveParty",
+                                                                              "to": {
+                                                                                "col": 33,
+                                                                                "row": 1,
+                                                                                "height": 0
+                                                                              },
+                                                                              "speed": "normal"
+                                                                            },
+                                                                            {
+                                                                              "kind": "moveParty",
+                                                                              "to": {
+                                                                                "col": 33,
+                                                                                "row": 0,
+                                                                                "height": 0
+                                                                              },
+                                                                              "speed": "normal"
+                                                                            },
+                                                                            {
+                                                                              "kind": "moveParty",
+                                                                              "to": {
+                                                                                "col": 33,
+                                                                                "row": -1,
+                                                                                "height": 0
+                                                                              },
+                                                                              "speed": "normal"
+                                                                            }
+                                                                          ],
+                                                                          "else": [
+                                                                            {
+                                                                              "kind": "branch",
+                                                                              "cond": {
+                                                                                "kind": "entitiesNear",
+                                                                                "from": {
+                                                                                  "scene": "courtyard",
+                                                                                  "entity": "approach-neighbor-probe"
+                                                                                },
+                                                                                "to": {
+                                                                                  "scene": "courtyard",
+                                                                                  "entity": "approach-neighbor-1-3"
+                                                                                },
+                                                                                "range": 0.01
+                                                                              },
+                                                                              "then": [
+                                                                                {
+                                                                                  "kind": "moveParty",
+                                                                                  "to": {
+                                                                                    "col": 32,
+                                                                                    "row": 0,
+                                                                                    "height": 0
+                                                                                  },
+                                                                                  "speed": "normal"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "moveParty",
+                                                                                  "to": {
+                                                                                    "col": 33,
+                                                                                    "row": 0,
+                                                                                    "height": 0
+                                                                                  },
+                                                                                  "speed": "normal"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "moveParty",
+                                                                                  "to": {
+                                                                                    "col": 33,
+                                                                                    "row": -1,
+                                                                                    "height": 0
+                                                                                  },
+                                                                                  "speed": "normal"
+                                                                                }
+                                                                              ],
+                                                                              "else": [
+                                                                                {
+                                                                                  "kind": "branch",
+                                                                                  "cond": {
+                                                                                    "kind": "entitiesNear",
+                                                                                    "from": {
+                                                                                      "scene": "courtyard",
+                                                                                      "entity": "approach-neighbor-probe"
+                                                                                    },
+                                                                                    "to": {
+                                                                                      "scene": "courtyard",
+                                                                                      "entity": "approach-neighbor-1-2"
+                                                                                    },
+                                                                                    "range": 0.01
+                                                                                  },
+                                                                                  "then": [
+                                                                                    {
+                                                                                      "kind": "moveParty",
+                                                                                      "to": {
+                                                                                        "col": 31,
+                                                                                        "row": 0,
+                                                                                        "height": 0
+                                                                                      },
+                                                                                      "speed": "normal"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "moveParty",
+                                                                                      "to": {
+                                                                                        "col": 32,
+                                                                                        "row": 0,
+                                                                                        "height": 0
+                                                                                      },
+                                                                                      "speed": "normal"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "moveParty",
+                                                                                      "to": {
+                                                                                        "col": 33,
+                                                                                        "row": 0,
+                                                                                        "height": 0
+                                                                                      },
+                                                                                      "speed": "normal"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "moveParty",
+                                                                                      "to": {
+                                                                                        "col": 33,
+                                                                                        "row": -1,
+                                                                                        "height": 0
+                                                                                      },
+                                                                                      "speed": "normal"
+                                                                                    }
+                                                                                  ],
+                                                                                  "else": [
+                                                                                    {
+                                                                                      "kind": "branch",
+                                                                                      "cond": {
+                                                                                        "kind": "entitiesNear",
+                                                                                        "from": {
+                                                                                          "scene": "courtyard",
+                                                                                          "entity": "approach-neighbor-probe"
+                                                                                        },
+                                                                                        "to": {
+                                                                                          "scene": "courtyard",
+                                                                                          "entity": "approach-neighbor-1-1"
+                                                                                        },
+                                                                                        "range": 0.01
+                                                                                      },
+                                                                                      "then": [
+                                                                                        {
+                                                                                          "kind": "moveParty",
+                                                                                          "to": {
+                                                                                            "col": 32,
+                                                                                            "row": -2,
+                                                                                            "height": 0
+                                                                                          },
+                                                                                          "speed": "normal"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "moveParty",
+                                                                                          "to": {
+                                                                                            "col": 33,
+                                                                                            "row": -2,
+                                                                                            "height": 0
+                                                                                          },
+                                                                                          "speed": "normal"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "moveParty",
+                                                                                          "to": {
+                                                                                            "col": 33,
+                                                                                            "row": -1,
+                                                                                            "height": 0
+                                                                                          },
+                                                                                          "speed": "normal"
+                                                                                        }
+                                                                                      ],
+                                                                                      "else": [
+                                                                                        {
+                                                                                          "kind": "branch",
+                                                                                          "cond": {
+                                                                                            "kind": "entitiesNear",
+                                                                                            "from": {
+                                                                                              "scene": "courtyard",
+                                                                                              "entity": "approach-neighbor-probe"
+                                                                                            },
+                                                                                            "to": {
+                                                                                              "scene": "courtyard",
+                                                                                              "entity": "approach-neighbor-1-0"
+                                                                                            },
+                                                                                            "range": 0.01
+                                                                                          },
+                                                                                          "then": [
+                                                                                            {
+                                                                                              "kind": "moveParty",
+                                                                                              "to": {
+                                                                                                "col": 32,
+                                                                                                "row": -3,
+                                                                                                "height": 0
+                                                                                              },
+                                                                                              "speed": "normal"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "moveParty",
+                                                                                              "to": {
+                                                                                                "col": 33,
+                                                                                                "row": -3,
+                                                                                                "height": 0
+                                                                                              },
+                                                                                              "speed": "normal"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "moveParty",
+                                                                                              "to": {
+                                                                                                "col": 33,
+                                                                                                "row": -2,
+                                                                                                "height": 0
+                                                                                              },
+                                                                                              "speed": "normal"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "moveParty",
+                                                                                              "to": {
+                                                                                                "col": 33,
+                                                                                                "row": -1,
+                                                                                                "height": 0
+                                                                                              },
+                                                                                              "speed": "normal"
+                                                                                            }
+                                                                                          ],
+                                                                                          "else": [
+                                                                                            {
+                                                                                              "kind": "branch",
+                                                                                              "cond": {
+                                                                                                "kind": "entitiesNear",
+                                                                                                "from": {
+                                                                                                  "scene": "courtyard",
+                                                                                                  "entity": "approach-neighbor-probe"
+                                                                                                },
+                                                                                                "to": {
+                                                                                                  "scene": "courtyard",
+                                                                                                  "entity": "approach-neighbor-0-4"
+                                                                                                },
+                                                                                                "range": 0.01
+                                                                                              },
+                                                                                              "then": [
+                                                                                                {
+                                                                                                  "kind": "moveParty",
+                                                                                                  "to": {
+                                                                                                    "col": 31,
+                                                                                                    "row": 1,
+                                                                                                    "height": 0
+                                                                                                  },
+                                                                                                  "speed": "normal"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "moveParty",
+                                                                                                  "to": {
+                                                                                                    "col": 32,
+                                                                                                    "row": 1,
+                                                                                                    "height": 0
+                                                                                                  },
+                                                                                                  "speed": "normal"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "moveParty",
+                                                                                                  "to": {
+                                                                                                    "col": 33,
+                                                                                                    "row": 1,
+                                                                                                    "height": 0
+                                                                                                  },
+                                                                                                  "speed": "normal"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "moveParty",
+                                                                                                  "to": {
+                                                                                                    "col": 33,
+                                                                                                    "row": 0,
+                                                                                                    "height": 0
+                                                                                                  },
+                                                                                                  "speed": "normal"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "moveParty",
+                                                                                                  "to": {
+                                                                                                    "col": 33,
+                                                                                                    "row": -1,
+                                                                                                    "height": 0
+                                                                                                  },
+                                                                                                  "speed": "normal"
+                                                                                                }
+                                                                                              ],
+                                                                                              "else": [
+                                                                                                {
+                                                                                                  "kind": "branch",
+                                                                                                  "cond": {
+                                                                                                    "kind": "entitiesNear",
+                                                                                                    "from": {
+                                                                                                      "scene": "courtyard",
+                                                                                                      "entity": "approach-neighbor-probe"
+                                                                                                    },
+                                                                                                    "to": {
+                                                                                                      "scene": "courtyard",
+                                                                                                      "entity": "approach-neighbor-0-3"
+                                                                                                    },
+                                                                                                    "range": 0.01
+                                                                                                  },
+                                                                                                  "then": [
+                                                                                                    {
+                                                                                                      "kind": "moveParty",
+                                                                                                      "to": {
+                                                                                                        "col": 31,
+                                                                                                        "row": 0,
+                                                                                                        "height": 0
+                                                                                                      },
+                                                                                                      "speed": "normal"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "moveParty",
+                                                                                                      "to": {
+                                                                                                        "col": 32,
+                                                                                                        "row": 0,
+                                                                                                        "height": 0
+                                                                                                      },
+                                                                                                      "speed": "normal"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "moveParty",
+                                                                                                      "to": {
+                                                                                                        "col": 33,
+                                                                                                        "row": 0,
+                                                                                                        "height": 0
+                                                                                                      },
+                                                                                                      "speed": "normal"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "moveParty",
+                                                                                                      "to": {
+                                                                                                        "col": 33,
+                                                                                                        "row": -1,
+                                                                                                        "height": 0
+                                                                                                      },
+                                                                                                      "speed": "normal"
+                                                                                                    }
+                                                                                                  ],
+                                                                                                  "else": [
+                                                                                                    {
+                                                                                                      "kind": "branch",
+                                                                                                      "cond": {
+                                                                                                        "kind": "entitiesNear",
+                                                                                                        "from": {
+                                                                                                          "scene": "courtyard",
+                                                                                                          "entity": "approach-neighbor-probe"
+                                                                                                        },
+                                                                                                        "to": {
+                                                                                                          "scene": "courtyard",
+                                                                                                          "entity": "approach-neighbor-0-2"
+                                                                                                        },
+                                                                                                        "range": 0.01
+                                                                                                      },
+                                                                                                      "then": [
+                                                                                                        {
+                                                                                                          "kind": "moveParty",
+                                                                                                          "to": {
+                                                                                                            "col": 31,
+                                                                                                            "row": -1,
+                                                                                                            "height": 0
+                                                                                                          },
+                                                                                                          "speed": "normal"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "moveParty",
+                                                                                                          "to": {
+                                                                                                            "col": 31,
+                                                                                                            "row": 0,
+                                                                                                            "height": 0
+                                                                                                          },
+                                                                                                          "speed": "normal"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "moveParty",
+                                                                                                          "to": {
+                                                                                                            "col": 32,
+                                                                                                            "row": 0,
+                                                                                                            "height": 0
+                                                                                                          },
+                                                                                                          "speed": "normal"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "moveParty",
+                                                                                                          "to": {
+                                                                                                            "col": 33,
+                                                                                                            "row": 0,
+                                                                                                            "height": 0
+                                                                                                          },
+                                                                                                          "speed": "normal"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "moveParty",
+                                                                                                          "to": {
+                                                                                                            "col": 33,
+                                                                                                            "row": -1,
+                                                                                                            "height": 0
+                                                                                                          },
+                                                                                                          "speed": "normal"
+                                                                                                        }
+                                                                                                      ],
+                                                                                                      "else": [
+                                                                                                        {
+                                                                                                          "kind": "branch",
+                                                                                                          "cond": {
+                                                                                                            "kind": "entitiesNear",
+                                                                                                            "from": {
+                                                                                                              "scene": "courtyard",
+                                                                                                              "entity": "approach-neighbor-probe"
+                                                                                                            },
+                                                                                                            "to": {
+                                                                                                              "scene": "courtyard",
+                                                                                                              "entity": "approach-neighbor-0-1"
+                                                                                                            },
+                                                                                                            "range": 0.01
+                                                                                                          },
+                                                                                                          "then": [
+                                                                                                            {
+                                                                                                              "kind": "moveParty",
+                                                                                                              "to": {
+                                                                                                                "col": 31,
+                                                                                                                "row": -2,
+                                                                                                                "height": 0
+                                                                                                              },
+                                                                                                              "speed": "normal"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "moveParty",
+                                                                                                              "to": {
+                                                                                                                "col": 32,
+                                                                                                                "row": -2,
+                                                                                                                "height": 0
+                                                                                                              },
+                                                                                                              "speed": "normal"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "moveParty",
+                                                                                                              "to": {
+                                                                                                                "col": 33,
+                                                                                                                "row": -2,
+                                                                                                                "height": 0
+                                                                                                              },
+                                                                                                              "speed": "normal"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "moveParty",
+                                                                                                              "to": {
+                                                                                                                "col": 33,
+                                                                                                                "row": -1,
+                                                                                                                "height": 0
+                                                                                                              },
+                                                                                                              "speed": "normal"
+                                                                                                            }
+                                                                                                          ],
+                                                                                                          "else": [
+                                                                                                            {
+                                                                                                              "kind": "branch",
+                                                                                                              "cond": {
+                                                                                                                "kind": "entitiesNear",
+                                                                                                                "from": {
+                                                                                                                  "scene": "courtyard",
+                                                                                                                  "entity": "approach-neighbor-probe"
+                                                                                                                },
+                                                                                                                "to": {
+                                                                                                                  "scene": "courtyard",
+                                                                                                                  "entity": "approach-neighbor-0-0"
+                                                                                                                },
+                                                                                                                "range": 0.01
+                                                                                                              },
+                                                                                                              "then": [
+                                                                                                                {
+                                                                                                                  "kind": "moveParty",
+                                                                                                                  "to": {
+                                                                                                                    "col": 31,
+                                                                                                                    "row": -3,
+                                                                                                                    "height": 0
+                                                                                                                  },
+                                                                                                                  "speed": "normal"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "moveParty",
+                                                                                                                  "to": {
+                                                                                                                    "col": 32,
+                                                                                                                    "row": -3,
+                                                                                                                    "height": 0
+                                                                                                                  },
+                                                                                                                  "speed": "normal"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "moveParty",
+                                                                                                                  "to": {
+                                                                                                                    "col": 33,
+                                                                                                                    "row": -3,
+                                                                                                                    "height": 0
+                                                                                                                  },
+                                                                                                                  "speed": "normal"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "moveParty",
+                                                                                                                  "to": {
+                                                                                                                    "col": 33,
+                                                                                                                    "row": -2,
+                                                                                                                    "height": 0
+                                                                                                                  },
+                                                                                                                  "speed": "normal"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "moveParty",
+                                                                                                                  "to": {
+                                                                                                                    "col": 33,
+                                                                                                                    "row": -1,
+                                                                                                                    "height": 0
+                                                                                                                  },
+                                                                                                                  "speed": "normal"
+                                                                                                                }
+                                                                                                              ],
+                                                                                                              "else": []
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "neighbor_seen",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "炉火有人看着，你们放心回去。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": -1,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": -4,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "setPartyFacing",
+                          "facing": "down"
+                        },
+                        {
+                          "kind": "cameraPan",
+                          "dx": 0,
+                          "dy": 2,
+                          "frames": 16
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "回来了啊，快往里走，外头冷。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "最里面那间是我们租的。门前种点蒜和韭菜，能省一点是一点。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这锅里的，我能尝尝吗？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setActorSprite",
+                          "actor": "child",
+                          "sprite": "child-crouch"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 450
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "child",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "那我只喝一点点呢？"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "hero",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "这是给老人熬的药。别惦记别人家的药锅，起来，我们走。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "actor",
+                              "actor": "neighbor",
+                              "portrait": {
+                                "kind": "default",
+                                "side": "right"
+                              }
+                            },
+                            "rows": [
+                              {
+                                "text": "小馋猫，这可不是糖水。快回家吃点热的吧。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setActorSprite",
+                          "actor": "child",
+                          "sprite": "child"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 33,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 35,
+                            "row": 0,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "moveParty",
+                          "to": {
+                            "col": 35,
+                            "row": -1,
+                            "height": 0
+                          },
+                          "speed": "normal"
+                        },
+                        {
+                          "kind": "setPartyFacing",
+                          "facing": "left"
+                        },
+                        {
+                          "kind": "wait",
+                          "ms": 300
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "小伙伴起身跟上，走了几步，还忍不住惦记那口药锅。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "slot": "bottom",
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "屋里传出低低的咳嗽。老人轻轻叹息：年轻真好。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "clearDialog"
+                        },
+                        {
+                          "kind": "setPartyFacing",
+                          "facing": "right"
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "neighbor_seen",
+                          "value": true
+                        },
+                        {
+                          "kind": "cameraSnap"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "medicine",
+      "label": "药炉",
+      "pos": {
+        "col": 34,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "pot",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "小煤炉里还亮着火。药锅的热气升起来，远处偶尔传来咳嗽。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "medicine-steam",
+      "label": "medicine-steam",
+      "pos": {
+        "col": 34,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "steam",
+      "facing": "right",
+      "collide": false,
+      "hidden": true,
+      "pages": [
+        {
+          "id": "default",
+          "label": "效果",
+          "animation": {
+            "sprite": "steam",
+            "action": "loop",
+            "loop": true
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "home",
+      "label": "回家",
+      "pos": {
+        "col": 41,
+        "row": -9,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "right",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "chapter_complete",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "loadScene",
+                          "scene": "home-room"
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "branch",
+                          "cond": {
+                            "kind": "flag",
+                            "flag": "neighbor_seen",
+                            "is": true
+                          },
+                          "then": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "child",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "回去吃一碗热面吧！"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "好，先回去。今天还有一肚子的事没想明白呢。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "moveParty",
+                              "to": {
+                                "col": 40,
+                                "row": -10,
+                                "height": 0
+                              },
+                              "speed": "normal"
+                            },
+                            {
+                              "kind": "cameraPan",
+                              "dx": 1,
+                              "dy": -1,
+                              "frames": 10
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "narration"
+                                },
+                                "rows": [
+                                  {
+                                    "text": "庙会的欢笑、飞来的异火、帘后的沉默，都留在了这个冬夜。疑问还没有答案，但两个人总算一起回到家门口。推开家门，屋里的灯还亮着。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "cameraSnap"
+                            },
+                            {
+                              "kind": "setFlag",
+                              "flag": "chapter_complete",
+                              "value": true
+                            },
+                            {
+                              "kind": "loadScene",
+                              "scene": "home-room"
+                            }
+                          ],
+                          "else": [
+                            {
+                              "kind": "clearDialog"
+                            },
+                            {
+                              "kind": "dialog",
+                              "cue": {
+                                "slot": "bottom",
+                                "identity": {
+                                  "kind": "actor",
+                                  "actor": "hero",
+                                  "portrait": {
+                                    "kind": "default",
+                                    "side": "right"
+                                  }
+                                },
+                                "rows": [
+                                  {
+                                    "text": "先和院里的邻居打声招呼。"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kind": "clearDialog"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "courtyard-rental-0",
+      "label": "courtyard-rental-0",
+      "pos": {
+        "col": 25,
+        "row": -5,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "courtyard-rental-1",
+      "label": "courtyard-rental-1",
+      "pos": {
+        "col": 32,
+        "row": -12,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "courtyard-rental-2",
+      "label": "courtyard-rental-2",
+      "pos": {
+        "col": 40,
+        "row": -16,
+        "height": 0
+      },
+      "sprite": "rental",
+      "facing": "right",
+      "collide": false,
+      "hidden": true
+    },
+    {
+      "id": "garden-0",
+      "label": "garden-0",
+      "pos": {
+        "col": 31,
+        "row": 4,
+        "height": 0
+      },
+      "sprite": "vegetables",
+      "facing": "right",
+      "collide": false,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "墙根有一小片蒜苗和韭菜。土里还留着整理过的痕迹，这点收成也要精打细算。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "garden-1",
+      "label": "garden-1",
+      "pos": {
+        "col": 36,
+        "row": -6,
+        "height": 0
+      },
+      "sprite": "vegetables",
+      "facing": "right",
+      "collide": false,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "墙根有一小片蒜苗和韭菜。土里还留着整理过的痕迹，这点收成也要精打细算。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "garden-2",
+      "label": "garden-2",
+      "pos": {
+        "col": 40,
+        "row": -4,
+        "height": 0
+      },
+      "sprite": "vegetables",
+      "facing": "right",
+      "collide": false,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "clearDialog"
+                    },
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "slot": "bottom",
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "墙根有一小片蒜苗和韭菜。土里还留着整理过的痕迹，这点收成也要精打细算。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "clearDialog"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "yard-wall",
+      "label": "yard-wall",
+      "pos": {
+        "col": 30,
+        "row": 6,
+        "height": 0
+      },
+      "sprite": "wall",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "yard-wall-2",
+      "label": "yard-wall-2",
+      "pos": {
+        "col": 38,
+        "row": -3,
+        "height": 0
+      },
+      "sprite": "wall",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "home-crate",
+      "label": "home-crate",
+      "pos": {
+        "col": 39,
+        "row": -12,
+        "height": 0
+      },
+      "sprite": "crate",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "approach-neighbor-probe",
+      "pos": {
+        "col": 33,
+        "row": -1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-0-0",
+      "pos": {
+        "col": 30,
+        "row": -3,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-0-1",
+      "pos": {
+        "col": 30,
+        "row": -2,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-0-2",
+      "pos": {
+        "col": 30,
+        "row": -1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-0-3",
+      "pos": {
+        "col": 30,
+        "row": 0,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-0-4",
+      "pos": {
+        "col": 30,
+        "row": 1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-1-0",
+      "pos": {
+        "col": 31,
+        "row": -3,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-1-1",
+      "pos": {
+        "col": 31,
+        "row": -2,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-1-2",
+      "pos": {
+        "col": 31,
+        "row": -1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-1-3",
+      "pos": {
+        "col": 31,
+        "row": 0,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-1-4",
+      "pos": {
+        "col": 31,
+        "row": 1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-2-0",
+      "pos": {
+        "col": 32,
+        "row": -3,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-2-1",
+      "pos": {
+        "col": 32,
+        "row": -2,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-2-3",
+      "pos": {
+        "col": 32,
+        "row": 0,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-2-4",
+      "pos": {
+        "col": 32,
+        "row": 1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-3-0",
+      "pos": {
+        "col": 33,
+        "row": -3,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-3-1",
+      "pos": {
+        "col": 33,
+        "row": -2,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-3-2",
+      "pos": {
+        "col": 33,
+        "row": -1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-3-3",
+      "pos": {
+        "col": 33,
+        "row": 0,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-3-4",
+      "pos": {
+        "col": 33,
+        "row": 1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-4-1",
+      "pos": {
+        "col": 34,
+        "row": -2,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-4-2",
+      "pos": {
+        "col": 34,
+        "row": -1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-4-3",
+      "pos": {
+        "col": 34,
+        "row": 0,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "approach-neighbor-4-4",
+      "pos": {
+        "col": 34,
+        "row": 1,
+        "height": 0
+      },
+      "zone": true
+    },
+    {
+      "id": "west-courtyard-house",
+      "label": "west-courtyard-house",
+      "pos": {
+        "col": 28,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "street-cottage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "middle-courtyard-house",
+      "label": "middle-courtyard-house",
+      "pos": {
+        "col": 35,
+        "row": -9,
+        "height": 0
+      },
+      "sprite": "street-cottage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "home-courtyard-house",
+      "label": "home-courtyard-house",
+      "pos": {
+        "col": 43,
+        "row": -13,
+        "height": 0
+      },
+      "sprite": "street-cottage",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "court-winter-tree",
+      "label": "court-winter-tree",
+      "pos": {
+        "col": 18,
+        "row": 4,
+        "height": 0
+      },
+      "sprite": "winter-tree",
+      "facing": "right",
+      "collide": false
+    },
+    {
+      "id": "court-firewood",
+      "label": "court-firewood",
+      "pos": {
+        "col": 42,
+        "row": -10,
+        "height": 0
+      },
+      "sprite": "snow-wood",
+      "facing": "right",
+      "collide": false
+    }
+  ],
+  "hooks": {
+    "onEnter": {
+      "initial": "main",
+      "variants": {
+        "main": {
+          "label": "抵达",
+          "order": 0,
+          "flow": {
+            "kind": "stages",
+            "initial": "main",
+            "stages": [
+              {
+                "id": "main",
+                "body": [
+                  {
+                    "kind": "setEntityState",
+                    "target": {
+                      "scene": "courtyard",
+                      "entity": "medicine-steam"
+                    },
+                    "state": 1
+                  },
+                  {
+                    "kind": "clearDialog"
+                  },
+                  {
+                    "kind": "dialog",
+                    "cue": {
+                      "slot": "bottom",
+                      "identity": {
+                        "kind": "narration"
+                      },
+                      "rows": [
+                        {
+                          "text": "旧院子里没有高楼。平房墙皮斑驳，门前有小菜地。煤炉上，一口药锅正冒着热气。"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "clearDialog"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

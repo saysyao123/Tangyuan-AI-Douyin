@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "checks": [
+    "AFFECTED_BACKSTAGE_COLLAPSE_CARRIERS_AND_DEPARTURE",
+    "AFFECTED_BACKSTAGE_SAVE_REOPEN"
+  ],
+  "errors": [],
+  "scope": "Only T34 backstage enclosure/floor/wall materials and depth around original collapse/carry routes. Complete fresh story and T33 room are reused; native map/story/collision/input remain byte-identical."
+}

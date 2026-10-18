@@ -1,0 +1,12 @@
+[
+  {
+    "id": "treat",
+    "name": "甜果串",
+    "desc": [
+      "一份给同行小伙伴的点心。"
+    ],
+    "buyPrice": 5,
+    "sellPrice": 0,
+    "sellable": false
+  }
+]

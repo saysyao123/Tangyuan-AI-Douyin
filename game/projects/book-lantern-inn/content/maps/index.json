@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "maps": [
+    {
+      "id": "inn",
+      "name": "檐下归途",
+      "path": "content/maps/inn.json"
+    },
+    {
+      "id": "forest",
+      "name": "月色雾林",
+      "path": "content/maps/forest.json"
+    }
+  ]
+}

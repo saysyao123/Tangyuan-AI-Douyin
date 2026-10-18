@@ -1,0 +1,388 @@
+{
+  "id": "forest",
+  "mapId": "forest",
+  "battleFieldId": 0,
+  "entry": {
+    "pos": {
+      "col": 8,
+      "row": 0,
+      "height": 0
+    },
+    "facing": "right"
+  },
+  "entities": [
+    {
+      "id": "inn-gate",
+      "label": "inn-gate",
+      "pos": {
+        "col": 6,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "sign",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "loadScene",
+                      "scene": "inn",
+                      "pos": {
+                        "col": 15,
+                        "row": -3,
+                        "height": 0
+                      },
+                      "facing": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互页",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "core-shard",
+      "label": "core-shard",
+      "pos": {
+        "col": 11,
+        "row": -2,
+        "height": 0
+      },
+      "sprite": "core",
+      "facing": "down",
+      "collide": true,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "core_taken",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "碎晶已收进了行囊。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "石缝里透出一点蓝光。获得：灯芯碎晶。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "giveItem",
+                          "itemId": "lamp-core",
+                          "count": 1
+                        },
+                        {
+                          "kind": "setFlag",
+                          "flag": "core_taken",
+                          "value": true
+                        },
+                        {
+                          "kind": "removeEntity",
+                          "target": {
+                            "scene": "forest",
+                            "entity": "core-shard"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互页",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "interact",
+            "range": 2
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "wolf",
+      "label": "wolf",
+      "pos": {
+        "col": 15,
+        "row": 0,
+        "height": 0
+      },
+      "sprite": "wolf",
+      "facing": "down",
+      "collide": false,
+      "behaviors": {
+        "trigger": {
+          "main": {
+            "label": "交互",
+            "order": 0,
+            "flow": {
+              "kind": "stages",
+              "initial": "main",
+              "stages": [
+                {
+                  "id": "main",
+                  "body": [
+                    {
+                      "kind": "dialog",
+                      "cue": {
+                        "identity": {
+                          "kind": "narration"
+                        },
+                        "rows": [
+                          {
+                            "text": "雾狼压低身体，堵住了回程。\n战斗中方向键选择指令，空格确认。"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "startBattle",
+                      "enemyTeamId": "mist-pack",
+                      "fieldId": 0,
+                      "boss": true,
+                      "music": null,
+                      "onLose": [
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "阿笙跌回路边。守灯人把他扶回檐下。"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "revivePartyAll",
+                          "tenths": 10
+                        },
+                        {
+                          "kind": "loadScene",
+                          "scene": "inn",
+                          "pos": {
+                            "col": 10,
+                            "row": 0,
+                            "height": 0
+                          }
+                        }
+                      ],
+                      "onFlee": []
+                    },
+                    {
+                      "kind": "branch",
+                      "cond": {
+                        "kind": "flag",
+                        "flag": "wolf_defeated",
+                        "is": true
+                      },
+                      "then": [
+                        {
+                          "kind": "removeEntity",
+                          "target": {
+                            "scene": "forest",
+                            "entity": "wolf"
+                          }
+                        },
+                        {
+                          "kind": "dialog",
+                          "cue": {
+                            "identity": {
+                              "kind": "narration"
+                            },
+                            "rows": [
+                              {
+                                "text": "雾狼退入林中。带上灯芯，回驿站点灯吧。"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "else": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "pages": [
+        {
+          "id": "default",
+          "label": "交互页",
+          "trigger": "main",
+          "triggerActivation": {
+            "on": "touch",
+            "range": 1
+          }
+        }
+      ],
+      "initialPage": "default"
+    },
+    {
+      "id": "decor-0",
+      "sprite": "tree",
+      "pos": {
+        "col": 6,
+        "row": -3,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-1",
+      "sprite": "tree",
+      "pos": {
+        "col": 9,
+        "row": -5,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-2",
+      "sprite": "tree",
+      "pos": {
+        "col": 13,
+        "row": -5,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-3",
+      "sprite": "tree",
+      "pos": {
+        "col": 18,
+        "row": -2,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-4",
+      "sprite": "tree",
+      "pos": {
+        "col": 19,
+        "row": 1,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-5",
+      "sprite": "tree",
+      "pos": {
+        "col": 13,
+        "row": 4,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-6",
+      "sprite": "tree",
+      "pos": {
+        "col": 8,
+        "row": 4,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-7",
+      "sprite": "tree",
+      "pos": {
+        "col": 17,
+        "row": 4,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    },
+    {
+      "id": "decor-8",
+      "sprite": "lantern",
+      "pos": {
+        "col": 7,
+        "row": 1,
+        "height": 0
+      },
+      "facing": "down",
+      "collide": true
+    }
+  ]
+}

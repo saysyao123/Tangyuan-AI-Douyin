@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NEW_FAIR_DRAWN_NATIVE_WORLD_RETAINED_AND_NO_BLACK_FIELD",
+    "FAIR_INVERSE_POINTER_AND_KEYBOARD_TAKEOVER",
+    "NEW_BACKSTAGE_DRAWN_NATIVE_WORLD_RETAINED_AND_NO_BLACK_FIELD",
+    "BACKSTAGE_INVERSE_POINTER_AND_KEYBOARD_TAKEOVER",
+    "NEW_STREET_DRAWN_NATIVE_WORLD_RETAINED_AND_NO_BLACK_FIELD",
+    "STREET_INVERSE_POINTER_AND_KEYBOARD_TAKEOVER",
+    "NEW_COURTYARD_DRAWN_NATIVE_WORLD_RETAINED_AND_NO_BLACK_FIELD",
+    "COURTYARD_INVERSE_POINTER_AND_KEYBOARD_TAKEOVER",
+    "REVISED_STREET_YOUTH_AND_COURTYARD_EXIT_CLICK_PATH",
+    "REVISED_COURTYARD_NEIGHBOR_AND_MEDICINE_INTERACTIONS",
+    "AFFECTED_COURTYARD_NATIVE_SAVE_REOPEN",
+    "NEW_MARKET_VENDOR_REMAINS_CLICKABLE",
+    "NEW_STAGE_ACTUAL_PERFORMER_AND_FIRE_PRESENTATION"
+  ],
+  "errors": [],
+  "states": [
+    {
+      "scene": "fair",
+      "position": {
+        "col": 30,
+        "row": 0,
+        "height": 0
+      },
+      "camera": {
+        "x": 320,
+        "y": 128
+      },
+      "actors": 35,
+      "p95": 37.79999999998836,
+      "blackFraction": 0
+    },
+    {
+      "scene": "backstage",
+      "position": {
+        "col": 26,
+        "row": 0,
+        "height": 0
+      },
+      "camera": {
+        "x": 256,
+        "y": 96
+      },
+      "actors": 7,
+      "p95": 26.39999999999418,
+      "blackFraction": 0.0003466796875
+    },
+    {
+      "scene": "street",
+      "position": {
+        "col": 26,
+        "row": 2,
+        "height": 0
+      },
+      "camera": {
+        "x": 224,
+        "y": 112
+      },
+      "actors": 11,
+      "p95": 24.89999999999418,
+      "blackFraction": 9.765625e-7
+    },
+    {
+      "scene": "courtyard",
+      "position": {
+        "col": 27,
+        "row": 1,
+        "height": 0
+      },
+      "camera": {
+        "x": 256,
+        "y": 112
+      },
+      "actors": 16,
+      "p95": 24.10000000000582,
+      "blackFraction": 0.0000068359375
+    }
+  ],
+  "scope": "Only four changed environment views, associated click paths, stage presentation and affected courtyard save. Approved home/raster people and passed full first-act history reused."
+}
