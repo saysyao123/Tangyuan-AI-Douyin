@@ -7,7 +7,7 @@ import type {Camera,CellRect,SpriteDraw} from './render.js';
 import {projectMapTilesInView} from './project-map.js';
 const act=new Set(['fair','backstage','street','courtyard']);
 const images=new Map<string,HTMLImageElement>();
-const filenames=['house','stage','stall','backstage','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood'];
+const filenames=['house','stage','stall','backstage','back-panel','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood'];
 function img(key:string){
  let v=images.get(key);if(!v){v=new Image();v.decoding='async';v.src=new URL(`./t32-art/${key}.webp`,window.location.href).href;images.set(key,v)}
  return v.complete&&v.naturalWidth>0?v:undefined;
@@ -68,6 +68,15 @@ const npcKeys=new Set(['merchant','neighbor','stranger','visitor','operative','p
 const direction:Record<string,number>={down:0,left:1,up:2,right:3};
 export function enhanceSprites(scene:string,sprites:readonly SpriteDraw[]):SpriteDraw[]{
  return sprites.map(s=>{
+  if(scene==='backstage'&&s.artId==='rear-wall')return {...s,drawHD:()=>{}};
+  if(scene==='backstage'&&s.artId==='rear-curtain'){
+   const panel=img('back-panel');if(!panel)return s;
+   return {...s,sortOffset:-100,drawHD:(c,camera)=>{
+    const A={x:400,y:205},B={x:511,y:147},C={x:643,y:217};
+    const wall=(a:typeof A,b:typeof A)=>{c.save();c.imageSmoothingEnabled=true;c.transform((b.x-a.x)/panel.naturalWidth,(b.y-a.y)/panel.naturalWidth,0,65/panel.naturalHeight,a.x-camera.x,a.y-camera.y-65);c.drawImage(panel,0,0);c.restore()};
+    wall(A,B);wall(B,C);
+   }};
+  }
   const prop=s.artId?byScene[scene]?.[s.artId]:undefined;
   let key=prop?.key,w=prop?.w,h=0,foot=prop?.foot??.94;
   if(!prop&&s.artKey&&npcKeys.has(s.artKey)){
