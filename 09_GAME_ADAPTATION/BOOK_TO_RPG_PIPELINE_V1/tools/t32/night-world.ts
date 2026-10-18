@@ -42,7 +42,7 @@ export function nightSprite(scene:string,s:SpriteDraw,get:GetImage):SpriteDraw|u
  if(s.artKey==='snowfall'){return {...s,drawHD:(c,camera)=>{const p=s.artFrame??0;c.save();c.fillStyle='rgba(222,236,248,.42)';for(let i=0;i<70;i++){const x=s.worldX-camera.x-160+(i*83+p*2)%320,y=s.worldY-camera.y-200+(i*47+p*4)%200;c.fillRect(x,y,i%5===0?.65:.35,i%5===0?1:.45)}c.restore()}}}
  const props:Record<string,[string,number,number?]>={
   'west-street-cottage':['v34-house-0',184,.84],'east-street-cottage':['v34-house-1',184,.84],'lit-storefront':['v36-storefront',162,.94],truck:['v36-truck',112,.96],tracks:['v36-tracks',45,.9],
-  'yard-rental':['v34-house-2',184,.84],'yard-wall':['v34-wall',112,.94],'yard-west-tree':['v34-tree',94,.94],'yard-east-tree':['v34-tree',86,.94],
+  'yard-rental':['v34-house-2',184,.84],'yard-wall':['v34-wall',84,.94],'yard-west-tree':['v34-tree',94,.94],'yard-east-tree':['v34-tree',86,.94],
   'road-west-winter-tree':['v34-tree',94,.94],'road-east-winter-tree':['v34-tree',86,.94],
   'shelf-1':['v36-shelf-a',68,.98],'shelf-2':['v36-fridge',46,.98],'store-back-shelf':['v36-counter',76,.98],'store-side-shelf':['v36-shelf-b',60,.98],'shop-stock-cupboard':['room-cupboard',44,.98],
   income:['v36-income-book',34,.98],'star-shop':['v36-star-orb',29,.98],lottery:['v36-draw-basin',50,.98],'fruit-help':['v36-mind-tree',110,.98],

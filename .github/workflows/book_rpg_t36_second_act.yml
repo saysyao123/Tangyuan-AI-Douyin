@@ -85,9 +85,12 @@ jobs:
           PY
       - name: Only four changed second-act scenes and affected interactions/actions/save
         working-directory: upstream
+        env: {COMMIT_MESSAGE: '${{ github.event.head_commit.message }}'}
         run: |
           cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t36-night-style-e2e.mjs .
-          node t36-night-style-e2e.mjs
+          scope=all
+          if [[ "$COMMIT_MESSAGE" == *"[snow-only]"* ]]; then scope=snow; fi
+          T36_TEST_SCOPE="$scope" node t36-night-style-e2e.mjs
       - name: Collect corresponding evidence and candidate package
         if: always()
         run: |
