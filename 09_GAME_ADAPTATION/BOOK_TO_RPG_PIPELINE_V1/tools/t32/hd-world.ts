@@ -1,6 +1,6 @@
 /** Original T32 raster art, painted inside native canvas and native depth order.
  * Original frames remain the simulation and pointer contracts. Only drawing changes.
- * Missing art falls back to native sprites; ?art=baseline is a reversible QA switch.
+ * Decoded art is required before presentation; ?art=baseline remains an explicit QA switch.
  */
 import type {IsometricMapContent} from '@type-pal/content';
 import type {Camera,CellRect,SpriteDraw} from './render.js';
@@ -12,21 +12,52 @@ const images=new Map<string,HTMLImageElement>();
 const portraits=['hero','child','merchant','neighbor','stranger','visitor','officer','performer'];
 const filenames=['house','stage','stall','backstage','back-panel','back-panel-window','crate-indoor','wall','tree','stove','terrain-snow','terrain-stone','terrain-earth','terrain-wood','lamp','sign','crate','garden','wood',...portraits.map(role=>'portrait-'+role)];
 let activeScene='';
-function img(key:string){
- let v=images.get(key);if(!v){v=new Image();v.decoding='async';v.src=new URL(`./t32-art/${key}.webp`,window.location.href).href;images.set(key,v)}
- return v.complete&&v.naturalWidth>0?v:undefined;
+const decoded=new Set<string>();
+const assetJobs=new Map<string,Promise<void>>();
+const sceneJobs=new Map<string,Promise<void>>();
+const sceneStatus=new Map<string,'loading'|'ready'|'error'>();
+export function usesFirstActArt(scene:string){return act.has(scene)&&new URLSearchParams(location.search).get('art')!=='baseline'}
+function loadImage(key:string):Promise<void>{
+ const existing=assetJobs.get(key);if(existing)return existing;
+ const image=new Image();image.decoding='async';images.set(key,image);
+ const job=new Promise<void>((resolve,reject)=>{
+  const timer=setTimeout(()=>fail(),30000);
+  const fail=()=>{clearTimeout(timer);image.onload=null;image.onerror=null;reject(new Error('画面素材载入失败：'+key+'，请重新载入重试。'))};
+  image.onerror=fail;
+  image.onload=()=>{void image.decode().then(()=>{if(!image.naturalWidth){fail();return}clearTimeout(timer);image.onload=null;image.onerror=null;decoded.add(key);resolve()}).catch(fail)};
+  image.src=new URL(`./t32-art/${key}.webp`,window.location.href).href;
+ });
+ assetJobs.set(key,job);return job;
 }
-export function firstActReady(scene:string){
- activeScene=scene;
- if(!act.has(scene)||new URLSearchParams(location.search).get('art')==='baseline')return false;
+function img(key:string){return decoded.has(key)?images.get(key):undefined}
+function requiredArt(scene:string){
  const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-mat'];
  const extra=scene==='home-room'?roomFiles:scene==='fair'?[...Array.from({length:24},(_,i)=>`crowd-${Math.floor(i/4)}-${i%4}`)]:scene==='backstage'?['action-carriers-unique-0','action-carriers-unique-1',...['a','b','c'].flatMap(role=>Array.from({length:12},(_,i)=>`sub-${role}-${Math.floor(i/3)}-${i%3}`)),...Array.from({length:4},(_,i)=>`crowd-0-${i}`)]:[];
- const all=[...filenames,...extra,...(scene==='home-room'?[]:worldEnvironmentFiles),
+ return [...new Set([...filenames,...extra,...(scene==='home-room'?[]:worldEnvironmentFiles),
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
   ...['merchant','neighbor','stranger','visitor','operative','performer'].flatMap(role=>Array.from({length:4},(_,i)=>`npc-${role}-${i}`)),
   ...Array.from({length:12},(_,i)=>`guard-${Math.floor(i/3)}-${i%3}`),
-  ...Array.from({length:6},(_,i)=>`action-performer-${i}`),'action-carriers-0','action-carriers-1','action-child-crouch'];
- const ready=all.map(img).every(Boolean);document.documentElement.dataset.t32Art=ready?'ready':'loading';return ready;
+  ...Array.from({length:6},(_,i)=>`action-performer-${i}`),'action-carriers-0','action-carriers-1','action-child-crouch'])];
+}
+/** Starts beside native preparation, without changing the currently presented scene.
+ * Scene/world commit is allowed only after every required image has decoded.
+ */
+export function prepareFirstActArt(scene:string):Promise<void>{
+ if(!usesFirstActArt(scene))return Promise.resolve();
+ const existing=sceneJobs.get(scene);if(existing)return existing;
+ sceneStatus.set(scene,'loading');
+ const job=Promise.all(requiredArt(scene).map(loadImage)).then(()=>{sceneStatus.set(scene,'ready')}).catch(error=>{sceneStatus.set(scene,'error');throw error});
+ sceneJobs.set(scene,job);return job;
+}
+export function firstActReady(scene:string){
+ activeScene=scene;
+ if(!usesFirstActArt(scene)){document.documentElement.dataset.t32Art='native';return false}
+ if(!sceneJobs.has(scene))void prepareFirstActArt(scene).catch(()=>{});
+ const state=sceneStatus.get(scene)??'loading';document.documentElement.dataset.t32Art=state;
+ return state==='ready';
+}
+export function renderArtWaiting(ctx:CanvasRenderingContext2D,scene:string){
+ ctx.save();ctx.fillStyle='#111820';ctx.fillRect(0,0,320,200);ctx.fillStyle='#d8c5a5';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText(sceneStatus.get(scene)==='error'?'画面载入失败，请重新载入重试':'正在载入场景画面…',160,104);ctx.restore();
 }
 /** Keep native dialogue identities, slots, text layout and 64x72 logical footprint.
  * The source is 4x dense; it must never use its physical size as a UI size.

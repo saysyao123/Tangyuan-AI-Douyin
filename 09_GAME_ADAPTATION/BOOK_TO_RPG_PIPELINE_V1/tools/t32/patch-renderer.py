@@ -36,17 +36,40 @@ patch('world-scene-presentation.ts','''        partySprite(
           frame, displayed.pos, gridToPixel(displayed.pos), input.player.layer, partyIndex, true,
         ), artKey: visual.def.id, artFrame: frameIndex, artFacing: follower.facing},''')
 patch('world-scene-presentation.ts','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n','        sprites: input.sprites,\n        worldScale: this.host.worldScale,\n        sceneId: input.scene.scene?.id,\n')
-patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, presentationView, renderHDForeground } from './hd-world.js'")
-patch('render-scene.ts',"  layers?: import('./render.js').RenderLayerOpts\n","  layers?: import('./render.js').RenderLayerOpts\n  sceneId?: string\n")
-patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, layers)\n','''  if (args.sceneId && !layers && firstActReady(args.sceneId)) {
-    const view = presentationView(args.sceneId, camera)
-    ctx.scale(view.scale, view.scale)
-    renderer.renderScene(map, room, view.camera, [], {skipCover: true})
-    renderHDGround(ctx, args.sceneId, map, room, view.camera)
-    renderer.renderScene(map, room, view.camera, enhanceSprites(args.sceneId, sprites), {skipBase: true})
-    renderHDForeground(ctx, args.sceneId, view.camera)
+patch('render-scene.ts',"import type { IsometricMapContent } from '@type-pal/content'","import type { IsometricMapContent } from '@type-pal/content'\nimport { renderHDGround, enhanceSprites, firstActReady, presentationView, renderHDForeground, usesFirstActArt, renderArtWaiting } from './hd-world.js'")
+patch('render-scene.ts',"  layers?: import('./render.js').RenderLayerOpts\n","  layers?: import('./render.js').RenderLayerOpts\n  sceneId?: string\n  preserveFrame?: boolean\n")
+patch('render-scene.ts','  renderer.clear()\n','  if (!args.preserveFrame) renderer.clear()\n')
+patch('render-scene.ts','  renderer.renderScene(map, room, camera, sprites, layers)\n','''  if (args.sceneId && usesFirstActArt(args.sceneId)) {
+    if (firstActReady(args.sceneId)) {
+      const view = presentationView(args.sceneId, camera)
+      ctx.scale(view.scale, view.scale)
+      if (!layers?.skipBase) {
+        renderer.renderScene(map, room, view.camera, [], {...layers, skipCover: true})
+        renderHDGround(ctx, args.sceneId, map, room, view.camera)
+      }
+      if (!layers?.skipCover) {
+        renderer.renderScene(map, room, view.camera, enhanceSprites(args.sceneId, sprites), {...layers, skipBase: true})
+        renderHDForeground(ctx, args.sceneId, view.camera)
+      }
+    } else renderArtWaiting(ctx, args.sceneId)
   } else renderer.renderScene(map, room, camera, sprites, layers)
 ''')
+# Wave composition must use the same HD background and foreground paths.
+patch('world-scene-presentation.ts','''        layers: { skipCover: true },
+''','''        layers: { skipCover: true },
+        sceneId: input.scene.scene?.id,
+''')
+patch('world-scene-presentation.ts','''      this.host.context.save()
+      this.host.context.scale(this.host.worldScale, this.host.worldScale)
+      this.host.context.imageSmoothingEnabled = false
+      input.scene.renderer.renderScene(input.scene.map, input.scene.room, camera, input.sprites, {
+        skipBase: true,
+      })
+      this.host.context.restore()''','''      renderSceneFrame(this.host.context, input.scene.renderer, {
+        map: input.scene.map, room: input.scene.room, camera, sprites: input.sprites,
+        worldScale: this.host.worldScale, layers: {skipBase: true},
+        sceneId: input.scene.scene?.id, preserveFrame: true,
+      })''')
 print('T32_DISPLAY_ONLY_PATCH_APPLIED')
 
 # First-act high-density portraits are display overrides; content assets and
@@ -71,7 +94,7 @@ p=pkg/'main.ts';s=p.read_text();anchor="const WORLD_SCALE = new URLSearchParams(
 
 # Uniform room overview and its inverse are presentation only; native coordinates,
 # motion writers, legal cells, opaque hit masks and keyboard commands are unchanged.
-patch('main.ts', "import { PresentationPosition } from './presentation-position.js'", "import { PresentationPosition } from './presentation-position.js'\nimport { artScreenPoint, artWorldPoint } from './hd-world.js'")
+patch('main.ts', "import { PresentationPosition } from './presentation-position.js'", "import { PresentationPosition } from './presentation-position.js'\nimport { artScreenPoint, artWorldPoint, prepareFirstActArt } from './hd-world.js'")
 patch('main.ts', "return {x:(event.clientX-rect.left)*320/rect.width+camera.x,y:(event.clientY-rect.top)*200/rect.height+camera.y}", "return artWorldPoint(activeScene.scene.id,camera,(event.clientX-rect.left)*320/rect.width,(event.clientY-rect.top)*200/rect.height)")
 patch('main.ts', "const p = gridToPixel(e.pos), x=p.x-camera.x, y=p.y-camera.y+5", "const p = gridToPixel(e.pos), screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y+5), x=screen.x, y=screen.y")
 patch('main.ts', "const p=gridToPixel(step.pos);ctx.fillStyle='#e7bd7970';ctx.fillRect(Math.round(p.x-camera.x),Math.round(p.y-camera.y),2,1)", "const p=gridToPixel(step.pos), screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y);ctx.fillStyle='#e7bd7970';ctx.fillRect(Math.round(screen.x),Math.round(screen.y),2,1)")
@@ -79,3 +102,7 @@ patch('main.ts', "ctx.strokeStyle='#efca86';ctx.beginPath();ctx.ellipse(p.x-came
 
 # Softer room interaction cues retain the original targets and hover labels.
 patch('main.ts', "ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)", "if(['home-room','fair','backstage','street','courtyard'].includes(activeScene.scene.id)){ctx.strokeStyle='#e7bd7988';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(x,y,1.7,.8,0,0,Math.PI*2);ctx.stroke()}else{ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)}")
+
+# Preserve native synchronous input capture: start native prepare before awaiting art.
+patch('main.ts', '    return scenePreparation.prepare(sceneId, worldView, spawn, useActorOverrides, scriptState)', '''    const nativePlan = scenePreparation.prepare(sceneId, worldView, spawn, useActorOverrides, scriptState)
+    return Promise.all([nativePlan, prepareFirstActArt(sceneId)]).then(([plan]) => plan)''')
