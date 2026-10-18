@@ -18,7 +18,7 @@ function img(key:string){
 export function firstActReady(scene:string){
  activeScene=scene;
  if(!act.has(scene)||new URLSearchParams(location.search).get('art')==='baseline')return false;
- const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-memento','room-mat'];
+ const roomFiles=['room-wall-left','room-wall-right','room-floor','room-bed','room-tv','room-meal','room-basin','room-cupboard','room-lamp','room-mat'];
  const extra=scene==='home-room'?roomFiles:scene==='fair'?[...Array.from({length:24},(_,i)=>`crowd-${Math.floor(i/4)}-${i%4}`)]:scene==='backstage'?['action-carriers-unique-0','action-carriers-unique-1',...['a','b','c'].flatMap(role=>Array.from({length:12},(_,i)=>`sub-${role}-${Math.floor(i/3)}-${i%3}`)),...Array.from({length:4},(_,i)=>`crowd-0-${i}`)]:[];
  const all=[...filenames,...extra,
   ...['hero','child'].flatMap(role=>Array.from({length:12},(_,i)=>`lead-${role}-${Math.floor(i/3)}-${i%3}`)),
@@ -84,7 +84,7 @@ export function renderHDGround(ctx:CanvasRenderingContext2D,scene:string,map:Iso
 }
 type Prop={key:string,w:number,foot?:number,depth?:number,dx?:number};
 const byScene:Record<string,Record<string,Prop>>={
- 'home-room':{'room-bedside':{key:'room-bed',w:96,foot:.97},'room-television':{key:'room-tv',w:56,foot:.97},'meal-table':{key:'room-meal',w:80,foot:.97},washbasin:{key:'room-basin',w:36,foot:.98},'kitchen-cupboard':{key:'room-cupboard',w:48,foot:.98},'room-lamp':{key:'room-lamp',w:44,foot:.98},memory:{key:'room-memento',w:16,foot:.98}},
+ 'home-room':{'room-bedside':{key:'room-bed',w:96,foot:.97},'room-television':{key:'room-tv',w:56,foot:.97},'meal-table':{key:'room-meal',w:80,foot:.97},washbasin:{key:'room-basin',w:36,foot:.98},'kitchen-cupboard':{key:'room-cupboard',w:48,foot:.98},'room-lamp':{key:'room-lamp',w:44,foot:.98}},
  fair:{theater:{key:'stage',w:174,foot:.87,depth:-38},'market-stall-0':{key:'stall',w:84},'market-stall-1':{key:'stall',w:84},'market-stall-2':{key:'stall',w:84},'market-tree':{key:'tree',w:94}},
  backstage:{'rear-curtain':{key:'backstage',w:280,foot:.583,depth:-65,dx:-165},'rear-wall':{key:'wall',w:112}},
  street:{'street-rental-0':{key:'house',w:184,foot:.84},'street-rental-1':{key:'house',w:184,foot:.84},'street-rental-2':{key:'house',w:184,foot:.84},'street-tree':{key:'tree',w:93},'street-tree-2':{key:'tree',w:93},'street-wall':{key:'wall',w:110}},

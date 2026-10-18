@@ -75,3 +75,6 @@ patch('main.ts', "return {x:(event.clientX-rect.left)*320/rect.width+camera.x,y:
 patch('main.ts', "const p = gridToPixel(e.pos), x=p.x-camera.x, y=p.y-camera.y+5", "const p = gridToPixel(e.pos), screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y+5), x=screen.x, y=screen.y")
 patch('main.ts', "const p=gridToPixel(step.pos);ctx.fillStyle='#e7bd7970';ctx.fillRect(Math.round(p.x-camera.x),Math.round(p.y-camera.y),2,1)", "const p=gridToPixel(step.pos), screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y);ctx.fillStyle='#e7bd7970';ctx.fillRect(Math.round(screen.x),Math.round(screen.y),2,1)")
 patch('main.ts', "ctx.strokeStyle='#efca86';ctx.beginPath();ctx.ellipse(p.x-camera.x,p.y-camera.y,5,2.5,0,0,Math.PI*2);ctx.stroke()", "const screen=artScreenPoint(activeScene.scene.id,camera,p.x,p.y);ctx.strokeStyle='#efca86';ctx.beginPath();ctx.ellipse(screen.x,screen.y,5,2.5,0,0,Math.PI*2);ctx.stroke()")
+
+# Softer room interaction cues retain the original targets and hover labels.
+patch('main.ts', "ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)", "if(activeScene.scene.id==='home-room'){ctx.strokeStyle='#e7bd7988';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(x,y,1.7,.8,0,0,Math.PI*2);ctx.stroke()}else{ctx.fillStyle = '#e7bd79'; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,3,3)}")

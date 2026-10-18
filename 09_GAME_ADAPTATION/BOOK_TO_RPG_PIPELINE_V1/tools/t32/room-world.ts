@@ -3,8 +3,8 @@
  */
 import type {Camera} from './render.js';
 type GetImage=(key:string)=>HTMLImageElement|undefined;
-export const ROOM_VIEW={scale:.54,camera:{x:128,y:-72}} as const;
-const A={x:160,y:130},B={x:400,y:10},C={x:656,y:138};
+export const ROOM_VIEW={scale:.60,camera:{x:144,y:-24}} as const;
+const A={x:160,y:138},B={x:400,y:58},C={x:656,y:143};
 function floorPath(c:CanvasRenderingContext2D){c.beginPath();c.moveTo(A.x,A.y);c.lineTo(B.x,B.y);c.lineTo(C.x,C.y);c.lineTo(656,290);c.lineTo(160,290);c.closePath()}
 let cachedRoom:HTMLCanvasElement|undefined;
 export function drawRoomGround(ctx:CanvasRenderingContext2D,camera:Camera,get:GetImage){
@@ -21,7 +21,7 @@ function paintRoomGround(ctx:CanvasRenderingContext2D,get:GetImage){
  for(let v=-480;v<400;v+=160)for(let u=0;u<880;u+=160)ctx.drawImage(wood,u,v,160,160);
  ctx.restore();
  let glow=ctx.createRadialGradient(350,174,12,350,174,180);glow.addColorStop(0,'rgba(239,152,53,.22)');glow.addColorStop(1,'rgba(239,152,53,0)');ctx.fillStyle=glow;ctx.fillRect(160,10,496,280);
- glow=ctx.createRadialGradient(340,96,5,340,96,126);glow.addColorStop(0,'rgba(89,133,184,.12)');glow.addColorStop(1,'rgba(89,133,184,0)');ctx.fillStyle=glow;ctx.fillRect(160,10,496,280);ctx.restore();
+ glow=ctx.createRadialGradient(340,96,5,340,96,126);glow.addColorStop(0,'rgba(111,163,222,.26)');glow.addColorStop(1,'rgba(89,133,184,0)');ctx.fillStyle=glow;ctx.fillRect(160,10,496,280);ctx.restore();
  // Both full wall elevations include plaster, dado, posts and the roof cut beam.
  const wall=(im:HTMLImageElement,a:typeof A,b:typeof A)=>{ctx.save();ctx.transform((b.x-a.x)/im.naturalWidth,(b.y-a.y)/im.naturalWidth,0,78/im.naturalHeight,a.x,a.y-78);ctx.drawImage(im,0,0);ctx.restore()};wall(left,A,B);wall(right,B,C);
  // Ground shadows connect the old authored feet to the new floor; no simulation footprint changes.
@@ -35,6 +35,6 @@ export function drawRoomForeground(ctx:CanvasRenderingContext2D,camera:Camera,ge
  const rail=(x:number,w:number)=>ctx.drawImage(panel,0,panel.naturalHeight*.76,panel.naturalWidth*.18,panel.naturalHeight*.24,x,270,w,25);
  rail(160,110);rail(310,230);rail(580,76);
  // Exposed timber end posts and low side returns use the same raster material.
- for(const x of [160,646])ctx.drawImage(panel,0,0,panel.naturalWidth*.035,panel.naturalHeight,x,130,10,165);
+ for(const x of [160,646])ctx.drawImage(panel,0,0,panel.naturalWidth*.035,panel.naturalHeight,x,138,10,157);
  ctx.restore();
 }
