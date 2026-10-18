@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "checks": [
+    "SNOW-YARD_NEW_HD_DRAWN_WITH_NATIVE_WORLD_IDENTICAL",
+    "SNOW-YARD_POINTER_INVERSE_AND_KEYBOARD_TAKEOVER",
+    "NEW_TWO_DISTINCT_SNOWMEN_NATIVE_BUILD_AND_ENDING",
+    "AFFECTED_SECOND_ACT_SAVE_RELOAD_RETAINS_STATE_AND_HD"
+  ],
+  "errors": [],
+  "states": [
+    {
+      "scene": "snow-yard",
+      "camera": {
+        "x": 256,
+        "y": 112
+      },
+      "position": {
+        "col": 27,
+        "row": 1,
+        "height": 0
+      },
+      "actors": 11,
+      "p95": 39
+    }
+  ],
+  "scope": "Only lowered snow-yard foreground wall: view, pointer, two snowmen and save. Prior T36 13 checks reused."
+}

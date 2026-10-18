@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "checks": [
+    "NIGHT-ROAD_NEW_HD_DRAWN_WITH_NATIVE_WORLD_IDENTICAL",
+    "NIGHT-ROAD_POINTER_INVERSE_AND_KEYBOARD_TAKEOVER",
+    "NIGHT-SHOP-ROOM_NEW_HD_DRAWN_WITH_NATIVE_WORLD_IDENTICAL",
+    "NIGHT-SHOP-ROOM_POINTER_INVERSE_AND_KEYBOARD_TAKEOVER",
+    "MIND-TREE_NEW_HD_DRAWN_WITH_NATIVE_WORLD_IDENTICAL",
+    "MIND-TREE_POINTER_INVERSE_AND_KEYBOARD_TAKEOVER",
+    "SNOW-YARD_NEW_HD_DRAWN_WITH_NATIVE_WORLD_IDENTICAL",
+    "SNOW-YARD_POINTER_INVERSE_AND_KEYBOARD_TAKEOVER",
+    "REAL_TRUCK_COLLAPSE_WHITE_FIRE_UNIQUE_DRIVER_WALK_AND_DIALOGUE",
+    "UNIQUE_KEEPER_PORTRAIT_AND_NATIVE_STORE_PURCHASE_CLICK",
+    "NEW_MIND_OBJECTS_CLICK_AND_NATIVE_CONFIRM_ANIMATION",
+    "NEW_TWO_DISTINCT_SNOWMEN_NATIVE_BUILD_AND_ENDING",
+    "AFFECTED_SECOND_ACT_SAVE_RELOAD_RETAINS_STATE_AND_HD"
+  ],
+  "errors": [],
+  "states": [
+    {
+      "scene": "night-road",
+      "camera": {
+        "x": 320,
+        "y": 128
+      },
+      "position": {
+        "col": 30,
+        "row": 0,
+        "height": 0
+      },
+      "actors": 21,
+      "p95": 25.69999999999709
+    },
+    {
+      "scene": "night-shop-room",
+      "camera": {
+        "x": 208,
+        "y": 104
+      },
+      "position": {
+        "col": 25,
+        "row": 2,
+        "height": 0
+      },
+      "actors": 7,
+      "p95": 19.29999999998836
+    },
+    {
+      "scene": "mind-tree",
+      "camera": {
+        "x": 224,
+        "y": 96
+      },
+      "position": {
+        "col": 25,
+        "row": 1,
+        "height": 0
+      },
+      "actors": 6,
+      "p95": 18
+    },
+    {
+      "scene": "snow-yard",
+      "camera": {
+        "x": 256,
+        "y": 112
+      },
+      "position": {
+        "col": 27,
+        "row": 1,
+        "height": 0
+      },
+      "actors": 11,
+      "p95": 19.60000000000582
+    }
+  ],
+  "scope": "Only four revised second-act displays, associated actual accident/people/store, one mind draw and two snowmen/save. Full prior first/second act mechanics suites reused, not rerun."
+}
