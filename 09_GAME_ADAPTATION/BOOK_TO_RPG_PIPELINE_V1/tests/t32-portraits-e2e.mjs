@@ -2,7 +2,13 @@
 import {chromium,firefox,webkit} from 'playwright';import fs from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';
 const base=process.env.T1_URL??'http://127.0.0.1:6154',out='/tmp/t32-evidence/portraits/'+(process.env.T32_BROWSER??'chromium'),project=path.resolve('projects/book-pilot-cinematic');await fs.mkdir(out,{recursive:true});
 const scenes={},maps={};for(const id of ['fair','backstage','street','courtyard']){scenes[id]=JSON.parse(await fs.readFile(path.join(project,'content/scenes/'+id+'.json')));maps[id]=JSON.parse(await fs.readFile(path.join(project,'content/maps/'+id+'.json')))}
-const browserType={chromium,firefox,webkit}[process.env.T32_BROWSER??'chromium'];const browser=await browserType.launch({headless:true}),ctx=await browser.newContext({viewport:{width:1440,height:960},recordVideo:{dir:out,size:{width:1280,height:800}}}),page=await ctx.newPage(),errors=[],checks=[],screens=new Set(),coverage=[];let completedTrace=[];page.on('pageerror',e=>errors.push(e.message));
+const browserType={chromium,firefox,webkit}[process.env.T32_BROWSER??'chromium'];
+// WebKit ephemeral contexts reject native IDB Blob writes; use a normal persistent session.
+// No storage monkeypatch, no browser flag to mask failure, no SAVE12 changes.
+const options={viewport:{width:1440,height:960},recordVideo:{dir:out,size:{width:1280,height:800}}};
+const browser=process.env.T32_BROWSER==='webkit'?null:await browserType.launch({headless:true});
+const ctx=browser?await browser.newContext(options):await browserType.launchPersistentContext('/tmp/t32-webkit-profile-'+process.pid,{headless:true,...options});
+const page=await ctx.newPage(),errors=[],checks=[],screens=new Set(),coverage=[];let completedTrace=[];page.on('pageerror',e=>errors.push(e.message));
 const state=()=>page.evaluate(()=>window.__tpObserve?.readRuntime());const ready=()=>page.waitForFunction(()=>window.__tpObserve?.readRuntime(),null,{timeout:45000});const press=async key=>{await page.keyboard.press(key);await page.waitForTimeout(100)};
 async function shot(name){if(screens.has(name))return;screens.add(name);await page.screenshot({path:out+'/'+name+'.png'})}
 async function oldSampleShots(s){const has=id=>s.actors.some(a=>a.id==='entity:'+id);if(s.story.flags.fire_ignited&&!s.story.flags.fire_recalled&&has('body-fire'))await shot('fire-ignited');if(s.story.flags.fire_cast&&!s.story.flags.fire_dissolved&&s.actors.some(a=>a.id==='entity:fireball'&&a.canonical.col<39))await shot('fire-in-flight');if(s.story.flags.performer_down&&has('performer'))await shot('backstage-collapse');if(has('carriers'))await shot('backstage-departure');if(s.dialogue?.pageText?.includes('一点点')&&!screens.has('medicine-crouch')){await page.waitForTimeout(300);await shot('medicine-crouch')}}
@@ -30,7 +36,7 @@ async function sampleShots(s){
 }
 async function importScene(id,flags={}){
  const f=JSON.parse(await fs.readFile('../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/fixtures/t15-street.native-save.json','utf8'));f.position.sceneId=id;f.position.pos=scenes[id].entry.pos;Object.assign(f.world.script.flags,flags);
- await page.evaluate(x=>window.tpPlayer.importQuickSave(x),JSON.stringify(f));await press('F9');await drain();await page.waitForFunction(()=>document.documentElement.dataset.t32Art==='ready');
+ await page.evaluate(x=>window.tpPlayer.importQuickSave(x),JSON.stringify(f));await press('F9');await drain();await page.waitForFunction(()=>document.documentElement.dataset.t32Art==='ready');await page.waitForTimeout(2000);
 }
 try{
  await page.addInitScript(()=>{
@@ -53,4 +59,4 @@ try{
  await importScene('backstage',{backstage_seen:true,officers_departed:true});await page.locator('#screen').screenshot({path:out+'/backstage-entry.png'});
  assert.equal(seen.size,6);assert.deepEqual(errors,[]);
  await fs.writeFile(out+'/result.json',JSON.stringify({status:'PASS',browser:process.env.T32_BROWSER??'chromium',checks,decoded,dialogues,errors,scope:'Only newly changed portraits and backstage dressing. Actual first-act six speaking identities tested via native interactions. Visitor and performer assets decoded, no new dialogue invented. Prior full-story acceptance reused.'},null,2));
-}catch(e){await page.screenshot({path:out+'/FAIL.png'});await fs.writeFile(out+'/result.json',JSON.stringify({status:'FAIL',checks,dialogues,error:String(e),state:await state().catch(()=>null),errors},null,2));throw e}finally{await ctx.close();await browser.close()}
+}catch(e){await page.screenshot({path:out+'/FAIL.png'});await fs.writeFile(out+'/result.json',JSON.stringify({status:'FAIL',checks,dialogues,error:String(e),state:await state().catch(()=>null),errors},null,2));throw e}finally{await ctx.close();await browser?.close()}

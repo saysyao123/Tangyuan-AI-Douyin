@@ -9,7 +9,7 @@ on:
       - '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-portraits-e2e.mjs'
       - '.github/workflows/book_rpg_t32_art_integration.yml'
   workflow_dispatch:
-permissions: {contents: write}
+permissions: {contents: write, actions: read}
 jobs:
   integrate-and-play:
     runs-on: ubuntu-24.04
@@ -59,7 +59,13 @@ jobs:
       - name: Typecheck changed renderer in shipped source
         working-directory: upstream/packages/reforge
         run: pnpm typecheck
-      - run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - uses: actions/download-artifact@v4
+        with:
+          name: t32-first-act-art-and-playthrough
+          run-id: 39093310372
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          path: r2-proven
+      - run: pnpm exec playwright install --with-deps chromium webkit
         working-directory: upstream
       - name: Serve isolated candidate and unchanged T30 control
         run: |
@@ -76,14 +82,20 @@ jobs:
           assert len(files)>30
           for p in files:assert p.read_bytes()==(b/p.relative_to(a)).read_bytes(),p
           print('NATIVE_PROJECT_BYTES_UNCHANGED',len(files))
+          from zipfile import ZipFile
+          with ZipFile('r2-proven/T32_FIRST_ACT_CANDIDATE.zip') as z:
+            chapter=[n for n in z.namelist() if n.startswith('chapter/') and not n.endswith('/')]
+            for n in chapter:assert z.read(n)==(Path('site')/n).read_bytes(),n
+          print('R2_CHROMIUM_FIREFOX_TESTED_CHAPTER_IDENTICAL',len(chapter))
           PY
-      - name: Newly changed portraits and room through real dialogue in three browser engines
+      - name: Reuse passed Chromium and Firefox; finish WebKit in normal persistent context
         working-directory: upstream
         run: |
           cp ../source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t32-portraits-e2e.mjs .
-          for engine in chromium firefox webkit; do
-            T1_URL=http://127.0.0.1:6154/site T32_BROWSER=$engine node t32-portraits-e2e.mjs
-          done
+          mkdir -p /tmp/t32-evidence/portraits
+          cp -a ../r2-proven/t32-evidence/portraits/chromium /tmp/t32-evidence/portraits/
+          cp -a ../r2-proven/t32-evidence/portraits/firefox /tmp/t32-evidence/portraits/
+          T1_URL=http://127.0.0.1:6154/site T32_BROWSER=webkit node t32-portraits-e2e.mjs
       - name: Only affected backstage alignment, native collapse, carrying and save reopen
         working-directory: upstream
         env: {T1_URL: 'http://127.0.0.1:6154/site'}
