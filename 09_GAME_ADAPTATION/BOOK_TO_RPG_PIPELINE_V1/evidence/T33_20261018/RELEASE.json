@@ -1,0 +1,60 @@
+{
+  "phase": "T33_HOME_ROOM_AND_RESERVED_IDENTITIES_PUBLISHED",
+  "projectComplete": false,
+  "artUserAcceptance": "PENDING",
+  "sourceCommit": "cd824cff6c5be26aa4eeb5b82eaeab448939a5bd",
+  "runtimeCommit": "cb55699abe55005a5d1d008e7af9a1d26644ef93",
+  "sourceBranch": "feature/t33-home-room-identity-20261018",
+  "runtimeBranch": "t33-room-candidate",
+  "sitesSourceCommit": "044c301dc0d406616d7d4baad4b3233f22772be9",
+  "siteId": "appgprj_6ad427757a608191a95a42cc68b1f19b",
+  "siteVersionId": "appgprj_6ad427757a608191a95a42cc68b1f19b~appgver_0301ebeef608819195cc66e20a0e0a25",
+  "deploymentId": "appgdep_6ad4933d357881919df0f613d9d35a19",
+  "deploymentStatus": "succeeded",
+  "deploymentAt": "2026-10-18T09:37:20.118645+00:00",
+  "urls": {
+    "room": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/night/",
+    "review": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/review/#home-room",
+    "firstAct": "https://lantern-inn-act1-t32.ardentfern6.chatgpt.site/chapter/"
+  },
+  "changes": [
+    "Full furnished home-room architecture, snow-view window, floor, furniture, warm/cool light, softer interaction markers; one shared view transform and pointer inverse",
+    "Six ordinary crowd identities in four directions; three unique subordinate identities with native walking phases; revised carriers continue same lead guard and actor",
+    "All previous 98 raster hashes retained, including leads and important NPCs; canonical small-walnut pendant preserved"
+  ],
+  "qa": {
+    "run": 39115653713,
+    "roomIdentityChecks": 6,
+    "backstageChecks": 2,
+    "pageErrors": 0,
+    "typecheck": "PASS",
+    "nativeProjectBytesUnchanged": 109,
+    "testedGameFilesByteIdentical": 306,
+    "chapterShellFilesUnchanged": 5,
+    "runtimeInventoryFiles": 886,
+    "actualScreenshotsManuallyReviewed": true,
+    "reusedFirstActFullRegression": 39088306145,
+    "reusedPortraitEngines": [
+      39093310372,
+      39093766720
+    ]
+  },
+  "completeWebZip": {
+    "bytes": 77632183,
+    "sha256": "15a22782d1c5861df52303b19b5c392db7b2064de0880bd33188b1f601d8fc42",
+    "containsAllLocalDownloads": true
+  },
+  "limits": [
+    "Final user art acceptance remains pending; project not marked complete",
+    "Only affected checks rerun; passed unchanged first-act story and portrait suites reused",
+    "Linux CI Chromium for T33 affected checks, not a physical phone/Safari application check",
+    "Known WebKit private-session thumbnail Blob limitation retained",
+    "Existing owner-private isolated Site audience preserved; main and original formal Site untouched",
+    "Public source uses synthetic dialogue; private book text not published",
+    "Published-domain browser replay not repeated; exact tested game bytes deployed"
+  ],
+  "failedAcceptanceScriptAttempts": {
+    "39114964848": "Draw recorder omitted cached offscreen room layers; corrected cumulative source-draw record",
+    "39115441286": "Did not await native async save/load completion; corrected waits without changing save logic"
+  }
+}
