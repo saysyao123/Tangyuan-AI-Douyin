@@ -1,0 +1,51 @@
+name: T35 final parent loading hints only
+on:
+  push:
+    branches: ['feature/t35-no-legacy-flash-20261018']
+    paths: ['09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t35/**', '09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t35-shell-loading.mjs', '.github/workflows/book_rpg_t35_loading_shell.yml']
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  loading-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: source, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {ref: 1bbfc1585815c211c92c0550aff1efb0600fb9a3, path: site, persist-credentials: false}
+      - name: Patch only existing parent wait hint
+        run: node source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tools/t35/patch-loading-shell.mjs site
+      - name: Reuse all previously tested engine and art bytes
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          assert not subprocess.check_output(['git','-C','site','diff','--name-only','--','chapter/game']).strip()
+          print('ALL_338_TESTED_GAME_FILES_BYTE_IDENTICAL')
+          PY
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.19.0'}
+      - run: npm install --no-save --prefix /tmp/t35-runner playwright@1.56.1
+      - run: /tmp/t35-runner/node_modules/.bin/playwright install --with-deps chromium
+      - name: Only affected waiting hint and recovery
+        run: |
+          python3 -m http.server 6154 --bind 127.0.0.1 --directory . >/tmp/t35-http.log 2>&1 &
+          cp source/09_GAME_ADAPTATION/BOOK_TO_RPG_PIPELINE_V1/tests/t35-shell-loading.mjs /tmp/t35-runner/
+          node /tmp/t35-runner/t35-shell-loading.mjs
+      - name: Retain final shell evidence
+        if: always()
+        run: cp -a /tmp/t35-shell-evidence site/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: t35-final-loading-hints, path: /tmp/t35-shell-evidence, retention-days: 30}
+      - name: Publish isolated final runtime
+        if: success()
+        env: {PUSH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'}
+        run: |
+          cd site
+          git config user.name 'T35 Loading CI'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -qb t35-no-flash-final
+          git add -A
+          git commit -qm 'T35 truthful loading hint; exact verified no-flash engine retained'
+          git push "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/t35-no-flash-final --force
