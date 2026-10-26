@@ -1,0 +1,305 @@
+# AI Digital Asset Factory｜零新增费用数字资产工厂 V1.0
+
+> 制定：2026-10-26｜项目状态：PLAN_LOCKED / IMPLEMENTATION_NOT_STARTED  
+> 仓库：saysyao123/Tangyuan-AI-Douyin｜分支：main  
+> 本文件是本项目唯一启动入口。当前只提交方案，不创建代码、商品或其他文件。  
+> 本项目与已有 MV、AI 早报、网页 RPG 等并列，**不覆盖**它们的既有工作流与锁定规则。
+
+## 0. 一句话目标和任务契约
+
+**原始目标**：仅使用用户已经付费的 ChatGPT Plus 及其当前可用的 GPT、Codex、Work 能力，结合免费、许可清楚的开源项目，生产可以反复销售/授权、尽量无需日常客服的原创数字资产；持续增加有效资产并争取真实净收益。
+
+**最终目标**：能定期重复运行的「市场发现 → 小规模制作 → 机器/人工双层质检 → 平台发布 → 真实交易数据 → 继续/修正/停止」闭环。长期参考目标为净收入人民币 10,000 元/月，成熟阶段人工维护每周不超过 5 小时；这是**愿景而非承诺**。
+
+**本轮交付**：一份零新增费用的执行方案；不是生产系统，更不是已经上架、已经取得收益。
+
+**锁定约束**：
+
+1. **新增现金支出预算 = 0**：不购买 API tokens/credits、额外 AI 订阅、付费软件、插件、云服务器、域名、字体/素材、广告、样书或第三方服务。Plus 既有订阅费用为唯一已存在的订阅前提。
+2. 优先 GPT/ChatGPT 对话完成研究、文本与创意；Codex 编写、运行与维护脚本；Work 只在**当前账户已开放且使用包含额度**时用于多步执行。不得假设任一入口无限次、永远可用。
+3. **ChatGPT Plus ≠ OpenAI API 额度**；不能用 Plus 浏览器会话冒充 API，不能保存或共享 cookie/session/token；不能使用第三方付费模型。
+4. 正式产品必须是原创、合法可商用、用户真正能使用的作品。开源程序许可证与字体、图标、样例素材授权必须分别审查。
+5. GitHub 主仓库为 Public：这里仅公开方法论、链接和非敏感执行规范；待售商品源文件、内部选题、销售数据、身份证明、平台会话不得提交到本公开库。
+6. 以**真实订单/实际版税**为最高商业证据，不以文件数量、自动化程度、GitHub Stars、平台审核通过或浏览量替代盈利。
+7. 自动化不得规避平台账户限制、验证码、人工发布确认或付款/审核流程；平台本人身份、税务和收款处理须由账号所有者负责。
+8. 要求“低售后”，不是声称绝对零售后：可能发生拒稿、版权争议、质量投诉、退款、账号问题、税务义务。
+
+**本轮验收标准**：方案能指定免费技术、唯一第一批产物、成本硬门槛、可执行分阶段任务、各 Gate 证据、真实收入实验设计及下一轮直接可粘贴的执行指令。任何未运行项目均标记 NOT_TESTED。
+
+## 1. 与主仓库已有能力的衔接
+
+已经核查 main 分支：
+
+- README.md：主仓库原则是 experiment → evidence → rule → gate → regression → promotion；本项目继承这一方法，不继承 MV 特有的音频、镜头和发片要求。
+- 08_AGENT_CONTROL_LAYER/README.md：复用「No Evidence, No State Transition」「Generator != Judge」「Atomic Judgment」「Code owns deterministic control flow」「Stage seal / compact handoff」。这些是**设计原则**；不可声称本项目已实现独立 Judge。
+- 09_AGENT_RUNTIME/README.md：复用 Plus-only 边界——GPT 提供真实输入，免费确定性代码执行，执行结果需要文件/测试/哈希证明；不把 ChatGPT 对话伪装成可跨日无人值守的 API Agent。
+- 00_CONTROL/MASTER_CONTROL.md 与 00_CONTROL/LOCKED_RULES.md 主要服务既有抖音项目：不覆盖、不编辑、也不擅自将视频垂类限制复制到资产项目。
+- 现有仓库无需更改根 README、旧目录、CI 配置。此新目录目前仅包含本计划文件。
+
+**新项目命名空间**：10_DIGITAL_ASSET_FACTORY/。下一阶段开发时再按实际需要建立单独工作区/私有仓库，当前不擅自新建别的文件。
+
+## 2. 第一性原则：如何赚钱而不是如何批量生成
+
+一件资产的收入潜力近似取决于：
+
+**可触达的真实购买需求 × 商品实际竞争力 × 平台可见性 × 单笔净版税 × 资产有效生命周期**。
+
+批量生成只优化生产成本；不会自动获得需求、曝光和订单。
+
+因此优先**有既有付费交易、平台履约、无需我们自己处理多数交付**的渠道。首期两个小实验，不四线全开：
+
+| 轨道 | 角色 | 可售商品 | 为什么 | 首期产物 | 什么时候扩产 |
+|---|---|---|---|---|---|
+| A — Amazon KDP | **技术与收入验证主线** | 原创英文益智活动纸质书 | 平台按需印刷/配送；无需提前支付印刷和库存成本；题目可由代码生成且校验 | 一本有明确年龄/难度、真正不同题目、答案齐全的活动书（内页 PDF + 全幅封面 + 预览 + QA） | 账号具备准入、作品质量合格、真实上架；且存在真实成交或有证据的正向需求 |
+| B — Adobe Stock | **低售后授权并行小样** | 可编辑原创 SVG 矢量素材 | 单份资产可多次授权；平台处理授权交易 | 5 件不同商业用途的 SVG + 预览 + 英文标题/关键词 + QA | 真实通过审核，作品有实际授权/曝光证据，能判定非重复创作方向 |
+| C — Amazon Merch | 延后 | 原创透明底印花设计 | 平台负责制作/配送，但账户准入和设计竞争大 | V1 不生产 | A/B 测试结果有复用图案价值，再检查账号资格 |
+| D — 免费工具站 | 延后 | 本地运行的免费网页工具 | 技术可复用，但收入依赖访问量/广告批准 | V1 不建站 | 已有可观察的真实搜索需求及流量获取方案 |
+
+**路线调整原则**：A 的开源生产基础最明确，先测“能做出合格商品”；B 对低售后更有吸引力，并行少量投稿验证。**最终主线按真实商业数据重新选择**，不是预设 KDP 必定赚钱。零新增费用意味着**不买站外广告、不购买平台流量、不通过付费样书证明质量**。平台既有买家不代表平台承诺给新作者曝光。
+
+### 2.1 首批内容选题原则
+
+KDP 首批从迷宫算法切入，目标可定义为“英文儿童某年龄段的视觉与路径挑战活动书”**暂定选题，仅用于技术测试**。正式题材必须结合平台现售作品、买家用途、差评痛点与差异化重新筛选：不能以“普通迷宫合集 + 换封面”作为长期商业壁垒。年龄适宜性/难度须有明确规则和校验样本。
+
+Adobe 首批分别做家居维修流程、家庭整理、服务流程等**用途互不相同**的原创可编辑矢量作品；不以换色、换朝向、近似图大量刷量。
+
+## 3. 免费能力与费用防线（ZERO-SPEND GATE）
+
+| 环节 | 允许 | 明确不允许/注意 |
+|---|---|---|
+| 选题、研究、标题、审稿 | 现有 GPT/ChatGPT Plus、开放额度内的研究/文件能力 | 付费调研数据库、外挂付费模型 |
+| Coding、调试、审计 | Codex（Plus 可用额度）、现有 ChatGPT 工具、免费开源依赖 | Codex 额外 credits、独立 API 充值、第三方 AI 订阅 |
+| 云端运行 | 仅已有免费额度内的 Codex 环境；必要时免费 GitHub Actions/可用执行环境 | 超出配额自动收费；不确保某云端长期/无限免费 |
+| 图形 | 自写 SVG、Python/Pillow/ReportLab、SVGO、sharp；现有套餐内原生生图可用于辅助创意 | 付费素材站、商业字体、未授权图标与抄袭/描摹第三方作品 |
+| PDF | ReportLab 或经许可审核的免费 PDF 工具 | 付费 Acrobat/设计软件 |
+| 发布 | KDP 免费自助出版；Adobe Stock 按当期规则投稿 | 样书购买、付费推广、自动购买 ISBN、付费中转或商业代理 |
+| 代码/资产保管 | 既有 Public 仓库放公开 SOP；必要时 GitHub Free 私有仓库存非敏感生产源码/作品 | 将私有商品和身份证明上传 Public；Private Actions 超额使用 |
+| 收款与税务 | 使用平台支持的合规付款路径，先检查是否能够**零前置费用**建立 | 如果账户所在地、提现工具或税务流程产生必要新增费用，则该通道置 BLOCKED 并寻找其他**免费**合规渠道；不绕过身份核验 |
+
+**硬停止**：遇到必须充值、升级套餐、输入付费 API Key、付费域名/服务器、Paid runners、短信代收验证码、购买素材/字体、样书费用等提示，立即 STOP 并报告。不要先消费再解释。
+
+**注意**：GitHub Public Actions 标准托管 runner 一般免费，但 Public 不适合保存未发布的商业资产；Private 仓库有免费配额、超过可能收费，所以第一版**不建立自动定时云端批量任务**。本地/当前会话执行只在已有工具能力支持下进行，实际可用性逐项核实。
+
+**额度耗尽**：停止当轮 agent 操作，保留状态和可复现文件，等待包含额度恢复；不得默认购买 flex credits 或虚构后台执行。不能承诺不用 API 时 GPT 自己跨日醒来持续制作，若无合适的计划任务/授权，必须由用户在可用会话触发。
+
+官方说明：
+- https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan
+- https://help.openai.com/en/articles/12642688-using-credits-for-flexible-usage-in-chatgpt-personal-plans
+- https://help.openai.com/en/articles/9039756-managing-billing-for-chatgpt-and-the-api-platform
+- https://docs.github.com/en/actions/concepts/billing-and-usage
+- https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories
+
+## 4. 调研开源项目逐一落地：借鉴什么、不借鉴什么
+
+截至 2026-10-26 已复核所列 GitHub 仓库存在及仓库级许可证；**尚未克隆执行、审计完整依赖/测试，不能声称已稳定运行**。
+
+| 项目 | 许可证（仓库级） | 本项目取用 | 排除/待核查 |
+|---|---|---|---|
+| https://github.com/vijaxx/kdp-puzzle-engine | MIT；2026-07 最近推送；约 7 Stars | **KDP 主参考**：mazes.py、cover_maze.py、PDF 与 preflight 的设计，先审阅 tests/requirements | gen_themes.py 使用本地 Ollama（低配电脑负担大）；publish_tools 的 CDP 会话发布/改元数据脚本全部禁用；auto_factory 不启用无人值守；检查算法和布局正确性 |
+| https://github.com/pdfme/pdfme | MIT | 后续模板编辑器、JSON 数据驱动 PDF 方案 | V1 不上完整网页编辑器 |
+| https://github.com/py-pdf/fpdf2 | **LGPL-3.0** | 若 ReportLab 排版受限，可选 PDF 辅助模块 | 许可证及依赖义务需确认，勿误标 MIT |
+| https://github.com/Wasserpuncher/sudoku | MIT，极小型仓库 | 后续独立数独测试参考 | V1 先做迷宫；不能把该项目当成熟生产依赖 |
+| https://github.com/svg/svgo | MIT | **Stock 核心候选**：清理 SVG，保证没有无用/异常结构 | 自动优化不代表素材原创、可编辑或符合平台美术质量 |
+| https://github.com/lovell/sharp | Apache-2.0 | SVG 渲染预览、透明底 PNG 导出、像素尺寸检查 | 审核依赖与运行环境；不要把 PNG 当 SVG 交付 |
+| https://github.com/UmutHasanoglu/meta-gen | Apache-2.0 | 借鉴 Adobe CSV 字段、标题/关键词整理与去重 | 原项目使用 OpenAI/Gemini API；**不部署原有付费生成端点** |
+| https://github.com/Ars-Mond/Attributor | AGPL-3.0 | 借鉴人工复核、关键词工作流的**思路** | V1 不拷贝其源代码进入商业私有模块，避免未计划的 AGPL 合规义务 |
+| https://github.com/yakew7/DesignHub | MIT（第三方素材另授权） | Merch 阶段参考图案模板与 Mockup | 不复制内置第三方字体/图标直接售卖 |
+| https://github.com/osmaar/openmerch-engine | MIT；小型项目 | Merch 阶段参考输出工艺尺寸 | 不引入 Docker/数据库重型服务 |
+| https://github.com/iib0011/omni-tools | MIT | 未来免费工具站参考浏览器本地计算与单功能构建 | V1 不建免费站；无流量证据不部署 |
+| https://github.com/CorentinTh/it-tools | GPL-3.0 | 只研究体验/分类思想 | 不直接复制 GPL 代码进计划闭源的工具站 |
+
+**先做「读源码 → 跑原测试 → 最小适配 → 新增自有验证」**；禁止直接把 12 个仓库整合成巨型依赖链。第三方的 README 不是质量、授权和盈利的证明；若源代码、依赖许可或技术架构不合适，允许**自行重写最小功能**并记录原因。
+
+## 5. 技术架构：GPT 创作，确定性代码执行，独立质检
+
+~~~text
+[GPT 选题/需求与原创设计 brief]
+             │ 结构化输入（主题、买家、用途、尺寸、禁止项）
+             ▼
+[Codex 维护的免费 Python / Node 生产代码]
+      ├── KDP: 迷宫/答案 → 内页 PDF / wrap cover PDF
+      └── Stock: 原创 SVG → SVGO → sharp 预览
+             │
+             ▼
+[确定性自动 QA：尺寸/越界/结构/重复/答案/哈希/文件清单]
+             │ PASS
+             ▼
+[新上下文独立视觉+语义复核（GPT）]
+             │ PASS / REVISE / UNKNOWN
+             ▼
+[投稿包：成品+元数据+权益说明+证据+审核状态]
+             │
+             ▼
+[账号所有者在平台进行合法发布/审核确认]
+             │
+             ▼
+[真实审核结果、销量与收入] → GPT 复盘 → 下一批/停止
+~~~
+
+设计要点：
+
+- **模型不负责计数与数学正确性**：迷宫连通性、是否存在唯一路径、文件存在、页数、二维码/出血/尺寸等尽可能交给代码；无法机械验证的审美、市场需求、版权语义由 GPT + 人复核。
+- **同一个模型生成和审稿不构成真正独立的能力证明**：尽量使用独立的新上下文只拿作品及规则进行审核，并显式允许 UNKNOWN；重要结构另用程序独立验证。
+- 每一件资产有唯一 asset_id、源文件版本、随机种子、配置、许可证材料、SHA256、QA 报告、修改记录。只有通过 Gate 的版本可以进入下一阶段。
+- 生产过程应能在中途断开后继续，不重新生成已锁定并验收的内容。内容变更导致下游文件失效时，仅重跑受影响步骤。
+
+### 5.1 首批 KDP 的可复现最小流程
+
+1. 选择一组用户/年龄/场景假设；实际查 10～20 本可比现售商品，记录定价、内容结构和真实差评/痛点（不得采集或照搬他人题目、封面）。
+2. 首先审查 kdp-puzzle-engine 的许可证、依赖、测试与 mazes.py 的实际算法；要求不用 Ollama、浏览器登录和付费接口即可运行。
+3. 以固定 seed + 唯一 ID 生成不同迷宫。程序独立求解并核验路径存在、路径唯一性、难度、重复度；记录算法定义和限制。
+4. 排版英文标题/说明、正文、答案区、页码和版权信息。明确 PDF 装帧、页数、开本、出血和安全区，再生成内页和 full-wrap 封面。
+5. 自动检查 PDF 文件可读取、页面大小/数量、字体嵌入、文本溢出、图形越界、裁切线、安全区；逐页预览，并由 GPT 独立视觉/内容复核。
+6. 输出完整 submission_package：interior.pdf、cover.pdf、preview contact sheet、listing.md、rights_manifest.json、qa_report.json、build_manifest.json。若平台当前规则与本机假设不一致，**不得标 READY_TO_PUBLISH**。
+7. 用户完成 KDP 账号/税务/收款/正式上传的必要人工步骤；记录真实审核状态与订单版税。**不购买纸质样书**，使用平台免费数字预览和导出的逐页检查；无法排除印刷问题时明确记风险，不虚称印刷实物验收。
+
+KDP 官方参考：
+- https://kdp.amazon.com/en_US/help/topic/GHKDSCW2KQ3K4UU4 （可免费出版）
+- https://kdp.amazon.com/en_US/help/topic/G201834340 （按需印刷费用从版税扣除）
+- https://kdp.amazon.com/en_US/help/topic/G200672390 （内容及 AI 生成披露）
+- https://kdp.amazon.com/en_US/help/topic/GGE5T76TWKA85DJM （益智活动书通常不属于简单低内容书，但有例外）
+- https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6/ （封面规范）
+- https://kdp.amazon.com/en_US/help/topic/G202187850 （内页/出血规范）
+
+### 5.2 首批 Adobe Stock 的最小流程
+
+1. 从商业实际用途出发，产出 5 张差异明显的 brief（对象、使用者、版面用途、构图、禁止项），不要重复换色。
+2. 用 GPT 设计并输出原创 SVG 元素与合理图层/组、可编辑节点、清晰语义命名；真实无权素材不得使用。可使用原生生图**辅助创意**，但不能把 raster 扩展名改成 SVG 伪装矢量。
+3. 通过 SVGO 静态优化，sharp 渲染预览；机器验证 SVG XML、viewBox、基本尺寸、异常嵌入/外链、输出前后视觉差异；独立检查确实可编辑。
+4. GPT 审核英文标题/关键词是否与作品真实内容一致、是否引入商标/人名/误导描述；按平台要求正确标 AI 生成属性和权利说明。
+5. 输出每张 .svg、preview、CSV/metadata、QA、权利清单。用户本人提交；记录通过/拒稿及授权情况。
+
+Adobe 官方参考：
+- https://helpx.adobe.com/stock/contributor/submit-your-content/submit-vectors/vector-submission-overview.html
+- https://helpx.adobe.com/stock/contributor/submit-your-content/submit-generative-ai-content/generative-ai-vector-submission-guidelines.html
+- https://helpx.adobe.com/stock/contributor/submit-your-content/submit-generative-ai-content/adobe-stock-generative-ai-faq.html
+- https://helpx.adobe.com/stock/contributor/get-started/manage-your-account/account-submission-guidelines.html
+
+特别警示：图库允许 AI 生成内容**不等于**任何 GPT 输出都保证具备向第三方再许可所需的权利；提交前逐一核实当前服务条款、内容原创性及平台的 AI 标识要求。Adobe 对高度类似素材有反垃圾要求。
+
+## 6. 五段 Stage Gate 与明确状态机
+
+状态：IDEA → RESEARCHED → BUILDING → TECH_QA_PASS → CONTENT_QA_PASS → SUBMISSION_READY → SUBMITTED → APPROVED / REJECTED → SOLD / NO_SALE。任何阶段可进入 BLOCKED 或 REVISE；未获实际审批不能声明 APPROVED。
+
+| Gate | 阶段产物 | 必须有的客观证据 | 失败动作 |
+|---|---|---|---|
+| G0 免费与权益预检 | 题材、市场假设、依赖清单、预算表 | cost_new_cash=0；开源/字体/素材许可已登记；平台账号通道可用性已检查或标 UNKNOWN | 收费/许可不可解 → STOP；未知 → 不进入正式投稿 |
+| G1 生产可复现 | 可运行代码、构建命令、真实文件 | 版本号、seed、SHA256、实测命令/退出码；不能仅有 README | 修最小模块 |
+| G2 技术质量 | PDF/SVG、可读预览、机械 QA | 机器报告 PASS；迷宫解与重复性；PDF 尺寸/出血；SVG 编辑性 | 只重跑失败资产 |
+| G3 内容与合规 | 独立审稿记录、原创性/AI 标识 | 新上下文审稿、引用依据、授权台账；不允许“AI 觉得没问题”作为唯一证据 | REVISE / ESCALATE |
+| G4 上架与商业验证 | 审核记录、净版税、销量 | 平台审核邮件/后台状态（隐私脱敏）、订单/版税真实数据 | 拒稿优化一次；无收入时停止盲目扩量 |
+
+状态不得凭计划文本直接升级。每次单阶段结束的交接只带：Result / Evidence / Locked Rules / Open Issues / Next Action。
+
+## 7. 数据协议：每件商品必须留下证据而非只有图片
+
+以下是**未来生产文件的字段规范示例**，不是声称现在已经生成该文件：
+
+~~~json
+{
+  "asset_id": "KDP_MAZE_TEST_001",
+  "channel": "KDP",
+  "version": "0.1.0",
+  "status": "BUILDING",
+  "theme": "TO_BE_VALIDATED",
+  "buyer_hypothesis": "TO_BE_VALIDATED",
+  "source_repo_commit": null,
+  "seed": 20261026,
+  "dependencies_and_licenses_checked": false,
+  "third_party_rights_checked": false,
+  "extra_spend_usd": 0,
+  "paid_api_calls": 0,
+  "qa": {
+    "tech": "NOT_TESTED",
+    "content": "NOT_TESTED",
+    "platform_spec": "NOT_TESTED"
+  },
+  "outputs": [],
+  "evidence": [],
+  "submitted_at": null,
+  "approved_at": null,
+  "orders_count": null,
+  "actual_royalties": null
+}
+~~~
+
+测算必须区分：
+- 列表价格 != 作者版税；纸书版税需扣印刷成本；实际提现还涉及平台/收款/税务规定。
+- 平台曝光 != 销售；审核通过 != 可持续卖出；下载量不能用估算替代。
+- 对于新资产，按周记录：候选数、完成数、通过技术检查数、实际提交数、通过审核数、获得授权/订单数、实际版税、被拒原因、每件制作时间。
+- 健康指标：每件已上架资产累计版税、过去 30 天每件活跃资产版税、全部资产中的有收入比例、退款/拒稿/返工率、人工介入小时数。
+- **不允许用宣传性的「预计月入」作为真实成绩。**
+
+## 8. 30 / 60 / 90 天验证，不为数量造数量
+
+本安排是**在额度和真实操作许可的条件下的实验目标**，不是保证在日历上自动运行。
+
+### Day 1–7：验证原项目与环境
+- 检查 A/B 投稿地区、平台账户与合法收款可行性；可能产生新增必要费用的渠道立即标 BLOCKED，允许先做技术样品但不承诺上架。
+- 读取 kdp-puzzle-engine 的真实源码、requirements、LICENSE、tests；运行最短命令，建立复现报告；选择极简迷宫题型。
+- 先完成 3 道可机器验证的不同迷宫 + 其独立求解，证明算法正确。
+- **退出标准**：免费执行环境可用、真实生成结果、测试有输出、已知依赖成本为零。
+
+### Day 8–21：做一个完整 KDP 样本 + 五个 Stock 小样
+- 根据具体市场调研决定英文目标读者和差异化内容（不是只做低价值泛用迷宫）。
+- 把迷宫扩展成完整合格内页、答案、封面、接近实物体验的 PDF 预览；出具 QA。
+- 制作 5 个独立商业场景 SVG，导出预览与元数据，并核对官方 SVG 投稿规范。
+- **退出标准**：按 G0–G3 验收，留下原始证据；只完成文件不视为可卖。
+
+### Day 22–30：真实上架与审核
+- 由平台账号所有者完成必要的实名、税务、收款及发布确认；不自动操作登录会话。
+- 记录上架审核、拒稿和修复原因；**首要商业事件是实际首单或首次授权**，而不是发布成功。
+- **退出标准**：至少完成真实提交/有审核结果，或明确记录客观 BLOCKED 原因。无收入如实标为 NO_SALE。
+
+### Day 31–60：只围绕正向证据迭代
+- 已获得实际订单/授权的方向：制作少量不同用途新作品，比较每件净版税与每件时间成本。
+- 已上架但无订单：优先检查选题/呈现/市场需求，而不是继续自动批量生产。
+- 拒稿：先解决权利、内容与技术，避免积累账号风险。
+- 每周一次轻量复盘，由 GPT 输出「继续 / 修正 / 暂停 / 换渠道」。
+
+### Day 61–90：决定是否扩产
+- **可扩产条件**：明确可重复的制作质量 + 真实用户付费证据 + 低售后工作量 + 不增现金支出。
+- **不扩产条件**：无授权/订单、连续拒稿、原创质量差、账号资格不可行、人工时间显著超预算。
+- 如果两条轨道均失败，保留生产基础能力，复盘原因，另选可免费验证的垂直数字资产渠道，而非投入付费广告强行推动。
+
+## 9. AI / 人 / 平台职责边界
+
+| 任务 | GPT / Codex 能做 | 用户必须保留的动作 | 平台负责 |
+|---|---|---|---|
+| 选题与市场研究 | 搜集证据、竞品分析、提假设 | 必要商业方向确认 | 提供公开商品页面 |
+| 内容/程序/排版 | 原创设计、代码、PDF/SVG、校验、批量模板 | 无需逐件手工制作；抽查高风险项 | 无 |
+| 上架准备 | 商品描述、关键词、授权/AI 披露检查清单、投稿包 | 确保申报真实 | 提供审核工具 |
+| 正式发布 | 在能力/权限范围内协助准备，不越过人工控制 | 账户注册、实名、税务、收款、平台要求的同意/最终提交 | 审核、展示、交易 |
+| 售后 | 可以准备解释/修正方案 | 版权争议/高风险账号事项必须本人处理 | 平台处理其明确承担的配送/普通交易服务 |
+| 定期续产 | **被触发时**运行既定生产与复盘任务 | 发起新会话或使用当前套餐内可用且授权的计划任务 | 记录真实销售 |
+
+**不作出「完全无人值守/终生零售后/必定月赚一万」的承诺。** 产品开发由 AI 主要承担，不代表 GPT 能脱离当前会话一直在后台工作。
+
+## 10. 第一轮真正执行的指令（Work 或 Codex 可直接使用）
+
+**请按本文件继续，不得越过 Gate：**
+
+> 读取 10_DIGITAL_ASSET_FACTORY/PROJECT_MASTER_PLAN_V1.md。仅使用 ChatGPT Plus 包含的 GPT / Codex / 已开放 Work 用量、免费且许可证明确的开源工具；新增现金支出必须为零。不得调用 OpenAI API 或其他付费 AI API，不得购买 credits、增订阅、购买素材/字体、建付费服务器或绕过平台登录。
+>
+> 从阶段 G0/G1 开始：审核 vijaxx/kdp-puzzle-engine 的 LICENSE、requirements、mazes.py、preflight.py、cover_maze.py、现有测试与依赖风险；明确禁用 Ollama 和 publish_tools/CDP 自动登录发布。实际运行能用的最短原版测试，记录代码版本与命令输出。以单个迷宫为最小单元，建立独立求解与唯一解验证。若源码有问题，重新实现最小 Python 模块并给出原因。
+>
+> 只交付实测证据，不急于完整上架、不批量生产、不触发其他路线。达到 G1 才可进入全书 PDF/封面阶段；质量检查通过后再试做 5 件 Stock SVG。保持所有原有项目文件不变；必要新增生产文件优先存用户授权的私有工作区，Public 主仓库只同步非敏感方法与脱敏验收记录。最后报告当前状态、实际生成物、测试结果、费用核查、阻塞项与下一 Gate。
+
+## 11. 当前事实、风险与最终验收
+
+**已验证（截至 2026-10-26）**：
+- main 分支原有结构、Public 可见性、可复用的 08 Agent Gate 与 09 Plus-only 原则。
+- 12 个候选开源仓库存在，并查看其仓库级许可证；重点 kdp-puzzle-engine 的 README 和 LICENSE 已核查：它确实包含题目生成、封面/预检、Ollama 词表及 CDP 账户操作组件。
+- 官方文档确认：Plus 与 API 分开计费；Codex 受套餐用量限制；KDP 免费出版但纸书印刷从版税扣除；Adobe 接受符合规范的 AI/矢量文件，需权利与 AI 标识。
+
+**尚未验证 / 不能宣称完成**：
+- 任一候选代码可在当前云端/本地环境成功运行；
+- 数独/迷宫生成、独立 QA、PDF 与 SVG 成品的真实质量；
+- 用户所在地/账户的 KDP、Adobe Stock 投稿资格、税务与收款路径是否为零前置费用；
+- Adobe 对提交作品实际审核结果与 KDP 实际上架状态；
+- 任何销量、授权、收入、实际净利润及每周人力投入。
+  
+**本阶段完成条件**：GitHub 中存在这一份清晰、独立、可执行的方案文件，并可被 Work/Codex 作为单一入口读取。**文件已存在 ≠ 商业模式已验证。**
+
+---
+核查日期：2026-10-26；官方规则与工具额度会调整，每次正式投稿/部署前须再次查官方最新政策。
