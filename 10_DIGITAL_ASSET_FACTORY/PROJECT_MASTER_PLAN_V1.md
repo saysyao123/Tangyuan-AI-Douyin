@@ -649,3 +649,17 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **当前阶段**：PLATFORM_PUBLIC_RESEARCH_PASS；CN_CREATOR_KYC_UNKNOWN；AI_POLICY_CONDITIONAL；FULL_FEE_AND_PAYOUT_UNTESTED；PRODUCT_NOT_BUILT；REAL_INCOME_NONE。
 
 **下一步唯一动作**：先对 Creative Fabrica、Creative Market 在中国大陆的个人创作者店铺申请、GPT AI 明示归类、收款资格与所有费用做免费核查；同时从商品需求与视觉质量倒推出一种可批量积累但明显非同质的原创商业设计素材。未确认前不得批量投稿、隐瞒 AI 来源或产生新费用。
+
+## 16. ROOGOO 已有虚拟卡与无自有客户情况下的平台优先级（2026-10-26）
+
+本轮专项交付：[S0 海外平台比较，§8 ROOGOO 账户与平台原生客流核验](S0_OVERSEAS_PLATFORMS_COMPARE_20261026.md)。这是当前用户新增的执行硬约束，调整既有 Payhip/Gumroad 与仅按低平台抽成排序的判断。
+
+**ROOGOO 不能直接认定为版税收款账户**：现有 Roogoo Visa/Mastercard 虚拟卡由官方定义为预付消费卡；USDT 资金账户是链上/平台内部资产入金，不等于美元 ACH/SWIFT 入款账户。其商业多币种账户条款虽有法币收款服务，但商业用途主要面向注册企业，个人仅有限试用并需获批。除非用户实有以本人身份可合法收版权分成的独立法币银行产品，ROOGOO_CARD_PAYOUT=NOT_VERIFIED，禁止填写16位卡号为 payout bank account、用链上地址接平台法币付款或绕过实名 KYC。
+
+**无自有客户，平台自带搜索/流量是必须条件**：优先 Creative Market（中国地区可选 PayPal/Wire、不支持 ACH，标准净收入分成50%，最低申请提现$20，店铺申请审核及汇款费用未实测）和 Creative Fabrica（平台有搜索、订阅与营销、提供部分客户技术支持；银行电汇最低$100且另有$20处理费，需余额$120；开店须作品集与质量审核）。它们有买家生态，但没有保证曝光与交易。itch.io 仅在具体原创 RPG 资产方向具真实证据时作为备选；Payhip/Gumroad 等需自己引流的网站不适合作为默认主线。
+
+**境内收款备选优于强行使用 ROOGOO**：中国大陆合法本人银行账户接 Creative Market/Creative Fabrica 的国际电汇可能省去额外 PSP，但是否能将持续版权许可/设计销售所得合法入账、需要哪些协议/付款证明、账户性质、银行费和结汇条件，必须由本人的开户行核实；公开的 Wire 支持列表不能代替实际成功入账。中国 PayPal 往大陆银行提现公开每次$35且有门槛，不是小额频繁收款的理想方案。正常税务、合法汇兑、资金来源真实性保留。
+
+**下一唯一执行 Gate**：本人 ROOGOO 当前产品类型（预付卡还是另有银行收款账号）确认 + Creative Market 中国地区 PayPal/Wire 创作者开户费/实到费率核实 + Creative Fabrica 银行电汇及国内银行版权收入合法入账确认。再做 Creative Market/Creative Fabrica 对标商品与至少两个 GitHub 开源审美项目学习；没完成 Gate 不大量生产、不夸大收益。
+
+状态：ROOGOO_NOT_PAYOUT_VERIFIED / PLATFORM_ORGANIC_BUYERS_REQUIRED / CM_AND_CF_OFFICIAL_PAYOUT_RULES_CHECKED / BANK_KYC_AND_REAL_RECEIPT_UNKNOWN / PRODUCT_NOT_BUILT / REVENUE_NONE。
