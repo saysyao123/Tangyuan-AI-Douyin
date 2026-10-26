@@ -637,3 +637,15 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 7. 中国大陆个人注册、合法 PSP 使用资格（若限制 deposit-taking bank，不可用 PSP）、税务 W-8BEN、连连个人开户/维护费用仍是 S0 待验证；未把网页手续费信息冒充真实到账。
 
 **研究后的阶段状态**：EBOOK_COST_POLICY_VERIFIED / KDP_PERSONAL_PAYOUT_UNKNOWN / EBOOK_MARKET_BRIEF_NOT_STARTED / EPUB_CODE_NOT_TESTED / NO_BOOK / NO_UPLOAD / NO_SALES。下一轮应先完成中国大陆 KDP 收款可行性与英文 Kindle 阅读型细分选品证据，再启动 EPUB 最小验证，不继续做纸质迷宫成品。
+
+## 15. 2026-10-26 海外渠道税后收入对比与下一 Gate
+
+研究交付：[S0-OVERSEAS 海外数字商品/素材平台综合比较](S0_OVERSEAS_PLATFORMS_COMPARE_20261026.md)。中国大陆优先不等于必须卖国内客户；此次外部市场核查重点是合法中国身份、收款可兑现、无新增预付支出、平台带流量与 AI 内容合规。
+
+结论：Creative Fabrica（AI 标记、单品收入份额、订阅池、平台代为提供部分技术支持）和 Creative Market（AI 标记、50% 标准净收入、中国 PayPal/Wire、适用税收协定下版权预扣 10%）优先做店铺准入/作品格式核实。Payhip 的 $0/月+5% 更适合已具备自有流量的卖家，中国 PayPal Business 资格仍须实际测试；itch.io 适合原创 RPG/开发者美术资源，注意税务访谈及真实提现。Gumroad 的 10%+$0.50 和至少 $100 常规提现门槛、Lemon Squeezy 的跨境/PayPal/海外提现附加费用均不适合以小单金额作为默认第一平台。Etsy 官方禁止中国大陆新店申请，直接排除。
+
+关键税务纠正：30% 是未完成有效税务协定申请时美国来源版权预扣的默认，并非中国合条件纳税人永久适用；中美税收协定的版权 royalty 税率可能 10%，账户最终显示及所属收入类型为准。且国外卖家收款交易费、平台佣金与中国个人依法纳税必须另外核算。
+
+**当前阶段**：PLATFORM_PUBLIC_RESEARCH_PASS；CN_CREATOR_KYC_UNKNOWN；AI_POLICY_CONDITIONAL；FULL_FEE_AND_PAYOUT_UNTESTED；PRODUCT_NOT_BUILT；REAL_INCOME_NONE。
+
+**下一步唯一动作**：先对 Creative Fabrica、Creative Market 在中国大陆的个人创作者店铺申请、GPT AI 明示归类、收款资格与所有费用做免费核查；同时从商品需求与视觉质量倒推出一种可批量积累但明显非同质的原创商业设计素材。未确认前不得批量投稿、隐瞒 AI 来源或产生新费用。
