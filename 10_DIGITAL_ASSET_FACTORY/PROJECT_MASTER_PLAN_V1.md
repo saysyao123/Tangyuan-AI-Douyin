@@ -597,3 +597,29 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 - Adobe 内容相似：https://helpx.adobe.com/stock/contributor/submit-your-content/submit-generative-ai-content/distinct-generative-ai-submission-best-practices.html
 - OpenAI Work/Codex 使用额度：https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex
 - GitHub Actions 使用费用：https://docs.github.com/en/actions/concepts/billing-and-usage
+
+
+
+## 13. 2026-10-26｜中国大陆优先的路由覆盖与阶段移交
+
+**用户明确的新优先约束**：尽量以中国大陆合法身份、境内收款方式和本土平台运营，减少海外支付的复杂性、额外年费和提现成本。覆盖 §2、§8、§12 的「KDP 原定主线优先」**排序**，但不废除 KDP 技术储备、Plus only、0 新增现金或 STEP-0 / VISUAL-0。旧方案保留作为历史备选，不得把当前商业主线错误认定为已锁定英语迷宫书。
+
+**研究证据**：
+- [S0-CN 中国大陆渠道和费用增量](S0_CHANNEL_FEASIBILITY_20261026.md)；[S1-CN 国内选品优先路线](S1_MARKET_RESEARCH_20261026.md)。
+- KDP 银行所在地表不列中国大陆直接 EFT 地区；合作 PSP 虽列 Payoneer、PingPong、连连等，但某账户可能被要求改用存款银行账户，且付费/年费风险待核。
+- 国内 VCG 具有可供个人设计师申请及 AI 辅助创作历史业务，具体 GPT 作者资格、版权/再授权、款项结算不明：**第一顺位合规核查候选**。
+- Canva 可画中国有模板/素材长期使用分成，国际 Canva 创作者条款禁止 AI-generated 内容；大陆条款适用范围未核实，**政策未知，不可擅自上传 GPT 生成商品**。
+- 站酷海洛可用支付宝/境内银行结算，但 AI 供稿专题当期只接受美图 Whee 和 Midjourney：GPT 生图路线不得当作可直接投稿。
+- 图虫部分活动拒收 AI；仅作逐类研究。国际 Adobe Stock 留作有合规且无新增固定费用的备选。
+
+**S0 新执行路径（优先顺序）**：
+1. 从 VCG 官方投稿入口/合同核实具体 AI 作品政策、再授权和国内稿费支付（人民币/支付宝/境内银行、最低提现、固定费用、税务、签约方式）；
+2. 从 Canva.cn 创作者官方协议/支持确认中国计划对 GPT 主导作品、程序化设计和模板制作的具体限制，禁止仅参考全球页面推断许可；
+3. 国内渠道全部受限时，再对 KDP/Adobe 支付服务商的实际费用与资格做决定；
+4. 未明确版权和收款前，不创建批量销售商品；仍可做**低风险极小技术样品**，不得声称可直接投稿。
+
+**S1 当前商品优先方向**：本土设计/服务行业可编辑实用矢量信息图（条件候选），中文可编辑模板（需明确 AI 政策），不直接启动英语 KDP 迷宫书商业批量制作。两个国内商品方向需要新的 10 件竞品与真实使用场景核查后再锁定。
+
+**阶段状态**：S0_PUBLIC_RULES_PASS + MAINLAND_CHINA_PREFERENCE_LOCKED / CHINA_AI_ADMISSION_AND_PAYOUT_UNKNOWN；S1_RESEARCH_PIVOTED / DOMESTIC_BRIEF_PROVISIONAL / SALES_UNPROVEN；S2_NOT_STARTED；S3_NOT_STARTED；后续未开始。每阶段仍要交付实际状态与文件链接。
+
+**成本解释**：新增预付现金和固定会员/年费一律不允许；从已实现版权收入中合法扣除的平台佣金、税收和实际交易服务费，必须记录并计算净收入，过高则终止该渠道。未确认是否存在费用时标 UNKNOWN，禁止声称“零总成本”。
