@@ -663,3 +663,20 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **下一唯一执行 Gate**：本人 ROOGOO 当前产品类型（预付卡还是另有银行收款账号）确认 + Creative Market 中国地区 PayPal/Wire 创作者开户费/实到费率核实 + Creative Fabrica 银行电汇及国内银行版权收入合法入账确认。再做 Creative Market/Creative Fabrica 对标商品与至少两个 GitHub 开源审美项目学习；没完成 Gate 不大量生产、不夸大收益。
 
 状态：ROOGOO_NOT_PAYOUT_VERIFIED / PLATFORM_ORGANIC_BUYERS_REQUIRED / CM_AND_CF_OFFICIAL_PAYOUT_RULES_CHECKED / BANK_KYC_AND_REAL_RECEIPT_UNKNOWN / PRODUCT_NOT_BUILT / REVENUE_NONE。
+
+
+## 17. 币安与稳定币收款路线：存在，但中国大陆资金兑现 Gate 未通过（2026-10-26）
+
+本轮交付：[S0 币安/稳定币创作者收款与平台买家流量核验报告](S0_BINANCE_CRYPTO_PAYOUT_RESEARCH_20261026.md)。
+
+**用户提出的新候选**：已有币安账户，考虑通过海外数字商品市场获取 USDT/USDC，再用稳定币方式收取版税；仍需平台自身带客户，并以中国大陆身份与可合法使用的收入为当前基准。第一性原理仍是“商品有人买 → 平台合法打款 → 合法兑现净收入”，不是“钱包余额上涨就算净收入”。
+
+2026-02-06 八部门《关于进一步防范和处置虚拟货币等相关风险的通知》银发〔2026〕42号明确：境内法币/虚拟货币兑换及相关虚拟货币交易业务属于非法金融活动；境外机构非法向境内主体提供虚拟货币相关服务同样被禁止。来源：https://policy.mofcom.gov.cn/claw/clawContent.shtml?id=104982 。因此 **BINANCE_TO_MAINLAND_RMB_BY_C2C=BLOCKED**；不得设计 Binance P2P/C2C 兑换人民币、第三人收款、假居住地/账户或其他监管规避路径。
+
+技术可行性发现：Getly 官方自述可按 USDT/USDC 向钱包分成（BNB Smart Chain/Tron），ExDFS 也自述支持 USDT 创作者支付，Summon+ 支持 USDC。然而此类平台市场规模较新，自身“有搜索和推荐”不能证明有足够实际购买者；Getly 条款保留 AML 审查及最多 180 天暂扣资金的情形。**CRYPTO_PLATFORM_EXISTS=VERIFIED / ESTABLISHED_BUYER_TRAFFIC=NOT_PROVEN**。
+
+传统 Creative Market 正式列出的中国付款方式为 PayPal/Wire，Creative Fabrica 为 PayPal/Payoneer/银行，itch.io Payouts 为 PayPal/Payoneer，均不能直接把 Binance USDT 钱包设为作者版税结算账户。优先继续核实 **Creative Market 直接 Wire 到中国大陆合法本人银行**；其次是合规 PayPal 后按官方最低金额及手续费集中提现；Creative Fabrica Wire 因每次最低 $100 且另 $20 手续费须核算。中国 PayPal 官方美元提现大陆银行最低 $150、个人费率每笔 $35，需累计而非小额频繁操作。相关官方来源见本节交付报告。
+
+**决策**：币安稳定币路线作为“非中国大陆且另行完全核实合法居民身份和税务资格时的未来独立课题”，当前不作为实际收款主线。不改变 GPT Plus only、零新增现金付费、真实买家流量、STEP-0/VISUAL-0、以真实可依法使用的净收入为商业验收等锁定条件。
+
+**最新状态**：CRYPTO_PAYOUT_CHANNEL_IDENTIFIED / MAINLAND_CONVERSION_LEGAL_BLOCKER / MAINSTREAM_MARKETPLACE_CRYPTO_PAYOUT_NOT_OFFERED / CREATIVE_MARKET_CHINA_WIRE_LISTED_BUT_NOT_TESTED / PAYPAL_BANK_WITHDRAWAL_RULES_VERIFIED_BUT_ACCOUNT_UNKNOWN / NO_REVENUE。下一步先办境内银行真实收款合规核实、平台开店申请资格与费用；不在支付 Gate 前批量制作。
