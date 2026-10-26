@@ -623,3 +623,17 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **阶段状态**：S0_PUBLIC_RULES_PASS + MAINLAND_CHINA_PREFERENCE_LOCKED / CHINA_AI_ADMISSION_AND_PAYOUT_UNKNOWN；S1_RESEARCH_PIVOTED / DOMESTIC_BRIEF_PROVISIONAL / SALES_UNPROVEN；S2_NOT_STARTED；S3_NOT_STARTED；后续未开始。每阶段仍要交付实际状态与文件链接。
 
 **成本解释**：新增预付现金和固定会员/年费一律不允许；从已实现版权收入中合法扣除的平台佣金、税收和实际交易服务费，必须记录并计算净收入，过高则终止该渠道。未确认是否存在费用时标 UNKNOWN，禁止声称“零总成本”。
+
+## 14. 电子书优先方案的成本与选品纠偏（2026-10-26，S0 研究增量）
+
+**研究交付**：[S0-KDP-EBOOK 电子书费用/合规/收款/技术路线报告](S0_KDP_EBOOK_FEES_20261026.md)。本节保留历史纸质迷宫试验作为技术备选，但不允许将其当 Kindle 电子书首发商品。
+
+1. Kindle 电子书注册/出版免费、不要求 ISBN、不产生按需印刷/物流/打样成本；仍有 35% / 70% 版税档位、70% 模式文件传输费、真实美国预扣税、跨境收款/换汇费、可能的境内税费。
+2. **Kindle 官方内容质量规则将 puzzle books、coloring books 和用于书写的商品视为不适合 Kindle 阅读**，可能拒绝/移除。不能把原纸质迷宫 PDF 改名电子书上架。
+3. **KDP 不支持简体中文电子书**。繁体中文 eBook 当前为 Beta，要求 DOC/DOCX；首批建议优先研究英文市场，但语言质量必须独立验证。
+4. 美元美国站 70% 合格电子书价格从 2026-07-07 起为 $2.99–$12.99；其实际版税计算 70%×(不含适用 VAT 售价－Delivery Cost)，美国站传输费每 MB $0.15，35% 不扣 Delivery Cost；不要误用旧 $9.99 价格上限。
+5. 免费技术候选转为 KDP Kindle Create / Previewer、w3c/epubcheck、jgm/pandoc；原 `kdp-puzzle-engine` 限定纸质题集备选。任何工具仍需本步骤 Github 源码及许可实测，未审美验证不得规模生产。
+6. KDP Select 是免费但可自动续约、要求 90 天 Kindle eBook 独家的可选项目；初次实验不自动开启。Amazon Ads 可能产生预算支出和加卡临时 $50 预授权，明确禁止。
+7. 中国大陆个人注册、合法 PSP 使用资格（若限制 deposit-taking bank，不可用 PSP）、税务 W-8BEN、连连个人开户/维护费用仍是 S0 待验证；未把网页手续费信息冒充真实到账。
+
+**研究后的阶段状态**：EBOOK_COST_POLICY_VERIFIED / KDP_PERSONAL_PAYOUT_UNKNOWN / EBOOK_MARKET_BRIEF_NOT_STARTED / EPUB_CODE_NOT_TESTED / NO_BOOK / NO_UPLOAD / NO_SALES。下一轮应先完成中国大陆 KDP 收款可行性与英文 Kindle 阅读型细分选品证据，再启动 EPUB 最小验证，不继续做纸质迷宫成品。
