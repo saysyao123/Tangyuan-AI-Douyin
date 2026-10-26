@@ -584,7 +584,7 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 
 > 读取此文件 §0、§5.3、§12，执行 S0 平台准入、税务/收款合法性、zero-spend、AI/版权规则核查，以及 S1 买家/竞品与差异化研究。每个子步骤先提交第一性原理审核、苏格拉底八问、可用开源比选和可反证证据。不得要求用户提供个人敏感信息到 Public GitHub，不能推断账号资格；无法核实的标 UNKNOWN。产出至少一个有公开证据的商品 Brief、两个渠道 ELIGIBLE/UNKNOWN/BLOCKED 状态和下一 Gate 决策。暂不进行 S2–S5 的批量开发，不增加任何付费。结束时反馈真实证据/未解决问题/唯一后续动作。
 
-**当前真实状态**：PLAN_V1_2_READY；S0_NOT_EXECUTED；S1_NOT_EXECUTED；TECH_NOT_TESTED；PRODUCT_NOT_BUILT；NOT_SUBMITTED；NO_SALES_EVIDENCE。
+**当前真实状态（2026-10-26 CYCLE-01）**：PLAN_V1_2_READY；S0_PUBLIC_RULES_VERIFIED / ACCOUNT_ELIGIBILITY_UNKNOWN；S1_MARKET_SCAN_DONE / PRODUCT_BRIEF_PROVISIONAL / COMMERCIAL_GATE_NOT_PASSED；TECH_NOT_TESTED；PRODUCT_NOT_BUILT；NOT_SUBMITTED；NO_SALES_EVIDENCE。逐阶段交付记录：[S0 渠道与零成本](S0_CHANNEL_FEASIBILITY_20261026.md)；[S1 市场与选品](S1_MARKET_RESEARCH_20261026.md)。下一步先确认合法注册/收款地区与真实平台账户资格，再补核竞品详细信息并锁定商品 Brief，未经证据不得直接扩产。
 
 **当前官方参考**：
 - KDP 免费出版：https://kdp.amazon.com/en_US/help/topic/GHKDSCW2KQ3K4UU4
