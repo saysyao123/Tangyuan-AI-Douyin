@@ -1,0 +1,79 @@
+name: Final download verdict - Douyin Bilibili YouTube
+on:
+  push:
+    branches:
+      - experiment/yoinks-platform-probe-20261027
+    paths:
+      - .github/workflows/final_three_sites.yml
+      - 09_VIDEO_ACQUISITION_EXPERIMENTS/final_three_sites.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install true Yoinks CLI and complete yt-dlp EJS dependencies
+        run: |
+          python -m pip install --upgrade "yt-dlp[default]"
+          npm install -g yoinks
+          yoinks --version
+          python -m pip show yt-dlp-ejs
+      - name: Install ffmpeg and ffprobe
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffprobe -version | head -1
+      - name: Attempt real downloads from three sites and media decode
+        run: python 09_VIDEO_ACQUISITION_EXPERIMENTS/final_three_sites.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-three-sites-linux-diagnostic
+          path: three_sites_results/results.json
+          retention-days: 7
+          if-no-files-found: warn
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install true Yoinks CLI and complete yt-dlp EJS dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade "yt-dlp[default]"
+          npm install -g yoinks
+          yoinks --version
+          python -m pip show yt-dlp-ejs
+      - name: Ensure FFmpeg is available
+        shell: pwsh
+        run: |
+          if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+            choco install ffmpeg -y --no-progress
+          }
+          ffmpeg -version | Select-Object -First 1
+          ffprobe -version | Select-Object -First 1
+      - name: Attempt real downloads from three sites and media decode
+        shell: pwsh
+        run: python 09_VIDEO_ACQUISITION_EXPERIMENTS/final_three_sites.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-three-sites-windows-diagnostic
+          path: three_sites_results/results.json
+          retention-days: 7
+          if-no-files-found: warn
