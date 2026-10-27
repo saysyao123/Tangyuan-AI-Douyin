@@ -740,3 +740,12 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **阶段实际状态**：CYCLE03_MARKET_RESEARCH_DELIVERED / WHOP_DISCOVER_APPROVAL_NOT_VERIFIED / WHOP_USDT_USDC_EXTERNAL_PAYOUT_NOT_VERIFIED / GETLY_BUYER_DEMAND_UNKNOWN / BOUNTY_OPEN_ELIGIBLE_CASH_USDC_NOT_FOUND_IN_SAMPLE / FRAMEWISE_RETEST_PASS_BUT_PAID_VALUE_UNKNOWN / NEW_MOTION_PACK_NOT_BUILT / NO_NEW_REVENUE。
 
 **下一轮唯一优先操作**：先按本次研究报告确认 Whop Discover 审核入口与本人 USDT/USDC 第三方钱包提现网络是否真的同时可用，并锁定自然获客；如否，转为只读验证 Getly 真实买家，不能盲上架宣传会赚钱；如两者无法同时满足，尊重用户硬条件说明阻塞。
+
+
+## 22. 用户实际开户/Whop Discover 操作卡（2026-10-27，当前下一任务）
+
+本轮给出可执行的操作和演示品：[USER_ACTION_CHECKLIST_20261027.md](USER_ACTION_CHECKLIST_20261027.md)。其顺序：本人真实身份登录 Whop → 核 Payments/Finances Payouts 的 KYC/审核及外部 **USDT 或 USDC+区块链网络+费用** → 管理商店并查看 Discover 的真实检查项 → 若需要第一件真实商品，使用当前会话已制作的 **FRAMEWISE_Free_Sample_v0.1.zip** 免费示例（不包含完整收费工具）→ 申请/核验 Discover → 只回传脱敏状态和官方答复 → AI 后续据实际 Gate 进行产品制作和正式上传材料准备。禁止伪称 Whop 公开 Crypto payout (举 BTC/ETH) 等于具体本人 USDT/USDC；也禁止把 Whop 内部 USDT Wallet / DeFi yield 当同一功能。
+
+用户待提供的最小状态：Whop 账号是否能访问、KYC状态、实际USDT/USDC提现网络与费用、Discover清单/审核状态，最多两张打码截图即可。无需提供密码、钱包地址、身份证、银行资料。零新增会员/广告/API/认证充值和虚构地区。实际地区合法性需本人遵守，非法情境 STOP。
+
+本轮新的 **真实交付**：可下载 Markdown 执行操作手册和专门用于免费真实展示的 sample ZIP，且 ZIP 已通过结构 CRC 测试；不是新的12条动效付费商品，尚未进行 Whop 审核或产生订单。条件放行后才进入技术/审美/市场全量付费版。**当前真实状态**：USER_ACTION_CARD_READY / FREE_SAMPLE_READY / WHOP_ACCOUNT_KYC_UNKNOWN / WHOP_EXTERNAL_STABLECOIN_UNKNOWN / DISCOVER_UNKNOWN / PAID_PACK_NOT_BUILT / REVENUE_0_U。
