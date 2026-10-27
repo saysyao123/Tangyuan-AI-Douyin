@@ -2,7 +2,7 @@
 
 ## 范围与保护条件
 
-- 执行位置：GitHub Actions 的独立实验分支 \`experiment/yoinks-platform-probe-20261027\`，未修改 \`main\`
+- 执行位置：GitHub Actions 的独立实验分支 `experiment/yoinks-platform-probe-20261027`，未修改 `main`
 - 成功运行：https://github.com/saysyao123/Tangyuan-AI-Douyin/actions/runs/40459243816
 - yt-dlp 版本：2026.10.26；FFmpeg 版本：6.1.1-3ubuntu5
 - 样本：每站一个**公开的、真实的视频或剧集播放页**；仅普通无账号、无 Cookie、无 DRM 绕过的访问
@@ -14,7 +14,7 @@
 
 | 平台 | 样本 | 元信息解析 | 视频下载 | 视频解码 | 证据 |
 |---|---|---|---|---|---|
-| 抖音 | https://www.douyin.com/video/7682249897617247522 | ❌ | 未尝试 | 未尝试 | \`Fresh cookies (not necessarily logged in) are needed\` |
+| 抖音 | https://www.douyin.com/video/7682249897617247522 | ❌ | 未尝试 | 未尝试 | `Fresh cookies (not necessarily logged in) are needed` |
 | B站 | https://www.bilibili.com/video/BV1AerZB6EWa/ | ❌ | 未尝试 | 未尝试 | HTTP 412 Precondition Failed |
 | YouTube | https://www.youtube.com/watch?v=YE7VzlLtp-4 | ❌ | 未尝试 | 未尝试 | Sign in to confirm you're not a bot |
 | 红果短剧 | https://hongguoduanju.com/player/7690961604636052505 | ✅ | ✅ | ✅ | 3.08 秒 MP4，FFmpeg 解码通过 |
@@ -22,11 +22,11 @@
 ### 红果成功样本的客观参数
 
 - 标题：军需处长的账本 第1集 | 全集在线免费观看 | 红果短剧 (1)
-- 提取器：\`HTML5MediaEmbed\`；format_count：1
-- 测试文件：\`video.mp4\`，147469 bytes，3.080000 seconds
+- 提取器：`HTML5MediaEmbed`；format_count：1
+- 测试文件：`video.mp4`，147469 bytes，3.080000 seconds
 - 视频：H.264 / 360×640
 - 音频：AAC
-- \`ffprobe\` 检测到视频流和音频流；\`ffmpeg -t 1 -f null -\` 返回 0
+- `ffprobe` 检测到视频流和音频流；`ffmpeg -t 1 -f null -` 返回 0
 - 未测试整集、付费集、其他剧集或更高清晰度。只证明此公开播放页的短片段可获取和解码。
 
 ## 失败分类
@@ -46,7 +46,7 @@
 
 ## 文件与追溯
 
-- 实际测试脚本：\`09_VIDEO_ACQUISITION_EXPERIMENTS/yoinks_platform_probe.py\`
-- GitHub Actions 工作流：\`.github/workflows/yoinks_platform_probe.yml\`
-- 结构化结果：成功运行的 artifacts 中 \`yoinks-platform-probe-20261027/results.json\`
+- 实际测试脚本：`09_VIDEO_ACQUISITION_EXPERIMENTS/yoinks_platform_probe.py`
+- GitHub Actions 工作流：`.github/workflows/yoinks_platform_probe.yml`
+- 结构化结果：成功运行的 artifacts 中 `yoinks-platform-probe-20261027/results.json`
 - 首次运行因 Ubuntu Runner 未预装 FFmpeg 而提前失败，随后修正工作流完成正式测试，首次环境错误**未被计入四平台结果**。
