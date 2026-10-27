@@ -680,3 +680,16 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **决策**：币安稳定币路线作为“非中国大陆且另行完全核实合法居民身份和税务资格时的未来独立课题”，当前不作为实际收款主线。不改变 GPT Plus only、零新增现金付费、真实买家流量、STEP-0/VISUAL-0、以真实可依法使用的净收入为商业验收等锁定条件。
 
 **最新状态**：CRYPTO_PAYOUT_CHANNEL_IDENTIFIED / MAINLAND_CONVERSION_LEGAL_BLOCKER / MAINSTREAM_MARKETPLACE_CRYPTO_PAYOUT_NOT_OFFERED / CREATIVE_MARKET_CHINA_WIRE_LISTED_BUT_NOT_TESTED / PAYPAL_BANK_WITHDRAWAL_RULES_VERIFIED_BUT_ACCOUNT_UNKNOWN / NO_REVENUE。下一步先办境内银行真实收款合规核实、平台开店申请资格与费用；不在支付 Gate 前批量制作。
+
+
+## 18. 2026-10-27｜币安存币即目标：不再强制法币提现
+
+用户明确“**不用提现，存在币安就可以**”。覆盖此前 §17 把人民币现金到账作为该路线必需验收的设定；**并未解除合法使用、税务、真实买家、可提币与真实账户 KYC 的审查**。详细可执行性研究：[S0 Binance 稳定币研究 §S0-BINANCE-HOLD](S0_BINANCE_CRYPTO_PAYOUT_RESEARCH_20261026.md)。
+
+**更新的付款目标**：合规海外数字商品平台实际卖出原创新品 → 平台按销售分成以稳定币向创作者付款 → Binance 合法有效账户确认收到 USDT/USDC → 只记录稳定币资产（不提现人民币）。避免将转到币安资产误写成已兑换人民币或无需税务义务。
+
+**技术候选**：Getly 官方支持 USDT/USDC 向 BSC 或 Tron 钱包结算（BSC $5 起、Tron $15 起），每月 1 日与 15 日。Binance 官方支持对应**由实际账号入金界面提供且网络匹配**的加密资产充值。Getly 的商品数/卖家数是平台自报，**未证明成熟自然买家流量**；其条款仍可能索取资金来源、税务和 payout 资料。ExDFS 是第二技术候选，但流量与自然订单证据更弱。
+
+**首要合规约束**：2026-02-06 银发〔2026〕42号禁止在中国境内开展相关非法虚拟货币业务，限制境外向境内非法提供虚拟货币服务；仅“不提现”不能证明境内从平台接稳定币版税就完全合法。Binance 真实 KYC 居住法域/账号服务地区/平台是否允许此类商业来源**未知**，必须先核实；不能虚构身份、借用外区账户、VPN 绕区或通过他人钱包规避政策。对合法境外居住/KYC 情况须按当地规定独立确认，不擅自推断。
+
+**双 Gate 顺序**：COUNTRY_AND_EXCHANGE_ELIGIBILITY → PLATFORM_REAL_BUYER_EVIDENCE → 商品开源审美/差异化/版权样板 → 真实销售 → 钱包到账与交易哈希/收入台账。当前状态 LEGAL_ELIGIBILITY_UNKNOWN / REAL_BUYERS_NOT_VERIFIED / TECH_COMPATIBILITY_DOCUMENTED / NO_ACTUAL_PAYOUT。**无需人民币提现**，但不得因此先触发受限制的加密货币收款行为。
