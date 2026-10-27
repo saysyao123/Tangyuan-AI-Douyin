@@ -63,3 +63,38 @@
 执行决策：不拿 Binance 作为当前中国大陆商业收入的默认收款工具；保留币平台市场资讯供非大陆合规辖区的未来另案研究。持续推进“成熟平台真实买家 + Wire/PayPal 合规法币收款”流程，不购买增值服务、不使用地下 C2C 或虚假信息过桥。
 
 下一唯一动作：咨询本人境内开户银行是否接受持续的海外版权/数字设计商品平台 SWIFT 版税，并取得费用表；并向 Creative Market 商店支持确认中国大陆个人开户以及 Wire 的付款处理费、最小金额、具体税务资料与 AI 作品披露。随后才投入原创商品样板与竞品验证。
+
+
+## S0-BINANCE-HOLD｜2026-10-27 用户明确只需将海外销售所得保存在币安，暂不法币提现
+
+**最新目标修正**：收入完成标准不再要求兑换人民币或汇入境内银行卡。此项仅覆盖旧文件中“必须实际人民币到账才算第一阶段收入”之要求；仍然坚持用户仅 GPT Plus、无新增现金付费、真实自然买家和合规可执行。**真实商业收入完成状态应分离为 PLATFORM_SALE / PLATFORM_PAYOUT / EXCHANGE_CREDIT / LEGAL_USABILITY / RMB_CASHOUT_NOT_REQUIRED。**
+
+### 技术可行性：Getly → 币安，条件成立时存在对应网络
+
+- Getly 官方允许从数字商品市场结算 USDT/USDC，支付网络为 BNB Smart Chain（USDT 或 USDC）或 Tron（仅 USDT），每月 1/15 结算，在约 30 天退款窗口结束后进行。低于 BSC $5 / Tron $15 的余额结转。来源：https://www.getly.store/sell/crypto 、https://www.getly.store/faq 。
+- Getly 官方价格与条款：普通作者约保留商品售价的 80–90%，自带流量可享更低抽成；卖家有自己的平台目录，但“平台有搜索分类”≠“成熟真实消费者流量”；官网自报约 9,585 个 listing、2,425 个 creator，**未取得独立真实销量、搜索转化和新店曝光证明**。来源：https://www.getly.store/ 、https://www.getly.store/terms 。
+- Binance 官方说明从外部钱包存加密资产时，币种及网络必须完全匹配；BEP20=BSC，TRC20=Tron。选错网络可能无法追回资金。**只有账户在真实 KYC 所属国家/地区及实际使用地点获准接受此类来源，平台的托管充值信息且源款身份核验通过时，技术上才可组成交易所入账闭环**。来源：https://www.binance.com/en/support/faq/detail/85a1c394ac1d489fb0bfac0ef2fceafd 、https://www.binance.com/en-AU/support/faq/detail/6d7de22f918d4cf28d68a7079a10e254/ 。
+- Getly 宣传通常无平台级 KYC，但 2026-10 的条款要求真实完整的 payout/tax 信息，平台保留索取额外材料及暂缓结算权。不能把“无需 KYC”当作匿名绕过地区限制的许可。来源：https://www.getly.store/terms 、https://www.getly.store/rules 。
+- 其他技术候选 ExDFS 提供 USDT（BSC/Tron）到外部钱包的方案，最低 $25（部分创始店例外），但独立自然买家规模缺证据，不宜视为已拥有有效市场。来源：https://exdfs.com/sell/ 、https://exdfs.com/faq/ 。
+- 根据中国 2026-02-06 银发〔2026〕42号，境内虚拟货币相关非法金融业务被禁止，并禁止境外主体非法向境内主体提供虚拟货币服务。因此如果实际居住/经营场景是中国大陆，**即使不做 RMB 兑换，接收境外平台结算并存入币安也不能直接视为合规**。原始法律来源：https://www.csrc.gov.cn/csrc/c100028/c7614318/content.shtml 。个人仅持有虚拟资产的法律性质应与提供非法金融业务区分，但不足以推出“从事稳定币收款经营必然合法”。
+- 币安用户协议：https://www.binance.com/zh-CN/terms ，要求真实地区及身份符合适用法律，不能通过更换 IP / 虚报居住地 / 借用 KYC / 代收款规避限制。
+- 这次用户并未说出实际 Binance KYC 国别、居住地及帐号服务所属区域；**不得把聊天偏好“中国大陆注册方便”推断成已确定其当前法域**。实际获准的非大陆辖区可另行根据当期法律、交易所和税务政策审查，但不能据此假设用户已获相关资格。
+
+### 更新后的两级商业 Gate
+
+1. **LEGAL_AND_ACCOUNT_GATE（先行）**：确认本人币安实际 KYC 及常住/经营地对应支持的合法 crypto deposit 服务，Getly/ExDFS 是否允许向该类用户支付商业收益，双方的合规/税务及付款来源证明；无授权则 STOP，不指导绕过。
+2. **REAL_BUYERS_GATE（后行）**：优先有真实平台消费者且按平台自然发现获得订单的市场。Getly 仅自报商品/卖家数，缺独立买家流量和新店自然成交证据，应先做只读竞品分析和小样而非批量生产。与 Creative Market/Fabrica 的成熟市场生态比较时明确：它们未提供币安直接稳定币结算。因此这是收益分配方式与自然获客之间的真实 tradeoff。
+
+### 苏格拉底八问（本次新收款目标）
+1. 去掉 RMB 提现解决什么？省去境内银行汇兑和提现费用，但不消除帐号 KYC 与地区政策、持币风险。
+2. Getly 直接打 USDT 就是商业成功吗？仅平台真正结算且币安显示到账，再确认账户合法使用，才证明付款链路；平台有销售才是收入。
+3. 可以把平台的“无 KYC”当规避地区限制吗？不能，条款保留税务/反洗钱及限制。
+4. 币安能收所有网络吗？不能，按真实账户实时币种与网络支持判断，不跨链猜测。
+5. 平台有上万产品就有客户？不能，供给/目录数不等于销售/买家。
+6. 有比 Getly 更成熟的稳定币设计市场吗？当前未核实；ExDFS 同样缺市场证据，不应承诺一定销售。
+7. 什么可推翻选择？身份法域不允许、币安账户禁止、Getly 平台拒绝商业付款、自然买家不可验证、提现/资金冻结。
+8. 应怎样防重复低质生产？先做行业类别竞品证据、两个设计开源参考、最小高质量素材样板，独立 QA 和少量真实上架试验（仅在前序合规通过时）。
+
+**状态**：GOAL_BINANCE_CUSTODY_ONLY_LOCKED / CRYPTO_TECH_ROUTE_IDENTIFIED / RESIDENCY_AND_KYC_UNKNOWN / GETLY_BUYER_DEMAND_UNVERIFIED / ACTUAL_TRANSFER_NOT_TESTED / NO_PRODUCT / NO_ORDER。
+
+**下一阶段**：仅需确认用户真实 Binance 账户 KYC/居住司法辖区（只问国家或地区，不收具体身份文件与账号），先处理合法使用，再研究 Getly 及 ExDFS 平台在目标细分行业的真实自然消费者数据，之后才做可售样品。
