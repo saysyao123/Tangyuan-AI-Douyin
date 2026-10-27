@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 ERROR_PATTERNS = (
@@ -132,7 +133,7 @@ def execute(url: str, mode: str, root: Path, clip_seconds: float,
     slug = platform_of(url)
     uid = hashlib.sha256(url.encode()).hexdigest()[:12]
     dirname = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = root / f"{slug}-{uid}-{dirname}"
+    run_dir = root / f"{slug}-{uid}-{dirname}-{uuid.uuid4().hex[:8]}"
     run_dir.mkdir(parents=True, exist_ok=True)
     report: dict = {
         "schema_version": 1, "source_url": safe_source_url(url), "platform": slug,
