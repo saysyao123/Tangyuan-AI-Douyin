@@ -20,8 +20,12 @@ jobs:
           python3 -m pip install --user --upgrade yt-dlp
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           "$HOME/.local/bin/yt-dlp" --version
-      - name: Verify FFmpeg
-        run: ffmpeg -version | head -1
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -1
+          ffprobe -version | head -1
       - name: Probe Douyin, Bilibili, YouTube, Hongguo
         run: python3 09_VIDEO_ACQUISITION_EXPERIMENTS/yoinks_platform_probe.py
       - name: Upload JSON test evidence only (no videos)
