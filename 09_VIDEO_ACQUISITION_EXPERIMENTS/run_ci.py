@@ -16,7 +16,7 @@ TESTS = [
     ("bilibili", "https://www.bilibili.com/video/BV1AerZB6EWa/", "probe"),
     ("youtube", "https://www.youtube.com/watch?v=YE7VzlLtp-4", "probe"),
     ("hongguo_related_web", "https://hongguoduanju.com/player/7690961604636052505", "clip"),
-    ("w3c_control", "https://media.w3.org/2010/05/sintel/trailer.mp4", "clip"),
+    ("w3c_control", "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", "clip"),
 ]
 result = {"schema_version": 1, "started_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
           "scope": "public non-DRM 3-second smoke tests, no cookies, no media persisted",
