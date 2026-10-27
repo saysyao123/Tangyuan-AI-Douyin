@@ -725,3 +725,18 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 - **Superteam Earn** 只作为可参加奖金的辅助研究，验证过一个公开列表以为仍开放但详情已公布获奖者的 $150 USDC 视频任务，不能冒称能继续接；其他 USDG 也不可冒充 USDC。
 - **真实状态**：E0_PUBLIC_PAYOUT_RULES_PASS / ACTUAL_STABLECOIN_ACCOUNT_ELIGIBILITY_UNKNOWN；E1_COMPETITOR_SUPPLY_PASS / MARKET_DEMAND_NOT_VALIDATED；E2_OSS_AND_VISUAL_INTERNAL_REVIEW_ONLY；E3_PROTOTYPE_CODE_BUILT_AND_TESTED / PRIVATE_PRERELEASE；WHOP_NOT_LISTED / NO_SALES / NO_USDT_USDC_RECEIVED。
 - **下一唯一商业 Gate**：Whop 实际国家地区允许的本人 KYC、USDT/USDC 币种/网络与完整收款费用审核，才可正式上架，之后记录真实自然曝光、订单、平台可用余额和实际 Binance 到账。不能为了“赚到 U”让用户先向无关钱包缴保证金、绕 KYC 或买收款账号。
+
+
+## 21. 市场先行且 AI 完整交付的硬门槛重置（2026-10-27 晚间）
+
+> 本轮最优先执行合同：[CYCLE-03《USDT/USDC 真正获客、完整生产、现实到账执行门槛》](EXECUTION_GATE_MARKET_DRIVEN_USDT_20261027.md)。此文覆盖此前过早把 Whop 判为自然有客以及直接量产 FRAMEWISE 的隐含前提，但保留已有软件技术成果与公开事实。用户只负责本人账户、实名、钱包、上传/发布；AI 负责完整商品和质量，但**不能保证买家购买、平台分配自然流量或竞赛必获奖**。
+
+- **G1 已有付费需求/平台自然发现必须通过**。Whop 官方操作指南要求申请 Discover 展示，商店开通≠被发现；新店最终能否进入推荐需要账户实际批准。Getly 只是可浏览的市场，虽有约120项 Video&Motion 供给，但并无足够可靠的新店成交证据。Superteam 虽有赞助商和真实奖项，详情页常出现报名已过期、限地区/需PRO或社交传播、奖励活动门票而不是USDC等情况。逐单验收后才做。
+- **G2 完整交付**。已有 FRAMEWISE v0.1 ZIP 本轮解压复测通过，确实为离线工具、可导出且无需 API；但目前不能证明有人愿买纯人工质检工作台。首件商品实验转向原创完整9:16视频动效包：12条不同用途的真实可播放3–5秒素材，通用 MP4 + 可编辑 HTML/CSS/JS 源 +真实演示/说明/授权、编码与剪辑 QA。不能以提示词或截图代替成片；不宣称未测的 Premiere/CapCut 原生工程文件兼容或“透明MP4”。
+- **G3 用户实际可合法收 USDT 或 USDC**。Whop 的通用 crypto payout 及 Whop USDT 钱包非同一功能，官方网络报价的示例 BTC/ETH 不证明本人卖家有可用外部 USDT/USDC payout。需 Whop 原后台认证币种网络、合规地区及费用；Getly 官网清楚写明 BSC USDT/USDC、Tron USDT、结算门槛、退款等待，但仍需真实个人资格与买家情况。币安可收发是用户提供事实，**未自动解决外部平台资金合法来源和当地限制**。
+- **G4 零新增付款**。不用付费广告、会员、API、主网 gas、报名/保证金/“验资”操作；平台真实成交分成和税依法计入净收入。不允许虚报身份、借用金融账户、绕过监管。
+- **决策公式**：G1×G2×G3×G4 四关缺一不可。没有全通过的渠道，不再生成批量无客户商品。若全球商户/商品市场在当前约束下无法通过，需明确 NO_VIABLE_CHANNEL_FOUND，而不是将方案包装成保证能赚 U。
+
+**阶段实际状态**：CYCLE03_MARKET_RESEARCH_DELIVERED / WHOP_DISCOVER_APPROVAL_NOT_VERIFIED / WHOP_USDT_USDC_EXTERNAL_PAYOUT_NOT_VERIFIED / GETLY_BUYER_DEMAND_UNKNOWN / BOUNTY_OPEN_ELIGIBLE_CASH_USDC_NOT_FOUND_IN_SAMPLE / FRAMEWISE_RETEST_PASS_BUT_PAID_VALUE_UNKNOWN / NEW_MOTION_PACK_NOT_BUILT / NO_NEW_REVENUE。
+
+**下一轮唯一优先操作**：先按本次研究报告确认 Whop Discover 审核入口与本人 USDT/USDC 第三方钱包提现网络是否真的同时可用，并锁定自然获客；如否，转为只读验证 Getly 真实买家，不能盲上架宣传会赚钱；如两者无法同时满足，尊重用户硬条件说明阻塞。
