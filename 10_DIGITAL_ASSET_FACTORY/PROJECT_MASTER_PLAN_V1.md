@@ -749,3 +749,18 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 用户待提供的最小状态：Whop 账号是否能访问、KYC状态、实际USDT/USDC提现网络与费用、Discover清单/审核状态，最多两张打码截图即可。无需提供密码、钱包地址、身份证、银行资料。零新增会员/广告/API/认证充值和虚构地区。实际地区合法性需本人遵守，非法情境 STOP。
 
 本轮新的 **真实交付**：可下载 Markdown 执行操作手册和专门用于免费真实展示的 sample ZIP，且 ZIP 已通过结构 CRC 测试；不是新的12条动效付费商品，尚未进行 Whop 审核或产生订单。条件放行后才进入技术/审美/市场全量付费版。**当前真实状态**：USER_ACTION_CARD_READY / FREE_SAMPLE_READY / WHOP_ACCOUNT_KYC_UNKNOWN / WHOP_EXTERNAL_STABLECOIN_UNKNOWN / DISCOVER_UNKNOWN / PAID_PACK_NOT_BUILT / REVENUE_0_U。
+
+
+## 23. Work 模式零上下文交接入口（2026-10-27 最新）
+
+**开始新的 Work 深入分析/执行时，第一份必须读取的交接**：[WORK_START_HERE_USDT_FACTORY_20261027.md](WORK_START_HERE_USDT_FACTORY_20261027.md)。该文件是用户当前商业合同的最高优先级启动入口。它统一了：
+- 用户仅有 GPT Plus，不新增付费 API / 订阅 / 广告 / 服务器；没有自有买家或粉丝，需要平台真实自带需求；
+- 用户只有本人注册、真实身份/KYC/收款地区检查、商品上传/必要授权与资金操作；Work 负责真实研究、编码设计视频、英文上架文案、测试、打包和公开脱敏状态记录；
+- 收益以实际合规收到 USDT 或 USDC 为目标，存现有 Binance 不兑换人民币；不能默认已验证第三方平台按该实际账户和地区可以付款；
+- 市场已有真实买家(G1)、Work能交付完整可用成品(G2)、本人能合法收指定U币种(G3)、无新现金支出(G4)四门同时通过才进入正式规模制作；
+- Work 对 Whop / Getly / Superteam 重新评估，不被历史的 Whop 或“12 条动效”预设绑架；前者存在 Discover 资格与外部 USDT/USDC 未证问题，Getly 用户自然购买量不足证明，Superteam 真实任务须逐条核查截止、地区、奖金与社媒要求；
+- 历史 FRAMEWISE v0.1 浏览器软件和免费样品确已做出，附件不是 Public GitHub 内容；如 Work 无法看到需明确回报，先完成独立调研再请用户转附，不允许虚构访问；
+- 执行 R0 项目真实性、R1 平台流量收款、R2 10 件竞品与三类商品选型、R3 完整交付与 QA、R4 本人上传、R5 真实自然订单和稳定币入账；按 Gate 输出可下载实物、公开方法研究、真实状态与停止条件；
+- 公共 GitHub 只放研究/门槛/脱敏 QA，不放未售完整商业源码或用户个人金融身份资料。
+
+**本轮提交情况**：Work 交接文件写入 GitHub 且通过 readback；**未新增任何销售收入、没有取得 Whop KYC/Discover 的真实账号状态，先前 E0–E3 的未完成项仍存在**。Work 的任务是核实并尽可能执行，而不是在没有证据时宣布它们通过。
