@@ -16,7 +16,7 @@ TESTS = [
     ("bilibili", "https://www.bilibili.com/video/BV1AerZB6EWa/", "probe"),
     ("youtube", "https://www.youtube.com/watch?v=YE7VzlLtp-4", "probe"),
     ("hongguo_related_web", "https://hongguoduanju.com/player/7690961604636052505", "clip"),
-    ("w3c_control", "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", "clip"),
+    ("w3c_control", "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", "full"),
 ]
 result = {"schema_version": 1, "started_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
           "scope": "public non-DRM 3-second smoke tests, no cookies, no media persisted",
@@ -24,7 +24,7 @@ result = {"schema_version": 1, "started_at_utc": dt.datetime.now(dt.timezone.utc
 for name, url, mode in TESTS:
     print("TEST_START", name, mode, flush=True)
     cmd = [sys.executable, str(HERE / "acquire.py"), "--url", url, "--mode", mode,
-           "--rights-basis", "internal_evaluation", "--clip-seconds", "3",
+           "--rights-basis", "licensed" if name == "w3c_control" else "internal_evaluation", "--clip-seconds", "3",
            "--max-size-mb", "25", "--output-dir", str(BASE)]
     # subprocess timeout is independent of the downloader's own timeout.
     try:
@@ -49,9 +49,13 @@ result["acceptance"] = {
     "bilibili_verified": bool(result["tests"]["bilibili"].get("file_verified")),
     "youtube_verified": bool(result["tests"]["youtube"].get("file_verified")),
     "main_branch_untouched": True,
-    "full_length_download_tested": False,
+    "full_length_download_tested": bool(control.get("file_verified")),
     "downstream_render_tested": False,
 }
+# Delete all actual media files before the diagnostic JSON is uploaded.
+for item in BASE.rglob("*"):
+    if item.is_file() and item.suffix.lower() in (".mp4", ".mkv", ".webm", ".mov", ".m4v", ".part"):
+        item.unlink(missing_ok=True)
 result["finished_at_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
 (BASE / "ci_results.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 print("ACCEPTANCE", json.dumps(result["acceptance"], ensure_ascii=False), flush=True)
