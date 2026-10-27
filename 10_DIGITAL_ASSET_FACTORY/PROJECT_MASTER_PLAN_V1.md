@@ -712,3 +712,16 @@ Private GitHub 的免费 Actions 有使用额度，超出可能计费；不要�
 **重要地区红线**：如果实际经营/居住在中国大陆，不可因为只持 U 不换人民币，就断言境外平台向境内提供虚拟币支付一定合法。2026-02-06 银发〔2026〕42号关于境内虚拟币非法金融活动和境外向境内提供相关服务的限制仍需核实；不能使用虚假地址、他人账户、借用 KYC 或境内 C2C 规避。Whop/Getly 的 KYC／地区批准是条件；无法确认时仅只读研究、创建无金融行为的本地样品，不进行受限制的收款动作。
 
 **本轮已交付**：市场及平台规则调查，初始产品实验 brief，开源/审美研究候选及阶段 Gate；**没有创作者开户成功、没有商品交付、没有悬赏获得、没有 U 入账**。下一轮启动指令在上述 S1 专项报告 §I。
+
+
+## 20. 2026-10-27 E0–E3 已执行：Whop 真实收款核查及 FRAMEWISE 离线产品原型
+
+**本轮实际验收与工作证据**：[E0–E3 阶段收款/市场/开源审美/软件实测记录](E0_E3_EXECUTION_RECEIPT_20261027.md)。与原 S1 报告并存，本节是状态更新，不能从计划推定已经销售。
+
+- **E0** Whop 官网确认支持一般加密钱包提现，网络公开价目 crypto payout 5%+$1；但 Whop 钱包/ USDT 稳定币功能 **不等于** 本人 Whop 卖家账户明确具有外部 USDT/USDC 提现功能。身份/法域/KYC、目标链/币种、实际转入 Binance 尚未核验，财务行为 STOP。某些 Whop 稳定币 Wallet/yield 协议涉及 Aave/Veda 放贷风险，不能替持币用户自动选择。
+- **E1** 查到五项 AI 视频制作竞品（$25、$36、$47、$49、$99 的公开挂牌例子），部分有真正买家评分，未验证任何销量/给新店的自然流量；商品需求与完整十件竞品审查仍需继续。
+- **E2** Penpot(MPL-2.0)、Excalidraw(MIT)、Fabric.js(MIT) 做外部界面参考及许可筛查；本次无直接复制其软件或图标。已做原创桌面/移动版截图内部审美检查，独立用户审美未验收。
+- **E3** 真正制作原生 HTML/JS FRAMEWISE v0.1 本地离线产品原型（五阶段工作台、3 镜头示例、时长和缺字段自动提醒、连续性规范、人工 QA 硬门槛、Markdown/CSV/JSON 实际浏览器导出）。实际 Playwright/Chromium DOM 运行测试 PASS，包括异常 JSON 拦截和成功导入，localStorage 经模拟验证，尚未进行用户电脑端多浏览器独立 QA。已在当轮会话提供预发布 ZIP、界面截图和原始测试/授权草案，**不将尚未上架资产提交 Public GitHub**。
+- **Superteam Earn** 只作为可参加奖金的辅助研究，验证过一个公开列表以为仍开放但详情已公布获奖者的 $150 USDC 视频任务，不能冒称能继续接；其他 USDG 也不可冒充 USDC。
+- **真实状态**：E0_PUBLIC_PAYOUT_RULES_PASS / ACTUAL_STABLECOIN_ACCOUNT_ELIGIBILITY_UNKNOWN；E1_COMPETITOR_SUPPLY_PASS / MARKET_DEMAND_NOT_VALIDATED；E2_OSS_AND_VISUAL_INTERNAL_REVIEW_ONLY；E3_PROTOTYPE_CODE_BUILT_AND_TESTED / PRIVATE_PRERELEASE；WHOP_NOT_LISTED / NO_SALES / NO_USDT_USDC_RECEIVED。
+- **下一唯一商业 Gate**：Whop 实际国家地区允许的本人 KYC、USDT/USDC 币种/网络与完整收款费用审核，才可正式上架，之后记录真实自然曝光、订单、平台可用余额和实际 Binance 到账。不能为了“赚到 U”让用户先向无关钱包缴保证金、绕 KYC 或买收款账号。
