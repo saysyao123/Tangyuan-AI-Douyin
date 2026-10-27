@@ -1,0 +1,41 @@
+name: Video acquisition v0.1 - actual download and QA
+on:
+  push:
+    branches:
+      - experiment/yoinks-platform-probe-20261027
+    paths:
+      - .github/workflows/video_acquisition_v01.yml
+      - 09_VIDEO_ACQUISITION_EXPERIMENTS/acquire.py
+      - 09_VIDEO_ACQUISITION_EXPERIMENTS/run_ci.py
+      - 09_VIDEO_ACQUISITION_EXPERIMENTS/test_acquire.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acquire-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install open source downloader and media validators
+        run: |
+          python3 -m pip install --user --upgrade yt-dlp
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          "$HOME/.local/bin/yt-dlp" --version
+          ffprobe -version | head -1
+      - name: Offline rights, redaction and classifier tests
+        run: python3 -m unittest discover -s 09_VIDEO_ACQUISITION_EXPERIMENTS -p 'test_acquire.py' -v
+      - name: Real external URL probe and short media decode tests
+        run: python3 09_VIDEO_ACQUISITION_EXPERIMENTS/run_ci.py
+      - name: Upload only JSON results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-acquisition-v01-diagnostic-json
+          path: |
+            acquisition_runs/ci_results.json
+            acquisition_runs/**/asset_manifest.json
+          retention-days: 7
+          if-no-files-found: warn
