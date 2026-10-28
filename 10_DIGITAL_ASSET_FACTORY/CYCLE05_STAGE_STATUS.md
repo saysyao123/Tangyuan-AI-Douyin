@@ -1,3 +1,5 @@
+> **历史状态，当前请读 [PROJECT_STATE.json](PROJECT_STATE.json)**。Cycle06统一项目入口和规则，并补查买家使用授权；本文件保留Cycle05技术交付记录，不能作为新的发布许可。见 [START_HERE.md](START_HERE.md)。
+
 # Cycle 05 阶段状态与私有成品登记
 
 日期：2026-10-28。最新范围以[本轮决策](CYCLE05_SCOPE_AND_PLATFORM_DECISION.md)为准；历史稳定币报告仍保留。
