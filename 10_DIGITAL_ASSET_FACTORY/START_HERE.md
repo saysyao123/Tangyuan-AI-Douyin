@@ -13,7 +13,9 @@
 2. [PROJECT_STATE.json](PROJECT_STATE.json)：唯一当前状态、已验事实、阻塞和下一任务。
 3. [AGENTS.md](AGENTS.md)：所有执行环境共用的读写与交接规则。
 4. [ASSET_REGISTRY.md](ASSET_REGISTRY.md)：真实资产、版本、哈希和私人交付说明。
-5. 仅按当前任务读取关联证据：
+5. [EXECUTION_CHECKLIST.md](EXECUTION_CHECKLIST.md)：按顺序的人机分工、完成节点与进度快照。
+6. 仅按当前任务读取关联证据：
+   - [历史目标与分工核对](research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md)
    - [平台规则复核](research/CYCLE06_PLATFORM_RULES_AUDIT.md)
    - [7个AI变现公共仓库与1个设计项目](research/CYCLE06_OPEN_SOURCE_REVIEW.md)
    - [设计质量门槛](DESIGN_QUALITY_GATE.md)
