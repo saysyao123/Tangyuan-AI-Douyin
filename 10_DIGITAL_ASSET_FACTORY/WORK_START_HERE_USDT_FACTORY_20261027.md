@@ -1,3 +1,5 @@
+> **本文件已归档为Work历史交接快照（Cycle06，2026-10-28）**：网页端、Codex、Work现在统一读取 [START_HERE.md](START_HERE.md)、[当前合同](PROJECT_CONTRACT.md)、[唯一当前状态](PROJECT_STATE.json)。下文旧币种限定、平台优先级和“当前下一步”仅供历史核对，不作为另一套独立项目指令。账号由本人处理，AI先完成公共规则核验；已有商品不重新制作。
+
 > **2026-10-28 最新执行范围变更（Cycle 05）**：用户最新指令允许国内人民币收入，并扩展可考虑币种。下文的“仅稳定币”限定属于历史版本；零新增现金、真实买家、本人实际地区及平台规则、完整交付和真实到账验收保持不变。继续执行前先读 [Cycle05平台决策](CYCLE05_SCOPE_AND_PLATFORM_DECISION.md)、[竞品与商品Gate](CYCLE05_COMPETITORS_AND_PRODUCT_GATE.md)、[最新阶段状态](CYCLE05_STAGE_STATUS.md)，再结合本文历史顺序。当前没有已通过全链路验收的盈利渠道，中英文成品仅为一件有限试销资产，不代表获客或收入PASS。
 
 # WORK START HERE · USDT/USDC 数字资产工厂
