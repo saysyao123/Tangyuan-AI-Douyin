@@ -22,4 +22,12 @@
 
 STORE-REVIEW v1内的产品文件与测试事实保留；其“原创力第一站”的操作顺序是Cycle05快照，已被本轮平台复核与统一入口替代。AI准入、卖家收费权限和买家使用授权未明确前，不能仅按旧卡直接收费发布。源PPTX本身本轮未改写，不虚构v2商品或重新计为一件新品。
 
-本轮只登记设计审查意见，未对完整成品做新版审美验收，不把接入设计方法写成商品视觉已经改善。
+Cycle06只登记设计审查意见，未对完整成品做新版审美验收。后续本轮封装范围如下，不把接入设计方法写成商品视觉已经改善。
+
+## Cycle09：同一STORE-REVIEW的MotionElements封装1.1
+
+已私人交付 `STORE_REVIEW_ME_READY_CHECK_v1_1_20261028.zip`（14,696,968字节），SHA256 `2f0d4342767ae828dc98ff521576733aa568fe046392c46039470ed193d8a8f3`。内含客户ZIP、英文文案、最新本人操作卡、5张真实单页预览、48秒无声页面预览视频和QA。
+
+客户ZIP `Store_Review_EN_ME_Customer_v1_1.zip` 的SHA256为 `0be71a809dfe7d63aebc872857d347f355221c318d18306d49e81f711ca18d09`。原英文PPTX及字体字节保持v1不变；封装1.1不是第二件商品。中文版及历史包保留。旧包内第一站/定价/电汇说明由[Cycle09判定](research/CYCLE09_CHANNEL_VERDICT.md)与[当前操作卡](OWNER_NEXT_ACTION.md)替代。
+
+技术重新检查和预览视频通过，见[交付QA](research/CYCLE09_DELIVERY_QA.md)。目标PowerPoint/WPS、本人审核、自然订单与最终到账仍未通过，不因有可上传文件而放行发布。
