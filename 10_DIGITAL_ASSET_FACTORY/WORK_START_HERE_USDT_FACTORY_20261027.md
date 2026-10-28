@@ -1,3 +1,5 @@
+> **2026-10-28 最新执行范围变更（Cycle 05）**：用户最新指令允许国内人民币收入，并扩展可考虑币种。下文的“仅稳定币”限定属于历史版本；零新增现金、真实买家、本人实际地区及平台规则、完整交付和真实到账验收保持不变。继续执行前先读 [Cycle05平台决策](CYCLE05_SCOPE_AND_PLATFORM_DECISION.md)、[竞品与商品Gate](CYCLE05_COMPETITORS_AND_PRODUCT_GATE.md)、[最新阶段状态](CYCLE05_STAGE_STATUS.md)，再结合本文历史顺序。当前没有已通过全链路验收的盈利渠道，中英文成品仅为一件有限试销资产，不代表获客或收入PASS。
+
 # WORK START HERE · USDT/USDC 数字资产工厂
 **Work 模式零上下文交接包 v1.0｜2026-10-27**
 **仓库**：https://github.com/saysyao123/Tangyuan-AI-Douyin
