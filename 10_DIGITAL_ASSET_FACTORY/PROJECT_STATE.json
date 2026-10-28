@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "AI_DIGITAL_ASSET_FACTORY",
-  "revision": 1,
+  "revision": 2,
   "repository": "saysyao123/Tangyuan-AI-Douyin",
   "branch": "main",
   "project_root": "10_DIGITAL_ASSET_FACTORY/",
-  "contract_version": "1.0",
-  "cycle": "06",
+  "contract_version": "1.1",
+  "cycle": "07",
   "mode_policy": "one_project_shared_by_web_codex_work",
   "verified_net_revenue": {
     "CNY": 0,
@@ -22,11 +22,16 @@
   "stages": {
     "R0": {
       "status": "PASS",
-      "scope": "repository history, latest user scope and shared project continuity",
+      "scope": "current contract, available historical handoffs and GitHub records reviewed; full original conversation audit remains blocked",
       "evidence": [
         {
           "type": "project_report",
           "path": "research/CYCLE06_OPEN_SOURCE_REVIEW.md",
+          "checked_on": "2026-10-28"
+        },
+        {
+          "type": "project_report",
+          "path": "research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md",
           "checked_on": "2026-10-28"
         }
       ]
@@ -133,15 +138,15 @@
     "STORE-REVIEW"
   ],
   "next_task": {
-    "id": "C07-CLOSE-CONTENT-AND-PAYOUT-GATE",
+    "id": "C08-CLOSE-PLATFORM-AND-DEMAND-GATE",
     "owner": "assistant",
-    "action": "Obtain stronger official evidence resolving AI-generated template paid admission and buyer intended use; inspect real account eligibility only when owner supplies it. Prefer validating existing assets, no second product batch.",
-    "success": "One channel with current explicit content/seller/buyer rules and a viable personal zero-upfront-cost payout route, or a documented rejection.",
+    "action": "Continue public official-content, buyer-use-license, payout-cost and relevant demand verification for one existing-asset channel; prepare one owner action card only when appropriate. Original-chat transcript reconciliation can proceed separately when text is supplied.",
+    "success": "One evidence-backed route suitable for one bounded existing-asset trial, with account-only unknowns isolated, or a documented rejection.",
     "user_owned_steps": [
-      "account registration",
-      "identity and tax information",
-      "actual terms acceptance",
-      "authorized listing and funds operations"
+      "account registration, real identity and tax details",
+      "personal contract acceptance and account setup",
+      "authorized upload, release and funds operations",
+      "brief opening-experience and redacted account-status feedback"
     ]
   },
   "blockers": [
@@ -152,9 +157,9 @@
   ],
   "unread_context": [
     {
-      "source": "user-provided shared ChatGPT conversation",
+      "source": "web conversation titled AI副业编码建议",
       "status": "BLOCKED",
-      "reason": "public fetch unavailable; personal context search unavailable; not treated as read"
+      "reason": "Targeted personal-context retrieval unavailable; no matching full transcript returned from file search. Two historical handoff documents were read in full and are not a transcript."
     }
   ],
   "automation": {
@@ -167,7 +172,18 @@
     "D-003",
     "D-004",
     "D-005",
-    "D-006"
+    "D-006",
+    "D-007"
   ],
-  "updated_on": "2026-10-28"
+  "updated_on": "2026-10-28",
+  "execution_checklist_path": "EXECUTION_CHECKLIST.md",
+  "history_review": {
+    "status": "PARTIAL",
+    "scope": "reviewed archived SOP, Work prompt and GitHub history; original chat transcript not accessible",
+    "evidence": "research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md"
+  },
+  "current_execution_nodes": [
+    "P01",
+    "P02"
+  ]
 }
