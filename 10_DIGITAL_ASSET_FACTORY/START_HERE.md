@@ -1,40 +1,29 @@
-# AI Digital Asset Factory：统一执行入口
+# AI Digital Asset Factory｜统一入口
 
-适用于 ChatGPT 网页端、Codex、Work。三种入口是同一个项目的执行环境，使用同一仓库、同一目录、同一状态。
+仓库：`saysyao123/Tangyuan-AI-Douyin`；分支：`main`；唯一目录：`10_DIGITAL_ASSET_FACTORY/`。网页端、Codex、Work接续同一项目。
 
-- 仓库：`saysyao123/Tangyuan-AI-Douyin`
-- 分支：`main`
-- 唯一项目根目录：`10_DIGITAL_ASSET_FACTORY/`
-- 项目标识：`AI_DIGITAL_ASSET_FACTORY`
+## 轻量启动
 
-## 每轮必须读取
+先读以下当前文件；已在本轮读取且内容未变的，不重复输出全文：
+1. [合同](PROJECT_CONTRACT.md)：目标、零现金约束、分工和商业门槛。
+2. [状态](PROJECT_STATE.json)：唯一当前事实、revision、阻塞和下一任务。
+3. [执行规则](AGENTS.md)：读写、权限与验证。
+4. [资产登记](ASSET_REGISTRY.md)：现有成品、哈希与私人交付。
 
-1. [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md)：当前目标、分工和商业验收规则。
-2. [PROJECT_STATE.json](PROJECT_STATE.json)：唯一当前状态、已验事实、阻塞和下一任务。
-3. [AGENTS.md](AGENTS.md)：所有执行环境共用的读写与交接规则。
-4. [ASSET_REGISTRY.md](ASSET_REGISTRY.md)：真实资产、版本、哈希和私人交付说明。
-5. [PROJECT_EXECUTION_PLAN.md](PROJECT_EXECUTION_PLAN.md)：完整路线、候选顺序、试销实验、收款模型和停止条件。
-6. [EXECUTION_CHECKLIST.md](EXECUTION_CHECKLIST.md)：按顺序的人机分工、完成节点与进度快照。
-7. 仅按当前任务读取关联证据：
-   - [完整方案补充证据](research/CYCLE08_PLAN_EVIDENCE.md)
-   - [历史目标与分工核对](research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md)
-   - [平台规则复核](research/CYCLE06_PLATFORM_RULES_AUDIT.md)
-   - [7个AI变现公共仓库与1个设计项目](research/CYCLE06_OPEN_SOURCE_REVIEW.md)
-   - [设计质量门槛](DESIGN_QUALITY_GATE.md)
-   - [决策日志](DECISIONS.md)
+随后只读本次任务需要的证据。完整方案、执行清单和全部历史不再每轮默认整篇载入。首次全面规划或对应任务再读：
+- [完整方案](PROJECT_EXECUTION_PLAN.md)；[按序分工](EXECUTION_CHECKLIST.md)。
+- [当前平台证据](research/CYCLE08_PLAN_EVIDENCE.md)；[早一轮规则核对](research/CYCLE06_PLATFORM_RULES_AUDIT.md)。
+- [历史核对](research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md)；[开源审阅](research/CYCLE06_OPEN_SOURCE_REVIEW.md)。
+- [设计门槛](DESIGN_QUALITY_GATE.md)；[决策](DECISIONS.md)；[历史总控](PROJECT_MASTER_PLAN_V1.md)。
 
-[PROJECT_MASTER_PLAN_V1.md](PROJECT_MASTER_PLAN_V1.md)保留为历史总控和索引，不再把其中不同日期的“当前下一步”当作并列指令。Cycle04/05、旧Work启动文件、旧操作卡和私人ZIP内文案均是相应日期快照。当前状态以 `PROJECT_STATE.json` 为准，当前规则以 `PROJECT_CONTRACT.md` 为准；用户当轮明确指令优先，并须记录变更。
+## 接续要求
 
-## 当前最重要的事实
+报告状态revision与唯一下一任务，然后直接执行。AI承担研究、制作、修复与复盘；本人承担账号、身份/税务/协议、上传发布、资金及必要体验/脱敏反馈。
 
-截至2026-10-28，尚未证实一条满足全部条件的盈利渠道。完整中英文PPTX已私人交付，但平台AI准入、买家授权、本人结算与自然订单仍未全部通过。不能因已有成品或账号注册而跳过市场验证。
+旧计划和私人ZIP里的操作卡是历史快照；规则看合同，事实看状态，用户最新明确要求优先。已有资产优先复用；技术交付不等于自然订单或净到账。完整待售商品、原聊天及私人定位符不写Public仓库。
 
-当前核验顺序：先查MotionElements与现有英文PPT的适配及本人收款，同时补一个国内候选；这是核验优先级，不是已通过上架。公开单席位许可在一名使用者为自己/雇主制作报告的范围有依据；实际商品审核、最终收款与自然需求仍未知。Payoneer可能有固定/年费，不能默认免费开户即可无成本收款。完整安排见项目执行方案。
+修改前取最新内容与SHA；有并发改动先合并，写后回读，运行项目连续性检查。仓库不可读时明确“未同步”。不另建模式专属项目，不虚构后台工作、收益或容量释放。
 
-历史纠偏继续保留：原创力普通非独家及人民币结算有官方依据，但AI收费准入没有找到明确许可；买家使用授权另有待确认条款。因此从“国内第一测试候选”降为“待规则确认候选”，不要求用户盲目上传。MotionElements的AI及非独家公共规则较清楚，最终提现与自然订单仍未知。
+## 换对话可直接发送
 
-## 通用续作指令
-
-> 继续同一个 AI Digital Asset Factory 项目。读取 `saysyao123/Tangyuan-AI-Douyin` 的 `main` 分支 `10_DIGITAL_ASSET_FACTORY/START_HERE.md`，按其顺序读取当前合同、状态、执行规则和资产登记。先报告状态 revision 与唯一下一任务，然后直接完成当前环境能独立完成的工作。不要另建网页端/Codex/Work项目，不从头制作已有商品，不恢复历史已否决路线。完成后以最新GitHub内容和SHA为依据更新同一状态与证据。完整待售商品留在私人附件中。
-
-无法读取仓库时，明确标记“未同步”，可准备增量补丁；不得声称已检查最新状态或把本地副本称作新的权威项目。
+> 继续同一AI数字资产工厂项目。读取 `saysyao123/Tangyuan-AI-Douyin` 的 `main` 分支 `10_DIGITAL_ASSET_FACTORY/START_HERE.md`。按轻量启动读取当前合同、状态、规则和资产登记，直接执行状态中的next_task。其余证据按需读取，沿用已有成品和同一项目。
