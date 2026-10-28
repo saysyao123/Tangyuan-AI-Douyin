@@ -1,3 +1,5 @@
+> **统一执行入口（2026-10-28，Cycle06）**：网页端、Codex、Work继续同一个项目。先读 [START_HERE.md](START_HERE.md)、[当前合同](PROJECT_CONTRACT.md)、[唯一当前状态](PROJECT_STATE.json)。下文各日期章节为历史记录，旧的“当前下一步”不再作为并列启动指令。账号由本人处理，AI负责公共规则核验与完整制作。
+
 # AI Digital Asset Factory｜零新增费用数字资产工厂 V1.2
 
 > 制定：2026-10-26｜修订：2026-10-26（V1.2 S0–S8 完整路线，保留 V1.1 前置审核）｜项目状态：PLAN_LOCKED / IMPLEMENTATION_NOT_STARTED  
@@ -786,3 +788,16 @@ R0 PASS；R1 BLOCKED：没有证实一条同时满足新卖家有效需求与本
 R0 PASS；R1 UNKNOWN（原链上路径仍BLOCKED）；R2 UNKNOWN（挂牌供给存在，购买与新卖家自然曝光未验证）；R3 PASS仅限一件完整试销资产的技术交付：中英文各12页原生PPTX及私有完整包已制作，编辑保存、逐页渲染与LibreOffice转换检查完成，真实PowerPoint/WPS界面和平台验收仍未知。R4 BLOCKED等待本人账号资格及正式提交；R5无已核实订单、分成或到账，已核实收入0。
 
 完整商品、源PPTX和预览仅私人交付。先核验一个国内账号的零前置费、AI准入、非独家及人民币结算条件；通过后才试销中文文件。未通过前不扩充产品库，不把免费替代品、平台宣传或浏览计数当成成交证据。
+
+
+## 26. Cycle06：开源反证、平台规则与跨模式统一（2026-10-28）
+
+统一入口：[START_HERE.md](START_HERE.md)。规则：[PROJECT_CONTRACT.md](PROJECT_CONTRACT.md)；唯一当前状态：[PROJECT_STATE.json](PROJECT_STATE.json)；执行约束：[AGENTS.md](AGENTS.md)；真实资产：[ASSET_REGISTRY.md](ASSET_REGISTRY.md)；决策：[DECISIONS.md](DECISIONS.md)。不另建网页端/Codex/Work项目或模式专属状态。
+
+本轮：[平台规则审计](research/CYCLE06_PLATFORM_RULES_AUDIT.md)、[7个收入公共仓库+1个设计项目](research/CYCLE06_OPEN_SOURCE_REVIEW.md)、[设计质量门槛](DESIGN_QUALITY_GATE.md)、[执行回执](CYCLE06_EXECUTION_RECEIPT.md)。分享对话链接未能读取，未伪称已核对其全部要求；当前合同基于本轮、当前会话与可读取GitHub历史。
+
+纠偏：原创力普通非独家收费与人民币结算有公开规则，但AI商品准入未明，买家内部经营使用的授权仍需澄清，降为规则待确认候选；账号注册不会解除这些内容缺口。MotionElements的AI与非独家机制较明确，实际本人收款与自然订单仍未通过。没有新盈利渠道被认定PASS。
+
+开源研究中最值得吸收的是失败实验、零收入如实记录、单一状态交接和任务适配的设计审查。ZeroStore公开日志仍为day0/0收入；Ithiel实验作者报告大量产物但收入0，不能复制付费自动运行和推广。qiaomu-design已核对为MIT，借机制而不导入作者个人偏好或外部模型依赖。本轮无新增商品/发布/交易，既有私有成品保留。
+
+连续性检查与回归检查在本轮执行，检查范围和局限见回执；它们不证明真实买家、平台资格、审美或到账。后续只更新同一状态revision与证据，不把历史章节标题中的“最新”当成当前权威。
