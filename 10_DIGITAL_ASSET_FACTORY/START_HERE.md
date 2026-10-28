@@ -12,7 +12,8 @@
 
 随后只读本次任务需要的证据。完整方案、执行清单和全部历史不再每轮默认整篇载入。首次全面规划或对应任务再读：
 - [完整方案](PROJECT_EXECUTION_PLAN.md)；[按序分工](EXECUTION_CHECKLIST.md)。
-- [当前平台证据](research/CYCLE08_PLAN_EVIDENCE.md)；[早一轮规则核对](research/CYCLE06_PLATFORM_RULES_AUDIT.md)。
+- [当前渠道判定](research/CYCLE09_CHANNEL_VERDICT.md)；[本人下一步](OWNER_NEXT_ACTION.md)；[本轮交付QA](research/CYCLE09_DELIVERY_QA.md)。
+- 早一轮规则：[Cycle08](research/CYCLE08_PLAN_EVIDENCE.md)；[Cycle06](research/CYCLE06_PLATFORM_RULES_AUDIT.md)。
 - [历史核对](research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md)；[开源审阅](research/CYCLE06_OPEN_SOURCE_REVIEW.md)。
 - [设计门槛](DESIGN_QUALITY_GATE.md)；[决策](DECISIONS.md)；[历史总控](PROJECT_MASTER_PLAN_V1.md)。
 
