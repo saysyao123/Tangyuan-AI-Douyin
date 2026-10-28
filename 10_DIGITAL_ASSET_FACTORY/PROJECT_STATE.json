@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "project_id": "AI_DIGITAL_ASSET_FACTORY",
-  "revision": 3,
+  "revision": 4,
   "repository": "saysyao123/Tangyuan-AI-Douyin",
   "branch": "main",
   "project_root": "10_DIGITAL_ASSET_FACTORY/",
   "contract_version": "1.1",
-  "cycle": "07",
+  "cycle": "08",
   "mode_policy": "one_project_shared_by_web_codex_work",
   "verified_net_revenue": {
     "CNY": 0,
@@ -38,11 +38,16 @@
     },
     "R1": {
       "status": "UNKNOWN",
-      "scope": "public platform mechanisms reviewed; AI entry, buyer license and personal payout not fully closed",
+      "scope": "Public AI, format, nonexclusive and narrow single-seat intended-use rules reviewed for MotionElements; personal eligibility, final payout cost and domestic AI/buyer-use terms remain unclosed",
       "evidence": [
         {
           "type": "project_report",
           "path": "research/CYCLE06_PLATFORM_RULES_AUDIT.md",
+          "checked_on": "2026-10-28"
+        },
+        {
+          "type": "project_report",
+          "path": "research/CYCLE08_PLAN_EVIDENCE.md",
           "checked_on": "2026-10-28"
         }
       ]
@@ -107,7 +112,8 @@
       "buyer_intended_use_license": "UNKNOWN",
       "final_personal_payout": "UNKNOWN",
       "decision": "hold_for_rule_confirmation",
-      "evidence": "research/CYCLE06_PLATFORM_RULES_AUDIT.md"
+      "evidence": "research/CYCLE06_PLATFORM_RULES_AUDIT.md",
+      "verification_priority": 2
     },
     {
       "id": "docer",
@@ -118,7 +124,8 @@
       "buyer_intended_use_license": "UNKNOWN",
       "final_personal_payout": "UNKNOWN",
       "decision": "secondary_pending_current_contract",
-      "evidence": "research/CYCLE06_PLATFORM_RULES_AUDIT.md"
+      "evidence": "research/CYCLE06_PLATFORM_RULES_AUDIT.md",
+      "verification_priority": 3
     },
     {
       "id": "motionelements",
@@ -126,10 +133,12 @@
       "public_nonexclusive_sales_mechanism": "PASS",
       "personal_paid_upload_permission": "UNKNOWN",
       "public_payout_rules": "PASS",
-      "buyer_intended_use_license": "UNKNOWN",
+      "buyer_intended_use_license": "PASS",
       "final_personal_payout": "UNKNOWN",
       "decision": "verify_existing_asset_channel_before_new_product",
-      "evidence": "research/CYCLE06_PLATFORM_RULES_AUDIT.md"
+      "evidence": "research/CYCLE08_PLAN_EVIDENCE.md",
+      "buyer_license_scope": "Public single-seat terms only: one user edits a report for own/employer end use; no source-template redistribution, resale or unlimited seats; actual item-specific review pending.",
+      "verification_priority": 1
     }
   ],
   "existing_asset_ids": [
@@ -140,8 +149,8 @@
   "next_task": {
     "id": "C08-CLOSE-PLATFORM-AND-DEMAND-GATE",
     "owner": "assistant",
-    "action": "Continue public official-content, buyer-use-license, payout-cost and relevant demand verification for one existing-asset channel; prepare one owner action card only when appropriate. Supplied conversation archive has been read and reconciled; missing historical messages do not block this task.",
-    "success": "One evidence-backed route suitable for one bounded existing-asset trial, with account-only unknowns isolated, or a documented rejection.",
+    "action": "Finish one public-rule/demand verdict for existing English STORE-REVIEW on MotionElements and one domestic rule verdict for Book118, including final payout-cost assumptions; supply one platform-specific owner action card only if justified, otherwise document rejection. No second product batch.",
+    "success": "One justified bounded existing-asset trial route with content, rights and zero-cash conditions established and account-only unknowns isolated, or a documented rejection; no claim of guaranteed buyers.",
     "user_owned_steps": [
       "account registration, real identity and tax details",
       "personal contract acceptance and account setup",
@@ -150,10 +159,10 @@
     ]
   },
   "blockers": [
-    "Domestic AI paid admission not explicit in public sources",
-    "Buyer intended-use licensing for template not fully established",
-    "Personal payment-provider eligibility and net final withdrawal cost unknown",
-    "No verified natural demand for this specific asset"
+    "Domestic AI paid admission and buyer intended-use authorization not explicit in available public sources",
+    "Personal payment-provider eligibility, possible fixed/annual fees and net final withdrawal cost unknown",
+    "No verified relevant paid demand or new-seller natural conversion for this specific asset",
+    "Actual target-app opening and buyer acceptance pending"
   ],
   "unread_context": [
     {
@@ -174,7 +183,8 @@
     "D-005",
     "D-006",
     "D-007",
-    "D-008"
+    "D-008",
+    "D-009"
   ],
   "updated_on": "2026-10-28",
   "execution_checklist_path": "EXECUTION_CHECKLIST.md",
@@ -223,5 +233,25 @@
   "current_execution_nodes": [
     "P01",
     "P02"
-  ]
+  ],
+  "project_plan_path": "PROJECT_EXECUTION_PLAN.md",
+  "trial_protocol": {
+    "status": "PLANNED_NOT_STARTED",
+    "asset_id": "STORE-REVIEW",
+    "max_existing_products": 1,
+    "max_initial_published_channels": 2,
+    "start_condition": "Approved purchasable listing with verified platform discoverability after content, owner eligibility, payment and delivery checks.",
+    "observation_days": 30,
+    "checkpoints_days": [
+      0,
+      7,
+      14,
+      30
+    ],
+    "max_major_variable_changes": 1,
+    "no_paid_ads": true,
+    "no_owner_customer_acquisition": true,
+    "rule": "Unknown public sales data may be tested with the already-produced asset only when participation, rules, owner/payment and delivery conditions pass; R2 remains evidence-scoped and no batch production is approved.",
+    "recommended_initial_published_channels": 1
+  }
 }
