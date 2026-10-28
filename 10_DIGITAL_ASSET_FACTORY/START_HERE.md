@@ -13,8 +13,10 @@
 2. [PROJECT_STATE.json](PROJECT_STATE.json)：唯一当前状态、已验事实、阻塞和下一任务。
 3. [AGENTS.md](AGENTS.md)：所有执行环境共用的读写与交接规则。
 4. [ASSET_REGISTRY.md](ASSET_REGISTRY.md)：真实资产、版本、哈希和私人交付说明。
-5. [EXECUTION_CHECKLIST.md](EXECUTION_CHECKLIST.md)：按顺序的人机分工、完成节点与进度快照。
-6. 仅按当前任务读取关联证据：
+5. [PROJECT_EXECUTION_PLAN.md](PROJECT_EXECUTION_PLAN.md)：完整路线、候选顺序、试销实验、收款模型和停止条件。
+6. [EXECUTION_CHECKLIST.md](EXECUTION_CHECKLIST.md)：按顺序的人机分工、完成节点与进度快照。
+7. 仅按当前任务读取关联证据：
+   - [完整方案补充证据](research/CYCLE08_PLAN_EVIDENCE.md)
    - [历史目标与分工核对](research/CYCLE07_HISTORY_AND_ROLE_AUDIT.md)
    - [平台规则复核](research/CYCLE06_PLATFORM_RULES_AUDIT.md)
    - [7个AI变现公共仓库与1个设计项目](research/CYCLE06_OPEN_SOURCE_REVIEW.md)
@@ -27,7 +29,9 @@
 
 截至2026-10-28，尚未证实一条满足全部条件的盈利渠道。完整中英文PPTX已私人交付，但平台AI准入、买家授权、本人结算与自然订单仍未全部通过。不能因已有成品或账号注册而跳过市场验证。
 
-本轮修正：原创力普通非独家及人民币结算有官方依据，但AI收费准入没有找到明确许可；买家使用授权另有待确认条款。因此从“国内第一测试候选”降为“待规则确认候选”，不要求用户盲目上传。MotionElements的AI及非独家公共规则较清楚，最终提现与自然订单仍未知。
+当前核验顺序：先查MotionElements与现有英文PPT的适配及本人收款，同时补一个国内候选；这是核验优先级，不是已通过上架。公开单席位许可在一名使用者为自己/雇主制作报告的范围有依据；实际商品审核、最终收款与自然需求仍未知。Payoneer可能有固定/年费，不能默认免费开户即可无成本收款。完整安排见项目执行方案。
+
+历史纠偏继续保留：原创力普通非独家及人民币结算有官方依据，但AI收费准入没有找到明确许可；买家使用授权另有待确认条款。因此从“国内第一测试候选”降为“待规则确认候选”，不要求用户盲目上传。MotionElements的AI及非独家公共规则较清楚，最终提现与自然订单仍未知。
 
 ## 通用续作指令
 
