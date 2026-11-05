@@ -1,0 +1,17 @@
+{
+  "checked_date": "2026-11-05",
+  "probe": "fresh_native_gif_no_reference",
+  "request": {
+    "prompt": "Generate a genuine animated GIF from scratch, one complete portrait scene per frame, fixed camera. A single small cream-white cat sits on a wooden window ledge inside a warmly lit quiet room at blue hour, looking toward a rain-covered window. Tasteful cinematic soft blue and amber lighting. Keep the identical cat, fur pattern, body proportions, window, lamp, crop and background throughout. Very gentle continuous breathing; one slow natural blink near the middle; tiny tail-tip movement, no walking or head turn. The animation covers approximately five seconds. No camera motion, no scrolling, no panels, no collage or contact sheet, no borders, no text, no logos. Complete coherent independent frames. This is a minimal nativeGIF capability test with no reference images. Return the actual animatedGIF file.",
+    "gif": {
+      "frame_count": 16,
+      "frame_duration_ms": 310
+    },
+    "transparent_background": false
+  },
+  "status": "FAILED",
+  "error": "image generation failed: http 400 Bad Request: Some(\"{\\\"detail\\\":\\\"GIF output is not enabled for this request.\\\"}\")",
+  "native_gif_created": false,
+  "interpretation": "No-reference request failed too; the previous failure cannot be explained solely by using a reference image. Exact backend/model/account cause is not established.",
+  "no_paid_api_fallback": true
+}

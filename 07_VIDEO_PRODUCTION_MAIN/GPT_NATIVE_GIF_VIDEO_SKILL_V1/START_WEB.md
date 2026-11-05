@@ -6,7 +6,7 @@
 
 > 请读取 https://github.com/saysyao123/Tangyuan-AI-Douyin 的 main 当前 commit SHA，再以同一 SHA 读取 `07_VIDEO_PRODUCTION_MAIN/README.md`、`07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md`、`references/PROMPTS.md`、`references/QA.md` 和 `scripts/gif_to_video.py`，按本目录最新规范执行。使用已确认人物与固定镜头，先取得GPT原生源GIF并检查全部真实源帧，再以5秒／120帧GIF为主交付，同时导出同时间轴5秒／120帧／24FPS MP4。按当次真实工具能力生成，不许凭提示词承诺 30 或 120 原生帧；不许滚动拼图、拉伸伪高清或把补间称为原生帧。尽可能由你完成生成、后处理和 QA，最后给真实文件及报告。若缺少执行能力或原生源GIF，明确说明具体阻塞，不能宣称完成；不要改用3张静态图或PNG→MP4替代正式演示。此专项不替换 Work-Fisher 总流程。
 
-补充本次内容：例如“沿用我的雨夜窗前参考图，人物轻眨眼后缓慢抬手；5 秒、无配音、非循环”。已有 GIF 时直接附源文件，避免重新生成。
+补充本次内容：例如“沿用我的雨夜窗前参考图，固定镜头、轻呼吸和一次慢眨眼；5 秒、无配音、非循环”。这是待原生复测的保守动作要求。抬手触碰另做遮挡验收。已有 GIF 时直接附源文件，避免重新生成。
 
 ## 执行 Agent 的最短操作
 
@@ -24,6 +24,8 @@
 | 只能阅读／聊天 | 读取规范、审查提示词和用户提供的可见画面 | 已生成可播放成片或已完成编码测试 |
 
 2026-11-05 本 Work 图像工具 schema 的 GIF 范围为 2–16 帧；过去 30 帧结果是历史事实，不是当前工具参数上限。本轮实际生成调用返回 `GIF output is not enabled for this request`，因此**新原生GIF生成当前BLOCKED**，不能把schema存在当成端到端通过。可复用历史合格 GIF。未新增付费 API、订阅或云 GPU。
+
+补测不带参考图也返回同一400；尚不能确定权限／模型／执行入口中的具体原因。执行前读 [原生生成复核](references/NATIVE_GIF_RESEARCH.md)，保存完整实际请求、原始返回和源文件哈希。候选提示词未通过原生生成复验，不因文档更新而升级为已验证能力。
 
 ## 更新与安装说明
 

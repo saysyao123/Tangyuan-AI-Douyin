@@ -1,0 +1,52 @@
+{
+  "date_utc": "2026-11-05",
+  "baseline_main_sha": "1c3aa84cd9175e45a87a3451d8292820bff3a82a",
+  "scope": "generation capability research and documentation only",
+  "contract_tests": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_skill_contract.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "passed": 4,
+    "log": "contract_tests.log"
+  },
+  "diff_check": {
+    "command": "git diff --check",
+    "exit_code": 0,
+    "output": ""
+  },
+  "production_script_changed": false,
+  "production_script_sha256": "a932ceaabc441766b6c44170c4812e71bd3f909701715182650369b762c9c29e",
+  "new_native_gif_generation": "BLOCKED_HTTP_400",
+  "new_generated_gif_or_movie": false,
+  "full_media_regression_rerun": false,
+  "current_full_pipeline_import": "cv2 missing in current default and primary-runtime Python; full pipeline not rerun",
+  "timing_function_check": "prospective_timing.json: AST-extracted unchanged timeline_map using available numpy; arithmetic only",
+  "historical_37_test_result": "Existing prior evidence only; not repeated or reattributed to this check",
+  "cash_spent": 0,
+  "local_markdown_links": {
+    "checked": 22,
+    "missing": []
+  },
+  "changed_files": [
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/evidence/2026-11-05/native_generation_research/contract_tests.log",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/evidence/2026-11-05/native_generation_research/history_trace.json",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/evidence/2026-11-05/native_generation_research/no_reference_probe.json",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/evidence/2026-11-05/native_generation_research/prospective_timing.json",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/evidence/2026-11-05/native_generation_research/validation.json",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/references/NATIVE_GIF_RESEARCH.md",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/CHANGELOG.md",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/README.md",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/START_WEB.md",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/references/PROMPTS.md"
+  ]
+}

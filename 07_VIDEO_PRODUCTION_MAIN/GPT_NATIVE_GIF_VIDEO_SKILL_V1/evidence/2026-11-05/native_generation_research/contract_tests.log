@@ -1,0 +1,9 @@
+test_frontmatter_uses_standard_minimal_fields (test_skill_contract.SkillContractTests.test_frontmatter_uses_standard_minimal_fields) ... ok
+test_parent_router_keeps_work_fisher_priority (test_skill_contract.SkillContractTests.test_parent_router_keeps_work_fisher_priority) ... ok
+test_referenced_local_resources_exist (test_skill_contract.SkillContractTests.test_referenced_local_resources_exist) ... ok
+test_repository_layout_installation_gap_is_disclosed (test_skill_contract.SkillContractTests.test_repository_layout_installation_gap_is_disclosed) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

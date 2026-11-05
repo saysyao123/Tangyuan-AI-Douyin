@@ -1,0 +1,20 @@
+{
+  "checked_date": "2026-11-05",
+  "historical_source_sha256": "9b4c6b7d59a244071a327d760c622c91cf8e7127028acbee3bd2c4ca51df9e9b",
+  "confirmed_file": {
+    "frames": 30,
+    "width": 144,
+    "height": 328,
+    "frame_duration_ms": 170,
+    "total_ms": 5100
+  },
+  "retrieved_prior_reply": {
+    "time_utc": "2026-11-05T02:57:00Z",
+    "reported_source_path": "/mnt/data/ghostwriter_images/generated/imagegen_1.gif"
+  },
+  "original_tool_call_parameters": "NOT_RECOVERED",
+  "original_exact_prompt": "NOT_RECOVERED",
+  "direct_GIF_vs_grid_packaging": "NOT_PROVEN_BY_CURRENT_RECORDS",
+  "original_surface_chat_or_work": "NOT_RECOVERED",
+  "interpretation": "ExistingGIF and repeated postprocessing are verified; exact historical generation route is not yet reproducible. Do not infer construction from dimensions alone."
+}

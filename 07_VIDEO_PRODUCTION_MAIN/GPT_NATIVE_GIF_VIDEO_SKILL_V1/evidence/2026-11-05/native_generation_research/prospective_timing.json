@@ -1,0 +1,37 @@
+{
+  "scope": "TIME_MAPPING_FUNCTION_ARITHMETIC_ONLY_NOT_GENERATION_OR_VISUAL_TEST",
+  "execution_method": "Extract unchanged timeline_map AST function to avoid importing unavailable cv2; numpy available",
+  "native_gif_actually_created": false,
+  "input_hypothesis": {
+    "source_frames": 16,
+    "source_duration_ms_each": 310,
+    "source_total_ms": 4960
+  },
+  "target": {
+    "frames": 120,
+    "duration_ms": 5000,
+    "mp4_fps": 24
+  },
+  "retime_factor": 1.0080645161290323,
+  "actual_map_kind_counts": {
+    "source_sample": 8,
+    "interpolated": 105,
+    "terminal_hold": 7
+  },
+  "script_sha256": "a932ceaabc441766b6c44170c4812e71bd3f909701715182650369b762c9c29e",
+  "first_record": {
+    "output_frame": 0,
+    "source_time_ms": 0.0,
+    "source_index": 0,
+    "alpha": 0.0,
+    "kind": "source_sample"
+  },
+  "last_record": {
+    "output_frame": 119,
+    "source_time_ms": 4918.666667,
+    "source_index": 15,
+    "alpha": 0.8666666667,
+    "kind": "terminal_hold"
+  },
+  "current_full_pipeline_import": "BLOCKED: cv2 is not installed in current Python runtimes; no full regression rerun claimed"
+}
