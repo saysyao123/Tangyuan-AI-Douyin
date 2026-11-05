@@ -17,3 +17,10 @@
 
 ### 现实限制
 GPT Plus / Codex 不等于提供 ComfyUI GPU / MiniMax H3 云端推理额度。原始 ComfyUI JSON 只是技术参考；没有真实服务、参考图或渲染文件时，不能把提示词宣称为已交付成片。公开改编书籍前还需确认版权许可。
+
+## GPT 原生 GIF → 5 秒 24FPS 视频（专项子技能）
+- 专项入口：[GPT_NATIVE_GIF_VIDEO_SKILL_V1/START_WEB.md](GPT_NATIVE_GIF_VIDEO_SKILL_V1/START_WEB.md)
+- Skill 规范：[GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md](GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md)
+- 执行脚本：`GPT_NATIVE_GIF_VIDEO_SKILL_V1/scripts/gif_to_video.py`
+- 适用于用户明确要求「GPT 原生 GIF 动画 / 5 秒微动态 / 免费补间视频」时；**不改变上述 Work-Fisher 的默认导演路由**。
+- 固定验收：真 GIF 源完整 → 画面不滚动 → 补间 120 帧 → 5 秒 / 24FPS MP4、GIF → QA 回读。原生帧与补间帧必须分开记录。
