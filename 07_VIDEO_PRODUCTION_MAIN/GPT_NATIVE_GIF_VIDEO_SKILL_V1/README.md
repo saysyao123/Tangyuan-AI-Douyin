@@ -1,17 +1,29 @@
-# GPT Native GIF-to-Video Skill v1.0
+# GPT Native GIF-to-Video Skill v1.1.0
 
-**用途**：使用 GPT 原生 GIF 生成 5 秒低幅度动画镜头，以免费光流补间 + FFmpeg 合成 120 帧 / 24 FPS MP4 与 GIF，并强制逐帧 QA。
+零新增现金费用的低幅动画专项模块：由当次可用GPT原生GIF工具生成／读取完整源画面，CPU光流后处理为 **5秒／120帧／24FPS MP4＋GIF**。保留原Work-Fisher主路由。
 
-**入口**：`SKILL.md`（Agent Skills 格式）；`START_WEB.md`（ChatGPT 网页端与 Work 零上下文）；`scripts/gif_to_video.py`（实际产线）。
+- [网页端／Work入口](START_WEB.md) · [执行规范](SKILL.md)
+- [审核与真实证据](AUDIT_REPORT.md) · [开源对照](references/OPEN_SOURCE_COMPARISON.md) · [质量门禁](references/QA.md)
+- [变更记录](CHANGELOG.md) · [原审核任务书](WORK_AUDIT_START.md)
 
-**与项目关系**：这是 `07_VIDEO_PRODUCTION_MAIN` 的专项子技能，与 `WORK_FISHER_SKILL_V1` 并列，不更改既定视频总路由；适用于情绪微电影、MV 中的低幅动作镜头。无需额外付费订阅。
+## 执行
 
-**测试**：`python scripts/gif_to_video.py --input /path/to/native_source_30frames.gif --out result --seconds 5 --fps 24 --scale 2`。
+```bash
+python scripts/gif_to_video.py --input source.gif --out inspect --inspect-only
+# 实际查看全部源帧检查页后，使用新的空目录：
+python scripts/gif_to_video.py --input source.gif --out result \
+  --seconds 5 --fps 24 --scale 1 --source-reviewed --source-origin gpt-native
+python tests/run_regression.py --out results/regression-unique
+```
 
-**生产红线**：GIF 文件规格正确 ≠ 视觉动作完全合格；禁止滚动图和拆帧错位，必须查看输出的 MP4；禁止把补间帧说成原生帧。
+运行依赖为 `requirements.txt` ＋系统 `ffmpeg`／`ffprobe`（libx264）；已实测精确版本见 `requirements-tested.txt`。回归使用标准库unittest，无需pytest，无模型下载或服务调用。源码只负责后处理，不自动调用GPT生成。
 
-**样本素材**：历史 30 帧原生 GIF 在本轮交付的完整 ZIP 内，未提交进 GitHub（避免把较大的示例二进制文件作为源码）。
+## 本版修复重点
 
-## Work 深度审核 / 升级入口
+真实GIF累计时长采样、光流缓存、共享色板、disposal／透明度重建验证、源滚动负例、完整MP4解码与CFR时间戳检查、真实来源计数、奇数尺寸补边和可选已有音轨封装。默认不放大、不循环；输出名改为 `animation.gif`／`animation.mp4`，避免非5秒参数仍写死5秒文件名。
 
-[WORK_AUDIT_START.md](WORK_AUDIT_START.md) 是 Work 模式的零下载、零上下文审核指令。要求实际检查、测试、修复代码并将通过验收的更改同步到 GitHub `main`；网页端通过 `START_WEB.md` 再读取最新提交。GitHub 不等于 ChatGPT 内置 Skill 的自动热更新。
+文件格式正确≠人物动作合格。脚本永远保留视觉待验收；每个实际样片另做完整播放和逐帧记录。30原生帧的本次采样是30源采样＋87光流＋3自然停留，不能笼统宣传“120原生帧”或“90个新动作”。
+
+历史原生素材、成片的真实位置与SHA见 [素材索引](evidence/2026-11-05/ASSETS.md)。仓库保持源码／text-only fixture，未打包人物GIF二进制；找不到历史文件时如实标PENDING_REAL_ASSET，不能从fixture推断人物通过。
+
+这是可按文件执行的仓库规范；尚未安装为ChatGPT全局Skill，原目录命名与严格安装包要求的name不一致。网页端下次应重新读取main当前SHA，不承诺自动更新聊天缓存。

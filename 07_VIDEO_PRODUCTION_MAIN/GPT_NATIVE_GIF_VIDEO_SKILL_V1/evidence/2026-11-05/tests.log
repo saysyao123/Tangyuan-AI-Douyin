@@ -1,0 +1,42 @@
+test_30_to_120_provenance_not_subtraction (test_pipeline.PipelineTests.test_30_to_120_provenance_not_subtraction) ... ok
+test_ambiguous_midwarp_region_is_flagged_for_review (test_pipeline.PipelineTests.test_ambiguous_midwarp_region_is_flagged_for_review) ... ok
+test_audio_is_padded_to_video_duration (test_pipeline.PipelineTests.test_audio_is_padded_to_video_duration) ... ok
+test_blend_requires_no_flow (test_pipeline.PipelineTests.test_blend_requires_no_flow) ... ok
+test_cached_warp_matches_original_pair_formula (test_pipeline.PipelineTests.test_cached_warp_matches_original_pair_formula) ... ok
+test_centisecond_distribution_exact (test_pipeline.PipelineTests.test_centisecond_distribution_exact) ... ok
+test_cli_source_review_gate_and_risk_rejection (test_pipeline.PipelineTests.test_cli_source_review_gate_and_risk_rejection) ... ok
+test_disposal_restore_background_local_patch (test_pipeline.PipelineTests.test_disposal_restore_background_local_patch) ... ok
+test_disposal_restore_previous_local_patch (test_pipeline.PipelineTests.test_disposal_restore_previous_local_patch) ... ok
+test_existing_output_directory_rejected (test_pipeline.PipelineTests.test_existing_output_directory_rejected) ... ok
+test_fixed_background_guard_accepts (test_pipeline.PipelineTests.test_fixed_background_guard_accepts) ... ok
+test_full_9_16_encode_and_decode (test_pipeline.PipelineTests.test_full_9_16_encode_and_decode) ... ok
+test_gif_preserves_holds_without_faking_pixels (test_pipeline.PipelineTests.test_gif_preserves_holds_without_faking_pixels) ... ok
+test_global_palette_keeps_fixed_background_losslessly_in_time (test_pipeline.PipelineTests.test_global_palette_keeps_fixed_background_losslessly_in_time) ... ok
+test_grid_slip_guard_rejects (test_pipeline.PipelineTests.test_grid_slip_guard_rejects) ... ok
+test_identical_animation_rejected_by_guard (test_pipeline.PipelineTests.test_identical_animation_rejected_by_guard) ... ok
+test_invalid_source_selection_rejected (test_pipeline.PipelineTests.test_invalid_source_selection_rejected) ... ok
+test_loop_requires_explicit_request (test_pipeline.PipelineTests.test_loop_requires_explicit_request) ... ok
+test_matching_midwarps_do_not_raise_ghost_signal (test_pipeline.PipelineTests.test_matching_midwarps_do_not_raise_ghost_signal) ... ok
+test_odd_dimensions_pad_without_stretch (test_pipeline.PipelineTests.test_odd_dimensions_pad_without_stretch) ... ok
+test_original_onset_pixels_are_exactly_preserved (test_pipeline.PipelineTests.test_original_onset_pixels_are_exactly_preserved) ... ok
+test_pair_flow_is_cached (test_pipeline.PipelineTests.test_pair_flow_is_cached) ... ok
+test_real_gif_signature_required (test_pipeline.PipelineTests.test_real_gif_signature_required) ... ok
+test_scroll_guard_rejects (test_pipeline.PipelineTests.test_scroll_guard_rejects) ... ok
+test_single_frame_rejected (test_pipeline.PipelineTests.test_single_frame_rejected) ... ok
+test_source_selection_preserves_original_frame_lineage (test_pipeline.PipelineTests.test_source_selection_preserves_original_frame_lineage) ... ok
+test_time_map_respects_long_second_frame (test_pipeline.PipelineTests.test_time_map_respects_long_second_frame) ... ok
+test_transparency_explicit_matte (test_pipeline.PipelineTests.test_transparency_explicit_matte) ... ok
+test_truncated_mp4_fails_probe (test_pipeline.PipelineTests.test_truncated_mp4_fails_probe) ... ok
+test_unaligned_timing_does_not_claim_all_native_samples (test_pipeline.PipelineTests.test_unaligned_timing_does_not_claim_all_native_samples) ... ok
+test_unrepresentable_gif_timing_rejected (test_pipeline.PipelineTests.test_unrepresentable_gif_timing_rejected) ... ok
+test_variable_delays_read_without_flattening (test_pipeline.PipelineTests.test_variable_delays_read_without_flattening) ... ok
+test_zero_delays_require_explicit_policy (test_pipeline.PipelineTests.test_zero_delays_require_explicit_policy) ... ok
+test_frontmatter_uses_standard_minimal_fields (test_skill_contract.SkillContractTests.test_frontmatter_uses_standard_minimal_fields) ... ok
+test_parent_router_keeps_work_fisher_priority (test_skill_contract.SkillContractTests.test_parent_router_keeps_work_fisher_priority) ... ok
+test_referenced_local_resources_exist (test_skill_contract.SkillContractTests.test_referenced_local_resources_exist) ... ok
+test_repository_layout_installation_gap_is_disclosed (test_skill_contract.SkillContractTests.test_repository_layout_installation_gap_is_disclosed) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 3.952s
+
+OK

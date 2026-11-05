@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/scripts/gif_to_video.py",
+    "--input",
+    "../assets_original/雨窗前的凝眸与触碰.gif",
+    "--out",
+    "../audit_evidence/reject_real_120",
+    "--source-reviewed",
+    "--source-origin",
+    "gpt-native"
+  ],
+  "exit_code": 2,
+  "stdout": "",
+  "stderr": "{\"status\": \"FAILED\", \"error\": \"SOURCE_REJECTED: GLOBAL_DRIFT_OR_SCROLL\"}\n"
+}

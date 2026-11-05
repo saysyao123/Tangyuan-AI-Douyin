@@ -1,0 +1,51 @@
+[
+  {
+    "filename": "native_source_30frames.gif",
+    "library_file_id": "libfile_2c8d3355e590819195ef7fe9d8b09290",
+    "sha256": "9b4c6b7d59a244071a327d760c622c91cf8e7127028acbee3bd2c4ca51df9e9b",
+    "bytes": 900262,
+    "status": "原始30帧/5100ms，未改写"
+  },
+  {
+    "filename": "rain_window_full30_audit.mp4",
+    "library_file_id": "libfile_a5583f348f888191926f4274ded3297e",
+    "sha256": "021655f59b31c909126055d8a0ce03edc7179c88ad08b1f6d899b2d77f647f2b",
+    "bytes": 109869,
+    "status": "完整原动作后处理；技术通过，手部FLOW_REJECTED"
+  },
+  {
+    "filename": "rain_window_full30_audit_120f.gif",
+    "library_file_id": "libfile_baecae3917508191814a12afa9e5e5b1",
+    "sha256": "0a65b607d1f54877b3dd46caa40e571e716cb1e8303862b1d498a79b6c9cdd3e",
+    "bytes": 3709590,
+    "status": "同完整动作GIF；120帧/5000ms，视觉失败保留"
+  },
+  {
+    "filename": "rain_window_micro_5s.mp4",
+    "library_file_id": "libfile_aded40a7c1b48191a6df529570b2f6ac",
+    "sha256": "20d7df156fe0aa8000d38817018d733f94b5c19f7b465de32811bb470899004c",
+    "bytes": 268742,
+    "status": "原帧0–14重定时；低幅微动回退样片"
+  },
+  {
+    "filename": "rain_window_micro_120f.gif",
+    "library_file_id": "libfile_796fc1e08a1481919ba6a42a8133fde8",
+    "sha256": "1ca0abb6d618c01734b593924cfa457d62d8c7492e3273d729a25b2518e37a3a",
+    "bytes": 12189590,
+    "status": "微动GIF；120帧/5000ms，显示2倍，非高清修复"
+  },
+  {
+    "filename": "gif_video_A_B_5s.mp4",
+    "library_file_id": "libfile_b0bff4cf2fac8191804d0a3f9f25b49e",
+    "sha256": "730cb7a004fc62ea104d122ff04d6072a0b828d21deed8ffadd2f013f71010e1",
+    "bytes": 1008176,
+    "status": "左旧索引版，中新版完整动作，右不同动作范围的微动回退；右侧不是同动作修复"
+  },
+  {
+    "filename": "gif_video_audit_QA.json",
+    "library_file_id": "libfile_411dd2d6535c819199f99985ea712836",
+    "sha256": "7369c411044fe83137f263b67d1ce7b60a188e940e2fb4910eb5c928077eeb1d",
+    "bytes": 89315,
+    "status": "测试、A/B、技术和视觉完整JSON"
+  }
+]
