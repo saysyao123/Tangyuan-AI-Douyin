@@ -7,9 +7,19 @@ description: Use when making a GPT-native GIF micro-animation or converting a ve
 
 ## 目标与边界
 
-交付真实 GIF、5.00 秒／120 帧／24 FPS H.264 MP4、全部帧检查图和 QA。优先完整画面、固定人物、固定镜头和自然动作。不得用重复运动、滚动拼图、补间伪称原生帧、放大伪称高清。
+以 **5.00 秒／120 帧 GIF 为主交付**，同时交付同一动画时间轴的5.00秒／120帧／24FPS H.264 MP4、原生源GIF、全部帧检查图和QA。优先完整画面、固定人物、固定镜头和自然动作。不得用重复运动、滚动拼图、补间伪称原生帧、放大伪称高清。
 
 遵守：用户当前指令 > 原项目锁定要求 > Work-Fisher 主流程 > 本专项模块。不改写 Work-Fisher 原版或历史成功资产。保持本仓库目录作为唯一正式源。
+
+## 原生GIF主链与正式验收
+
+按 **参考图（可选） → GPT原生源GIF → 全帧检查 → 时间映射与光流补间 → 5秒／120帧GIF＋同时间轴24FPS MP4 → 实测QA** 执行。先取得真正的原生GIF文件；参考静图不是源动画。
+
+源GIF的原生帧数与最终120帧是两个概念。保留历史约30帧原生源的成功路线，最终增至120帧通常需要补间；不要求或宣传单次原生生成120帧。GIF最终累计时长5000ms，MP4为24FPS恒定帧率。
+
+**正式演示不得用少量静态PNG关键帧拼接、重复姿态或直接PNG→MP4绕过原生GIF步骤。** 这类方法可以作为单独的效果实验，但必须标 `ALTERNATIVE_DEMO_NOT_ORIGINAL_SKILL_PASS`，不作为本Skill原生GIF生成链路通过的证据。即使实验也导出了120帧GIF，文件后缀和参数仍不能证明来源合规。
+
+原生GIF接口未启用时，报告 `NATIVE_GIF_GENERATION_BLOCKED`。如实交付已完成的参考图和具体阻塞；已有真实原生GIF可另做后处理回归，但不能把历史素材复用说成新生成成功。不以替代实验消除正式链路的阻塞状态。
 
 ## 先检查当次能力
 
@@ -21,7 +31,7 @@ description: Use when making a GPT-native GIF micro-animation or converting a ve
 ## 执行流程
 
 1. 继承已确认角色、镜头、时长、画幅及声音。新镜头默认单人、固定机位、一个轻动作、无声音；9:16 仅是创作目标，不把已有源图拉伸为 9:16。
-2. 生成时使用 [提示词](references/PROMPTS.md)，按当次工具可支持帧数取高质量完整画面。保留已验证的 6/30 帧经验，拒绝 120 格大拼图；若是手动拼多段，先证明交界处姿态继承，不能用后期掩盖断裂。
+2. 生成时使用 [提示词](references/PROMPTS.md)，按当次工具可支持帧数取得真正的原生GIF文件和高质量完整源画面。保留已验证的 6/30 帧经验，拒绝 120 格大拼图；若是手动拼多段，先证明交界处姿态继承，不能用后期掩盖断裂。
 3. 在空目录运行源检查：
    ```bash
    python scripts/gif_to_video.py --input source.gif --out inspect --inspect-only
@@ -39,7 +49,7 @@ description: Use when making a GPT-native GIF micro-animation or converting a ve
 8. 需要现有音频时加 `--audio voice.wav`：截取／补静音至视频长度并复验 AAC；不包含 TTS、口型或字幕自动生成。默认非循环；仅检查首尾衔接后才用 `--loop`。
 9. 若原片复杂动作不合格，可在用户目标允许的情况下显式选择 `--source-range 0:15` 等已查看的安全片段；必须披露选取原帧索引、原片时长与重定时倍率，保留完整原片失败证据。不得把删除动作后的片段当作原动作已修复。
 10. 按 [质量门禁](references/QA.md) 回读文件并完整播放，逐帧检查实际输出。脚本只写 `TECH_PASS_VISUAL_PENDING`，永不自动签发美术通过。另写带文件 SHA、时间码和具体观察的视觉审核记录；发现问题则回退。播放器不可用时明确保留 `PLAYBACK_PENDING`，不能把解码检查等同实时观看。
-11. 仅交付真实存在的 `animation.gif`、`animation.mp4`、`qa_contact_sheet.jpg`、`source_report.json`、`qa_report.json` 和视觉记录，附原生源 GIF。来源、时长、输出编码、环境和文件哈希均可查。保留所有失败边界。
+11. 以真实存在且验收的 `animation.gif`（5秒／120帧）为主交付，并同时提供 `animation.mp4`（同一动画、5秒／120帧／24FPS）、`qa_contact_sheet.jpg`、`source_report.json`、`qa_report.json` 和视觉记录，附原生源 GIF。来源、时长、输出编码、环境和文件哈希均可查。保留所有失败边界。
 
 ## 来源统计与禁止虚报
 
