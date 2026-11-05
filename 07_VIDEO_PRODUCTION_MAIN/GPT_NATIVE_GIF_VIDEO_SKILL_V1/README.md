@@ -4,6 +4,7 @@
 
 - [网页端／Work入口](START_WEB.md) · [执行规范](SKILL.md)
 - [审核与真实证据](AUDIT_REPORT.md) · [开源对照](references/OPEN_SOURCE_COMPARISON.md) · [质量门禁](references/QA.md)
+- [原生GIF生成复核与当前阻塞](references/NATIVE_GIF_RESEARCH.md)：无参考图请求也返回400；历史文件可核验，但原始生成参数未找回；新微动提示词仍待原生实测。
 - [变更记录](CHANGELOG.md) · [原审核任务书](WORK_AUDIT_START.md)
 
 ## 执行

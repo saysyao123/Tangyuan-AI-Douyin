@@ -23,6 +23,8 @@ description: Use when making a GPT-native GIF micro-animation or converting a ve
 
 ## 先检查当次能力
 
+当前原生生成的实测阻塞、历史生成记录缺口与复测条件见 [原生GIF生成复核](references/NATIVE_GIF_RESEARCH.md)。新请求保留实际工具参数、完整回执和原始文件哈希；候选提示词标注待实测，不把仓库更新视为能力已恢复。
+
 1. 读取 `START_WEB.md`，记录 main 当前 SHA，再以该 SHA 读取本文件、脚本和参考，避免跨提交混用。
 2. 确认当次可调用的原生 GIF 生成工具、帧数上限、参考图接口及可取得的真实文件。不要靠提示词突破工具 schema。2026-11-05 此 Work 会话工具仅接受 2–16 帧；历史 30 帧样本可继续使用，不能承诺本次单次生成 30 帧。**本轮实际调用返回HTTP400：GIF output is not enabled for this request。工具参数可见不代表调用已启用；当前新GIF生成标为BLOCKED，不能声称端到端自动生成通过。**
 3. 确认 Python、Pillow、NumPy、OpenCV、`ffmpeg`、`ffprobe`、libx264。优先已有环境。只有普通网页聊天而无代码/文件执行能力时，只能做生成与检查指导，不能声称脚本已执行。
