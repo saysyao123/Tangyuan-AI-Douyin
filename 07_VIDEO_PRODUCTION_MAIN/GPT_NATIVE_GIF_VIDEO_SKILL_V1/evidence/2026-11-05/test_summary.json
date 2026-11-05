@@ -1,0 +1,23 @@
+{
+  "tests_run": 37,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "test_exit_code": 0,
+  "fixture_cli_exit_code": 0,
+  "elapsed_seconds": 6.555901216999928,
+  "python": "3.12.14",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/d3b00ac4fe49/repo/07_VIDEO_PRODUCTION_MAIN/GPT_NATIVE_GIF_VIDEO_SKILL_V1/scripts/gif_to_video.py",
+    "--input",
+    "/workspace/scratch/d3b00ac4fe49/audit_evidence/regression_final/fixtures/fixed.gif",
+    "--out",
+    "/workspace/scratch/d3b00ac4fe49/audit_evidence/regression_final/fixture_video",
+    "--source-reviewed",
+    "--source-origin",
+    "synthetic-fixture"
+  ],
+  "status": "ENGINEERING_PASS",
+  "real_character_visual_qa": "NOT_PROVEN_BY_SYNTHETIC_FIXTURES"
+}

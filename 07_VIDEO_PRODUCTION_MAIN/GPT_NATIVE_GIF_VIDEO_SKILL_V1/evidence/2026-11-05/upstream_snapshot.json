@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-11-05",
+  "repositories": [
+    {
+      "repo": "opencv/opencv",
+      "archived": false,
+      "pushed_at": "2026-11-04T13:52:24Z",
+      "license": "Apache-2.0",
+      "default_branch": "5.x",
+      "url": "https://github.com/opencv/opencv"
+    },
+    {
+      "repo": "hzwer/Practical-RIFE",
+      "archived": false,
+      "pushed_at": "2026-08-27T08:13:43Z",
+      "license": "MIT",
+      "default_branch": "main",
+      "url": "https://github.com/hzwer/Practical-RIFE"
+    },
+    {
+      "repo": "google-research/frame-interpolation",
+      "archived": true,
+      "pushed_at": "2024-08-10T01:12:48Z",
+      "license": "Apache-2.0",
+      "default_branch": "main",
+      "url": "https://github.com/google-research/frame-interpolation"
+    },
+    {
+      "repo": "python-pillow/Pillow",
+      "archived": false,
+      "pushed_at": "2026-11-05T02:26:25Z",
+      "license": "NOASSERTION",
+      "default_branch": "main",
+      "url": "https://github.com/python-pillow/Pillow"
+    },
+    {
+      "repo": "kohler/gifsicle",
+      "archived": false,
+      "pushed_at": "2026-10-15T18:57:38Z",
+      "license": "GPL-2.0",
+      "default_branch": "master",
+      "url": "https://github.com/kohler/gifsicle"
+    },
+    {
+      "repo": "FFmpeg/FFmpeg",
+      "archived": false,
+      "pushed_at": "2026-11-05T04:44:21Z",
+      "license": "NOASSERTION",
+      "default_branch": "master",
+      "url": "https://github.com/FFmpeg/FFmpeg"
+    },
+    {
+      "repo": "agentskills/agentskills",
+      "archived": false,
+      "pushed_at": "2026-11-04T19:47:27Z",
+      "license": "Apache-2.0",
+      "default_branch": "main",
+      "url": "https://github.com/agentskills/agentskills"
+    }
+  ]
+}

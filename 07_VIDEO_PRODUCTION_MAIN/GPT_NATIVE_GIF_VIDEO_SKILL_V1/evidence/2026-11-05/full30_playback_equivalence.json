@@ -1,0 +1,8 @@
+{
+  "decoded_yuv420p_frame_count": [
+    120,
+    120
+  ],
+  "frame_hashes_equal": true,
+  "note": "Browser lacks H264; lossless VP9 derivative is used for actual playback of the same decoded frames. This is not direct browser MP4 playback."
+}

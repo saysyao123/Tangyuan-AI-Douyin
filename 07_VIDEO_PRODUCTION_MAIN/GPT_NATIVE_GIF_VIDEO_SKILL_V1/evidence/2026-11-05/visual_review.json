@@ -1,0 +1,70 @@
+{
+  "reviewer": "Work primary agent; independent forward-use findings cross-checked",
+  "source_sha256": "9b4c6b7d59a244071a327d760c622c91cf8e7127028acbee3bd2c4ca51df9e9b",
+  "full_30_frame_result": {
+    "mp4_sha256": "021655f59b31c909126055d8a0ce03edc7179c88ad08b1f6d899b2d77f647f2b",
+    "technical": "PASS",
+    "visual": "FLOW_REJECTED",
+    "observations": [
+      {
+        "frames": [
+          65,
+          66,
+          67
+        ],
+        "time_seconds": [
+          2.708333,
+          2.75,
+          2.791667
+        ],
+        "finding": "Translucent double hand silhouette during source16->17 transition"
+      },
+      {
+        "frames": [
+          81,
+          82,
+          83
+        ],
+        "finding": "Soft finger edges/occlusion; not solved by interpolation"
+      }
+    ],
+    "scope": "Source identity/background continuous; full30 hand action not accepted. Existing history asset is not overwritten.",
+    "automated_risk_flag": "source pair [16,17] detected by connected warp-disagreement warning"
+  },
+  "conservative_micro_result": {
+    "mp4_sha256": "20d7df156fe0aa8000d38817018d733f94b5c19f7b465de32811bb470899004c",
+    "gif_sha256": "1ca0abb6d618c01734b593924cfa457d62d8c7492e3273d729a25b2518e37a3a",
+    "source_selection": "original input indices0..14 only, 2550ms retimed to5000ms; no new GIF generation",
+    "technical": "PASS",
+    "visual": "LOW_AMPLITUDE_PASS_WITH_LIMITATIONS",
+    "reviewed": "All15 selected source frames and all120 decoded MP4 frames in order; encoded GIF preview and decode; full5s playback of equivalent decoded content",
+    "observations": [
+      "One stable woman/window/bookcase composition; no scrolling grid or cut frames observed",
+      "Only subtle face/blink motion, no lifting hand included",
+      "Low native detail retained, slightly soft face/background; display scale2 is not restoration",
+      "15 source samples +98 optical-flow samples +7 explicit terminal holds"
+    ],
+    "not_proven": [
+      "Original full hand action fixed",
+      "New generation currently enabled",
+      "HD native detail",
+      "Complex occlusion",
+      "Lip sync",
+      "Cross-shot identity"
+    ]
+  },
+  "playback": {
+    "method": "Chromium134 headless browser, real-time played to ended at5s using lossless VP9 derivative; all120 decoded YUV420p frame hashes equal corresponding MP4",
+    "full_events_file": "playback.json",
+    "micro_events_file": "micro_playback.json",
+    "mp4_direct_browser_codec": "UNAVAILABLE; H264 canPlayType empty. FFmpeg fullH264 decoding PASS. Not direct MP4 browser playback."
+  },
+  "gif_generation_attempt": {
+    "status": "BLOCKED",
+    "http_status": 400,
+    "detail": "GIF output is not enabled for this request.",
+    "attempted_frame_count": 12,
+    "no_chargeable_api_fallback": true
+  },
+  "overall": "Engineering fixes and conservative existing-source postprocessing verified; full hand action and current new nativeGIF generation NOT PASSED"
+}

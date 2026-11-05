@@ -23,4 +23,5 @@ GPT Plus / Codex 不等于提供 ComfyUI GPU / MiniMax H3 云端推理额度。�
 - Skill 规范：[GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md](GPT_NATIVE_GIF_VIDEO_SKILL_V1/SKILL.md)
 - 执行脚本：`GPT_NATIVE_GIF_VIDEO_SKILL_V1/scripts/gif_to_video.py`
 - 适用于用户明确要求「GPT 原生 GIF 动画 / 5 秒微动态 / 免费补间视频」时；**不改变上述 Work-Fisher 的默认导演路由**。
-- 固定验收：真 GIF 源完整 → 画面不滚动 → 补间 120 帧 → 5 秒 / 24FPS MP4、GIF → QA 回读。原生帧与补间帧必须分开记录。
+- 固定验收：真 GIF 源完整 → 画面不滚动／人物动作合理 → 按逐帧时长采样 → 120 帧／5 秒／24FPS MP4 与 GIF → 完整回读与播放。源采样、光流补间和自然停留分开记录。
+- 专项当前版本：v1.1.0；[审核与测试证据](GPT_NATIVE_GIF_VIDEO_SKILL_V1/AUDIT_REPORT.md)。支持离线工程回归，真实人物单独验收；网页端应重新读取 main 同一提交，不是全局 Skill 自动热更新。

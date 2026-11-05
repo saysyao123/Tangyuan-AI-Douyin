@@ -1,0 +1,47 @@
+{
+  "source_sha256": "9b4c6b7d59a244071a327d760c622c91cf8e7127028acbee3bd2c4ca51df9e9b",
+  "baseline_script_sha256": "a7cd011398afa640ecc28cfefd150ecbf2ca2144f6381169c356c5ec6170ee31",
+  "current_script_sha256": "a932ceaabc441766b6c44170c4812e71bd3f909701715182650369b762c9c29e",
+  "runtime_median": {
+    "legacy": {
+      "runs_seconds": [
+        2.415810165000039,
+        2.6486940269999195,
+        2.5621597929998643
+      ],
+      "median_seconds": 2.5621597929998643
+    },
+    "v11": {
+      "runs_seconds": [
+        0.6337028259999897,
+        0.6666100410000126,
+        0.6713999450000756
+      ],
+      "median_seconds": 0.6666100410000126
+    }
+  },
+  "render_speedup_ratio": 3.8435661562436856,
+  "flow_calls": {
+    "legacy": 236,
+    "v11": 58
+  },
+  "same_time_warp_max_pixel_error": 0,
+  "timing": {
+    "fixture_durations_ms": [
+      100,
+      700,
+      200
+    ],
+    "old_wrong_source_intervals": 71,
+    "v11_wrong_source_intervals": 0
+  },
+  "palette": {
+    "global": {
+      "fixed_background_temporal_mae": 0.0
+    },
+    "per-frame": {
+      "fixed_background_temporal_mae": 0.8854948914431672
+    }
+  },
+  "scope": "Engineering correctness, timing and palette stability only. No claim of recovered detail or human anatomy."
+}

@@ -1,0 +1,5 @@
+# Actual Linux/Python 3.12 audit environment, 2026-11-05.
+# FFmpeg/ffprobe 6.1.1 installed separately; libx264 required.
+Pillow==13.0.0
+numpy==2.3.5
+opencv-python-headless==5.0.0.93

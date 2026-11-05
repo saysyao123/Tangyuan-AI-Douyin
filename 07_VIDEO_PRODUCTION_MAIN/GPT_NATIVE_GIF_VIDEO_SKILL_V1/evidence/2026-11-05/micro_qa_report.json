@@ -1,0 +1,1581 @@
+{
+  "version": "1.1.0",
+  "status": "TECH_PASS_VISUAL_PENDING",
+  "source": {
+    "filename": "native_source_30frames.gif",
+    "sha256": "9b4c6b7d59a244071a327d760c622c91cf8e7127028acbee3bd2c4ca51df9e9b",
+    "frames": 15,
+    "width": 144,
+    "height": 328,
+    "duration_ms": 2550,
+    "loop": 0,
+    "version": "GIF89a",
+    "durations_ms": [
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170,
+      170
+    ],
+    "disposal": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "local_rectangles": [
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ],
+      [
+        0,
+        0,
+        144,
+        328
+      ]
+    ],
+    "transparency_composited": false,
+    "matte_rgb": [
+      0,
+      0,
+      0
+    ],
+    "timing_override_frames": [],
+    "input_total_frames": 30,
+    "selected_input_frame_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "source_risks": {
+    "flags": [],
+    "background_translation_xy_support": [
+      [
+        -0.8223419189453125,
+        0.03634071350097656,
+        0.6239316239316239
+      ],
+      [
+        0.536402702331543,
+        0.0006866455078125,
+        0.5514018691588785
+      ],
+      [
+        0.8956756591796875,
+        0.079864501953125,
+        0.5102040816326531
+      ],
+      [
+        -0.27451062202453613,
+        0.03898429870605469,
+        0.8548387096774194
+      ],
+      [
+        -0.15386199951171875,
+        -0.1893157958984375,
+        0.7428571428571429
+      ],
+      [
+        0.4604320526123047,
+        -0.5926589965820312,
+        0.6296296296296297
+      ],
+      [
+        -1.1812105178833008,
+        -0.2733306884765625,
+        0.8297872340425532
+      ],
+      [
+        0.31414031982421875,
+        0.2825126647949219,
+        0.9333333333333333
+      ],
+      [
+        0.5134458541870117,
+        -0.2357177734375,
+        0.96875
+      ],
+      [
+        0.0017461776733398438,
+        -0.05374908447265625,
+        0.7948717948717948
+      ],
+      [
+        -0.38863372802734375,
+        0.03533935546875,
+        0.6774193548387096
+      ],
+      [
+        0.6890029907226562,
+        -0.568939208984375,
+        0.5813953488372093
+      ],
+      [
+        -1.0393638610839844,
+        -0.21705245971679688,
+        0.8461538461538461
+      ],
+      [
+        0.2843971252441406,
+        0.119964599609375,
+        0.8695652173913043
+      ]
+    ],
+    "drift_boundaries": [
+      7,
+      13
+    ],
+    "diagnostics": {
+      "adjacent_mean_abs_rgb_diff": {
+        "min": 3.5265709688346885,
+        "median": 4.254869579945799,
+        "max": 5.342204437669377
+      },
+      "exact_duplicate_transitions": 0,
+      "near_duplicate_transitions_threshold_0_15": 0,
+      "extreme_change_boundaries": [],
+      "warning": "Signals only; cannot prove identity, hands, complete scenes or absence of grids."
+    },
+    "coverage": "Heuristic fixed-camera guard; subtle grids and anatomy still require actual review."
+  },
+  "source_review_pages": [
+    "source_frames_000_014.jpg"
+  ],
+  "source_origin": "gpt-native",
+  "visual_qa": {
+    "status": "PENDING",
+    "note": "Script never grants visual approval."
+  },
+  "output": {
+    "frames": 120,
+    "fps": 24,
+    "seconds": 5.0,
+    "gif_size": [
+      288,
+      656
+    ],
+    "verified": {
+      "gif_frames": 120,
+      "gif_duration_ms": 5000,
+      "gif_loop": null,
+      "gif_delays_ms": [
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40,
+        40,
+        50,
+        40,
+        40,
+        40
+      ],
+      "mp4": {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 288,
+        "height": 656,
+        "coded_width": 288,
+        "coded_height": 656,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "18:41",
+        "pix_fmt": "yuv420p",
+        "level": 21,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 4,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "24/1",
+        "avg_frame_rate": "24/1",
+        "time_base": "1/12288",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 61440,
+        "duration": "5.000000",
+        "bit_rate": "426692",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "120",
+        "nb_read_frames": "120",
+        "extradata_size": 46,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc60.31.102 libx264"
+        }
+      },
+      "audio_tracks": [],
+      "full_decode": "PASS",
+      "cfr_timestamps": "PASS"
+    }
+  },
+  "timeline": {
+    "policy": "cumulative-duration CFR ticks; terminal GIF delay is a hold",
+    "retime_factor": 1.9607843137254903,
+    "mapping": [
+      {
+        "output_frame": 0,
+        "source_time_ms": 0.0,
+        "source_index": 0,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 1,
+        "source_time_ms": 21.25,
+        "source_index": 0,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 2,
+        "source_time_ms": 42.5,
+        "source_index": 0,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 3,
+        "source_time_ms": 63.75,
+        "source_index": 0,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 4,
+        "source_time_ms": 85.0,
+        "source_index": 0,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 5,
+        "source_time_ms": 106.25,
+        "source_index": 0,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 6,
+        "source_time_ms": 127.5,
+        "source_index": 0,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 7,
+        "source_time_ms": 148.75,
+        "source_index": 0,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 8,
+        "source_time_ms": 170.0,
+        "source_index": 1,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 9,
+        "source_time_ms": 191.25,
+        "source_index": 1,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 10,
+        "source_time_ms": 212.5,
+        "source_index": 1,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 11,
+        "source_time_ms": 233.75,
+        "source_index": 1,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 12,
+        "source_time_ms": 255.0,
+        "source_index": 1,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 13,
+        "source_time_ms": 276.25,
+        "source_index": 1,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 14,
+        "source_time_ms": 297.5,
+        "source_index": 1,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 15,
+        "source_time_ms": 318.75,
+        "source_index": 1,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 16,
+        "source_time_ms": 340.0,
+        "source_index": 2,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 17,
+        "source_time_ms": 361.25,
+        "source_index": 2,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 18,
+        "source_time_ms": 382.5,
+        "source_index": 2,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 19,
+        "source_time_ms": 403.75,
+        "source_index": 2,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 20,
+        "source_time_ms": 425.0,
+        "source_index": 2,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 21,
+        "source_time_ms": 446.25,
+        "source_index": 2,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 22,
+        "source_time_ms": 467.5,
+        "source_index": 2,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 23,
+        "source_time_ms": 488.75,
+        "source_index": 2,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 24,
+        "source_time_ms": 510.0,
+        "source_index": 3,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 25,
+        "source_time_ms": 531.25,
+        "source_index": 3,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 26,
+        "source_time_ms": 552.5,
+        "source_index": 3,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 27,
+        "source_time_ms": 573.75,
+        "source_index": 3,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 28,
+        "source_time_ms": 595.0,
+        "source_index": 3,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 29,
+        "source_time_ms": 616.25,
+        "source_index": 3,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 30,
+        "source_time_ms": 637.5,
+        "source_index": 3,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 31,
+        "source_time_ms": 658.75,
+        "source_index": 3,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 32,
+        "source_time_ms": 680.0,
+        "source_index": 4,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 33,
+        "source_time_ms": 701.25,
+        "source_index": 4,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 34,
+        "source_time_ms": 722.5,
+        "source_index": 4,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 35,
+        "source_time_ms": 743.75,
+        "source_index": 4,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 36,
+        "source_time_ms": 765.0,
+        "source_index": 4,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 37,
+        "source_time_ms": 786.25,
+        "source_index": 4,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 38,
+        "source_time_ms": 807.5,
+        "source_index": 4,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 39,
+        "source_time_ms": 828.75,
+        "source_index": 4,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 40,
+        "source_time_ms": 850.0,
+        "source_index": 5,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 41,
+        "source_time_ms": 871.25,
+        "source_index": 5,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 42,
+        "source_time_ms": 892.5,
+        "source_index": 5,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 43,
+        "source_time_ms": 913.75,
+        "source_index": 5,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 44,
+        "source_time_ms": 935.0,
+        "source_index": 5,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 45,
+        "source_time_ms": 956.25,
+        "source_index": 5,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 46,
+        "source_time_ms": 977.5,
+        "source_index": 5,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 47,
+        "source_time_ms": 998.75,
+        "source_index": 5,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 48,
+        "source_time_ms": 1020.0,
+        "source_index": 6,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 49,
+        "source_time_ms": 1041.25,
+        "source_index": 6,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 50,
+        "source_time_ms": 1062.5,
+        "source_index": 6,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 51,
+        "source_time_ms": 1083.75,
+        "source_index": 6,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 52,
+        "source_time_ms": 1105.0,
+        "source_index": 6,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 53,
+        "source_time_ms": 1126.25,
+        "source_index": 6,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 54,
+        "source_time_ms": 1147.5,
+        "source_index": 6,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 55,
+        "source_time_ms": 1168.75,
+        "source_index": 6,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 56,
+        "source_time_ms": 1190.0,
+        "source_index": 7,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 57,
+        "source_time_ms": 1211.25,
+        "source_index": 7,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 58,
+        "source_time_ms": 1232.5,
+        "source_index": 7,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 59,
+        "source_time_ms": 1253.75,
+        "source_index": 7,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 60,
+        "source_time_ms": 1275.0,
+        "source_index": 7,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 61,
+        "source_time_ms": 1296.25,
+        "source_index": 7,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 62,
+        "source_time_ms": 1317.5,
+        "source_index": 7,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 63,
+        "source_time_ms": 1338.75,
+        "source_index": 7,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 64,
+        "source_time_ms": 1360.0,
+        "source_index": 8,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 65,
+        "source_time_ms": 1381.25,
+        "source_index": 8,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 66,
+        "source_time_ms": 1402.5,
+        "source_index": 8,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 67,
+        "source_time_ms": 1423.75,
+        "source_index": 8,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 68,
+        "source_time_ms": 1445.0,
+        "source_index": 8,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 69,
+        "source_time_ms": 1466.25,
+        "source_index": 8,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 70,
+        "source_time_ms": 1487.5,
+        "source_index": 8,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 71,
+        "source_time_ms": 1508.75,
+        "source_index": 8,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 72,
+        "source_time_ms": 1530.0,
+        "source_index": 9,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 73,
+        "source_time_ms": 1551.25,
+        "source_index": 9,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 74,
+        "source_time_ms": 1572.5,
+        "source_index": 9,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 75,
+        "source_time_ms": 1593.75,
+        "source_index": 9,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 76,
+        "source_time_ms": 1615.0,
+        "source_index": 9,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 77,
+        "source_time_ms": 1636.25,
+        "source_index": 9,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 78,
+        "source_time_ms": 1657.5,
+        "source_index": 9,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 79,
+        "source_time_ms": 1678.75,
+        "source_index": 9,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 80,
+        "source_time_ms": 1700.0,
+        "source_index": 10,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 81,
+        "source_time_ms": 1721.25,
+        "source_index": 10,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 82,
+        "source_time_ms": 1742.5,
+        "source_index": 10,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 83,
+        "source_time_ms": 1763.75,
+        "source_index": 10,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 84,
+        "source_time_ms": 1785.0,
+        "source_index": 10,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 85,
+        "source_time_ms": 1806.25,
+        "source_index": 10,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 86,
+        "source_time_ms": 1827.5,
+        "source_index": 10,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 87,
+        "source_time_ms": 1848.75,
+        "source_index": 10,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 88,
+        "source_time_ms": 1870.0,
+        "source_index": 11,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 89,
+        "source_time_ms": 1891.25,
+        "source_index": 11,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 90,
+        "source_time_ms": 1912.5,
+        "source_index": 11,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 91,
+        "source_time_ms": 1933.75,
+        "source_index": 11,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 92,
+        "source_time_ms": 1955.0,
+        "source_index": 11,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 93,
+        "source_time_ms": 1976.25,
+        "source_index": 11,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 94,
+        "source_time_ms": 1997.5,
+        "source_index": 11,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 95,
+        "source_time_ms": 2018.75,
+        "source_index": 11,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 96,
+        "source_time_ms": 2040.0,
+        "source_index": 12,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 97,
+        "source_time_ms": 2061.25,
+        "source_index": 12,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 98,
+        "source_time_ms": 2082.5,
+        "source_index": 12,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 99,
+        "source_time_ms": 2103.75,
+        "source_index": 12,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 100,
+        "source_time_ms": 2125.0,
+        "source_index": 12,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 101,
+        "source_time_ms": 2146.25,
+        "source_index": 12,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 102,
+        "source_time_ms": 2167.5,
+        "source_index": 12,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 103,
+        "source_time_ms": 2188.75,
+        "source_index": 12,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 104,
+        "source_time_ms": 2210.0,
+        "source_index": 13,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 105,
+        "source_time_ms": 2231.25,
+        "source_index": 13,
+        "alpha": 0.125,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 106,
+        "source_time_ms": 2252.5,
+        "source_index": 13,
+        "alpha": 0.25,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 107,
+        "source_time_ms": 2273.75,
+        "source_index": 13,
+        "alpha": 0.375,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 108,
+        "source_time_ms": 2295.0,
+        "source_index": 13,
+        "alpha": 0.5,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 109,
+        "source_time_ms": 2316.25,
+        "source_index": 13,
+        "alpha": 0.625,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 110,
+        "source_time_ms": 2337.5,
+        "source_index": 13,
+        "alpha": 0.75,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 111,
+        "source_time_ms": 2358.75,
+        "source_index": 13,
+        "alpha": 0.875,
+        "kind": "interpolated"
+      },
+      {
+        "output_frame": 112,
+        "source_time_ms": 2380.0,
+        "source_index": 14,
+        "alpha": 0.0,
+        "kind": "source_sample"
+      },
+      {
+        "output_frame": 113,
+        "source_time_ms": 2401.25,
+        "source_index": 14,
+        "alpha": 0.125,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 114,
+        "source_time_ms": 2422.5,
+        "source_index": 14,
+        "alpha": 0.25,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 115,
+        "source_time_ms": 2443.75,
+        "source_index": 14,
+        "alpha": 0.375,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 116,
+        "source_time_ms": 2465.0,
+        "source_index": 14,
+        "alpha": 0.5,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 117,
+        "source_time_ms": 2486.25,
+        "source_index": 14,
+        "alpha": 0.625,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 118,
+        "source_time_ms": 2507.5,
+        "source_index": 14,
+        "alpha": 0.75,
+        "kind": "terminal_hold"
+      },
+      {
+        "output_frame": 119,
+        "source_time_ms": 2528.75,
+        "source_index": 14,
+        "alpha": 0.875,
+        "kind": "terminal_hold"
+      }
+    ]
+  },
+  "provenance": {
+    "source_origin_asserted_not_inferred": "gpt-native",
+    "source_frame_count": 15,
+    "output_sample_kinds": {
+      "source_sample": 15,
+      "interpolated": 98,
+      "terminal_hold": 7
+    },
+    "distinct_source_endpoints_sampled": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "upsampling_not_restoration": true,
+    "all_output_frames_are_postprocessed": true,
+    "no_external_paid_api": true
+  },
+  "processing": {
+    "method": "flow",
+    "flow_calculations": 28,
+    "palette": "global",
+    "matte": "#000000",
+    "loop_requested": false,
+    "ffmpeg_command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-f",
+      "rawvideo",
+      "-pix_fmt",
+      "rgb24",
+      "-s",
+      "288x656",
+      "-r",
+      "24",
+      "-i",
+      "-",
+      "-an",
+      "-vf",
+      "pad=ceil(iw/2)*2:ceil(ih/2)*2:0:0:color=black,setsar=1",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-r",
+      "24",
+      "-frames:v",
+      "120",
+      "-movflags",
+      "+faststart",
+      "../audit_evidence/micro_motion/animation.mp4"
+    ],
+    "elapsed_seconds": 3.6840815660000317,
+    "memory_estimate_bytes": 210418560
+  },
+  "flow_pair_risks": [
+    {
+      "source_pair": [
+        0,
+        1
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 4,
+      "fraction_pixels_rgb_difference_over_35": 0.00044461382113821136,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        1,
+        2
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 9,
+      "fraction_pixels_rgb_difference_over_35": 0.0007198509485094851,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        2,
+        3
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 9,
+      "fraction_pixels_rgb_difference_over_35": 0.0009739159891598916,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        3,
+        4
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 5,
+      "fraction_pixels_rgb_difference_over_35": 0.0002117208672086721,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        4,
+        5
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 3,
+      "fraction_pixels_rgb_difference_over_35": 0.0003175813008130081,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        5,
+        6
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 5,
+      "fraction_pixels_rgb_difference_over_35": 0.00038109756097560977,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        6,
+        7
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 3,
+      "fraction_pixels_rgb_difference_over_35": 0.0002328929539295393,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        7,
+        8
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 4,
+      "fraction_pixels_rgb_difference_over_35": 0.0002117208672086721,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        8,
+        9
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 13,
+      "fraction_pixels_rgb_difference_over_35": 0.0005081300813008131,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        9,
+        10
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 2,
+      "fraction_pixels_rgb_difference_over_35": 0.0002328929539295393,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        10,
+        11
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 4,
+      "fraction_pixels_rgb_difference_over_35": 0.00035992547425474255,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        11,
+        12
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 5,
+      "fraction_pixels_rgb_difference_over_35": 0.0002964092140921409,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        12,
+        13
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 3,
+      "fraction_pixels_rgb_difference_over_35": 0.000402269647696477,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    },
+    {
+      "source_pair": [
+        13,
+        14
+      ],
+      "flag": null,
+      "largest_disagreement_component_pixels": 3,
+      "fraction_pixels_rgb_difference_over_35": 0.0004234417344173442,
+      "warning": "Heuristic; inspect actual output. Does not prove good/bad anatomy."
+    }
+  ],
+  "flow_flagged_source_pairs": [],
+  "diagnostics": {
+    "adjacent_mean_abs_rgb_diff": {
+      "min": 0.0,
+      "median": 0.6332641711833785,
+      "max": 0.8671098690153568
+    },
+    "exact_duplicate_transitions": 7,
+    "near_duplicate_transitions_threshold_0_15": 7,
+    "extreme_change_boundaries": [],
+    "warning": "Signals only; cannot prove identity, hands, complete scenes or absence of grids."
+  },
+  "mp4_decoded_diagnostics": {
+    "adjacent_mean_abs_rgb_diff": {
+      "min": 0.004379093270099368,
+      "median": 0.676806331865402,
+      "max": 1.0310400434733513
+    },
+    "exact_duplicate_transitions": 0,
+    "near_duplicate_transitions_threshold_0_15": 7,
+    "extreme_change_boundaries": [],
+    "warning": "Signals only; cannot prove identity, hands, complete scenes or absence of grids."
+  },
+  "output_review_pages": [
+    "output_frames_000_029.jpg",
+    "output_frames_030_059.jpg",
+    "output_frames_060_089.jpg",
+    "output_frames_090_119.jpg"
+  ],
+  "review_pages_origin": "actual decoded MP4 RGB frames",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "numpy": "2.3.5",
+    "opencv": "5.0.0",
+    "pillow": "13.0.0",
+    "script_sha256": "a932ceaabc441766b6c44170c4812e71bd3f909701715182650369b762c9c29e",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers"
+  },
+  "files": {
+    "animation.gif": {
+      "sha256": "1ca0abb6d618c01734b593924cfa457d62d8c7492e3273d729a25b2518e37a3a",
+      "bytes": 12189590
+    },
+    "animation.mp4": {
+      "sha256": "20d7df156fe0aa8000d38817018d733f94b5c19f7b465de32811bb470899004c",
+      "bytes": 268742
+    },
+    "qa_contact_sheet.jpg": {
+      "sha256": "7bdc378c9b40b624015a1be3e026346eef66548b8debdfbe3e4c5ef3fee025eb",
+      "bytes": 149530
+    }
+  }
+}
