@@ -1,0 +1,57 @@
+name: KataGo cloud smoke test
+on:
+  push:
+    branches: [experiment/katago-cloud-smoke-20261113]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Download official CPU engine and small test model
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/katago-test
+          cd /tmp/katago-test
+          python - <<'PY'
+          import json, urllib.request
+          url = 'https://api.github.com/repos/lightvector/KataGo/releases/tags/v1.18.1'
+          with urllib.request.urlopen(url, timeout=30) as r: release=json.load(r)
+          candidates=[a for a in release['assets'] if 'eigenavx2' in a['name'].lower() and 'linux' in a['name'].lower() and 'x64' in a['name'].lower() and '+bs50' not in a['name']]
+          if not candidates:
+              raise RuntimeError('No suitable CPU asset: '+str([a['name'] for a in release['assets']]))
+          print(candidates[0]['name'])
+          urllib.request.urlretrieve(candidates[0]['browser_download_url'], 'engine.zip')
+          PY
+          unzip -q engine.zip -d engine
+          curl -fL --retry 2 'https://github.com/pasky/pachi/releases/download/katago_models/g170e-b10c128-s1141046784-d204142634.bin.gz' -o model.bin.gz
+          find engine -type f | head -30
+          ENGINE=$(find engine -type f -name katago | head -1)
+          chmod +x "$ENGINE"
+          "$ENGINE" version
+          cat > analysis.cfg <<'EOF'
+          numSearchThreads = 2
+          numAnalysisThreads = 1
+          nnMaxBatchSize = 4
+          reportAnalysisWinratesAs = BLACK
+          logToStderr = true
+          EOF
+          printf '%s\n' '{"id":"public-synthetic-smoke","moves":[["B","D4"],["W","Q16"],["B","Q4"],["W","D16"]],"rules":"chinese","komi":7.5,"boardXSize":19,"boardYSize":19,"maxVisits":100,"includeOwnership":true}' > query.jsonl
+          "$ENGINE" analysis -model model.bin.gz -config analysis.cfg < query.jsonl > result.jsonl
+          python - <<'PY'
+          import json
+          rows=[json.loads(s) for s in open('result.jsonl') if s.strip()]
+          r=next(x for x in rows if x.get('id')=='public-synthetic-smoke' and x.get('moveInfos'))
+          assert len(r['ownership'])==361
+          assert 'scoreLead' in r['rootInfo']
+          print(json.dumps({'id':r['id'],'rootInfo':r['rootInfo'],'top3':r['moveInfos'][:3]},ensure_ascii=False))
+          PY
+      - name: Upload actual analysis result
+        uses: actions/upload-artifact@v4
+        with:
+          name: katago-smoke-result
+          path: /tmp/katago-test/result.jsonl
+          retention-days: 3
