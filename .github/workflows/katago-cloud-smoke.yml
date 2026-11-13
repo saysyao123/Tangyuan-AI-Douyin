@@ -55,3 +55,13 @@ jobs:
           name: katago-smoke-result
           path: /tmp/katago-test/result.jsonl
           retention-days: 3
+
+      - name: Package engine and weights for isolated analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: katago-cpu-engine-bundle
+          path: |
+            /tmp/katago-test/engine/katago
+            /tmp/katago-test/model.bin.gz
+            /tmp/katago-test/analysis.cfg
+          retention-days: 3
