@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "updated_on": "2026-11-27",
+  "scope": "Skill Factory 生产或正式纳入审核的子 Skill；不含母工厂自身",
+  "products": [
+    {
+      "id": "SF-P001",
+      "name": "PDF 页面提取与重排",
+      "slug": "pdf-page-select",
+      "version": "1.0",
+      "factory_version": "1.0",
+      "recorded_on": "2026-11-27",
+      "development_status": "local_tested_candidate",
+      "evidence_level": "E1",
+      "commercial_status": "not_released",
+      "upstream": {
+        "url": "https://github.com/py-pdf/pypdf",
+        "tested_version": "5.9.0",
+        "commit_verified": false
+      },
+      "tests": {
+        "development_passed": 13,
+        "development_total": 13,
+        "positive": 5,
+        "negative": 8,
+        "critical_failures": 0,
+        "full_rounds": 1,
+        "repeat_three_complete": false,
+        "fresh_directory_execution": "passed",
+        "independent_ab": "not_run",
+        "holdout": "not_run",
+        "target_host": "not_run"
+      },
+      "artifact": {
+        "filename": "PDF_Page_Select_V1.0_Candidate.zip",
+        "sha256": "0f323cf3c71c27225f1efd6a5960cbd1efd1c0d3588f3925280c5b125477a041",
+        "stored_in_repository": false
+      },
+      "record_path": "SF-P001-PDF_PAGE_SELECT/README.md",
+      "next_action": "完成独立 A/B/C 对照、封存测试、关键场景重复及目标宿主验证，核查商业化条件"
+    }
+  ]
+}
