@@ -43,7 +43,7 @@
       "id": "SF-P002",
       "name": "VoiceScript｜中文知识口播改写",
       "slug": "voice-script",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "factory_version": "1.0.1",
       "recorded_on": "2026-11-27",
       "development_status": "local_tested_candidate",
@@ -69,10 +69,13 @@
       "tests": {
         "structure_passed": 8,
         "structure_total": 8,
-        "literal_passed": 10,
-        "literal_total": 10,
-        "scope": "author_same_context_text_smoke; V0.1.1 patched 3 outputs and retained 7, no independent rerun",
+        "regression_literal_passed": 10,
+        "regression_literal_total": 10,
+        "stress_assertions_passed": 10,
+        "stress_assertions_total": 10,
+        "scope": "author_same_context generated 20 responses; 18 rewrite tasks, 2 clarification tasks; necessary assertions only; no independent or listening tests",
         "independent_abcd": "not_run",
+        "independent_version_comparison": "not_run",
         "holdout": "not_run",
         "repeat_three": "not_run",
         "ablation": "not_run",
@@ -80,17 +83,45 @@
         "target_host": "not_run"
       },
       "artifact": {
-        "filename": "VoiceScript_V0.1.1_Trial.zip",
-        "sha256": "396f22c18c310423f459b6b46cd004c88397092371e6c2651b316803e2af0956",
+        "filename": "VoiceScript_V0.1.2_Trial.zip",
+        "sha256": "f4dc94f53d9aaa6448bb8bfc1705db9ecc0f1ed82ee143f465da3c28cb6b5e88",
         "stored_in_repository": false
       },
       "development_artifact": {
-        "filename": "VoiceScript_SF-P002_Development.zip",
-        "sha256": "0ec3f43b7095a4deca830b6f6b9d75a1c75d5df0284c12a1e6ef79b79286a806",
+        "filename": "VoiceScript_SF-P002_V0.1.2_Development.zip",
+        "sha256": "7deb72d6f75a6bc0bd2fc485c22d5d1503e781b249bb7e1469e4333ccd5dbd62",
         "stored_in_repository": false
       },
       "record_path": "SF-P002-VOICE_SCRIPT/README.md",
-      "next_action": "先做3个开发任务的独立A/B/C/D，继而完整开发集、封存、重复、消融及真实盲听；目标宿主和支付另验收"
+      "next_action": "独立 A/B/C/D 与 V0.1.1/V0.1.2 配对盲评，继而封存、重复、消融、真实盲听及宿主/支付核验；E1 候选未发布",
+      "history": [
+        {
+          "version": "0.1.1",
+          "tests": {
+            "structure_passed": 8,
+            "structure_total": 8,
+            "literal_passed": 10,
+            "literal_total": 10,
+            "scope": "author_same_context_text_smoke; V0.1.1 patched 3 outputs and retained 7, no independent rerun",
+            "independent_abcd": "not_run",
+            "holdout": "not_run",
+            "repeat_three": "not_run",
+            "ablation": "not_run",
+            "listening": "not_run",
+            "target_host": "not_run"
+          },
+          "artifact": {
+            "filename": "VoiceScript_V0.1.1_Trial.zip",
+            "sha256": "396f22c18c310423f459b6b46cd004c88397092371e6c2651b316803e2af0956",
+            "stored_in_repository": false
+          },
+          "development_artifact": {
+            "filename": "VoiceScript_SF-P002_Development.zip",
+            "sha256": "0ec3f43b7095a4deca830b6f6b9d75a1c75d5df0284c12a1e6ef79b79286a806",
+            "stored_in_repository": false
+          }
+        }
+      ]
     }
   ]
 }
