@@ -38,6 +38,59 @@
       },
       "record_path": "SF-P001-PDF_PAGE_SELECT/README.md",
       "next_action": "完成独立 A/B/C 对照、封存测试、关键场景重复及目标宿主验证，核查商业化条件"
+    },
+    {
+      "id": "SF-P002",
+      "name": "VoiceScript｜中文知识口播改写",
+      "slug": "voice-script",
+      "version": "0.1.1",
+      "factory_version": "1.0.1",
+      "recorded_on": "2026-11-27",
+      "development_status": "local_tested_candidate",
+      "evidence_level": "E1",
+      "commercial_status": "not_released",
+      "upstreams": [
+        {
+          "url": "https://github.com/op7418/Humanizer-zh",
+          "commit": "f4518a8eab97b8bfebc66a89d34320a89bef6930",
+          "license": "MIT"
+        },
+        {
+          "url": "https://github.com/KyrieHuang/humanizer-zh-speech",
+          "commit": "4009329e733de802a363c6222efd105c9f32e0f8",
+          "license": "MIT"
+        },
+        {
+          "url": "https://github.com/souzatharsis/podcastfy",
+          "commit": "053b54a0917e35edb2808049499292361ccaae7b",
+          "license": "Apache-2.0"
+        }
+      ],
+      "tests": {
+        "structure_passed": 8,
+        "structure_total": 8,
+        "literal_passed": 10,
+        "literal_total": 10,
+        "scope": "author_same_context_text_smoke; V0.1.1 patched 3 outputs and retained 7, no independent rerun",
+        "independent_abcd": "not_run",
+        "holdout": "not_run",
+        "repeat_three": "not_run",
+        "ablation": "not_run",
+        "listening": "not_run",
+        "target_host": "not_run"
+      },
+      "artifact": {
+        "filename": "VoiceScript_V0.1.1_Trial.zip",
+        "sha256": "396f22c18c310423f459b6b46cd004c88397092371e6c2651b316803e2af0956",
+        "stored_in_repository": false
+      },
+      "development_artifact": {
+        "filename": "VoiceScript_SF-P002_Development.zip",
+        "sha256": "0ec3f43b7095a4deca830b6f6b9d75a1c75d5df0284c12a1e6ef79b79286a806",
+        "stored_in_repository": false
+      },
+      "record_path": "SF-P002-VOICE_SCRIPT/README.md",
+      "next_action": "先做3个开发任务的独立A/B/C/D，继而完整开发集、封存、重复、消融及真实盲听；目标宿主和支付另验收"
     }
   ]
 }
