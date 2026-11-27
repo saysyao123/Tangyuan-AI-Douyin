@@ -1,0 +1,1 @@
+{"slug":"example-skill","description":"明确描述何时调用以及做什么。","task":"待明确真实用户任务","buyer":"目标用户","input":"所需输入","output":"真实交付物","acceptance":"客观断言","source":{"url":"https://github.com/owner/repo","revision":"精确 commit/tag/version","license":"待核实","review_status":"pending","evidence":"源码路径、许可、最小链路测试记录"},"entrypoint":"scripts/run.py","dependencies":[],"limits":"无未经授权的外发、费用或发布"}

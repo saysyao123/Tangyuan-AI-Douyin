@@ -1,0 +1,10 @@
+{
+  "name": "skill-factory",
+  "version": "1.0.1",
+  "entrypoint": "versions/v1.0.1/skill-factory/SKILL.md",
+  "skill_directory": "versions/v1.0.1/skill-factory",
+  "standard": "versions/v1.0.1/skill-factory/references/STANDARD_V0.1.md",
+  "evidence_level": "E1",
+  "status": "current-local-tested-baseline",
+  "commercial_release": false
+}

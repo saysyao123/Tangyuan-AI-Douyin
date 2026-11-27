@@ -1,0 +1,67 @@
+{
+  "passed": 12,
+  "total": 12,
+  "tests": [
+    {
+      "test": "init fresh",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "reject overwrite",
+      "passed": true,
+      "detail": "BLOCKED: [Errno 17] File exists: '/tmp/factory-selftest-yxa86s6d/project'\n"
+    },
+    {
+      "test": "reject unfinished",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "complete structure",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "reject untrusted execution",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "execute 3 synthetic cases with oracle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "identical report not promoted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "package candidate",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "exclude eval and evidence files",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "reject stale fixture evidence",
+      "passed": true,
+      "detail": "BLOCKED: evidence stale or legacy; retest\n"
+    },
+    {
+      "test": "reject stale manifest evidence",
+      "passed": true,
+      "detail": "BLOCKED: evidence stale or legacy; retest\n"
+    },
+    {
+      "test": "optional oracle local package",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "scope": "offline synthetic controller self-test only; no independent agent, no host install, no commercial release"
+}
